@@ -1,7 +1,9 @@
 package models.tools;
 
 
-public class Axe extends Tool {
+import enums.Item;
+
+public class Axe extends Tool implements Item {
     //If usage is failed -1
     //If foraging talent is max -1
     public Axe(int level) {

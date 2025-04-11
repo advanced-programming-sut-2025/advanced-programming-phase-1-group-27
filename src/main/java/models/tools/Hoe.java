@@ -1,6 +1,8 @@
 package models.tools;
 
-public class Hoe extends Tool{
+import enums.Item;
+
+public class Hoe extends Tool implements Item {
 
     public Hoe(int level) {
         int energyUsage = 0;

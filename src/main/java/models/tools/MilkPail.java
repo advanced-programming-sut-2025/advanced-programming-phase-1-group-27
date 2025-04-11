@@ -1,6 +1,8 @@
 package models.tools;
 
-public class MilkPail extends Tool{
+import enums.Item;
+
+public class MilkPail extends Tool implements Item {
 
     private int price;
 

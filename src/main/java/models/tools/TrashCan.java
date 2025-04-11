@@ -1,6 +1,8 @@
 package models.tools;
 
-public class TrashCan extends Tool{
+import enums.Item;
+
+public class TrashCan extends Tool implements Item {
     private int percentage;
 
     public TrashCan(int level) {

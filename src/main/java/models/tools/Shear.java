@@ -1,6 +1,8 @@
 package models.tools;
 
-public class Shear extends Tool {
+import enums.Item;
+
+public class Shear extends Tool implements Item {
     private int price;
 
     public Shear() {

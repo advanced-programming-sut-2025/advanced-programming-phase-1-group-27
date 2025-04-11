@@ -1,6 +1,8 @@
 package models.tools;
 
-public class FishingPole extends Tool{
+import enums.Item;
+
+public class FishingPole extends Tool implements Item {
     private int price;
     //Required fishing talent : 0 , 0 , 2 , 4
     //If fishing talent is max -1

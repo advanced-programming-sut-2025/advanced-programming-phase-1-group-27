@@ -1,8 +1,9 @@
 package models;
 
 import enums.CropType;
+import enums.Item;
 
-public class Crop {
+public class Crop implements Item {
     CropType cropType;
     int currentStage, remainingTime;
     //...

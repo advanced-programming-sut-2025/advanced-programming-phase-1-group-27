@@ -1,6 +1,8 @@
 package models.tools;
 
-public class WateringCan extends Tool{
+import enums.Item;
+
+public class WateringCan extends Tool implements Item {
     //Water: 40 - 55 - 70 - 85 - 100
     //EnergyUsage : 5 - 4 - 3 - 2 - 1;
     //If farming talent is max -1

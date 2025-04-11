@@ -3,7 +3,7 @@ package controller.InteractionsWithOthers;
 import models.Result;
 
 public class TradeController{
-    public Result startTrade(){
+    public Result startTrade(,سثق){
 
     }
 

@@ -1,6 +1,8 @@
 package models.tools;
 
-public class Backpack extends Tool{
+import enums.Item;
+
+public class Backpack extends Tool implements Item {
 
     private int capacity;
 

@@ -1,6 +1,8 @@
 package models.tools;
 
-public class Pickaxe extends Tool{
+import enums.Item;
+
+public class Pickaxe extends Tool implements Item {
     //EnergyUsage : 5 - 4 - 3 - 2 - 1;
     //If usage is failed -1
     //If mining talent is max -1

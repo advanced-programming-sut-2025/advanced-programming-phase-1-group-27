@@ -1,6 +1,8 @@
 package models.tools;
 
-public class Scythe extends Tool{
+import enums.Item;
+
+public class Scythe extends Tool implements Item {
 
     public Scythe() {
         int level = 0;

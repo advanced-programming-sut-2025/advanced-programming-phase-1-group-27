@@ -25,8 +25,8 @@ public enum NPCType {
     private ArrayList<Relation> relationsWithOthers;
     private ArrayList<Quest> Quests;
     private ArrayList<Features> features;
-    //private ArrayList<Item> favorite;
-    //private Map placeOfHome;
-    //private Map placeOfShop;
+    private ArrayList<Item> favorite;
+    private Map placeOfHome;
+    private Map placeOfShop;
 
 }

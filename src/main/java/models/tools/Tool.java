@@ -1,6 +1,8 @@
 package models.tools;
 
-public abstract class Tool {
+import enums.Item;
+
+public abstract class Tool implements Item {
     private final int energyUsage;
     private int level;
     private String name;
