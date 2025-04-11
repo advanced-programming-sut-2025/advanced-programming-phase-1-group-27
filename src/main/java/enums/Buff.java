@@ -1,6 +1,8 @@
 package enums;
 
-public enum Buff {
+import models.Ability;
 
-    // TODO: different types of buff
+public class Buff {
+    private final Kooft ability;
+    private final int duration;   
 }

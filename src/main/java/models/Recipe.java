@@ -1,6 +1,4 @@
-package model;
-
-import enums.Item;
+package models;
 
 import java.util.HashMap;
 

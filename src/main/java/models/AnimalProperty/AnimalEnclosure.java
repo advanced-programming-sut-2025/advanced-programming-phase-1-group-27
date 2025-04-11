@@ -1,4 +1,4 @@
-package model;
+package models.AnimalProperty;
 
 import java.util.ArrayList;
 

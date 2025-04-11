@@ -1,5 +1,5 @@
 package enums;
 
-public enum Item {
-    // TODO: different types of materials
+public interface Item {
+    // TODO: different types of Items;
 }

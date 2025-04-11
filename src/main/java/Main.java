@@ -1,7 +1,7 @@
-import view.AppView;
+import models.Seasons.Season;
 
 public class Main {
     public static void main(String[] args) {
-        (new AppView()).run();
+
     }
 }

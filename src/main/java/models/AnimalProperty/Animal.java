@@ -1,6 +1,7 @@
-package model;
+package models.AnimalProperty;
 
 import enums.AnimalType;
+import models.Position;
 
 public class Animal {
     private AnimalType type;

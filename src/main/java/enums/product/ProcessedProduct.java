@@ -1,6 +1,8 @@
 package enums.product;
 
-public enum ProcessedProduct implements Product {
+import enums.Item;
+
+public enum ProcessedProduct implements Product, Item {
     Honey;
     // TODO: different processed products
 }

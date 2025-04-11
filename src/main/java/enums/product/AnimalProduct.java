@@ -1,6 +1,8 @@
 package enums.product;
 
-public enum AnimalProduct implements Product {
+import enums.Item;
+
+public enum AnimalProduct implements Product, Item {
     Milk;
     // TODO: different products of animals
     private final int price;
