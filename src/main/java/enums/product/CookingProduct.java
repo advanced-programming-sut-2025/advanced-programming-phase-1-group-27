@@ -1,9 +1,8 @@
 package enums.product;
 
-import enums.Buff;
+import models.Buff;
 import enums.Item;
 import models.Recipe;
-import models.*;
 
 public enum CookingProduct implements Product, Item {
     FriedEgg;

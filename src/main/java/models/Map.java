@@ -1,5 +1,7 @@
 package models;
 
+import enums.CellType;
+
 public class Map {
     private String[] mapView = new String[80];
     private int height, width;
