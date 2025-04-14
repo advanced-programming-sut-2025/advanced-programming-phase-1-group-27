@@ -5,6 +5,7 @@ import enums.Item;
 public class TrashCan extends Tool implements Item {
     private int percentage;
 
+
     public TrashCan(int level) {
         int energyUsage = 0;
         if(level == 0){
@@ -24,5 +25,10 @@ public class TrashCan extends Tool implements Item {
     @Override
     public void use() {
 
+    }
+
+    public void deleteItem(Item item) {
+        int refund = item.value * this.percentage / 100;
+        // TODO: add money to user
     }
 }

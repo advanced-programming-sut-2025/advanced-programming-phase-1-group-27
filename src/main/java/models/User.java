@@ -30,6 +30,7 @@ public class User {
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell;
     private Map currentMap;
+    private int money;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -96,5 +97,9 @@ public class User {
 
     public void trashItem(String itemName) {
 
+    }
+
+    public int getMoney() {
+        return money;
     }
 }
