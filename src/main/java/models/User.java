@@ -10,15 +10,13 @@ import enums.Gender;
 import enums.Item;
 import enums.MachineTypes;
 import enums.product.CraftingProduct;
-import model.Place;
-import model.SecurityQuestion;
+import models.Place;
+import models.SecurityQuestion;
 
 public class User {
 
     private String username, password, nickname, email;
     private final Gender gender;
-    // list of questions in order to recover password
-    private ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
     // shows the amount of each item in stock
     private HashMap<Item, Integer> itemAmount = new HashMap<>();
     private ArrayList<CraftingProduct> availableRecipes = new ArrayList<>();
@@ -26,7 +24,20 @@ public class User {
     private ArrayList<Item> inventory = new ArrayList<>();
     private ArrayList<Item> inHandItems = new ArrayList<>();
     private ArrayList<MachineTypes> availableMachines = new ArrayList<>();
+    // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(); // TODO: this hashmap should be initialized before
+    private int energy, maxEnergy = 200;
+    private Ability farming, mining, foraging, fishing;
+    private Cell currentCell;
+    private Map currentMap;
+
+    public User(String username, String password, String nickname, String email, Gender gender) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.gender = gender;
+    }
 
     public static boolean isValidUsername(String username) {}
 
@@ -35,14 +46,6 @@ public class User {
     public static boolean isValidPassword(String password) {}
 
     public static boolean isStrongPassword(String password) {}
-
-
-
-
-    private int energy, maxEnergy = 200;
-    private Ability farming, mining, foraging, fishing;
-    private Cell currentCell;
-    private Map currentMap;
 
     public void walk(Place destination) {
 
@@ -94,6 +97,4 @@ public class User {
     public void trashItem(String itemName) {
 
     }
-
-
 }
