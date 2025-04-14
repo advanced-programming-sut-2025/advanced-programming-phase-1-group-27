@@ -23,6 +23,6 @@ public class TrashCan extends Tool implements Item {
 
     @Override
     public void use() {
-
+        //deleteItem;
     }
 }
