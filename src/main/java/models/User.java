@@ -3,15 +3,11 @@ package models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.tools.Tool;
-
 import enums.AbilityType;
 import enums.Gender;
 import enums.Item;
 import enums.MachineTypes;
 import enums.product.CraftingProduct;
-import models.Place;
-import models.SecurityQuestion;
 
 public class User {
 
@@ -22,7 +18,8 @@ public class User {
     private ArrayList<CraftingProduct> availableRecipes = new ArrayList<>();
     // can contain either of items
     private ArrayList<Item> inventory = new ArrayList<>();
-    private ArrayList<Item> inHandItems = new ArrayList<>();
+    // items which are place in the fridge
+    private ArrayList<Item> refrigerator = new ArrayList<>();
     private ArrayList<MachineTypes> availableMachines = new ArrayList<>();
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(); // TODO: this hashmap should be initialized before

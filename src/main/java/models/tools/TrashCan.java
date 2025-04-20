@@ -28,6 +28,7 @@ public class TrashCan extends Tool implements Item {
     }
 
     public void deleteItem(Item item) {
+        // TODO: add getValue() method to enums
         int refund = item.value * this.percentage / 100;
         // TODO: add money to user
     }
