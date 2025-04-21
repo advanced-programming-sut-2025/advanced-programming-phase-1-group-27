@@ -1,4 +1,4 @@
-package models.Seasons;
+package enums.Seasons;
 
 import java.util.ArrayList;
 

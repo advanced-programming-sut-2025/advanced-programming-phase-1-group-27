@@ -1,8 +1,11 @@
 package enums;
 
+import models.Position;
+
 public enum PlaceType {
-    Hut;
+    Hut,
+    GreenHouse;
     
     private int height, width;
-
+    private Position doorPosition;
 }
