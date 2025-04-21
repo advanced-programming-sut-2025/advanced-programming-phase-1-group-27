@@ -1,9 +1,12 @@
 package controller;
 
-import model.Result;
+import enums.Menu;
+import models.App;
+import models.Result;
+import view.AppMenu;
 
-public class MenuController {
-    public Result enterMenu(String menuName) {}
+public abstract class MenuController {
+    public abstract Result enterMenu(String menuName) {}
 
     public Result exitMenu() {}
 

@@ -1,9 +1,17 @@
 package controller;
 
-import model.Result;
-import model.User;
+import enums.Menu;
+import models.Result;
+import models.User;
 
 public class LoginMenuMenuController extends MenuController {
+    public Result enterMenu(String menuName) {
+        Menu newMenu = Menu.getMenu(menuName);
+        if (newMenu == null)
+            return new Result(false, "menu doesn't exist!");
+        return new Result(false, "you should first login to enter this menu.");
+    }
+
     public Result register(String username, String password, String reEnteredPassword, String nickname, String email, String gender) {}
 
     public Result pickQuestion(int questionId, String answer, String reEnteredAnswer) {}

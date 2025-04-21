@@ -6,70 +6,70 @@ import enums.Menu;
 import java.util.ArrayList;
 
 public class App {
-    private User LoggedInUser = null;
-    private Game currentGame = null;
-    private ArrayList<User> users = new ArrayList<>();
-    private ArrayList<SecurityQuestion> questions = new ArrayList<>();
-    private Menu currentMenu = Menu.LoginMenu;
-    private ArrayList<CraftingProduct> allRecipes = new ArrayList<>(); // TODO: arraylist should be initialized
+    private static User LoggedInUser = null;
+    private static Game currentGame = null;
+    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<SecurityQuestion> questions = new ArrayList<>();
+    private static Menu currentMenu = Menu.LoginMenu;
+    private static ArrayList<CraftingProduct> allRecipes = new ArrayList<>(); // TODO: arraylist should be initialized
     // list of questions in order to recover password
-    private ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
+    private static ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
 
     public static User getUserByUsername(String username) {}
 
-    public User getLoggedInUser() {
+    public static User getLoggedInUser() {
         return LoggedInUser;
     }
 
-    public void setLoggedInUser(User loggedInUser) {
+    public static void setLoggedInUser(User loggedInUser) {
         LoggedInUser = loggedInUser;
     }
 
-    public Game getCurrentGame() {
+    public static Game getCurrentGame() {
         return currentGame;
     }
 
-    public void setCurrentGame(Game currentGame) {
-        this.currentGame = currentGame;
+    public static void setCurrentGame(Game currentGame) {
+        App.currentGame = currentGame;
     }
 
-    public ArrayList<User> getUsers() {
+    public static ArrayList<User> getUsers() {
         return users;
     }
 
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
+    public static void setUsers(ArrayList<User> users) {
+        App.users = users;
     }
 
-    public ArrayList<SecurityQuestion> getQuestions() {
+    public static ArrayList<SecurityQuestion> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(ArrayList<SecurityQuestion> questions) {
-        this.questions = questions;
+    public static void setQuestions(ArrayList<SecurityQuestion> questions) {
+        App.questions = questions;
     }
 
-    public Menu getCurrentMenu() {
+    public static Menu getCurrentMenu() {
         return currentMenu;
     }
 
-    public void setCurrentMenu(Menu currentMenu) {
-        this.currentMenu = currentMenu;
+    public static void setCurrentMenu(Menu currentMenu) {
+        App.currentMenu = currentMenu;
     }
 
-    public ArrayList<CraftingProduct> getAllRecipes() {
+    public static ArrayList<CraftingProduct> getAllRecipes() {
         return allRecipes;
     }
 
-    public void setAllRecipes(ArrayList<CraftingProduct> allRecipes) {
-        this.allRecipes = allRecipes;
+    public static void setAllRecipes(ArrayList<CraftingProduct> allRecipes) {
+        App.allRecipes = allRecipes;
     }
 
-    public ArrayList<SecurityQuestion> getRecoveryQuestions() {
+    public static ArrayList<SecurityQuestion> getRecoveryQuestions() {
         return recoveryQuestions;
     }
 
-    public void setRecoveryQuestions(ArrayList<SecurityQuestion> recoveryQuestions) {
-        this.recoveryQuestions = recoveryQuestions;
+    public static void setRecoveryQuestions(ArrayList<SecurityQuestion> recoveryQuestions) {
+        App.recoveryQuestions = recoveryQuestions;
     }
 }
