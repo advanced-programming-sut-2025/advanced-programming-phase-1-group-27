@@ -2,9 +2,12 @@ package models.tools;
 
 import enums.Item;
 
+import java.util.ArrayList;
+
 public class Backpack extends Tool implements Item {
 
     private int capacity;
+    private ArrayList<Item> items;
 
     public Backpack(int level) {
         int energyUsage = 0;
@@ -21,5 +24,9 @@ public class Backpack extends Tool implements Item {
     @Override
     public void use() {
 
+    }
+
+    public void addItem(Item item) {
+        this.items.add(item);
     }
 }

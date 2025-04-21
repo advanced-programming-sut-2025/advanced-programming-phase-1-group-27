@@ -21,8 +21,6 @@ public abstract class Tool implements Item {
         return level;
     }
 
-    public abstract void use();
-
     private void upgradeLevel(){
         this.level++;
     }
