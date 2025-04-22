@@ -8,6 +8,7 @@ import enums.Gender;
 import enums.Item;
 import enums.MachineTypes;
 import enums.product.CraftingProduct;
+import models.tools.Backpack;
 
 public class User {
 
@@ -17,9 +18,9 @@ public class User {
     private HashMap<Item, Integer> itemAmount = new HashMap<>();
     private ArrayList<CraftingProduct> availableRecipes = new ArrayList<>();
     // can contain either of items
-    private ArrayList<Item> inventory = new ArrayList<>();
+    private ArrayList<Stack> inventory = new ArrayList<>();
     // items which are place in the fridge
-    private ArrayList<Item> refrigerator = new ArrayList<>();
+    private ArrayList<Stack> refrigerator = new ArrayList<>();
     private ArrayList<MachineTypes> availableMachines = new ArrayList<>();
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(); // TODO: this hashmap should be initialized before

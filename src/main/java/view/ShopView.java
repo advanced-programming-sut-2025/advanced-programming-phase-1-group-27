@@ -3,5 +3,7 @@ package view;
 import java.util.Scanner;
 
 public class ShopView extends AppMenu {
-    public void executeCommands(Scanner scanner) {}
+    public void executeCommands(Scanner scanner) {
+
+    }
 }

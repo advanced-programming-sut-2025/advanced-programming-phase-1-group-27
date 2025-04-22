@@ -17,6 +17,7 @@ public enum NPCType {
     Robin,
     Willy,
     Marnie,
+    Morris,
     Gus;
 
     private String name;
