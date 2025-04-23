@@ -1,9 +1,11 @@
 package enums;
 
+import models.Crop;
 import models.Seasons.Season;
 
-public enum CropType {
-    BlueJazz; 
+public enum CropType implements Item{
+    BlueJazz,
+    Hay;
     // ...
 
     private String name;

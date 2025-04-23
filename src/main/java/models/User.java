@@ -9,6 +9,7 @@ import enums.Item;
 import enums.MachineTypes;
 import enums.product.CraftingProduct;
 import models.tools.Backpack;
+import models.tools.Tool;
 
 public class User {
 
@@ -29,6 +30,8 @@ public class User {
     private Cell currentCell;
     private Map currentMap;
     private int money;
+    private Tool currentTool;
+    private Backpack currentBackpack;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -99,5 +102,21 @@ public class User {
 
     public int getMoney() {
         return money;
+    }
+
+    public Tool getCurrentTool() {
+        return currentTool;
+    }
+
+    public void setCurrentTool(Tool currentTool) {
+        this.currentTool = currentTool;
+    }
+
+    public Backpack getCurrentBackpack() {
+        return currentBackpack;
+    }
+
+    public void setCurrentBackpack(Backpack currentBackpack) {
+        this.currentBackpack = currentBackpack;
     }
 }

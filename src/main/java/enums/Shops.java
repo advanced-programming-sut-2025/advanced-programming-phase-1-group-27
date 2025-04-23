@@ -15,14 +15,17 @@ public enum Shops {
     PierreGeneralStore(NPCType.Marnie , 9 , 16),
     TheStardropSaloon(NPCType.Gus , 12 , 24);
 
-    private final NPCType owner;
+    private final NPCType manager;
     private final int startTime;
     private final int endTime;
+    private final ArrayList<Stack> stacks;
 
 
-    Shops(NPCType npcType , int startTime, int endTime) {
-        this.owner = npcType;
+
+    Shops(NPCType manager , int startTime, int endTime, ArrayList<Stack> stacks) {
+        this.manager = manager;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.stacks = stacks;
     }
 }

@@ -5,7 +5,29 @@ import enums.Item;
 import models.Recipe;
 
 public enum CookingProduct implements Product, Item {
-    FriedEgg();
+    FriedEgg(),
+    BakedFish(),
+    Salad(),
+    Olmelet(),
+    PumpkinPie(),
+    Spaghetti(),
+    Pizza(),
+    Tortilla(),
+    MakiRoll(),
+    TripleShotEspresso(),
+    Cookie(),
+    HashBrowns(),
+    Pancakes(),
+    FruitSalad(),
+    RedPlate(),
+    Bread(),
+    SalmonDinner(),
+    VegetableMedley(),
+    FarmersLunch(),
+    SurvivalBurger(),
+    DishOTheSea(),
+    SeaformPudding(),
+    MinersTreat();
     // TODO: different cooking products
     private final Recipe recipe;
     private final Buff buff;

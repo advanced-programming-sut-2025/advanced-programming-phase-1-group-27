@@ -1,6 +1,6 @@
 package enums;
 
-public enum Tools {
+public enum ToolType implements Item{
     Axe,
     BackPack,
     FishingPole,
