@@ -1,6 +1,6 @@
 package org.example.models;
 
-import org.example.enums.PollTypes;
+import org.example.models.enums.PollTypes;
 
 public class Poll {
     private int numberOfParticipants;

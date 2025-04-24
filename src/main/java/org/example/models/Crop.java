@@ -1,7 +1,7 @@
 package org.example.models;
 
-import org.example.enums.items.CropType;
-import org.example.enums.items.Item;
+import org.example.models.enums.items.CropType;
+import org.example.models.enums.items.Item;
 
 public class Crop implements Item {
     CropType cropType;

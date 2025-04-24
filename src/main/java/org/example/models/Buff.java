@@ -1,6 +1,6 @@
 package org.example.models;
 
-import org.example.enums.AbilityType;
+import org.example.models.enums.AbilityType;
 
 public class Buff {
     private final AbilityType ability;

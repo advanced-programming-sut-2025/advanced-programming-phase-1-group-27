@@ -1,6 +1,6 @@
 package org.example.models;
 
-import org.example.enums.CellType;
+import org.example.models.enums.CellType;
 
 public class Map {
     private String[] mapView = new String[80];

@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.enums.Menu;
+import org.example.models.enums.Menu;
 import org.example.models.App;
 import org.example.models.Result;
 

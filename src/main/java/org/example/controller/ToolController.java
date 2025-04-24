@@ -1,7 +1,7 @@
 package org.example.controller;
 
-import org.example.enums.items.Item;
-import org.example.enums.items.ToolType;
+import org.example.models.enums.items.Item;
+import org.example.models.enums.items.ToolType;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.User;
@@ -20,7 +20,7 @@ public class ToolController {
         StringBuilder result = new StringBuilder();
         User player = App.getCurrentGame().getCurrentUser();
         int i = 0;
-        for(Item item : player.getCurrentBackpack().getItems()){
+        for(Item item : player.getBackpack().getItems()){
             if(item instanceof Tool){
                 if(i != 0){
                     result.append("\n");
@@ -38,14 +38,14 @@ public class ToolController {
     }
 
     public Result equipTool(String toolName){
-        ToolType toolType = getToolTypeWithName(toolName);
+        ToolType toolType = getTool(toolName);
         if(toolType == null){
             return new Result(false, "Tool not found");
         }
 
     }
 
-    private ToolType getToolTypeWithName(String toolName){
+    private ToolType getTool(String toolName){
         if(toolName.equals("Hoe")){
             return ToolType.Hoe;
         }else if(toolName.equals("Pickaxe")){
@@ -71,4 +71,11 @@ public class ToolController {
         }
     }
 
+    private boolean isToolInBackPack(String toolName){
+        User player = App.getCurrentGame().getCurrentUser();
+        if(player.getBackpack().getTool(toolName) == null){
+            return false;
+        }
+        return true;
+    }
 }

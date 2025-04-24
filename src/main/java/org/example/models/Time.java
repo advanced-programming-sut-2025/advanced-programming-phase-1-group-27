@@ -1,6 +1,6 @@
 package org.example.models;
 
-import org.example.enums.Seasons.Season;
+import org.example.models.enums.Seasons.Season;
 
 public class Time {
     //implement as instance

@@ -1,6 +1,6 @@
 package org.example.models;
 
-import org.example.enums.items.Item;
+import org.example.models.enums.items.Item;
 
 public class Stack {
     private Item item;

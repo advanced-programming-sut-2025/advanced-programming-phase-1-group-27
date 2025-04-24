@@ -1,6 +1,6 @@
 package org.example.models.Stores;
 
-import org.example.enums.NPCType;
+import org.example.models.enums.NPCType;
 import org.example.models.Map;
 import org.example.models.Position;
 

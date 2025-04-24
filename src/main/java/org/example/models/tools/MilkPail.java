@@ -1,6 +1,6 @@
 package org.example.models.tools;
 
-import org.example.enums.items.Item;
+import org.example.models.enums.items.Item;
 
 public class MilkPail extends Tool implements Item {
 

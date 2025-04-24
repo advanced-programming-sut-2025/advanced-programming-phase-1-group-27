@@ -3,11 +3,11 @@ package org.example.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.example.enums.AbilityType;
-import org.example.enums.Gender;
-import org.example.enums.items.Item;
-import org.example.enums.items.MachineTypes;
-import org.example.enums.items.products.CraftingProduct;
+import org.example.models.enums.AbilityType;
+import org.example.models.enums.Gender;
+import org.example.models.enums.items.Item;
+import org.example.models.enums.items.ArtisanTypes;
+import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
 
@@ -18,11 +18,9 @@ public class User {
     // shows the amount of each item in stock
     private HashMap<Item, Integer> itemAmount = new HashMap<>();
     private ArrayList<CraftingProduct> availableRecipes = new ArrayList<>();
-    // can contain either of items
-    private ArrayList<Stack> inventory = new ArrayList<>();
     // items which are place in the fridge
     private ArrayList<Stack> refrigerator = new ArrayList<>();
-    private ArrayList<MachineTypes> availableMachines = new ArrayList<>();
+    private ArrayList<ArtisanTypes> availableMachines = new ArrayList<>();
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(); // TODO: this hashmap should be initialized before
     private int energy, maxEnergy = 200;
@@ -31,7 +29,8 @@ public class User {
     private Map currentMap;
     private int money;
     private Tool currentTool;
-    private Backpack currentBackpack;
+    // user's inventory
+    private Backpack backpack;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -112,11 +111,11 @@ public class User {
         this.currentTool = currentTool;
     }
 
-    public Backpack getCurrentBackpack() {
-        return currentBackpack;
+    public Backpack getBackpack() {
+        return backpack;
     }
 
-    public void setCurrentBackpack(Backpack currentBackpack) {
-        this.currentBackpack = currentBackpack;
+    public void setBackpack(Backpack backpack) {
+        this.backpack = backpack;
     }
 }

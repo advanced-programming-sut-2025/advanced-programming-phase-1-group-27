@@ -1,7 +1,7 @@
 package org.example.view.menu;
 
 import org.example.controller.LoginMenuMenuController;
-import org.example.enums.commands.LoginMenuCommands;
+import org.example.models.enums.commands.LoginMenuCommands;
 import org.example.models.Result;
 import org.example.view.AppMenu;
 

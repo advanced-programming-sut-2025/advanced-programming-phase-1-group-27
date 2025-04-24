@@ -1,7 +1,7 @@
 package org.example.view.menu;
 
 import org.example.controller.GameMenuController;
-import org.example.enums.commands.GameMenuCommands;
+import org.example.models.enums.commands.GameMenuCommands;
 import org.example.models.Result;
 import org.example.view.AppMenu;
 

@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import model.Result;
+import org.example.models.Result;
 
 public class ShopController {
     public Result buildBuilding(String buildingName, int x, int y) {}
