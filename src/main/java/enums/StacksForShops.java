@@ -14,7 +14,7 @@ public enum StacksForShops {
     CarpenterShop(NPCType.Morris , 9 , 23),
     FishShop(NPCType.Pierre , 9 , 17),
     JojaMart(NPCType.Robin , 9 , 20),
-    MarnieShop(NPCType.Willy , 9 , 17),
+    MarnieShop(),
     PierreGeneralStore(),
     TheStardropSaloon();
 
