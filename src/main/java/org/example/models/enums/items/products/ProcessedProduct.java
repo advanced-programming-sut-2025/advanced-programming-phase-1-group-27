@@ -25,6 +25,7 @@ public enum ProcessedProduct implements Product, Item {
     LargeMayonnaise,
     DuckMayonnaise,
     DinosaurMayonnaise,
+    Oil,
     TruffleOil,
     CornOil,
     SunflowerSeedOil,

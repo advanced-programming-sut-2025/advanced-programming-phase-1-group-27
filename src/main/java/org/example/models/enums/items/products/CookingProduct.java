@@ -27,6 +27,7 @@ public enum CookingProduct implements Product, Item {
     SurvivalBurger(),
     DishOTheSea(),
     SeaformPudding(),
+    TroutSoup(),
     MinersTreat();
     // TODO: different cooking products
     private final Recipe recipe;

@@ -5,6 +5,9 @@ import models.Seasons.Season;
 public enum CropType implements Item {
     BlueJazz,
     Wood,
+    Sugar,
+    Rice,
+    WheatFlour,
     Hay;
     // ...
 

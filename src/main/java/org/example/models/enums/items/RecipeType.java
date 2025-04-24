@@ -1,6 +1,7 @@
 package org.example.models.enums.items;
 
 public enum RecipeType implements Item {
+    FishSmoker(),
     HashbrownsRecipe(),
     OmeletteRecipe(),
     PancakeRecipe(),
@@ -9,6 +10,8 @@ public enum RecipeType implements Item {
     PizzaRecipe(),
     MakiRollRecipe(),
     TripleShotEspressoRecipe(),
+    DehydratorRecipe(),
+    GrassStarterRecipe(),
     CookieRecipe();
 
     @Override
