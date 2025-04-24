@@ -26,6 +26,20 @@ public class Backpack extends Tool implements Item {
 
     }
 
+    public Tool getTool(String toolName) {
+        Tool tool = getTool(toolName);
+        for(Item item : items){
+            if(tool == item){
+                return tool;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
     public void addItem(Item item) {
         this.items.add(item);
     }

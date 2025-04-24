@@ -1,5 +1,6 @@
 package Controller;
 
+import enums.Item;
 import enums.ToolType;
 import models.App;
 import models.Result;
@@ -16,11 +17,24 @@ public class ToolController {
     }
 
     public Result showAvailableTools(){
-
+        StringBuilder result = new StringBuilder();
+        User player = App.getCurrentGame().getCurrentUser();
+        int i = 0;
+        for(Item item : player.getCurrentBackpack().getItems()){
+            if(item instanceof Tool){
+                if(i != 0){
+                    result.append("\n");
+                }
+                result.append(item.toString());
+                i++;
+            }
+        }
+        return new Result(true , result.toString());
     }
 
     public Result showCurrentTool(){
-
+        User player = App.getCurrentGame().getCurrentUser();
+        return new Result(true , player.getCurrentTool().toString());
     }
 
     public Result equipTool(String toolName){
@@ -28,7 +42,6 @@ public class ToolController {
         if(toolType == null){
             return new Result(false, "Tool not found");
         }
-
     }
 
     private ToolType getTool(String toolName){
@@ -57,7 +70,11 @@ public class ToolController {
         }
     }
 
-    private boolean isToolInBackPack(ToolType toolType){
-        if(App.getLoggedInUser().getCurrentBackpack())
+    private boolean isToolInBackPack(String toolName){
+        User player = App.getCurrentGame().getCurrentUser();
+        if(player.getCurrentBackpack().getTool(toolName) == null){
+            return false;
+        }
+        return true;
     }
 }
