@@ -1,6 +1,6 @@
-package org.example.enums;
+package org.example.enums.items;
 
-public enum MineralType implements Item{
+public enum MineralType implements Item {
     Quartz,
     CopperOre,
     IronOre,

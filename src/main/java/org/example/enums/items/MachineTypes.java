@@ -1,6 +1,6 @@
-package org.example.enums;
+package org.example.enums.items;
 
-import org.example.enums.product.ProcessedProduct;
+import org.example.enums.items.products.ProcessedProduct;
 
 public enum MachineTypes {
     BeeHouse,

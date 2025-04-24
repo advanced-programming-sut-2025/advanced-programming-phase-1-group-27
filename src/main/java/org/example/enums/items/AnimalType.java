@@ -1,6 +1,6 @@
-package org.example.enums;
+package org.example.enums.items;
 
-import org.example.enums.product.AnimalProduct;
+import org.example.enums.items.products.AnimalProduct;
 
 import java.util.ArrayList;
 

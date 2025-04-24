@@ -1,6 +1,7 @@
 package org.example.enums;
 
-import org.example.enums.product.ProcessedProduct;
+import org.example.enums.items.*;
+import org.example.enums.items.products.ProcessedProduct;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ public enum StacksForShops {
     PierreGeneralStore(),
     TheStardropSaloon();
 
-    private Map<Item , Integer> BlacksmithStorePrices(){
+    private Map<Item, Integer> BlacksmithStorePrices(){
         Map<Item ,  Integer> BlacksmithStore = new HashMap<>();
         BlacksmithStore.put(MineralType.CopperOre , 75);
         BlacksmithStore.put(MineralType.IronOre , 150);

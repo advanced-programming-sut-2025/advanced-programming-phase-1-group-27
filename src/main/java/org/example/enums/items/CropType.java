@@ -1,8 +1,8 @@
-package org.example.enums;
+package org.example.enums.items;
 
 import models.Seasons.Season;
 
-public enum CropType implements Item{
+public enum CropType implements Item {
     BlueJazz,
     Hay;
     // ...

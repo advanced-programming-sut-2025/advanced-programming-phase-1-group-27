@@ -1,6 +1,6 @@
 package org.example.models.tools;
 
-import org.example.enums.Item;
+import org.example.enums.items.Item;
 
 public class Scythe extends Tool implements Item {
 

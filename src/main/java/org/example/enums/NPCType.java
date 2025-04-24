@@ -1,5 +1,6 @@
 package org.example.enums;
 
+import org.example.enums.items.Item;
 import org.example.models.NPCs.Dialogue;
 import org.example.models.NPCs.Quest;
 import org.example.models.Relations.Relation;

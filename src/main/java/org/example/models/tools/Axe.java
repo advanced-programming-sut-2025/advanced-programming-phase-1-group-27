@@ -1,7 +1,7 @@
 package org.example.models.tools;
 
 
-import org.example.enums.Item;
+import org.example.enums.items.Item;
 
 public class Axe extends Tool implements Item {
     //If usage is failed -1

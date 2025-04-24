@@ -1,6 +1,6 @@
 package org.example.models.AnimalProperty;
 
-import org.example.enums.AnimalType;
+import org.example.enums.items.AnimalType;
 import org.example.models.Position;
 
 public class Animal {

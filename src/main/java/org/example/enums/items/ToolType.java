@@ -1,6 +1,6 @@
-package org.example.enums;
+package org.example.enums.items;
 
-public enum ToolType implements Item{
+public enum ToolType implements Item {
     Axe("Axe"),
     BackPack("Backpack"),
     FishingPole("Fishing pole"),

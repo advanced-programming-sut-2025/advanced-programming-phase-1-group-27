@@ -1,6 +1,6 @@
 package org.example.models.tools;
 
-import org.example.enums.Item;
+import org.example.enums.items.Item;
 
 import java.util.ArrayList;
 

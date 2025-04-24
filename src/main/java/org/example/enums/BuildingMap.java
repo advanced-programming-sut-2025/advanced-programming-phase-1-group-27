@@ -1,5 +1,5 @@
 package org.example.enums;
 
-public enum buildingMap {
+public enum BuildingMap {
     
 }

@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 import org.example.enums.AbilityType;
 import org.example.enums.Gender;
-import org.example.enums.Item;
-import org.example.enums.MachineTypes;
-import org.example.enums.product.CraftingProduct;
+import org.example.enums.items.Item;
+import org.example.enums.items.MachineTypes;
+import org.example.enums.items.products.CraftingProduct;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
 

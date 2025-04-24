@@ -1,6 +1,6 @@
 package org.example.models;
 
-import org.example.enums.product.CraftingProduct;
+import org.example.enums.items.products.CraftingProduct;
 import org.example.enums.Menu;
 
 import java.util.ArrayList;

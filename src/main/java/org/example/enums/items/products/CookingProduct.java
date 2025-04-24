@@ -1,7 +1,7 @@
-package org.example.enums.product;
+package org.example.enums.items.products;
 
+import org.example.enums.items.Item;
 import org.example.models.Buff;
-import org.example.enums.Item;
 import org.example.models.Recipe;
 
 public enum CookingProduct implements Product, Item {

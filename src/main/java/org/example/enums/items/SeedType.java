@@ -1,4 +1,4 @@
-package org.example.enums;
+package org.example.enums.items;
 
 import models.Seasons.Season;
 

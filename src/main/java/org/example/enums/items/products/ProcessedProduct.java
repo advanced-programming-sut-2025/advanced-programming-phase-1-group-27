@@ -1,6 +1,6 @@
-package org.example.enums.product;
+package org.example.enums.items.products;
 
-import org.example.enums.Item;
+import org.example.enums.items.Item;
 
 public enum ProcessedProduct implements Product, Item {
     Honey,

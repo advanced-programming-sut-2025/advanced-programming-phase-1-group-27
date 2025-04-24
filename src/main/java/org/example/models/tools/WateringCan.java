@@ -1,6 +1,6 @@
 package org.example.models.tools;
 
-import org.example.enums.Item;
+import org.example.enums.items.Item;
 
 public class WateringCan extends Tool implements Item {
     //Water: 40 - 55 - 70 - 85 - 100

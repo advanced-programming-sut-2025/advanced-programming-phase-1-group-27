@@ -1,7 +1,7 @@
 package org.example.controller;
 
-import org.example.enums.Item;
-import org.example.enums.ToolType;
+import org.example.enums.items.Item;
+import org.example.enums.items.ToolType;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.User;

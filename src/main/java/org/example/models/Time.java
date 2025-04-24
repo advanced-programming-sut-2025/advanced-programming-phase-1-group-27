@@ -14,7 +14,7 @@ public class Time {
     }
 
     public int getDate() {
-        return this.day
+        return this.day;
     }
 
     public String getDayOfWeek() {
