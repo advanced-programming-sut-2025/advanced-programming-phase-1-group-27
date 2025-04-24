@@ -38,14 +38,14 @@ public class ToolController {
     }
 
     public Result equipTool(String toolName){
-        ToolType toolType = getTool(toolName);
+        ToolType toolType = getToolTypeWithName(toolName);
         if(toolType == null){
             return new Result(false, "Tool not found");
         }
 
     }
 
-    private ToolType getTool(String toolName){
+    private ToolType getToolTypeWithName(String toolName){
         if(toolName.equals("Hoe")){
             return ToolType.Hoe;
         }else if(toolName.equals("Pickaxe")){
@@ -71,11 +71,4 @@ public class ToolController {
         }
     }
 
-    private boolean isToolInBackPack(String toolName){
-        User player = App.getCurrentGame().getCurrentUser();
-        if(player.getCurrentBackpack().getTool(toolName) == null){
-            return false;
-        }
-        return true;
-    }
 }

@@ -4,7 +4,7 @@ import org.example.enums.items.products.AnimalProduct;
 
 import java.util.ArrayList;
 
-public enum AnimalType {
+public enum AnimalType implements Item {
     Rabbit,
     Chicken,
     Cow,
@@ -15,4 +15,14 @@ public enum AnimalType {
     Pig;
     // TODO: different types of animal
     private final ArrayList<AnimalProduct> products;
+
+    @Override
+    public void use() {
+
+    }
+
+    @Override
+    public int getPrice() {
+        return 0;
+    }
 }

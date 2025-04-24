@@ -16,6 +16,7 @@ public enum ProcessedProduct implements Product, Item {
     DriedMushrooms,
     DriedFruit,
     Raisins,
+    JojaCola,
     Coal;
     // TODO: different processed products
 }

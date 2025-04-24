@@ -4,6 +4,7 @@ public enum MineralType implements Item {
     Quartz,
     CopperOre,
     IronOre,
+    Stone,
     GoldOre;
     //...
 
@@ -13,5 +14,10 @@ public enum MineralType implements Item {
     @Override
     public void use() {
 
+    }
+
+    @Override
+    public int getPrice() {
+        return 0;
     }
 }
