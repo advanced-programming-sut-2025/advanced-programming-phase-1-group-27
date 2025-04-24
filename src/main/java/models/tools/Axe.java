@@ -2,6 +2,8 @@ package models.tools;
 
 
 import enums.Item;
+import models.App;
+import models.User;
 
 public class Axe extends Tool implements Item {
     //If usage is failed -1
@@ -21,10 +23,16 @@ public class Axe extends Tool implements Item {
         }
         super(level , energyUsage , "Axe");
     }
-
     @Override
     public void use() {
+        User player = App.getCurrentGame().getCurrentUser();
+        player.get
+        player.consumeEnergy(getEnergyUsage());
+    }
 
+    @Override
+    public int getPrice() {
+        return 0;
     }
 
 }
