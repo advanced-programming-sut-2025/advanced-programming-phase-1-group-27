@@ -29,4 +29,15 @@ public enum Menu {
             default -> null;
         };
     }
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case LoginMenu -> "login menu";
+            case MainMenu -> "main menu";
+            case ProfileMenu -> "profile menu";
+            case GameMenu -> "game menu";
+            case ExitMenu -> "exit menu";
+        };
+    }
 }

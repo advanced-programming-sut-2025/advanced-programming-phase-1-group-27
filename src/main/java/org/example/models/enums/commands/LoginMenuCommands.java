@@ -4,14 +4,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum LoginMenuCommands implements MenuCommands {
-    EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
-    Register,
+    Register("register\\s+-u\\s+(?<username>.+)\\s+" +
+            "-p\\s+(?<password>.+)\\s+(?<reEnteredPassword>.+)\\s+" +
+            "-n\\s+(?<nickname>.+)\\s+" +
+            "-e\\s+(?<email>.+)\\s+" +
+            "-g\\s+(?<gender>.+)"),
     PickQuestion,
     Login,
     ForgetPassword,
     AnswerQuestion,
-    ExitMenu,
-    ShowCurrentMenu;
+    EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
+    ExitMenu("menu\\s+exit"),
+    ShowCurrentMenu("show\\s+current\\s+menu");
 
     private final String pattern;
 

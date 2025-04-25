@@ -4,6 +4,7 @@ import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.Menu;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class App {
     private static User LoggedInUser = null;
@@ -14,8 +15,6 @@ public class App {
     private static ArrayList<CraftingProduct> allRecipes = new ArrayList<>(); // TODO: arraylist should be initialized
     // list of questions in order to recover password
     private static ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
-
-    public static User getUserByUsername(String username) {}
 
     public static User getLoggedInUser() {
         return LoggedInUser;
@@ -37,8 +36,8 @@ public class App {
         return users;
     }
 
-    public static void setUsers(ArrayList<User> users) {
-        App.users = users;
+    public static void addUser(User user) {
+        App.users.add(user);
     }
 
     public static ArrayList<SecurityQuestion> getQuestions() {
@@ -71,5 +70,23 @@ public class App {
 
     public static void setRecoveryQuestions(ArrayList<SecurityQuestion> recoveryQuestions) {
         App.recoveryQuestions = recoveryQuestions;
+    }
+
+    public static User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username))
+                return user;
+        }
+        return null;
+    }
+
+    public static String generateUsername(String username) {
+        String result;
+        Random random = new Random();
+        do {
+            int randomInt = random.nextInt(20);
+            result = username + randomInt;
+        } while (getUserByUsername(result) != null);
+        return result;
     }
 }

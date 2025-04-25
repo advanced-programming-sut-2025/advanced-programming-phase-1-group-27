@@ -2,6 +2,8 @@ package org.example.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
@@ -38,11 +40,33 @@ public class User {
         this.gender = gender;
     }
 
-    public static boolean isValidUsername(String username) {}
+    public String getUsername() {
+        return username;
+    }
 
-    public static boolean isValidEmail(String email) {}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public static boolean isValidPassword(String password) {}
+    public int getMoney() {
+        return money;
+    }
+
+    public Tool getCurrentTool() {
+        return currentTool;
+    }
+
+    public void setCurrentTool(Tool currentTool) {
+        this.currentTool = currentTool;
+    }
+
+    public Backpack getBackpack() {
+        return backpack;
+    }
+
+    public void setBackpack(Backpack backpack) {
+        this.backpack = backpack;
+    }
 
     public static boolean isStrongPassword(String password) {}
 
@@ -97,23 +121,43 @@ public class User {
 
     }
 
-    public int getMoney() {
-        return money;
+    public static boolean isValidUsername(String username) {
+        return username.matches("^[A-Za-z0-9-]+$");
     }
 
-    public Tool getCurrentTool() {
-        return currentTool;
+    public static boolean isValidEmail(String email) {
+        Pattern pattern = Pattern.compile("(?<mail>[\\w.-]+)@(?<domain>[A-Za-z0-9-]+)\\.(?<TLD>[A-Za-z]{2,})");
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.matches())
+            return false;
+        return isValidMail(matcher.group("mail")) &&
+                isValidDomain(matcher.group("domain")) &&
+                isValidTLD(matcher.group("TLD"));
     }
 
-    public void setCurrentTool(Tool currentTool) {
-        this.currentTool = currentTool;
+    public static boolean isValidPassword(String password) {
+
     }
 
-    public Backpack getBackpack() {
-        return backpack;
+    private static boolean isValidMail(String mail) {
+        if (!String.valueOf(mail.charAt(0)).matches("[A-Za-z0-9]"))
+            return false;
+        if (!String.valueOf(mail.charAt(mail.length() - 1)).matches("[A-Za-z0-9]"))
+            return false;
+        for (int i = 1; i < mail.toCharArray().length; i++) {
+            if (mail.charAt(i) == '.' && mail.charAt(i - 1) == '.')
+                return false;
+        }
+        return true;
     }
 
-    public void setBackpack(Backpack backpack) {
-        this.backpack = backpack;
+    private static boolean isValidDomain(String domain) {
+        if (!String.valueOf(domain.charAt(0)).matches("[A-Za-z0-9]"))
+            return false;
+        return String.valueOf(domain.charAt(domain.length() - 1)).matches("[A-Za-z0-9]");
+    }
+
+    private static boolean isValidTLD(String TLD) {
+        return TLD.length() >= 2;
     }
 }

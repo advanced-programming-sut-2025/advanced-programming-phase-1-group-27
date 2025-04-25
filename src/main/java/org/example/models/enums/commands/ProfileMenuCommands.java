@@ -4,14 +4,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ProfileMenuCommands implements MenuCommands {
-    EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
     ChangeUsername,
     ChangeNickname,
     ChangeEmail,
     ChangePassword,
     UserInfo,
-    ExitMenu,
-    ShowCurrentMenu;
+    EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
+    ExitMenu("menu\\s+exit"),
+    ShowCurrentMenu("show\\s+current\\s+menu");
 
     private final String pattern;
 

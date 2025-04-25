@@ -10,8 +10,8 @@ public enum GameMenuCommands implements MenuCommands {
     ExitGame,
     NextTurn,
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
-    ExitMenu,
-    ShowCurrentMenu;
+    ExitMenu("menu\\s+exit"),
+    ShowCurrentMenu("show\\s+current\\s+menu");
 
     private final String pattern;
 
