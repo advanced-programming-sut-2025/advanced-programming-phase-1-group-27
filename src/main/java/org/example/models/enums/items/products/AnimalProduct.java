@@ -3,7 +3,18 @@ package org.example.models.enums.items.products;
 import org.example.models.enums.items.Item;
 
 public enum AnimalProduct implements Item {
-    Milk;
-    // TODO: different products of animals
+    CowMilk,
+    LargeCowMilk,
+    GoatMilk,
+    LargeGoatMilk,
+    Egg,
+    LargeEgg,
+    DuckEgg,
+    DuckFeather,
+    Wool,
+    RabbitLeg,
+    DinosaurEgg,
+    Truffle;
+
     private final int price;
 }

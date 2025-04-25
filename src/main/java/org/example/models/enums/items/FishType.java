@@ -1,5 +1,7 @@
 package org.example.models.enums.items;
 
+import org.example.models.enums.Seasons.Season;
+
 public enum FishType {
     Salmon,
     Sardine,
@@ -24,4 +26,5 @@ public enum FishType {
 
     private final int price;
     private final Season season;
+    private final boolean isLegendary;
 }

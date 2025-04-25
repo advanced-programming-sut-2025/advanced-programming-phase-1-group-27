@@ -13,13 +13,8 @@ public enum AnimalType implements Item {
     Sheep,
     Dinosaur,
     Pig;
-    // TODO: different types of animal
+
     private final ArrayList<AnimalProduct> products;
-
-    @Override
-    public void use() {
-
-    }
 
     @Override
     public int getPrice() {
