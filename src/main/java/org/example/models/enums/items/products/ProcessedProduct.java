@@ -3,7 +3,7 @@ package org.example.models.enums.items.products;
 import org.example.models.Recipe;
 import org.example.models.enums.items.Item;
 
-public enum ProcessedProduct implements Product, Item {
+public enum ProcessedProduct implements Item {
     Honey,
     Cheese,
     LargeCheese,
@@ -34,6 +34,7 @@ public enum ProcessedProduct implements Product, Item {
     Jelly, // TODO: different jellies based on different type of fruits
     SmokedFish, // TODO: different smoked fish based on different types of fish
     MetalBar; // TODO: different metal bars based on different ors;
-    // TODO: different processed products
+
     private final Recipe recipe;
+    private final int energy;
 }

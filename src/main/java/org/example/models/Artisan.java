@@ -7,6 +7,6 @@ import java.util.ArrayList;
 
 public class Artisan {
     private ArtisanTypes type;
-    private ProcessedProduct inQueueProduct;
+    private ProcessedProduct finalProduct;
     private int timeLeft;
 }

@@ -7,6 +7,7 @@ import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
 import org.example.models.enums.items.Item;
 import org.example.models.enums.items.ArtisanTypes;
+import org.example.models.enums.items.RecipeType;
 import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
@@ -15,12 +16,11 @@ public class User {
 
     private String username, password, nickname, email;
     private final Gender gender;
-    // shows the amount of each item in stock
-    private HashMap<Item, Integer> itemAmount = new HashMap<>();
-    private ArrayList<CraftingProduct> availableRecipes = new ArrayList<>();
+    private ArrayList<RecipeType> availableRecipes; // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
+    // user's inventory
+    private Backpack backpack;
     // items which are place in the fridge
     private ArrayList<Stack> refrigerator = new ArrayList<>();
-    private ArrayList<ArtisanTypes> availableMachines = new ArrayList<>();
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(); // TODO: this hashmap should be initialized before
     private int energy, maxEnergy = 200;
@@ -29,8 +29,6 @@ public class User {
     private Map currentMap;
     private int money;
     private Tool currentTool;
-    // user's inventory
-    private Backpack backpack;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;

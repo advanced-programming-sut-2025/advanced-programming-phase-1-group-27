@@ -3,7 +3,7 @@ package org.example.models.enums.items.products;
 import org.example.models.enums.items.Item;
 import org.example.models.Recipe;
 
-public enum CraftingProduct implements Product, Item {
+public enum CraftingProduct implements Item {
     CherryBomb,
     Bomb,
     MegaBomb,

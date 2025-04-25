@@ -1,7 +1,6 @@
 package org.example.models.enums;
 
 import org.example.models.Stack;
-import org.example.models.Stores.Blacksmith;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.ProcessedProduct;
@@ -113,7 +112,7 @@ public enum StocksForShops {
         SpringJojaMart.add(new Stack(SeedType.StrawberrySeed , 5));
         SpringJojaMart.add(new Stack(SeedType.TulipBulbSeed , 5));
         SpringJojaMart.add(new Stack(SeedType.KaleSeed , 5));
-        SpringJojaMart.add(new Stack(SeedType.CoffeeBeanSeed, 1));
+        SpringJojaMart.add(new Stack(SeedType.CoffeeBean, 1));
         SpringJojaMart.add(new Stack(SeedType.CarrotSeed , 10));
         SpringJojaMart.add(new Stack(SeedType.RhubarbSeed , 5));
         SpringJojaMart.add(new Stack(SeedType.JazzSeed , 5));
@@ -132,7 +131,7 @@ public enum StocksForShops {
         SummerMartJojaMart.add(new Stack(SeedType.PoppySeed , 5));
         SummerMartJojaMart.add(new Stack(SeedType.SpangleSeed , 5));
         SummerMartJojaMart.add(new Stack(SeedType.StarfruitSeed , 5));
-        SummerMartJojaMart.add(new Stack(SeedType.CoffeeBeanSeed, 1));
+        SummerMartJojaMart.add(new Stack(SeedType.CoffeeBean, 1));
         SummerMartJojaMart.add(new Stack(SeedType.SunflowerSeed , 5));
         return SummerMartJojaMart;
     }

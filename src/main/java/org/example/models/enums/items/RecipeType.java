@@ -15,11 +15,6 @@ public enum RecipeType implements Item {
     CookieRecipe();
 
     @Override
-    public void use() {
-
-    }
-
-    @Override
     public int getPrice() {
         return 0;
     }

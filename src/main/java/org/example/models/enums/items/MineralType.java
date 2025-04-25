@@ -2,19 +2,23 @@ package org.example.models.enums.items;
 
 public enum MineralType implements Item {
     Quartz,
+    EarthCrystal,
+    FrozenTear,
+    FireQuartz,
+    Emerald,
+    Aquamarine,
+    Ruby,
+    Amethyst,
+    Topaz,
+    Jade,
+    Diamond,
+    PrismaticShard,
     CopperOre,
     IronOre,
     Stone,
     GoldOre;
-    //...
 
-    private String name, decs;
     private int sellPrice;
-
-    @Override
-    public void use() {
-
-    }
 
     @Override
     public int getPrice() {

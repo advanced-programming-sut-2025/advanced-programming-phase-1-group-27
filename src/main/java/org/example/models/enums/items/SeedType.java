@@ -4,7 +4,6 @@ import org.example.models.enums.Seasons.Season;
 
 public enum SeedType implements Item{
     //Starter + Seed + Bean + Shoot
-    AncientSeed,
     GrassStater,
     ParsnipSeed,
     BeanStarter,
@@ -26,7 +25,7 @@ public enum SeedType implements Item{
     PoppySeed,
     SpangleSeed,
     StarfruitSeed,
-    CoffeeBeanSeed,
+    CoffeeBean,
     SunflowerSeed,
     CornSeed,
     EggplantSeed,
@@ -45,7 +44,9 @@ public enum SeedType implements Item{
     RedCabbageSeed,
     ArtichokeSeed,
     RiceShoot,
-    PowdermelonSeed;
+    PowdermelonSeed,
+    AncientSeed,
+    MixedSeed;
 
     private Season season;
 

@@ -13,5 +13,6 @@ public class Ability {
     private void levelUp() {
         this.xp -= this.level * 100 + 150;
         this.level++;
+        // TODO: adding new recipes to user's HashMap
     }
 }

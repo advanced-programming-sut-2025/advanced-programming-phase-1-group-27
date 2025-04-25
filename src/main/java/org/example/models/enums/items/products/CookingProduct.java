@@ -4,7 +4,7 @@ import org.example.models.enums.items.Item;
 import org.example.models.Buff;
 import org.example.models.Recipe;
 
-public enum CookingProduct implements Product, Item {
+public enum CookingProduct implements Item {
     FriedEgg(),
     BakedFish(),
     Salad(),
@@ -29,13 +29,14 @@ public enum CookingProduct implements Product, Item {
     SeaformPudding(),
     TroutSoup(),
     MinersTreat();
-    // TODO: different cooking products
     private final Recipe recipe;
     private final Buff buff;
+    private final int energy;
 
-    CookingProduct(Recipe recipe, Buff buff) {
+    CookingProduct(Recipe recipe, Buff buff, int energy) {
         this.recipe = recipe;
         this.buff = buff;
+        this.energy = energy;
     }
 
     // TODO: create constructor
