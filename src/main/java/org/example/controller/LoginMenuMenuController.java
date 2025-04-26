@@ -51,16 +51,9 @@ public class LoginMenuMenuController extends MenuController {
                 return new Result(false, "Registration failed! Redirecting to login menu ...");
         }
 
-        if (password.length() < 8)
-            return new Result(false, "Password must be at least 8 characters!");
-        if (!password.matches("^.*[A-Z].*$"))
-            return new Result(false, "Password must contain uppercase letters!");
-        if (!password.matches("^.*[a-z].*$"))
-            return new Result(false, "Password must contain lowercase letters!");
-        if (!password.matches("^.*[0-9].*$"))
-            return new Result(false, "Password must contain numbers!");
-        if (!password.matches("^.*[?><,\"';:\\\\/|\\]\\[}{+=)(*&~%$#!].*$"))
-            return new Result(false, "Password must contain special characters!");
+        Result passwordCheck = User.checkPassword(password);
+        if (!passwordCheck.success())
+            return passwordCheck;
 
         if (Gender.getGender(gender) == null)
             return new Result(false, "Gender is invalid!");

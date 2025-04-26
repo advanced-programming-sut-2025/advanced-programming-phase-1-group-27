@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 public enum MainMenuCommands implements MenuCommands {
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
     ExitMenu("menu\\s+exit"),
-    ShowCurrentMenu("show\\s+current\\s+menu");
+    ShowCurrentMenu("show\\s+current\\s+menu"),
+    Logout("user\\s+logout");
 
     private final String pattern;
 

@@ -17,8 +17,10 @@ public class User {
     private final Gender gender;
     // security questions to recover forgotten password
     private ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
+    private int maxMoneyEarned = 0;
+    private int numberOfGamesPlayed = 0;
     private ArrayList<Recipe> availableRecipes; // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
-    // user's inventory
+    // player's inventory
     private Backpack backpack;
     // items which are place in the fridge
     private ArrayList<Stack> refrigerator = new ArrayList<>();
@@ -55,24 +57,36 @@ public class User {
         this.password = password;
     }
 
-    public int getMoney() {
-        return money;
+    public String getNickname() {
+        return nickname;
     }
 
-    public Tool getCurrentTool() {
-        return currentTool;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public void setCurrentTool(Tool currentTool) {
-        this.currentTool = currentTool;
+    public String getEmail() {
+        return email;
     }
 
-    public Backpack getBackpack() {
-        return backpack;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setBackpack(Backpack backpack) {
-        this.backpack = backpack;
+    public int getMaxMoneyEarned() {
+        return maxMoneyEarned;
+    }
+
+    public void setMaxMoneyEarned(int maxMoneyEarned) {
+        this.maxMoneyEarned = maxMoneyEarned;
+    }
+
+    public int getNumberOfGamesPlayed() {
+        return numberOfGamesPlayed;
+    }
+
+    public void setNumberOfGamesPlayed(int numberOfGamesPlayed) {
+        this.numberOfGamesPlayed = numberOfGamesPlayed;
     }
 
     public ArrayList<SecurityQuestion> getRecoveryQuestions() {
@@ -83,57 +97,6 @@ public class User {
         recoveryQuestions.add(new SecurityQuestion("Eneter your email: ", email));
         recoveryQuestions.add(new SecurityQuestion("Enter your nickname: ", nickname));
         // other questions can be added
-    }
-
-    public void walk(Place destination) {
-
-    }
-
-    public void consumeEnergy(int val) {
-        energy -= val;
-        if (energy < 0) {
-            this.passOut();
-        }
-    }
-
-    public int getEnrgy() {
-        return this.energy;
-    }
-
-    public void goToSleep() {
-        //set the energy for tommorow and...
-    }
-
-    public void passOut() {
-        // set the 75% energy for tommorow and...
-    }
-
-    public void farmXp(int xp) {
-        // add xp for farmingAbility
-    }
-
-    public void mineXp(int xp) {
-        // ..
-    }
-
-    public void forageXp(int xp) {
-        // ..
-    }
-
-    public void fishXp(int xp) {
-        // ..
-    }
-
-    public String showItems() {
-
-    }
-
-    public void trashItem(String itemName, int n) {
-
-    }
-
-    public void trashItem(String itemName) {
-
     }
 
     public static boolean isValidUsername(String username) {
@@ -150,8 +113,18 @@ public class User {
                 isValidTLD(matcher.group("TLD"));
     }
 
-    public static boolean isValidPassword(String password) {
-
+    public static Result checkPassword(String password) {
+        if (password.length() < 8)
+            return new Result(false, "Password must be at least 8 characters!");
+        if (!password.matches("^.*[A-Z].*$"))
+            return new Result(false, "Password must contain uppercase letters!");
+        if (!password.matches("^.*[a-z].*$"))
+            return new Result(false, "Password must contain lowercase letters!");
+        if (!password.matches("^.*[0-9].*$"))
+            return new Result(false, "Password must contain numbers!");
+        if (!password.matches("^.*[?><,\"';:\\\\/|\\]\\[}{+=)(*&~%$#!].*$"))
+            return new Result(false, "Password must contain special characters!");
+        return new Result(true, "Password is valid!");
     }
 
     private static boolean isValidMail(String mail) {

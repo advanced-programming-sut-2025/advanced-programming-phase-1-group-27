@@ -27,5 +27,9 @@ public class MainMenuMenuController extends MenuController {
         return new Result(true, "Redirecting to login menu ...");
     }
 
-    public Result logout() {}
+    public Result logout() {
+        App.setLoggedInUser(null);
+        App.setCurrentMenu(Menu.LoginMenu);
+        return new Result(true, "User logged out successfully!");
+    }
 }

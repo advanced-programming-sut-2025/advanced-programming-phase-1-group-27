@@ -2,13 +2,17 @@ package org.example.models.enums.items;
 
 import org.example.models.enums.Seasons.Season;
 
+import java.util.ArrayList;
+
 public enum TreeType implements Item {
     ApricotTree,
     CherryTree,
     BananaTree,
     MangoTree,
     OrangeTree,
-    PeachTree,
+    PeachTree {{
+        decorate(kfkfklf);
+    }},
     AppleTree,
     PomegranateTree,
     OakTree,
@@ -18,6 +22,9 @@ public enum TreeType implements Item {
     MushroomTree,
     MysticTree;
 
+    public static ArrayList<TreeType> foragings = new ArrayList<>(
+
+    );
     private final SeedType source;
     private final int[] stages;
     private final int harvestTime;

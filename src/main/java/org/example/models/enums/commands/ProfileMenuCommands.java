@@ -4,11 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ProfileMenuCommands implements MenuCommands {
-    ChangeUsername,
-    ChangeNickname,
-    ChangeEmail,
-    ChangePassword,
-    UserInfo,
+    ChangeUsername("change\\s+username\\s+-u\\s+(?<username>.+)"),
+    ChangeNickname("change\\s+nickname\\s+-u\\s+(?<nickname>.+)"),
+    ChangeEmail("change\\s+email\\s+-e\\s+(?<email>.+)"),
+    ChangePassword("change\\s+password\\s+-p\\s+(?<newPassword>.+)\\s+-o\\s+(?<oldPassword>.+)"),
+    UserInfo("user\\s+info"),
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
     ExitMenu("menu\\s+exit"),
     ShowCurrentMenu("show\\s+current\\s+menu");

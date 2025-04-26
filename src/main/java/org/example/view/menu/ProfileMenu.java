@@ -27,6 +27,30 @@ public class ProfileMenu extends AppMenu {
         else if (ProfileMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
         }
+        else if ((matcher = ProfileMenuCommands.ChangeUsername.getMatcher(input)) != null) {
+            System.out.println(controller.changeUsername(
+                    matcher.group("username").trim()
+            ));
+        }
+        else if ((matcher = ProfileMenuCommands.ChangeNickname.getMatcher(input)) != null) {
+            System.out.println(controller.changeNickname(
+                    matcher.group("nickname").trim()
+            ));
+        }
+        else if ((matcher = ProfileMenuCommands.ChangeEmail.getMatcher(input)) != null) {
+            System.out.println(controller.changeEmail(
+                    matcher.group("email").trim()
+            ));
+        }
+        else if ((matcher = ProfileMenuCommands.ChangePassword.getMatcher(input)) != null) {
+            System.out.println(controller.changePassword(
+                    matcher.group("newPassword").trim(),
+                    matcher.group("oldPassword").trim()
+            ));
+        }
+        else if (ProfileMenuCommands.UserInfo.getMatcher(input) != null) {
+            System.out.println(controller.showInfo());
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }

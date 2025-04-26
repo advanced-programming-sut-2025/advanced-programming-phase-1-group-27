@@ -27,6 +27,9 @@ public class MainMenu extends AppMenu {
         else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
         }
+        else if (MainMenuCommands.Logout.getMatcher(input) != null) {
+            System.out.println(controller.logout());
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }
