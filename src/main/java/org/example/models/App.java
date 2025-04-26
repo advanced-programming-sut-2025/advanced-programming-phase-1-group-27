@@ -14,7 +14,16 @@ public class App {
     private static Menu currentMenu = Menu.LoginMenu;
     private static ArrayList<CraftingProduct> allRecipes = new ArrayList<>(); // TODO: arraylist should be initialized
     // list of questions in order to recover password
-    private static ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
+    private static ArrayList<SecurityQuestion> securityQuestions = new ArrayList<>();
+
+    static  {
+        initSecurityQuestions();
+    }
+
+    public static void initSecurityQuestions() {
+        securityQuestions.add(new SecurityQuestion("2 + 2 = ?", "5"));
+        // TODO: more security questions need to be added
+    }
 
     public static User getLoggedInUser() {
         return LoggedInUser;
@@ -64,12 +73,24 @@ public class App {
         App.allRecipes = allRecipes;
     }
 
-    public static ArrayList<SecurityQuestion> getRecoveryQuestions() {
-        return recoveryQuestions;
+    public static String getSecurityQuestions() {
+        StringBuilder result = new StringBuilder("Security Questions:");
+        for (int i = 0; i < securityQuestions.size(); i++) {
+            result.append("\n");
+            result.append("\t").append(i + 1).append(". ");
+            result.append(securityQuestions.get(i).getQuestion());
+        }
+        return result.toString();
     }
 
-    public static void setRecoveryQuestions(ArrayList<SecurityQuestion> recoveryQuestions) {
-        App.recoveryQuestions = recoveryQuestions;
+    public static SecurityQuestion getSecurityQuestion(int id) {
+        if (id >= securityQuestions.size())
+            return null;
+        return securityQuestions.get(id);
+    }
+
+    public static void setSecurityQuestions(ArrayList<SecurityQuestion> securityQuestions) {
+        App.securityQuestions = securityQuestions;
     }
 
     public static User getUserByUsername(String username) {

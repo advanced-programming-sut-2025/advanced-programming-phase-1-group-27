@@ -65,15 +65,15 @@ public enum StocksForShops {
         StardropSaloon.add(new Stack(CookingProduct.Spaghetti , -1));
         StardropSaloon.add(new Stack(CookingProduct.Pizza, -1));
         StardropSaloon.add(new Stack(ProcessedProduct.Coffee , -1));
-        StardropSaloon.add(new Stack(RecipeType.HashbrownsRecipe, 1));
-        StardropSaloon.add(new Stack(RecipeType.OmeletteRecipe, 1));
-        StardropSaloon.add(new Stack(RecipeType.PancakeRecipe, 1));
-        StardropSaloon.add(new Stack(RecipeType.BreadRecipe, 1));
-        StardropSaloon.add(new Stack(RecipeType.TortillaRecipe, 1));
-        StardropSaloon.add(new Stack(RecipeType.PizzaRecipe, 1));
-        StardropSaloon.add(new Stack(RecipeType.MakiRollRecipe, 1));
-        StardropSaloon.add(new Stack(RecipeType.TripleShotEspressoRecipe, 1));
-        StardropSaloon.add(new Stack(RecipeType.CookieRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.HashbrownsRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.OmeletteRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.PancakeRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.BreadRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.TortillaRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.PizzaRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.MakiRollRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.TripleShotEspressoRecipe, 1));
+        StardropSaloon.add(new Stack(Recipe.CookieRecipe, 1));
         return StardropSaloon;
     }
 
@@ -167,8 +167,8 @@ public enum StocksForShops {
         PermanentPierreGeneralStore.add(new Stack(CropType.WheatFlour , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.Bouquet , 2));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.WeddingRing , 2));
-        PermanentPierreGeneralStore.add(new Stack(RecipeType.DehydratorRecipe , 1));
-        PermanentPierreGeneralStore.add(new Stack(RecipeType.GrassStarterRecipe , 1));
+        PermanentPierreGeneralStore.add(new Stack(Recipe.DehydratorRecipe , 1));
+        PermanentPierreGeneralStore.add(new Stack(Recipe.GrassStarterRecipe , 1));
         PermanentPierreGeneralStore.add(new Stack(CropType.Sugar , -1));
         PermanentPierreGeneralStore.add(new Stack(ProcessedProduct.Oil , -1));
         PermanentPierreGeneralStore.add(new Stack(ProcessedProduct.Vinegar , -1));
@@ -248,7 +248,7 @@ public enum StocksForShops {
 
     private static ArrayList<Stack> FishShopStock(){
         ArrayList<Stack> FishShopStock = new ArrayList<>();
-        FishShopStock.add(new Stack(RecipeType.FishSmoker , 1));
+        FishShopStock.add(new Stack(Recipe.FishSmoker , 1));
         FishShopStock.add(new Stack(CookingProduct.TroutSoup , 1));
         FishShopStock.add(new Stack(ToolType.BambooPole , 1));
         FishShopStock.add(new Stack(ToolType.TrainingRod , 1));

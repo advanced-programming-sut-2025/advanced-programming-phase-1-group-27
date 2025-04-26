@@ -7,10 +7,7 @@ import java.util.regex.Pattern;
 
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
-import org.example.models.enums.items.Item;
-import org.example.models.enums.items.ArtisanTypes;
-import org.example.models.enums.items.RecipeType;
-import org.example.models.enums.items.products.CraftingProduct;
+import org.example.models.enums.items.Recipe;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
 
@@ -18,7 +15,9 @@ public class User {
 
     private String username, password, nickname, email;
     private final Gender gender;
-    private ArrayList<RecipeType> availableRecipes; // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
+    // security questions to recover forgotten password
+    private ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
+    private ArrayList<Recipe> availableRecipes; // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
     // user's inventory
     private Backpack backpack;
     // items which are place in the fridge
@@ -48,6 +47,14 @@ public class User {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public int getMoney() {
         return money;
     }
@@ -68,7 +75,15 @@ public class User {
         this.backpack = backpack;
     }
 
-    public static boolean isStrongPassword(String password) {}
+    public ArrayList<SecurityQuestion> getRecoveryQuestions() {
+        return recoveryQuestions;
+    }
+
+    public void addRecoveryQuestions() {
+        recoveryQuestions.add(new SecurityQuestion("Eneter your email: ", email));
+        recoveryQuestions.add(new SecurityQuestion("Enter your nickname: ", nickname));
+        // other questions can be added
+    }
 
     public void walk(Place destination) {
 

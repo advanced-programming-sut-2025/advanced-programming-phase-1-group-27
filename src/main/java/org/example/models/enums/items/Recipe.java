@@ -1,6 +1,8 @@
 package org.example.models.enums.items;
 
-public enum RecipeType implements Item {
+import java.util.HashMap;
+
+public enum Recipe implements Item {
     FishSmoker(),
     HashbrownsRecipe(),
     OmeletteRecipe(),
@@ -13,6 +15,9 @@ public enum RecipeType implements Item {
     DehydratorRecipe(),
     GrassStarterRecipe(),
     CookieRecipe();
+
+    private final Item finalProduct;
+    private final HashMap<Item, Integer> ingredients;
 
     @Override
     public int getPrice() {

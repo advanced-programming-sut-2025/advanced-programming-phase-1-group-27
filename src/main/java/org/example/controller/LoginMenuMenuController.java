@@ -1,17 +1,18 @@
 package org.example.controller;
 
 import org.example.models.App;
+import org.example.models.SecurityQuestion;
 import org.example.models.User;
 import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
 import org.example.models.Result;
 import org.example.view.menu.LoginMenu;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 
 public class LoginMenuMenuController extends MenuController {
     private LoginMenu view;
@@ -76,8 +77,14 @@ public class LoginMenuMenuController extends MenuController {
         while (!password.equals(reEnteredPassword)) {
             reEnteredPassword = view.reTypePassword(scanner);
         }
-
-        // TODO: Security questions
+        // handling security questions ...
+        String securityQuestions = App.getSecurityQuestions();
+        view.printString(securityQuestions);
+        Result result = view.pickQuestion(scanner);
+        if (!result.success())
+            return result;
+        // successful registration ...
+        suggestedUser.addRecoveryQuestions();
         App.addUser(suggestedUser);
         return new Result(true, "Registration was successful. you can now login!");
     }
@@ -88,11 +95,50 @@ public class LoginMenuMenuController extends MenuController {
         return new Result(false, "suggested username rejected!");
     }
 
-    public Result pickQuestion(int questionId, String answer, String reEnteredAnswer) {}
+    public Result checkAnswer(Matcher matcher) { // checking answers for register questions
+        if (matcher == null)
+            return new Result(false, "Command format is invalid. Registration failed!");
+        int questionId = Integer.parseInt(matcher.group("questionId").trim());
+        SecurityQuestion question = App.getSecurityQuestion(questionId);
+        if (question == null)
+            return new Result(false, "Question not found. Registration failed");
+        String answer = matcher.group("answer").trim();
+        String reenteredAnswer = matcher.group("reenteredAnswer").trim();
+        if (!answer.equals(reenteredAnswer))
+            return new Result(false, "Reentered answer doesn't match answer. Registration failed!");
+        if (!answer.equals(question.getAnswer()))
+            return new Result(false, "Answer is incorrect. Registration failed!");
+        return new Result(true, "Baba benazam!");
+    }
 
-    public Result login(String username, String password, boolean stayLoggedIn) {}
+    public Result login(String username, String password, boolean stayLoggedIn) {
+        User user = App.getUserByUsername(username);
+        if (user == null)
+            return new Result(false, "Username not found!");
+        if (!user.getPassword().equals(password))
+            return new Result(false, "Incorrect password!");
+        // TODO: handling stay logged in flag
+        App.setLoggedInUser(user);
+        App.setCurrentMenu(Menu.MainMenu);
+        return new Result(true, "You have successfully logged in.");
+    }
 
-    public Result answerQuestion(String answer) {}
+    public Result forgetPassword(String username, Scanner scanner) {
+        User user = App.getUserByUsername(username);
+        if (user == null)
+            return new Result(false, "Username not found!");
+        for (SecurityQuestion recoveryQuestion : user.getRecoveryQuestions()) {
+            view.printString(recoveryQuestion.getQuestion());
+            Matcher matcher = view.getAnswer(scanner);
+            if (matcher == null)
+                return new Result(false, "Answer format is invalid!");
+            String answer = matcher.group("answer").trim();
+            if (!answer.equals(recoveryQuestion.getAnswer()))
+                return new Result(false, "Incorrect answer. Recovery failed!");
+        }
+        user.setPassword(generatePassword());
+        return new Result(true, "Your new password is: " + user.getPassword());
+    }
 
     private String generatePassword() {
         Random random = new Random();

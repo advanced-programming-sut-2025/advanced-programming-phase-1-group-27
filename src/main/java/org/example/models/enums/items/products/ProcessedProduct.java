@@ -1,7 +1,7 @@
 package org.example.models.enums.items.products;
 
-import org.example.models.Recipe;
 import org.example.models.enums.items.Item;
+import org.example.models.enums.items.Recipe;
 
 public enum ProcessedProduct implements Item {
     Honey,

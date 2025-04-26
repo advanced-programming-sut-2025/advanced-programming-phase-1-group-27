@@ -30,6 +30,19 @@ public class LoginMenu extends AppMenu {
                     scanner
             ));
         }
+        else if ((matcher = LoginMenuCommands.Login.getMatcher(input)) != null) {
+            System.out.println(controller.login(
+                    matcher.group("username").trim(),
+                    matcher.group("password").trim(),
+                    matcher.group("stay") != null
+            ));
+        }
+        else if ((matcher = LoginMenuCommands.ForgetPassword.getMatcher(input)) != null) {
+            System.out.println(controller.forgetPassword(
+                    matcher.group("username").trim(),
+                    scanner
+            ));
+        }
         else if ((matcher = LoginMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
         }
@@ -64,5 +77,20 @@ public class LoginMenu extends AppMenu {
                 "E if you want to go back to login menu and " +
                 "type anything else to regenerate.");
         return scanner.nextLine().trim();
+    }
+
+    public Result pickQuestion(Scanner scanner) {
+        System.out.println("Pick one question: \n");
+        String input = scanner.nextLine().trim();
+        return controller.checkAnswer(LoginMenuCommands.PickQuestion.getMatcher(input));
+    }
+
+    public Matcher getAnswer(Scanner scanner) {
+        String input = scanner.nextLine().trim();
+        return LoginMenuCommands.AnswerQuestion.getMatcher(input);
+    }
+
+    public void printString(String str) {
+        System.out.println(str);
     }
 }
