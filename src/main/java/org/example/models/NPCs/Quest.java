@@ -1,5 +1,8 @@
 package org.example.models.NPCs;
 
+import org.example.models.Time;
+import org.example.models.enums.items.Item;
+
 import java.util.ArrayList;
 
 public class Quest {

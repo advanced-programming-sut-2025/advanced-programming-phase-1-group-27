@@ -7,7 +7,7 @@ public enum FarmBuildingType implements Item {
     Coop(),
     BigCoop(),
     DeluxeCoop(),
-    Well,
+    Well(),
     ShippingBin();
 
 }
