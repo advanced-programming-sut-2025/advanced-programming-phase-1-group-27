@@ -10,9 +10,7 @@ public enum TreeType implements Item {
     BananaTree,
     MangoTree,
     OrangeTree,
-    PeachTree {{
-        decorate(kfkfklf);
-    }},
+    PeachTree,
     AppleTree,
     PomegranateTree,
     OakTree,
@@ -20,7 +18,8 @@ public enum TreeType implements Item {
     PineTree,
     MahoganyTree,
     MushroomTree,
-    MysticTree;
+    MysticTree,
+    AcornTree;
 
     public static ArrayList<TreeType> foragings = new ArrayList<>(
 
@@ -30,4 +29,5 @@ public enum TreeType implements Item {
     private final int harvestTime;
     private final FruitType fruit;
     private final Season season;
+    private final int harvestCycle;
 }

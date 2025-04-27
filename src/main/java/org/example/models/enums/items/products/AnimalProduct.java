@@ -3,18 +3,27 @@ package org.example.models.enums.items.products;
 import org.example.models.enums.items.Item;
 
 public enum AnimalProduct implements Item {
-    CowMilk,
-    LargeCowMilk,
-    GoatMilk,
-    LargeGoatMilk,
-    Egg,
-    LargeEgg,
-    DuckEgg,
-    DuckFeather,
-    Wool,
-    RabbitLeg,
-    DinosaurEgg,
-    Truffle;
+    Egg(50),
+    LargeEgg(95),
+    DuckEgg(95),
+    DuckFeather(250),
+    Wool(340),
+    RabbitLeg(565),
+    DinosaurEgg(350),
+    CowMilk(125),
+    LargeCowMilk(190),
+    GoatMilk(225),
+    LargeGoatMilk(345),
+    Truffle(625);
 
     private final int price;
+
+    AnimalProduct(int price) {
+        this.price = price;
+    }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
 }

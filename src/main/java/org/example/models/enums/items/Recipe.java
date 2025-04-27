@@ -16,11 +16,12 @@ public enum Recipe implements Item {
     GrassStarterRecipe(),
     CookieRecipe();
 
+    private final int price;
     private final Item finalProduct;
     private final HashMap<Item, Integer> ingredients;
 
     @Override
     public int getPrice() {
-        return 0;
+        return price;
     }
 }

@@ -16,8 +16,7 @@ public enum FruitType implements Item {
     CommonMushroom,
     MysticSyrup;
 
-    private final int price;
+       private final int price;
     private final boolean isFruitEdible;
     private final int energy;
-    private final int harvestCycle; // ?????
 }

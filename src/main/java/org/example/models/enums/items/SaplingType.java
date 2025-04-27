@@ -6,7 +6,12 @@ public enum SaplingType implements Item {
     CherrySapling,
     OrangeSapling,
     PeachSapling,
-    PomegranateSapling;
+    PomegranateSapling,
+    AcornSapling,
+    MapleSapling,
+    PineCone,
+    MahoganySapling,
+    MushroomTreeSapling;
 
     @Override
     public int getPrice() {

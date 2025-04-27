@@ -67,7 +67,6 @@ public enum CropType implements Item {
     WinterRoot;
 
     private int price;
-
     private String name;
     private SeedType source;
     private int[] stages;
@@ -77,6 +76,6 @@ public enum CropType implements Item {
 
     @Override
     public int getPrice() {
-        return 0;
+        return price;
     }
 }

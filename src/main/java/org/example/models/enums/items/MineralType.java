@@ -19,10 +19,10 @@ public enum MineralType implements Item {
     GoldOre,
     Wood; // jash shayad avaj she
 
-    private int sellPrice;
+    private int price;
 
     @Override
     public int getPrice() {
-        return 0;
+        return price;
     }
 }
