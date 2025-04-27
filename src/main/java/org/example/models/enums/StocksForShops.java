@@ -43,7 +43,7 @@ public enum StocksForShops {
 
     private static ArrayList<Stack> MarnieShopStock() {
         ArrayList<Stack> MarnieShop = new ArrayList<>();
-        MarnieShop.add(new Stack(CropType.Hay , -1));
+        MarnieShop.add(new Stack(ShopItems.Hay , -1));
         MarnieShop.add(new Stack(ToolType.MilkPail , 1));
         MarnieShop.add(new Stack(ToolType.Shear , 1));
         MarnieShop.add(new Stack(AnimalType.Chicken , 2));
@@ -79,7 +79,7 @@ public enum StocksForShops {
 
     private static ArrayList<Stack> CarpenterShopStock() {
         ArrayList<Stack> CarpenterShop = new ArrayList<>();
-        CarpenterShop.add(new Stack(CropType.Wood, -1));
+        CarpenterShop.add(new Stack(MineralType.Wood, -1));
         CarpenterShop.add(new Stack(MineralType.Stone, -1));
         CarpenterShop.add(new Stack(FarmBuildingType.Barn, 1));
         CarpenterShop.add(new Stack(FarmBuildingType.BigBarn, 1));
@@ -97,9 +97,9 @@ public enum StocksForShops {
         JojaMart.add(new Stack(ShopItems.JojaCola , -1));
         JojaMart.add(new Stack(SeedType.AncientSeed , 1));
         JojaMart.add(new Stack(SeedType.GrassStater , -1));
-        JojaMart.add(new Stack(CropType.Sugar , -1));
+        JojaMart.add(new Stack(ShopItems.Sugar , -1));
         JojaMart.add(new Stack(CropType.WheatFlour , -1));
-        JojaMart.add(new Stack(CropType.Rice , -1));
+        JojaMart.add(new Stack(ProcessedProduct.Rice , -1));
         return JojaMart;
     }
 
@@ -163,13 +163,13 @@ public enum StocksForShops {
 
     private static ArrayList<Stack> PermanentPierreGeneralStoreStock(){
         ArrayList<Stack> PermanentPierreGeneralStore = new ArrayList<>();
-        PermanentPierreGeneralStore.add(new Stack(CropType.Rice , -1));
-        PermanentPierreGeneralStore.add(new Stack(CropType.WheatFlour , -1));
+        PermanentPierreGeneralStore.add(new Stack(ProcessedProduct.Rice , -1));
+        PermanentPierreGeneralStore.add(new Stack(ShopItems.WheatFlour , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.Bouquet , 2));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.WeddingRing , 2));
         PermanentPierreGeneralStore.add(new Stack(Recipe.DehydratorRecipe , 1));
         PermanentPierreGeneralStore.add(new Stack(Recipe.GrassStarterRecipe , 1));
-        PermanentPierreGeneralStore.add(new Stack(CropType.Sugar , -1));
+        PermanentPierreGeneralStore.add(new Stack(ShopItems.Sugar , -1));
         PermanentPierreGeneralStore.add(new Stack(ProcessedProduct.Oil , -1));
         PermanentPierreGeneralStore.add(new Stack(ProcessedProduct.Vinegar , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.BasicFertilizer , -1));

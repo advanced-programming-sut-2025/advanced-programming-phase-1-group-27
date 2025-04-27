@@ -26,5 +26,6 @@ public enum CraftingProduct implements Item {
     MysticTreeSeed;
     // TODO: different crafting products
     private final Recipe recipe;
+    private final int price;
     // TODO: create constructor
 }

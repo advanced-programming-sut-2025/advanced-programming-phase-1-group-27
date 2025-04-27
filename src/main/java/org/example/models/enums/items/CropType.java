@@ -64,13 +64,7 @@ public enum CropType implements Item {
     CrystalFruit,
     Holly,
     SnowYum,
-    WinterRoot,
-    Wood,
-    Sugar,
-    Rice,
-    WheatFlour,
-    Hay;
-    // ...
+    WinterRoot;
 
     private int price;
 

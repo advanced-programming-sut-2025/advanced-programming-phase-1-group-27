@@ -9,5 +9,8 @@ public enum ShopItems implements Item {
     DeluxeSpeedGro,
     BasicRetainingSoil,
     QualityRetainingSoil,
-    JojaCola;
+    JojaCola,
+    Sugar,
+    WheatFlour,
+    Hay;
 }

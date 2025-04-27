@@ -33,8 +33,10 @@ public enum ProcessedProduct implements Item {
     Pickles, // TODO: different pickles based on different types of vegetables
     Jelly, // TODO: different jellies based on different type of fruits
     SmokedFish, // TODO: different smoked fish based on different types of fish
-    MetalBar; // TODO: different metal bars based on different ors;
+    MetalBar,
+    Rice; // TODO: different metal bars based on different ors;
 
     private final Recipe recipe;
     private final int energy;
+    private final int price;
 }
