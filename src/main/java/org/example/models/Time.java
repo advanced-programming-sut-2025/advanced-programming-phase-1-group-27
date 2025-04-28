@@ -21,7 +21,7 @@ public class Time {
         return this.daysOfWeek[this.day % 7];
     }
 
-    public String getDateTime() {
+    public String showDateTime() {
         return new String(getDayOfWeek() + ", " + getSeason() + " " + getDate() + "\n" +
                 getTime() + ":00\n");
     }
@@ -49,10 +49,7 @@ public class Time {
     }
 
     private void advanceSeason() {
-        if (this.season == Season.Spring) {this.season = Season.Summer;}
-        else if (this.season == Season.Summer) {this.season = Season.Fall;}
-        else if (this.season == Season.Fall) {this.season = Season.Winter;}
-        else {this.season = Season.Spring;}
+        season = season.getNextSeason();
     }
     public Season getSeason() {
         return this.season;
