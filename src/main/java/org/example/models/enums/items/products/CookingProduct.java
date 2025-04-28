@@ -5,39 +5,45 @@ import org.example.models.Buff;
 import org.example.models.enums.items.Recipe;
 
 public enum CookingProduct implements Item {
-    FriedEgg(),
-    BakedFish(),
-    Salad(),
-    Olmelet(),
-    PumpkinPie(),
-    Spaghetti(),
-    Pizza(),
-    Tortilla(),
-    MakiRoll(),
-    TripleShotEspresso(),
-    Cookie(),
-    HashBrowns(),
-    Pancakes(),
-    FruitSalad(),
-    RedPlate(),
-    Bread(),
-    SalmonDinner(),
-    VegetableMedley(),
-    FarmersLunch(),
-    SurvivalBurger(),
-    DishOTheSea(),
-    SeaformPudding(),
-    TroutSoup(),
-    MinersTreat();
+    FriedEgg(Recipe.FriedEggRecipe, ),
+    BakedFish(Recipe.BakedFishRecipe, ),
+    Salad(Recipe.SaladRecipe),
+    Omelette(Recipe.OmeletteRecipe),
+    PumpkinPie(Recipe.PumpkinPieRecipe),
+    Spaghetti(Recipe.SpaghettiRecipe),
+    Pizza(Recipe.PizzaRecipe),
+    Tortilla(Recipe.TortillaRecipe),
+    MakiRoll(Recipe.MakiRollRecipe),
+    TripleShotEspresso(Recipe.TortillaRecipe),
+    Cookie(Recipe.CookieRecipe),
+    HashBrowns(Recipe.HashbrownsRecipe),
+    Pancakes(Recipe.PancakeRecipe),
+    FruitSalad(Recipe.FruitSaladRecipe),
+    RedPlate(Recipe.RedPlateRecipe),
+    Bread(Recipe.BreadRecipe),
+    SalmonDinner(Recipe.SalmonDinnerRecipe),
+    VegetableMedley(Recipe.VegetableMedleyRecipe),
+    FarmersLunch(Recipe.FarmerLunchRecipe),
+    SurvivalBurger(Recipe.SurvivalBurgerRecipe),
+    DishOfTheSea(Recipe.DishOfTheSeaRecipe),
+    SeaformPudding(Recipe.SeaformPuddingRecipe),
+    TroutSoup(Recipe.TroutSoupRecipe), // TODO: ba parsa check shavad (aslan recipe dare? khalie ya null)
+    MinersTreat(Recipe.MinerTreatRecipe);
+
+    private final int price;
     private final Recipe recipe;
     private final Buff buff;
     private final int energy;
 
-    CookingProduct(Recipe recipe, Buff buff, int energy) {
+    CookingProduct(int price, Recipe recipe, Buff buff, int energy) {
+        this.price = price;
         this.recipe = recipe;
         this.buff = buff;
         this.energy = energy;
     }
 
-    // TODO: create constructor
+    @Override
+    public int getPrice() {
+        return price;
+    }
 }
