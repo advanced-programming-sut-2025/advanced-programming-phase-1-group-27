@@ -59,7 +59,7 @@ public enum ArtisanTypes {
             ProcessedProduct.OrangeWine,
             ProcessedProduct.PeachWine,
             ProcessedProduct.PomegranateWine,
-            ProcessedProduct.PowdermelonWine,
+            ProcessedProduct.PowderMelonWine,
             ProcessedProduct.RhubarbWine,
             ProcessedProduct.SalmonBerryWine,
             ProcessedProduct.SpiceBerryWine,
