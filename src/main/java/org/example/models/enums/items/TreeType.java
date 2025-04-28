@@ -30,4 +30,13 @@ public enum TreeType implements Item {
     private final FruitType fruit;
     private final Season season;
     private final int harvestCycle;
+
+    TreeType(SeedType source, int[] stages, int harvestTime, FruitType fruit, Season season, int harvestCycle) {
+        this.source = source;
+        this.stages = stages;
+        this.harvestTime = harvestTime;
+        this.fruit = fruit;
+        this.season = season;
+        this.harvestCycle = harvestCycle;
+    }
 }

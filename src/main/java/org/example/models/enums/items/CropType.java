@@ -48,7 +48,7 @@ public enum CropType implements Item {
     Dandelion,
     Leek,
     Morel,
-    Salmonberry,
+    SalmonBerry,
     SpringOnion,
     WildHorseradish,
     FiddleheadFern,
@@ -73,6 +73,10 @@ public enum CropType implements Item {
     private int totalHarvestTime, regrowthTime, baseSellPrice, energy;
     private boolean oneTime, isEdible, canBecomeGiant;
     private Season season;
+
+    public int getEnergy(){
+        return energy;
+    }
 
     @Override
     public int getPrice() {

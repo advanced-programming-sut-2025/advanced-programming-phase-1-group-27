@@ -2,7 +2,7 @@ package org.example.models.enums.items;
 
 import org.example.models.enums.Seasons.Season;
 
-public enum FishType {
+public enum FishType implements Item{
     Salmon(75, Season.Fall, false),
     Sardine(40, Season.Fall, false),
     Shad(60, Season.Fall, false),
@@ -25,12 +25,22 @@ public enum FishType {
     Crimsonfish(1500, Season.Summer, true);
 
     private final int price;
+    private final int energy;
     private final Season season;
     private final boolean isLegendary;
 
-    FishType(int price, Season season, boolean isLegendary) {
+    FishType(int price, Season season, boolean isLegendary , int energy) {
         this.price = price;
         this.season = season;
         this.isLegendary = isLegendary;
+    }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
+
+    public int getEnergy() {
+        return energy;
     }
 }
