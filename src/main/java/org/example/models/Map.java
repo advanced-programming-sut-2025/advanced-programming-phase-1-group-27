@@ -2,34 +2,83 @@ package org.example.models;
 
 import org.example.models.enums.CellType;
 
+import java.util.*;
+
 public class Map {
-    private String[] mapView = new String[80];
     private int height, width;
-    private CellType[][] cells = new CellType[80][70];
+    private Cell[][] cells;
 
     Map (int height, int width) {
         this.height = height;
         this.width = width;
-        this.generate();
+        this.cells = new Cell[height][width];
+        buildCellsGraph();
     }
 
-    public void generate() {
+    private void buildCellsGraph() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                cells[i][j] = new Cell();
+            }
+        }
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (i > 0) cells[i][j].addAdjacentCell(cells[i - 1][j]);
+                if (j > 0) cells[i][j].addAdjacentCell(cells[i][j - 1]);
+                if (i < height - 1) cells[i][j].addAdjacentCell(cells[i + 1][j]);
+                if (j < width - 1) cells[i][j].addAdjacentCell(cells[i][j + 1]);
+            }
+        }
+    }
+
+    private HashSet<Cell> markedCells;
+
+    private void dfs(Cell cell) {
+        markedCells.add(cell);
+        for (Cell adj : cell.getAdjacentCells()) {
+            if (adj.isPassable() && !markedCells.contains(adj)) {
+                dfs(adj);
+            }
+        }
+    }
+
+    public boolean areConnected(Cell A, Cell B) {
+        markedCells = new HashSet<>();
+        dfs(A);
+        return markedCells.contains(B);
+    }
+
+    private HashMap<Cell, Integer> distance;
+
+    private void bfs(Cell cell) {
+        Queue<Cell> queue = new LinkedList<>();
+        markedCells.add(cell);
+        queue.add(cell);
+        while (!queue.isEmpty()) {
+            Cell current = queue.remove();
+            for (Cell adj : current.getAdjacentCells()) {
+                if (adj.isPassable() && !markedCells.contains(adj)) {
+                    markedCells.add(adj);
+                    distance.put(adj, distance.get(current) + 1);
+                    queue.add(adj);
+                }
+            }
+        }
+    }
+
+    public int getDistance(Cell A, Cell B) {
+        markedCells = new HashSet<>();
+        distance = new HashMap<>();
+        distance.put(A, 0);
+        bfs(A);
+        return (distance.containsKey(B)? distance.get(B): 0);
+    }
+
+    public String[] veiwMapString() {
 
     }
 
-    public void plant(int x, int y, Crop crop) {
-
-    }
-
-    public boolean areConnected(Place A, Place B) {
-    
-    }
-
-    public void changeType(int x, int y, CellType cellType) {
-        
-    }
-
-    public String veiwMapString() {
-        
+    public Cell getCell(int x, int y) {
+        return cells[x][y];
     }
 }
