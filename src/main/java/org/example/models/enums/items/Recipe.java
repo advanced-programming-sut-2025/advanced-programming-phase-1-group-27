@@ -2,6 +2,7 @@ package org.example.models.enums.items;
 
 import org.example.models.Stack;
 import org.example.models.enums.items.products.AnimalProduct;
+import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.items.products.ProcessedProduct;
 
 import java.util.ArrayList;
@@ -528,7 +529,11 @@ public enum Recipe implements Item {
             new Stack(MineralType.IridiumOre , 5),
             new Stack(ProcessedProduct.Coal , 1)
     ))),
-    FishSmoker(),
+    FishSmoker(10000, CraftingProduct.FishSmoker, new ArrayList<>(List.of(
+            new Stack(MineralType.Wood, 50),
+            new Stack(ProcessedProduct.IronMetalBar, 3),
+            new Stack(ProcessedProduct.Coal , 10)
+    ))),
     DehydratorRecipe(),
     GrassStarterRecipe(),
     FriedEggRecipe(),
@@ -554,7 +559,10 @@ public enum Recipe implements Item {
     DishOfTheSeaRecipe(),
     SeaformPuddingRecipe(),
     TroutSoupRecipe(),
-    MinerTreatRecipe();
+    MinerTreatRecipe(),
+    RiceRecipe(0, ProcessedProduct.Rice, new ArrayList<>(List.of(
+            new Stack(CropType.UnmilledRice, 1)
+    )));
 
     private final int price;
     private final Item finalProduct;

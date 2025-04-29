@@ -98,7 +98,7 @@ public enum StocksForShops {
         JojaMart.add(new Stack(SeedType.AncientSeed , 1));
         JojaMart.add(new Stack(SeedType.GrassStater , -1));
         JojaMart.add(new Stack(ShopItems.Sugar , -1));
-        JojaMart.add(new Stack(CropType.WheatFlour , -1));
+        JojaMart.add(new Stack(ShopItems.WheatFlour , -1));
         JojaMart.add(new Stack(ProcessedProduct.Rice , -1));
         return JojaMart;
     }
