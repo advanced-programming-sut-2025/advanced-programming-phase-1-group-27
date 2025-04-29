@@ -311,7 +311,7 @@ public enum ProcessedProduct implements Item {
     IronMetalBar(Recipe.IronMetalBarRecipe , 0 , getPriceWithMultiplier(MineralType.IronOre , 10)),
     GoldMetalBar(Recipe.GoldMetalBarRecipe , 0 , getPriceWithMultiplier(MineralType.GoldOre , 10)),
     IridiumMetalBar(Recipe.IridiumMetalBarRecipe , 0 , getPriceWithMultiplier(MineralType.IridiumOre , 10)),
-    Rice;
+    Rice(Recipe.RiceRecipe, 0, 250); // energy not defined!
 
     private final Recipe recipe;
     private final int energy;
