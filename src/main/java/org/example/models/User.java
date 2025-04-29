@@ -19,24 +19,6 @@ public class User {
     private ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
     private int maxMoneyEarned = 0;
     private int numberOfGamesPlayed = 0;
-    private ArrayList<Recipe> availableRecipes; // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
-    // player's inventory
-    private Backpack backpack;
-    // items which are place in the fridge
-    private ArrayList<Stack> refrigerator = new ArrayList<>();
-    // maps ability type to user's ability
-    private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(){{
-        put(AbilityType.Farming, farming);
-        put(AbilityType.Fishing, fishing);
-        put(AbilityType.Foraging, foraging);
-        put(AbilityType.Mining, mining);
-    }};
-    private int energy, maxEnergy = 200;
-    private Ability farming = new Ability(), mining = new Ability(), foraging = new Ability(), fishing = new Ability();
-    private Cell currentCell;
-    private Map currentMap;
-    private int money;
-    private Tool currentTool;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;

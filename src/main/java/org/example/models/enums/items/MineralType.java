@@ -17,8 +17,8 @@ public enum MineralType implements Item {
     IronOre(10),
     GoldOre(25),
     IridiumOre(100),
-    Stone(),
-    Wood; // jash shayad avaz she
+    Stone(0),
+    Wood(0); // jash shayad avaz she
 
     private int price;
 

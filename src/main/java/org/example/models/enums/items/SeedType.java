@@ -44,7 +44,7 @@ public enum SeedType implements Item{
     RedCabbageSeed,
     ArtichokeSeed,
     RiceShoot,
-    PowdermelonSeed,
+    PowderMelonSeed,
     AncientSeed,
     MixedSeed;
 

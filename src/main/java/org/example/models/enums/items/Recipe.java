@@ -553,7 +553,6 @@ public enum Recipe implements Item {
     SurvivalBurgerRecipe(),
     DishOfTheSeaRecipe(),
     SeaformPuddingRecipe(),
-    TroutSoupRecipe(),
     MinerTreatRecipe();
 
     private final int price;

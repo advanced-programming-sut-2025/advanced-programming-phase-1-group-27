@@ -27,7 +27,7 @@ public enum CookingProduct implements Item {
     SurvivalBurger(Recipe.SurvivalBurgerRecipe),
     DishOfTheSea(Recipe.DishOfTheSeaRecipe),
     SeaformPudding(Recipe.SeaformPuddingRecipe),
-    TroutSoup(Recipe.TroutSoupRecipe), // TODO: ba parsa check shavad (aslan recipe dare? khalie ya null)
+    TroutSoup(null), // TODO: ba parsa check shavad (aslan recipe dare? khalie ya null)
     MinersTreat(Recipe.MinerTreatRecipe);
 
     private final int price;

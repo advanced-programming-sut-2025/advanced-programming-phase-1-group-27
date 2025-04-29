@@ -16,7 +16,12 @@ public class Player extends User {
     // items which are place in the fridge
     private ArrayList<Stack> refrigerator = new ArrayList<>();
     // maps ability type to user's ability
-    private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(); // TODO: this hashmap should be initialized before
+    private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(){{
+        put(AbilityType.Farming, farming);
+        put(AbilityType.Fishing, fishing);
+        put(AbilityType.Foraging, foraging);
+        put(AbilityType.Mining, mining);
+    }};
     private int energy, maxEnergy = 200;
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell;

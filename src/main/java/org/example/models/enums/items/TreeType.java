@@ -21,9 +21,7 @@ public enum TreeType implements Item {
     MysticTree,
     AcornTree;
 
-    public static ArrayList<TreeType> foragings = new ArrayList<>(
-
-    );
+    public static ArrayList<TreeType> foragings = new ArrayList<>();
     private final SeedType source;
     private final int[] stages;
     private final int harvestTime;
