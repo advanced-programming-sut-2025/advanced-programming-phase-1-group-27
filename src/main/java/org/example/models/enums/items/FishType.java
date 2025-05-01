@@ -1,8 +1,9 @@
 package org.example.models.enums.items;
 
+import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
 
-public enum FishType implements Item{
+public enum FishType implements Item {
     Salmon(75, Season.Fall, false , 75),
     Sardine(40, Season.Fall, false , 40),
     Shad(60, Season.Fall, false , 60),
@@ -33,6 +34,7 @@ public enum FishType implements Item{
         this.price = price;
         this.season = season;
         this.isLegendary = isLegendary;
+        this.energy = energy;
     }
 
     @Override

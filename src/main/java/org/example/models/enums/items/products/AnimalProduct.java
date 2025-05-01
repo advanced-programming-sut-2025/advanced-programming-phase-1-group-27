@@ -1,6 +1,6 @@
 package org.example.models.enums.items.products;
 
-import org.example.models.enums.items.Item;
+import org.example.models.Item;
 
 public enum AnimalProduct implements Item {
     Egg(50),

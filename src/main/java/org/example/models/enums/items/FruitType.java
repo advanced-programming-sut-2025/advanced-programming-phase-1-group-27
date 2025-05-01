@@ -1,5 +1,7 @@
 package org.example.models.enums.items;
 
+import org.example.models.Item;
+
 public enum FruitType implements Item {
     Apricot(59 , true ,38),
     Cherry(80 , true ,38),

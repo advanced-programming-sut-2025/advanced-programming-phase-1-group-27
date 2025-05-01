@@ -1,538 +1,542 @@
 package org.example.models.enums.items;
 
-import org.example.models.Stack;
+import org.example.models.Ingredient;
+import org.example.models.Item;
 import org.example.models.enums.items.products.AnimalProduct;
 import org.example.models.enums.items.products.CraftingProduct;
-import org.example.models.enums.items.products.ProcessedProduct;
+import org.example.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public enum Recipe implements Item {
-    HoneyRecipe(0, ProcessedProduct.Honey, new ArrayList<>(List.of())),
-    CheeseRecipe(0, ProcessedProduct.Cheese, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.CowMilk, 1)
+    HoneyRecipe(0, ProcessedProductType.Honey, new ArrayList<>(List.of())),
+    CheeseRecipe(0, ProcessedProductType.Cheese, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.CowMilk, 1)
     ))),
-    LargeCheeseRecipe(0, ProcessedProduct.LargeCheese, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.LargeCowMilk, 1)
+    LargeCheeseRecipe(0, ProcessedProductType.LargeCheese, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.LargeCowMilk, 1)
     ))),
-    GoatCheeseRecipe(0, ProcessedProduct.GoatCheese, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.GoatMilk, 1)
+    GoatCheeseRecipe(0, ProcessedProductType.GoatCheese, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.GoatMilk, 1)
     ))),
-    LargeGoatCheeseRecipe(0, ProcessedProduct.LargeGoatCheese, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.LargeGoatMilk, 1)
+    LargeGoatCheeseRecipe(0, ProcessedProductType.LargeGoatCheese, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.LargeGoatMilk, 1)
     ))),
-    BeerRecipe(0, ProcessedProduct.Beer, new ArrayList<>(List.of(
-            new Stack(CropType.Wheat, 1)
+    BeerRecipe(0, ProcessedProductType.Beer, new ArrayList<>(List.of(
+            new Ingredient(CropType.Wheat, 1)
     ))),
-    VinegarRecipe(0, ProcessedProduct.Vinegar, new ArrayList<>(List.of(
-            new Stack(ProcessedProduct.Rice, 1)
+    VinegarRecipe(0, ProcessedProductType.Vinegar, new ArrayList<>(List.of(
+            new Ingredient(ProcessedProductType.Rice, 1)
     ))),
-    CoffeeRecipe(0, ProcessedProduct.Coffee, new ArrayList<>(List.of(
-            new Stack(CropType.CoffeeBean, 5)
+    CoffeeRecipe(0, ProcessedProductType.Coffee, new ArrayList<>(List.of(
+            new Ingredient(CropType.CoffeeBean, 5)
     ))),
-    AmaranthJuiceRecipe(0, ProcessedProduct.AmaranthJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Amaranth, 1)
+    JuiceRecipe(null, ProcessedProductType.Juice, new ArrayList<>(List.of(
+          new Ingredient(new ArrayList<>(List.of(FruitType.Apple, )), 1)
     ))),
-    ArtichokeJuiceRecipe(0, ProcessedProduct.ArtichokeJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Artichoke, 1)
+    AmaranthJuiceRecipe(0, ProcessedProductType.AmaranthJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Amaranth, 1)
     ))),
-    BeetJuiceRecipe(0, ProcessedProduct.BeetJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Beet, 1)
+    ArtichokeJuiceRecipe(0, ProcessedProductType.ArtichokeJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Artichoke, 1)
     ))),
-    BokChoyJuiceRecipe(0, ProcessedProduct.BokChoyJuice, new ArrayList<>(List.of(
-            new Stack(CropType.BokChoy, 1)
+    BeetJuiceRecipe(0, ProcessedProductType.BeetJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Beet, 1)
     ))),
-    BroccoliJuiceRecipe(0, ProcessedProduct.BroccoliJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Broccoli, 1)
+    BokChoyJuiceRecipe(0, ProcessedProductType.BokChoyJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.BokChoy, 1)
     ))),
-    CarrotJuiceRecipe(0, ProcessedProduct.CarrotJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Carrot, 1)
+    BroccoliJuiceRecipe(0, ProcessedProductType.BroccoliJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Broccoli, 1)
     ))),
-    CauliflowerJuiceRecipe(0, ProcessedProduct.CauliflowerJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Cauliflower, 1)
+    CarrotJuiceRecipe(0, ProcessedProductType.CarrotJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Carrot, 1)
     ))),
-    CornJuiceRecipe(0, ProcessedProduct.CornJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Corn, 1)
+    CauliflowerJuiceRecipe(0, ProcessedProductType.CauliflowerJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Cauliflower, 1)
     ))),
-    EggplantJuiceRecipe(0, ProcessedProduct.EggplantJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Eggplant, 1)
+    CornJuiceRecipe(0, ProcessedProductType.CornJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Corn, 1)
     ))),
-    FiddleheadFernJuiceRecipe(0, ProcessedProduct.FiddleheadFernJuice, new ArrayList<>(List.of(
-            new Stack(CropType.FiddleheadFern, 1)
+    EggplantJuiceRecipe(0, ProcessedProductType.EggplantJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Eggplant, 1)
     ))),
-    GarlicJuiceRecipe(0, ProcessedProduct.GarlicJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Garlic, 1)
+    FiddleheadFernJuiceRecipe(0, ProcessedProductType.FiddleheadFernJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.FiddleheadFern, 1)
     ))),
-    GreenBeanJuiceRecipe(0, ProcessedProduct.GreenBeanJuice, new ArrayList<>(List.of(
-            new Stack(CropType.GreenBean, 1)
+    GarlicJuiceRecipe(0, ProcessedProductType.GarlicJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Garlic, 1)
     ))),
-    HopsJuiceRecipe(0, ProcessedProduct.HopsJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Hops, 1)
+    GreenBeanJuiceRecipe(0, ProcessedProductType.GreenBeanJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.GreenBean, 1)
     ))),
-    KaleJuiceRecipe(0, ProcessedProduct.KaleJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Kale, 1)
+    HopsJuiceRecipe(0, ProcessedProductType.HopsJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Hops, 1)
     ))),
-    ParsnipJuiceRecipe(0, ProcessedProduct.ParsnipJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Parsnip, 1)
+    KaleJuiceRecipe(0, ProcessedProductType.KaleJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Kale, 1)
     ))),
-    PotatoJuiceRecipe(0, ProcessedProduct.PotatoJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Potato, 1)
+    ParsnipJuiceRecipe(0, ProcessedProductType.ParsnipJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Parsnip, 1)
     ))),
-    PumpkinJuiceRecipe(0, ProcessedProduct.PumpkinJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Pumpkin, 1)
+    PotatoJuiceRecipe(0, ProcessedProductType.PotatoJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Potato, 1)
     ))),
-    RadishJuiceRecipe(0, ProcessedProduct.RadishJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Radish, 1)
+    PumpkinJuiceRecipe(0, ProcessedProductType.PumpkinJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Pumpkin, 1)
     ))),
-    RedCabbageJuiceRecipe(0, ProcessedProduct.RedCabbageJuice, new ArrayList<>(List.of(
-            new Stack(CropType.RedCabbage, 1)
+    RadishJuiceRecipe(0, ProcessedProductType.RadishJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Radish, 1)
     ))),
-    SummerSquashJuiceRecipe(0, ProcessedProduct.SummerSquashJuice, new ArrayList<>(List.of(
-            new Stack(CropType.SummerSquash, 1)
+    RedCabbageJuiceRecipe(0, ProcessedProductType.RedCabbageJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.RedCabbage, 1)
     ))),
-    TomatoJuiceRecipe(0, ProcessedProduct.TomatoJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Tomato, 1)
+    SummerSquashJuiceRecipe(0, ProcessedProductType.SummerSquashJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.SummerSquash, 1)
     ))),
-    UnmilledRiceJuiceRecipe(0, ProcessedProduct.UnmilledRiceJuice, new ArrayList<>(List.of(
-            new Stack(CropType.UnmilledRice, 1)
+    TomatoJuiceRecipe(0, ProcessedProductType.TomatoJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Tomato, 1)
     ))),
-    WheatJuiceRecipe(0, ProcessedProduct.WheatJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Wheat, 1)
+    UnmilledRiceJuiceRecipe(0, ProcessedProductType.UnmilledRiceJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.UnmilledRice, 1)
     ))),
-    YamJuiceRecipe(0, ProcessedProduct.YamJuice, new ArrayList<>(List.of(
-            new Stack(CropType.Yam, 1)
+    WheatJuiceRecipe(0, ProcessedProductType.WheatJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Wheat, 1)
     ))),
-    MeadRecipe(0, ProcessedProduct.Mead, new ArrayList<>(List.of(
-            new Stack(ProcessedProduct.Honey, 1)
+    YamJuiceRecipe(0, ProcessedProductType.YamJuice, new ArrayList<>(List.of(
+            new Ingredient(CropType.Yam, 1)
     ))),
-    PaleAleRecipe(0, ProcessedProduct.PaleAle, new ArrayList<>(List.of(
-            new Stack(CropType.Hops, 1)
+    MeadRecipe(0, ProcessedProductType.Mead, new ArrayList<>(List.of(
+            new Ingredient(ProcessedProductType.Honey, 1)
     ))),
-    AncientFruitWineRecipe(0, ProcessedProduct.AncientFruitWine, new ArrayList<>(List.of(
-            new Stack(CropType.AncientFruit, 1)
+    PaleAleRecipe(0, ProcessedProductType.PaleAle, new ArrayList<>(List.of(
+            new Ingredient(CropType.Hops, 1)
     ))),
-    AppleWineRecipe(0, ProcessedProduct.AppleWine, new ArrayList<>(List.of(
-            new Stack(FruitType.Apple, 1)
+    AncientFruitWineRecipe(0, ProcessedProductType.AncientFruitWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.AncientFruit, 1)
     ))),
-    ApricotWineRecipe(0, ProcessedProduct.ApricotWine, new ArrayList<>(List.of(
-            new Stack(FruitType.Apricot, 1)
+    AppleWineRecipe(0, ProcessedProductType.AppleWine, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Apple, 1)
     ))),
-    BananaWineRecipe(0, ProcessedProduct.BananaWine, new ArrayList<>(List.of(
-            new Stack(FruitType.Banana, 1)
+    ApricotWineRecipe(0, ProcessedProductType.ApricotWine, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Apricot, 1)
     ))),
-    BlackberryWineRecipe(0, ProcessedProduct.BlackberryWine, new ArrayList<>(List.of(
-            new Stack(CropType.Blackberry, 1)
+    BananaWineRecipe(0, ProcessedProductType.BananaWine, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Banana, 1)
     ))),
-    BlueberryWineRecipe(0, ProcessedProduct.BlueberryWine, new ArrayList<>(List.of(
-            new Stack(CropType.Blueberry, 1)
+    BlackberryWineRecipe(0, ProcessedProductType.BlackberryWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.Blackberry, 1)
     ))),
-    CherryWineRecipe(0, ProcessedProduct.CherryWine, new ArrayList<>(List.of(
-            new Stack(FruitType.Cherry, 1)
+    BlueberryWineRecipe(0, ProcessedProductType.BlueberryWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.Blueberry, 1)
     ))),
-    CranberriesWineRecipe(0, ProcessedProduct.CranberriesWine, new ArrayList<>(List.of(
-            new Stack(CropType.Cranberry, 1)
+    CherryWineRecipe(0, ProcessedProductType.CherryWine, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Cherry, 1)
     ))),
-    CrystalFruitWineRecipe(0, ProcessedProduct.CrystalFruitWine, new ArrayList<>(List.of(
-            new Stack(CropType.CrystalFruit, 1)
+    CranberriesWineRecipe(0, ProcessedProductType.CranberriesWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.Cranberry, 1)
     ))),
-    GrapeWineRecipe(0, ProcessedProduct.GrapeWine, new ArrayList<>(List.of(
-            new Stack(CropType.Grape, 1)
+    CrystalFruitWineRecipe(0, ProcessedProductType.CrystalFruitWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.CrystalFruit, 1)
     ))),
-    HotPepperWineRecipe(0, ProcessedProduct.HotPepperWine, new ArrayList<>(List.of(
-            new Stack(CropType.HotPepper, 1)
+    GrapeWineRecipe(0, ProcessedProductType.GrapeWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.Grape, 1)
     ))),
-    MangoWineRecipe(0, ProcessedProduct.MangoWine, new ArrayList<>(List.of(
-            new Stack(FruitType.Mango, 1)
+    HotPepperWineRecipe(0, ProcessedProductType.HotPepperWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.HotPepper, 1)
     ))),
-    MelonWineRecipe(0, ProcessedProduct.MelonWine, new ArrayList<>(List.of(
-            new Stack(CropType.Melon, 1)
+    MangoWineRecipe(0, ProcessedProductType.MangoWine, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Mango, 1)
     ))),
-    OrangeWineRecipe(0, ProcessedProduct.OrangeWine, new ArrayList<>(List.of(
-            new Stack(FruitType.Orange, 1)
+    MelonWineRecipe(0, ProcessedProductType.MelonWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.Melon, 1)
     ))),
-    PeachWineRecipe(0, ProcessedProduct.PeachWine, new ArrayList<>(List.of(
-            new Stack(FruitType.Peach, 1)
+    OrangeWineRecipe(0, ProcessedProductType.OrangeWine, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Orange, 1)
     ))),
-    PomegranateWineRecipe(0, ProcessedProduct.PomegranateWine, new ArrayList<>(List.of(
-            new Stack(FruitType.Pomegranate, 1)
+    PeachWineRecipe(0, ProcessedProductType.PeachWine, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Peach, 1)
     ))),
-    PowderMelonWineRecipe(0, ProcessedProduct.PowderMelonWine, new ArrayList<>(List.of(
-            new Stack(CropType.PowderMelon, 1)
+    PomegranateWineRecipe(0, ProcessedProductType.PomegranateWine, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Pomegranate, 1)
     ))),
-    RhubarbWineRecipe(0, ProcessedProduct.RhubarbWine, new ArrayList<>(List.of(
-            new Stack(CropType.Rhubarb, 1)
+    PowderMelonWineRecipe(0, ProcessedProductType.PowderMelonWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.PowderMelon, 1)
     ))),
-    SalmonBerryWineRecipe(0, ProcessedProduct.SalmonBerryWine, new ArrayList<>(List.of(
-            new Stack(CropType.SalmonBerry, 1)
+    RhubarbWineRecipe(0, ProcessedProductType.RhubarbWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.Rhubarb, 1)
     ))),
-    SpiceBerryWineRecipe(0, ProcessedProduct.SpiceBerryWine, new ArrayList<>(List.of(
-            new Stack(CropType.SpiceBerry, 1)
+    SalmonBerryWineRecipe(0, ProcessedProductType.SalmonBerryWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.SalmonBerry, 1)
     ))),
-    StarfruitWineRecipe(0, ProcessedProduct.StarfruitWine, new ArrayList<>(List.of(
-            new Stack(CropType.Starfruit, 1)
+    SpiceBerryWineRecipe(0, ProcessedProductType.SpiceBerryWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.SpiceBerry, 1)
     ))),
-    StrawberryWineRecipe(0, ProcessedProduct.StrawberryWine, new ArrayList<>(List.of(
-            new Stack(CropType.Strawberry, 1)
+    StarfruitWineRecipe(0, ProcessedProductType.StarfruitWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.Starfruit, 1)
     ))),
-    WildPlumWineRecipe(0, ProcessedProduct.WildPlumWine, new ArrayList<>(List.of(
-            new Stack(CropType.WildPlum, 1)
+    StrawberryWineRecipe(0, ProcessedProductType.StrawberryWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.Strawberry, 1)
     ))),
-    ChanterelleDriedMushroomsRecipe(0, ProcessedProduct.ChanterelleDriedMushrooms, new ArrayList<>(List.of(
-            new Stack(CropType.Chanterelle, 5)
+    WildPlumWineRecipe(0, ProcessedProductType.WildPlumWine, new ArrayList<>(List.of(
+            new Ingredient(CropType.WildPlum, 1)
     ))),
-    CommonMushroomDriedMushroomsRecipe(0, ProcessedProduct.CommonMushroomDriedMushrooms, new ArrayList<>(List.of(
-            new Stack(FruitType.CommonMushroom, 5)
+    ChanterelleDriedMushroomsRecipe(0, ProcessedProductType.ChanterelleDriedMushrooms, new ArrayList<>(List.of(
+            new Ingredient(CropType.Chanterelle, 5)
     ))),
-    MorelDriedMushroomsRecipe(0, ProcessedProduct.MorelDriedMushrooms, new ArrayList<>(List.of(
-            new Stack(CropType.Morel, 5)
+    CommonMushroomDriedMushroomsRecipe(0, ProcessedProductType.CommonMushroomDriedMushrooms, new ArrayList<>(List.of(
+            new Ingredient(FruitType.CommonMushroom, 5)
     ))),
-    PurpleMushroomDriedMushroomsRecipe(0, ProcessedProduct.PurpleMushroomDriedMushrooms, new ArrayList<>(List.of(
-            new Stack(CropType.PurpleMushroom, 5)
+    MorelDriedMushroomsRecipe(0, ProcessedProductType.MorelDriedMushrooms, new ArrayList<>(List.of(
+            new Ingredient(CropType.Morel, 5)
     ))),
-    RedMushroomDriedMushroomsRecipe(0 , ProcessedProduct.RedMushroomDriedMushrooms, new ArrayList<>(List.of(
-            new Stack(CropType.RedMushroom, 5)
+    PurpleMushroomDriedMushroomsRecipe(0, ProcessedProductType.PurpleMushroomDriedMushrooms, new ArrayList<>(List.of(
+            new Ingredient(CropType.PurpleMushroom, 5)
     ))),
-    AncientFruitDriedFruitRecipe(0 , ProcessedProduct.AncientFruitDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.AncientFruit, 5)
+    RedMushroomDriedMushroomsRecipe(0 , ProcessedProductType.RedMushroomDriedMushrooms, new ArrayList<>(List.of(
+            new Ingredient(CropType.RedMushroom, 5)
     ))),
-    AppleDriedFruitRecipe(0 , ProcessedProduct.AppleDriedFruit, new ArrayList<>(List.of(
-            new Stack(FruitType.Apple, 5)
+    AncientFruitDriedFruitRecipe(0 , ProcessedProductType.AncientFruitDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.AncientFruit, 5)
+    ))),
+    AppleDriedFruitRecipe(0 , ProcessedProductType.AppleDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Apple, 5)
     )) ),
-    ApricotDriedFruitRecipe(0 , ProcessedProduct.ApricotDriedFruit, new ArrayList<>(List.of(
-            new Stack(FruitType.Apricot, 5)
+    ApricotDriedFruitRecipe(0 , ProcessedProductType.ApricotDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Apricot, 5)
     )) ),
-    BananaDriedFruitRecipe(0 , ProcessedProduct.BananaDriedFruit, new ArrayList<>(List.of(
-            new Stack(FruitType.Banana, 5)
+    BananaDriedFruitRecipe(0 , ProcessedProductType.BananaDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Banana, 5)
     )) ),
-    BlackberryDriedFruitRecipe(0 , ProcessedProduct.BlackberryDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.Blackberry, 5)
+    BlackberryDriedFruitRecipe(0 , ProcessedProductType.BlackberryDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.Blackberry, 5)
     )) ),
-    BlueberryDriedFruitRecipe(0 , ProcessedProduct.BlueberryDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.Blueberry, 5)
+    BlueberryDriedFruitRecipe(0 , ProcessedProductType.BlueberryDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.Blueberry, 5)
     )) ),
-    CherryDriedFruitRecipe(0 , ProcessedProduct.CherryDriedFruit, new ArrayList<>(List.of(
-            new Stack(FruitType.Cherry, 5)
+    CherryDriedFruitRecipe(0 , ProcessedProductType.CherryDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Cherry, 5)
     )) ),
-    CranberriesDriedFruitRecipe(0 , ProcessedProduct.CranberriesDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.Cranberry , 5)
+    CranberriesDriedFruitRecipe(0 , ProcessedProductType.CranberriesDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.Cranberry , 5)
     )) ),
-    CrystalFruitDriedFruitRecipe(0 , ProcessedProduct.CrystalFruitDriedFruit , new ArrayList<>(List.of(
-            new Stack(CropType.CrystalFruit , 5)
+    CrystalFruitDriedFruitRecipe(0 , ProcessedProductType.CrystalFruitDriedFruit , new ArrayList<>(List.of(
+            new Ingredient(CropType.CrystalFruit , 5)
     )) ),
-    HotPepperDriedFruitRecipe(0 , ProcessedProduct.HotPepperDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.HotPepper, 5)
+    HotPepperDriedFruitRecipe(0 , ProcessedProductType.HotPepperDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.HotPepper, 5)
     )) ),
-    MangoDriedFruitRecipe(0 , ProcessedProduct.MangoDriedFruit, new ArrayList<>(List.of(
-            new Stack(FruitType.Mango, 5)
+    MangoDriedFruitRecipe(0 , ProcessedProductType.MangoDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Mango, 5)
     )) ),
-    MelonDriedFruitRecipe(0 , ProcessedProduct.MelonDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.Melon, 5)
+    MelonDriedFruitRecipe(0 , ProcessedProductType.MelonDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.Melon, 5)
     )) ),
-    OrangeDriedFruitRecipe(0 , ProcessedProduct.OrangeDriedFruit, new ArrayList<>(List.of(
-            new Stack(FruitType.Orange, 5)
+    OrangeDriedFruitRecipe(0 , ProcessedProductType.OrangeDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Orange, 5)
     )) ),
-    PeachDriedFruitRecipe(0 , ProcessedProduct.PeachDriedFruit, new ArrayList<>(List.of(
-            new Stack(FruitType.Peach, 5)
+    PeachDriedFruitRecipe(0 , ProcessedProductType.PeachDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Peach, 5)
     )) ),
-    PomegranateDriedFruitRecipe(0 , ProcessedProduct.PomegranateDriedFruit, new ArrayList<>(List.of(
-            new Stack(FruitType.Pomegranate, 5)
+    PomegranateDriedFruitRecipe(0 , ProcessedProductType.PomegranateDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Pomegranate, 5)
     )) ),
-    PowderMelonDriedFruitRecipe(0 , ProcessedProduct.PowderMelonDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.PowderMelon , 5)
+    PowderMelonDriedFruitRecipe(0 , ProcessedProductType.PowderMelonDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.PowderMelon , 5)
     )) ),
-    RhubarbDriedFruitRecipe(0 , ProcessedProduct.RhubarbDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.Rhubarb, 5)
+    RhubarbDriedFruitRecipe(0 , ProcessedProductType.RhubarbDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.Rhubarb, 5)
     )) ),
-    SalmonBerryDriedFruitRecipe(0 , ProcessedProduct.SalmonBerryDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.SalmonBerry, 5)
+    SalmonBerryDriedFruitRecipe(0 , ProcessedProductType.SalmonBerryDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.SalmonBerry, 5)
     )) ),
-    SpiceBerryDriedFruitRecipe(0 , ProcessedProduct.SpiceBerryDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.SpiceBerry, 5)
+    SpiceBerryDriedFruitRecipe(0 , ProcessedProductType.SpiceBerryDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.SpiceBerry, 5)
     )) ),
-    StarfruitDriedFruitRecipe(0 , ProcessedProduct.StarfruitDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.Starfruit, 5)
+    StarfruitDriedFruitRecipe(0 , ProcessedProductType.StarfruitDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.Starfruit, 5)
     )) ),
-    StrawberryDriedFruitRecipe(0 , ProcessedProduct.StrawberryDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.Strawberry, 5)
+    StrawberryDriedFruitRecipe(0 , ProcessedProductType.StrawberryDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.Strawberry, 5)
     )) ),
-    WildPlumDriedFruitRecipe(0 , ProcessedProduct.WildPlumDriedFruit, new ArrayList<>(List.of(
-            new Stack(CropType.WildPlum, 5)
+    WildPlumDriedFruitRecipe(0 , ProcessedProductType.WildPlumDriedFruit, new ArrayList<>(List.of(
+            new Ingredient(CropType.WildPlum, 5)
     )) ),
-    RaisinsRecipe(0 , ProcessedProduct.Raisins, new ArrayList<>(List.of(
-            new Stack(CropType.Grape , 5)
+    RaisinsRecipe(0 , ProcessedProductType.Raisins, new ArrayList<>(List.of(
+            new Ingredient(CropType.Grape , 5)
     ))),
-    CoalRecipe(0 , ProcessedProduct.Coal, new ArrayList<>(List.of(
-            new Stack(MineralType.Wood , 10)
+    CoalRecipe(0 , ProcessedProductType.Coal, new ArrayList<>(List.of(
+            new Ingredient(MineralType.Wood , 10)
     ))),
-    ClothRecipe(0 , ProcessedProduct.Cloth, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.Wool , 1)
+    ClothRecipe(0 , ProcessedProductType.Cloth, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.Wool , 1)
     ))),
-    MayonnaiseRecipe(0 , ProcessedProduct.Mayonnaise, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.Egg , 1)
+    MayonnaiseRecipe(0 , ProcessedProductType.Mayonnaise, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.Egg , 1)
     ))),
-    LargeMayonnaiseRecipe(0 , ProcessedProduct.LargeMayonnaise, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.LargeEgg , 1)
+    LargeMayonnaiseRecipe(0 , ProcessedProductType.LargeMayonnaise, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.LargeEgg , 1)
     ))),
-    DuckMayonnaiseRecipe(0 , ProcessedProduct.DuckMayonnaise, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.DuckEgg , 1)
+    DuckMayonnaiseRecipe(0 , ProcessedProductType.DuckMayonnaise, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.DuckEgg , 1)
     ))),
-    DinosaurMayonnaiseRecipe(0 , ProcessedProduct.DinosaurMayonnaise, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.DinosaurEgg , 1)
+    DinosaurMayonnaiseRecipe(0 , ProcessedProductType.DinosaurMayonnaise, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.DinosaurEgg , 1)
     ))),
-    TruffleOilRecipe(0 , ProcessedProduct.TruffleOil, new ArrayList<>(List.of(
-            new Stack(AnimalProduct.Truffle , 1)
+    TruffleOilRecipe(0 , ProcessedProductType.TruffleOil, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.Truffle , 1)
     ))),
-    CornOilRecipe(0 , ProcessedProduct.CornOil, new ArrayList<>(List.of(
-            new Stack(CropType.Corn , 1)
+    CornOilRecipe(0 , ProcessedProductType.CornOil, new ArrayList<>(List.of(
+            new Ingredient(CropType.Corn , 1)
     ))),
-    SunflowerSeedOilRecipe(0 , ProcessedProduct.SunflowerSeedOil, new ArrayList<>(List.of(
-            new Stack(SeedType.SunflowerSeed , 1)
+    SunflowerSeedOilRecipe(0 , ProcessedProductType.SunflowerSeedOil, new ArrayList<>(List.of(
+            new Ingredient(SeedType.SunflowerSeed , 1)
     ))),
-    SunflowerOilRecipe(0 , ProcessedProduct.SunflowerOil, new ArrayList<>(List.of(
-            new Stack(CropType.Sunflower , 1)
+    SunflowerOilRecipe(0 , ProcessedProductType.SunflowerOil, new ArrayList<>(List.of(
+            new Ingredient(CropType.Sunflower , 1)
     ))),
-    AmaranthPicklesRecipe(0 , ProcessedProduct.AmaranthPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Amaranth , 1)
+    AmaranthPicklesRecipe(0 , ProcessedProductType.AmaranthPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Amaranth , 1)
     ))),
-    ArtichokePicklesRecipe(0 , ProcessedProduct.ArtichokePickles, new ArrayList<>(List.of(
-            new Stack(CropType.Artichoke , 1)
+    ArtichokePicklesRecipe(0 , ProcessedProductType.ArtichokePickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Artichoke , 1)
     ))),
-    BeetPicklesRecipe(0 , ProcessedProduct.BeetPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Beet , 1)
+    BeetPicklesRecipe(0 , ProcessedProductType.BeetPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Beet , 1)
     ))),
-    BokChoyPicklesRecipe(0, ProcessedProduct.BokChoyPickles, new ArrayList<>(List.of(
-            new Stack(CropType.BokChoy , 1)
+    BokChoyPicklesRecipe(0, ProcessedProductType.BokChoyPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.BokChoy , 1)
     ))),
-    BroccoliPicklesRecipe(0 , ProcessedProduct.BroccoliPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Broccoli , 1)
+    BroccoliPicklesRecipe(0 , ProcessedProductType.BroccoliPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Broccoli , 1)
     ))),
-    CarrotPicklesRecipe(0 , ProcessedProduct.CarrotPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Carrot , 1)
+    CarrotPicklesRecipe(0 , ProcessedProductType.CarrotPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Carrot , 1)
     ))),
-    CauliflowerPicklesRecipe(0 , ProcessedProduct.CauliflowerPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Cauliflower , 1)
+    CauliflowerPicklesRecipe(0 , ProcessedProductType.CauliflowerPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Cauliflower , 1)
     ))),
-    CornPicklesRecipe(0 , ProcessedProduct.CornPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Corn , 1)
+    CornPicklesRecipe(0 , ProcessedProductType.CornPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Corn , 1)
     ))),
-    EggplantPicklesRecipe(0 , ProcessedProduct.EggplantPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Eggplant, 1)
+    EggplantPicklesRecipe(0 , ProcessedProductType.EggplantPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Eggplant, 1)
     ))),
-    FiddleheadFernPicklesRecipe(0 , ProcessedProduct.FiddleheadFernPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Eggplant , 1)
+    FiddleheadFernPicklesRecipe(0 , ProcessedProductType.FiddleheadFernPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Eggplant , 1)
     ))),
-    GarlicPicklesRecipe(0 , ProcessedProduct.GarlicPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Garlic, 1)
+    GarlicPicklesRecipe(0 , ProcessedProductType.GarlicPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Garlic, 1)
     ))),
-    GreenBeanPicklesRecipe(0 , ProcessedProduct.GreenBeanPickles, new ArrayList<>(List.of(
-            new Stack(CropType.GreenBean , 1)
+    GreenBeanPicklesRecipe(0 , ProcessedProductType.GreenBeanPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.GreenBean , 1)
     ))),
-    HopsPicklesRecipe(0 , ProcessedProduct.HopsPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Hops , 1)
+    HopsPicklesRecipe(0 , ProcessedProductType.HopsPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Hops , 1)
     ))),
-    KalePicklesRecipe(0 , ProcessedProduct.KalePickles, new ArrayList<>(List.of(
-            new Stack(CropType.Kale , 1)
+    KalePicklesRecipe(0 , ProcessedProductType.KalePickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Kale , 1)
     ))),
-    ParsnipPicklesRecipe(0 , ProcessedProduct.ParsnipPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Parsnip , 1)
+    ParsnipPicklesRecipe(0 , ProcessedProductType.ParsnipPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Parsnip , 1)
     ))),
-    PotatoPicklesRecipe(0 , ProcessedProduct.PotatoPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Potato , 1)
+    PotatoPicklesRecipe(0 , ProcessedProductType.PotatoPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Potato , 1)
     ))),
-    PumpkinPicklesRecipe(0 , ProcessedProduct.PumpkinPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Pumpkin , 1)
+    PumpkinPicklesRecipe(0 , ProcessedProductType.PumpkinPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Pumpkin , 1)
     ))),
-    RadishPicklesRecipe(0 , ProcessedProduct.RadishPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Radish , 1)
+    RadishPicklesRecipe(0 , ProcessedProductType.RadishPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Radish , 1)
     ))),
-    RedCabbagePicklesRecipe(0 , ProcessedProduct.RedCabbagePickles, new ArrayList<>(List.of(
-            new Stack(CropType.RedCabbage , 1)
+    RedCabbagePicklesRecipe(0 , ProcessedProductType.RedCabbagePickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.RedCabbage , 1)
     ))),
-    SummerSquashPicklesRecipe(0 , ProcessedProduct.SummerSquashPickles, new ArrayList<>(List.of(
-            new Stack(CropType.SummerSquash , 1)
+    SummerSquashPicklesRecipe(0 , ProcessedProductType.SummerSquashPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.SummerSquash , 1)
     ))),
-    TomatoPicklesRecipe(0 , ProcessedProduct.TomatoPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Tomato , 1)
+    TomatoPicklesRecipe(0 , ProcessedProductType.TomatoPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Tomato , 1)
     ))),
-    UnmilledRicePicklesRecipe(0 , ProcessedProduct.UnmilledRicePickles, new ArrayList<>(List.of(
-            new Stack(CropType.UnmilledRice , 1)
+    UnmilledRicePicklesRecipe(0 , ProcessedProductType.UnmilledRicePickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.UnmilledRice , 1)
     ))),
-    WheatPicklesRecipe(0 , ProcessedProduct.WheatPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Wheat , 1)
+    WheatPicklesRecipe(0 , ProcessedProductType.WheatPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Wheat , 1)
     ))),
-    YamPicklesRecipe(0 , ProcessedProduct.YamPickles, new ArrayList<>(List.of(
-            new Stack(CropType.Yam , 1)
+    YamPicklesRecipe(0 , ProcessedProductType.YamPickles, new ArrayList<>(List.of(
+            new Ingredient(CropType.Yam , 1)
     ))),
-    AncientFruitJellyRecipe(0 , ProcessedProduct.AncientFruitJelly, new ArrayList<>(List.of(
-            new Stack(CropType.AncientFruit , 1)
+    AncientFruitJellyRecipe(0 , ProcessedProductType.AncientFruitJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.AncientFruit , 1)
     ))),
-    AppleJellyRecipe(0 , ProcessedProduct.AppleJelly, new ArrayList<>(List.of(
-            new Stack(FruitType.Apple , 1)
+    AppleJellyRecipe(0 , ProcessedProductType.AppleJelly, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Apple , 1)
     ))),
-    ApricotJellyRecipe(0 , ProcessedProduct.ApricotJelly, new ArrayList<>(List.of(
-            new Stack(FruitType.Apricot , 1)
+    ApricotJellyRecipe(0 , ProcessedProductType.ApricotJelly, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Apricot , 1)
     ))),
-    BananaJellyRecipe(0 , ProcessedProduct.BananaJelly, new ArrayList<>(List.of(
-            new Stack(FruitType.Banana , 1)
+    BananaJellyRecipe(0 , ProcessedProductType.BananaJelly, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Banana , 1)
     ))),
-    BlackberryJellyRecipe(0 , ProcessedProduct.BlackberryJelly, new ArrayList<>(List.of(
-            new Stack(CropType.Blackberry , 1)
+    BlackberryJellyRecipe(0 , ProcessedProductType.BlackberryJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.Blackberry , 1)
     ))),
-    BlueberryJellyRecipe(0 , ProcessedProduct.BlueberryJelly, new ArrayList<>(List.of(
-            new Stack(CropType.Blueberry , 1)
+    BlueberryJellyRecipe(0 , ProcessedProductType.BlueberryJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.Blueberry , 1)
     ))),
-    CherryJellyRecipe(0 , ProcessedProduct.CherryJelly, new ArrayList<>(List.of(
-            new Stack(FruitType.Cherry , 1)
+    CherryJellyRecipe(0 , ProcessedProductType.CherryJelly, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Cherry , 1)
     ))),
-    CranberriesJellyRecipe(0 , ProcessedProduct.CranberriesJelly, new ArrayList<>(List.of(
-            new Stack(CropType.Cranberry , 1)
+    CranberriesJellyRecipe(0 , ProcessedProductType.CranberriesJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.Cranberry , 1)
     ))),
-    CrystalFruitJellyRecipe(0 , ProcessedProduct.CrystalFruitJelly, new ArrayList<>(List.of(
-            new Stack(CropType.CrystalFruit , 1)
+    CrystalFruitJellyRecipe(0 , ProcessedProductType.CrystalFruitJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.CrystalFruit , 1)
     ))),
-    GrapeJellyRecipe(0 , ProcessedProduct.GrapeJelly, new ArrayList<>(List.of(
-            new Stack(CropType.Grape , 1)
+    GrapeJellyRecipe(0 , ProcessedProductType.GrapeJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.Grape , 1)
     ))),
-    HotPepperJellyRecipe(0 , ProcessedProduct.HotPepperJelly, new ArrayList<>(List.of(
-            new Stack(CropType.HotPepper , 1)
+    HotPepperJellyRecipe(0 , ProcessedProductType.HotPepperJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.HotPepper , 1)
     ))),
-    MangoJellyRecipe(0 , ProcessedProduct.MangoJelly, new ArrayList<>(List.of(
-            new Stack(FruitType.Mango , 1)
+    MangoJellyRecipe(0 , ProcessedProductType.MangoJelly, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Mango , 1)
     ))),
-    MelonJellyRecipe(0 , ProcessedProduct.MelonJelly, new ArrayList<>(List.of(
-            new Stack(CropType.Melon , 1)
+    MelonJellyRecipe(0 , ProcessedProductType.MelonJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.Melon , 1)
     ))),
-    OrangeJellyRecipe(0 , ProcessedProduct.OrangeJelly, new ArrayList<>(List.of(
-            new Stack(FruitType.Orange , 1)
+    OrangeJellyRecipe(0 , ProcessedProductType.OrangeJelly, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Orange , 1)
     ))),
-    PeachJellyRecipe(0 , ProcessedProduct.PeachJelly, new ArrayList<>(List.of(
-            new Stack(FruitType.Peach , 1)
+    PeachJellyRecipe(0 , ProcessedProductType.PeachJelly, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Peach , 1)
     ))),
-    PomegranateJellyRecipe(0 , ProcessedProduct.PomegranateJelly, new ArrayList<>(List.of(
-            new Stack(FruitType.Pomegranate , 1)
+    PomegranateJellyRecipe(0 , ProcessedProductType.PomegranateJelly, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Pomegranate , 1)
     ))),
-    PowdermelonJellyRecipe(0 , ProcessedProduct.PowderMelonJelly, new ArrayList<>(List.of(
-            new Stack(CropType.PowderMelon , 1)
+    PowdermelonJellyRecipe(0 , ProcessedProductType.PowderMelonJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.PowderMelon , 1)
     ))),
-    RhubarbJellyRecipe(0 , ProcessedProduct.RhubarbJelly, new ArrayList<>(List.of(
-            new Stack(CropType.Rhubarb , 1)
+    RhubarbJellyRecipe(0 , ProcessedProductType.RhubarbJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.Rhubarb , 1)
     ))),
-    SalmonberryJellyRecipe(0 , ProcessedProduct.SalmonBerryJelly, new ArrayList<>(List.of(
-            new Stack(CropType.SalmonBerry, 1)
+    SalmonberryJellyRecipe(0 , ProcessedProductType.SalmonBerryJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.SalmonBerry, 1)
     ))),
-    SpiceBerryJellyRecipe(0 , ProcessedProduct.SpiceBerryJelly, new ArrayList<>(List.of(
-            new Stack(CropType.SpiceBerry , 1)
+    SpiceBerryJellyRecipe(0 , ProcessedProductType.SpiceBerryJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.SpiceBerry , 1)
     ))),
-    StarfruitJellyRecipe(0 , ProcessedProduct.StarfruitJelly, new ArrayList<>(List.of(
-            new Stack(CropType.Starfruit , 1)
+    StarfruitJellyRecipe(0 , ProcessedProductType.StarfruitJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.Starfruit , 1)
     ))),
-    StrawberryJellyRecipe(0 , ProcessedProduct.StrawberryJelly, new ArrayList<>(List.of(
-            new Stack(CropType.Strawberry , 1)
+    StrawberryJellyRecipe(0 , ProcessedProductType.StrawberryJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.Strawberry , 1)
     ))),
-    WildPlumJellyRecipe(0 , ProcessedProduct.WildPlumJelly, new ArrayList<>(List.of(
-            new Stack(CropType.WildPlum , 1)
+    WildPlumJellyRecipe(0 , ProcessedProductType.WildPlumJelly, new ArrayList<>(List.of(
+            new Ingredient(CropType.WildPlum , 1)
     ))),
-    SalmonSmokeFishRecipe(0 , ProcessedProduct.SalmonSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Salmon , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    SalmonSmokeFishRecipe(0 , ProcessedProductType.SalmonSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Salmon , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    SardineSmokeFishRecipe(0 , ProcessedProduct.SardineSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Sardine , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    SardineSmokeFishRecipe(0 , ProcessedProductType.SardineSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Sardine , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    ShadSmokeFishRecipe(0 , ProcessedProduct.ShadSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Shad , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    ShadSmokeFishRecipe(0 , ProcessedProductType.ShadSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Shad , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    BlueDiscusSmokeFishRecipe(0 , ProcessedProduct.BlueDiscusSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.BlueDiscus , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    BlueDiscusSmokeFishRecipe(0 , ProcessedProductType.BlueDiscusSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.BlueDiscus , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    MidnightCarpSmokeFishRecipe(0 , ProcessedProduct.MidnightCarpSmokeFish , new ArrayList<>(List.of(
-            new Stack(FishType.MidnightCarp , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    MidnightCarpSmokeFishRecipe(0 , ProcessedProductType.MidnightCarpSmokeFish , new ArrayList<>(List.of(
+            new Ingredient(FishType.MidnightCarp , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    SquidSmokeFishRecipe(0 , ProcessedProduct.SquidSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Squid , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    SquidSmokeFishRecipe(0 , ProcessedProductType.SquidSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Squid , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    TunaSmokeFishRecipe(0 , ProcessedProduct.TunaSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Tuna , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    TunaSmokeFishRecipe(0 , ProcessedProductType.TunaSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Tuna , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    PerchSmokeFishRecipe(0 , ProcessedProduct.PerchSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Perch , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    PerchSmokeFishRecipe(0 , ProcessedProductType.PerchSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Perch , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    FlounderSmokeFishRecipe(0 , ProcessedProduct.FlounderSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Flounder , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    FlounderSmokeFishRecipe(0 , ProcessedProductType.FlounderSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Flounder , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    LionfishSmokeFishRecipe(0 , ProcessedProduct.LionfishSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Lionfish , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    LionfishSmokeFishRecipe(0 , ProcessedProductType.LionfishSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Lionfish , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    HerringSmokeFishRecipe(0 , ProcessedProduct.HerringSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Herring , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    HerringSmokeFishRecipe(0 , ProcessedProductType.HerringSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Herring , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    GhostfishSmokeFishRecipe(0 , ProcessedProduct.GhostfishSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Ghostfish , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    GhostfishSmokeFishRecipe(0 , ProcessedProductType.GhostfishSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Ghostfish , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    TilapiaSmokeFishRecipe(0 , ProcessedProduct.TilapiaSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Tilapia , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    TilapiaSmokeFishRecipe(0 , ProcessedProductType.TilapiaSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Tilapia , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    DoradoSmokeFishRecipe(0 , ProcessedProduct.DoradoSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Dorado , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    DoradoSmokeFishRecipe(0 , ProcessedProductType.DoradoSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Dorado , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    SunfishSmokeFishRecipe(0 , ProcessedProduct.SunfishSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Sunfish , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    SunfishSmokeFishRecipe(0 , ProcessedProductType.SunfishSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Sunfish , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    RainbowTroutSmokeFishRecipe(0 , ProcessedProduct.RainbowTroutSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.RainbowTrout , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    RainbowTroutSmokeFishRecipe(0 , ProcessedProductType.RainbowTroutSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.RainbowTrout , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    LegendSmokeFishRecipe(0 , ProcessedProduct.LegendSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Legend , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    LegendSmokeFishRecipe(0 , ProcessedProductType.LegendSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Legend , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    GlacierfishSmokeFishRecipe(0 , ProcessedProduct.GlacierfishSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Glacierfish , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    GlacierfishSmokeFishRecipe(0 , ProcessedProductType.GlacierfishSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Glacierfish , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    AnglerSmokeFishRecipe(0 , ProcessedProduct.AnglerSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Angler , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    AnglerSmokeFishRecipe(0 , ProcessedProductType.AnglerSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Angler , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    CrimsonfishSmokeFishRecipe(0 , ProcessedProduct.CrimsonfishSmokeFish, new ArrayList<>(List.of(
-            new Stack(FishType.Crimsonfish , 1),
-            new Stack(ProcessedProduct.Coal , 1)
+    CrimsonfishSmokeFishRecipe(0 , ProcessedProductType.CrimsonfishSmokeFish, new ArrayList<>(List.of(
+            new Ingredient(FishType.Crimsonfish , 1),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    CopperMetalBarRecipe(0 , ProcessedProduct.CopperMetalBar, new ArrayList<>(List.of(
-            new Stack(MineralType.CopperOre , 5),
-            new Stack(ProcessedProduct.Coal , 1)
+    CopperMetalBarRecipe(0 , ProcessedProductType.CopperMetalBar, new ArrayList<>(List.of(
+            new Ingredient(MineralType.CopperOre , 5),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    IronMetalBarRecipe(0 , ProcessedProduct.IronMetalBar, new ArrayList<>(List.of(
-            new Stack(MineralType.IronOre , 5),
-            new Stack(ProcessedProduct.Coal , 1)
+    IronMetalBarRecipe(0 , ProcessedProductType.IronMetalBar, new ArrayList<>(List.of(
+            new Ingredient(MineralType.IronOre , 5),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    GoldMetalBarRecipe(0 , ProcessedProduct.GoldMetalBar, new ArrayList<>(List.of(
-            new Stack(MineralType.GoldOre , 5),
-            new Stack(ProcessedProduct.Coal , 1)
+    GoldMetalBarRecipe(0 , ProcessedProductType.GoldMetalBar, new ArrayList<>(List.of(
+            new Ingredient(MineralType.GoldOre , 5),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
-    IridiumMetalBarRecipe(0 , ProcessedProduct.IridiumMetalBar, new ArrayList<>(List.of(
-            new Stack(MineralType.IridiumOre , 5),
-            new Stack(ProcessedProduct.Coal , 1)
+    IridiumMetalBarRecipe(0 , ProcessedProductType.IridiumMetalBar, new ArrayList<>(List.of(
+            new Ingredient(MineralType.IridiumOre , 5),
+            new Ingredient(ProcessedProductType.Coal , 1)
     ))),
     FishSmoker(10000, CraftingProduct.FishSmoker, new ArrayList<>(List.of(
-            new Stack(MineralType.Wood, 50),
-            new Stack(ProcessedProduct.IronMetalBar, 3),
-            new Stack(ProcessedProduct.Coal , 10)
+            new Ingredient(MineralType.Wood, 50),
+            new Ingredient(ProcessedProductType.IronMetalBar, 3),
+            new Ingredient(ProcessedProductType.Coal , 10)
     ))),
     DehydratorRecipe(),
     GrassStarterRecipe(),
@@ -560,15 +564,15 @@ public enum Recipe implements Item {
     SeaformPuddingRecipe(),
     TroutSoupRecipe(),
     MinerTreatRecipe(),
-    RiceRecipe(0, ProcessedProduct.Rice, new ArrayList<>(List.of(
-            new Stack(CropType.UnmilledRice, 1)
+    RiceRecipe(0, ProcessedProductType.Rice, new ArrayList<>(List.of(
+            new Ingredient(CropType.UnmilledRice, 1)
     )));
 
     private final int price;
     private final Item finalProduct;
-    private final ArrayList<Stack> ingredients;
+    private final ArrayList<Ingredient> ingredients;
 
-    Recipe(int price, Item finalProduct, ArrayList<Stack> ingredients) {
+    Recipe(int price, Item finalProduct, ArrayList<Ingredient> ingredients) {
         this.price = price;
         this.finalProduct = finalProduct;
         this.ingredients = ingredients;

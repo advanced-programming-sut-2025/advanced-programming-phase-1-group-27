@@ -3,7 +3,7 @@ package org.example.models.enums;
 import org.example.models.Stack;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.CookingProduct;
-import org.example.models.enums.items.products.ProcessedProduct;
+import org.example.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
 
@@ -29,15 +29,19 @@ public enum StocksForShops {
     StocksForShops(ArrayList<Stack> stacks) {
         this.stacks = stacks;
     }
+
+    public ArrayList<Stack> getStacks() {
+        return stacks;
+    }
+
     //Limits are daily and restock every morning
     //-1 means unlimited
-
     private static ArrayList<Stack> BlacksmithStoreStock() {
         ArrayList<Stack> BlacksmithStore = new ArrayList<>();
         BlacksmithStore.add(new Stack(MineralType.CopperOre, -1));
         BlacksmithStore.add(new Stack(MineralType.IronOre, -1));
         BlacksmithStore.add(new Stack(MineralType.GoldOre, -1));
-        BlacksmithStore.add(new Stack(ProcessedProduct.Coal, -1));
+        BlacksmithStore.add(new Stack(ProcessedProductType.Coal, -1));
         return BlacksmithStore;
     }
 
@@ -59,12 +63,12 @@ public enum StocksForShops {
 
     private static ArrayList<Stack> StardropSaloonStock() {
         ArrayList<Stack> StardropSaloon = new ArrayList<>();
-        StardropSaloon.add(new Stack(ProcessedProduct.Beer , -1));
+        StardropSaloon.add(new Stack(ProcessedProductType.Beer , -1));
         StardropSaloon.add(new Stack(CookingProduct.Salad , -1));
         StardropSaloon.add(new Stack(CookingProduct.Bread , -1));
         StardropSaloon.add(new Stack(CookingProduct.Spaghetti , -1));
         StardropSaloon.add(new Stack(CookingProduct.Pizza, -1));
-        StardropSaloon.add(new Stack(ProcessedProduct.Coffee , -1));
+        StardropSaloon.add(new Stack(ProcessedProductType.Coffee , -1));
         StardropSaloon.add(new Stack(Recipe.HashbrownsRecipe, 1));
         StardropSaloon.add(new Stack(Recipe.OmeletteRecipe, 1));
         StardropSaloon.add(new Stack(Recipe.PancakeRecipe, 1));
@@ -99,7 +103,7 @@ public enum StocksForShops {
         JojaMart.add(new Stack(SeedType.GrassStater , -1));
         JojaMart.add(new Stack(ShopItems.Sugar , -1));
         JojaMart.add(new Stack(ShopItems.WheatFlour , -1));
-        JojaMart.add(new Stack(ProcessedProduct.Rice , -1));
+        JojaMart.add(new Stack(ProcessedProductType.Rice , -1));
         return JojaMart;
     }
 
@@ -157,21 +161,21 @@ public enum StocksForShops {
 
     private static ArrayList<Stack> WinterMartJojaMartStock() {
         ArrayList<Stack> WinterMartJojaMart = new ArrayList<>();
-        WinterMartJojaMart.add(new Stack(SeedType.PowdermelonSeed , 10));
+        WinterMartJojaMart.add(new Stack(SeedType.PowderMelonSeed , 10));
         return WinterMartJojaMart;
     }
 
     private static ArrayList<Stack> PermanentPierreGeneralStoreStock(){
         ArrayList<Stack> PermanentPierreGeneralStore = new ArrayList<>();
-        PermanentPierreGeneralStore.add(new Stack(ProcessedProduct.Rice , -1));
+        PermanentPierreGeneralStore.add(new Stack(ProcessedProductType.Rice , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.WheatFlour , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.Bouquet , 2));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.WeddingRing , 2));
         PermanentPierreGeneralStore.add(new Stack(Recipe.DehydratorRecipe , 1));
         PermanentPierreGeneralStore.add(new Stack(Recipe.GrassStarterRecipe , 1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.Sugar , -1));
-        PermanentPierreGeneralStore.add(new Stack(ProcessedProduct.Oil , -1));
-        PermanentPierreGeneralStore.add(new Stack(ProcessedProduct.Vinegar , -1));
+        PermanentPierreGeneralStore.add(new Stack(ProcessedProductType.Oil , -1));
+        PermanentPierreGeneralStore.add(new Stack(ProcessedProductType.Vinegar , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.BasicFertilizer , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.QualityFertilizer , -1));
         PermanentPierreGeneralStore.add(new Stack(SeedType.GrassStater , -1));
@@ -249,7 +253,7 @@ public enum StocksForShops {
     private static ArrayList<Stack> FishShopStock(){
         ArrayList<Stack> FishShopStock = new ArrayList<>();
         FishShopStock.add(new Stack(Recipe.FishSmoker , 1));
-        FishShopStock.add(new Stack(CookingProduct.TroutSoup , 1));
+        FishShopStock.add(new Stack(ShopItems.TroutSoup , 1));
         FishShopStock.add(new Stack(ToolType.BambooPole , 1));
         FishShopStock.add(new Stack(ToolType.TrainingRod , 1));
         FishShopStock.add(new Stack(ToolType.FiberglassRod , 1));

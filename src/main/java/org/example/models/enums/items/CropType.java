@@ -1,5 +1,6 @@
 package org.example.models.enums.items;
 
+import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
 
 public enum CropType implements Item {
@@ -99,7 +100,7 @@ public enum CropType implements Item {
     Broccoli(new int[]{2, 2, 2, 2}, 70, SeedType.BroccoliSeed, 8
             , 4, 63, true, true, false
             , new Season[]{Season.Fall}),
-    Cranberries(new int[]{1, 2, 1, 1, 2}, 75, SeedType.CranberrySeed, 7
+    Cranberry(new int[]{1, 2, 1, 1, 2}, 75, SeedType.CranberrySeed, 7
             , 5, 38, true, true, false
             , new Season[]{Season.Fall}),
     Eggplant(new int[]{1, 1, 1, 1}, 60, SeedType.EggplantSeed, 5
@@ -188,7 +189,8 @@ public enum CropType implements Item {
             , new Season[]{Season.Winter}),
     WinterRoot(new int[]{} , 70 , null , 0
             , null , 25 , false , true , false
-            , new Season[]{Season.Winter}),;
+            , new Season[]{Season.Winter});
+
     private int price;
     private SeedType source;
     private int[] stages;

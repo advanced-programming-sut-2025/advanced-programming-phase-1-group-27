@@ -1,6 +1,6 @@
 package org.example.models.tools;
 
-import org.example.models.enums.items.Item;
+import org.example.models.Item;
 
 public class Pickaxe extends Tool implements Item {
     //EnergyUsage : 5 - 4 - 3 - 2 - 1;

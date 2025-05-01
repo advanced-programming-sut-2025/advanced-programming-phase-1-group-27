@@ -1,6 +1,7 @@
 package org.example.models.enums;
 
-import org.example.models.enums.items.Item;
+import org.example.models.Map;
+import org.example.models.Item;
 import org.example.models.NPCs.Dialogue;
 import org.example.models.NPCs.Quest;
 import org.example.models.Relations.Relation;

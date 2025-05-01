@@ -1,8 +1,9 @@
 package org.example.models.enums.items;
 
+import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
 
-public enum SeedType implements Item{
+public enum SeedType implements Item {
     //Starter + Seed + Bean + Shoot
     GrassStater,
     ParsnipSeed,
@@ -52,5 +53,10 @@ public enum SeedType implements Item{
 
     public boolean isFarmable() {
         
+    }
+
+    @Override
+    public int getPrice() {
+        return 0;
     }
 }

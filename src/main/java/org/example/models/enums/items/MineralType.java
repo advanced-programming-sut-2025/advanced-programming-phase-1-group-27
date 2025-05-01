@@ -1,5 +1,7 @@
 package org.example.models.enums.items;
 
+import org.example.models.Item;
+
 public enum MineralType implements Item {
     Quartz(25),
     EarthCrystal(50),

@@ -1,12 +1,10 @@
 package org.example.models;
 
 import org.example.models.enums.items.ArtisanTypes;
-import org.example.models.enums.items.products.ProcessedProduct;
-
-import java.util.ArrayList;
+import org.example.models.enums.items.products.ProcessedProductType;
 
 public class Artisan {
     private ArtisanTypes type;
-    private ProcessedProduct finalProduct;
+    private ProcessedProductType finalProduct;
     private int timeLeft;
 }

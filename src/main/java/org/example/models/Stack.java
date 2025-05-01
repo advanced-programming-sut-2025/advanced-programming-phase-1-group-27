@@ -1,7 +1,5 @@
 package org.example.models;
 
-import org.example.models.enums.items.Item;
-
 public class Stack {
     private Item item;
     private int quantity;
@@ -34,4 +32,5 @@ public class Stack {
     public void subtractQuantity(int quantity) {
         this.quantity -= quantity;
     }
+
 }

@@ -1,8 +1,9 @@
 package org.example.models.enums.items.products;
 
+import org.example.models.Item;
 import org.example.models.enums.items.*;
 
-public enum ProcessedProduct implements Item {
+public enum ProcessedProductType implements Item {
     Honey(Recipe.HoneyRecipe , 75 , 350),
     Cheese(Recipe.CheeseRecipe , 100 , 230),
     LargeCheese(Recipe.LargeCheeseRecipe , 100 , 345),
@@ -11,6 +12,7 @@ public enum ProcessedProduct implements Item {
     Beer(Recipe.BeerRecipe , 50 , 200),
     Vinegar(Recipe.VinegarRecipe , 13 , 100),
     Coffee(Recipe.CoffeeRecipe , 75 , 150),
+    Juice(Recipe.JuiceRecipe, null, null),
     AmaranthJuice(Recipe.AmaranthJuiceRecipe , CropType.Amaranth.getEnergy() * 2 ,
             getPriceWithMultiplier(CropType.Amaranth , 2.25)),
     ArtichokeJuice(Recipe.ArtichokeJuiceRecipe , CropType.Artichoke.getEnergy() * 2,
@@ -75,8 +77,8 @@ public enum ProcessedProduct implements Item {
             getPriceWithMultiplier(CropType.Blueberry , 3)),
     CherryWine(Recipe.CherryWineRecipe , (int) (FruitType.Cherry.getEnergy() * 1.75) ,
             getPriceWithMultiplier(FruitType.Cherry , 3)),
-    CranberriesWine(Recipe.CranberriesWineRecipe , (int) (CropType.Cranberries.getEnergy() * 1.75) ,
-            getPriceWithMultiplier(CropType.Cranberries , 3)),
+    CranberriesWine(Recipe.CranberriesWineRecipe , (int) (CropType.Cranberry.getEnergy() * 1.75) ,
+            getPriceWithMultiplier(CropType.Cranberry, 3)),
     CrystalFruitWine(Recipe.CrystalFruitWineRecipe , (int) (CropType.CrystalFruit.getEnergy() * 1.75) ,
             getPriceWithMultiplier(CropType.CrystalFruit , 3)),
     GrapeWine(Recipe.GrapeWineRecipe , (int) (CropType.Grape.getEnergy() * 1.75) ,
@@ -132,7 +134,7 @@ public enum ProcessedProduct implements Item {
     CherryDriedFruit(Recipe.CherryDriedFruitRecipe , 75 ,
             getPriceWithMultiplier(FruitType.Cherry , 7.5) + 25),
     CranberriesDriedFruit(Recipe.CranberriesDriedFruitRecipe , 75 ,
-            getPriceWithMultiplier(CropType.Cranberries , 7.5) + 25),
+            getPriceWithMultiplier(CropType.Cranberry, 7.5) + 25),
     CrystalFruitDriedFruit(Recipe.CrystalFruitDriedFruitRecipe , 75 ,
             getPriceWithMultiplier(CropType.CrystalFruit , 7.5) + 25),
     HotPepperDriedFruit(Recipe.HotPepperDriedFruitRecipe , 75 ,
@@ -235,8 +237,8 @@ public enum ProcessedProduct implements Item {
             getPriceWithMultiplier(CropType.Blueberry , 2) + 50),
     CherryJelly(Recipe.CherryJellyRecipe , FruitType.Cherry.getEnergy() * 2,
             getPriceWithMultiplier(FruitType.Cherry , 2) + 50),
-    CranberriesJelly(Recipe.CranberriesJellyRecipe , CropType.Cranberries.getEnergy() * 2,
-            getPriceWithMultiplier(CropType.Cranberries , 2) + 50),
+    CranberriesJelly(Recipe.CranberriesJellyRecipe , CropType.Cranberry.getEnergy() * 2,
+            getPriceWithMultiplier(CropType.Cranberry, 2) + 50),
     CrystalFruitJelly(Recipe.CrystalFruitJellyRecipe , CropType.CrystalFruit.getEnergy() * 2,
             getPriceWithMultiplier(CropType.CrystalFruit , 2) + 50),
     GrapeJelly(Recipe.GrapeJellyRecipe , CropType.Grape.getEnergy() * 2,
@@ -314,10 +316,10 @@ public enum ProcessedProduct implements Item {
     Rice(Recipe.RiceRecipe, 0, 250); // energy not defined!
 
     private final Recipe recipe;
-    private final int energy;
-    private final int price;
+    private final Integer energy;
+    private final Integer price;
 
-    ProcessedProduct(Recipe recipe, int energy, int price) {
+    ProcessedProductType(Recipe recipe, int energy, int price) {
         this.recipe = recipe;
         this.energy = energy;
         this.price = price;

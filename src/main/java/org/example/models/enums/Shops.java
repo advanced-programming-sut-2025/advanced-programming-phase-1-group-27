@@ -16,14 +16,15 @@ public enum Shops {
     private final NPCType manager;
     private final int startTime;
     private final int endTime;
-    private final ArrayList<Stack> stacks;
+    private ArrayList<Stack> stacks;
 
-
-
-    Shops(NPCType manager , int startTime, int endTime, ArrayList<Stack> stacks) {
+    Shops(NPCType manager , int startTime, int endTime) {
         this.manager = manager;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public void setStacks(ArrayList<Stack> stacks) { // TODO: stacks should be initialized every morning depending on season
         this.stacks = stacks;
     }
 }

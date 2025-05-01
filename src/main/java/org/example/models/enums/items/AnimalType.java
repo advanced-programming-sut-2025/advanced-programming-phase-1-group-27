@@ -1,5 +1,6 @@
 package org.example.models.enums.items;
 
+import org.example.models.Item;
 import org.example.models.enums.items.products.AnimalProduct;
 
 import java.util.ArrayList;

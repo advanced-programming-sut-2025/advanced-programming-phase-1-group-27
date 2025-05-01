@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.models.enums.items.Item;
+import org.example.models.Item;
 import org.example.models.enums.items.ToolType;
 import org.example.models.App;
 import org.example.models.Result;
