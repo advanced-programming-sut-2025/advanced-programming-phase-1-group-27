@@ -4,7 +4,7 @@ import org.example.models.Item;
 import org.example.models.enums.items.Recipe;
 
 public enum CraftingProduct implements Item {
-    CherryBomb,
+    CherryBomb(),
     Bomb,
     MegaBomb,
     Sprinkler,
@@ -25,7 +25,17 @@ public enum CraftingProduct implements Item {
     FishSmoker,
     MysticTreeSeed;
     // TODO: different crafting products
+
     private final Recipe recipe;
     private final int price;
-    // TODO: create constructor
+
+    CraftingProduct(Recipe recipe, int price) {
+        this.recipe = recipe;
+        this.price = price;
+    }
+
+    @Override
+    public int getPrice() {
+        return 0;
+    }
 }

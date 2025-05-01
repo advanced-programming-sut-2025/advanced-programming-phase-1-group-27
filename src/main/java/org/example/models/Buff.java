@@ -6,6 +6,11 @@ public class Buff {
     private final AbilityType ability;
     private final int duration;
 
+    public Buff(AbilityType ability, int duration) {
+        this.ability = ability;
+        this.duration = duration;
+    }
+
     public AbilityType getAbility() {
         return ability;
     }
