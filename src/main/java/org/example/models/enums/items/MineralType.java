@@ -2,6 +2,9 @@ package org.example.models.enums.items;
 
 import org.example.models.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum MineralType implements Item {
     Quartz(25),
     EarthCrystal(50),
@@ -24,9 +27,14 @@ public enum MineralType implements Item {
     Coal(15);
 
     private int price;
+    private static ArrayList<MineralType> foragingMinerals = new ArrayList<>(List.of(MineralType.values()));
 
     MineralType(int price) {
         this.price = price;
+    }
+
+    public static ArrayList<MineralType> getForagingMinerals() {
+        return foragingMinerals;
     }
 
     @Override

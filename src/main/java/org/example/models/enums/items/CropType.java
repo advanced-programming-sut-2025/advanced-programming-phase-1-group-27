@@ -3,6 +3,10 @@ package org.example.models.enums.items;
 import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public enum CropType implements Item {
     BlueJazz(new int[]{1, 2, 2, 2}, 50, SeedType.JazzSeed, 7
             , null, 45, true, true, false
@@ -198,6 +202,17 @@ public enum CropType implements Item {
     private Integer regrowthTime;
     private boolean oneTime, isEdible, canBecomeGiant;
     private Season[] season;
+    private static HashMap<Season, ArrayList<CropType>> foragingCropsBySeason = new HashMap<>(){{
+        put(Season.Spring, new ArrayList<>(List.of(CropType.Daffodil,
+        CropType.Dandelion, CropType.Leek, CropType.Morel, CropType.SalmonBerry, CropType.SpringOnion,
+            CropType.WildHorseradish)));
+        put(Season.Summer, new ArrayList<>(List.of(CropType.FiddleheadFern, CropType.Grape, CropType.RedMushroom,
+            CropType.SpiceBerry, CropType.SweetPea)));
+        put(Season.Fall, new ArrayList<>(List.of(CropType.Blackberry, CropType.Chanterelle, CropType.Hazelnut,
+                CropType.PurpleMushroom, CropType.WildPlum)));
+        put(Season.Winter, new ArrayList<>(List.of(CropType.Crocus, CropType.CrystalFruit, CropType.Holly,
+                CropType.SnowYum, CropType.WinterRoot)));
+    }};
 
     CropType(int[] stages, int price, SeedType source, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] season) {
@@ -215,6 +230,10 @@ public enum CropType implements Item {
 
     public int getEnergy() {
         return energy;
+    }
+
+    public static HashMap<Season, ArrayList<CropType>> getForagingCropsBySeason() {
+        return foragingCropsBySeason;
     }
 
     @Override

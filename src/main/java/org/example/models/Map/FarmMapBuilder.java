@@ -1,0 +1,96 @@
+package org.example.models.Map;
+
+import org.example.models.Cell;
+import org.example.models.enums.CellType;
+
+import java.util.Random;
+
+public class FarmMapBuilder {
+    private FarmMap finalProduct;
+    private int n, m;
+
+    public void setDimensions(int height, int width) {
+        finalProduct = new FarmMap(height, width);
+        n = height;
+        m = width;
+    }
+
+    public void createHut() {
+        Hut hut = new Hut(finalProduct.getCell(7, m - 5));
+        for (int i = 4; i < 8; i++) {
+            for (int j = m - 6; j < m - 2; j++) {
+                finalProduct.getCell(i, j).setType(CellType.Building);
+                finalProduct.getCell(j, i).setPlace(hut);
+            }
+        }
+        finalProduct.getCell(7, m - 5).setType(CellType.Door);
+        finalProduct.setHut(hut);
+    }
+
+    public void createBigLake(int x, int y) {
+        for (int i = x; i < x + 8; i++)
+            for (int j = y; j < y + 5; j++)
+                finalProduct.getCell(i, j).setType(CellType.Water);
+        for (int i = x; i < x + 8; i++) {
+            finalProduct.getCell(i, y - 1).setType(CellType.Water);
+            finalProduct.getCell(i, y + 5).setType(CellType.Water);
+        }
+        for (int j = y; j < y + 5; j++) {
+            finalProduct.getCell(x - 1, j).setType(CellType.Water);
+            finalProduct.getCell(x + 8, j).setType(CellType.Water);
+        }
+    }
+
+    public void createSmallLake(int x, int y) {
+        for (int i = x; i < x + 3; i++)
+            for (int j = y; j < y + 2; j++)
+                finalProduct.getCell(i, j).setType(CellType.Water);
+        for (int i = x; i < x + 3; i++) {
+            finalProduct.getCell(i, y - 1).setType(CellType.Water);
+            finalProduct.getCell(i, y + 2).setType(CellType.Water);
+        }
+        for (int j = y; j < y + 2; j++) {
+            finalProduct.getCell(x - 1, j).setType(CellType.Water);
+            finalProduct.getCell(x + 3, j).setType(CellType.Water);
+        }
+    }
+
+    public void createGreenHouse() {
+        GreenHouse greenHouse = new GreenHouse(finalProduct.getCell(10, 24));
+        for (int i = 4; i < 11; i++) {
+            finalProduct.getCell(i, 20).setType(CellType.Building);
+            finalProduct.getCell(i, 20).setPlace(greenHouse);
+            finalProduct.getCell(i, 27).setType(CellType.Building);
+            finalProduct.getCell(i, 27).setPlace(greenHouse);
+        }
+        for (int j = 20; j < 28; j++) {
+            finalProduct.getCell(4, j).setType(CellType.Building);
+            finalProduct.getCell(10, j).setPlace(greenHouse);
+            finalProduct.getCell(4, j).setType(CellType.Building);
+            finalProduct.getCell(10, j).setPlace(greenHouse);
+        }
+        finalProduct.getCell(10, 24).setType(CellType.Door);
+        finalProduct.setGreenHouse(greenHouse);
+    }
+
+    public void generateForagingItems() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                Cell cell = finalProduct.getCell(i, j);
+                int randomInt = (new Random()).nextInt(100);
+                if (cell.getType() == CellType.Free) {
+                    if (randomInt < 3) {
+                        cell.placeForagingMineral();
+                    }
+                    else if (randomInt < 30) {
+                        cell.placeForagingCrop();
+                    }
+                }
+            }
+        }
+    }
+
+    public FarmMap getFinalProduct() {
+        return finalProduct;
+    }
+}

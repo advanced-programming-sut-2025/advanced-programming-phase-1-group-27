@@ -1,14 +1,17 @@
-package org.example.models;
+package org.example.models.Map;
 
-import org.example.models.enums.CellType;
+import org.example.models.Cell;
 
 import java.util.*;
 
-public class Map {
+public class FarmMap {
     private int height, width;
     private Cell[][] cells;
+    private Hut hut;
+    private GreenHouse greenHouse;
 
-    Map (int height, int width) {
+
+    FarmMap(int height, int width) {
         this.height = height;
         this.width = width;
         this.cells = new Cell[height][width];
@@ -75,10 +78,35 @@ public class Map {
     }
 
     public String[] veiwMapString() {
-
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                System.out.print(cells[i][j].toString());
+            }
+            System.out.println("\n");
+        }
     }
 
     public Cell getCell(int x, int y) {
         return cells[x][y];
+    }
+
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public Hut getHut() {
+        return hut;
+    }
+
+    public void setHut(Hut hut) {
+        this.hut = hut;
+    }
+
+    public GreenHouse getGreenHouse() {
+        return greenHouse;
+    }
+
+    public void setGreenHouse(GreenHouse greenHouse) {
+        this.greenHouse = greenHouse;
     }
 }

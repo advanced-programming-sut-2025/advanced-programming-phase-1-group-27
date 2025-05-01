@@ -3,6 +3,7 @@ package org.example.models;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
 import org.example.models.enums.items.Recipe;
+import org.example.models.Map.FarmMap;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
 
@@ -25,7 +26,7 @@ public class Player extends User {
     private int energy, maxEnergy = 200;
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell;
-    private Map currentMap;
+    private FarmMap currentFarmMap;
     private int money;
     private Tool currentTool;
 

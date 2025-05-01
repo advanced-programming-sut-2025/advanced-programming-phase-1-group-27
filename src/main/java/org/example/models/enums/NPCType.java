@@ -1,6 +1,6 @@
 package org.example.models.enums;
 
-import org.example.models.Map;
+import org.example.models.Map.FarmMap;
 import org.example.models.Item;
 import org.example.models.NPCs.Dialogue;
 import org.example.models.NPCs.Quest;
@@ -29,7 +29,7 @@ public enum NPCType {
     private ArrayList<Quest> Quests;
     private ArrayList<Features> features;
     private ArrayList<Item> favorite;
-    private Map placeOfHome;
-    private Map placeOfShop;
+    private FarmMap placeOfHome;
+    private FarmMap placeOfShop;
 
 }

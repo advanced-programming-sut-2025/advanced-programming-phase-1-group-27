@@ -10,4 +10,9 @@ public class Crop implements Item {
     public void harvest() {
 
     }
+
+    @Override
+    public int getPrice() {
+        return 0;
+    }
 }

@@ -1,10 +1,10 @@
 package org.example.models.enums;
 
 public enum CellType {
-    UnAvailable,
+    Building,
     Occupied,
     Free,
     Plowed,
-    Water;
-    //TODO: takmil
+    Water,
+    Door;
 }
