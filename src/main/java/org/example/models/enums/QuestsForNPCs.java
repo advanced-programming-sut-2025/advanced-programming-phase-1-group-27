@@ -1,7 +1,7 @@
 package org.example.models.enums;
 
 import org.example.models.Stacks;
-import org.example.models.enums.items.CropType;
+import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.enums.items.ToolType;

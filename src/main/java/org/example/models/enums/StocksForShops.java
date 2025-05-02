@@ -1,5 +1,7 @@
 package org.example.models.enums;
 
+import org.example.models.enums.Plants.SaplingType;
+import org.example.models.enums.Plants.SeedType;
 import org.example.models.Stacks;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.CookingProduct;

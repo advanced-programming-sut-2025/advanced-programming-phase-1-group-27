@@ -1,8 +1,11 @@
 package org.example.models;
 
 import org.example.models.Map.Hut;
+import org.example.models.enums.Plants.Crop;
+import org.example.models.enums.Plants.Tree;
 import org.example.models.enums.CellType;
-import org.example.models.enums.items.CropType;
+import org.example.models.enums.Plants.CropType;
+import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.items.MineralType;
 
 import java.util.ArrayList;
@@ -42,10 +45,11 @@ public class Cell {
         this.place = place;
     }
     public void placeForagingCrop() {
+        Season currentSeason = App.getCurrentGame().getTime().getSeason();
         int randomInt = new Random().nextInt(
-                CropType.getForagingCropsBySeason().get(App.getCurrentGame().getTime().getSeason()).size());
+                CropType.getForagingCropsBySeason().get(currentSeason).size());
         cellType = CellType.Occupied;
-        object = new Crop(CropType.getForagingCropsBySeason().get(randomInt)); // TODO
+        object = new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt)); // TODO
     }
     public void placeForagingMineral() {
         int randomInt = new Random().nextInt(MineralType.values().length);
@@ -68,7 +72,7 @@ public class Cell {
                 return "G";
             }
         } else if (cellType.equals(CellType.Occupied)) {
-            if (object instanceof Crop) {
+            if (object instanceof Tree) {
                 return "C";
             } else if(object instanceof MineralType) {
                 return "R";

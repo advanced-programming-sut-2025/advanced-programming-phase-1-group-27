@@ -1,9 +1,11 @@
 package org.example.models.enums.items;
 
-import org.example.models.Crop;
 import org.example.models.Ingredient;
 import org.example.models.Item;
-import org.example.models.ProcessedProduct;
+import org.example.models.enums.Plants.CropType;
+import org.example.models.enums.Plants.FruitType;
+import org.example.models.enums.Plants.SaplingType;
+import org.example.models.enums.Plants.SeedType;
 import org.example.models.enums.items.products.AnimalProduct;
 import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.CraftingProduct;

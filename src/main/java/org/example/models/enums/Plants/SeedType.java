@@ -1,13 +1,12 @@
-package org.example.models.enums.items;
+package org.example.models.enums.Plants;
 
-import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public enum SeedType implements Item {
+public enum SeedType implements PlantSourceType {
     //Starter + Seed + Bean + Shoot
     GrassStater,
     ParsnipSeed,
@@ -51,10 +50,13 @@ public enum SeedType implements Item {
     RiceShoot,
     PowderMelonSeed,
     AncientSeed,
-    MixedSeed;
+    MixedSeed,
+    MapleSeed,
+    MahoganySeed,
+    MushroomTreeSeed,
+    MysticTreeSeed;
 
-    private Season season;
-    private HashMap<Season, ArrayList<SeedType>> foragingSeedsBySeason = new HashMap<>(){{
+    private static HashMap<Season, ArrayList<SeedType>> foragingSeedsBySeason = new HashMap<>(){{
         put(Season.Spring, new ArrayList<>(List.of(AncientSeed, MixedSeed, JazzSeed, CarrotSeed, CauliflowerSeed,
                 CoffeeBean, GarlicSeed, BeanStarter, KaleSeed, ParsnipSeed, PotatoSeed, RhubarbSeed, StrawberrySeed,
                 TulipBulbSeed, RiceShoot)));
@@ -72,12 +74,8 @@ public enum SeedType implements Item {
         return true;
     }
 
-    public HashMap<Season, ArrayList<SeedType>> getForagingSeedsBySeason() {
+    public static HashMap<Season, ArrayList<SeedType>> getForagingSeedsBySeason() {
         return foragingSeedsBySeason;
     }
 
-    @Override
-    public Integer getPrice() {
-        return 0;
-    }
 }
