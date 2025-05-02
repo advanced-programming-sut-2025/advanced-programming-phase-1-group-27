@@ -154,13 +154,13 @@ public class InteractionsWithNPCController {
         if (index == 0
                 && npc.getName().equals("Abigail")) {
             Relation relation = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer());
-            relation.setLevel(relation.getLevel() + ratio);
+            relation.setLevel(Math.min(relation.getLevel() + ratio , 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
         if (index == 1
                 && npc.getName().equals("Harvey")) {
             Relation relation = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer());
-            relation.setLevel(relation.getLevel() + ratio);
+            relation.setLevel(Math.min(relation.getLevel() + ratio , 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
         Stacks reward = quests[index].getReward();
