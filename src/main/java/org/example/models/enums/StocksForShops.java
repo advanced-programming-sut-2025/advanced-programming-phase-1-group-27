@@ -85,14 +85,14 @@ public enum StocksForShops {
         ArrayList<Stack> CarpenterShop = new ArrayList<>();
         CarpenterShop.add(new Stack(MineralType.Wood, -1));
         CarpenterShop.add(new Stack(MineralType.Stone, -1));
-        CarpenterShop.add(new Stack(FarmBuildingType.Barn, 1));
-        CarpenterShop.add(new Stack(FarmBuildingType.BigBarn, 1));
-        CarpenterShop.add(new Stack(FarmBuildingType.DeluxeBarn, 1));
-        CarpenterShop.add(new Stack(FarmBuildingType.Coop, 1));
-        CarpenterShop.add(new Stack(FarmBuildingType.BigCoop, 1));
-        CarpenterShop.add(new Stack(FarmBuildingType.DeluxeCoop, 1));
-        CarpenterShop.add(new Stack(FarmBuildingType.Well, 1));
-        CarpenterShop.add(new Stack(FarmBuildingType.ShippingBin, -1));
+        CarpenterShop.add(new Stack(BuildingType.Barn, 1));
+        CarpenterShop.add(new Stack(BuildingType.BigBarn, 1));
+        CarpenterShop.add(new Stack(BuildingType.DeluxeBarn, 1));
+        CarpenterShop.add(new Stack(BuildingType.Coop, 1));
+        CarpenterShop.add(new Stack(BuildingType.BigCoop, 1));
+        CarpenterShop.add(new Stack(BuildingType.DeluxeCoop, 1));
+        CarpenterShop.add(new Stack(BuildingType.Well, 1));
+        CarpenterShop.add(new Stack(BuildingType.ShippingBin, -1));
         return CarpenterShop;
     }
 

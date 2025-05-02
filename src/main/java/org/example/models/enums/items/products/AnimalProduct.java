@@ -23,7 +23,7 @@ public enum AnimalProduct implements Item {
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 }

@@ -69,6 +69,7 @@ public enum SeedType implements Item {
 
     public boolean isFarmable() {
         //TODO
+        return true;
     }
 
     public HashMap<Season, ArrayList<SeedType>> getForagingSeedsBySeason() {

@@ -3,20 +3,23 @@ package org.example.models.enums.items;
 import org.example.models.Item;
 
 public enum SaplingType implements Item {
-    AppleSapling,
-    ApricotSapling,
-    CherrySapling,
+    ApricotSapling(),
+    CherrySapling(),
+    BananaSapling(),
+    MangoSapling(),
     OrangeSapling,
     PeachSapling,
+    AppleSapling(),
     PomegranateSapling,
-    AcornSapling,
+    Acorn,
     MapleSapling,
     PineCone,
     MahoganySapling,
-    MushroomTreeSapling;
+    MushroomTreeSapling,
+    MysticTreeSapling;
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return 0;
     }
 }
