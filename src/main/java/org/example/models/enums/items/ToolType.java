@@ -2,7 +2,7 @@ package org.example.models.enums.items;
 
 import org.example.models.Item;
 
-public enum ToolType implements Item {
+public enum ToolType {
     Axe("Axe"),
     BackPack("Backpack"),
     LargeBackPack("Large Backpack"),
@@ -31,8 +31,4 @@ public enum ToolType implements Item {
         return name;
     }
 
-    @Override
-    public Integer getPrice() { // ???????
-        return 0;
-    }
 }
