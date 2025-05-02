@@ -193,7 +193,8 @@ public enum CropType implements Item {
             , new Season[]{Season.Winter}),
     WinterRoot(new int[]{} , 70 , null , 0
             , null , 25 , false , true , false
-            , new Season[]{Season.Winter});
+            , new Season[]{Season.Winter}),
+    Fiber(null, 0, null, 0, null, 0, false, false, false, null); // TODO: WTF?
 
     private int price;
     private SeedType source;
@@ -237,7 +238,7 @@ public enum CropType implements Item {
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 

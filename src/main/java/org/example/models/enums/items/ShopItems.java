@@ -18,9 +18,11 @@ public enum ShopItems implements Item {
     TroutSoup;
 
     private final int price;
+    private final Recipe recipe;
 
-    ShopItems(int price) {
+    ShopItems(int price, Recipe recipe) {
         this.price = price;
+        this.recipe = recipe;
     }
 
     @Override
