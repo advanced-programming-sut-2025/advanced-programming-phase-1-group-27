@@ -1,5 +1,6 @@
 package org.example.models;
 
 public interface Item {
-    public abstract Integer getPrice();
+    public abstract int getPrice();
+    public abstract String getName();
 }

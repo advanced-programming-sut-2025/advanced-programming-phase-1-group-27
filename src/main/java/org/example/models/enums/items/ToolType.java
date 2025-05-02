@@ -18,7 +18,8 @@ public enum ToolType implements Item {
     FiberglassRod("Fiberglass rod"),
     IridiumRod("Iridium rod"),
     BambooPole("Bamboo pole"),
-    WateringCan("Watering can");
+    WateringCan("Watering can"),
+    IridiumWateringCan("Iridium watering can"),;
 
     private final String name;
 

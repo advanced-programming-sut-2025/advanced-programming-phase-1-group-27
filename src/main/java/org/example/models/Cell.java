@@ -76,4 +76,8 @@ public class Cell {
         }
         return "?";
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }

@@ -1,6 +1,6 @@
 package org.example.models.enums;
 
-import org.example.models.Stack;
+import org.example.models.Stacks;
 
 import java.util.ArrayList;
 
@@ -16,15 +16,13 @@ public enum Shops {
     private final NPCType manager;
     private final int startTime;
     private final int endTime;
-    private ArrayList<Stack> stacks;
+    private ArrayList<Stacks> stacks;
 
-    Shops(NPCType manager , int startTime, int endTime) {
+    Shops(NPCType manager , int startTime, int endTime , ArrayList<Stacks> stacks) {
         this.manager = manager;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public void setStacks(ArrayList<Stack> stacks) { // TODO: stacks should be initialized every morning depending on season
-        this.stacks = stacks;
-    }
+
 }

@@ -9,7 +9,7 @@ import org.example.models.Relations.Relation;
 import java.util.ArrayList;
 
 public enum NPCType {
-    Sebastian,
+    Sebastian("Sebastian" , ),
     Abigail,
     Harvey,
     Lia,
@@ -32,4 +32,17 @@ public enum NPCType {
     private FarmMap placeOfHome;
     private FarmMap placeOfShop;
 
+    NPCType(String name, Shops job, ArrayList<Dialogue> dialogues, ArrayList<Relation> relationsWithOthers
+            , ArrayList<Quest> quests, ArrayList<Features> features, ArrayList<Item> favorite
+            , FarmMap placeOfHome, FarmMap placeOfShop) {
+        this.name = name;
+        this.job = job;
+        this.dialogues = dialogues;
+        this.relationsWithOthers = relationsWithOthers;
+        Quests = quests;
+        this.features = features;
+        this.favorite = favorite;
+        this.placeOfHome = placeOfHome;
+        this.placeOfShop = placeOfShop;
+    }
 }

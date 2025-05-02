@@ -1,10 +1,10 @@
 package org.example.models;
 
-public class Stack {
+public class Stacks {
     private Item item;
     private int quantity;
 
-    public Stack(Item item, int quantity) {
+    public Stacks(Item item, int quantity) {
         this.item = item;
         this.quantity = quantity;
     }

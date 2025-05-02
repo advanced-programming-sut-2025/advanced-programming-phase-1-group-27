@@ -33,7 +33,7 @@ public class ToolController {
     }
 
     public Result showCurrentTool(){
-        User player = App.getCurrentGame().getCurrentUser();
+        User player = App.getCurrentGame().getCurrentPlayer();
         return new Result(true , player.getCurrentTool().toString());
     }
 

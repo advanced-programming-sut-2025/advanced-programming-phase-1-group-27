@@ -1,5 +1,6 @@
 package org.example.models;
 
+import org.example.models.NPCs.NPC;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
 import org.example.models.enums.items.Recipe;
@@ -9,13 +10,14 @@ import org.example.models.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Player extends User {
     private ArrayList<Recipe> availableRecipes; // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
     // player's inventory
     private Backpack backpack;
     // items which are place in the fridge
-    private ArrayList<Stack> refrigerator = new ArrayList<>();
+    private ArrayList<Stacks> refrigerator = new ArrayList<>();
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(){{
         put(AbilityType.Farming, farming);
@@ -29,6 +31,9 @@ public class Player extends User {
     private FarmMap currentFarmMap;
     private int money;
     private Tool currentTool;
+    //TODO : refresh every morning
+    private Map<NPC , Boolean> npcMetToday = new HashMap<>();
+    private Map<NPC , Boolean> npcGiftToday = new HashMap<>();
 
     public Player(String username, String password, String nickname, String email, Gender gender) {
         super(username, password, nickname, email, gender);
@@ -36,6 +41,10 @@ public class Player extends User {
 
     public int getMoney() {
         return money;
+    }
+
+    public void addMoney(int money) {
+        this.money += money;
     }
 
     public Tool getCurrentTool() {
@@ -104,4 +113,17 @@ public class Player extends User {
     public void trashItem(String itemName) {
 
     }
+
+    public Position getPosition() {
+        return currentCell.getPosition();
+    }
+
+    public Map<NPC, Boolean> getNpcMetToday() {
+        return npcMetToday;
+    }
+
+    public Map<NPC, Boolean> getNpcGiftToday() {
+        return npcGiftToday;
+    }
+
 }
