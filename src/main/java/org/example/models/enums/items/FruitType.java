@@ -29,7 +29,7 @@ public enum FruitType implements Item {
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 

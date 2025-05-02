@@ -1,6 +1,6 @@
 package org.example.models;
 
-import org.example.models.enums.items.ArtisanTypes;
+import org.example.models.enums.ArtisanTypes;
 import org.example.models.enums.items.products.ProcessedProductType;
 
 public class Artisan {

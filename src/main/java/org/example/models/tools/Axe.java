@@ -1,7 +1,7 @@
 package models.tools;
 
-
-import enums.Item;
+import org.example.models.Item;
+import org.example.models.tools.Tool;
 
 public class Axe extends Tool implements Item {
     //If usage is failed -1
@@ -23,8 +23,7 @@ public class Axe extends Tool implements Item {
     }
 
     @Override
-    public void use() {
-
+    public Integer getPrice() { // TODO: function is incomplete
+        return 0;
     }
-
 }

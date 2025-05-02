@@ -1,14 +1,14 @@
 package org.example.models.Stores;
 
-import org.example.models.NPCs.NPC;
+import org.example.models.Item;
+import org.example.models.enums.NPCType;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Others extends Store{
-    private ArrayList<Stack> products;
+    private ArrayList<Item> products;
 
-    public Others(NPC manager, int start, int end, ArrayList<Stack> products) {
+    public Others(NPCType manager, int start, int end, ArrayList<Item> products) {
         super(manager, start, end);
         this.products = products;
     }

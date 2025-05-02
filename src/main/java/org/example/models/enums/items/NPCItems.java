@@ -11,7 +11,7 @@ public enum NPCItems implements Item {
         this.price = price;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 }

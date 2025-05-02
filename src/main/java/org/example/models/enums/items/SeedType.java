@@ -77,7 +77,7 @@ public enum SeedType implements Item {
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return 0;
     }
 }

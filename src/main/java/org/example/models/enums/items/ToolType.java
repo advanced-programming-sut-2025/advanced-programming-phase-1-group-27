@@ -30,4 +30,9 @@ public enum ToolType implements Item {
     public String toString() {
         return name;
     }
+
+    @Override
+    public Integer getPrice() { // ???????
+        return 0;
+    }
 }

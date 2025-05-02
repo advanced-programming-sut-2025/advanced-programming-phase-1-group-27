@@ -1,24 +1,23 @@
 package org.example.controller;
 
-import org.example.models.Item;
+import org.example.models.*;
 import org.example.models.enums.items.ToolType;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.User;
 import org.example.models.tools.Tool;
 
 public class ToolController {
     public Result upgradeTool(){
-
+        // TODO: function incomplete
+        return null;
     }
 
     public Result userTool(){
-
+        // TODO: function incomplete
+        return null;
     }
 
     public Result showAvailableTools(){
         StringBuilder result = new StringBuilder();
-        User player = App.getCurrentGame().getCurrentUser();
+        Player player = App.getCurrentGame().getCurrentPlayer();
         int i = 0;
         for(Item item : player.getBackpack().getItems()){
             if(item instanceof Tool){
@@ -33,7 +32,7 @@ public class ToolController {
     }
 
     public Result showCurrentTool(){
-        User player = App.getCurrentGame().getCurrentPlayer();
+        Player player = App.getCurrentGame().getCurrentPlayer();
         return new Result(true , player.getCurrentTool().toString());
     }
 
@@ -42,7 +41,8 @@ public class ToolController {
         if(toolType == null){
             return new Result(false, "Tool not found");
         }
-
+        // TODO: function incomplete
+        return null;
     }
 
     private ToolType getTool(String toolName){
@@ -72,7 +72,7 @@ public class ToolController {
     }
 
     private boolean isToolInBackPack(String toolName){
-        User player = App.getCurrentGame().getCurrentUser();
+        Player player = App.getCurrentGame().getCurrentPlayer();
         if(player.getBackpack().getTool(toolName) == null){
             return false;
         }

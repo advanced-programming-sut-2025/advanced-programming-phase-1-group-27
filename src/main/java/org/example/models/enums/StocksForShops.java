@@ -176,11 +176,9 @@ public enum StocksForShops {
         PermanentPierreGeneralStore.add(new Stack(ShopItems.Sugar , -1));
         PermanentPierreGeneralStore.add(new Stack(ProcessedProductType.Oil , -1));
         PermanentPierreGeneralStore.add(new Stack(ProcessedProductType.Vinegar , -1));
-        PermanentPierreGeneralStore.add(new Stack(ShopItems.BasicFertilizer , -1));
-        PermanentPierreGeneralStore.add(new Stack(ShopItems.QualityFertilizer , -1));
+        PermanentPierreGeneralStore.add(new Stack(ShopItems.DeluxeRetainingSoil , -1));
         PermanentPierreGeneralStore.add(new Stack(SeedType.GrassStater , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.SpeedGro , -1));
-        PermanentPierreGeneralStore.add(new Stack(ShopItems.DeluxeSpeedGro , -1));
         PermanentPierreGeneralStore.add(new Stack(SaplingType.AppleSapling , -1));
         PermanentPierreGeneralStore.add(new Stack(SaplingType.ApricotSapling , -1));
         PermanentPierreGeneralStore.add(new Stack(SaplingType.CherrySapling , -1));
@@ -189,8 +187,6 @@ public enum StocksForShops {
         PermanentPierreGeneralStore.add(new Stack(SaplingType.PomegranateSapling , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.BasicRetainingSoil , -1));
         PermanentPierreGeneralStore.add(new Stack(ShopItems.QualityRetainingSoil , -1));
-        PermanentPierreGeneralStore.add(new Stack(ToolType.LargeBackPack , 1));
-        PermanentPierreGeneralStore.add(new Stack(ToolType.LargeBackPack , 1));
         return PermanentPierreGeneralStore;
     }
 

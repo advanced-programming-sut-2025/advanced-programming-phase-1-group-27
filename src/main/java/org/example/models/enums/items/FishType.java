@@ -38,7 +38,7 @@ public enum FishType implements Item {
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 

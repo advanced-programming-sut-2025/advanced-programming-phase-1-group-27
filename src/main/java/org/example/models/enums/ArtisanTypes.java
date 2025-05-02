@@ -1,4 +1,4 @@
-package org.example.models.enums.items;
+package org.example.models.enums;
 
 import org.example.models.enums.items.products.ProcessedProductType;
 

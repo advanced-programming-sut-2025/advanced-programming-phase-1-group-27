@@ -29,13 +29,28 @@ public class GameMenuController extends MenuController {
         return new Result(true, "Redirecting to main menu ...");
     }
 
-    public Result createGame(ArrayList<String> playerUsername) {}
+    public Result createGame(ArrayList<String> playerUsername) {
+        // TODO: function incomplete
+        return null;
+    }
 
-    public Result setMap(int mapId) {}
+    public Result setMap(int mapId) {
+        // TODO: function incomplete
+        return null;
+    }
 
-    public Result loadGame() {}
+    public Result loadGame() {
+        // TODO: function incomplete
+        return null;
+    }
 
-    public Result exitGame() {}
+    public Result exitGame() {
+        // TODO: function incomplete
+        return null;
+    }
 
-    public Result nextTurn() {}
+    public Result nextTurn() {
+        // TODO: function incomplete
+        return null;
+    }
 }

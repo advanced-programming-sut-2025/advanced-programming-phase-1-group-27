@@ -103,7 +103,8 @@ public class Player extends User {
     }
 
     public String showItems() {
-
+        // TODO
+        return null;
     }
 
     public void trashItem(String itemName, int n) {

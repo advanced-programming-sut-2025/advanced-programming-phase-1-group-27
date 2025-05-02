@@ -72,7 +72,7 @@ public enum AnimalType implements Item {
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 }

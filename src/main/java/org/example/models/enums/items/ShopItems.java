@@ -3,20 +3,18 @@ package org.example.models.enums.items;
 import org.example.models.Item;
 
 public enum ShopItems implements Item {
-    Bouquet,
-    WeddingRing,
-    BasicFertilizer,
-    QualityFertilizer,
-    SpeedGro,
-    DeluxeSpeedGro,
-    BasicRetainingSoil,
-    QualityRetainingSoil,
-    JojaCola,
-    Sugar,
-    WheatFlour,
-    Hay,
-    Coin,
-    TroutSoup;
+    Bouquet(1000, null),
+    WeddingRing(10000, null),
+    DeluxeRetainingSoil(150, null),
+    SpeedGro(100, null),
+    BasicRetainingSoil(100, null),
+    QualityRetainingSoil(150, null),
+    JojaCola(75, null),
+    Sugar(125, null),
+    WheatFlour(125, null),
+    Hay(50, null),
+    TroutSoup(250, null),
+    Coin(1, null);
 
     private final int price;
     private final Recipe recipe;
@@ -27,7 +25,7 @@ public enum ShopItems implements Item {
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return 0;
     }
 }

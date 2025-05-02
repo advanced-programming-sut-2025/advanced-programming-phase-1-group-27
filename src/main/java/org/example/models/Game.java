@@ -6,7 +6,7 @@ import org.example.models.NPCs.NPC;
 import java.util.ArrayList;
 
 public class Game {
-    private User admin;
+    private Player admin;
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players = new ArrayList<>();
     private FarmMap farmMap;
@@ -21,7 +21,7 @@ public class Game {
         return time;
     }
 
-    public ArrayList<NPC> getNpcs() {
+    public ArrayList<NPC> getNPCs() {
         return npcs;
     }
 }

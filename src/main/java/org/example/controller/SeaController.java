@@ -1,7 +1,10 @@
 package org.example.controller;
 
-import model.Result;
+import org.example.models.Result;
 
 public class SeaController {
-    public Result fishing(String fishingPole) {}
+    public Result fishing(String fishingPole) {
+        // TODO: function incomplete
+        return null;
+    }
 }

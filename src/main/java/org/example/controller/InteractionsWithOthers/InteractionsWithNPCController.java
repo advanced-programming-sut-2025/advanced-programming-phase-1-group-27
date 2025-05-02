@@ -64,7 +64,7 @@ public class InteractionsWithNPCController {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         StringBuilder result = new StringBuilder();
         result.append("(Name) - (Level) - (Xp)");
-        for (NPC npc : App.getCurrentGame().getNpcs()) {
+        for (NPC npc : App.getCurrentGame().getNPCs()) {
             result.append("\n");
             result.append(npc.getName()).append(" - ");
             result.append(npc.getRelations().get(currentPlayer).getLevel()).append(" - ");
@@ -77,7 +77,7 @@ public class InteractionsWithNPCController {
         StringBuilder result = new StringBuilder();
         result.append("Active Quests : ");
         result.append("\n");
-        for (NPC npc : App.getCurrentGame().getNpcs()) {
+        for (NPC npc : App.getCurrentGame().getNPCs()) {
             if (npc.getQuests() != null) {//Some NPCs doesn't have quests
                 result.append(npc.getName()).append(" : ");
                 Quest[] quests = npc.getQuests();
@@ -185,7 +185,7 @@ public class InteractionsWithNPCController {
     }
 
     private NPC findNPC(String npcName) {
-        for (NPC npc : App.getCurrentGame().getNpcs()) {
+        for (NPC npc : App.getCurrentGame().getNPCs()) {
             if (npc.getName().equals(npcName)) {
                 return npc;
             }
