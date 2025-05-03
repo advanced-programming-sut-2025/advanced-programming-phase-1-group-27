@@ -20,7 +20,7 @@ public class FarmMapBuilder {
         for (int i = 4; i < 8; i++) {
             for (int j = m - 6; j < m - 2; j++) {
                 finalProduct.getCell(i, j).setType(CellType.Building);
-                finalProduct.getCell(j, i).setPlace(hut);
+                finalProduct.getCell(j, i).setBuilding(hut);
             }
         }
         finalProduct.getCell(7, m - 5).setType(CellType.Door);
@@ -59,15 +59,15 @@ public class FarmMapBuilder {
         GreenHouse greenHouse = new GreenHouse(finalProduct.getCell(10, 24));
         for (int i = 4; i < 11; i++) {
             finalProduct.getCell(i, 20).setType(CellType.Building);
-            finalProduct.getCell(i, 20).setPlace(greenHouse);
+            finalProduct.getCell(i, 20).setBuilding(greenHouse);
             finalProduct.getCell(i, 27).setType(CellType.Building);
-            finalProduct.getCell(i, 27).setPlace(greenHouse);
+            finalProduct.getCell(i, 27).setBuilding(greenHouse);
         }
         for (int j = 20; j < 28; j++) {
             finalProduct.getCell(4, j).setType(CellType.Building);
-            finalProduct.getCell(10, j).setPlace(greenHouse);
+            finalProduct.getCell(10, j).setBuilding(greenHouse);
             finalProduct.getCell(4, j).setType(CellType.Building);
-            finalProduct.getCell(10, j).setPlace(greenHouse);
+            finalProduct.getCell(10, j).setBuilding(greenHouse);
         }
         finalProduct.getCell(10, 24).setType(CellType.Door);
         finalProduct.setGreenHouse(greenHouse);

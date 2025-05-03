@@ -63,7 +63,7 @@ public class Player extends User {
         this.backpack = backpack;
     }
 
-    public void walk(Place destination) {
+    public void walk(Building destination) {
 
     }
 

@@ -1,97 +1,37 @@
 package org.example.models.Map;
 
+import org.example.models.AnimalProperty.Barn;
+import org.example.models.AnimalProperty.Coop;
 import org.example.models.Cell;
+import org.example.models.Position;
 
 import java.util.*;
 
-public class FarmMap {
-    private int height, width;
-    private Cell[][] cells;
+public class FarmMap extends Map {
+
     private Hut hut;
     private GreenHouse greenHouse;
+    private Barn barn;
+    private Coop coop;
 
-
-    FarmMap(int height, int width) {
-        this.height = height;
-        this.width = width;
-        this.cells = new Cell[height][width];
-        buildCellsGraph();
-    }
-
-    private void buildCellsGraph() {
+    public FarmMap(int height, int width) {
+        super(height, width);
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                cells[i][j] = new Cell();
+                cells[i][j] = new Cell(new Position(i, j));
             }
         }
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (i > 0) cells[i][j].addAdjacentCell(cells[i - 1][j]);
-                if (j > 0) cells[i][j].addAdjacentCell(cells[i][j - 1]);
-                if (i < height - 1) cells[i][j].addAdjacentCell(cells[i + 1][j]);
-                if (j < width - 1) cells[i][j].addAdjacentCell(cells[i][j + 1]);
-            }
-        }
-    }
-
-    private HashSet<Cell> markedCells;
-
-    private void dfs(Cell cell) {
-        markedCells.add(cell);
-        for (Cell adj : cell.getAdjacentCells()) {
-            if (adj.isPassable() && !markedCells.contains(adj)) {
-                dfs(adj);
-            }
-        }
-    }
-
-    public boolean areConnected(Cell A, Cell B) {
-        markedCells = new HashSet<>();
-        dfs(A);
-        return markedCells.contains(B);
-    }
-
-    private HashMap<Cell, Integer> distance;
-
-    private void bfs(Cell cell) {
-        Queue<Cell> queue = new LinkedList<>();
-        markedCells.add(cell);
-        queue.add(cell);
-        while (!queue.isEmpty()) {
-            Cell current = queue.remove();
-            for (Cell adj : current.getAdjacentCells()) {
-                if (adj.isPassable() && !markedCells.contains(adj)) {
-                    markedCells.add(adj);
-                    distance.put(adj, distance.get(current) + 1);
-                    queue.add(adj);
-                }
-            }
-        }
-    }
-
-    public int getDistance(Cell A, Cell B) {
-        markedCells = new HashSet<>();
-        distance = new HashMap<>();
-        distance.put(A, 0);
-        bfs(A);
-        return (distance.containsKey(B)? distance.get(B): 0);
     }
 
     public String[] veiwMapString() {
+        String[] mapView = new String[height];
         for (int i = 0; i < height; i++) {
+            mapView[i] = "";
             for (int j = 0; j < width; j++) {
-                System.out.print(cells[i][j].toString());
+                mapView[i] += cells[i][j].toString();
             }
-            System.out.println("\n");
         }
-    }
-
-    public Cell getCell(int x, int y) {
-        return cells[x][y];
-    }
-
-    public Cell[][] getCells() {
-        return cells;
+        return mapView;
     }
 
     public Hut getHut() {
@@ -108,5 +48,35 @@ public class FarmMap {
 
     public void setGreenHouse(GreenHouse greenHouse) {
         this.greenHouse = greenHouse;
+    }
+
+    public Barn getBarn() {
+        return barn;
+    }
+
+    public void setBarn(Barn barn) {
+        this.barn = barn;
+    }
+
+    public Coop getCoop() {
+        return coop;
+    }
+
+    public void setCoop(Coop coop) {
+        this.coop = coop;
+    }
+
+    private static final String[] mapReadingManual = new String[] {
+            "C -> Crop",
+            "T -> Tree",
+            "R -> Mineral",
+            "H -> Hut",
+            "G -> GreenHouse",
+            "W -> Water",
+            "D -> Door"
+    };
+
+    public String[] getMapReadingManual() {
+        return mapReadingManual;
     }
 }

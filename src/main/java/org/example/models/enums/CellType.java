@@ -6,5 +6,6 @@ public enum CellType {
     Free,
     Plowed,
     Water,
-    Door;
+    Door,
+    View;
 }

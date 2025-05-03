@@ -10,7 +10,7 @@ public class Game {
     private Player admin;
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players = new ArrayList<>();
-    private FarmMap farmMap;
+    private FarmMap[] farmMaps = new FarmMap[];
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
     private static ArrayList<Dialogue> dialogues = new ArrayList<>();

@@ -12,23 +12,32 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Cell {
+    private final Position position;
     private Object object = null;
     private CellType cellType;
-    private Place place = null;
-    private Position position;
+    private Building building = null;
     private Character view = null;
 
     private ArrayList<Cell> adjacentCells = new ArrayList<>();
 
-    public Cell() {
-        cellType = CellType.Free;
+    public Cell(CellType cellType, Position position) {
+        this.cellType = cellType;
+        this.position = position;
     }
+
+    public Cell(Position position) {
+        cellType = CellType.Free;
+        this.position = position;
+    }
+
+
+
     public void addAdjacentCell(Cell cell) {
         adjacentCells.add(cell);
     }
 
     public boolean isPassable() {
-        return cellType == CellType.Plowed || cellType == CellType.Free;
+        return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View;
     }
 
     public ArrayList<Cell> getAdjacentCells() {
@@ -41,8 +50,8 @@ public class Cell {
     public CellType getType() {
         return cellType;
     }
-    public void setPlace(Place place) {
-        this.place = place;
+    public void setBuilding(Building building) {
+        this.building = building;
     }
     public void placeForagingCrop() {
         Season currentSeason = App.getCurrentGame().getTime().getSeason();
@@ -66,17 +75,21 @@ public class Cell {
         } else if (cellType.equals(CellType.Door)) {
             return "D";
         } else if (cellType.equals(CellType.Building)) {
-            if (place instanceof Hut) {
+            if (building instanceof Hut) {
                 return "H";
             } else {
                 return "G";
             }
         } else if (cellType.equals(CellType.Occupied)) {
             if (object instanceof Tree) {
+                return "T";
+            } else if (object instanceof Crop) {
                 return "C";
             } else if(object instanceof MineralType) {
                 return "R";
             }
+        } else if (cellType.equals(CellType.View)) {
+            return "~";
         }
         return "?";
     }

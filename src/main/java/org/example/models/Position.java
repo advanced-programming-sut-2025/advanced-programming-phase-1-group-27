@@ -1,7 +1,12 @@
 package org.example.models;
 
 public class Position {
-    int x, y;
+    private final int x, y;
+
+    public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public int getX(){
         return x;

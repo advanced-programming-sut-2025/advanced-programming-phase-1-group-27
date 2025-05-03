@@ -1,5 +1,5 @@
 package org.example.models;
 
-public abstract class Place {
+public abstract class Building {
     protected Position position;
 }

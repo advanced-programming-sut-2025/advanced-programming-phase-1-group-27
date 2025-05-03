@@ -1,9 +1,9 @@
 package org.example.models.AnimalProperty;
 
-import org.example.models.Place;
+import org.example.models.Building;
 
 import java.util.ArrayList;
 
-public abstract class AnimalEnclosure extends Place {
+public abstract class AnimalEnclosure extends Building {
     private ArrayList<Animal> animals;
 }
