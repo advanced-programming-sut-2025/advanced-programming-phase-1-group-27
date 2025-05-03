@@ -29,9 +29,18 @@ public class Time {
     public void passAnHour() {
         hour++;
         if (hour == 24) {
-            advanceDate(1);
+            passADay();
             hour = 9;
         }
+    }
+
+    private void passADay() {
+        day++;
+        if (day == 28) {
+            advanceSeason();
+            day = 0;
+        }
+        App.getCurrentGame().newDay();
     }
 
     private void advanceTime(int hour) {
@@ -41,10 +50,8 @@ public class Time {
     }
     
     private void advanceDate(int day) {
-        this.day += day;
-        while (this.day >= 28) {
-            advanceSeason();
-            this.day -= 28;
+        while (day-- > 0) {
+            passADay();
         }
     }
 

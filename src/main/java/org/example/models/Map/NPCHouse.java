@@ -10,6 +10,7 @@ public class NPCHouse extends Building {
 
     public NPCHouse(NPCType npc) {
         this.npc = npc;
+        npc.setHome(this);
     }
 
     public NPCType getNpc() {

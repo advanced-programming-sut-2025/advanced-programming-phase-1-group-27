@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Map {
+
     protected int height, width;
     protected Cell[][] cells;
 
@@ -84,5 +85,34 @@ public class Map {
         distance.put(A, 0);
         bfs(A);
         return (distance.containsKey(B)? distance.get(B): -1);
+    }
+
+
+    public String[] veiwMapString() {
+        String[] mapView = new String[height];
+        for (int i = 0; i < height; i++) {
+            mapView[i] = "";
+            for (int j = 0; j < width; j++) {
+                mapView[i] += cells[i][j].toString();
+            }
+        }
+        return mapView;
+    }
+
+    private static final String[] mapReadingManual = new String[] {
+            "C -> Crop",
+            "T -> Tree",
+            "R -> Mineral",
+            "H -> Hut",
+            "G -> GreenHouse",
+            "W -> Water",
+            "D -> Door",
+            "N -> NPC House",
+            "S -> Store",
+            "~ -> City Grounds"
+    };
+
+    public String[] getMapReadingManual() {
+        return mapReadingManual;
     }
 }

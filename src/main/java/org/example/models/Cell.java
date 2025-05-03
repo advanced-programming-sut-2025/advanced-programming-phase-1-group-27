@@ -1,6 +1,9 @@
 package org.example.models;
 
+import org.example.models.Map.GreenHouse;
 import org.example.models.Map.Hut;
+import org.example.models.Map.NPCHouse;
+import org.example.models.Map.StoreBuilding;
 import org.example.models.enums.Plants.Crop;
 import org.example.models.enums.Plants.Tree;
 import org.example.models.enums.CellType;
@@ -37,7 +40,8 @@ public class Cell {
     }
 
     public boolean isPassable() {
-        return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View;
+        return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View ||
+                cellType == CellType.Door;
     }
 
     public ArrayList<Cell> getAdjacentCells() {
@@ -77,8 +81,12 @@ public class Cell {
         } else if (cellType.equals(CellType.Building)) {
             if (building instanceof Hut) {
                 return "H";
-            } else {
+            } else if (building instanceof GreenHouse){
                 return "G";
+            } else if (building instanceof NPCHouse) {
+                return "N";
+            } else if (building instanceof StoreBuilding) {
+                return "S";
             }
         } else if (cellType.equals(CellType.Occupied)) {
             if (object instanceof Tree) {

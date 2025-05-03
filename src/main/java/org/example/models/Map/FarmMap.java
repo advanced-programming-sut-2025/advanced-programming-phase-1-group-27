@@ -23,16 +23,6 @@ public class FarmMap extends Map {
         }
     }
 
-    public String[] veiwMapString() {
-        String[] mapView = new String[height];
-        for (int i = 0; i < height; i++) {
-            mapView[i] = "";
-            for (int j = 0; j < width; j++) {
-                mapView[i] += cells[i][j].toString();
-            }
-        }
-        return mapView;
-    }
 
     public Hut getHut() {
         return hut;
@@ -66,17 +56,5 @@ public class FarmMap extends Map {
         this.coop = coop;
     }
 
-    private static final String[] mapReadingManual = new String[] {
-            "C -> Crop",
-            "T -> Tree",
-            "R -> Mineral",
-            "H -> Hut",
-            "G -> GreenHouse",
-            "W -> Water",
-            "D -> Door"
-    };
 
-    public String[] getMapReadingManual() {
-        return mapReadingManual;
-    }
 }
