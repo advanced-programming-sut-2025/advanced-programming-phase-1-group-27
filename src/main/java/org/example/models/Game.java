@@ -1,6 +1,8 @@
 package org.example.models;
 
 import org.example.models.Map.FarmMap;
+import org.example.models.Map.FarmMapBuilder;
+import org.example.models.Map.FarmMapDirector;
 import org.example.models.Map.NPCMap;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
@@ -22,7 +24,12 @@ public class Game {
     public Game(ArrayList<Player> players) {
         this.admin = players.getFirst();
         this.players = players;
-        // TODO: other fields should be initialized
+        for (int i = 0; i < 4; i++) {
+            FarmMapBuilder builder = new FarmMapBuilder();
+            FarmMapDirector director = new FarmMapDirector();
+            director.BuildMap(builder, i);
+            farmMaps[i] = builder.getFinalProduct();
+        }
     }
 
     public Player getAdmin() {

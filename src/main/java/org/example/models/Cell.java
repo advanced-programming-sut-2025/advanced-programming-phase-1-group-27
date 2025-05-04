@@ -33,8 +33,6 @@ public class Cell {
         this.position = position;
     }
 
-
-
     public void addAdjacentCell(Cell cell) {
         adjacentCells.add(cell);
     }
