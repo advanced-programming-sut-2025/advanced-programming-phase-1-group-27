@@ -1,9 +1,10 @@
 package org.example.controller;
 
+import org.example.models.*;
 import org.example.models.enums.Menu;
-import org.example.models.App;
-import org.example.models.Result;
 import org.example.view.menu.MainMenu;
+
+import java.util.ArrayList;
 
 public class MainMenuMenuController extends MenuController {
     private MainMenu view;
@@ -19,7 +20,40 @@ public class MainMenuMenuController extends MenuController {
         if (newMenu == Menu.LoginMenu)
             return new Result(false, "you should logout to enter this menu!");
         App.setCurrentMenu(newMenu);
-        return new Result(true, "Redirecting to " + newMenu.toString() + " ...");
+        return new Result(true, "Redirecting to " + newMenu + " ...");
+    }
+
+    public Result createNewGame(String username1, String username2, String username3, String overflow) {
+        if (username1 == null)
+            return new Result(false, "No username provided!");
+        if (overflow != null)
+            return new Result(false, "You can't play with more than 3 players!");
+        ArrayList<User> users = new ArrayList<>();
+        users.add(App.getLoggedInUser());
+        if (username1 != null)
+            users.add(App.getUserByUsername(username1));
+        if (username2 != null)
+            users.add(App.getUserByUsername(username2));
+        if (username3 != null)
+            users.add(App.getUserByUsername(username3));
+        for (User user : users) {
+            if (user == null)
+                return new Result(false, "Username not found!");
+        }
+        if (users.getFirst().getCurrentGame() != null)
+            return new Result(false, "You are already in a game!");
+        for (int i = 1; i < users.size(); i++) {
+            if (users.get(i).getCurrentGame() != null)
+                return new Result(false, "User is already in a game!");
+        }
+        ArrayList<Player> players = new ArrayList<>();
+        for (User user : users) {
+            players.add(new Player(user));
+        }
+        Game game = new Game(players);
+        App.setCurrentGame(game);
+        App.setCurrentMenu(Menu.GameMenu);
+        return new Result(true, "Game created!");
     }
 
     public Result exitMenu() {

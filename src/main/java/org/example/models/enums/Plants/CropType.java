@@ -1,6 +1,5 @@
 package org.example.models.enums.Plants;
 
-import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
 
 import java.util.ArrayList;
@@ -125,7 +124,7 @@ public enum CropType implements PlantType {
     SweetGemBerry(FruitType.SweetGemBerry, new int[]{2, 4, 6, 6, 6}, 3000, SeedType.RareSeed, 24
             , null, 0, false, false, false
             , new Season[]{Season.Fall}),
-    PowderMelon(FruitType.Powdermelon, new int[]{1, 2, 1, 2, 1}, 60, SeedType.PowderMelonSeed, 7
+    PowderMelon(FruitType.PowderMelon, new int[]{1, 2, 1, 2, 1}, 60, SeedType.PowderMelonSeed, 7
             , null, 63, true, true, false
             , new Season[]{Season.Winter}),
     AncientFruit(FruitType.AncientFruit, new int[]{2, 7, 7, 7, 5}, 550, SeedType.AncientSeed, 28

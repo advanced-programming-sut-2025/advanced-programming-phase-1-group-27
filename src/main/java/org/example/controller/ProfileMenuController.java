@@ -7,7 +7,7 @@ import org.example.models.Result;
 import org.example.view.menu.ProfileMenu;
 
 public class ProfileMenuController extends MenuController {
-    private ProfileMenu view;
+    private final ProfileMenu view;
 
     public ProfileMenuController(ProfileMenu view) {
         this.view = view;

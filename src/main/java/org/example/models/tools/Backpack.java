@@ -29,7 +29,7 @@ public class Backpack extends Tool implements Item {
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return 0;
     }
 

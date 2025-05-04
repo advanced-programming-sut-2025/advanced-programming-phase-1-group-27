@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player extends User {
-    private ArrayList<Recipe> availableRecipes; // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
+    private ArrayList<Recipe> availableRecipes = new ArrayList<>(); // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
     // player's inventory
-    private Backpack backpack;
+    private Backpack backpack = new Backpack(0);
     // items which are place in the fridge
     private ArrayList<Stacks> refrigerator = new ArrayList<>();
     // maps ability type to user's ability
@@ -37,6 +37,11 @@ public class Player extends User {
 
     public Player(String username, String password, String nickname, String email, Gender gender) {
         super(username, password, nickname, email, gender);
+    }
+
+    public Player(User user) {
+        super(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getGender());
+
     }
 
     public int getMoney() {

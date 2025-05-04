@@ -21,6 +21,14 @@ public class MainMenu extends AppMenu {
         if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
         }
+        else if ((matcher = MainMenuCommands.NewGame.getMatcher(input)) != null) {
+            System.out.println(controller.createNewGame(
+                    matcher.group("username1"),
+                    matcher.group("username2"),
+                    matcher.group("username3"),
+                    matcher.group("overflow")
+            ));
+        }
         else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
         }

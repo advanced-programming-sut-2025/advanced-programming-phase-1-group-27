@@ -1,6 +1,8 @@
 package org.example.models.enums.Plants;
 
-public enum SaplingType implements PlantSourceType {
+import org.example.models.Item;
+
+public enum SaplingType implements Item, PlantSourceType {
     ApricotSapling(TreeType.ApricotTree),
     CherrySapling(TreeType.CherryTree),
     BananaSapling(TreeType.BananaTree),
@@ -20,5 +22,10 @@ public enum SaplingType implements PlantSourceType {
 
     public TreeType getTree() {
         return tree;
+    }
+
+    @Override
+    public Integer getPrice() {
+        return 0;
     }
 }

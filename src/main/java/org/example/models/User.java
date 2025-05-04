@@ -17,6 +17,7 @@ public class User {
     private final Gender gender;
     // security questions to recover forgotten password
     private ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
+    private Game currentGame = null;
     private int maxMoneyEarned = 0;
     private int numberOfGamesPlayed = 0;
 
@@ -50,6 +51,14 @@ public class User {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public Game getCurrentGame() {
+        return currentGame;
     }
 
     public String getEmail() {

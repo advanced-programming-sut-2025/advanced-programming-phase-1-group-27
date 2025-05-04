@@ -12,22 +12,47 @@ public class Game {
     private Player admin;
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players = new ArrayList<>();
-    private FarmMap[] farmMaps = new FarmMap[];
+    private FarmMap[] farmMaps = new FarmMap[4];
     private NPCMap npcMap = new NPCMap();
     private Weather currentWeather;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
     private static ArrayList<Dialogue> dialogues = new ArrayList<>();
 
+    public Game(ArrayList<Player> players) {
+        this.admin = players.getFirst();
+        this.players = players;
+        // TODO: other fields should be initialized
+    }
+
+    public Player getAdmin() {
+        return admin;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public Weather getCurrentWeather() {
+        return currentWeather;
+    }
+
+    public void passAnHour() {
+        time.passAnHour();
+        // TODO
+    }
+
     public void newDay() {
         currentWeather = time.getSeason().pickARandomWeather();
+
         //TODO
 
 
-
-
     }
-
 
     public Player getCurrentPlayer() {
         return players.get(currentPlayerIndex);

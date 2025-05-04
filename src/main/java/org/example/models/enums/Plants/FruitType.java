@@ -1,6 +1,8 @@
 package org.example.models.enums.Plants;
 
-public enum FruitType {
+import org.example.models.Item;
+
+public enum FruitType implements Item {
 //Trees :
     Apricot(59 , true ,38),
     Cherry(80 , true ,38),
@@ -79,7 +81,7 @@ public enum FruitType {
     Pumpkin(320, false, 0),
     Yam(160, true, 45),
     SweetGemBerry(3000, false, 0),
-    Powdermelon(60, true, 63),
+    PowderMelon(60, true, 63),
     AncientFruit(550, false, 0);
 
     private final int price;
@@ -101,7 +103,11 @@ public enum FruitType {
         return energy;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
+    }
+
+    public String getName() {
+        return this.toString();
     }
 }

@@ -2,5 +2,8 @@ package org.example.models;
 
 public interface Item {
     public abstract Integer getPrice();
-    public abstract String getName();
+
+    default String getName() {
+        return this.toString().replaceAll("([A-Z])", " $1").trim();
+    }
 }

@@ -5,6 +5,11 @@ import java.util.regex.Pattern;
 
 public enum MainMenuCommands implements MenuCommands {
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
+    NewGame("game\\s+new\\s+-u" +
+            "(?:\\s+(?<username1>\\S+))?" +
+            "(?:\\s+(?<username2>\\S+))?" +
+            "(?:\\s+(?<username3>\\S+))?" +
+            "(?:\\s+(?<overflow>\\S+))?"),
     ExitMenu("menu\\s+exit"),
     ShowCurrentMenu("show\\s+current\\s+menu"),
     Logout("user\\s+logout");

@@ -14,7 +14,7 @@ public class ProcessedProduct implements Item { // for all processed products
     }
 
     @Override
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 }
