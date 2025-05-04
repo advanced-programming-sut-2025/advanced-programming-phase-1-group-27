@@ -5,6 +5,7 @@ import org.example.models.enums.Menu;
 import org.example.view.menu.MainMenu;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MainMenuMenuController extends MenuController {
     private MainMenu view;
@@ -23,7 +24,7 @@ public class MainMenuMenuController extends MenuController {
         return new Result(true, "Redirecting to " + newMenu + " ...");
     }
 
-    public Result createNewGame(String username1, String username2, String username3, String overflow) {
+    public Result createNewGame(String username1, String username2, String username3, String overflow, Scanner scanner) {
         if (username1 == null)
             return new Result(false, "No username provided!");
         if (overflow != null)
@@ -51,9 +52,17 @@ public class MainMenuMenuController extends MenuController {
             players.add(new Player(user));
         }
         Game game = new Game(players);
+        for (Player player : players) {
+            getPlayerMap(player, game, scanner);
+        }
         App.setCurrentGame(game);
         App.setCurrentMenu(Menu.GameMenu);
         return new Result(true, "Game created!");
+    }
+
+    public Result loadGame() {
+        // TODO: loading game using JSON
+        return null;
     }
 
     public Result exitMenu() {
@@ -65,5 +74,16 @@ public class MainMenuMenuController extends MenuController {
         App.setLoggedInUser(null);
         App.setCurrentMenu(Menu.LoginMenu);
         return new Result(true, "User logged out successfully!");
+    }
+
+    private void getPlayerMap(Player player, Game game, Scanner scanner) {
+        view.printString("Choosing " + player.getUsername() + "'s map:");
+        Result result;
+        int mapId;
+        do {
+            result = view.inputMap(scanner);
+            mapId = result.success()? Integer.parseInt(result.message()): -1;
+        } while (!result.success());
+        player.setFarmMap(game.getFarmMap(mapId));
     }
 }

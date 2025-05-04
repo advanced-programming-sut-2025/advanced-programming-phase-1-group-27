@@ -4,8 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuCommands implements MenuCommands {
-    SetMap("game\\s+map\\s+(?<mapNumber>\\d+)"),
-    LoadGame("load\\s+game"),
     ExitGame("exit\\s+game"),
     NextTurn("next\\s+turn"),
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),

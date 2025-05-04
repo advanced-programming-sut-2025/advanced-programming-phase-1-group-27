@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Game {
     private Player admin;
     private int currentPlayerIndex = 0;
-    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Player> players;
     private FarmMap[] farmMaps = new FarmMap[4];
     private NPCMap npcMap = new NPCMap();
     private Weather currentWeather;
@@ -46,6 +46,10 @@ public class Game {
 
     public Weather getCurrentWeather() {
         return currentWeather;
+    }
+
+    public FarmMap getFarmMap(int index) {
+        return farmMaps[index];
     }
 
     public void passAnHour() {

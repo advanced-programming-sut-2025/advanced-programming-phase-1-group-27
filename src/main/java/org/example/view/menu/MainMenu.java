@@ -26,8 +26,12 @@ public class MainMenu extends AppMenu {
                     matcher.group("username1"),
                     matcher.group("username2"),
                     matcher.group("username3"),
-                    matcher.group("overflow")
+                    matcher.group("overflow"),
+                    scanner
             ));
+        }
+        else if (MainMenuCommands.LoadGame.getMatcher(input) != null) {
+            System.out.println(controller.loadGame());
         }
         else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
@@ -41,5 +45,18 @@ public class MainMenu extends AppMenu {
         else {
             System.out.println(new Result(false, "invalid command!"));
         }
+    }
+
+    public Result inputMap(Scanner scanner) {
+        String input = scanner.nextLine().trim();
+        Matcher matcher;
+        if ((matcher = MainMenuCommands.SetMap.getMatcher(input)) != null) {
+            return new Result(true, matcher.group("mapNumber"));
+        }
+        return new Result(false, "invalid command!");
+    }
+
+    public void printString(String string) {
+        System.out.println(string);
     }
 }

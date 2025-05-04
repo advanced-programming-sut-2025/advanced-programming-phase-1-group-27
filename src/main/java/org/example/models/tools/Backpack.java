@@ -24,18 +24,8 @@ public class Backpack extends Tool implements Item {
     }
 
     @Override
-    public void use() {
-
-    }
-
-    @Override
     public Integer getPrice() {
         return 0;
-    }
-
-    @Override
-    public String getName() {
-        return "";
     }
 
     public List<Stacks> getItems() {
