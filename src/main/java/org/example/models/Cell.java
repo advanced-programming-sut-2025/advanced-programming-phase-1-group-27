@@ -1,5 +1,7 @@
 package org.example.models;
 
+import org.example.models.AnimalProperty.Barn;
+import org.example.models.AnimalProperty.Coop;
 import org.example.models.Map.GreenHouse;
 import org.example.models.Map.Hut;
 import org.example.models.Map.NPCHouse;
@@ -85,6 +87,10 @@ public class Cell {
                 return "N";
             } else if (building instanceof StoreBuilding) {
                 return "S";
+            } else if (building instanceof Barn) {
+                return "B";
+            } else if (building instanceof Coop) {
+                return "Q";
             }
         } else if (cellType.equals(CellType.Occupied)) {
             if (object instanceof Tree) {
