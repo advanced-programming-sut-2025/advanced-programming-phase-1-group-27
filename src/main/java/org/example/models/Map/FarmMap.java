@@ -4,6 +4,8 @@ import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Cell;
 import org.example.models.Position;
+import org.example.models.enums.CellType;
+import org.example.models.enums.items.BuildingType;
 
 import java.util.*;
 
@@ -11,8 +13,8 @@ public class FarmMap extends Map {
 
     private Hut hut;
     private GreenHouse greenHouse;
-    private Barn barn;
-    private Coop coop;
+    private ArrayList<Barn> barns;
+    private ArrayList<Coop> coops;
 
     public FarmMap(int height, int width) {
         super(height, width);
@@ -40,21 +42,47 @@ public class FarmMap extends Map {
         this.greenHouse = greenHouse;
     }
 
-    public Barn getBarn() {
-        return barn;
+    public ArrayList<Barn> getBarns() {
+        return barns;
     }
 
-    public void setBarn(Barn barn) {
-        this.barn = barn;
+    public void addBarn(Barn barn) {
+        this.barns.add(barn);
     }
 
-    public Coop getCoop() {
-        return coop;
+    public ArrayList<Coop> getCoops() {
+        return coops;
     }
 
-    public void setCoop(Coop coop) {
-        this.coop = coop;
+    public boolean freeRectangle(int x, int y, int width, int height) {
+        for (int i = x; i < x + height; i++) {
+            for (int j = y; j < y + width; j++) {
+                if (cells[i][j].getType() != CellType.Free) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
+    public void placeCoop(int x, int y, Coop coop) {
+        this.coops.add(coop);
+        for (int i = x; i < x + BuildingType.Coop.getHeight(); i++) {
+            for (int j = y; j < y + BuildingType.Coop.getHeight(); j++) {
+                cells[i][j].setType(CellType.Building);
+                cells[i][j].setBuilding(coop);
+            }
+        }
+    }
+
+    public void placeBarn(int x, int y, Barn barn) {
+        this.barns.add(barn);
+        for (int i = x; i < x + BuildingType.Barn.getHeight(); i++) {
+            for (int j = y; j < y + BuildingType.Barn.getHeight(); j++) {
+                cells[i][j].setType(CellType.Building);
+                cells[i][j].setBuilding(barn);
+            }
+        }
+    }
 
 }

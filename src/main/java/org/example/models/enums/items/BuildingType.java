@@ -24,6 +24,18 @@ public enum BuildingType implements Item {
         this.recipe = recipe;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
     @Override
     public Integer getPrice() {
         return price;

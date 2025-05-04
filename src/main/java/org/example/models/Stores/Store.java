@@ -16,7 +16,6 @@ public abstract class Store {
         this.start = start;
         this.end = end;
     }
-
 }
 
 
