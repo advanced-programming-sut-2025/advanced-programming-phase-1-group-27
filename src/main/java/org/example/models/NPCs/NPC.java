@@ -4,6 +4,7 @@ import org.example.models.Item;
 import org.example.models.Player;
 import org.example.models.Position;
 import org.example.models.Relations.Relation;
+import org.example.models.enums.Features;
 import org.example.models.enums.NPCType;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class NPC {
     private String name;
     private NPCType type;
     private Position currentPosition;
+    private Features features;
     private ArrayList<Item> favorites;
     private int daysForThirdQuest;
     private Map<Player , Relation> relations = new HashMap<>();
@@ -39,6 +41,14 @@ public class NPC {
 
     public Quest[] getQuests() {
         return quests;
+    }
+
+    public Features getFeatures() {
+        return features;
+    }
+
+    public int getDaysForThirdQuest() {
+        return daysForThirdQuest;
     }
 
     public ArrayList<Item> getFavorites() {

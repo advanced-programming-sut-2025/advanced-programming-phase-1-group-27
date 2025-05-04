@@ -54,6 +54,7 @@ public class Game {
     }
 
     public void newDay() {
+
         currentWeather = time.getSeason().pickARandomWeather();
 
         //TODO

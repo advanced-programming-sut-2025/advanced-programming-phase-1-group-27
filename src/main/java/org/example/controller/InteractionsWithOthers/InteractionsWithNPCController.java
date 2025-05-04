@@ -4,10 +4,12 @@ import org.example.models.*;
 import org.example.models.NPCs.NPC;
 import org.example.models.NPCs.Quest;
 import org.example.models.Relations.Relation;
+import org.example.models.enums.Features;
+import org.example.models.enums.Seasons.Season;
+import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Backpack;
-import org.example.models.tools.FishingPole;
 import org.example.models.tools.Tool;
 import org.example.models.tools.WateringCan;
 
@@ -20,13 +22,62 @@ public class InteractionsWithNPCController {
         if (!isNPCNear(npc, App.getCurrentGame().getCurrentPlayer())) {
             return new Result(false, "NPC is not near you!");
         }
+        StringBuilder result = new StringBuilder();
+        result.append(dialogueForNPC(npc));
         if (firstTimeMet(npc, App.getCurrentGame().getCurrentPlayer())) {
             npc.getRelations().computeIfAbsent(App.getCurrentGame().getCurrentPlayer(), k -> new Relation());
             npc.addXP(App.getCurrentGame().getCurrentPlayer(), 20);
             //Dialogues must be different
-            return new Result(true, "Hi! How are you today?");
+            result.append(" (You get +20 XP)");
         }
-        return new Result(true, "What do you want?");
+        return new Result(true, result.toString());
+    }
+
+    private String dialogueForNPC(NPC npc) {
+        int time = App.getCurrentGame().getTime().getHour();
+        Weather weather = App.getCurrentGame().getCurrentWeather();
+        int level = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel();
+        Season season = App.getCurrentGame().getTime().getSeason();
+        Features features = npc.getFeatures();
+        StringBuilder result = new StringBuilder();
+        result.append("Hi");
+        if(level == 0){
+            result.append(" stranger! ");
+        }else {
+            result.append(" friend! ");
+        }
+        if (time >= 9
+                && time <= 12) {
+            result.append("Good Morning! ");
+        } else if (time > 12
+                && time <= 16) {
+            result.append("Good Afternoon! ");
+        } else if (time > 16
+                && time <= 19) {
+            result.append("Good Evening! ");
+        } else { //time > 19 && time <= 24
+            result.append("Good Night! ");
+        }
+        if (weather == Weather.Rain) {
+            result.append("Do you have an umbrella? ");
+        } else if (weather == Weather.Snow) {
+            result.append("It's so cold! ");
+        } else if (weather == Weather.Storm) {
+            result.append("Weather is windy! ");
+        } else {//weather == Weather.Sunny
+            result.append("It's so hot! ");
+        }
+        result.append("I like ");
+        if(season == Season.Spring){
+            result.append("Spring!");
+        }else if(season == Season.Summer){
+            result.append("Summer!");
+        }else if(season == Season.Fall){
+            result.append("Fall!");
+        }else { // season == Season.Winter
+            result.append("Winter!");
+        }
+        return result.toString();
     }
 
     public Result giftNPC(String npcName, String itemName) {
@@ -180,9 +231,9 @@ public class InteractionsWithNPCController {
                     }
                 }
             }
-            if(deletedStack != null) {
+            if (deletedStack != null) {
                 backpack.getItems().remove(deletedStack);
-                backpack.addItems(ToolType.IridiumWateringCan , 1);
+                backpack.addItems(ToolType.IridiumWateringCan, 1);
             }
         }
         Stacks reward = quests[index].getReward();
@@ -247,7 +298,7 @@ public class InteractionsWithNPCController {
     }
 
     private boolean canActivateThirdQuest(NPC npc) {
-        //TODO : zaman bayad check shavad
-        return true;
+        int daysPassed = App.getCurrentGame().getTime().getDaysPassed();
+        return npc.getDaysForThirdQuest() >= daysPassed;
     }
 }

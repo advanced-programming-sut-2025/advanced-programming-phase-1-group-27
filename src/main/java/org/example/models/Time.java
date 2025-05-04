@@ -4,12 +4,13 @@ import org.example.models.enums.Seasons.Season;
 
 public class Time {
     //implement as instance
+    private int daysPassed = 0;
     private int hour = 9, day = 1;
     private Season season = Season.Spring;
     private final String[] daysOfWeek = new String[] {"Sunday", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday"};
 
-    public int getTime() {
+    public int getHour() {
         return this.hour;
     }
 
@@ -23,7 +24,7 @@ public class Time {
 
     public String showDateTime() {
         return new String(getDayOfWeek() + ", " + getSeason() + " " + getDate() + "\n" +
-                getTime() + ":00\n");
+                getHour() + ":00\n");
     }
 
     public void passAnHour() {
@@ -36,6 +37,7 @@ public class Time {
 
     private void passADay() {
         day++;
+        daysPassed++;
         if (day == 28) {
             advanceSeason();
             day = 0;
@@ -71,4 +73,7 @@ public class Time {
         advanceDate(day);
     }
 
+    public int getDaysPassed() {
+        return daysPassed;
+    }
 }

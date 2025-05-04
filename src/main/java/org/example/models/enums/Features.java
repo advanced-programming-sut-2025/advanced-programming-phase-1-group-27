@@ -7,5 +7,4 @@ public enum Features {
     Anxious,
     Scared,
     Lazy;
-    //incomplete
 }
