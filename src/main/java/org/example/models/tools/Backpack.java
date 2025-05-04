@@ -1,32 +1,28 @@
 package org.example.models.tools;
 
-import org.example.models.Ingredient;
 import org.example.models.Item;
 import org.example.models.Stacks;
 import org.example.models.enums.StackLevel;
+import org.example.models.enums.items.ToolType;
 
 import java.util.*;
 
-public class Backpack extends Tool implements Item {
+public class Backpack extends Tool{
 
     private int capacity;
     private List<Stacks> items;
 
-    public Backpack(int level) {
+    public Backpack(ToolType toolType) {
+        StackLevel level = toolType.getLevel();
         int energyUsage = 0;
-        if (level == 0) {
+        if (level == StackLevel.Basic) {
             this.capacity = 12;
-        } else if (level == 1) {
+        } else if (level == StackLevel.Large) {
             this.capacity = 24;
-        } else if (level == 2) {
+        } else if (level == StackLevel.Deluxe) {
             this.capacity = -1;//infinite
         }
-        super(level, energyUsage, "Backpack");
-    }
-
-    @Override
-    public Integer getPrice() {
-        return 0;
+        super(level, energyUsage, toolType.getName());
     }
 
     public List<Stacks> getItems() {
@@ -125,4 +121,15 @@ public class Backpack extends Tool implements Item {
         }
     }
 
+    public boolean isToolAvailable(String toolName) {
+        for (Stacks stacks : items) {
+            if (stacks.getItem() instanceof ToolType) {
+                if (stacks.getItem().getName().equalsIgnoreCase(toolName)) {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
 }

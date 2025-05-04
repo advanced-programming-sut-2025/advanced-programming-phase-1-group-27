@@ -1,28 +1,36 @@
 package org.example.models.tools;
 
-import org.example.models.Item;
+import org.example.models.App;
+import org.example.models.enums.AbilityType;
+import org.example.models.enums.StackLevel;
+import org.example.models.enums.items.ToolType;
 
-public class Pickaxe extends Tool implements Item {
+public class Pickaxe extends Tool{
     //EnergyUsage : 5 - 4 - 3 - 2 - 1;
     //If usage is failed -1
     //If mining talent is max -1
-    public Pickaxe(int level) {
+    public Pickaxe(ToolType toolType) {
+        StackLevel level = toolType.getLevel();
         int energyUsage = 0;
-        if(level == 0){
+        if(level == StackLevel.Basic){
             energyUsage = 5;
-        }else if(level == 1){
+        }else if(level == StackLevel.Bronze){
             energyUsage = 4;
-        }else if(level == 2){
+        }else if(level == StackLevel.Iron){
             energyUsage = 3;
-        }else if(level == 3){
+        }else if(level == StackLevel.Gold){
             energyUsage = 2;
-        }else if(level == 4){
+        }else if(level == StackLevel.Iridium){
             energyUsage = 1;
         }
-        super(level , energyUsage , "Pickaxe");
+        super(level , energyUsage , toolType.getName());
     }
 
-    public void use() {
-
+    public int getEnergy() {
+        int energy = this.getEnergyUsage();
+        if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Mining).getLevel() == 4) {
+            energy--;
+        }
+        return Math.min(energy , 0);
     }
 }

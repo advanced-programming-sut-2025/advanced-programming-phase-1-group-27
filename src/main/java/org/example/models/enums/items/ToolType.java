@@ -54,6 +54,10 @@ public enum ToolType implements Item {
         return 0;
     }
 
+    public StackLevel getLevel() {
+        return level;
+    }
+
     @Override
     public String getName() {
         return this.name;

@@ -155,4 +155,7 @@ public class Player extends User {
         return npcGiftToday;
     }
 
+    public Ability getAbility(AbilityType type) {
+        return abilityFinder.get(type);
+    }
 }

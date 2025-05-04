@@ -1,27 +1,28 @@
 package org.example.models.tools;
 
-import org.example.models.Item;
+import org.example.models.App;
+import org.example.models.enums.StackLevel;
 
-public abstract class Tool implements Item {
+public abstract class Tool{
     private final int energyUsage;
-    private int level;
+    private StackLevel level;
     private String name;
 
-    public Tool(int level , int energyUsage , String name) {
+    public Tool(StackLevel level , int energyUsage , String name) {
         this.level = level;
         this.energyUsage = energyUsage;
         this.name = name;
     }
 
-    public int getEnergyUsage(){
+    protected int getEnergyUsage(){
         return energyUsage;
     }
 
-    public int getLevel() {
+    public StackLevel getLevel() {
         return level;
     }
 
-    private void upgradeLevel(){
-        this.level++;
+    public String getName() {
+        return name;
     }
 }

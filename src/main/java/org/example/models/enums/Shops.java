@@ -18,7 +18,7 @@ public enum Shops {
     private final int endTime;
     private ArrayList<Stacks> stacks;
 
-    Shops(NPCType manager , int startTime, int endTime , ArrayList<Stacks> stacks) {
+    Shops(NPCType manager , int startTime, int endTime) {
         this.manager = manager;
         this.startTime = startTime;
         this.endTime = endTime;

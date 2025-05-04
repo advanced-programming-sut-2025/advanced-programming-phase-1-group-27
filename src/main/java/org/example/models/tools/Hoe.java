@@ -1,27 +1,25 @@
 package org.example.models.tools;
 
-import org.example.models.Item;
+import org.example.models.enums.StackLevel;
+import org.example.models.enums.items.ToolType;
 
-public class Hoe extends Tool implements Item {
+public class Hoe extends Tool{
 
-    public Hoe(int level) {
+    public Hoe(ToolType toolType) {
+        StackLevel level = toolType.getLevel();
         int energyUsage = 0;
-        if(level == 0){
+        if(level == StackLevel.Basic){
             energyUsage = 5;
-        }else if(level == 1){
+        }else if(level == StackLevel.Bronze){
             energyUsage = 4;
-        }else if(level == 2){
+        }else if(level == StackLevel.Iron){
             energyUsage = 3;
-        }else if(level == 3){
+        }else if(level == StackLevel.Gold){
             energyUsage = 2;
-        }else if(level == 4){
+        }else if(level == StackLevel.Iridium){
             energyUsage = 1;
         }
-        super(level , energyUsage , "Hoe");
-    }
-
-    public void use() {
-
+        super(level , energyUsage , toolType.getName());
     }
 
 }

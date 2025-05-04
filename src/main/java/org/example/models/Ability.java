@@ -15,4 +15,8 @@ public class Ability {
         this.level++;
         // TODO: adding new recipes to user's HashMap
     }
+
+    public int getLevel(){
+        return level;
+    }
 }

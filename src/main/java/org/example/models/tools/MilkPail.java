@@ -1,19 +1,17 @@
 package org.example.models.tools;
 
-import org.example.models.Item;
+import org.example.models.enums.StackLevel;
+import org.example.models.enums.items.ToolType;
 
-public class MilkPail extends Tool implements Item {
+public class MilkPail extends Tool{
 
     private int price;
 
     public MilkPail() {
-        int level = 0;
+        StackLevel level = ToolType.MilkPail.getLevel();
         this.price = 1000;
         int energyUsage = 4;
-        super(level, energyUsage , "Milk pail");
+        super(level, energyUsage , ToolType.MilkPail.getName());
     }
 
-    public void use() {
-
-    }
 }

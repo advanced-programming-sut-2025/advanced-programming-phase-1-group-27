@@ -1,13 +1,14 @@
 package org.example.models.tools;
 
-import org.example.models.Item;
+import org.example.models.enums.StackLevel;
+import org.example.models.enums.items.ToolType;
 
-public class Scythe extends Tool implements Item {
+public class Scythe extends Tool{
 
     public Scythe() {
-        int level = 0;
+        StackLevel level = ToolType.Scythe.getLevel();
         int energyUsage = 2;
-        super(level , energyUsage , "Scythe");
+        super(level , energyUsage , ToolType.Scythe.getName());
     }
 
     public void use() {

@@ -2,7 +2,6 @@ package org.example.controller;
 
 import org.example.models.*;
 import org.example.models.enums.items.ToolType;
-import org.example.models.tools.Tool;
 
 public class ToolController {
     public Result upgradeTool(){
@@ -19,12 +18,13 @@ public class ToolController {
         StringBuilder result = new StringBuilder();
         Player player = App.getCurrentGame().getCurrentPlayer();
         int i = 0;
-        for(Item item : player.getBackpack().getItems()){
-            if(item instanceof Tool){
+        for(Stacks stacks: player.getBackpack().getItems()){
+            Item item = stacks.getItem();
+            if(item instanceof ToolType){
                 if(i != 0){
                     result.append("\n");
                 }
-                result.append(item.toString());
+                result.append(item.getName());
                 i++;
             }
         }
@@ -33,7 +33,10 @@ public class ToolController {
 
     public Result showCurrentTool(){
         Player player = App.getCurrentGame().getCurrentPlayer();
-        return new Result(true , player.getCurrentTool().toString());
+        if(player.getCurrentTool() == null){
+            return new Result(false , "No tool equipped");
+        }
+        return new Result(true , player.getCurrentTool().getName());
     }
 
     public Result equipTool(String toolName){
@@ -46,36 +49,16 @@ public class ToolController {
     }
 
     private ToolType getTool(String toolName){
-        if(toolName.equals("Hoe")){
-            return ToolType.Hoe;
-        }else if(toolName.equals("Pickaxe")){
-            return ToolType.Pickaxe;
-        }else if(toolName.equals("Axe")){
-            return ToolType.Axe;
-        }else if(toolName.equals("Watering can")){
-            return ToolType.WateringCan;
-        }else if(toolName.equals("Fishing pole")){
-            return ToolType.FishingPole;
-        }else if(toolName.equals("Scythe")){
-            return ToolType.Scythe;
-        }else if(toolName.equals("Milk pain")){
-            return ToolType.MilkPail;
-        }else if(toolName.equals("Shear")){
-            return ToolType.Shear;
-        }else if(toolName.equals("Backpack")){
-            return ToolType.BackPack;
-        }else if(toolName.equals("Trash can")){
-            return ToolType.TrashCan;
-        }else {
-            return null;
+        for(ToolType toolType : ToolType.values()){
+            if(toolType.getName().equalsIgnoreCase(toolName)){
+                return toolType;
+            }
         }
+        return null;
     }
 
     private boolean isToolInBackPack(String toolName){
         Player player = App.getCurrentGame().getCurrentPlayer();
-        if(player.getBackpack().getTool(toolName) == null){
-            return false;
-        }
-        return true;
+        return player.getBackpack().isToolAvailable(toolName);
     }
 }
