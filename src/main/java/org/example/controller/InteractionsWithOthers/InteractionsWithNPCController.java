@@ -6,6 +6,7 @@ import org.example.models.NPCs.Quest;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.Features;
 import org.example.models.enums.Seasons.Season;
+import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.enums.items.ToolType;
@@ -41,9 +42,9 @@ public class InteractionsWithNPCController {
         Features features = npc.getFeatures();
         StringBuilder result = new StringBuilder();
         result.append("Hi");
-        if(level == 0){
+        if (level == 0) {
             result.append(" stranger! ");
-        }else {
+        } else {
             result.append(" friend! ");
         }
         if (time >= 9
@@ -68,13 +69,13 @@ public class InteractionsWithNPCController {
             result.append("It's so hot! ");
         }
         result.append("I like ");
-        if(season == Season.Spring){
+        if (season == Season.Spring) {
             result.append("Spring!");
-        }else if(season == Season.Summer){
+        } else if (season == Season.Summer) {
             result.append("Summer!");
-        }else if(season == Season.Fall){
+        } else if (season == Season.Fall) {
             result.append("Fall!");
-        }else { // season == Season.Winter
+        } else { // season == Season.Winter
             result.append("Winter!");
         }
         return result.toString();
@@ -100,7 +101,7 @@ public class InteractionsWithNPCController {
         if (firstTimeGift(npc, App.getCurrentGame().getCurrentPlayer())) {
             boolean addItem = false;
             for (Item item : npc.getFavorites()) {
-                if (item == stack.getItem()) {
+                if (item.getName().equals(stack.getItem().getName())) {
                     npc.addXP(App.getCurrentGame().getCurrentPlayer(), 200);
                     xp = 200;
                     addItem = true;
@@ -223,7 +224,7 @@ public class InteractionsWithNPCController {
             for (Stacks stacks1 : backpack.getItems()) {
                 if (stacks1.getItem() instanceof WateringCan) {
                     if (stacks1.getItem().getName().equals("Iridium watering can")) {
-                        backpack.addItems(stacks.getItem(), stacks.getQuantity());
+                        backpack.addItems(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity());
                         quests[index].setDone(false);
                         return new Result(true, npcName + " : You have Iridium watering can already!");
                     } else {
@@ -233,7 +234,7 @@ public class InteractionsWithNPCController {
             }
             if (deletedStack != null) {
                 backpack.getItems().remove(deletedStack);
-                backpack.addItems(ToolType.IridiumWateringCan, 1);
+                backpack.addItems(ToolType.IridiumWateringCan, StackLevel.Iridium, 1);
             }
         }
         Stacks reward = quests[index].getReward();
@@ -243,7 +244,7 @@ public class InteractionsWithNPCController {
             return new Result(true, npcName + " : Thank you! ( You get " + amount + " money)");
         }
         //TODO : momken hast ja nadashte bashim
-        int amount = backpack.addItems(stacks.getItem(), stacks.getQuantity() * ratio);
+        int amount = backpack.addItems(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity() * ratio);
         return new Result(true, npcName + " : Thank you! ( You get " + stacks.getQuantity() * ratio +
                 "*" + stacks.getItem().getName() + " )");
     }
@@ -253,8 +254,10 @@ public class InteractionsWithNPCController {
         int playerY = player.getPosition().getY();
         int npcX = npc.getCurrentPosition().getX();
         int npcY = npc.getCurrentPosition().getY();
-        int distance = Math.abs(playerX - npcX) + Math.abs(playerY - npcY);
-        return distance < 2;
+        int distanceX = Math.abs(playerX - npcX);
+        int distanceY = Math.abs(playerY - npcY);
+        return distanceY <= 1
+                && distanceX <= 1;
     }
 
     private NPC findNPC(String npcName) {

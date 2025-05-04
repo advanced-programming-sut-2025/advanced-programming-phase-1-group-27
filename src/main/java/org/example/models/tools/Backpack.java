@@ -3,6 +3,7 @@ package org.example.models.tools;
 import org.example.models.Ingredient;
 import org.example.models.Item;
 import org.example.models.Stacks;
+import org.example.models.enums.StackLevel;
 
 import java.util.*;
 
@@ -56,15 +57,15 @@ public class Backpack extends Tool implements Item {
         }
     }
 
-    public int addItems(Item item, int amount) {
+    public int addItems(Item item, StackLevel stackLevel, int amount) {
         arranging();
         if (capacity == -1) {
             while (amount > 0) {
                 if (amount > 999) {
-                    items.add(new Stacks(item, 999));
+                    items.add(new Stacks(item, stackLevel ,999));
                     amount -= 999;
                 } else {
-                    items.add(new Stacks(item, amount));
+                    items.add(new Stacks(item, stackLevel ,amount));
                 }
             }
             arranging();
@@ -90,11 +91,11 @@ public class Backpack extends Tool implements Item {
                     } else {
                         break;
                     }
-                }else {
+                } else {
                     if (items.size() <= capacity) {
                         items.add(new Stacks(item, amount));
                         amount -= amount;
-                    }else {
+                    } else {
                         break;
                     }
                 }

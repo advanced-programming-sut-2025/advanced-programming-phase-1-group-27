@@ -17,4 +17,9 @@ public class ProcessedProduct implements Item { // for all processed products
     public Integer getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return type.toString();
+    }
 }
