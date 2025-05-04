@@ -103,7 +103,7 @@ public enum CropType implements PlantType {
     Broccoli(FruitType.Broccoli, new int[]{2, 2, 2, 2}, 70, SeedType.BroccoliSeed, 8
             , 4, 63, true, true, false
             , new Season[]{Season.Fall}),
-    Cranberry(FruitType.Cranberries, new int[]{1, 2, 1, 1, 2}, 75, SeedType.CranberrySeed, 7
+    Cranberry(FruitType.Cranberry, new int[]{1, 2, 1, 1, 2}, 75, SeedType.CranberrySeed, 7
             , 5, 38, true, true, false
             , new Season[]{Season.Fall}),
     Eggplant(FruitType.Eggplant, new int[]{1, 1, 1, 1}, 60, SeedType.EggplantSeed, 5
@@ -142,7 +142,7 @@ public enum CropType implements PlantType {
     Morel(FruitType.Morel, new int[]{} , 150 , null , 0
             , null , 20 , false , true , false
             , new Season[]{Season.Spring}),
-    SalmonBerry(FruitType.Salmonberry, new int[]{} , 5 , null , 0
+    SalmonBerry(FruitType.SalmonBerry, new int[]{} , 5 , null , 0
             , null , 25 , false , true , false
             , new Season[]{Season.Spring}),
     SpringOnion(FruitType.SpringOnion, new int[]{} , 8 , null , 0

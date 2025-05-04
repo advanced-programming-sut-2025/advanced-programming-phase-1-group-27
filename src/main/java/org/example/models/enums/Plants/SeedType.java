@@ -1,12 +1,13 @@
 package org.example.models.enums.Plants;
 
+import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public enum SeedType implements PlantSourceType {
+public enum SeedType implements PlantSourceType, Item {
     //Starter + Seed + Bean + Shoot
     GrassStater,
     ParsnipSeed,
@@ -78,4 +79,8 @@ public enum SeedType implements PlantSourceType {
         return foragingSeedsBySeason;
     }
 
+    @Override
+    public Integer getPrice() {
+        return 0;
+    }
 }

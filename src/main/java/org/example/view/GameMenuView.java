@@ -1,18 +1,16 @@
-package org.example.view.menu;
+package org.example.view;
 
 import org.example.controller.GameMenuController;
-import org.example.models.Game;
 import org.example.models.enums.commands.GameMenuCommands;
 import org.example.models.Result;
-import org.example.view.AppMenu;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class GameMenu extends AppMenu {
+public class GameMenuView extends AppMenu {
     private final GameMenuController controller;
 
-    public GameMenu() {
+    public GameMenuView() {
         controller = new GameMenuController(this);
     }
 
@@ -21,6 +19,9 @@ public class GameMenu extends AppMenu {
         Matcher matcher;
         if ((matcher = GameMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
+        }
+        else if (GameMenuCommands.ExitGame.getMatcher(input) != null) {
+            System.out.println(controller.exitGame());
         }
         else if (GameMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
