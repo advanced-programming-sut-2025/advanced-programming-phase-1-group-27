@@ -2,6 +2,7 @@ package org.example.models.enums;
 
 import org.example.models.Stacks;
 import org.example.models.enums.Plants.CropType;
+import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.enums.items.ToolType;
@@ -14,9 +15,9 @@ public enum QuestsForNPCs {
     SebastianThirdQuest(new Stacks(MineralType.Stone , 150) , new Stacks(MineralType.Quartz , 50)),
     // +1 FriendShip
     AbigailFirstQuest(new Stacks(ProcessedProductType.GoldMetalBar , 1) , null),
-    AbigailSecondQuest(new Stacks(CropType.Pumpkin , 1) , new Stacks(ShopItems.Coin , 500)),
+    AbigailSecondQuest(new Stacks(FruitType.Pumpkin , 1) , new Stacks(ShopItems.Coin , 500)),
     AbigailThirdQuest(new Stacks(CropType.Wheat , 50) , new Stacks(ToolType.IridiumWateringCan , 1)),
-    HarveyFirstQuest()),
+    HarveyFirstQuest(),
     HarveySecondQuest(),
     HarveyThirdQuest(),
     LiaFirstQuest(),
@@ -29,9 +30,16 @@ public enum QuestsForNPCs {
     private final Stacks request;
     private final Stacks reward;
 
-
     QuestsForNPCs(Stacks request, Stacks reward) {
         this.request = request;
         this.reward = reward;
+    }
+
+    public Stacks getReward() {
+        return reward;
+    }
+
+    public Stacks getRequest() {
+        return request;
     }
 }

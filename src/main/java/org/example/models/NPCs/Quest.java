@@ -9,7 +9,13 @@ import java.util.ArrayList;
 public class Quest {
     private Stacks Reward;
     private Stacks Request;
-    private boolean isDone = false;
+    private boolean isDone;
+
+    public Quest(Stacks reward, Stacks request) {
+        Reward = reward;
+        Request = request;
+        this.isDone = false;
+    }
 
     public Stacks getReward() {
         return Reward;

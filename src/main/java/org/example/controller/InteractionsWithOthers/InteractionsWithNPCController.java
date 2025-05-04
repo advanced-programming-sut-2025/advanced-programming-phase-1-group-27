@@ -5,8 +5,11 @@ import org.example.models.NPCs.NPC;
 import org.example.models.NPCs.Quest;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.items.ShopItems;
+import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Backpack;
+import org.example.models.tools.FishingPole;
 import org.example.models.tools.Tool;
+import org.example.models.tools.WateringCan;
 
 public class InteractionsWithNPCController {
     public Result meetNPC(String npcName) {
@@ -154,14 +157,33 @@ public class InteractionsWithNPCController {
         if (index == 0
                 && npc.getName().equals("Abigail")) {
             Relation relation = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer());
-            relation.setLevel(Math.min(relation.getLevel() + ratio , 799));
+            relation.setLevel(Math.min(relation.getLevel() + ratio, 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
         if (index == 1
                 && npc.getName().equals("Harvey")) {
             Relation relation = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer());
-            relation.setLevel(Math.min(relation.getLevel() + ratio , 799));
+            relation.setLevel(Math.min(relation.getLevel() + ratio, 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
+        }
+        if (index == 2
+                && npc.getName().equals("Abigail")) {
+            Stacks deletedStack = null;
+            for (Stacks stacks1 : backpack.getItems()) {
+                if (stacks1.getItem() instanceof WateringCan) {
+                    if (stacks1.getItem().getName().equals("Iridium watering can")) {
+                        backpack.addItems(stacks.getItem(), stacks.getQuantity());
+                        quests[index].setDone(false);
+                        return new Result(true, npcName + " : You have Iridium watering can already!");
+                    } else {
+                        deletedStack = stacks1;
+                    }
+                }
+            }
+            if(deletedStack != null) {
+                backpack.getItems().remove(deletedStack);
+                backpack.addItems(ToolType.IridiumWateringCan , 1);
+            }
         }
         Stacks reward = quests[index].getReward();
         if (reward.getItem() == ShopItems.Coin) {
