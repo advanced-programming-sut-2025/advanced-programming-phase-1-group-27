@@ -10,7 +10,6 @@ public class Scythe extends Tool implements Item {
         super(level , energyUsage , "Scythe");
     }
 
-    @Override
     public void use() {
 
     }

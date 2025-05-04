@@ -1,8 +1,15 @@
 package org.example.controller;
 
 import org.example.models.Result;
+import org.example.view.HomeView;
 
 public class HomeController {
+    private final HomeView view;
+
+    public HomeController(HomeView view) {
+        this.view = view;
+    }
+
     public Result showCraftingRecipes() {
         // TODO: function incomplete
         return null;

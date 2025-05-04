@@ -77,4 +77,8 @@ public class Game {
     public ArrayList<NPC> getNPCs() {
         return npcs;
     }
+
+    public void nextPlayer() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % 4;
+    }
 }

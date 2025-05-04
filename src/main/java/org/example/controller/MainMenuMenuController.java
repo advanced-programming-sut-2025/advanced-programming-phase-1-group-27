@@ -52,6 +52,9 @@ public class MainMenuMenuController extends MenuController {
             players.add(new Player(user));
         }
         Game game = new Game(players);
+        for (User user : users) {
+            user.setCurrentGame(game);
+        }
         for (Player player : players) {
             getPlayerMap(player, game, scanner);
         }

@@ -24,7 +24,6 @@ public class FishingPole extends Tool implements Item {
         super(level , energyUsage , "FishingPole");
     }
 
-    @Override
     public void use() {
 
     }

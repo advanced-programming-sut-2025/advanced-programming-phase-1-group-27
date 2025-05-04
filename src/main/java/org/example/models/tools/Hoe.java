@@ -20,7 +20,6 @@ public class Hoe extends Tool implements Item {
         super(level , energyUsage , "Hoe");
     }
 
-    @Override
     public void use() {
 
     }

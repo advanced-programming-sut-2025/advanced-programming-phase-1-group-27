@@ -28,13 +28,14 @@ public class GameMenuController extends MenuController {
     }
 
     public Result exitGame() {
-
+        App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);
         return new Result(true, "Redirecting to main menu ...");
     }
 
-    public Result nextTurn() {
-        // TODO: function incomplete
-        return null;
+    public void nextTurn() {
+        App.getCurrentGame().getCurrentPlayer().setTomorrowEnergy();
+        App.getCurrentGame().nextPlayer();
+        // TODO: parsa pasokh be soalat mokhtalef
     }
 }

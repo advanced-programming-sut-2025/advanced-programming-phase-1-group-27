@@ -22,7 +22,6 @@ public class Pickaxe extends Tool implements Item {
         super(level , energyUsage , "Pickaxe");
     }
 
-    @Override
     public void use() {
 
     }

@@ -61,6 +61,10 @@ public class User {
         return currentGame;
     }
 
+    public void setCurrentGame(Game currentGame) {
+        this.currentGame = currentGame;
+    }
+
     public String getEmail() {
         return email;
     }

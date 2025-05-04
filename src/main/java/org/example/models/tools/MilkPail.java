@@ -13,7 +13,6 @@ public class MilkPail extends Tool implements Item {
         super(level, energyUsage , "Milk pail");
     }
 
-    @Override
     public void use() {
 
     }

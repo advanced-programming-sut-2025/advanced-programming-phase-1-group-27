@@ -23,6 +23,9 @@ public class GameMenuView extends AppMenu {
         else if (GameMenuCommands.ExitGame.getMatcher(input) != null) {
             System.out.println(controller.exitGame());
         }
+        else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
+            controller.nextTurn();
+        }
         else if (GameMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
         }

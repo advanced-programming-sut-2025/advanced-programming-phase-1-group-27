@@ -37,11 +37,23 @@ public class Player extends User {
 
     public Player(String username, String password, String nickname, String email, Gender gender) {
         super(username, password, nickname, email, gender);
+        initFields();
     }
 
     public Player(User user) {
         super(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getGender());
+        initFields();
+    }
 
+    private void initFields() {
+        this.energy = 50;
+        this.farming = new Ability();
+        this.mining = new Ability();
+        this.foraging = new Ability();
+        this.fishing = new Ability();
+        this.currentCell = null; // TODO: sobhan. ko ja bashe?
+        this.money = 0;
+        this.currentTool = null;
     }
 
     public int getMoney() {
@@ -83,7 +95,14 @@ public class Player extends User {
         }
     }
 
-    public int getEnrgy() {
+    public void setTomorrowEnergy() {
+        if (energy <= 0)
+            energy = 37;
+        else
+            energy = 50;
+    }
+
+    public int getEnergy() {
         return this.energy;
     }
 
@@ -91,7 +110,7 @@ public class Player extends User {
         //set the energy for tommorow and...
     }
 
-    public void passOut() {
+    public void passOut() { // TODO: sobhan. bedard mikhore in?
         // set the 75% energy for tommorow and...
     }
 
