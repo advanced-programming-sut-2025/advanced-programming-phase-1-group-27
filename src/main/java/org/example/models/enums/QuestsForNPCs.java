@@ -16,7 +16,7 @@ public enum QuestsForNPCs {
     // +1 FriendShip
     AbigailFirstQuest(new Stacks(ProcessedProductType.GoldMetalBar , 1) , null),
     AbigailSecondQuest(new Stacks(FruitType.Pumpkin , 1) , new Stacks(ShopItems.Coin , 500)),
-    AbigailThirdQuest(new Stacks(CropType.Wheat , 50) , new Stacks(ToolType.IridiumWateringCan , 1)),
+    AbigailThirdQuest(new Stacks(FruitType.Wheat , 50) , null),
     HarveyFirstQuest(),
     HarveySecondQuest(),
     HarveyThirdQuest(),

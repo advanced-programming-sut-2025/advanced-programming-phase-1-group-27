@@ -3,14 +3,12 @@ package org.example.controller;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.enums.Menu;
-import org.example.view.menu.GameMenu;
-
-import java.util.ArrayList;
+import org.example.view.GameMenuView;
 
 public class GameMenuController extends MenuController {
-    private GameMenu view;
+    private GameMenuView view;
 
-    public GameMenuController(GameMenu view) {
+    public GameMenuController(GameMenuView view) {
         this.view = view;
     }
 
@@ -29,24 +27,10 @@ public class GameMenuController extends MenuController {
         return new Result(true, "Redirecting to main menu ...");
     }
 
-    public Result createGame(ArrayList<String> playerUsername) {
-        // TODO: function incomplete
-        return null;
-    }
-
-    public Result setMap(int mapId) {
-        // TODO: function incomplete
-        return null;
-    }
-
-    public Result loadGame() {
-        // TODO: function incomplete
-        return null;
-    }
-
     public Result exitGame() {
-        // TODO: function incomplete
-        return null;
+
+        App.setCurrentMenu(Menu.MainMenu);
+        return new Result(true, "Redirecting to main menu ...");
     }
 
     public Result nextTurn() {

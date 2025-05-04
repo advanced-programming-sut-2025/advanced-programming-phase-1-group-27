@@ -2,7 +2,7 @@ package org.example.models.enums.items;
 
 import org.example.models.Ingredient;
 import org.example.models.Item;
-import org.example.models.enums.Plants.CropType;
+import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
@@ -30,113 +30,113 @@ public enum Recipe implements Item {
             new Ingredient(AnimalProduct.LargeGoatMilk, 1)
     ))),
     BeerRecipe(0, ProcessedProductType.Beer, new ArrayList<>(List.of(
-            new Ingredient(CropType.Wheat, 1)
+            new Ingredient(FruitType.Wheat, 1)
     ))),
     VinegarRecipe(0, ProcessedProductType.Vinegar, new ArrayList<>(List.of(
             new Ingredient(ProcessedProductType.Rice, 1)
     ))),
     CoffeeRecipe(0, ProcessedProductType.Coffee, new ArrayList<>(List.of(
-            new Ingredient(CropType.CoffeeBean, 5)
+            new Ingredient(FruitType.CoffeeBean, 5)
     ))),
     JuiceRecipe(0, ProcessedProductType.Juice, new ArrayList<>(List.of(
           new Ingredient(new ArrayList<>(List.of(
-                  CropType.Amaranth,
-                  CropType.Artichoke,
-                  CropType.Beet,
-                  CropType.BokChoy,
-                  CropType.Broccoli,
-                  CropType.Carrot,
-                  CropType.Cauliflower,
-                  CropType.Corn,
-                  CropType.Eggplant,
-                  CropType.FiddleheadFern,
-                  CropType.Garlic,
-                  CropType.GreenBean,
-                  CropType.Hops,
-                  CropType.Kale,
-                  CropType.Parsnip,
-                  CropType.Potato,
-                  CropType.Pumpkin,
-                  CropType.Radish,
-                  CropType.RedCabbage,
-                  CropType.SummerSquash,
-                  CropType.Tomato,
-                  CropType.UnmilledRice,
-                  CropType.Wheat,
-                  CropType.Yam
+                  FruitType.Amaranth,
+                  FruitType.Artichoke,
+                  FruitType.Beet,
+                  FruitType.BokChoy,
+                  FruitType.Broccoli,
+                  FruitType.Carrot,
+                  FruitType.Cauliflower,
+                  FruitType.Corn,
+                  FruitType.Eggplant,
+                  FruitType.FiddleheadFern,
+                  FruitType.Garlic,
+                  FruitType.GreenBean,
+                  FruitType.Hops,
+                  FruitType.Kale,
+                  FruitType.Parsnip,
+                  FruitType.Potato,
+                  FruitType.Pumpkin,
+                  FruitType.Radish,
+                  FruitType.RedCabbage,
+                  FruitType.SummerSquash,
+                  FruitType.Tomato,
+                  FruitType.UnmilledRice,
+                  FruitType.Wheat,
+                  FruitType.Yam
           )), 1)
     ))),
     MeadRecipe(0, ProcessedProductType.Mead, new ArrayList<>(List.of(
             new Ingredient(ProcessedProductType.Honey, 1)
     ))),
     PaleAleRecipe(0, ProcessedProductType.PaleAle, new ArrayList<>(List.of(
-            new Ingredient(CropType.Hops, 1)
+            new Ingredient(FruitType.Hops, 1)
     ))),
     WineRecipe(0, ProcessedProductType.Wine, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
-                    CropType.AncientFruit,
+                    FruitType.AncientFruit,
                     FruitType.Apple,
                     FruitType.Apricot,
                     FruitType.Banana,
-                    CropType.Blackberry,
-                    CropType.Blueberry,
+                    FruitType.Blackberry,
+                    FruitType.Blueberry,
                     FruitType.Cherry,
-                    CropType.Cranberry,
-                    CropType.CrystalFruit,
-                    CropType.Grape,
-                    CropType.HotPepper,
+                    FruitType.Cranberry,
+                    FruitType.CrystalFruit,
+                    FruitType.Grape,
+                    FruitType.HotPepper,
                     FruitType.Mango,
-                    CropType.Melon,
+                    FruitType.Melon,
                     FruitType.Orange,
                     FruitType.Peach,
                     FruitType.Pomegranate,
-                    CropType.PowderMelon,
-                    CropType.Rhubarb,
-                    CropType.SalmonBerry,
-                    CropType.SpiceBerry,
-                    CropType.Starfruit,
-                    CropType.Strawberry,
-                    CropType.WildPlum
+                    FruitType.PowderMelon,
+                    FruitType.Rhubarb,
+                    FruitType.SalmonBerry,
+                    FruitType.SpiceBerry,
+                    FruitType.Starfruit,
+                    FruitType.Strawberry,
+                    FruitType.WildPlum
             )), 1)
     ))),
     DriedMushroomRecipe(0, ProcessedProductType.DriedMushroom, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
-                    CropType.Chanterelle,
+                    FruitType.Chanterelle,
                     FruitType.CommonMushroom,
-                    CropType.Morel,
-                    CropType.PurpleMushroom,
-                    CropType.RedMushroom
+                    FruitType.Morel,
+                    FruitType.PurpleMushroom,
+                    FruitType.RedMushroom
             )), 1)
     ))),
     DriedFruitRecipe(0, ProcessedProductType.DriedFruit, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
-                    CropType.AncientFruit,
+                    FruitType.AncientFruit,
                     FruitType.Apple,
                     FruitType.Apricot,
                     FruitType.Banana,
-                    CropType.Blackberry,
-                    CropType.Blueberry,
+                    FruitType.Blackberry,
+                    FruitType.Blueberry,
                     FruitType.Cherry,
-                    CropType.Cranberry,
-                    CropType.CrystalFruit,
-                    CropType.Grape,
-                    CropType.HotPepper,
+                    FruitType.Cranberry,
+                    FruitType.CrystalFruit,
+                    FruitType.Grape,
+                    FruitType.HotPepper,
                     FruitType.Mango,
-                    CropType.Melon,
+                    FruitType.Melon,
                     FruitType.Orange,
                     FruitType.Peach,
                     FruitType.Pomegranate,
-                    CropType.PowderMelon,
-                    CropType.Rhubarb,
-                    CropType.SalmonBerry,
-                    CropType.SpiceBerry,
-                    CropType.Starfruit,
-                    CropType.Strawberry,
-                    CropType.WildPlum
+                    FruitType.PowderMelon,
+                    FruitType.Rhubarb,
+                    FruitType.SalmonBerry,
+                    FruitType.SpiceBerry,
+                    FruitType.Starfruit,
+                    FruitType.Strawberry,
+                    FruitType.WildPlum
             )), 1)
     ))),
     RaisinsRecipe(0 , ProcessedProductType.Raisins, new ArrayList<>(List.of(
-            new Ingredient(CropType.Grape , 5)
+            new Ingredient(FruitType.Grape , 5)
     ))),
     CoalRecipe(0 , ProcessedProductType.Coal, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood , 10)
@@ -161,64 +161,64 @@ public enum Recipe implements Item {
     ))),
     OilRecipe(0, ProcessedProductType.Oil, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
-                    CropType.Corn,
-                    CropType.Sunflower,
+                    FruitType.Corn,
+                    FruitType.Sunflower,
                     SeedType.SunflowerSeed
             )), 1)
     ))),
     PickleRecipe(0 , ProcessedProductType.Pickle, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
-                    CropType.Amaranth,
-                    CropType.Artichoke,
-                    CropType.Beet,
-                    CropType.BokChoy,
-                    CropType.Broccoli,
-                    CropType.Carrot,
-                    CropType.Cauliflower,
-                    CropType.Corn,
-                    CropType.Eggplant,
-                    CropType.FiddleheadFern,
-                    CropType.Garlic,
-                    CropType.GreenBean,
-                    CropType.Hops,
-                    CropType.Kale,
-                    CropType.Parsnip,
-                    CropType.Potato,
-                    CropType.Pumpkin,
-                    CropType.Radish,
-                    CropType.RedCabbage,
-                    CropType.SummerSquash,
-                    CropType.Tomato,
-                    CropType.UnmilledRice,
-                    CropType.Wheat,
-                    CropType.Yam
+                    FruitType.Amaranth,
+                    FruitType.Artichoke,
+                    FruitType.Beet,
+                    FruitType.BokChoy,
+                    FruitType.Broccoli,
+                    FruitType.Carrot,
+                    FruitType.Cauliflower,
+                    FruitType.Corn,
+                    FruitType.Eggplant,
+                    FruitType.FiddleheadFern,
+                    FruitType.Garlic,
+                    FruitType.GreenBean,
+                    FruitType.Hops,
+                    FruitType.Kale,
+                    FruitType.Parsnip,
+                    FruitType.Potato,
+                    FruitType.Pumpkin,
+                    FruitType.Radish,
+                    FruitType.RedCabbage,
+                    FruitType.SummerSquash,
+                    FruitType.Tomato,
+                    FruitType.UnmilledRice,
+                    FruitType.Wheat,
+                    FruitType.Yam
             )), 1)
     ))),
     JellyRecipe(0 , ProcessedProductType.Jelly, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
-                    CropType.AncientFruit,
+                    FruitType.AncientFruit,
                     FruitType.Apple,
                     FruitType.Apricot,
                     FruitType.Banana,
-                    CropType.Blackberry,
-                    CropType.Blueberry,
+                    FruitType.Blackberry,
+                    FruitType.Blueberry,
                     FruitType.Cherry,
-                    CropType.Cranberry,
-                    CropType.CrystalFruit,
-                    CropType.Grape,
-                    CropType.HotPepper,
+                    FruitType.Cranberry,
+                    FruitType.CrystalFruit,
+                    FruitType.Grape,
+                    FruitType.HotPepper,
                     FruitType.Mango,
-                    CropType.Melon,
+                    FruitType.Melon,
                     FruitType.Orange,
                     FruitType.Peach,
                     FruitType.Pomegranate,
-                    CropType.PowderMelon,
-                    CropType.Rhubarb,
-                    CropType.SalmonBerry,
-                    CropType.SpiceBerry,
-                    CropType.Starfruit,
-                    CropType.Strawberry,
-                    CropType.WildPlum
+                    FruitType.PowderMelon,
+                    FruitType.Rhubarb,
+                    FruitType.SalmonBerry,
+                    FruitType.SpiceBerry,
+                    FruitType.Starfruit,
+                    FruitType.Strawberry,
+                    FruitType.WildPlum
             )), 1)
     ))),
     SmokedFishRecipe(0 , ProcessedProductType.SmokedFish, new ArrayList<>(List.of(
@@ -375,9 +375,9 @@ public enum Recipe implements Item {
     ))),
     MysticTreeSeed(0, CraftingProduct.MysticTreeSeed, new ArrayList<>(List.of(
             new Ingredient(SaplingType.Acorn, 5),
-            new Ingredient(SaplingType.MapleSapling, 5),
+            new Ingredient(SeedType.MapleSeed, 5),
             new Ingredient(SaplingType.PineCone, 5),
-            new Ingredient(SaplingType.MahoganySapling, 5)
+            new Ingredient(SeedType.MahoganySeed, 5)
     ))),
     FriedEggRecipe(0, CookingProduct.FriedEgg, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
@@ -389,11 +389,11 @@ public enum Recipe implements Item {
     BakedFishRecipe(0, CookingProduct.BakedFish, new ArrayList<>(List.of(
             new Ingredient(FishType.Sardine, 1),
             new Ingredient(FishType.Salmon , 1),
-            new Ingredient(CropType.Wheat, 1)
+            new Ingredient(FruitType.Wheat, 1)
     ))),
     SaladRecipe(0, CookingProduct.Salad, new ArrayList<>(List.of(
-            new Ingredient(CropType.Leek, 1),
-            new Ingredient(CropType.Dandelion, 1)
+            new Ingredient(FruitType.Leek, 1),
+            new Ingredient(FruitType.Dandelion, 1)
     ))),
     OmeletteRecipe(100, CookingProduct.Omelette, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
@@ -407,7 +407,7 @@ public enum Recipe implements Item {
             )), 1)
     ))),
     PumpkinPieRecipe(0, CookingProduct.PumpkinPie, new ArrayList<>(List.of(
-            new Ingredient(CropType.Pumpkin, 1),
+            new Ingredient(FruitType.Pumpkin, 1),
             new Ingredient(ShopItems.WheatFlour, 1),
             new Ingredient(new ArrayList<>(List.of(
                     AnimalProduct.CowMilk,
@@ -417,15 +417,15 @@ public enum Recipe implements Item {
     ))),
     SpaghettiRecipe(0, CookingProduct.Spaghetti, new ArrayList<>(List.of(
             new Ingredient(ShopItems.WheatFlour, 1),
-            new Ingredient(CropType.Tomato, 1)
+            new Ingredient(FruitType.Tomato, 1)
     ))),
     PizzaRecipe(150, CookingProduct.Pizza, new ArrayList<>(List.of(
             new Ingredient(ShopItems.WheatFlour, 1),
-            new Ingredient(CropType.Tomato, 1),
+            new Ingredient(FruitType.Tomato, 1),
             new Ingredient(ProcessedProductType.Cheese, 1)
     ))),
     TortillaRecipe(100, CookingProduct.Tortilla, new ArrayList<>(List.of(
-            new Ingredient(CropType.Corn, 1)
+            new Ingredient(FruitType.Corn, 1)
     ))),
     MakiRollRecipe(300, CookingProduct.MakiRoll, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(Arrays.asList(
@@ -446,7 +446,7 @@ public enum Recipe implements Item {
             )), 1)
     ))),
     HashbrownsRecipe(50, CookingProduct.HashBrowns, new ArrayList<>(List.of(
-            new Ingredient(CropType.Potato, 1),
+            new Ingredient(FruitType.Potato, 1),
             new Ingredient(ProcessedProductType.Oil, 1)
     ))),
     PancakeRecipe(100, CookingProduct.Pancakes, new ArrayList<>(List.of(
@@ -458,34 +458,34 @@ public enum Recipe implements Item {
             )), 1)
     ))),
     FruitSaladRecipe(0, CookingProduct.FruitSalad, new ArrayList<>(List.of(
-            new Ingredient(CropType.Blueberry, 1),
-            new Ingredient(CropType.Melon, 1),
+            new Ingredient(FruitType.Blueberry, 1),
+            new Ingredient(FruitType.Melon, 1),
             new Ingredient(FruitType.Apricot, 1)
     ))),
     RedPlateRecipe(0, CookingProduct.RedPlate, new ArrayList<>(List.of(
-            new Ingredient(CropType.RedCabbage, 1),
-            new Ingredient(CropType.Radish, 1)
+            new Ingredient(FruitType.RedCabbage, 1),
+            new Ingredient(FruitType.Radish, 1)
     ))),
     BreadRecipe(100, CookingProduct.Bread, new ArrayList<>(List.of(
             new Ingredient(ShopItems.WheatFlour, 1)
     ))),
     SalmonDinnerRecipe(0, CookingProduct.SalmonDinner, new ArrayList<>(List.of(
             new Ingredient(FishType.Salmon, 1),
-            new Ingredient(CropType.Amaranth, 1),
-            new Ingredient(CropType.Kale, 1)
+            new Ingredient(FruitType.Amaranth, 1),
+            new Ingredient(FruitType.Kale, 1)
     ))),
     VegetableMedleyRecipe(0, CookingProduct.VegetableMedley, new ArrayList<>(List.of(
-            new Ingredient(CropType.Tomato, 1),
-            new Ingredient(CropType.Beet, 1)
+            new Ingredient(FruitType.Tomato, 1),
+            new Ingredient(FruitType.Beet, 1)
     ))),
     FarmerLunchRecipe(0, CookingProduct.FarmersLunch, new ArrayList<>(List.of(
             new Ingredient(CookingProduct.Omelette, 1),
-            new Ingredient(CropType.Parsnip, 1)
+            new Ingredient(FruitType.Parsnip, 1)
     ))),
     SurvivalBurgerRecipe(0, CookingProduct.SurvivalBurger, new ArrayList<>(List.of(
             new Ingredient(CookingProduct.Bread, 1),
-            new Ingredient(CropType.Carrot, 1),
-            new Ingredient(CropType.Eggplant, 1)
+            new Ingredient(FruitType.Carrot, 1),
+            new Ingredient(FruitType.Eggplant, 1)
     ))),
     DishOfTheSeaRecipe(0, CookingProduct.DishOfTheSea, new ArrayList<>(List.of(
             new Ingredient(FishType.Sardine, 2),
@@ -496,7 +496,7 @@ public enum Recipe implements Item {
             new Ingredient(FishType.MidnightCarp, 1)
     ))),
     MinerTreatRecipe(0, CookingProduct.MinersTreat, new ArrayList<>(List.of(
-            new Ingredient(CropType.Carrot, 2),
+            new Ingredient(FruitType.Carrot, 2),
             new Ingredient(ShopItems.Sugar, 1),
             new Ingredient(new ArrayList<>(List.of(
                     AnimalProduct.CowMilk,
@@ -504,7 +504,7 @@ public enum Recipe implements Item {
             )), 1)
     ))),
     RiceRecipe(0, ProcessedProductType.Rice, new ArrayList<>(List.of(
-            new Ingredient(CropType.UnmilledRice, 1)
+            new Ingredient(FruitType.UnmilledRice, 1)
     ))),
     BarnRecipe(0, BuildingType.Barn, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 350),

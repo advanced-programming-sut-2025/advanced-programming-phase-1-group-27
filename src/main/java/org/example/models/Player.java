@@ -68,6 +68,10 @@ public class Player extends User {
         this.backpack = backpack;
     }
 
+    public void setFarmMap(FarmMap farmMap) {
+        this.currentFarmMap = farmMap;
+    }
+
     public void walk(Building destination) {
 
     }
