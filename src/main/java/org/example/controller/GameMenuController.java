@@ -61,6 +61,10 @@ public class GameMenuController extends MenuController {
         }
         if (fullTurn)
             App.getCurrentGame().passAnHour();
+        if (currentPlayer.getDayEnergy() <= 0) {
+            view.printString(currentPlayer.getUsername() + " passed out!");
+            nextTurn(scanner);
+        }
         // TODO: parsa pasokh be soalat mokhtalef
     }
 

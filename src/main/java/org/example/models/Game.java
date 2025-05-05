@@ -76,6 +76,9 @@ public class Game {
     }
 
     public void newDay() {
+        for (Player player : players) {
+            player.setDayEnergy(player.getMaxEnergy());
+        }
         if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
         else {
             currentWeather = tomorrowWeather;

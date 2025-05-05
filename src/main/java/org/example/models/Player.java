@@ -27,9 +27,9 @@ public class Player extends User {
         put(AbilityType.Foraging, foraging);
         put(AbilityType.Mining, mining);
     }};
-    private int energy, maxEnergy = 200;
+    private int energy, dayEnergy, maxEnergy = 200;
     private Ability farming, mining, foraging, fishing;
-    private Cell currentCell;
+    private Cell currentCell; // TODO: sobhan
     private FarmMap currentFarmMap;
     private int money;
     private Tool currentTool;
@@ -51,12 +51,13 @@ public class Player extends User {
 
     private void initFields() {
         this.energy = 50;
+        this.dayEnergy = 200;
         this.farming = new Ability();
         this.mining = new Ability();
         this.foraging = new Ability();
         this.fishing = new Ability();
         this.currentCell = null; // TODO: sobhan. ko ja bashe?
-        this.money = 0;
+        this.money = 0; // TODO: parsa. pool?
         this.currentTool = null;
     }
 
@@ -124,14 +125,26 @@ public class Player extends User {
     }
 
     public void setNextTurnEnergy() {
-        int val = Math.min(50, maxEnergy);
-        energy += val;
-        maxEnergy -= val;
-        // TODO: ba sobhan check shavad
+        dayEnergy += energy;
+        int val = Math.min(50, dayEnergy);
+        energy = val;
+        dayEnergy -= val;
     }
 
     public int getEnergy() {
         return this.energy;
+    }
+
+    public int getDayEnergy() {
+        return dayEnergy;
+    }
+
+    public void setDayEnergy(int dayEnergy) {
+        this.dayEnergy = dayEnergy;
+    }
+
+    public int getMaxEnergy() {
+        return maxEnergy;
     }
 
     public void goToSleep() {
@@ -139,6 +152,7 @@ public class Player extends User {
     }
 
     public void passOut() { // TODO: sobhan. bedard mikhore in?
+
         // set the 75% energy for tommorow and...
     }
 
