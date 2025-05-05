@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public enum GameMenuCommands implements MenuCommands {
     ExitGame("exit\\s+game"),
     NextTurn("next\\s+turn"),
+    TerminateGame("terminate\\s+game"),
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
     ExitMenu("menu\\s+exit"),
     ShowCurrentMenu("show\\s+current\\s+menu");

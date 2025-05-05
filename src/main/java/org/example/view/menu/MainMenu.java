@@ -55,8 +55,4 @@ public class MainMenu extends AppMenu {
         }
         return new Result(false, "invalid command!");
     }
-
-    public void printString(String string) {
-        System.out.println(string);
-    }
 }

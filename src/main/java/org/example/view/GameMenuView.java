@@ -24,7 +24,10 @@ public class GameMenuView extends AppMenu {
             System.out.println(controller.exitGame());
         }
         else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
-            controller.nextTurn();
+            controller.nextTurn(scanner);
+        }
+        else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
+            System.out.println(controller.terminateGame());
         }
         else if (GameMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
@@ -35,5 +38,15 @@ public class GameMenuView extends AppMenu {
         else {
             System.out.println(new Result(false, "invalid command!"));
         }
+    }
+
+    public Result askToVote(Scanner scanner) {
+        String input = scanner.nextLine().trim();
+        if (!input.equals("accept") && !input.equals("reject")) {
+            System.out.println("Invalid response!");
+            return new Result(false, "invalid command!");
+        }
+        System.out.println("You have voted successfully!");
+        return new Result(true, input);
     }
 }

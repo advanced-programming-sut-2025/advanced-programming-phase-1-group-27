@@ -6,6 +6,7 @@ import org.example.models.enums.Gender;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.Recipe;
 import org.example.models.Map.FarmMap;
+import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
 
@@ -16,7 +17,7 @@ import java.util.Map;
 public class Player extends User {
     private ArrayList<Recipe> availableRecipes = new ArrayList<>(); // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
     // player's inventory
-    private Backpack backpack = new Backpack(0);
+    private Backpack backpack = new Backpack(ToolType.BasicBackpack); // TODO: ba parsa check shavad
     // items which are place in the fridge
     private ArrayList<Stacks> refrigerator = new ArrayList<>();
     // maps ability type to user's ability
@@ -35,6 +36,8 @@ public class Player extends User {
     //TODO : refresh every morning
     private Map<NPC , Boolean> npcMetToday = new HashMap<>();
     private Map<NPC , Boolean> npcGiftToday = new HashMap<>();
+    private Player spouse = null; // in case the player gets married
+    private Poll poll = null; // in order to terminate the game
 
     public Player(String username, String password, String nickname, String email, Gender gender) {
         super(username, password, nickname, email, gender);
@@ -61,8 +64,20 @@ public class Player extends User {
         return money;
     }
 
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     public void addMoney(int money) {
         this.money += money;
+        if (spouse != null)
+            spouse.addMoney(money);
+    }
+
+    public void spendMoney(int money) {
+        this.money -= money;
+        if (spouse != null)
+            spouse.spendMoney(money);
     }
 
     public Tool getCurrentTool() {
@@ -85,6 +100,18 @@ public class Player extends User {
         this.currentFarmMap = farmMap;
     }
 
+    public void setSpouse(Player spouse) {
+        this.spouse = spouse;
+    }
+
+    public Poll getPoll() {
+        return poll;
+    }
+
+    public void setPoll(Poll poll) {
+        this.poll = poll;
+    }
+
     public void walk(Building destination) {
 
     }
@@ -94,6 +121,13 @@ public class Player extends User {
         if (energy < 0) {
             this.passOut();
         }
+    }
+
+    public void setNextTurnEnergy() {
+        int val = Math.min(50, maxEnergy);
+        energy += val;
+        maxEnergy -= val;
+        // TODO: ba sobhan check shavad
     }
 
     public int getEnergy() {

@@ -89,8 +89,4 @@ public class LoginMenu extends AppMenu {
         String input = scanner.nextLine().trim();
         return LoginMenuCommands.AnswerQuestion.getMatcher(input);
     }
-
-    public void printString(String str) {
-        System.out.println(str);
-    }
 }

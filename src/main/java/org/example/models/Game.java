@@ -36,6 +36,13 @@ public class Game {
         return admin;
     }
 
+    public void setAdmin(User user) {
+        for (Player player : players) {
+            if (player.getUsername().equals(user.getUsername()))
+                admin = player;
+        }
+    }
+
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
     }
@@ -92,8 +99,9 @@ public class Game {
         return npcs;
     }
 
-    public void nextPlayer() {
+    public boolean nextPlayer() { // returns true if everyone has played one turn
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
+        return players.get(currentPlayerIndex) == admin;
     }
 
 }

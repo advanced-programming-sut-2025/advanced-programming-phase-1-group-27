@@ -64,8 +64,13 @@ public class MainMenuMenuController extends MenuController {
     }
 
     public Result loadGame() {
-        // TODO: loading game using JSON
-        return null;
+        User user = App.getLoggedInUser();
+        Game game = user.getCurrentGame();
+        if (game == null)
+            return new Result(false, "There are no game to load!");
+        game.setAdmin(user);
+        App.setCurrentGame(game);
+        return new Result(true, "Game loaded!");
     }
 
     public Result exitMenu() {
