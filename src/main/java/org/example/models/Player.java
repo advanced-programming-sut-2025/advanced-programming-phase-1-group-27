@@ -3,6 +3,7 @@ package org.example.models;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
+import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.Recipe;
 import org.example.models.Map.FarmMap;
 import org.example.models.tools.Backpack;
@@ -93,13 +94,6 @@ public class Player extends User {
         if (energy < 0) {
             this.passOut();
         }
-    }
-
-    public void setTomorrowEnergy() {
-        if (energy <= 0)
-            energy = 37;
-        else
-            energy = 50;
     }
 
     public int getEnergy() {

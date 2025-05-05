@@ -32,6 +32,7 @@ public class Axe extends Tool {
         if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Foraging).getLevel() == 4) {
             energy--;
         }
+
         return Math.min(energy , 0);
     }
 

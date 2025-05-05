@@ -59,7 +59,7 @@ public enum TreeType implements PlantType {
         return stages;
     }
 
-    public int getHarvestTime() {
+    public int getTotalHarvestTime() {
         return harvestTime;
     }
 

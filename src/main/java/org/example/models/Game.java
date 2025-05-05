@@ -16,7 +16,7 @@ public class Game {
     private ArrayList<Player> players;
     private FarmMap[] farmMaps = new FarmMap[4];
     private NPCMap npcMap = new NPCMap();
-    private Weather currentWeather;
+    private Weather currentWeather, tomorrowWeather = null;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
     private static ArrayList<Dialogue> dialogues = new ArrayList<>();
@@ -48,6 +48,14 @@ public class Game {
         return currentWeather;
     }
 
+    public Weather getTomorrowWeather() {
+        return tomorrowWeather;
+    }
+
+    public void setTomorrowWeather(Weather tomorrowWeather) {
+        this.tomorrowWeather = tomorrowWeather;
+    }
+
     public FarmMap getFarmMap(int index) {
         return farmMaps[index];
     }
@@ -55,11 +63,17 @@ public class Game {
     public void passAnHour() {
         time.passAnHour();
         // TODO
+        
+        
+        
     }
 
     public void newDay() {
-
-        currentWeather = time.getSeason().pickARandomWeather();
+        if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
+        else {
+            currentWeather = tomorrowWeather;
+            tomorrowWeather = null;
+        }
 
         //TODO
 
@@ -81,4 +95,5 @@ public class Game {
     public void nextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
     }
+
 }

@@ -7,6 +7,7 @@ import org.example.models.Map.Hut;
 import org.example.models.Map.NPCHouse;
 import org.example.models.Map.StoreBuilding;
 import org.example.models.enums.Plants.Crop;
+import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.Tree;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Plants.CropType;
@@ -21,7 +22,6 @@ public class Cell {
     private Object object = null;
     private CellType cellType;
     private Building building = null;
-    private Character view = null;
 
     private ArrayList<Cell> adjacentCells = new ArrayList<>();
 
@@ -57,17 +57,36 @@ public class Cell {
     public void setBuilding(Building building) {
         this.building = building;
     }
+
+    public void plant(Plant plant) {
+        cellType = CellType.Occupied;
+        object = plant;
+        plant.setCell(this);
+    }
+
     public void placeForagingCrop() {
         Season currentSeason = App.getCurrentGame().getTime().getSeason();
         int randomInt = new Random().nextInt(
                 CropType.getForagingCropsBySeason().get(currentSeason).size());
-        cellType = CellType.Occupied;
-        object = new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt)); // TODO
+        plant(new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt)));
     }
+
     public void placeForagingMineral() {
         int randomInt = new Random().nextInt(MineralType.values().length);
         cellType = CellType.Occupied;
         object = MineralType.values()[randomInt];
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
     }
 
     @Override
@@ -106,7 +125,4 @@ public class Cell {
         return "?";
     }
 
-    public Position getPosition() {
-        return position;
-    }
 }
