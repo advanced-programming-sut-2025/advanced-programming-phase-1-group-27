@@ -8,7 +8,9 @@ import org.example.models.Position;
 import org.example.models.enums.CellType;
 import org.example.models.enums.items.BuildingType;
 
+import java.sql.Time;
 import java.util.*;
+import java.util.random.RandomGenerator;
 
 public class FarmMap extends Map {
 
@@ -96,6 +98,20 @@ public class FarmMap extends Map {
     public void placeBarn(int i, int j, Barn barn) {
         this.barns.add(barn);
         placeAnimalEnclosure(barn, i, j);
+    }
+
+    public void generateForaging() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (cells[i][j].getType() == CellType.Free) {
+                    int randomInt =  (new Random(System.currentTimeMillis())).nextInt(1000);
+                    if (randomInt / 10 == 15) {
+                        if (randomInt == 151) cells[i][j].placeForagingMineral();
+                        else cells[i][j].placeForagingCrop();
+                    }
+                }
+            }
+        }
     }
 
 }

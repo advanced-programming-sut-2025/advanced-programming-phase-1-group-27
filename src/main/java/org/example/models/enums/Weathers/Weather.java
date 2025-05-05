@@ -1,11 +1,24 @@
 package org.example.models.enums.Weathers;
+
+import org.example.models.App;
+import org.example.models.Cell;
+import org.example.models.Map.FarmMap;
+import org.example.models.Player;
+import org.example.models.Time;
+import org.example.models.enums.Plants.Plant;
+
+import javax.management.timer.Timer;
+import java.util.Random;
+import java.util.function.Function;
+
 public enum Weather {
     Sunny(1),
-    Rain(1.5),
-    Storm(1),
-    Snow(2);
+    Rainy(1.5),
+    Stormy(1),
+    Snowy(2);
 
     private final double toolEnergyModifier;
+
 
     Weather(double toolEnergyModifier) {
         this.toolEnergyModifier = toolEnergyModifier;
@@ -15,7 +28,36 @@ public enum Weather {
         return toolEnergyModifier;
     }
 
-    public void pre() {
-        // Apply the weathers effect
+    public void applyWeatherEffect() {
+        if (this == Stormy) applyThor();
+        if (this == Stormy || this == Rainy) applyRain();
+
+    }
+
+    private static void applyRain() {
+        for (Player player: App.getCurrentGame().getPlayers()) {
+            FarmMap map = player.getCurrentFarmMap();
+            Cell[][] cells = map.getCells();
+            for (int i = 0; i < cells.length; i++) {
+                for (int j = 0; j < cells[i].length; j++) {
+                    if (cells[i][j].getObject() instanceof Plant) {
+                        Plant plant = (Plant) cells[i][j].getObject();
+                        plant.water();
+                    }
+                }
+            }
+        }
+    }
+
+    private static void applyThor() {
+        for (Player player: App.getCurrentGame().getPlayers()) {
+            FarmMap map = player.getCurrentFarmMap();
+            Cell[][] cells = map.getCells();
+            for (int i = 0; i < 3; i++) {
+                int x = (new Random(System.currentTimeMillis())).nextInt(cells.length);
+                int y = (new Random(System.currentTimeMillis())).nextInt(cells[0].length);
+                cells[x][y].thor();
+            }
+        }
     }
 }

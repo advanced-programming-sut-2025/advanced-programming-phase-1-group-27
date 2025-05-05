@@ -84,6 +84,8 @@ public class Game {
             currentWeather = tomorrowWeather;
             tomorrowWeather = null;
         }
+        currentWeather.applyWeatherEffect();
+
 
         //TODO
 

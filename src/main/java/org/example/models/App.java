@@ -103,7 +103,7 @@ public class App {
 
     public static String generateUsername(String username) {
         String result;
-        Random random = new Random();
+        Random random = new Random(System.currentTimeMillis());
         do {
             int randomInt = random.nextInt(20);
             result = username + randomInt;

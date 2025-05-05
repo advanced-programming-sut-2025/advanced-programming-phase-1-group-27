@@ -10,7 +10,11 @@ public enum GameMenuCommands implements MenuCommands {
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
     ExitMenu("menu\\s+exit"),
     ShowCurrentMenu("show\\s+current\\s+menu"),
-    Home("go\\s+to\\s+home");
+    Home("go\\s+to\\s+home"),
+    ShowWeather("weather"),
+    ForecastWeather("weather\\s+forecast"),
+    CheatSetWeather("cheat\\s+weather\\s+set\\s+(?<weatherName>\\S+)"),
+    CheatThor("cheat\\s+Thor\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)");
 
     private final String pattern;
 

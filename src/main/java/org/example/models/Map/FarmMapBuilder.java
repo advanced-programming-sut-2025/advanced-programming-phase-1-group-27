@@ -77,7 +77,7 @@ public class FarmMapBuilder {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 Cell cell = finalProduct.getCell(i, j);
-                int randomInt = (new Random()).nextInt(100);
+                int randomInt = (new Random(System.currentTimeMillis())).nextInt(100);
                 if (cell.getType() == CellType.Free) {
                     if (randomInt < 3) {
                         cell.placeForagingMineral();

@@ -1,6 +1,8 @@
 package org.example.controller;
 
 import org.example.models.*;
+import org.example.models.Map.FarmMap;
+import org.example.models.enums.CellType;
 import org.example.models.enums.Menu;
 import org.example.models.enums.Weathers.Weather;
 import org.example.view.GameMenuView;
@@ -125,8 +127,33 @@ public class GameMenuController extends MenuController {
 
     // Cheats :
     
-    public void cheatSetWeather() {
+    public Result cheatSetWeather(String weatherString) {
+        Weather weather = null;
+        for (Weather w : Weather.values()) {
+            if (w.toString().equals(weatherString)) {
+                weather = w;
+            }
+        }
+        if (weather == null) {
+            return new Result(false, "Please a valid weather type from " + Weather.values());
+        }
         Game game = App.getCurrentGame();
         game.setTomorrowWeather(game.getTime().getSeason().pickARandomWeather());
+        return new Result(true, "Weather set to " + weather.toString() + " Weather!");
+    }
+
+    public Result cheatThor(String s, String t) {
+        if (!s.matches("\\d") || !t.matches("\\d")) {
+            return new Result(false, "GO KILL YOURSELF");
+        }
+        int i = Integer.parseInt(s), j = Integer.parseInt(t);
+        FarmMap map = App.getCurrentGame().getCurrentPlayer().getCurrentFarmMap();
+        Cell cell = map.getCell(i, j);
+        if (cell.getType() == CellType.Building) {
+            return new Result(false, "There is A Building!!");
+        } else {
+            cell.thor();
+            return new Result(true, "The Cell [" + i + ", " + j + "] was hit by Thor!");
+        }
     }
 }

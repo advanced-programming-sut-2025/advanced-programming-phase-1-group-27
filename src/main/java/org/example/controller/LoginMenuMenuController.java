@@ -134,7 +134,7 @@ public class LoginMenuMenuController extends MenuController {
     }
 
     private String generatePassword() {
-        Random random = new Random();
+        Random random = new Random(System.currentTimeMillis());
         int passwordLen = 8 + random.nextInt(5);
         String lowercase = "abcdefghijklmnopqrstuvwxyz";
         String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

@@ -42,6 +42,18 @@ public class GameMenuView extends AppMenu {
         else if (GameMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
         }
+        else if (GameMenuCommands.ShowWeather.getMatcher(input) != null) {
+            System.out.println(controller.showWeather());
+        }
+        else if (GameMenuCommands.ForecastWeather.getMatcher(input) != null) {
+            System.out.println(controller.forecastWeather());
+        }
+        else if (GameMenuCommands.CheatSetWeather.getMatcher(input) != null) {
+            System.out.println(controller.cheatSetWeather(matcher.group("weatherName").trim()));
+        }
+        else if (GameMenuCommands.CheatThor.getMatcher(input) != null) {
+            System.out.println(controller.cheatThor(matcher.group("i"), matcher.group("j")));
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }

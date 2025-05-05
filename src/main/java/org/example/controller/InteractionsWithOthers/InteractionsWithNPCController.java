@@ -59,11 +59,11 @@ public class InteractionsWithNPCController {
         } else { //time > 19 && time <= 24
             result.append("Good Night! ");
         }
-        if (weather == Weather.Rain) {
+        if (weather == Weather.Rainy) {
             result.append("Do you have an umbrella? ");
-        } else if (weather == Weather.Snow) {
+        } else if (weather == Weather.Snowy) {
             result.append("It's so cold! ");
-        } else if (weather == Weather.Storm) {
+        } else if (weather == Weather.Stormy) {
             result.append("Weather is windy! ");
         } else {//weather == Weather.Sunny
             result.append("It's so hot! ");

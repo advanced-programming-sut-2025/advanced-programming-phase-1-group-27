@@ -66,13 +66,13 @@ public class Cell {
 
     public void placeForagingCrop() {
         Season currentSeason = App.getCurrentGame().getTime().getSeason();
-        int randomInt = new Random().nextInt(
+        int randomInt = new Random(System.currentTimeMillis()).nextInt(
                 CropType.getForagingCropsBySeason().get(currentSeason).size());
         plant(new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt)));
     }
 
     public void placeForagingMineral() {
-        int randomInt = new Random().nextInt(MineralType.values().length);
+        int randomInt = new Random(System.currentTimeMillis()).nextInt(MineralType.values().length);
         cellType = CellType.Occupied;
         object = MineralType.values()[randomInt];
     }
@@ -87,6 +87,15 @@ public class Cell {
 
     public void setObject(Object object) {
         this.object = object;
+    }
+
+    public void thor() {
+        if (cellType == CellType.Occupied && object instanceof Tree) {
+            object = new Stacks(MineralType.Coal, 1);
+        } else if (cellType == CellType.Occupied && object instanceof Plant) {
+            cellType = CellType.Free;
+            object = null;
+        }
     }
 
     @Override
