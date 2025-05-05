@@ -8,8 +8,9 @@ public class NPCHouse extends Building {
     private final NPCType npc;
     private Cell door;
 
-    public NPCHouse(NPCType npc) {
+    public NPCHouse(NPCType npc, Cell topLeftCell) {
         this.npc = npc;
+        super(topLeftCell);
         npc.setHome(this);
     }
 

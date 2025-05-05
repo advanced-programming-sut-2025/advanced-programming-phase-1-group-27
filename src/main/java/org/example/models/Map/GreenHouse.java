@@ -8,8 +8,9 @@ public class GreenHouse extends Building {
     private Cell[][] cells = new Cell[5][6];
     private boolean isRepaired = false;
 
-    public GreenHouse(Cell door) {
+    public GreenHouse(Cell door, Cell topLeftCell) {
         this.door = door;
+        super(topLeftCell);
     }
 
     public boolean isRepaired() {

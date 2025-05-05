@@ -8,8 +8,9 @@ public class StoreBuilding extends Building {
     private final Store store;
     private Cell door = null;
 
-    public StoreBuilding(Store store) {
+    public StoreBuilding(Store store, Cell topLeftCell) {
         this.store = store;
+        super(topLeftCell);
     }
 
     public Store getStore() {

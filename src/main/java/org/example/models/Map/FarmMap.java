@@ -1,5 +1,6 @@
 package org.example.models.Map;
 
+import org.example.models.AnimalProperty.AnimalEnclosure;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Cell;
@@ -65,24 +66,36 @@ public class FarmMap extends Map {
         return true;
     }
 
-    public void placeCoop(int x, int y, Coop coop) {
-        this.coops.add(coop);
-        for (int i = x; i < x + BuildingType.Coop.getHeight(); i++) {
-            for (int j = y; j < y + BuildingType.Coop.getHeight(); j++) {
-                cells[i][j].setType(CellType.Building);
-                cells[i][j].setBuilding(coop);
+    public void placeAnimalEnclosure(AnimalEnclosure animalEnclosure, int r, int c) {
+        int height = animalEnclosure.getType().getHeight(),
+                width = animalEnclosure.getType().getWidth();
+        for (int i = r; i < r + height; i++) {
+            cells[i][c].setType(CellType.Building);
+            cells[i][c].setBuilding(animalEnclosure);
+            cells[i][c + width - 1].setType(CellType.Building);
+            cells[i][c + width - 1].setBuilding(animalEnclosure);
+        }
+        for (int j = c; j < c + width; j++) {
+            cells[r][j].setType(CellType.Building);
+            cells[r][j].setBuilding(animalEnclosure);
+            cells[r + height - 1][j].setType(CellType.Building);
+            cells[r + height - 1][j].setBuilding(animalEnclosure);
+        }
+        for (int i = r; i < r + height; i++) {
+            for (int j = c; j < c + width; j++) {
+                cells[i][j].setBuilding(animalEnclosure);
             }
         }
     }
 
-    public void placeBarn(int x, int y, Barn barn) {
+    public void placeCoop(int i, int j, Coop coop) {
+        this.coops.add(coop);
+        placeAnimalEnclosure(coop, i, j);
+    }
+
+    public void placeBarn(int i, int j, Barn barn) {
         this.barns.add(barn);
-        for (int i = x; i < x + BuildingType.Barn.getHeight(); i++) {
-            for (int j = y; j < y + BuildingType.Barn.getHeight(); j++) {
-                cells[i][j].setType(CellType.Building);
-                cells[i][j].setBuilding(barn);
-            }
-        }
+        placeAnimalEnclosure(barn, i, j);
     }
 
 }

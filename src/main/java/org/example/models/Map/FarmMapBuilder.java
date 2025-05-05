@@ -16,7 +16,7 @@ public class FarmMapBuilder {
     }
 
     public void createHut() {
-        Hut hut = new Hut(finalProduct.getCell(7, m - 5));
+        Hut hut = new Hut(finalProduct.getCell(7, m - 5), finalProduct.getCell(4, m - 6));
         for (int i = 4; i < 8; i++) {
             for (int j = m - 6; j < m - 2; j++) {
                 finalProduct.getCell(i, j).setType(CellType.Building);
@@ -56,7 +56,7 @@ public class FarmMapBuilder {
     }
 
     public void createGreenHouse() {
-        GreenHouse greenHouse = new GreenHouse(finalProduct.getCell(10, 24));
+        GreenHouse greenHouse = new GreenHouse(finalProduct.getCell(10, 24), finalProduct.getCell(4, 20));
         for (int i = 4; i < 11; i++) {
             finalProduct.getCell(i, 20).setType(CellType.Building);
             finalProduct.getCell(i, 20).setBuilding(greenHouse);

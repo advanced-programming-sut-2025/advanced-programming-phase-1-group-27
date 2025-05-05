@@ -1,6 +1,7 @@
 package org.example.models.enums;
 
 import org.example.models.Building;
+import org.example.models.Cell;
 import org.example.models.Map.FarmMap;
 import org.example.models.Item;
 import org.example.models.Relations.Dialogue;
@@ -28,12 +29,13 @@ public enum NPCType {
     Morris("Morris", Shops.JojaMart, null, Features.Sad, MorrisFavouriteItems()),
     Gus("Gus", Shops.TheStardropSaloon, null, Features.Happy, GusFavouriteItems());
 
-    private String name;
-    private Shops job;
-    private Quest[] Quests;
-    private Features features;
-    private ArrayList<Item> favorite;
+    private final String name;
+    private final Shops job;
+    private final Quest[] Quests;
+    private final Features features;
+    private final ArrayList<Item> favorite;
     private Building home;
+    private Cell StandingCell;
     private FarmMap placeOfShop;
 
     NPCType(String name, Shops job , Quest[] quests, Features features, ArrayList<Item> favorite) {
@@ -46,6 +48,10 @@ public enum NPCType {
 
     public void setHome(Building home) {
         this.home = home;
+    }
+
+    public void setStandingCell(Cell standingCell) {
+        StandingCell = standingCell;
     }
 
     private static Quest[] AbigailQuests() {

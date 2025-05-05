@@ -23,7 +23,8 @@ public class NPCMap extends Map{
         storeBuilding.setDoor(cells[x + 3][y + 1]);
     }
 
-    private void buildNPCHouse(NPCHouse npcHouse, Cell topLeftCell) {
+    private void buildNPCHouse(NPCHouse npcHouse) {
+        Cell topLeftCell = npcHouse.getTopLeftCell();
         int x = topLeftCell.getPosition().getX(), y = topLeftCell.getPosition().getY();
         for (int i = x; i < x + 4; i++) {
             for (int j = y; j < y + 4; j++) {
@@ -36,10 +37,10 @@ public class NPCMap extends Map{
     }
 
     private void build() {
-        buildNPCHouse(new NPCHouse(NPCType.Abigail), cells[11][1]);
-        buildNPCHouse(new NPCHouse(NPCType.Sebastian), cells[11][6]);
-        buildNPCHouse(new NPCHouse(NPCType.Harvey), cells[11][12]);
-        buildNPCHouse(new NPCHouse(NPCType.Lia), cells[11][18]);
-        buildNPCHouse(new NPCHouse(NPCType.Robbin), cells[11][23]);
+        buildNPCHouse(new NPCHouse(NPCType.Abigail, cells[11][1]));
+        buildNPCHouse(new NPCHouse(NPCType.Sebastian, cells[11][6]));
+        buildNPCHouse(new NPCHouse(NPCType.Harvey, cells[11][12]));
+        buildNPCHouse(new NPCHouse(NPCType.Lia, cells[11][18]));
+        buildNPCHouse(new NPCHouse(NPCType.Robbin, cells[11][23]));
     }
 }
