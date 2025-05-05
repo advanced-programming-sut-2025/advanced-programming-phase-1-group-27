@@ -43,6 +43,50 @@ public class GameMenuController extends MenuController {
         App.getCurrentGame().getCurrentPlayer().setNextTurnEnergy();
         boolean fullTurn =  App.getCurrentGame().nextPlayer();
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+
+        handlePoll(currentPlayer, scanner);
+
+        if (fullTurn)
+            App.getCurrentGame().passAnHour();
+        if (currentPlayer.getDayEnergy() <= 0) {
+            nextTurn(scanner);
+            return;
+        }
+
+        view.printString(currentPlayer.getUsername() + "'s turn!");
+        // TODO: parsa pasokh be soalat mokhtalef
+    }
+
+    public Result terminateGame() {
+        ArrayList<Player> players = App.getCurrentGame().getPlayers();
+        Poll poll = new Poll(players.size());
+        poll.vote(); // the first player should always vote
+        for (Player player : players) {
+            player.setPoll(poll);
+        }
+        return new Result(true, "Request sent to other players.");
+    }
+
+    public Result goToHome() {
+        App.setCurrentMenu(Menu.Home);
+        return new Result(true, "Redirecting to Home ...");
+    }
+
+    public Result showWeather() {
+        return new Result(true, "The Current State Of Weather is " +
+                App.getCurrentGame().getCurrentWeather() + " Weather!");
+    }
+    
+    public Result forecastWeather() {
+        Game game = App.getCurrentGame();
+        Weather weather;
+        if (game.getTomorrowWeather() != null) weather = game.getTomorrowWeather();
+        else game.setTomorrowWeather(weather = game.getTime().getSeason().pickARandomWeather());
+        return new Result(true, "The Weather Forecasted For Tomorrow is " +
+                weather.toString() + " Weather!");
+    }
+
+    private void handlePoll(Player currentPlayer, Scanner scanner) {
         Poll poll = currentPlayer.getPoll();
         if (poll != null) {
             if (poll.isPollComplete()) {
@@ -59,37 +103,6 @@ public class GameMenuController extends MenuController {
                 currentPlayer.setPoll(null);
             }
         }
-        if (fullTurn)
-            App.getCurrentGame().passAnHour();
-        if (currentPlayer.getDayEnergy() <= 0) {
-            view.printString(currentPlayer.getUsername() + " passed out!");
-            nextTurn(scanner);
-        }
-        // TODO: parsa pasokh be soalat mokhtalef
-    }
-
-    public Result terminateGame() {
-        ArrayList<Player> players = App.getCurrentGame().getPlayers();
-        Poll poll = new Poll(players.size());
-        poll.vote(); // the first player should always vote
-        for (Player player : players) {
-            player.setPoll(poll);
-        }
-        return new Result(true, "Request sent to other players.");
-    }
-
-    public Result showWeather() {
-        return new Result(true, "The Current State Of Weather is " +
-                App.getCurrentGame().getCurrentWeather() + " Weather!");
-    }
-    
-    public Result forecastWeather() {
-        Game game = App.getCurrentGame();
-        Weather weather;
-        if (game.getTomorrowWeather() != null) weather = game.getTomorrowWeather();
-        else game.setTomorrowWeather(weather = game.getTime().getSeason().pickARandomWeather());
-        return new Result(true, "The Weather Forecasted For Tomorrow is " +
-                weather.toString() + " Weather!");
     }
 
     private void eraseGame() {

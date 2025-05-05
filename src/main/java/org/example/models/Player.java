@@ -3,7 +3,7 @@ package org.example.models;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
-import org.example.models.enums.Weathers.Weather;
+import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.Recipe;
 import org.example.models.Map.FarmMap;
 import org.example.models.enums.items.ToolType;
@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player extends User {
-    private ArrayList<Recipe> availableRecipes = new ArrayList<>(); // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
+    private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>(); // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
+    private ArrayList<Recipe> availableCookingRecipes = new ArrayList<>();
     // player's inventory
     private Backpack backpack = new Backpack(ToolType.BasicBackpack); // TODO: ba parsa check shavad
     // items which are place in the fridge
@@ -30,7 +31,7 @@ public class Player extends User {
     private int energy, dayEnergy, maxEnergy = 200;
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell; // TODO: sobhan
-    private FarmMap currentFarmMap;
+    private FarmMap currentFarmMap = null;
     private int money;
     private Tool currentTool;
     //TODO : refresh every morning
@@ -51,7 +52,7 @@ public class Player extends User {
 
     private void initFields() {
         this.energy = 50;
-        this.dayEnergy = 200;
+        this.dayEnergy = 150; // 50 (energy) + 150 (day energy) = 200
         this.farming = new Ability();
         this.mining = new Ability();
         this.foraging = new Ability();
@@ -59,6 +60,14 @@ public class Player extends User {
         this.currentCell = null; // TODO: sobhan. ko ja bashe?
         this.money = 0; // TODO: parsa. pool?
         this.currentTool = null;
+        // crafting recipes
+        availableCraftingRecipes.add(Recipe.FurnaceRecipe);
+        availableCraftingRecipes.add(Recipe.ScarecrowRecipe);
+        availableCraftingRecipes.add(Recipe.MayonnaiseRecipe);
+        // cooking recipes
+        availableCookingRecipes.add(Recipe.FriedEggRecipe);
+        availableCookingRecipes.add(Recipe.BakedFishRecipe);
+        availableCookingRecipes.add(Recipe.SaladRecipe);
     }
 
     public int getMoney() {
@@ -97,6 +106,10 @@ public class Player extends User {
         this.backpack = backpack;
     }
 
+    public FarmMap getCurrentFarmMap() {
+        return currentFarmMap;
+    }
+
     public void setFarmMap(FarmMap farmMap) {
         this.currentFarmMap = farmMap;
     }
@@ -113,8 +126,12 @@ public class Player extends User {
         this.poll = poll;
     }
 
-    public void walk(Building destination) {
+    public ArrayList<Recipe> getAvailableCraftingRecipes() {
+        return availableCraftingRecipes;
+    }
 
+    public ArrayList<Recipe> getAvailableCookingRecipes() {
+        return availableCookingRecipes;
     }
 
     public void consumeEnergy(int val) {
@@ -135,6 +152,13 @@ public class Player extends User {
         return this.energy;
     }
 
+    public boolean reduceEnergy(int amount) { // returns true if the player passes out
+        energy -= amount;
+        if (energy <= 0 && dayEnergy <= 0)
+            return true;
+        return false;
+    }
+
     public int getDayEnergy() {
         return dayEnergy;
     }
@@ -145,6 +169,42 @@ public class Player extends User {
 
     public int getMaxEnergy() {
         return maxEnergy;
+    }
+
+    public Position getPosition() {
+        return currentCell.getPosition();
+    }
+
+    public Map<NPC, Boolean> getNpcMetToday() {
+        return npcMetToday;
+    }
+
+    public Map<NPC, Boolean> getNpcGiftToday() {
+        return npcGiftToday;
+    }
+
+    public Ability getAbility(AbilityType type) {
+        return abilityFinder.get(type);
+    }
+
+    public boolean hasEnoughIngredients(Recipe recipe) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            if (getAvailableIngredient(ingredient) == null)
+                return false;
+        }
+        return true;
+    }
+
+    public void useRecipe(Recipe recipe) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            Item item = getAvailableIngredient(ingredient);
+            backpack.reduceItems(item, ingredient.getQuantity());
+        }
+        backpack.addItems(recipe.getFinalProduct(), StackLevel.Basic, 1);
+    }
+
+    public void walk(Building destination) {
+
     }
 
     public void goToSleep() {
@@ -184,20 +244,21 @@ public class Player extends User {
     public void trashItem(String itemName) {
 
     }
-
-    public Position getPosition() {
-        return currentCell.getPosition();
+    
+    private Item getAvailableIngredient(Ingredient ingredient) {
+        for (Item item : ingredient.getPossibleIngredients()) {
+            if (hasEnoughItem(item, ingredient.getQuantity()))
+                return item;
+        }
+        return null;
     }
-
-    public Map<NPC, Boolean> getNpcMetToday() {
-        return npcMetToday;
-    }
-
-    public Map<NPC, Boolean> getNpcGiftToday() {
-        return npcGiftToday;
-    }
-
-    public Ability getAbility(AbilityType type) {
-        return abilityFinder.get(type);
+    
+    private boolean hasEnoughItem(Item item, int quantity) {
+        int counter = 0;
+        for (Stacks slot : backpack.getItems()) {
+            if (slot.getItem().getName().equals(item.getName()))
+                counter += slot.getQuantity();
+        }
+        return counter >= quantity;
     }
 }

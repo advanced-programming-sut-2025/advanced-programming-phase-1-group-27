@@ -13,6 +13,10 @@ public class ProcessedProduct implements Item { // for all processed products
         this.energy = energy;
     }
 
+    public ProcessedProductType getType() {
+        return type;
+    }
+
     @Override
     public Integer getPrice() {
         return price;

@@ -10,7 +10,9 @@ public enum HomeCommands {
     PutPickRefrigerator("cooking\\s+refrigerator\\s+(?<function>put|pick)\\s+(?<itemName>.+)"),
     ShowCookingRecipes("cooking\\s+show\\s+recipes"),
     CookItem("cooking\\s+prepare\\s+(?<itemName>.+)"),
-    EatFood("eat\\s+(?<itemName>.+)");
+    EatFood("eat\\s+(?<itemName>.+)"),
+    Exit("exit");
+    // NextTurn?????
 
     private final String pattern;
 

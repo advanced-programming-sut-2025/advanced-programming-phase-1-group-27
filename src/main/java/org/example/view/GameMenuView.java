@@ -14,6 +14,10 @@ public class GameMenuView extends AppMenu {
         controller = new GameMenuController(this);
     }
 
+    public GameMenuController getController() {
+        return controller;
+    }
+
     public void executeCommands(Scanner scanner) {
         String input = scanner.nextLine().trim();
         Matcher matcher;
@@ -28,6 +32,9 @@ public class GameMenuView extends AppMenu {
         }
         else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
             System.out.println(controller.terminateGame());
+        }
+        else if (GameMenuCommands.Home.getMatcher(input) != null) {
+            System.out.println(controller.goToHome());
         }
         else if (GameMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
@@ -48,5 +55,12 @@ public class GameMenuView extends AppMenu {
         }
         System.out.println("You have voted successfully!");
         return new Result(true, input);
+    }
+
+    public Result askToPassTurn(Scanner scanner) {
+        String input = scanner.nextLine().trim();
+        if (GameMenuCommands.NextTurn.getMatcher(input) == null)
+            return new Result(false, "invalid command!");
+        return new Result(true, "");
     }
 }

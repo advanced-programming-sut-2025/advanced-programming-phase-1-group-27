@@ -24,4 +24,17 @@ public class Ingredient {
     public int getQuantity() {
         return quantity;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("Item: ");
+        for (int i = 0; i < possibleIngredients.size(); i++) {
+            result.append(possibleIngredients.get(i).getName());
+            if (i != possibleIngredients.size() - 1)
+                result.append("|");
+        }
+        result.append("\tQuantity: ").append(quantity);
+        return result.toString();
+    }
 }

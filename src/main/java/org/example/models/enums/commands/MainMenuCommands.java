@@ -10,7 +10,7 @@ public enum MainMenuCommands implements MenuCommands {
             "(?:\\s+(?<username2>\\S+))?" +
             "(?:\\s+(?<username3>\\S+))?" +
             "(?:\\s+(?<overflow>\\S+))?"),
-    SetMap("game\\s+map\\s+(?<mapNumber>\\d+)"),
+    SetMap("game\\s+map\\s+(?<mapNumber>0|1|2|3)"),
     LoadGame("load\\s+game"),
     ExitMenu("menu\\s+exit"),
     ShowCurrentMenu("show\\s+current\\s+menu"),

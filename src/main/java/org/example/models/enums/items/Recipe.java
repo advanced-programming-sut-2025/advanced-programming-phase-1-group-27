@@ -551,4 +551,30 @@ public enum Recipe implements Item {
     public Integer getPrice() {
         return price;
     }
+
+    public Item getFinalProduct() {
+        return finalProduct;
+    }
+
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public String description() {
+        StringBuilder result = new StringBuilder();
+        result.append("Final Product: ").append(finalProduct.getName()).append("\n");
+        result.append("Ingredients:\n");
+        for (Ingredient ingredient : ingredients) {
+            result.append(ingredient.toString()).append("\n");
+        }
+        return result.toString();
+    }
+
+    public static Recipe getRecipe(Item item) {
+        for (Recipe recipe : Recipe.values()) {
+            if (recipe.finalProduct == item)
+                return recipe;
+        }
+        return null;
+    }
 }

@@ -1,7 +1,6 @@
 package org.example.models.enums;
 
-import org.example.view.AppMenu;
-import org.example.view.GameMenuView;
+import org.example.view.*;
 import org.example.view.menu.*;
 
 import java.util.Scanner;
@@ -11,6 +10,9 @@ public enum Menu {
     MainMenu(new MainMenu()),
     GameMenu(new GameMenuView()),
     ProfileMenu(new ProfileMenu()),
+    Home(new HomeView()),
+    Shop(new ShopView()),
+    AnimalEnclosure(new AnimalEnclosureView()),
     ExitMenu(new ExitMenu());
 
     private final AppMenu menu;
@@ -19,7 +21,13 @@ public enum Menu {
         this.menu = menu;
     }
 
-    public void executeCommands(Scanner scanner) {}
+    public void executeCommands(Scanner scanner) {
+        menu.executeCommands(scanner);
+    }
+
+    public AppMenu getMenu() {
+        return menu;
+    }
 
     public static Menu getMenu(String menuName) {
         return switch (menuName) {
@@ -38,6 +46,9 @@ public enum Menu {
             case MainMenu -> "main menu";
             case ProfileMenu -> "profile menu";
             case GameMenu -> "game menu";
+            case Home -> "Home";
+            case Shop -> "Shop";
+            case AnimalEnclosure -> "Animal enclosure";
             case ExitMenu -> "exit menu";
         };
     }
