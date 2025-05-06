@@ -1,8 +1,16 @@
 package org.example.controller;
 
+import org.example.models.App;
 import org.example.models.Result;
+import org.example.view.AnimalEnclosureView;
 
 public class AnimalEnclosureController {
+    private final AnimalEnclosureView view;
+
+    public AnimalEnclosureController(AnimalEnclosureView view) {
+        this.view = view;
+    }
+
     public Result petAnimal(String name) {
         // TODO: function incomplete
         return null;
@@ -31,5 +39,9 @@ public class AnimalEnclosureController {
     public Result sellAnimal(String name) {
         // TODO: function incomplete
         return null;
+    }
+
+    public boolean playerPassedOut() {
+        return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
     }
 }

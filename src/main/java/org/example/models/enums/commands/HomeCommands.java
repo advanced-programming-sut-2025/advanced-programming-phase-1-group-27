@@ -12,7 +12,6 @@ public enum HomeCommands {
     CookItem("cooking\\s+prepare\\s+(?<itemName>.+)"),
     EatFood("eat\\s+(?<itemName>.+)"),
     Exit("exit");
-    // NextTurn?????
 
     private final String pattern;
 

@@ -3,12 +3,14 @@ package org.example.models;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
+import org.example.models.enums.Menu;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.Recipe;
 import org.example.models.Map.FarmMap;
 import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
+import org.example.view.AppMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,8 +31,10 @@ public class Player extends User {
         put(AbilityType.Mining, mining);
     }};
     private int energy, dayEnergy, maxEnergy = 200;
+    private boolean passedOut = false;
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell; // TODO: sobhan
+    private Menu currentMenu; // TODO: sobhan. depends on current cell
     private FarmMap currentFarmMap = null;
     private int money;
     private Tool currentTool;
@@ -152,11 +156,10 @@ public class Player extends User {
         return this.energy;
     }
 
-    public boolean reduceEnergy(int amount) { // returns true if the player passes out
+    public void reduceEnergy(int amount) {
         energy -= amount;
         if (energy <= 0 && dayEnergy <= 0)
-            return true;
-        return false;
+            passedOut = true;
     }
 
     public int getDayEnergy() {
@@ -169,6 +172,18 @@ public class Player extends User {
 
     public int getMaxEnergy() {
         return maxEnergy;
+    }
+
+    public boolean hasPassedOut() {
+        return passedOut;
+    }
+
+    public Menu getCurrentMenu() {
+        return currentMenu;
+    }
+
+    public void setCurrentMenu(Menu currentMenu) {
+        this.currentMenu = currentMenu;
     }
 
     public Position getPosition() {
@@ -201,6 +216,14 @@ public class Player extends User {
             backpack.reduceItems(item, ingredient.getQuantity());
         }
         backpack.addItems(recipe.getFinalProduct(), StackLevel.Basic, 1);
+    }
+
+    public Item getItemFromBackpack(String itemName) {
+        for (Stacks slot : backpack.getItems()) {
+            if (slot.getItem().getName().equals(itemName))
+                return slot.getItem();
+        }
+        return null;
     }
 
     public void walk(Building destination) {
@@ -252,7 +275,7 @@ public class Player extends User {
         }
         return null;
     }
-    
+
     private boolean hasEnoughItem(Item item, int quantity) {
         int counter = 0;
         for (Stacks slot : backpack.getItems()) {

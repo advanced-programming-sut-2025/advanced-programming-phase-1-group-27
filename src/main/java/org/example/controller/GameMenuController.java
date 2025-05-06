@@ -54,8 +54,8 @@ public class GameMenuController extends MenuController {
             nextTurn(scanner);
             return;
         }
-
         view.printString(currentPlayer.getUsername() + "'s turn!");
+        App.setCurrentMenu(currentPlayer.getCurrentMenu());
         // TODO: parsa pasokh be soalat mokhtalef
     }
 
@@ -70,7 +70,9 @@ public class GameMenuController extends MenuController {
     }
 
     public Result goToHome() {
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         App.setCurrentMenu(Menu.Home);
+        currentPlayer.setCurrentMenu(Menu.Home);
         return new Result(true, "Redirecting to Home ...");
     }
 
@@ -123,6 +125,10 @@ public class GameMenuController extends MenuController {
             result = view.askToVote(scanner);
         } while (!result.success());
         return result.message().equals("accept") ? 1 : 0;
+    }
+
+    public boolean playerPassedOut() {
+        return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
     }
 
     // Cheats :

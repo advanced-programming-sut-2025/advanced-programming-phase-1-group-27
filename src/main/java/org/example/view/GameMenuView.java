@@ -1,6 +1,7 @@
 package org.example.view;
 
 import org.example.controller.GameMenuController;
+import org.example.models.enums.Menu;
 import org.example.models.enums.commands.GameMenuCommands;
 import org.example.models.Result;
 
@@ -19,6 +20,10 @@ public class GameMenuView extends AppMenu {
     }
 
     public void executeCommands(Scanner scanner) {
+        if (controller.playerPassedOut()) {
+            ((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner);
+            return;
+        }
         String input = scanner.nextLine().trim();
         Matcher matcher;
         if ((matcher = GameMenuCommands.EnterMenu.getMatcher(input)) != null) {
