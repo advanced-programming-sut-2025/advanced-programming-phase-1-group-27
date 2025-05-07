@@ -72,9 +72,10 @@ public class Cell {
     }
 
     public void placeForagingMineral() {
-        int randomInt = new Random(System.currentTimeMillis()).nextInt(MineralType.values().length);
+        ArrayList<MineralType> foragingMinerals = MineralType.getForagingMinerals();
+        int randomInt = new Random(System.currentTimeMillis()).nextInt(foragingMinerals.size());
         cellType = CellType.Occupied;
-        object = MineralType.values()[randomInt];
+        object = foragingMinerals.get(randomInt);
     }
 
     public Position getPosition() {

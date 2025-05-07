@@ -1,8 +1,8 @@
 package org.example.models.tools;
 
-import org.example.models.App;
-import org.example.models.Item;
+import org.example.models.*;
 import org.example.models.enums.AbilityType;
+import org.example.models.enums.CellType;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
 
@@ -10,6 +10,7 @@ public class WateringCan extends Tool{
     //Water: 40 - 55 - 70 - 85 - 100
     //EnergyUsage : 5 - 4 - 3 - 2 - 1;
     //If farming talent is max -1
+    private final int maxCapacity;
     private int waterCapacity;
     public WateringCan(ToolType toolType) {
         StackLevel level = toolType.getLevel();
@@ -31,13 +32,26 @@ public class WateringCan extends Tool{
             this.waterCapacity = 100;
         }
         super(level , energyUsage , toolType.getName());
+        this.maxCapacity = this.waterCapacity;
     }
 
-    public int getEnergy() {
-        int energy = this.getEnergyUsage();
+    @Override
+    public int getEnergyUsage() {
+        int energy = super.getEnergyUsage();
         if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Farming).getLevel() == 4) {
             energy--;
         }
         return Math.min(energy , 0);
+    }
+
+    public Result use(Cell cell) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        if (cell.getType() == CellType.Water) {
+            player.consumeEnergy(getEnergyUsage());
+            this.waterCapacity = maxCapacity;
+            return new Result(true, "Filled WateringCan!");
+        } else if {
+
+        }
     }
 }

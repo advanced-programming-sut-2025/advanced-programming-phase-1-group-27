@@ -5,7 +5,7 @@ import org.example.models.enums.StackLevel;
 
 public abstract class Tool{
     private final int energyUsage;
-    private StackLevel level;
+    protected StackLevel level;
     private String name;
 
     public Tool(StackLevel level , int energyUsage , String name) {

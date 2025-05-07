@@ -22,6 +22,9 @@ public class Map {
     }
 
     private void buildCellsGraph() {
+        int I[] = {0, 1, 1, 1, 0, -1, -1, -1},
+                J[] = {1, 1, 0, -1, -1, -1, 0, 1};
+        //directions : {R, DR, D, DL, L, UL, U, UR}
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 cells[i][j] = new Cell(CellType.View, new Position(i, j));
@@ -29,13 +32,16 @@ public class Map {
         }
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (i > 0) cells[i][j].addAdjacentCell(cells[i - 1][j]);
-                if (j > 0) cells[i][j].addAdjacentCell(cells[i][j - 1]);
-                if (i < height - 1) cells[i][j].addAdjacentCell(cells[i + 1][j]);
-                if (j < width - 1) cells[i][j].addAdjacentCell(cells[i][j + 1]);
+                for (int k = 0; k < 8; k++) {
+                    int newI = i + I[k], newJ = j + J[k];
+                    if (newI >= 0 && newI < height && newJ >= 0 && newJ < width) {
+                        cells[i][j].addAdjacentCell(cells[newI][newJ]);
+                    }
+                }
             }
         }
     }
+
 
     public Cell getCell(int x, int y) {
         return cells[x][y];
