@@ -1,5 +1,8 @@
 package org.example.models.tools;
 
+import org.example.models.App;
+import org.example.models.Cell;
+import org.example.models.Result;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
 
@@ -14,4 +17,9 @@ public class MilkPail extends Tool{
         super(level, energyUsage , ToolType.MilkPail.getName());
     }
 
+    public Result use(Cell cell) {
+        App.getCurrentGame().getCurrentPlayer().consumeEnergy(getEnergyUsage());
+        //TODO rassa heyvun bezan
+        return new Result(false, "");
+    }
 }

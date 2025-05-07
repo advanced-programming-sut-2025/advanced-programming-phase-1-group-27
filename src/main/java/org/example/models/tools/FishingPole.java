@@ -1,7 +1,11 @@
 package org.example.models.tools;
 
 import org.example.models.App;
+import org.example.models.Cell;
+import org.example.models.Player;
+import org.example.models.Result;
 import org.example.models.enums.AbilityType;
+import org.example.models.enums.CellType;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
 
@@ -32,8 +36,9 @@ public class FishingPole extends Tool{
         return price;
     }
 
-    public int getEnergy() {
-        int energy = this.getEnergyUsage();
+    @Override
+    public int getEnergyUsage() {
+        int energy = super.getEnergyUsage();
         if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() == 4) {
             energy--;
         }
@@ -51,5 +56,15 @@ public class FishingPole extends Tool{
             return App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 4;
         }
         return false;
+    }
+
+    public Result use(Cell cell) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        if (cell.getType() != CellType.Water) {
+            return new Result(false, "This is Not A Water Cell!!");
+        } else {
+            //TODO : rassa mahi begir.
+            return new Result(true, "This is A Water Cell!!");
+        }
     }
 }

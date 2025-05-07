@@ -3,6 +3,7 @@ package org.example.models.tools;
 import org.example.models.*;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.CellType;
+import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
 
@@ -50,8 +51,16 @@ public class WateringCan extends Tool{
             player.consumeEnergy(getEnergyUsage());
             this.waterCapacity = maxCapacity;
             return new Result(true, "Filled WateringCan!");
-        } else if {
-
+        } else if (cell.getObject() instanceof Plant plant) {
+            if (plant.getWateredToday()) {
+                return new Result(false, "Plant Was Watered Before!");
+            } else {
+                plant.water();
+                player.consumeEnergy(getEnergyUsage());
+                return new Result(true, "Plant Watered!");
+            }
+        } else {
+            return new Result(false, "Invalid Cell!");
         }
     }
 }

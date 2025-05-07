@@ -259,7 +259,6 @@ public enum CropType implements PlantType {
 
     public int getHarvestCycle() {
         if (regrowthTime == null) {
-            assert(false);
             return -1;
         } else {
             return (int) regrowthTime;

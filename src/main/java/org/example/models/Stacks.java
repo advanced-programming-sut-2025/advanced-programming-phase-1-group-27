@@ -46,4 +46,8 @@ public class Stacks {
     public StackLevel getStackLevel() {
         return stackLevel;
     }
+
+    public int getPrice() {
+        return (int) ((double)item.getPrice() * this.stackLevel.getPriceModifier());
+    }
 }

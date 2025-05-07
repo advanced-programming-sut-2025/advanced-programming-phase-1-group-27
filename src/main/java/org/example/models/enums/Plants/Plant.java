@@ -7,7 +7,7 @@ public abstract class Plant {
     protected PlantType type;
     protected int cnt = 0, currentStage = 0, tillNextHarvest;
     protected Cell cell;
-    protected boolean wateredYesterday = true;
+    protected boolean wateredYesterday = true, wateredToday = false;
     //...
 
     protected Plant(PlantType type) {
@@ -45,11 +45,23 @@ public abstract class Plant {
     }
 
     public void water() {
-        wateredYesterday = true;
+        wateredToday = true;
+    }
+
+    public void setWateredYesterday(boolean wateredYesterday) {
+        this.wateredYesterday = wateredYesterday;
+    }
+
+    public void setWateredToday(boolean wateredToday) {
+        this.wateredToday = wateredToday;
     }
 
     public boolean getWateredYesterday() {
         return wateredYesterday;
+    }
+
+    public boolean getWateredToday() {
+        return wateredToday;
     }
 
     public void delete() {

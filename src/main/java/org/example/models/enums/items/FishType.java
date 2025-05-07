@@ -3,6 +3,9 @@ package org.example.models.enums.items;
 import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public enum FishType implements Item {
     Salmon(75, Season.Fall, false , 75),
     Sardine(40, Season.Fall, false , 40),
@@ -30,11 +33,22 @@ public enum FishType implements Item {
     private final Season season;
     private final boolean isLegendary;
 
+    private static HashMap<Season, FishType> cheapestOfSeason = new HashMap<>() {{
+        put(Season.Fall, Sardine);
+        put(Season.Winter, Perch);
+        put(Season.Summer, Sunfish);
+        put(Season.Spring, Herring);
+    }};
+
     FishType(int price, Season season, boolean isLegendary , int energy) {
         this.price = price;
         this.season = season;
         this.isLegendary = isLegendary;
         this.energy = energy;
+    }
+
+    public static HashMap<Season, FishType> getCheapestOfSeason() {
+        return cheapestOfSeason;
     }
 
     @Override
