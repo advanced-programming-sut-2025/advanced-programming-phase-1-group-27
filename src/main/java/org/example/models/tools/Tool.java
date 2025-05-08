@@ -1,6 +1,8 @@
 package org.example.models.tools;
 
 import org.example.models.App;
+import org.example.models.Cell;
+import org.example.models.Result;
 import org.example.models.enums.StackLevel;
 
 public abstract class Tool{
@@ -24,5 +26,9 @@ public abstract class Tool{
 
     public String getName() {
         return name;
+    }
+
+    public Result use(Cell cell) {
+        return null;
     }
 }

@@ -15,6 +15,7 @@ public class Shear extends Tool {
         super(level, energyUsage , ToolType.Shear.getName());
     }
 
+    @Override
     public Result use() {
         //TODO rassa heyvun
         return new Result(false, "(!*@*&!&#$*!@#");

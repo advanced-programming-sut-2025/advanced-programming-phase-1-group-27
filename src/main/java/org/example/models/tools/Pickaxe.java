@@ -40,6 +40,8 @@ public class Pickaxe extends Tool{
         return Math.min(energy , 0);
     }
 
+
+    @Override
     public Result use(Cell cell) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Object object = cell.getObject();
@@ -55,6 +57,7 @@ public class Pickaxe extends Tool{
                     cell.setType(CellType.Free);
                     cell.setObject(null);
                     //TODO add to Inventory: 1 object
+                    player.mineXp(10);
                     return new Result(true, "You Extracted A " + ((MineralType) object).getName() +
                             " Mineral!!");
 
@@ -68,6 +71,7 @@ public class Pickaxe extends Tool{
                     cell.setType(CellType.Free);
                     cell.setObject(null);
                     //TODO add to Inventory: 1 object
+                    player.mineXp(10);
                     return new Result(true, "You Extracted A " + ((MineralType) object).getName() +
                             " Jewel!!");
                 } else {
@@ -79,6 +83,7 @@ public class Pickaxe extends Tool{
                 cell.setType(CellType.Free);
                 cell.setObject(null);
                 //TODO add to Inventory: 1 object
+                player.mineXp(10);
                 return new Result(true, "You Extracted A " + ((MineralType) object).getName());
             }
         } else if (cell.getType() == CellType.Occupied) {

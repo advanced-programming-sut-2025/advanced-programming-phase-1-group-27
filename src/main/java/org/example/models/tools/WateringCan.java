@@ -45,6 +45,7 @@ public class WateringCan extends Tool{
         return Math.min(energy , 0);
     }
 
+    @Override
     public Result use(Cell cell) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         if (cell.getType() == CellType.Water) {

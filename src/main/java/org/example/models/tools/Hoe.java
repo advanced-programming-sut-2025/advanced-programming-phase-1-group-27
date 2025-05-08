@@ -27,6 +27,7 @@ public class Hoe extends Tool{
         super(level , energyUsage , toolType.getName());
     }
 
+    @Override
     public Result use(Cell cell) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         player.consumeEnergy(this.getEnergyUsage());

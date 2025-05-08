@@ -33,7 +33,7 @@ public enum Weather {
 
     private static void applyRain() {
         for (Player player: App.getCurrentGame().getPlayers()) {
-            FarmMap map = player.getCurrentMap();
+            FarmMap map = player.getFarmMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < cells.length; i++) {
                 for (int j = 0; j < cells[i].length; j++) {
@@ -48,7 +48,7 @@ public enum Weather {
 
     private static void applyThor() {
         for (Player player: App.getCurrentGame().getPlayers()) {
-            FarmMap map = player.getCurrentMap();
+            FarmMap map = player.getFarmMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < 3; i++) {
                 int x = (new Random(System.currentTimeMillis())).nextInt(cells.length);

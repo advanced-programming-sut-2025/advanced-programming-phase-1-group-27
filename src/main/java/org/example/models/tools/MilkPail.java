@@ -17,6 +17,7 @@ public class MilkPail extends Tool{
         super(level, energyUsage , ToolType.MilkPail.getName());
     }
 
+    @Override
     public Result use(Cell cell) {
         App.getCurrentGame().getCurrentPlayer().consumeEnergy(getEnergyUsage());
         //TODO rassa heyvun bezan

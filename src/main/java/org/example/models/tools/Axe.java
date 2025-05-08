@@ -41,6 +41,7 @@ public class Axe extends Tool {
         return Math.min(energy , 0);
     }
 
+    @Override
     public Result use(Cell cell) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         if (cell.getObject() instanceof Tree) {

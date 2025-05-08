@@ -6,6 +6,7 @@ import org.example.models.Map.Map;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Menu;
 import org.example.models.enums.Weathers.Weather;
+import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
 
 import java.util.ArrayList;
@@ -92,9 +93,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result walk(String s, String t, Scanner scanner) {
-        if (!s.matches("\\d") || !t.matches("\\d")) {
-            return new Result(false, "GO KILL YOURSELF");
-        }
+
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Map currentMap = currentPlayer.getCurrentMap();
@@ -129,9 +128,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result printMap(String s, String t, String sizeString) {
-        if (!s.matches("\\d") || !t.matches("\\d") || !sizeString.matches("\\d+")) {
-            return new Result(false, "GO KILL YOURSELF");
-        }
+
         int x = Integer.parseInt(s), y = Integer.parseInt(t), size = Integer.parseInt(sizeString);
         String view = "";
         Map map = App.getCurrentGame().getCurrentPlayer().getCurrentMap();
@@ -149,6 +146,25 @@ public class GameMenuController extends MenuController {
 
     public Result helpReadingMap() {
         return new Result(true, App.getCurrentGame().getCurrentPlayer().getCurrentMap().getMapReadingManual());
+    }
+
+    public Result showEnergy() {
+        return new Result(true, "Energy Remaining for The Day : " +
+                App.getCurrentGame().getCurrentPlayer().getDayEnergy() + "\n" +
+                "Energy Remaining for This Turn : " +
+                App.getCurrentGame().getCurrentPlayer().getEnergy());
+    }
+
+    public Result useTool(String directionString) {
+        int direction = Integer.parseInt(directionString);
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Cell currentCell = player.getCurrentCell();
+        Cell cell = currentCell.getAdjacentCells().get(direction);
+        Tool tool = player.getCurrentTool();
+        if (tool == null) {
+            return new Result(false, "You Don't Have A Tool in Hand");
+        }
+        return tool.use(cell);
     }
 
     private void handlePoll(Player currentPlayer, Scanner scanner) {
@@ -222,5 +238,20 @@ public class GameMenuController extends MenuController {
             cell.thor();
             return new Result(true, "The Cell [" + i + ", " + j + "] was hit by Thor!");
         }
+    }
+
+    public Result cheatSetEnergy(String energyString) {
+        int energy = Integer.parseInt(energyString);
+
+        App.getCurrentGame().getCurrentPlayer().setEnergy(energy);
+        return new Result(true, "Energy Set to " + energy);
+    }
+
+    public Result cheatEnergyUnlimited() {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        player.setEnergy(100000000);
+        player.setDayEnergy(100000000);
+        player.setMaxEnergy(100000000);
+        return new Result(true, "Cheat Activated!!");
     }
 }

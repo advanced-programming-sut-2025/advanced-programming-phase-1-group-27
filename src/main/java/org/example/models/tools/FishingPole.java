@@ -58,6 +58,7 @@ public class FishingPole extends Tool{
         return false;
     }
 
+    @Override
     public Result use(Cell cell) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         if (cell.getType() != CellType.Water) {

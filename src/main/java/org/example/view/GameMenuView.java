@@ -69,6 +69,18 @@ public class GameMenuView extends AppMenu {
         else if (GameMenuCommands.HelpReadingMap.getMatcher(input) != null) {
             System.out.println(controller.helpReadingMap());
         }
+        else if (GameMenuCommands.ShowEnergy.getMatcher(input) != null) {
+            System.out.println(controller.showEnergy());
+        }
+        else if ((matcher = GameMenuCommands.CheatSetEnergy.getMatcher(input)) != null) {
+            System.out.println(controller.cheatSetEnergy(matcher.group("value")));
+        }
+        else if (GameMenuCommands.CheatEnergyUnlimited.getMatcher(input) != null) {
+            System.out.println(controller.cheatEnergyUnlimited());
+        }
+        else if ((matcher = GameMenuCommands.ToolsUse.getMatcher(input)) != null) {
+            System.out.println(controller.useTool(matcher.group("direction")));
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }

@@ -162,6 +162,14 @@ public class Player extends User {
             passedOut = true;
     }
 
+    public void setMaxEnergy(int maxEnergy) {
+        this.maxEnergy = maxEnergy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
     public int getDayEnergy() {
         return dayEnergy;
     }

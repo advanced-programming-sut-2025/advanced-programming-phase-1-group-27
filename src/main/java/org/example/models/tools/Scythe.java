@@ -22,6 +22,8 @@ public class Scythe extends Tool{
         super(level , energyUsage , ToolType.Scythe.getName());
     }
 
+
+    @Override
     public Result use(Cell cell) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         player.consumeEnergy(getEnergyUsage());
@@ -37,6 +39,7 @@ public class Scythe extends Tool{
                     cell.setObject(null);
                 }
             }
+            player.farmXp(5);
             return new Result(true, "You Harvested " + plant.harvest().getName());
         } else if (cell.getObject() instanceof MineralType mineralType) {
             if (mineralType == MineralType.Fiber) {
@@ -45,8 +48,10 @@ public class Scythe extends Tool{
                 int randomInt = (new Random()).nextInt(2);
                 if (randomInt == 1) {
                     //TODO add to inventory: 1 fiber
+                    player.forageXp(10);
                     return new Result(true, "Found 1 Fiber");
                 } else {
+                    player.forageXp(10);
                     return new Result(true, "Weed Was Cut");
                 }
             } else {
