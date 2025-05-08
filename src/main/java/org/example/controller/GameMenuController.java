@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.models.*;
 import org.example.models.Map.FarmMap;
+import org.example.models.Map.Map;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Menu;
 import org.example.models.enums.Weathers.Weather;
@@ -90,6 +91,66 @@ public class GameMenuController extends MenuController {
                 weather.toString() + " Weather!");
     }
 
+    public Result walk(String s, String t, Scanner scanner) {
+        if (!s.matches("\\d") || !t.matches("\\d")) {
+            return new Result(false, "GO KILL YOURSELF");
+        }
+        int i = Integer.parseInt(s), j = Integer.parseInt(t);
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        Map currentMap = currentPlayer.getCurrentMap();
+        Cell destination = currentMap.getCell(i, j);
+        if (!currentMap.areConnected(currentPlayer.getCurrentCell(), destination)) {
+            return new Result(false, "There Is No Path Between These Cells");
+        } else {
+            int energy = currentMap.getDistance(currentPlayer.getCurrentCell(), destination) / 20;
+            System.out.println("The Energy Needed for This Walk is " +
+                     energy + " And You Have " + currentPlayer.getEnergy() +
+                    ", Would You Like To Walk? (Y/N)");
+            String answer = scanner.nextLine();
+            while (true) {
+                if (answer.trim().equals("Y")) {
+                    if (currentPlayer.getEnergy() > energy) {
+                        currentPlayer.consumeEnergy(energy);
+                        currentPlayer.setCurrentCell(destination);
+                        return new Result(true, "You Walked And Now Are On Cell(" +
+                                i + "," + j);
+                    } else {
+                        energy = 0;
+                        currentPlayer.passOut();
+                        return new Result(false, "You Passed Out!!");
+                    }
+                } else if (answer.trim().equals("N")) {
+                    return new Result(false, "Alright.");
+                }
+                System.out.println("Invalid Response, Please Answer By (Y/N)");
+                answer = scanner.nextLine();
+            }
+        }
+    }
+
+    public Result printMap(String s, String t, String sizeString) {
+        if (!s.matches("\\d") || !t.matches("\\d") || !sizeString.matches("\\d+")) {
+            return new Result(false, "GO KILL YOURSELF");
+        }
+        int x = Integer.parseInt(s), y = Integer.parseInt(t), size = Integer.parseInt(sizeString);
+        String view = "";
+        Map map = App.getCurrentGame().getCurrentPlayer().getCurrentMap();
+        if (x + size > map.getHeight() || y + size > map.getWidth()) {
+            return new Result(false, "Size is Too Big");
+        }
+        for (int i = x; i < x + size; i++) {
+            if (i > 0) view += "\n";
+            for (int j = y; j < y + size; j++) {
+                view += map.getCell(i, j).toString();
+            }
+        }
+        return new Result(true, view);
+    }
+
+    public Result helpReadingMap() {
+        return new Result(true, App.getCurrentGame().getCurrentPlayer().getCurrentMap().getMapReadingManual());
+    }
+
     private void handlePoll(Player currentPlayer, Scanner scanner) {
         Poll poll = currentPlayer.getPoll();
         if (poll != null) {
@@ -153,7 +214,7 @@ public class GameMenuController extends MenuController {
             return new Result(false, "GO KILL YOURSELF");
         }
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
-        FarmMap map = App.getCurrentGame().getCurrentPlayer().getCurrentFarmMap();
+        FarmMap map = App.getCurrentGame().getCurrentPlayer().getFarmMap();
         Cell cell = map.getCell(i, j);
         if (cell.getType() == CellType.Building) {
             return new Result(false, "There is A Building!!");

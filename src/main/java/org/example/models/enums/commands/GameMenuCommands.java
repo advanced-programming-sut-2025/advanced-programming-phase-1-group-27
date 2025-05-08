@@ -14,7 +14,10 @@ public enum GameMenuCommands implements MenuCommands {
     ShowWeather("weather"),
     ForecastWeather("weather\\s+forecast"),
     CheatSetWeather("cheat\\s+weather\\s+set\\s+(?<weatherName>\\S+)"),
-    CheatThor("cheat\\s+Thor\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)");
+    CheatThor("cheat\\s+Thor\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)"),
+    Walk("walk\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)"),
+    PrintMap("print\\s+map\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)\\s+-s\\s+(?<size>\\d+)"),
+    HelpReadingMap("help\\s+reading\\s+map");
 
     private final String pattern;
 

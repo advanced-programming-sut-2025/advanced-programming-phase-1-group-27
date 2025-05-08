@@ -94,31 +94,29 @@ public class Map {
     }
 
 
-    public String[] veiwMapString() {
-        String[] mapView = new String[height];
-        for (int i = 0; i < height; i++) {
-            mapView[i] = "";
-            for (int j = 0; j < width; j++) {
-                mapView[i] += cells[i][j].toString();
-            }
-        }
-        return mapView;
+    private static final String mapReadingManual = new String(
+            "Map Manual :\n" +
+            "C -> Crop\n" +
+            "T -> Tree\n" +
+            "R -> Mineral\n" +
+            "H -> Hut\n" +
+            "G -> GreenHouse\n" +
+            "W -> Water\n" +
+            "D -> Door\n" +
+            "N -> NPC House\n" +
+            "S -> Store\n" +
+            "~ -> City Grounds\n"
+    );
+
+    public String getMapReadingManual() {
+        return mapReadingManual;
     }
 
-    private static final String[] mapReadingManual = new String[] {
-            "C -> Crop",
-            "T -> Tree",
-            "R -> Mineral",
-            "H -> Hut",
-            "G -> GreenHouse",
-            "W -> Water",
-            "D -> Door",
-            "N -> NPC House",
-            "S -> Store",
-            "~ -> City Grounds"
-    };
+    public int getHeight() {
+        return height;
+    }
 
-    public String[] getMapReadingManual() {
-        return mapReadingManual;
+    public int getWidth() {
+        return width;
     }
 }

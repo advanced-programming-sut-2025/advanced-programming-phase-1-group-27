@@ -1,5 +1,6 @@
 package org.example.models;
 
+import org.example.models.Map.Map;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Gender;
@@ -10,11 +11,9 @@ import org.example.models.Map.FarmMap;
 import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
-import org.example.view.AppMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Player extends User {
     private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>(); // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
@@ -35,12 +34,13 @@ public class Player extends User {
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell; // TODO: sobhan
     private Menu currentMenu; // TODO: sobhan. depends on current cell
-    private FarmMap currentFarmMap = null;
+    private Map currentMap = null; // TODO rassa reeeedi
+    private FarmMap farmMap = null;
     private int money;
     private Tool currentTool;
     //TODO : refresh every morning
-    private Map<NPC , Boolean> npcMetToday = new HashMap<>();
-    private Map<NPC , Boolean> npcGiftToday = new HashMap<>();
+    private java.util.Map<NPC , Boolean> npcMetToday = new HashMap<>();
+    private java.util.Map<NPC , Boolean> npcGiftToday = new HashMap<>();
     private Player spouse = null; // in case the player gets married
     private Poll poll = null; // in order to terminate the game
 
@@ -110,12 +110,12 @@ public class Player extends User {
         this.backpack = backpack;
     }
 
-    public FarmMap getCurrentFarmMap() {
-        return currentFarmMap;
+    public Map getCurrentMap() {
+        return currentMap;
     }
 
-    public void setFarmMap(FarmMap farmMap) {
-        this.currentFarmMap = farmMap;
+    public void setFarmMap(Map farmMap) {
+        this.currentMap = farmMap;
     }
 
     public void setSpouse(Player spouse) {
@@ -190,16 +190,32 @@ public class Player extends User {
         return currentCell.getPosition();
     }
 
-    public Map<NPC, Boolean> getNpcMetToday() {
+    public java.util.Map<NPC, Boolean> getNpcMetToday() {
         return npcMetToday;
     }
 
-    public Map<NPC, Boolean> getNpcGiftToday() {
+    public java.util.Map<NPC, Boolean> getNpcGiftToday() {
         return npcGiftToday;
     }
 
     public Ability getAbility(AbilityType type) {
         return abilityFinder.get(type);
+    }
+
+    public Cell getCurrentCell() {
+        return currentCell;
+    }
+
+    public void setCurrentCell(Cell currentCell) {
+        this.currentCell = currentCell;
+    }
+
+    public FarmMap getFarmMap() {
+        return farmMap;
+    }
+
+    public void setFarmMap(FarmMap farmMap) {
+        this.farmMap = farmMap;
     }
 
     public boolean hasEnoughIngredients(Recipe recipe) {
@@ -224,10 +240,6 @@ public class Player extends User {
                 return slot.getItem();
         }
         return null;
-    }
-
-    public void walk(Building destination) {
-
     }
 
     public void goToSleep() {

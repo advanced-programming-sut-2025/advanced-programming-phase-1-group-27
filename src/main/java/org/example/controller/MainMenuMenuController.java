@@ -92,7 +92,7 @@ public class MainMenuMenuController extends MenuController {
             result = view.inputMap(scanner);
             mapId = result.success()? Integer.parseInt(result.message()): -1;
             for (Player thisPlayer : game.getPlayers()) {
-                if (thisPlayer.getCurrentFarmMap() != null && thisPlayer.getCurrentFarmMap() == game.getFarmMap(mapId))
+                if (thisPlayer.getCurrentMap() != null && thisPlayer.getCurrentMap() == game.getFarmMap(mapId))
                     result = new Result(false, "");
             }
         } while (!result.success());

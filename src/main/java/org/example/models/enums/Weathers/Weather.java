@@ -4,12 +4,9 @@ import org.example.models.App;
 import org.example.models.Cell;
 import org.example.models.Map.FarmMap;
 import org.example.models.Player;
-import org.example.models.Time;
 import org.example.models.enums.Plants.Plant;
 
-import javax.management.timer.Timer;
 import java.util.Random;
-import java.util.function.Function;
 
 public enum Weather {
     Sunny(1),
@@ -36,7 +33,7 @@ public enum Weather {
 
     private static void applyRain() {
         for (Player player: App.getCurrentGame().getPlayers()) {
-            FarmMap map = player.getCurrentFarmMap();
+            FarmMap map = player.getCurrentMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < cells.length; i++) {
                 for (int j = 0; j < cells[i].length; j++) {
@@ -51,7 +48,7 @@ public enum Weather {
 
     private static void applyThor() {
         for (Player player: App.getCurrentGame().getPlayers()) {
-            FarmMap map = player.getCurrentFarmMap();
+            FarmMap map = player.getCurrentMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < 3; i++) {
                 int x = (new Random(System.currentTimeMillis())).nextInt(cells.length);
