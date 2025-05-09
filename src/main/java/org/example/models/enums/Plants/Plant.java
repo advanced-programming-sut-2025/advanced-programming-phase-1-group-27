@@ -4,6 +4,7 @@ import org.example.models.Cell;
 import org.example.models.enums.CellType;
 
 public abstract class Plant {
+    protected boolean isGiant = false;
     protected PlantType type;
     protected int cnt = 0, currentStage = 0, tillNextHarvest;
     protected Cell cell;
@@ -30,6 +31,8 @@ public abstract class Plant {
             currentStage++;
             cnt = 0;
         }
+        wateredYesterday = wateredToday;
+        wateredToday = false;
     }
 
     public Fruit harvest() {
@@ -64,8 +67,11 @@ public abstract class Plant {
         return wateredToday;
     }
 
-    public void delete() {
-        cell.setType(CellType.Free);
-        cell.setObject(null);
+    public boolean isGiant() {
+        return isGiant;
+    }
+
+    public void setGiant(boolean giant) {
+        isGiant = giant;
     }
 }

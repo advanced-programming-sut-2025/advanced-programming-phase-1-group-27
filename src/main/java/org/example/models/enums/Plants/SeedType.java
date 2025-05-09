@@ -9,53 +9,59 @@ import java.util.List;
 
 public enum SeedType implements PlantSourceType, Item {
     //Starter + Seed + Bean + Shoot
-    GrassStater,
-    ParsnipSeed,
-    BeanStarter,
-    CauliflowerSeed,
-    PotatoSeed,
-    StrawberrySeed,
-    TulipBulbSeed,
-    KaleSeed,
-    CarrotSeed,
-    RhubarbSeed,
-    JazzSeed,
-    TomatoSeed,
-    PepperSeed,
-    WheatSeed,
-    SummerSquashSeed,
-    RadishSeed,
-    MelonSeed,
-    HopsStarter,
-    PoppySeed,
-    SpangleSeed,
-    StarfruitSeed,
-    CoffeeBean,
-    SunflowerSeed,
-    CornSeed,
-    EggplantSeed,
-    PumpkinSeed,
-    BroccoliSeed,
-    AmaranthSeed,
-    GrapeStarter,
-    BeetSeed,
-    YamSeed,
-    BokChoySeed,
-    CranberrySeed,
-    FairySeed,
-    RareSeed,
-    GarlicSeed,
-    BlueberrySeed,
-    RedCabbageSeed,
-    ArtichokeSeed,
-    RiceShoot,
-    PowderMelonSeed,
-    AncientSeed,
-    MixedSeed,
-    MapleSeed,
-    MahoganySeed,
-    MushroomTreeSeed,
-    MysticTreeSeed;
+    GrassStater(CropType.Parsnip), //TODO in chie??
+    ParsnipSeed(CropType.Parsnip),
+    BeanStarter(CropType.GreenBean),
+    CauliflowerSeed(CropType.Cauliflower),
+    PotatoSeed(CropType.Potato),
+    StrawberrySeed(CropType.Strawberry),
+    TulipBulbSeed(CropType.Tulip),
+    KaleSeed(CropType.Kale),
+    CarrotSeed(CropType.Carrot),
+    RhubarbSeed(CropType.Rhubarb),
+    JazzSeed(CropType.BlueJazz),
+    TomatoSeed(CropType.Tomato),
+    PepperSeed(CropType.HotPepper),
+    WheatSeed(CropType.Wheat),
+    SummerSquashSeed(CropType.SummerSquash),
+    RadishSeed(CropType.Radish),
+    MelonSeed(CropType.Melon),
+    HopsStarter(CropType.Hops),
+    PoppySeed(CropType.Poppy),
+    SpangleSeed(CropType.SummerSpangle),
+    StarfruitSeed(CropType.Starfruit),
+    CoffeeBean(CropType.CoffeeBean),
+    SunflowerSeed(CropType.Sunflower),
+    CornSeed(CropType.Corn),
+    EggplantSeed(CropType.Eggplant),
+    PumpkinSeed(CropType.Pumpkin),
+    BroccoliSeed(CropType.Broccoli),
+    AmaranthSeed(CropType.Amaranth),
+    GrapeStarter(CropType.Grape),
+    BeetSeed(CropType.Beet),
+    YamSeed(CropType.Yam),
+    BokChoySeed(CropType.BokChoy),
+    CranberrySeed(CropType.Cranberry),
+    FairySeed(CropType.FairyRose),
+    RareSeed(CropType.SweetGemBerry),
+    GarlicSeed(CropType.Garlic),
+    BlueberrySeed(CropType.Blueberry),
+    RedCabbageSeed(CropType.RedCabbage),
+    ArtichokeSeed(CropType.Artichoke),
+    RiceShoot(CropType.UnmilledRice),
+    PowderMelonSeed(CropType.PowderMelon),
+    AncientSeed(CropType.AncientFruit),
+    MixedSeed(null),
+    MapleSeed(TreeType.MapleTree),
+    MahoganySeed(TreeType.MahoganyTree),
+    MushroomTreeSeed(TreeType.MushroomTree),
+    MysticTreeSeed(TreeType.MysticTree),;
+
+    private final PlantType plant;
+
+    SeedType(PlantType plant) {
+        this.plant = plant;
+    }
 
     private static HashMap<Season, ArrayList<SeedType>> foragingSeedsBySeason = new HashMap<>(){{
         put(Season.Spring, new ArrayList<>(List.of(AncientSeed, MixedSeed, JazzSeed, CarrotSeed, CauliflowerSeed,
@@ -73,6 +79,10 @@ public enum SeedType implements PlantSourceType, Item {
     public boolean isFarmable() {
         //TODO
         return true;
+    }
+
+    public PlantType getPlant() {
+        return plant;
     }
 
     public static HashMap<Season, ArrayList<SeedType>> getForagingSeedsBySeason() {

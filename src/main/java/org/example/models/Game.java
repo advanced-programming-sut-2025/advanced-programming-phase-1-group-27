@@ -6,6 +6,8 @@ import org.example.models.Map.FarmMapDirector;
 import org.example.models.Map.NPCMap;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
+import org.example.models.enums.CellType;
+import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -81,20 +83,42 @@ public class Game {
     }
 
     public void newDay() {
+        // Setting Energies :
         for (Player player : players) {
             player.setDayEnergy(player.getMaxEnergy());
         }
+        // Setting Weather :
         if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
         else {
             currentWeather = tomorrowWeather;
             tomorrowWeather = null;
         }
-        currentWeather.applyWeatherEffect();
+        // Grow (and deleting) Plants :
+        for (Player player : players) {
+            Cell[][] cells = player.getFarmMap().getCells();
+            for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
+                for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
+                    if (cells[i][j].getType() == CellType.Plowed && cells[i][j].getObject() instanceof Plant plant) {
+                        if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
+                            cells[i][j].setObject(null);
+                        } else if (!plant.isGiant()){
+                            plant.grow();
+                        } else {
+                            if ((cells[i][j].getAdjacentCells().get(4) != null &&
+                                    cells[i][j].getAdjacentCells().get(4).getObject() == plant) ||
+                                    (cells[i][j].getAdjacentCells().get(6) != null &&
+                                            cells[i][j].getAdjacentCells().get(6).getObject() == plant)) {
 
-
+                            } else {
+                                plant.grow();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         //TODO
-
-
+        currentWeather.applyWeatherEffect();
     }
 
     public Player getCurrentPlayer() {
