@@ -39,10 +39,10 @@ public enum CraftingProduct implements Item {
         return price;
     }
 
-    public static CraftingProduct getCraftingProduct(String itemName) {
-        for (CraftingProduct value : CraftingProduct.values()) {
-            if (value.getName().equals(itemName)) {
-                return value;
+    public static CraftingProduct getItem(String itemName) {
+        for (CraftingProduct craftingProduct : CraftingProduct.values()) {
+            if (craftingProduct.getName().equals(itemName)) {
+                return craftingProduct;
             }
         }
         return null;

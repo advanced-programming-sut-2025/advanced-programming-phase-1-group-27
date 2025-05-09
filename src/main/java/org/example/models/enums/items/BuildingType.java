@@ -40,4 +40,13 @@ public enum BuildingType implements Item {
     public Integer getPrice() {
         return price;
     }
+
+    public static BuildingType getItem(String itemName) {
+        for (BuildingType buildingType : BuildingType.values()) {
+            if (buildingType.name().equalsIgnoreCase(itemName)) {
+                return buildingType;
+            }
+        }
+        return null;
+    }
 }

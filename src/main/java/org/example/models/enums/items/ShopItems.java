@@ -28,4 +28,13 @@ public enum ShopItems implements Item {
     public Integer getPrice() {
         return 0;
     }
+
+    public static ShopItems getItem(String itemName) {
+        for (ShopItems shopItems : ShopItems.values()) {
+            if (shopItems.name().equalsIgnoreCase(itemName)) {
+                return shopItems;
+            }
+        }
+        return null;
+    }
 }

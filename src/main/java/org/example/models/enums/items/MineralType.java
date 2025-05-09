@@ -81,4 +81,13 @@ public enum MineralType implements Item {
     public Integer getPrice() {
         return price;
     }
+
+    public static MineralType getItem(String itemName) {
+        for (MineralType mineralType : MineralType.values()) {
+            if (mineralType.name().equalsIgnoreCase(itemName)) {
+                return mineralType;
+            }
+        }
+        return null;
+    }
 }

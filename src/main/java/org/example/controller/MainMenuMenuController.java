@@ -59,7 +59,7 @@ public class MainMenuMenuController extends MenuController {
             getPlayerMap(player, game, scanner);
         }
         App.setCurrentGame(game);
-        App.setCurrentMenu(Menu.GameMenu);
+        App.setCurrentMenu(Menu.Home);
         return new Result(true, "Game created!");
     }
 

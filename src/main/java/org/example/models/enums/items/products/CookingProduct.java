@@ -47,6 +47,15 @@ public enum CookingProduct implements Item {
         return price;
     }
 
+    public static CookingProduct getItem(String itemName) {
+        for (CookingProduct cookingProduct : CookingProduct.values()) {
+            if (cookingProduct.getName().equals(itemName)) {
+                return cookingProduct;
+            }
+        }
+        return null;
+    }
+
     public Recipe getRecipe() {
         return recipe;
     }

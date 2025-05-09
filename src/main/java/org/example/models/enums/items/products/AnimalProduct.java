@@ -26,4 +26,13 @@ public enum AnimalProduct implements Item {
     public Integer getPrice() {
         return price;
     }
+
+    public static AnimalProduct getItem(String itemName) {
+        for (AnimalProduct animalProduct : AnimalProduct.values()) {
+            if (animalProduct.getName().equals(itemName)) {
+                return animalProduct;
+            }
+        }
+        return null;
+    }
 }

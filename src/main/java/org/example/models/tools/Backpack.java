@@ -42,15 +42,32 @@ public class Backpack extends Tool{
         } else {
             for (Stacks stacks : items) {
                 if (stacks.getItem().getName().equals(item.getName())) {
-                    if (stacks.getQuantity() <= amount) {
+                    if (stacks.getQuantity() < amount) {
                         amount -= stacks.getQuantity();
                         stacks.setQuantity(0);
                     } else {
                         stacks.setQuantity(stacks.getQuantity() - amount);
+                        break;
                     }
                 }
             }
             return true;
+        }
+    }
+
+    // This function can only be used if we are sure that there is enough of an item.
+    public void reduceItems(Item item, StackLevel level, int amount) {
+        for (Stacks stacks : items) {
+            if (stacks.getItem().getName().equals(item.getName()) && stacks.getStackLevel() == level) {
+                if (stacks.getQuantity() < amount) {
+                    amount -= stacks.getQuantity();
+                    stacks.setQuantity(0);
+                }
+                else {
+                    stacks.setQuantity(stacks.getQuantity() - amount);
+                    break;
+                }
+            }
         }
     }
 
@@ -150,10 +167,6 @@ public class Backpack extends Tool{
         return false;
     }
 
-    public boolean isFull() {
-        return items.size() == capacity;
-    }
-
     public boolean hasSameItemType(Stacks slot, Item item) {
         Item slotItem = slot.getItem();
         if (slotItem instanceof ProcessedProduct) {
@@ -164,5 +177,32 @@ public class Backpack extends Tool{
         if (item instanceof ProcessedProduct)
             return false;
         return item == slotItem;
+    }
+
+    public boolean canAdd(Item item, StackLevel level, int amount) {
+        int overflow = addItems(item, level, amount);
+        reduceItems(item, level, amount - overflow);
+        return overflow > 0;
+    }
+
+    public boolean hasEnoughItem(Item item, int quantity) {
+        int counter = 0;
+        for (Stacks slot : items) {
+            if (slot.getItem().getName().equals(item.getName()))
+                counter += slot.getQuantity();
+        }
+        return counter >= quantity;
+    }
+
+    public Stacks getSlotByItemName(String itemName) {
+        for (Stacks slot : items) {
+            if (slot.getItem().getName().equals(itemName))
+                return slot;
+        }
+        return null;
+    }
+
+    private boolean isFull() {
+        return items.size() == capacity;
     }
 }

@@ -7,6 +7,11 @@ import org.example.models.Map.NPCMap;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.Weathers.Weather;
+import org.example.models.enums.items.*;
+import org.example.models.enums.items.products.AnimalProduct;
+import org.example.models.enums.items.products.CookingProduct;
+import org.example.models.enums.items.products.CraftingProduct;
+import org.example.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
 
@@ -109,4 +114,53 @@ public class Game {
         return players.get(currentPlayerIndex) == admin;
     }
 
+    public static Item getItemByName(String itemName) { // for cheat commands
+        Item result = AnimalProduct.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = CookingProduct.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = CraftingProduct.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = ProcessedProductType.getItem(itemName);
+        if (result != null) {
+            if (result.getPrice() == null)
+                return new ProcessedProduct((ProcessedProductType) result, 0, 0);
+            return new ProcessedProduct(
+                    (ProcessedProductType) result,
+                    result.getPrice(),
+                    ((ProcessedProductType) result).getEnergy()
+            );
+        }
+
+        result = AnimalType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = BuildingType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = FishType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = MineralType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = ShopItems.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = ToolType.getItem(itemName);
+        if (result != null)
+            return result; // TODO: ba parsa check shavad
+        return null;
+    }
 }

@@ -2,8 +2,10 @@ package org.example.view;
 
 import org.example.controller.GameMenuController;
 import org.example.models.enums.Menu;
+import org.example.models.enums.commands.CheatCommands;
 import org.example.models.enums.commands.GameMenuCommands;
 import org.example.models.Result;
+import org.example.models.enums.commands.HomeCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -80,6 +82,18 @@ public class GameMenuView extends AppMenu {
         }
         else if ((matcher = GameMenuCommands.ToolsUse.getMatcher(input)) != null) {
             System.out.println(controller.useTool(matcher.group("direction")));
+        }
+        else if ((matcher = GameMenuCommands.PlaceItem.getMatcher(input)) != null) {
+            System.out.println(controller.placeItem(
+                    matcher.group("itemName").trim(),
+                    Integer.parseInt(matcher.group("direction").trim())
+            ));
+        }
+        else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
+            System.out.println(controller.cheatAddItem(
+                    matcher.group("itemName").trim(),
+                    Integer.parseInt(matcher.group("count"))
+            ));
         }
         else {
             System.out.println(new Result(false, "invalid command!"));

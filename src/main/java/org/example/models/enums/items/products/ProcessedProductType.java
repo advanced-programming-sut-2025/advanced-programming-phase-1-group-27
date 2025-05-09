@@ -62,4 +62,13 @@ public enum ProcessedProductType implements Item {
     private static int getPriceWithMultiplier(Item item , double multiplier) {
         return (int)(item.getPrice() * multiplier);
     }
+
+    public static ProcessedProductType getItem(String itemName) {
+        for (ProcessedProductType processedProductType : ProcessedProductType.values()) {
+            if (processedProductType.getName().equals(itemName)) {
+                return processedProductType;
+            }
+        }
+        return null;
+    }
 }

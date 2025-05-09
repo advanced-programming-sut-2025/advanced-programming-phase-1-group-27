@@ -21,7 +21,7 @@ public class Player extends User {
     // player's inventory
     private Backpack backpack = new Backpack(ToolType.BasicBackpack); // TODO: ba parsa check shavad
     // items which are place in the fridge
-    private ArrayList<Stacks> refrigerator = new ArrayList<>();
+    private final Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(){{
         put(AbilityType.Farming, farming);
@@ -33,7 +33,7 @@ public class Player extends User {
     private boolean passedOut = false;
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell; // TODO: sobhan
-    private Menu currentMenu; // TODO: sobhan. depends on current cell
+    private Menu currentMenu = Menu.Home; // TODO: sobhan. depends on current cell
     private Map currentMap = null; // TODO rassa reeeedi
     private FarmMap farmMap = null;
     private int money;
@@ -108,6 +108,10 @@ public class Player extends User {
 
     public void setBackpack(Backpack backpack) {
         this.backpack = backpack;
+    }
+
+    public Backpack getRefrigerator() {
+        return refrigerator;
     }
 
     public Map getCurrentMap() {
@@ -290,18 +294,9 @@ public class Player extends User {
     
     private Item getAvailableIngredient(Ingredient ingredient) {
         for (Item item : ingredient.getPossibleIngredients()) {
-            if (hasEnoughItem(item, ingredient.getQuantity()))
+            if (backpack.hasEnoughItem(item, ingredient.getQuantity()))
                 return item;
         }
         return null;
-    }
-
-    private boolean hasEnoughItem(Item item, int quantity) {
-        int counter = 0;
-        for (Stacks slot : backpack.getItems()) {
-            if (slot.getItem().getName().equals(item.getName()))
-                counter += slot.getQuantity();
-        }
-        return counter >= quantity;
     }
 }

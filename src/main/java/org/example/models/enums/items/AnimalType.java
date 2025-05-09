@@ -75,4 +75,13 @@ public enum AnimalType implements Item {
     public Integer getPrice() {
         return price;
     }
+
+    public static AnimalType getItem(String itemName) {
+        for (AnimalType animalType : AnimalType.values()) {
+            if (animalType.name().equalsIgnoreCase(itemName)) {
+                return animalType;
+            }
+        }
+        return null;
+    }
 }

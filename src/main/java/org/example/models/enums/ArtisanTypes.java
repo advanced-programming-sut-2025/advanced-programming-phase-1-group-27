@@ -1,5 +1,6 @@
 package org.example.models.enums;
 
+import org.example.models.Item;
 import org.example.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
@@ -64,5 +65,18 @@ public enum ArtisanTypes {
 
     public ArrayList<ProcessedProductType> getProducts() {
         return products;
+    }
+
+    public static ArtisanTypes getArtisan(Item item) {
+        for (ArtisanTypes artisan : ArtisanTypes.values()) {
+            if (artisan.toString().equals(item.getName()))
+                return artisan;
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return this.name().replaceAll("([A-Z])", " $1").trim();
     }
 }

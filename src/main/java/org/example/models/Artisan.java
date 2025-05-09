@@ -7,4 +7,9 @@ public class Artisan {
     private ArtisanTypes type;
     private ProcessedProductType finalProduct;
     private int timeLeft;
+
+    public Artisan(ArtisanTypes type) {
+        this.type = type;
+        this.finalProduct = null;
+    }
 }

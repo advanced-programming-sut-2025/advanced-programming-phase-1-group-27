@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 public enum HomeCommands {
     ShowCraftingRecipes("crafting\\s+show\\s+recipes"),
     CraftItem("crafting\\s+craft\\s+(?<itemName>.+)"),
-    PlaceItem("place\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-d\\s+(?<direction>\\d+)"),
     PutPickRefrigerator("cooking\\s+refrigerator\\s+(?<function>put|pick)\\s+(?<itemName>.+)"),
     ShowCookingRecipes("cooking\\s+show\\s+recipes"),
     CookItem("cooking\\s+prepare\\s+(?<itemName>.+)"),

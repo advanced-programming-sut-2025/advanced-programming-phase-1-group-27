@@ -1,16 +1,14 @@
 package org.example.controller;
 
-import org.example.models.App;
-import org.example.models.Item;
-import org.example.models.Player;
-import org.example.models.Result;
+import org.example.models.*;
+import org.example.models.Map.Hut;
 import org.example.models.enums.Menu;
+import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.Recipe;
+import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.CraftingProduct;
-import org.example.view.GameMenuView;
+import org.example.models.tools.Backpack;
 import org.example.view.HomeView;
-
-import java.util.Scanner;
 
 public class HomeController {
     private final HomeView view;
@@ -29,16 +27,18 @@ public class HomeController {
         return new Result(true, result.toString());
     }
 
-    public Result craft(String itemName, Scanner scanner ) {
+    public Result craft(String itemName) {
         Player player = App.getCurrentGame().getCurrentPlayer();
-        CraftingProduct item = CraftingProduct.getCraftingProduct(itemName);
+        CraftingProduct item = CraftingProduct.getItem(itemName);
         if (item == null)
             return new Result(false, "Item not found!");
+        Recipe recipe = Recipe.getRecipe(item);
+        if (!player.getAvailableCraftingRecipes().contains(recipe))
+            return new Result(false, "You don't have this recipe!");
         if (player.getEnergy() < 2)
             return new Result(false, "You don't have enough energy to craft " + itemName);
-        if (player.getBackpack().isFull())
+        if (player.getBackpack().canAdd(recipe.getFinalProduct(), StackLevel.Basic, 1))
             return new Result(false, "Your backpack is full!");
-        Recipe recipe = Recipe.getRecipe(item);
         if (!player.hasEnoughIngredients(recipe))
             return new Result(false, "You don't have enough ingredients!");
         player.useRecipe(recipe);
@@ -46,35 +46,61 @@ public class HomeController {
         return new Result(true, itemName + " crafted successfully!");
     }
 
-    public Result placeItem(String itemName, int direction) {
+    public Result putOrPickFromRefrigerator(String itemName, String func) {
         Player player = App.getCurrentGame().getCurrentPlayer();
-        Item item = player.getItemFromBackpack(itemName);
-        if (item == null)
-            return new Result(false, "Item not found in backpack!");
-        if (direction < 1 || direction > 8)
-            return new Result(false, "Invalid direction!");
-        // TODO: ba sobhan check kon chejoori place konim
-        return null;
-    }
-
-    public Result cheatAddItem(String itemName, int count) {
-        // TODO: function incomplete
-        return null;
-    }
-
-    public Result putOrPickFromRefrigerator(String itemName) {
-        // TODO: function incomplete
-        return null;
+        Hut hut = player.getFarmMap().getHut();
+        Backpack refrigerator = hut.getOwner().getRefrigerator();
+        if (func.equals("put")) {
+            Stacks slot = player.getBackpack().getSlotByItemName(itemName);
+            if (slot == null)
+                return new Result(false, "Item not found!");
+            if (refrigerator.canAdd(slot.getItem(), slot.getStackLevel(), 1)) {
+                refrigerator.addItems(slot.getItem(), slot.getStackLevel(), 1);
+                player.getBackpack().reduceItems(slot.getItem(), slot.getStackLevel(), 1);
+                return new Result(true, itemName + " added to refrigerator successfully!");
+            }
+            return new Result(false, "Refrigerator is full!");
+        }
+        else {
+            Stacks slot = refrigerator.getSlotByItemName(itemName);
+            if (slot == null)
+                return new Result(false, "Item not found!");
+            if (player.getBackpack().canAdd(slot.getItem(), slot.getStackLevel(), 1)) {
+                player.getBackpack().addItems(slot.getItem(), slot.getStackLevel(), 1);
+                refrigerator.reduceItems(slot.getItem(), slot.getStackLevel(), 1);
+                return new Result(true, itemName + "picked successfully!");
+            }
+            return new Result(false, "Inventory is full!");
+        }
     }
 
     public Result showCookingRecipes() {
-        // TODO: function incomplete
-        return null;
+        StringBuilder result = new StringBuilder();
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        for (Recipe cookingRecipe : player.getAvailableCookingRecipes()) {
+            result.append(cookingRecipe.description());
+            result.append("--------\n");
+        }
+        return new Result(true, result.toString());
     }
 
     public Result cook(String itemName) {
-        // TODO: function incomplete
-        return null;
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        CookingProduct item = CookingProduct.getItem(itemName);
+        if (item == null)
+            return new Result(false, "Item not found!");
+        Recipe recipe = Recipe.getRecipe(item);
+        if (!player.getAvailableCookingRecipes().contains(recipe))
+            return new Result(false, "You don't have this recipe!");
+        if (player.getEnergy() < 3)
+            return new Result(false, "You don't have enough energy to cook " + itemName);
+        if (player.getBackpack().canAdd(recipe.getFinalProduct(), StackLevel.Basic, 1))
+            return new Result(false, "Your backpack is full!");
+        if (!player.hasEnoughIngredients(recipe))
+            return new Result(false, "You don't have enough ingredients!");
+        player.useRecipe(recipe);
+        player.reduceEnergy(3);
+        return new Result(true, itemName + " cooked successfully!");
     }
 
     public Result eatFood(String foodName) {

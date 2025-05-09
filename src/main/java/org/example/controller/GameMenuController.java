@@ -2,10 +2,14 @@ package org.example.controller;
 
 import org.example.models.*;
 import org.example.models.Map.FarmMap;
+import org.example.models.Map.Hut;
 import org.example.models.Map.Map;
+import org.example.models.enums.ArtisanTypes;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Menu;
+import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
+import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
 
@@ -73,9 +77,15 @@ public class GameMenuController extends MenuController {
 
     public Result goToHome() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
-        App.setCurrentMenu(Menu.Home);
-        currentPlayer.setCurrentMenu(Menu.Home);
-        return new Result(true, "Redirecting to Home ...");
+        Cell cell = currentPlayer.getCurrentCell();
+        for (Cell adjacentCell : cell.getAdjacentCells()) {
+            if (adjacentCell.getType() == CellType.Building && adjacentCell.getBuilding() instanceof Hut) {
+                App.setCurrentMenu(Menu.Home);
+                currentPlayer.setCurrentMenu(Menu.Home);
+                return new Result(true, "Redirecting to home ...");
+            }
+        }
+        return new Result(false, "There are no house nearby!");
     }
 
     public Result showWeather() {
@@ -165,6 +175,38 @@ public class GameMenuController extends MenuController {
             return new Result(false, "You Don't Have A Tool in Hand");
         }
         return tool.use(cell);
+    }
+
+    public Result placeItem(String itemName, int direction) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Item item = player.getItemFromBackpack(itemName);
+        if (item == null)
+            return new Result(false, "Item not found in backpack!");
+        if (direction < 1 || direction > 8)
+            return new Result(false, "Invalid direction!");
+        ArtisanTypes artisanType = ArtisanTypes.getArtisan(item);
+        if (artisanType == null)
+            return new Result(false, "This item cannot be placed!");
+        player.getBackpack().reduceItems(item, 1);
+        Artisan artisan = new Artisan(artisanType);
+        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction); // TODO: age vojood nadasht chi?
+        cell.setObject(artisan);
+        return new Result(true, "Item placed successfully!");
+        // TODO: ba sobhan check kon chejoori place konim
+    }
+
+    public Result cheatAddItem(String itemName, int count) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Item item = Game.getItemByName(itemName);
+        if (item == null)
+            return new Result(false, "Item not found!");
+        StackLevel level = item instanceof ToolType? ((ToolType) item).getLevel() : StackLevel.Basic;
+        int overflow = player.getBackpack().addItems(item, level, count);
+        if (overflow > 0) {
+            player.getBackpack().reduceItems(item, level, count - overflow);
+            return new Result(false, "You don't have enough space!");
+        }
+        return new Result(true, count + " of " + itemName + "added to the backpack!");
     }
 
     private void handlePoll(Player currentPlayer, Scanner scanner) {

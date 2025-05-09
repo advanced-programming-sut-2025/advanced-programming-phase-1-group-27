@@ -62,4 +62,13 @@ public enum ToolType implements Item {
     public String getName() {
         return this.name;
     }
+
+    public static ToolType getItem(String itemName) {
+        for (ToolType toolType : ToolType.values()) {
+            if (toolType.getName().equals(itemName)) {
+                return toolType;
+            }
+        }
+        return null;
+    }
 }

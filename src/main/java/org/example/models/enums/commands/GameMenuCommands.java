@@ -11,6 +11,7 @@ public enum GameMenuCommands implements MenuCommands {
     ExitMenu("menu\\s+exit"),
     ShowCurrentMenu("show\\s+current\\s+menu"),
     Home("go\\s+to\\s+home"),
+    PlaceItem("place\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-d\\s+(?<direction>\\d+)"),
     ShowWeather("weather"),
     ForecastWeather("weather\\s+forecast"),
     CheatSetWeather("cheat\\s+weather\\s+set\\s+(?<weatherName>\\S+)"),

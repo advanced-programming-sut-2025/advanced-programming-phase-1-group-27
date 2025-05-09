@@ -28,14 +28,21 @@ public class HomeView extends AppMenu {
         }
         else if ((matcher = HomeCommands.CraftItem.getMatcher(input)) != null) {
             System.out.println(controller.craft(
-                    matcher.group("itemName").trim(),
-                    scanner
+                    matcher.group("itemName").trim()
             ));
         }
-        else if ((matcher = HomeCommands.PlaceItem.getMatcher(input)) != null) {
-            System.out.println(controller.placeItem(
+        else if ((matcher = HomeCommands.PutPickRefrigerator.getMatcher(input)) != null) {
+            System.out.println(controller.putOrPickFromRefrigerator(
                     matcher.group("itemName").trim(),
-                    Integer.parseInt(matcher.group("direction").trim())
+                    matcher.group("function").trim()
+            ));
+        }
+        else if (HomeCommands.ShowCookingRecipes.getMatcher(input) != null) {
+            System.out.println(controller.showCookingRecipes());
+        }
+        else if ((matcher = HomeCommands.CookItem.getMatcher(input)) != null) {
+            System.out.println(controller.cook(
+                    matcher.group("itemName").trim()
             ));
         }
         else if (HomeCommands.Exit.getMatcher(input) != null) {

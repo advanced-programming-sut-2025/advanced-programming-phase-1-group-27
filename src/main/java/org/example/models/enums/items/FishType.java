@@ -59,4 +59,13 @@ public enum FishType implements Item {
     public int getEnergy() {
         return energy;
     }
+
+    public static FishType getItem(String itemName) {
+        for (FishType fishType : FishType.values()) {
+            if (fishType.name().equalsIgnoreCase(itemName)) {
+                return fishType;
+            }
+        }
+        return null;
+    }
 }
