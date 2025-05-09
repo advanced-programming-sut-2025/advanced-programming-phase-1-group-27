@@ -7,8 +7,10 @@ public enum CheatCommands {
     CheatCode("\\s*cheat\\s+code\\s*"),
     CheatAdvanceTime("\\s*cheat\\s+advance\\s+time\\s+(?<X>\\d+)h\\s*"),
     CheatAdvanceDate("\\s*cheat\\s+advance\\s+date\\s+(?<X>\\d+)d\\s*"),
-    CheatThor("\\s*cheat\\s+Thor\\s+-l\\s+(?<x>\\d+)\\s+,\\s+(?<y>\\d+)\\s*"),
-    CheatWeatherSet("\\s*cheat\\s+weather\\s+set\\s+(?<Type>.+)\\s*"),
+    CheatThor("cheat\\s+Thor\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)"),
+    CheatSetWeather("cheat\\s+weather\\s+set\\s+(?<weatherName>\\S+)"),
+    CheatSetEnergy("energy\\s+set\\s+-v\\s+(?<value>\\d+)"),
+    CheatEnergyUnlimited("energy\\s+unlimited"),
     CheatAddItem("\\s*cheat\\s+add\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-c\\s+(?<count>\\d+)\\s*"),
     CheatSetFriendShip("\\s*cheat\\s+set\\s+friendship\\s+-n\\s+(?<animalName>.+)\\s+-c\\s+(?<amount>\\d+)\\s*"),
     CheatAdd("\\s*cheat\\s+add\\s+(?<count>\\d+)\\s+dollars\\s*");

@@ -2,6 +2,7 @@ package org.example.models.enums;
 
 import org.example.view.*;
 import org.example.view.menu.*;
+import org.example.view.shopview.*;
 
 import java.util.Scanner;
 
@@ -11,7 +12,13 @@ public enum Menu {
     GameMenu(new GameMenuView()),
     ProfileMenu(new ProfileMenu()),
     Home(new HomeView()),
-    Shop(new ShopView()),
+    BlackSmithShop(new BlackSmithShop()),
+    CarpenterShop(new CarpenterShop()),
+    FishShop(new FishShop()),
+    JojaMartShop(new JojaMartShop()),
+    MarnieRanchShop(new MarnieRanchShop()),
+    PierreGeneralShop(new PierreGeneralShop()),
+    StardropSaloonShop(new StardropSaloonShop()),
     AnimalEnclosure(new AnimalEnclosureView()),
     ExitMenu(new ExitMenu());
 

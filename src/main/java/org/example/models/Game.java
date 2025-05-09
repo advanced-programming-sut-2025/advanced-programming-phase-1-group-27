@@ -76,6 +76,7 @@ public class Game {
 
     public void passAnHour() {
         time.passAnHour();
+        updatePlyersBuff();
         // TODO
         
         
@@ -188,7 +189,18 @@ public class Game {
 
         result = ToolType.getItem(itemName);
         if (result != null)
-            return result; // TODO: ba parsa check shavad
+            return result;
         return null;
+    }
+
+    private void updatePlyersBuff() {
+        for (Player player : players) {
+            if (player.getCurrentBuff() != null) {
+                player.getCurrentBuff().reduceRemainingTime();
+                if (player.getCurrentBuff().getRemainingTime() <= 0) {
+                    player.removeBuff();
+                }
+            }
+        }
     }
 }

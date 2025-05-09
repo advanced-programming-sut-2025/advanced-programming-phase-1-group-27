@@ -148,6 +148,7 @@ public class Player extends User {
            abilityFinder.get(currentBuff.getAbility()).reduceLevel();
            removeRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel() + 1);
         }
+        currentBuff = null;
     }
 
     public void setBuff(Buff buff) {
@@ -162,6 +163,10 @@ public class Player extends User {
             abilityFinder.get(currentBuff.getAbility()).addLevel();
             addRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel());
         }
+    }
+
+    public Buff getCurrentBuff() {
+        return currentBuff;
     }
 
     public ArrayList<Recipe> getAvailableCraftingRecipes() {

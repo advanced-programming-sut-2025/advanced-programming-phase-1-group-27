@@ -23,4 +23,8 @@ public class Buff {
     public int getRemainingTime() {
         return remainingTime;
     }
+
+    public void reduceRemainingTime() {
+        remainingTime--;
+    }
 }

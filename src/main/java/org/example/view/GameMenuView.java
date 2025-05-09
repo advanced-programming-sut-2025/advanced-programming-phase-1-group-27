@@ -55,10 +55,10 @@ public class GameMenuView extends AppMenu {
         else if (GameMenuCommands.ForecastWeather.getMatcher(input) != null) {
             System.out.println(controller.forecastWeather());
         }
-        else if ((matcher = GameMenuCommands.CheatSetWeather.getMatcher(input)) != null) {
+        else if ((matcher = CheatCommands.CheatSetWeather.getMatcher(input)) != null) {
             System.out.println(controller.cheatSetWeather(matcher.group("weatherName").trim()));
         }
-        else if ((matcher = GameMenuCommands.CheatThor.getMatcher(input)) != null) {
+        else if ((matcher = CheatCommands.CheatThor.getMatcher(input)) != null) {
             System.out.println(controller.cheatThor(matcher.group("i"), matcher.group("j")));
         }
         else if ((matcher = GameMenuCommands.Walk.getMatcher(input)) != null) {
@@ -74,10 +74,10 @@ public class GameMenuView extends AppMenu {
         else if (GameMenuCommands.ShowEnergy.getMatcher(input) != null) {
             System.out.println(controller.showEnergy());
         }
-        else if ((matcher = GameMenuCommands.CheatSetEnergy.getMatcher(input)) != null) {
+        else if ((matcher = CheatCommands.CheatSetEnergy.getMatcher(input)) != null) {
             System.out.println(controller.cheatSetEnergy(matcher.group("value")));
         }
-        else if (GameMenuCommands.CheatEnergyUnlimited.getMatcher(input) != null) {
+        else if (CheatCommands.CheatEnergyUnlimited.getMatcher(input) != null) {
             System.out.println(controller.cheatEnergyUnlimited());
         }
         else if ((matcher = GameMenuCommands.ToolsUse.getMatcher(input)) != null) {

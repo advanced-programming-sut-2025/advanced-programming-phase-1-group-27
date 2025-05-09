@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class AnimalEnclosureView extends AppMenu{
     private final AnimalEnclosureController controller;
 
-    public AnimalEnclosureView(AnimalEnclosureView view) {
+    public AnimalEnclosureView() {
         controller = new AnimalEnclosureController(this);
     }
 
