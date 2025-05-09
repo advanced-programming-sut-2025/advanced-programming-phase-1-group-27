@@ -54,8 +54,14 @@ public enum Menu {
             case ProfileMenu -> "profile menu";
             case GameMenu -> "game menu";
             case Home -> "Home";
-            case Shop -> "Shop";
-            case AnimalEnclosure -> "Animal enclosure";
+            case BlackSmithShop -> "black smith shop";
+            case CarpenterShop -> "carpenter shop";
+            case FishShop -> "fish shop";
+            case JojaMartShop -> "joja shop";
+            case MarnieRanchShop -> "marnie shop";
+            case PierreGeneralShop -> "pierre shop";
+            case StardropSaloonShop -> "stardrop shop";
+            case AnimalEnclosure -> "animal enclosure";
             case ExitMenu -> "exit menu";
         };
     }
