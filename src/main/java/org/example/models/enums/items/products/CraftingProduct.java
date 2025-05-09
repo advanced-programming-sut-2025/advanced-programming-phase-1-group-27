@@ -6,11 +6,11 @@ import org.example.models.enums.items.Recipe;
 public enum CraftingProduct implements Item {
     CherryBomb(Recipe.CherryBomobRecipe, 50),
     Bomb(Recipe.BombRecipe, 50),
-    MegaBomb(Recipe.MegaBomb, 50),
+    MegaBomb(Recipe.MegaBombRecipe, 50),
     Sprinkler(Recipe.SprinklerRecipe, 0),
     QualitySprinkler(Recipe.QualitySprinkler, 0),
     IridiumSprinkler(Recipe.IridiumSprinkler, 0),
-    CharcoalKlin(Recipe.CharcoalKlin, 0),
+    CharcoalKlin(Recipe.CharcoalKlinRecipe, 0),
     Furnace(Recipe.FurnaceRecipe, 0),
     Scarecrow(Recipe.ScarecrowRecipe, 0),
     DeluxeScarecrow(Recipe.DeluxeScarecrowRecipe, 0),

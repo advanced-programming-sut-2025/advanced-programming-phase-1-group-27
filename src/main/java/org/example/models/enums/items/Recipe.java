@@ -272,7 +272,7 @@ public enum Recipe implements Item {
                     ProcessedProductType.Coal
             )), 1)
     ))),
-    MegaBomb(0, CraftingProduct.MegaBomb, new ArrayList<>(List.of(
+    MegaBombRecipe(0, CraftingProduct.MegaBomb, new ArrayList<>(List.of(
             new Ingredient(MineralType.GoldOre, 4),
             new Ingredient(new ArrayList<>(List.of(
                     MineralType.Coal,
@@ -291,7 +291,7 @@ public enum Recipe implements Item {
             new Ingredient(ProcessedProductType.GoldMetalBar, 1),
             new Ingredient(ProcessedProductType.IridiumMetalBar, 1)
     ))),
-    CharcoalKlin(0, CraftingProduct.CharcoalKlin, new ArrayList<>(List.of(
+    CharcoalKlinRecipe(0, CraftingProduct.CharcoalKlin, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 20),
             new Ingredient(ProcessedProductType.CopperMetalBar, 2)
     ))),

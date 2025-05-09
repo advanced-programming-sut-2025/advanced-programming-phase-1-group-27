@@ -42,7 +42,7 @@ public class HomeController {
         if (!player.hasEnoughIngredients(recipe))
             return new Result(false, "You don't have enough ingredients!");
         player.useRecipe(recipe);
-        player.reduceEnergy(2);
+        player.consumeEnergy(2);
         return new Result(true, itemName + " crafted successfully!");
     }
 
@@ -99,12 +99,22 @@ public class HomeController {
         if (!player.hasEnoughIngredients(recipe))
             return new Result(false, "You don't have enough ingredients!");
         player.useRecipe(recipe);
-        player.reduceEnergy(3);
+        player.consumeEnergy(3);
         return new Result(true, itemName + " cooked successfully!");
     }
 
     public Result eatFood(String foodName) {
-        // TODO: function incomplete
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Stacks slot = player.getBackpack().getSlotByItemName(foodName);
+        CookingProduct item = CookingProduct.getItem(foodName);
+        if (item == null)
+            return new Result(false, "Invalid food!");
+        if (slot == null)
+            return new Result(false, "This food doesn't exist in inventory!");
+        player.getBackpack().reduceItems(slot.getItem(), slot.getStackLevel(), 1);
+        player.addEnergy(item.getEnergy());
+        player.removeBuff();
+        player.setBuff(item.getBuff());
         return null;
     }
 

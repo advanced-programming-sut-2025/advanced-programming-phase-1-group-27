@@ -9,11 +9,14 @@ import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.Recipe;
 import org.example.models.Map.FarmMap;
 import org.example.models.enums.items.ToolType;
+import org.example.models.enums.items.products.CookingProduct;
+import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Player extends User {
     private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>(); // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
@@ -29,8 +32,7 @@ public class Player extends User {
         put(AbilityType.Foraging, foraging);
         put(AbilityType.Mining, mining);
     }};
-    private int energy, dayEnergy, maxEnergy = 200;
-    private boolean passedOut = false;
+    private int energy, dayEnergy, maxEnergy = 200, boostEnergy = 0;
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell; // TODO: sobhan
     private Menu currentMenu = Menu.Home; // TODO: sobhan. depends on current cell
@@ -43,6 +45,7 @@ public class Player extends User {
     private java.util.Map<NPC , Boolean> npcGiftToday = new HashMap<>();
     private Player spouse = null; // in case the player gets married
     private Poll poll = null; // in order to terminate the game
+    private Buff currentBuff = null;
 
     public Player(String username, String password, String nickname, String email, Gender gender) {
         super(username, password, nickname, email, gender);
@@ -56,7 +59,7 @@ public class Player extends User {
 
     private void initFields() {
         this.energy = 50;
-        this.dayEnergy = 150; // 50 (energy) + 150 (day energy) = 200
+        this.dayEnergy = 200;
         this.farming = new Ability();
         this.mining = new Ability();
         this.foraging = new Ability();
@@ -134,6 +137,33 @@ public class Player extends User {
         this.poll = poll;
     }
 
+    public void removeBuff() {
+        if (currentBuff == null)
+            return;
+        if (currentBuff.getAbility() == AbilityType.MaxEnergyUltimate ||
+                currentBuff.getAbility() == AbilityType.MaxEnergyCommunity) {
+            boostEnergy = 0;
+        }
+        else {
+           abilityFinder.get(currentBuff.getAbility()).reduceLevel();
+           removeRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel() + 1);
+        }
+    }
+
+    public void setBuff(Buff buff) {
+        currentBuff = new Buff(buff);
+        if (currentBuff.getAbility() == AbilityType.MaxEnergyUltimate) {
+            boostEnergy = 100;
+        }
+        else if (currentBuff.getAbility() == AbilityType.MaxEnergyCommunity) {
+            boostEnergy = 50;
+        }
+        else {
+            abilityFinder.get(currentBuff.getAbility()).addLevel();
+            addRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel());
+        }
+    }
+
     public ArrayList<Recipe> getAvailableCraftingRecipes() {
         return availableCraftingRecipes;
     }
@@ -142,36 +172,34 @@ public class Player extends User {
         return availableCookingRecipes;
     }
 
-    public void consumeEnergy(int val) {
-        energy -= val;
-        if (energy < 0) {
-            this.passOut();
+    public void consumeEnergy(int amount) {
+        energy -= amount;
+        if (amount > boostEnergy) {
+            dayEnergy -= amount - boostEnergy;
+            boostEnergy = 0;
         }
+        else
+            boostEnergy -= amount;
     }
 
     public void setNextTurnEnergy() {
-        dayEnergy += energy;
-        int val = Math.min(50, dayEnergy);
-        energy = val;
-        dayEnergy -= val;
+        energy = Math.min(50, dayEnergy + boostEnergy);
     }
 
     public int getEnergy() {
         return this.energy;
     }
 
-    public void reduceEnergy(int amount) {
-        energy -= amount;
-        if (energy <= 0 && dayEnergy <= 0)
-            passedOut = true;
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public void addEnergy(int amount) {
+        energy += amount;
     }
 
     public void setMaxEnergy(int maxEnergy) {
         this.maxEnergy = maxEnergy;
-    }
-
-    public void setEnergy(int energy) {
-        this.energy = energy;
     }
 
     public int getDayEnergy() {
@@ -187,7 +215,7 @@ public class Player extends User {
     }
 
     public boolean hasPassedOut() {
-        return passedOut;
+        return (energy <= 0 && dayEnergy <= 0 && boostEnergy <= 0);
     }
 
     public Menu getCurrentMenu() {
@@ -298,5 +326,26 @@ public class Player extends User {
                 return item;
         }
         return null;
+    }
+
+    private void removeRecipes(AbilityType type, int level) {
+        ArrayList<Recipe> recipes = Ability.getRecipeList(type, level);
+        for (Recipe recipe : recipes) {
+            if (recipe.getFinalProduct() instanceof CraftingProduct)
+                availableCraftingRecipes.remove(recipe);
+            else if (recipe.getFinalProduct() instanceof CookingProduct)
+                availableCookingRecipes.remove(recipe);
+            // TODO
+        }
+    }
+
+    private void addRecipes(AbilityType type, int level) {
+        ArrayList<Recipe> recipes = Ability.getRecipeList(type, level);
+        for (Recipe recipe : recipes) {
+            if (recipe.getFinalProduct() instanceof CraftingProduct)
+                availableCraftingRecipes.add(recipe);
+            else if (recipe.getFinalProduct() instanceof CookingProduct)
+                availableCookingRecipes.add(recipe);
+        }
     }
 }
