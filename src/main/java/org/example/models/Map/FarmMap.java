@@ -23,7 +23,7 @@ public class FarmMap extends Map {
         super(height, width);
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                cells[i][j] = new Cell(new Position(i, j));
+                cells[i][j].setType(CellType.Free);
             }
         }
     }

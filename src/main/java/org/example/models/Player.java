@@ -34,7 +34,7 @@ public class Player extends User {
     }};
     private int energy, dayEnergy, maxEnergy = 200, boostEnergy = 0;
     private Ability farming, mining, foraging, fishing;
-    private Cell currentCell; // TODO: sobhan
+    private Cell currentCell;
     private Menu currentMenu = Menu.Home; // TODO: sobhan. depends on current cell
     private Map currentMap = null; // TODO rassa reeeedi
     private FarmMap farmMap = null;
@@ -292,19 +292,21 @@ public class Player extends User {
     }
 
     public void farmXp(int xp) {
-        // add xp for farmingAbility
+        farming.addXp(xp);
     }
 
     public void mineXp(int xp) {
-        // ..
+        mining.addXp(xp);
     }
 
     public void forageXp(int xp) {
         // ..
+        foraging.addXp(xp);
     }
 
     public void fishXp(int xp) {
         // ..
+        fishing.addXp(xp);
     }
 
     public String showItems() {

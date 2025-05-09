@@ -121,11 +121,18 @@ public class GameMenuController extends MenuController {
                     if (currentPlayer.getEnergy() > energy) {
                         currentPlayer.consumeEnergy(energy);
                         currentPlayer.setCurrentCell(destination);
+                        if (destination.getType() == CellType.MapLink) {
+                            Cell newDestination = (Cell) destination.getObject();
+                            currentPlayer.setCurrentCell(newDestination);
+                            return new Result(true, "You Changed your Map And Now Are On Cell(" +
+                                    newDestination.getPosition().getX() + "," +
+                                    newDestination.getPosition().getY() + ")");
+                        }
                         return new Result(true, "You Walked And Now Are On Cell(" +
-                                i + "," + j);
+                                i + "," + j + ")");
                     } else {
-                        energy = 0;
-                        currentPlayer.passOut();
+                        currentPlayer.setDayEnergy(0);
+                         // TODO rassa passOut kojast?
                         return new Result(false, "You Passed Out!!");
                     }
                 } else if (answer.trim().equals("N")) {

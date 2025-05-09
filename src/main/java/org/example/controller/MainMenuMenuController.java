@@ -97,6 +97,7 @@ public class MainMenuMenuController extends MenuController {
             }
         } while (!result.success());
         player.setFarmMap(game.getFarmMap(mapId));
+        player.setCurrentCell(game.getFarmMap(mapId).getCell(8, 70));
         game.getFarmMap(mapId).getHut().setOwner(player);
     }
 }

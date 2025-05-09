@@ -19,8 +19,8 @@ public class Game {
     private Player admin;
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players;
-    private FarmMap[] farmMaps = new FarmMap[4];
-    private NPCMap npcMap = new NPCMap();
+    private final FarmMap[] farmMaps = new FarmMap[4];
+    private final NPCMap npcMap = new NPCMap();
     private Weather currentWeather, tomorrowWeather = null;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
@@ -112,6 +112,10 @@ public class Game {
     public boolean nextPlayer() { // returns true if everyone has played one turn
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
         return players.get(currentPlayerIndex) == admin;
+    }
+
+    public NPCMap getNpcMap() {
+        return npcMap;
     }
 
     public static Item getItemByName(String itemName) { // for cheat commands

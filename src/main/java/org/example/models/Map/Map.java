@@ -22,12 +22,12 @@ public class Map {
     }
 
     private void buildCellsGraph() {
-        int I[] = {0, 1, 1, 1, 0, -1, -1, -1},
-                J[] = {1, 1, 0, -1, -1, -1, 0, 1};
+        int[] I = {0, 1, 1, 1, 0, -1, -1, -1},
+                J = {1, 1, 0, -1, -1, -1, 0, 1};
         //directions : {R, DR, D, DL, L, UL, U, UR}
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                cells[i][j] = new Cell(CellType.View, new Position(i, j));
+                cells[i][j] = new Cell(CellType.View, new Position(i, j), this);
             }
         }
         for (int i = 0; i < height; i++) {
@@ -36,6 +36,8 @@ public class Map {
                     int newI = i + I[k], newJ = j + J[k];
                     if (newI >= 0 && newI < height && newJ >= 0 && newJ < width) {
                         cells[i][j].addAdjacentCell(cells[newI][newJ]);
+                    } else {
+                        cells[i][j].addAdjacentCell(null);
                     }
                 }
             }
@@ -96,7 +98,8 @@ public class Map {
 
     private static final String mapReadingManual = new String(
             "Map Manual :\n" +
-            "C -> Crop\n" +
+                    "Y -> You !!\n" +
+                    "C -> Crop\n" +
             "T -> Tree\n" +
             "R -> Mineral\n" +
             "H -> Hut\n" +

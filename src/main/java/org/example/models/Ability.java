@@ -87,7 +87,7 @@ public class Ability {
         )));
     }
 
-    public void addXp() {
+    public void addXp(int xp) {
         this.xp += xp;
         if (this.level < 4 && xp >= this.level * 100 + 150) {
             this.levelUp();

@@ -1,5 +1,6 @@
 package org.example.models.Map;
 
+import org.example.models.App;
 import org.example.models.Cell;
 import org.example.models.enums.CellType;
 
@@ -88,6 +89,11 @@ public class FarmMapBuilder {
                 }
             }
         }
+    }
+
+    public void setPassageToNpcValley(int x, int y, int x2, int y2) {
+        finalProduct.getCell(x, y).setType(CellType.MapLink);
+        finalProduct.getCell(x, y).setObject(App.getCurrentGame().getNpcMap().getCell(x2, y2));
     }
 
     public FarmMap getFinalProduct() {

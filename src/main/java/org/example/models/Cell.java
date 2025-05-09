@@ -2,10 +2,7 @@ package org.example.models;
 
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
-import org.example.models.Map.GreenHouse;
-import org.example.models.Map.Hut;
-import org.example.models.Map.NPCHouse;
-import org.example.models.Map.StoreBuilding;
+import org.example.models.Map.*;
 import org.example.models.enums.Plants.Crop;
 import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.Tree;
@@ -19,20 +16,23 @@ import java.util.Random;
 
 public class Cell {
     private final Position position;
+    private final Map map;
     private Object object = null;
     private CellType cellType;
     private Building building = null;
 
     private ArrayList<Cell> adjacentCells = new ArrayList<>();
 
-    public Cell(CellType cellType, Position position) {
+    public Cell(CellType cellType, Position position, Map map) {
         this.cellType = cellType;
         this.position = position;
+        this.map = map;
     }
 
-    public Cell(Position position) {
+    public Cell(Position position, Map map) {
         cellType = CellType.Free;
         this.position = position;
+        this.map = map;
     }
 
     public void addAdjacentCell(Cell cell) {
@@ -41,7 +41,7 @@ public class Cell {
 
     public boolean isPassable() {
         return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View ||
-                cellType == CellType.Door;
+                cellType == CellType.Door || cellType == CellType.MapLink;
     }
 
     public ArrayList<Cell> getAdjacentCells() {
@@ -106,7 +106,10 @@ public class Cell {
 
     @Override
     public String toString() {
-        if (cellType.equals(CellType.Free)) {
+        if (this == App.getCurrentGame().getCurrentPlayer().getCurrentCell()) {
+            return "Y";
+        }
+        else if (cellType.equals(CellType.Free)) {
             return "\\s";
         } else if (cellType.equals(CellType.Water)) {
             return "W";

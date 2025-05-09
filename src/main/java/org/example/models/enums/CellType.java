@@ -7,5 +7,6 @@ public enum CellType {
     Plowed,
     Water,
     Door,
-    View;
+    View,
+    MapLink;
 }
