@@ -5,9 +5,14 @@ import org.example.models.NPCs.NPC;
 import org.example.models.Relations.Dialogue;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.DialogueType;
+import org.example.models.enums.Plants.CropType;
+import org.example.models.enums.Plants.FruitType;
 import org.example.models.tools.Backpack;
 
+import java.util.ArrayList;
+
 public class InteractionsWithUserController {
+
     public Result friendship() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         StringBuilder result = new StringBuilder();
@@ -16,11 +21,10 @@ public class InteractionsWithUserController {
             if (player.getUsername().equals(currentPlayer.getUsername())) {
                 continue;
             }
-            Relation relation = currentPlayer.getRelations().get(player);
-            if (relation == null) {
-                relation = new Relation();
-                currentPlayer.getRelations().put(player, relation);
+            if(!currentPlayer.getRelations().containsKey(player)) {
+                currentPlayer.getRelations().put(player, new Relation());
             }
+            Relation relation = currentPlayer.getRelations().get(player);
             result.append(player.getUsername()).append(" : Level = ").append(relation.getLevel())
                     .append(" XP = ").append(relation.getXp()).append("\n");
         }
@@ -59,7 +63,7 @@ public class InteractionsWithUserController {
             return new Result(false, "Player is not near you");
         }
         StringBuilder result = new StringBuilder();
-        result.append("All messages with " + username + " :\n");
+        result.append("All messages with ").append(username).append(" :\n");
         for (Dialogue dialogue : App.getCurrentGame().getDialogues()) {
             if (dialogue.getType() == DialogueType.talk) {
                 if (dialogue.getSender().getUsername().equals(username)
@@ -79,7 +83,6 @@ public class InteractionsWithUserController {
     }
 
     public Result gift(String username, String stringItem, String stringAmount) {
-// TODO: function incomplete
         Player player = getPlayerWithUsername(username);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         int amount = Integer.parseInt(stringAmount);
@@ -89,11 +92,10 @@ public class InteractionsWithUserController {
         if (!isPlayerNear(player)) {
             return new Result(false, "Player is not near you");
         }
-        Relation relation = currentPlayer.getRelations().get(player);
-        if (relation == null) {
-            relation = new Relation();
-            currentPlayer.getRelations().put(player, relation);
+        if(!currentPlayer.getRelations().containsKey(player)) {
+            currentPlayer.getRelations().put(player, new Relation());
         }
+        Relation relation = currentPlayer.getRelations().get(player);
         if (relation.getLevel() == 0) {
             return new Result(false, "Relation level is 0");
         }
@@ -124,19 +126,63 @@ public class InteractionsWithUserController {
 
     public Result giftList() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
-        for(Dialogue dialogue : currentPlayer.getDialogues()) {
-            if(dialogue.getType() == DialogueType.gift) {
-                if(dialogue.getResponder().getUsername().equals(currentPlayer.getUsername())) {
-
+        StringBuilder result = new StringBuilder();
+        result.append("All gifts : \n");
+        int i = 1;
+        for (Dialogue dialogue : currentPlayer.getDialogues()) {
+            if (dialogue.getType() == DialogueType.gift) {
+                if (dialogue.getResponder().getUsername().equals(currentPlayer.getUsername())) {
+                    String m = dialogue.getInput().replaceFirst("^You have been gifted ", "");
+                    result.append(i).append(".");
+                    result.append(m).append("\n");
+                    i++;
                 }
             }
         }
-        return null;
+        return new Result(true, result.toString());
     }
 
-    public Result giftRate() {
-// TODO: function incomplete
-        return null;
+    public Result giftRate(String giftNumber, String stringRate) {
+        int number = Integer.parseInt(stringRate);
+        int rate = Integer.parseInt(stringRate);
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        if (rate > 5
+                || rate < 0) {
+            return new Result(false, "Rate must be between 0 and 5");
+        }
+        Dialogue dialogue1 = null;
+        for (Dialogue dialogue : currentPlayer.getDialogues()) {
+            if (dialogue.getType() == DialogueType.gift) {
+                if (dialogue.getResponder().getUsername().equals(currentPlayer.getUsername())) {
+                    if (number == 1) {
+                        dialogue1 = dialogue;
+                    } else {
+                        number--;
+                    }
+                }
+            }
+        }
+        if(dialogue1 == null) {
+            return new Result(false, "Gift number is invalid");
+        }
+        Player player1 = dialogue1.getResponder();
+        Player player2 = dialogue1.getSender();
+        String add = "";
+        if(dialogue1.getRespond().equals("1")) {//It is first time
+            int xp = (rate - 3) * 30 + 15;
+            add = String.valueOf(xp);
+            if(xp < 0){
+                xp *= -1;
+                player1.decreaseXP(player2 , xp);
+                player2.decreaseXP(player1 , xp);
+            }else {
+                player1.addXP(player2 , xp);
+                player2.addXP(player1 , xp);
+            }
+        }
+        player2.deleteDialogue(dialogue1);
+        player1.deleteDialogue(dialogue1);
+        return new Result(true , "Your rate has been added " + add);
     }
 
     public Result giftHistory(String username) {

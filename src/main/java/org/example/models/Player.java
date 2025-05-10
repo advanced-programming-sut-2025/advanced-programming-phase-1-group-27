@@ -15,7 +15,6 @@ import org.example.models.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Player extends User {
     private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>(); // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
@@ -402,6 +401,10 @@ public class Player extends User {
 
     public ArrayList<Dialogue> getDialogues() {
         return dialogues;
+    }
+
+    public void deleteDialogue(Dialogue dialogue) {
+        dialogues.remove(dialogue);
     }
 
     public void addDialogue(Dialogue dialogue) {
