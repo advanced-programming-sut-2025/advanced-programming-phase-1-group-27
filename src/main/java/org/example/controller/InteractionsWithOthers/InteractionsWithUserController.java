@@ -66,6 +66,7 @@ public class InteractionsWithUserController {
                 result.append(player.getUsername()).append("\n");
             }
         }
+        return new Result(true , result.toString());
     }
 
     public Result friendship() {
