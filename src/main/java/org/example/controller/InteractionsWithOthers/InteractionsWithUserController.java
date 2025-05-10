@@ -7,8 +7,66 @@ import org.example.models.enums.DialogueType;
 import org.example.models.enums.Plants.FruitType;
 import org.example.models.tools.Backpack;
 
+import java.util.ArrayList;
+
 
 public class InteractionsWithUserController {
+
+    public Result getNotification(){
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        StringBuilder result = new StringBuilder();
+        ArrayList<Player> talk = new ArrayList<>();
+        ArrayList<Player> trade = new ArrayList<>();
+        ArrayList<Player> gift = new ArrayList<>();
+        ArrayList<Player> marriage = new ArrayList<>();
+        for(Dialogue dialogue : currentPlayer.getDialogues()){
+            if(dialogue.getType() == DialogueType.talk){
+                if(!talk.contains(dialogue.getSender())){
+                    talk.add(dialogue.getSender());
+                }
+            }
+            if(dialogue.getType() == DialogueType.gift){
+                if(!gift.contains(dialogue.getSender())){
+                    gift.add(dialogue.getSender());
+                }
+            }
+            if(dialogue.getType() == DialogueType.Trade){
+                if(!trade.contains(dialogue.getSender())){
+                    trade.add(dialogue.getSender());
+                }
+            }
+            if(dialogue.getType() == DialogueType.Marriage){
+                if(!marriage.contains(dialogue.getSender())){
+                    marriage.add(dialogue.getSender());
+                }
+            }
+        }
+        if(!talk.isEmpty()){
+            result.append("Talk : \n");
+            for(Player player : talk){
+                result.append(player.getUsername()).append("\n");
+            }
+            currentPlayer.deleteTalk();
+        }
+        if(!gift.isEmpty()){
+            result.append("Gift : \n");
+            for(Player player : gift){
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+        if(!trade.isEmpty()){
+            result.append("Trade : \n");
+            for(Player player : trade){
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+        if(!marriage.isEmpty()){
+            result.append("Marriage : \n");
+            for(Player player : marriage){
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+    }
 
     public Result friendship() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
@@ -46,7 +104,6 @@ public class InteractionsWithUserController {
         }
         Dialogue dialogue = new Dialogue(DialogueType.talk, null, message, player, currentPlayer);
         App.getCurrentGame().addDialogue(dialogue);
-        player.addDialogue(dialogue);
         currentPlayer.addDialogue(dialogue);
         return new Result(true, "Message sent to " + player.getUsername());
     }
@@ -116,7 +173,6 @@ public class InteractionsWithUserController {
                 + amount + " * " + itemType.getName(), player, currentPlayer);
         App.getCurrentGame().addDialogue(dialogue);
         player.addDialogue(dialogue);
-        currentPlayer.addDialogue(dialogue);
         backpack1.reduceItems(itemType, amount);
         player.getBackpack().addItems(itemType, backpack1.getStackLevel(itemType), amount);
         return new Result(true, "Gift has been send successfully");

@@ -464,6 +464,34 @@ public class Player extends User {
         dialogues.add(dialogue);
     }
 
+    public void deleteTalk(){
+        ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
+        for(Dialogue dialogue : dialogues){
+            if(dialogue.getType() == DialogueType.talk){
+                selectedDialogues.add(dialogue);
+            }
+        }
+        dialogues.removeAll(selectedDialogues);
+    }
+
+    public void deleteMarriage(){
+        ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
+        for(Dialogue dialogue : dialogues){
+            if(dialogue.getType() == DialogueType.Marriage){
+                selectedDialogues.add(dialogue);
+            }
+        }
+        dialogues.removeAll(selectedDialogues);
+    }
+
+    public boolean isMarried(){
+        return spouse != null;
+    }
+
+    public void marryWIth(Player player){
+        spouse = player;
+    }
+
     public java.util.Map<Player, Relation> getRelations() {
         return relations;
     }
