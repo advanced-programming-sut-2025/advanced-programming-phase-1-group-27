@@ -45,6 +45,8 @@ public class Player extends User {
     private java.util.Map<NPC, Boolean> npcGiftToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerMetToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerGiftToday = new HashMap<>();
+    private java.util.Map<Player , Boolean> playerHuggedToday = new HashMap<>();
+    private java.util.Map<Player , Boolean> playerFloweredToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerTradeToday = new HashMap<>();
     private Player spouse = null; // in case the player gets married
     private Buff currentBuff = null;
@@ -380,12 +382,54 @@ public class Player extends User {
         if (xp > max) {
             if (level == 4) {
                 xp = max;
+            }else if (level == 2) {
+                xp = max;
+            }else if (level == 3) {
+                xp = max;
             } else {
                 xp -= max;
                 relation.setLevel(level + 1);
             }
         }
         relation.setXp(xp);
+    }
+
+    public boolean canMarried(Player player) {
+        if(!relations.containsKey(player)){
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int level = relation.getLevel();
+        int xp = relation.getXp();
+        int max = (level + 1) * 100;
+        if(level == 3
+                && xp == max){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canFlowered(Player player){
+        if(!relations.containsKey(player)){
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int level = relation.getLevel();
+        int xp = relation.getXp();
+        int max = (level + 1) * 100;
+        if(level == 2
+                && xp == max){
+            return true;
+        }
+        return false;
+    }
+
+    public void goNextLevel(Player player) {
+        Relation relation = relations.get(player);
+        int level = relation.getLevel();
+        int xp = relation.getXp();
+        relation.setLevel(level + 1);
+        relation.setXp(0);
     }
 
     public void decreaseXP(Player player, int amount) {
@@ -430,6 +474,10 @@ public class Player extends User {
 
     public java.util.Map<Player, Boolean> getPlayerGiftToday() {
         return playerGiftToday;
+    }
+
+    public java.util.Map<Player, Boolean> getPlayerHuggedToday() {
+        return playerHuggedToday;
     }
 
     public java.util.Map<Player, Boolean> getPlayerTradeToday() {

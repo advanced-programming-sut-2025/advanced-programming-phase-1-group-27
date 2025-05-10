@@ -1,15 +1,12 @@
 package org.example.controller.InteractionsWithOthers;
 
 import org.example.models.*;
-import org.example.models.NPCs.NPC;
 import org.example.models.Relations.Dialogue;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.DialogueType;
-import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.Plants.FruitType;
 import org.example.models.tools.Backpack;
 
-import java.util.ArrayList;
 
 public class InteractionsWithUserController {
 
@@ -40,7 +37,8 @@ public class InteractionsWithUserController {
         if (!isPlayerNear(player)) {
             return new Result(false, "Player is not near you");
         }
-        if (currentPlayer.getPlayerMetToday().get(player) == Boolean.FALSE) {
+        if (currentPlayer.getPlayerMetToday().get(player) == Boolean.FALSE
+                || currentPlayer.getPlayerMetToday().get(player) == null) {
             currentPlayer.getPlayerMetToday().put(player, Boolean.TRUE);
             player.getPlayerMetToday().put(currentPlayer, Boolean.TRUE);
             currentPlayer.addXP(player, 20);
@@ -108,7 +106,8 @@ public class InteractionsWithUserController {
             return new Result(false, "Item is not enough");
         }
         String respond = null;
-        if (currentPlayer.getPlayerGiftToday().get(player) == Boolean.FALSE) {
+        if (currentPlayer.getPlayerGiftToday().get(player) == Boolean.FALSE
+                || currentPlayer.getPlayerGiftToday().get(player) == null) {
             currentPlayer.getPlayerGiftToday().put(player, Boolean.TRUE);
             player.getPlayerGiftToday().put(currentPlayer, Boolean.TRUE);
             respond = "1";//That means first time in day
@@ -121,7 +120,6 @@ public class InteractionsWithUserController {
         backpack1.reduceItems(itemType, amount);
         player.getBackpack().addItems(itemType, backpack1.getStackLevel(itemType), amount);
         return new Result(true, "Gift has been send successfully");
-        //TODO : nomre dehi
     }
 
     public Result giftList() {
@@ -132,9 +130,13 @@ public class InteractionsWithUserController {
         for (Dialogue dialogue : currentPlayer.getDialogues()) {
             if (dialogue.getType() == DialogueType.gift) {
                 if (dialogue.getResponder().getUsername().equals(currentPlayer.getUsername())) {
-                    String m = dialogue.getInput().replaceFirst("^You have been gifted ", "");
-                    result.append(i).append(".");
-                    result.append(m).append("\n");
+                    String message = dialogue.getInput();
+                    String prefix = "You have been gifted ";
+                    if (message.startsWith(prefix)) {
+                        message = message.substring(prefix.length());
+                    }
+                    result.append(i).append("-");
+                    result.append(message).append("\n");
                     i++;
                 }
             }
@@ -143,7 +145,7 @@ public class InteractionsWithUserController {
     }
 
     public Result giftRate(String giftNumber, String stringRate) {
-        int number = Integer.parseInt(stringRate);
+        int number = Integer.parseInt(giftNumber);
         int rate = Integer.parseInt(stringRate);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         if (rate > 5
@@ -206,14 +208,54 @@ public class InteractionsWithUserController {
         return new Result(true, result.toString());
     }
 
-    public Result hug() {
-// TODO: function incomplete
-        return null;
+    public Result hug(String username) {
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        Player player = getPlayerWithUsername(username);
+        if(player == null) {
+            return new Result(false, "Player not found");
+        }
+        if(!isPlayerNear(player)) {
+            return new Result(false, "Player is not near");
+        }
+        if(!currentPlayer.getRelations().containsKey(player)) {
+            currentPlayer.getRelations().put(player, new Relation());
+        }
+        Relation relation = currentPlayer.getRelations().get(player);
+        if(relation.getLevel() < 2){
+            return new Result(false, "Your level is too low");
+        }
+        if(currentPlayer.getPlayerHuggedToday().get(player) == null
+                || currentPlayer.getPlayerHuggedToday().get(player) == Boolean.FALSE) {
+            currentPlayer.getPlayerHuggedToday().put(player, Boolean.TRUE);
+            player.getPlayerHuggedToday().put(player, Boolean.TRUE);
+            currentPlayer.addXP(player, 60);
+            player.addXP(currentPlayer, 60);
+        }
+        return new Result(true , "You hugged your friend!");
     }
 
-    public Result flower() {
-// TODO: function incomplete
-        return null;
+    public Result flower(String username) {
+        Player player = getPlayerWithUsername(username);
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        Backpack backpack = currentPlayer.getBackpack();
+        if(player == null) {
+            return new Result(false, "Player not found");
+        }
+        if(!isPlayerNear(player)) {
+            return new Result(false, "Player is not near");
+        }
+        if(!backpack.hasEnoughItem(FruitType.FairyRose , 1)){
+            return new Result(false, "You don't have Rose!");
+        }
+        backpack.reduceItems(FruitType.FairyRose , 1);
+        player.getBackpack().addItems(FruitType.FairyRose , backpack.getStackLevel(FruitType.FairyRose) , 1);
+        String add = "";
+        if(currentPlayer.canFlowered(player)){
+            currentPlayer.goNextLevel(player);
+            player.goNextLevel(currentPlayer);
+            add = "Relation is in level 3";
+        }
+        return new Result(true , "You have give your friend flower!" + add);
     }
 
     private boolean isPlayerNear(Player player) {
