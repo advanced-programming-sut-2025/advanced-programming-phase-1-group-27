@@ -2,6 +2,8 @@ package org.example.models;
 
 import org.example.models.Map.Map;
 import org.example.models.NPCs.NPC;
+import org.example.models.Relations.Dialogue;
+import org.example.models.Relations.Relation;
 import org.example.models.enums.*;
 import org.example.models.enums.items.Recipe;
 import org.example.models.Map.FarmMap;
@@ -23,7 +25,7 @@ public class Player extends User {
     // items which are place in the fridge
     private final Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
     // maps ability type to user's ability
-    private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>(){{
+    private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>() {{
         put(AbilityType.Farming, farming);
         put(AbilityType.Fishing, fishing);
         put(AbilityType.Foraging, foraging);
@@ -37,9 +39,14 @@ public class Player extends User {
     private FarmMap farmMap = null;
     private int money;
     private Tool currentTool;
+    private ArrayList<Dialogue> dialogues = new ArrayList<>();
+    private java.util.Map<Player, Relation> relations = new HashMap<>();
     //TODO : refresh every morning
-    private java.util.Map<NPC , Boolean> npcMetToday = new HashMap<>();
-    private java.util.Map<NPC , Boolean> npcGiftToday = new HashMap<>();
+    private java.util.Map<NPC, Boolean> npcMetToday = new HashMap<>();
+    private java.util.Map<NPC, Boolean> npcGiftToday = new HashMap<>();
+    private java.util.Map<Player, Boolean> playerMetToday = new HashMap<>();
+    private java.util.Map<Player, Boolean> playerGiftToday = new HashMap<>();
+    private java.util.Map<Player, Boolean> playerTradeToday = new HashMap<>();
     private Player spouse = null; // in case the player gets married
     private Poll poll = null; // in order to terminate the game
     private Buff currentBuff = null;
@@ -136,10 +143,9 @@ public class Player extends User {
         if (currentBuff.getAbility() == AbilityType.MaxEnergyUltimate ||
                 currentBuff.getAbility() == AbilityType.MaxEnergyCommunity) {
             boostEnergy = 0;
-        }
-        else {
-           abilityFinder.get(currentBuff.getAbility()).reduceLevel();
-           removeRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel() + 1);
+        } else {
+            abilityFinder.get(currentBuff.getAbility()).reduceLevel();
+            removeRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel() + 1);
         }
         currentBuff = null;
     }
@@ -148,11 +154,9 @@ public class Player extends User {
         currentBuff = new Buff(buff);
         if (currentBuff.getAbility() == AbilityType.MaxEnergyUltimate) {
             boostEnergy = 100;
-        }
-        else if (currentBuff.getAbility() == AbilityType.MaxEnergyCommunity) {
+        } else if (currentBuff.getAbility() == AbilityType.MaxEnergyCommunity) {
             boostEnergy = 50;
-        }
-        else {
+        } else {
             abilityFinder.get(currentBuff.getAbility()).addLevel();
             addRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel());
         }
@@ -175,8 +179,7 @@ public class Player extends User {
         if (amount > boostEnergy) {
             dayEnergy -= amount - boostEnergy;
             boostEnergy = 0;
-        }
-        else
+        } else
             boostEnergy -= amount;
     }
 
@@ -355,5 +358,69 @@ public class Player extends User {
             else if (recipe.getFinalProduct() instanceof CookingProduct)
                 availableCookingRecipes.add(recipe);
         }
+    }
+
+    public void addXP(Player player, int amount) {
+        if (!relations.containsKey(player)) {
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int xp = relation.getXp();
+        int level = relation.getLevel();
+        xp += amount;
+        int max = (level + 1) * 100;
+        if (xp > max) {
+            if (level == 4) {
+                xp = max;
+            } else {
+                xp -= max;
+                relation.setLevel(level + 1);
+            }
+        }
+        relation.setXp(xp);
+    }
+
+    public void decreaseXP(Player player, int amount) {
+        if (!relations.containsKey(player)) {
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int xp = relation.getXp();
+        int level = relation.getLevel();
+        xp -= amount;
+        if (xp < 0) {
+            if (level == 0) {
+                xp = 0;
+            }else {
+                xp -= level * 100;
+                level--;
+                relation.setLevel(level);
+            }
+        }
+        relation.setXp(xp);
+    }
+
+    public ArrayList<Dialogue> getDialogues() {
+        return dialogues;
+    }
+
+    public void addDialogue(Dialogue dialogue) {
+        dialogues.add(dialogue);
+    }
+
+    public java.util.Map<Player, Relation> getRelations() {
+        return relations;
+    }
+
+    public java.util.Map<Player, Boolean> getPlayerMetToday() {
+        return playerMetToday;
+    }
+
+    public java.util.Map<Player, Boolean> getPlayerGiftToday() {
+        return playerGiftToday;
+    }
+
+    public java.util.Map<Player, Boolean> getPlayerTradeToday() {
+        return playerTradeToday;
     }
 }
