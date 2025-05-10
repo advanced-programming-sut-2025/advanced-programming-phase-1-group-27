@@ -11,7 +11,7 @@ public enum GameMenuCommands implements MenuCommands {
     ExitMenu("menu\\s+exit"),
     ShowCurrentMenu("show\\s+current\\s+menu"),
     Home("go\\s+to\\s+home"),
-    PlaceItem("place\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-d\\s+(?<direction>\\d)"),
+    PlaceItem("place\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-d\\s+(?<direction>\\d+)"),
     ShowWeather("weather"),
     ForecastWeather("weather\\s+forecast"),
     Walk("walk\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)"),
@@ -23,7 +23,9 @@ public enum GameMenuCommands implements MenuCommands {
     Fishing("fishing\\s+-p\\s+(?<fishPole>.+)"),
     BuildGreenHouse("greenhouse\\s+build"),
     Plant("plant\\s+-s\\s+(?<seedName>\\S.*\\S)\\s+-d\\s+(?<direction>\\d)"),
-    ShowPlant("show\\s+plant\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)");
+    ShowPlant("show\\s+plant\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)"),
+    UseArtisan("artisan\\s+use\\s+(?<artisanName>\\S+)\\s+(?<itemList>.+)"), // TODO: sobhan. \\S zadam bayad avaj she vagarna ghati mishe
+    GetArtisan("artisan\\s+get\\s+(?<artisanName>\\S+)");
 
     private final String pattern;
 

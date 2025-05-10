@@ -45,5 +45,6 @@ public class NPCMap extends Map{
         buildNPCHouse(new NPCHouse(NPCType.Robbin, cells[11][23]));
 
 
+
     }
 }

@@ -81,4 +81,24 @@ public enum ToolType implements Item {
             default -> null;
         };
     }
+
+    public static int getFishPoleEnergy(ToolType type) {
+        return switch (type) {
+            case TrainingRod -> 8;
+            case BambooPole -> 8;
+            case FiberglassRod -> 6;
+            case IridiumRod -> 4;
+            default -> -1;
+        };
+    }
+
+    public static double getFishPoleModifier(ToolType type) {
+        return switch(type) {
+            case TrainingRod -> 0.1;
+            case BambooPole -> 0.5;
+            case FiberglassRod -> 0.9;
+            case IridiumRod -> 1.2;
+            default -> 0;
+        };
+    }
 }

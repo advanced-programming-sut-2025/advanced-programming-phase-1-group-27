@@ -47,7 +47,6 @@ public class Player extends User {
     private java.util.Map<Player, Boolean> playerGiftToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerTradeToday = new HashMap<>();
     private Player spouse = null; // in case the player gets married
-    private Poll poll = null; // in order to terminate the game
     private Buff currentBuff = null;
 
     public Player(String username, String password, String nickname, String email, Gender gender) {
@@ -68,7 +67,7 @@ public class Player extends User {
         this.foraging = new Ability();
         this.fishing = new Ability();
         this.currentCell = null; // TODO: sobhan. ko ja bashe?
-        this.money = 0; // TODO: parsa. pool?
+        this.money = 8569;
         this.currentTool = null;
         // crafting recipes
         availableCraftingRecipes.add(Recipe.FurnaceRecipe);
@@ -130,14 +129,6 @@ public class Player extends User {
 
     public Player getSpouse() {
         return spouse;
-    }
-
-    public Poll getPoll() {
-        return poll;
-    }
-
-    public void setPoll(Poll poll) {
-        this.poll = poll;
     }
 
     public void removeBuff() {
@@ -296,21 +287,35 @@ public class Player extends User {
     }
 
     public void farmXp(int xp) {
+        int level = farming.getLevel();
         farming.addXp(xp);
+        if (farming.getLevel() > level) {
+            addRecipes(AbilityType.Farming, level + 1);
+        }
     }
 
     public void mineXp(int xp) {
+        int level = mining.getLevel();
         mining.addXp(xp);
+        if (mining.getLevel() > level) {
+            addRecipes(AbilityType.Mining, level + 1);
+        }
     }
 
     public void forageXp(int xp) {
-        // ..
+        int level = foraging.getLevel();
         foraging.addXp(xp);
+        if (foraging.getLevel() > level) {
+            addRecipes(AbilityType.Foraging, level + 1);
+        }
     }
 
     public void fishXp(int xp) {
-        // ..
+        int level = fishing.getLevel();
         fishing.addXp(xp);
+        if (fishing.getLevel() > level) {
+            addRecipes(AbilityType.Fishing, level + 1);
+        }
     }
 
     public String showItems() {

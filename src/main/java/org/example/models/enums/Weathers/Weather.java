@@ -9,20 +9,26 @@ import org.example.models.enums.Plants.Plant;
 import java.util.Random;
 
 public enum Weather {
-    Sunny(1),
-    Rainy(1.5),
-    Stormy(1),
-    Snowy(2);
+    Sunny(1, 1.5),
+    Rainy(1.5, 1.2),
+    Stormy(1, 0.5),
+    Snowy(2, 1);
 
     private final double toolEnergyModifier;
+    private final double fishingModifier;
 
 
-    Weather(double toolEnergyModifier) {
+    Weather(double toolEnergyModifier, double fishingModifier) {
         this.toolEnergyModifier = toolEnergyModifier;
+        this.fishingModifier = fishingModifier;
     }
 
     public double getToolEnergyModifier() {
         return toolEnergyModifier;
+    }
+
+    public double getFishingModifier() {
+        return fishingModifier;
     }
 
     public void applyWeatherEffect() {

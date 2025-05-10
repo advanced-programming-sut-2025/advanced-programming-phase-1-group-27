@@ -4,11 +4,9 @@ import org.example.models.*;
 import org.example.models.Map.FarmMap;
 import org.example.models.Map.Hut;
 import org.example.models.Map.Map;
-import org.example.models.enums.ArtisanTypes;
-import org.example.models.enums.CellType;
-import org.example.models.enums.Menu;
+import org.example.models.enums.*;
 import org.example.models.enums.Plants.*;
-import org.example.models.enums.StackLevel;
+import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.FishType;
 import org.example.models.enums.items.MineralType;
@@ -16,8 +14,7 @@ import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameMenuController extends MenuController {
     private GameMenuView view;
@@ -55,8 +52,6 @@ public class GameMenuController extends MenuController {
         boolean fullTurn =  App.getCurrentGame().nextPlayer();
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
 
-        handlePoll(currentPlayer, scanner);
-
         if (fullTurn)
             App.getCurrentGame().passAnHour();
         if (currentPlayer.getDayEnergy() <= 0) {
@@ -65,17 +60,20 @@ public class GameMenuController extends MenuController {
         }
         view.printString(currentPlayer.getUsername() + "'s turn!");
         App.setCurrentMenu(currentPlayer.getCurrentMenu());
-        // TODO: parsa pasokh be soalat mokhtalef
     }
 
-    public Result terminateGame() {
+    public Result terminateGame(Scanner scanner) {
         ArrayList<Player> players = App.getCurrentGame().getPlayers();
-        Poll poll = new Poll(players.size());
-        poll.vote(); // the first player should always vote
+        int opposes = 0;
         for (Player player : players) {
-            player.setPoll(poll);
+            if (player != App.getCurrentGame().getCurrentPlayer())
+                opposes += getPlayerVote(player, scanner);
         }
-        return new Result(true, "Request sent to other players.");
+        if (opposes == 0) {
+            eraseGame();
+            return new Result(true, "Redirecting to main menu ...");
+        }
+        return new Result(false, "Can't terminate this game!");
     }
 
     public Result goToHome() {
@@ -336,25 +334,6 @@ public class GameMenuController extends MenuController {
         return new Result(true, count + " of " + itemName + "added to the backpack!");
     }
 
-    private void handlePoll(Player currentPlayer, Scanner scanner) {
-        Poll poll = currentPlayer.getPoll();
-        if (poll != null) {
-            if (poll.isPollComplete()) {
-                if (poll.requestIsAccepted())
-                    eraseGame();
-                currentPlayer.setPoll(null);
-            }
-            else {
-                int result = getPlayerVote(scanner);
-                if (result == 1)
-                    poll.vote();
-                else
-                    poll.oppose();
-                currentPlayer.setPoll(null);
-            }
-        }
-    }
-
     private void eraseGame() {
         Game game = App.getCurrentGame();
         for (Player player : game.getPlayers()) {
@@ -364,13 +343,13 @@ public class GameMenuController extends MenuController {
         App.setCurrentMenu(Menu.MainMenu);
     }
 
-    private int getPlayerVote(Scanner scanner) {
-        view.printString("Would you like to terminate the game? (accept|reject)");
+    private int getPlayerVote(Player player, Scanner scanner) {
+        view.printString(player.getUsername() + "! Should we terminate the game? (accept|reject)");
         Result result;
         do {
             result = view.askToVote(scanner);
         } while (!result.success());
-        return result.message().equals("accept") ? 1 : 0;
+        return result.message().equals("accept") ? 0 : 1;
     }
 
     public boolean playerPassedOut() {
@@ -433,6 +412,110 @@ public class GameMenuController extends MenuController {
             return new Result(false, "This fish pole is not available in your backpack!");
         if (!player.isByWater())
             return new Result(false, "You must be by the water!");
-        ArrayList<FishType> availableFish = FishType.getAvailableFish(App.getCurrentGame().getTime().getSeason());
+
+        int energyNeeded = ToolType.getFishPoleEnergy(type);
+        if (player.getAbility(AbilityType.Fishing).getLevel() == 4)
+            --energyNeeded;
+
+        if (player.getEnergy() < energyNeeded) {
+            player.consumeEnergy(player.getEnergy());
+            return new Result(false, "Fishing failed! You don't have enough energy!");
+        }
+        player.consumeEnergy(player.getEnergy());
+
+        Season currentSeason = App.getCurrentGame().getTime().getSeason();
+        ArrayList<FishType> availableFish;
+        if (type == ToolType.TrainingRod)
+            availableFish = new ArrayList<>(List.of(FishType.getCheapestOfSeason().get(currentSeason)));
+        else
+            availableFish = FishType.getAvailableFish(currentSeason);
+        if (player.getAbility(AbilityType.Fishing).getLevel() == 4)
+            availableFish.addAll(FishType.getAvailableLegendaryFish(currentSeason));
+
+        int numberOfFish = Math.min(6, getNumberOfFish());
+        ArrayList<Stacks> capturedFish = new ArrayList<>();
+        Random random = new Random(System.currentTimeMillis());
+        for (int i = 0; i < numberOfFish; i++) {
+            double coefficient = getFishCoefficient(type);
+            StackLevel fishLevel = getStackLevel(coefficient);
+            FishType fishType = availableFish.get(random.nextInt(availableFish.size()));
+            capturedFish.add(new Stacks(fishType, fishLevel, 1));
+        }
+        StringBuilder result = new StringBuilder("The following fish added to inventory:");
+        for (Stacks stacks : capturedFish) {
+            if (player.getBackpack().canAdd(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity())) {
+                player.getBackpack().addItems(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity());
+                result.append("\n").append(stacks.getStackLevel().toString());
+                result.append(" ").append(stacks.getItem().getName());
+            }
+            else
+                break;
+        }
+        return new Result(false, result.toString());
+    }
+
+    public Result useArtisan(String artisanName, String itemList) {
+        ArtisanTypes artisanType = ArtisanTypes.getArtisan(artisanName);
+        if (artisanType == null)
+            return new Result(false, "Artisan name is invalid!");
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Artisan artisan = null;
+        for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
+            if (adjacentCell.getObject() instanceof Artisan) {
+                if (((Artisan) adjacentCell.getObject()).getType() == artisanType) {
+                    artisan = (Artisan) adjacentCell.getObject();
+                }
+            }
+        }
+        if (artisan == null)
+            return new Result(false, "The is no " + artisanName + " nearby!");
+        // TODO: sobhan. pokht o paz
+        return null;
+    }
+
+    public Result getArtisanProduct(String artisanName) {
+        ArtisanTypes artisanType = ArtisanTypes.getArtisan(artisanName);
+        if (artisanType == null)
+            return new Result(false, "Artisan name is invalid!");
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Artisan artisan = null;
+        for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
+            if (adjacentCell.getObject() instanceof Artisan) {
+                if (((Artisan) adjacentCell.getObject()).getType() == artisanType) {
+                    artisan = (Artisan) adjacentCell.getObject();
+                }
+            }
+        }
+        if (artisan == null)
+            return new Result(false, "The is no " + artisanName + " nearby!");
+        // TODO: sobhan. pokht o paz
+        return null;
+    }
+
+    private int getNumberOfFish() {
+        Random random = new Random(System.currentTimeMillis());
+        return (int) Math.ceil(
+                App.getCurrentGame().getCurrentWeather().getFishingModifier() *
+                random.nextInt() *
+                (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() + 2)
+        );
+    }
+
+    private double getFishCoefficient(ToolType type) {
+        Random random = new Random(System.currentTimeMillis());
+        return (ToolType.getFishPoleModifier(type) *
+                (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() + 2) *
+                random.nextInt(2)) / (7.0 - App.getCurrentGame().getCurrentWeather().getFishingModifier());
+    }
+
+    private StackLevel getStackLevel(double coefficient) {
+        if (0 < coefficient && coefficient <= 0.5)
+            return StackLevel.Basic;
+        if (0.5 < coefficient && coefficient <= 0.7)
+            return StackLevel.Silver;
+        if (0.7 < coefficient && coefficient <= 0.9)
+            return StackLevel.Gold;
+        else
+            return StackLevel.Iridium;
     }
 }

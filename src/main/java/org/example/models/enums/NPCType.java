@@ -46,9 +46,6 @@ public enum NPCType {
         this.favorite = favorite;
     }
 
-    public void setHome(Building home) {
-        this.home = home;
-    }
 
     public void setStandingCell(Cell standingCell) {
         StandingCell = standingCell;

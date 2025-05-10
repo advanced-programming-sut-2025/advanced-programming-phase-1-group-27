@@ -78,7 +78,7 @@ public enum FishType implements Item {
         return result;
     }
 
-    public static ArrayList<FishType> getavailableLegendaryFish(Season season) {
+    public static ArrayList<FishType> getAvailableLegendaryFish(Season season) {
         ArrayList<FishType> result = new ArrayList<>();
         for (FishType fish : FishType.values()) {
             if (fish.isLegendary && fish.season == season)

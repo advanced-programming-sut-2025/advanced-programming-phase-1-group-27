@@ -57,15 +57,4 @@ public class FishingPole extends Tool{
         }
         return false;
     }
-
-    @Override
-    public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
-        if (cell.getType() != CellType.Water) {
-            return new Result(false, "This is Not A Water Cell!!");
-        } else {
-            //TODO: rassa mahi begir.
-            return new Result(true, "This is A Water Cell!!");
-        }
-    }
 }

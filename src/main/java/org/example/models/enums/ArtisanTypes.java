@@ -75,6 +75,14 @@ public enum ArtisanTypes {
         return null;
     }
 
+    public static ArtisanTypes getArtisan(String artisanName) {
+        for (ArtisanTypes artisan : ArtisanTypes.values()) {
+            if (artisan.toString().equals(artisanName))
+                return artisan;
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return this.name().replaceAll("([A-Z])", " $1").trim();

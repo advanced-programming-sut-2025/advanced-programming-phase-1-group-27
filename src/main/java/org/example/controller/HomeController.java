@@ -42,6 +42,11 @@ public class HomeController {
         if (!player.hasEnoughIngredients(recipe))
             return new Result(false, "You don't have enough ingredients!");
         player.useRecipe(recipe);
+        if (player.getEnergy() < 2) {
+            player.consumeEnergy(player.getEnergy());
+            player.getBackpack().reduceItems(recipe.getFinalProduct(), StackLevel.Basic, 1);
+            return new Result(false, "Crafting failed! You don't have enough energy!");
+        }
         player.consumeEnergy(2);
         return new Result(true, itemName + " crafted successfully!");
     }
@@ -92,13 +97,16 @@ public class HomeController {
         Recipe recipe = Recipe.getRecipe(item);
         if (!player.getAvailableCookingRecipes().contains(recipe))
             return new Result(false, "You don't have this recipe!");
-        if (player.getEnergy() < 3)
-            return new Result(false, "You don't have enough energy to cook " + itemName);
         if (player.getBackpack().canAdd(recipe.getFinalProduct(), StackLevel.Basic, 1))
             return new Result(false, "Your backpack is full!");
         if (!player.hasEnoughIngredients(recipe))
             return new Result(false, "You don't have enough ingredients!");
         player.useRecipe(recipe);
+        if (player.getEnergy() < 3) {
+            player.consumeEnergy(player.getEnergy());
+            player.getBackpack().reduceItems(recipe.getFinalProduct(), StackLevel.Basic, 1);
+            return new Result(false, "Cooking failed! You don't have enough energy!");
+        }
         player.consumeEnergy(3);
         return new Result(true, itemName + " cooked successfully!");
     }

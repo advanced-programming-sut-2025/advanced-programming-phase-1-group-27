@@ -37,7 +37,7 @@ public class GameMenuView extends AppMenu {
             controller.nextTurn(scanner);
         }
         else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
-            System.out.println(controller.terminateGame());
+            System.out.println(controller.terminateGame(scanner));
         }
         else if (GameMenuCommands.Home.getMatcher(input) != null) {
             System.out.println(controller.goToHome());
@@ -111,6 +111,17 @@ public class GameMenuView extends AppMenu {
         else if ((matcher = GameMenuCommands.ShowPlant.getMatcher(input)) != null) {
             System.out.println(controller.showPlant(matcher.group("i"), matcher.group("j")));
         }
+        else if ((matcher = GameMenuCommands.UseArtisan.getMatcher(input)) != null) {
+            System.out.println(controller.useArtisan(
+                    matcher.group("artisanName").trim(),
+                    matcher.group("itemList").trim()
+            ));
+        }
+        else if ((matcher = GameMenuCommands.GetArtisan.getMatcher(input)) != null) {
+            System.out.println(controller.getArtisanProduct(
+                    matcher.group("artisanName")
+            ));
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }
@@ -124,12 +135,5 @@ public class GameMenuView extends AppMenu {
         }
         System.out.println("You have voted successfully!");
         return new Result(true, input);
-    }
-
-    public Result askToPassTurn(Scanner scanner) {
-        String input = scanner.nextLine().trim();
-        if (GameMenuCommands.NextTurn.getMatcher(input) == null)
-            return new Result(false, "invalid command!");
-        return new Result(true, "");
     }
 }
