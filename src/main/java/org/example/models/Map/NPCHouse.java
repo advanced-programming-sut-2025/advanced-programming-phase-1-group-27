@@ -1,5 +1,6 @@
 package org.example.models.Map;
 
+import org.example.models.App;
 import org.example.models.Building;
 import org.example.models.Cell;
 import org.example.models.enums.NPCType;
@@ -10,7 +11,7 @@ public class NPCHouse extends Building {
 
     public NPCHouse(NPCType npc, Cell topLeftCell) {
         this.npc = npc;
-        super(topLeftCell);
+        super(topLeftCell, 4, 4);
         npc.setHome(this);
     }
 

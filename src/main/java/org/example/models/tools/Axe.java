@@ -8,6 +8,7 @@ import org.example.models.enums.AbilityType;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Plants.Tree;
 import org.example.models.enums.StackLevel;
+import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Tool;
 
@@ -48,7 +49,8 @@ public class Axe extends Tool {
             cell.setObject(null);
             cell.setType(CellType.Free);
             player.consumeEnergy(this.getEnergyUsage());
-            //TODO add to inventory: 1 MineralType.Wood
+            player.getBackpack().addItems(MineralType.Wood, null, 5);
+
             return new Result(true, "You Cut The Tree!");
         }
         return new Result(false, "Not A Tree Here!");

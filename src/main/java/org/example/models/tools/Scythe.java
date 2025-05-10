@@ -1,9 +1,6 @@
 package org.example.models.tools;
 
-import org.example.models.App;
-import org.example.models.Cell;
-import org.example.models.Player;
-import org.example.models.Result;
+import org.example.models.*;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Plants.Crop;
 import org.example.models.enums.Plants.Fruit;
@@ -28,7 +25,7 @@ public class Scythe extends Tool{
         Player player = App.getCurrentGame().getCurrentPlayer();
         player.consumeEnergy(getEnergyUsage());
         if (cell.getObject() instanceof Plant plant) {
-            Fruit fruit = plant.harvest();
+            Stacks fruit = plant.harvest();
             if (fruit == null) {
                 return new Result(false, "The Plant is not Ready to be Harvested Yet");
             }
@@ -40,7 +37,7 @@ public class Scythe extends Tool{
                 }
             }
             player.farmXp(5);
-            return new Result(true, "You Harvested " + plant.harvest().getName());
+            return new Result(true, "You Harvested " + fruit.getItem().getName());
         } else if (cell.getObject() instanceof MineralType mineralType) {
             if (mineralType == MineralType.Fiber) {
                 cell.setObject(null);

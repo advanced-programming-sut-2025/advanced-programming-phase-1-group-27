@@ -12,4 +12,8 @@ public class Artisan {
         this.type = type;
         this.finalProduct = null;
     }
+
+    public ArtisanTypes getType() {
+        return type;
+    }
 }

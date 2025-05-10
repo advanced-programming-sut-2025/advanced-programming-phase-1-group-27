@@ -37,7 +37,7 @@ public enum Weather {
             Cell[][] cells = map.getCells();
             for (int i = 0; i < cells.length; i++) {
                 for (int j = 0; j < cells[i].length; j++) {
-                    if (cells[i][j].getObject() instanceof Plant) {
+                    if (cells[i][j].getObject() instanceof Plant && cells[i][j].getBuilding() == null) {
                         Plant plant = (Plant) cells[i][j].getObject();
                         plant.water();
                     }

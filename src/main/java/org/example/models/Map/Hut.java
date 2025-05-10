@@ -10,7 +10,7 @@ public class Hut extends Building {
 
     public Hut(Cell door, Cell topLeftCell) {
         this.door = door;
-        super(topLeftCell);
+        super(topLeftCell, 4, 4);
     }
 
     public Player getOwner() {

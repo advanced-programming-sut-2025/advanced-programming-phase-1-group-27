@@ -128,6 +128,10 @@ public class Player extends User {
         this.spouse = spouse;
     }
 
+    public Player getSpouse() {
+        return spouse;
+    }
+
     public Poll getPoll() {
         return poll;
     }

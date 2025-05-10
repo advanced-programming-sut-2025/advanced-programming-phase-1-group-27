@@ -10,7 +10,7 @@ public class StoreBuilding extends Building {
 
     public StoreBuilding(Store store, Cell topLeftCell) {
         this.store = store;
-        super(topLeftCell);
+        super(topLeftCell, 4, 4);
     }
 
     public Store getStore() {

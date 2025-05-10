@@ -1,6 +1,7 @@
 package org.example.models.enums.Plants;
 
 import org.example.models.Cell;
+import org.example.models.Stacks;
 import org.example.models.enums.CellType;
 
 public abstract class Plant {
@@ -35,12 +36,12 @@ public abstract class Plant {
         wateredToday = false;
     }
 
-    public Fruit harvest() {
+    public Stacks harvest() {
         if (tillNextHarvest > 0) {
             return null;
         }
         tillNextHarvest = type.getHarvestCycle();
-        return new Fruit(type.getFruit());
+        return new Stacks(new Fruit(type.getFruit()), (isGiant? 10: 1));
     }
 
     public PlantType getType() {

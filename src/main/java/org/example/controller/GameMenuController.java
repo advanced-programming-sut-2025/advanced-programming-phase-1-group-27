@@ -13,6 +13,7 @@ import org.example.models.enums.Plants.TreeType;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.FishType;
+import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
@@ -126,11 +127,18 @@ public class GameMenuController extends MenuController {
                         currentPlayer.consumeEnergy(energy);
                         currentPlayer.setCurrentCell(destination);
                         if (destination.getType() == CellType.MapLink) {
-                            Cell newDestination = (Cell) destination.getObject();
-                            currentPlayer.setCurrentCell(newDestination);
-                            return new Result(true, "You Changed your Map And Now Are On Cell(" +
-                                    newDestination.getPosition().getX() + "," +
-                                    newDestination.getPosition().getY() + ")");
+                            if (((Cell) destination.getObject()).getMap() == currentPlayer.getFarmMap() ||
+                                    ((Cell) destination.getObject()).getMap() == App.getCurrentGame().getNpcMap() ||
+                                    (currentPlayer.getSpouse() != null &&
+                                            ((Cell) destination.getObject()).getMap() == currentPlayer.getSpouse().getFarmMap())) {
+                                Cell newDestination = (Cell) destination.getObject();
+                                currentPlayer.setCurrentCell(newDestination);
+                                return new Result(true, "You Changed your Map And Now Are On Cell(" +
+                                        newDestination.getPosition().getX() + "," +
+                                        newDestination.getPosition().getY() + ")");
+                            } else {
+                                return new Result(true, "You Walked But Are Not Able to Change Your Map!!");
+                            }
                         }
                         return new Result(true, "You Walked And Now Are On Cell(" +
                                 i + "," + j + ")");
@@ -153,12 +161,9 @@ public class GameMenuController extends MenuController {
         int x = Integer.parseInt(s), y = Integer.parseInt(t), size = Integer.parseInt(sizeString);
         String view = "";
         Map map = App.getCurrentGame().getCurrentPlayer().getCurrentMap();
-        if (x + size > map.getHeight() || y + size > map.getWidth()) {
-            return new Result(false, "Size is Too Big");
-        }
-        for (int i = x; i < x + size; i++) {
+        for (int i = x; i < Integer.min(x + size, map.getHeight()); i++) {
             if (i > 0) view += "\n";
-            for (int j = y; j < y + size; j++) {
+            for (int j = y; j < Integer.min(y + size, map.getWidth()); j++) {
                 view += map.getCell(i, j).toString();
             }
         }
@@ -208,6 +213,19 @@ public class GameMenuController extends MenuController {
                 ((Boolean) crop.canBecomeGiant()).toString().toUpperCase() : ""));
     }
 
+    public Result buildGreenHouse() {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        player.getFarmMap().getGreenHouse().repair();
+        if (player.getMoney() < 1000) {
+            return new Result(false, "Not Enough Money, 1000 coins needed but you only have " +
+                    player.getMoney() + ".");
+        } else if (!player.getBackpack().hasEnoughItem(MineralType.Wood, 500)) {
+            return new Result(false, "Not Enough Wood, 500 needed but you only have I dont know How Much.");
+        }
+        return new Result(true, "GreenHouse Repaired!");
+    }
+
+
     public Result placeItem(String itemName, int direction) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Item item = player.getItemFromBackpack(itemName);
@@ -224,8 +242,8 @@ public class GameMenuController extends MenuController {
         player.getBackpack().reduceItems(item, 1);
         Artisan artisan = new Artisan(artisanType);
         cell.setObject(artisan);
+        cell.setType(CellType.Occupied);
         return new Result(true, "Item placed successfully!");
-        // TODO: ba sobhan check kon chejoori place konim
     }
 
     public Result cheatAddItem(String itemName, int count) {

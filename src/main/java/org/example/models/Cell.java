@@ -96,12 +96,16 @@ public class Cell {
     }
 
     public void thor() {
-        if (cellType == CellType.Occupied && object instanceof Tree) {
+        if (object instanceof Tree) {
             object = new Stacks(MineralType.Coal, 1);
-        } else if (cellType == CellType.Occupied && object instanceof Plant) {
+        } else if (object instanceof Plant && building == null) {
             cellType = CellType.Free;
             object = null;
         }
+    }
+
+    public Map getMap() {
+        return map;
     }
 
     @Override

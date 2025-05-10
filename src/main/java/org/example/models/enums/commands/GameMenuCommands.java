@@ -20,7 +20,8 @@ public enum GameMenuCommands implements MenuCommands {
     ShowEnergy("energy\\s+show"),
     ToolsUse("tools\\s+use\\s+-d\\s+(?<direction>\\d)"),
     CropInfo("crop\\s+info\\s+-n\\s+(?<cropName>\\S(.*\\S)?)\\s*"),
-    Fishing("fishing\\s+-p\\s+(?<fishPole>.+)");
+    Fishing("fishing\\s+-p\\s+(?<fishPole>.+)"),
+    BuildGreenHouse("greenhouse\\s+build");
 
     private final String pattern;
 

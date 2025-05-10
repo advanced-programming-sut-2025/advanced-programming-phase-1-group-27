@@ -5,7 +5,6 @@ import org.example.models.enums.Menu;
 import org.example.models.enums.commands.CheatCommands;
 import org.example.models.enums.commands.GameMenuCommands;
 import org.example.models.Result;
-import org.example.models.enums.commands.HomeCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -102,6 +101,9 @@ public class GameMenuView extends AppMenu {
             System.out.println(controller.fishing(
                     matcher.group("fishPole").trim()
             ));
+        }
+        else if (GameMenuCommands.BuildGreenHouse.getMatcher(input) != null) {
+            System.out.println(controller.buildGreenHouse());
         }
         else {
             System.out.println(new Result(false, "invalid command!"));

@@ -1,9 +1,6 @@
 package org.example.models.tools;
 
-import org.example.models.App;
-import org.example.models.Cell;
-import org.example.models.Player;
-import org.example.models.Result;
+import org.example.models.*;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.CellType;
 import org.example.models.enums.StackLevel;
@@ -50,29 +47,31 @@ public class Pickaxe extends Tool{
             cell.setType(CellType.Free);
             return new Result(true, "You UnPlowed The Cell!!");
         }
-        else if (object instanceof MineralType) {
-            if (MineralType.getMinerals().contains((MineralType) object)) {
-                if (level.isBetterThan(((MineralType) object).getLevel())) {
+        else if (object instanceof MineralType mineralType) {
+            if (MineralType.getMinerals().contains(mineralType)) {
+                if (level.isBetterThan((mineralType).getLevel())) {
                     player.consumeEnergy(this.getEnergyUsage());
                     cell.setType(CellType.Free);
                     cell.setObject(null);
-                    //TODO add to Inventory: 1 object
+                    player.getBackpack().addItems(mineralType, null, 5);
+                    
                     player.mineXp(10);
-                    return new Result(true, "You Extracted A " + ((MineralType) object).getName() +
+                    return new Result(true, "You Extracted A " + (mineralType).getName() +
                             " Mineral!!");
 
                 } else {
                     player.consumeEnergy(Math.min(this.getEnergyUsage() - 1, 0));
                     return new Result(false, "Your Tool is not Strong Enough for This Mineral!");
                 }
-            } else if (MineralType.getJewels().contains((MineralType) object)) {
+            } else if (MineralType.getJewels().contains(mineralType)) {
                 if (level.isBetterThan(StackLevel.Bronze)) {
                     player.consumeEnergy(this.getEnergyUsage());
                     cell.setType(CellType.Free);
                     cell.setObject(null);
-                    //TODO add to Inventory: 1 object
+                    player.getBackpack().addItems(mineralType, null, 5);
+
                     player.mineXp(10);
-                    return new Result(true, "You Extracted A " + ((MineralType) object).getName() +
+                    return new Result(true, "You Extracted A " + mineralType.getName() +
                             " Jewel!!");
                 } else {
                     player.consumeEnergy(Math.min(this.getEnergyUsage() - 1, 0));
@@ -82,13 +81,17 @@ public class Pickaxe extends Tool{
                 player.consumeEnergy(this.getEnergyUsage());
                 cell.setType(CellType.Free);
                 cell.setObject(null);
-                //TODO add to Inventory: 1 object
+                player.getBackpack().addItems(mineralType, null, 5);
+
                 player.mineXp(10);
-                return new Result(true, "You Extracted A " + ((MineralType) object).getName());
+                return new Result(true, "You Extracted A " + mineralType.getName());
             }
-        } else if (cell.getType() == CellType.Occupied) {
-            //TODO
-            return new Result(false, "#$))!*)*#$)(%)()(#)@($)#@4");
+        } else if (cell.getObject() instanceof Artisan artisan) {
+            cell.setObject(null);
+            cell.setType(CellType.Free);
+            //player.getBackpack().addItems(artisan, null, 1);
+            //TODO rassa artisian ro chetory bargardunam behesh?
+            return new Result(false, "You Removed And Claimed The Artisan!");
         } else {
             player.consumeEnergy(Math.min(this.getEnergyUsage() - 1, 0));
             return new Result(false, "Cannot Use A Pickaxe Here !");

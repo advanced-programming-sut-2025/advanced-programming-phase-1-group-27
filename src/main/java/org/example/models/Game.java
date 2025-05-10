@@ -1,9 +1,6 @@
 package org.example.models;
 
-import org.example.models.Map.FarmMap;
-import org.example.models.Map.FarmMapBuilder;
-import org.example.models.Map.FarmMapDirector;
-import org.example.models.Map.NPCMap;
+import org.example.models.Map.*;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.CellType;
@@ -11,6 +8,7 @@ import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
+import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -102,7 +100,7 @@ public class Game {
             Cell[][] cells = player.getFarmMap().getCells();
             for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
                 for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
-                    if (cells[i][j].getType() == CellType.Plowed && cells[i][j].getObject() instanceof Plant plant) {
+                    if (cells[i][j].getObject() instanceof Plant plant) {
                         if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
                             cells[i][j].setObject(null);
                         } else if (!plant.isGiant()){
@@ -113,8 +111,13 @@ public class Game {
                                     (cells[i][j].getAdjacentCells().get(6) != null &&
                                             cells[i][j].getAdjacentCells().get(6).getObject() == plant)) {
 
-                            } else {
+                            } else if (cells[i][j].getBuilding() != null && cells[i][j].getBuilding() instanceof GreenHouse) {
                                 plant.grow();
+                            } else {
+                                for (Season season: plant.getType().getSeasons())
+                                    if (season == App.getCurrentGame().getTime().getSeason())
+                                        plant.grow();
+
                             }
                         }
                     }
