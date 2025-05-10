@@ -78,7 +78,7 @@ public enum AnimalType implements Item {
 
     public static AnimalType getItem(String itemName) {
         for (AnimalType animalType : AnimalType.values()) {
-            if (animalType.name().equalsIgnoreCase(itemName)) {
+            if (animalType.getName().equalsIgnoreCase(itemName)) {
                 return animalType;
             }
         }

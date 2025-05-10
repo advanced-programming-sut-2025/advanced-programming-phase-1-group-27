@@ -29,7 +29,7 @@ public enum AnimalProduct implements Item {
 
     public static AnimalProduct getItem(String itemName) {
         for (AnimalProduct animalProduct : AnimalProduct.values()) {
-            if (animalProduct.getName().equals(itemName)) {
+            if (animalProduct.getName().equalsIgnoreCase(itemName)) {
                 return animalProduct;
             }
         }

@@ -65,7 +65,7 @@ public enum ProcessedProductType implements Item {
 
     public static ProcessedProductType getItem(String itemName) {
         for (ProcessedProductType processedProductType : ProcessedProductType.values()) {
-            if (processedProductType.getName().equals(itemName)) {
+            if (processedProductType.getName().equalsIgnoreCase(itemName)) {
                 return processedProductType;
             }
         }

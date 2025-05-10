@@ -32,7 +32,7 @@ public class WateringCan extends Tool{
             energyUsage = 1;
             this.waterCapacity = 100;
         }
-        super(level , energyUsage , toolType.getName());
+        super(level , energyUsage , toolType.getName(), toolType);
         this.maxCapacity = this.waterCapacity;
     }
 

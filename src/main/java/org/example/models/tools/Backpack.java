@@ -167,18 +167,6 @@ public class Backpack extends Tool{
         return false;
     }
 
-    public boolean hasSameItemType(Stacks slot, Item item) {
-        Item slotItem = slot.getItem();
-        if (slotItem instanceof ProcessedProduct) {
-            if (item instanceof ProcessedProduct)
-                return slotItem.equals(item);
-            return false;
-        }
-        if (item instanceof ProcessedProduct)
-            return false;
-        return item == slotItem;
-    }
-
     public boolean canAdd(Item item, StackLevel level, int amount) {
         int overflow = addItems(item, level, amount);
         reduceItems(item, level, amount - overflow);
@@ -204,5 +192,17 @@ public class Backpack extends Tool{
 
     private boolean isFull() {
         return items.size() == capacity;
+    }
+
+    private boolean hasSameItemType(Stacks slot, Item item) {
+        Item slotItem = slot.getItem();
+        if (slotItem instanceof ProcessedProduct) {
+            if (item instanceof ProcessedProduct)
+                return slotItem.equals(item);
+            return false;
+        }
+        if (item instanceof ProcessedProduct)
+            return false;
+        return item == slotItem;
     }
 }

@@ -43,5 +43,7 @@ public class NPCMap extends Map{
         buildNPCHouse(new NPCHouse(NPCType.Harvey, cells[11][12]));
         buildNPCHouse(new NPCHouse(NPCType.Lia, cells[11][18]));
         buildNPCHouse(new NPCHouse(NPCType.Robbin, cells[11][23]));
+
+
     }
 }

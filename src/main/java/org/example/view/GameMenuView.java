@@ -98,6 +98,11 @@ public class GameMenuView extends AppMenu {
         else if ((matcher = GameMenuCommands.CropInfo.getMatcher(input)) != null) {
             System.out.println(controller.cropInfo(matcher.group("cropName")));
         }
+        else if ((matcher = GameMenuCommands.Fishing.getMatcher(input)) != null) {
+            System.out.println(controller.fishing(
+                    matcher.group("fishPole").trim()
+            ));
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }

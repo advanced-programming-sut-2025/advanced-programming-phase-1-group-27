@@ -252,7 +252,7 @@ public enum StocksForShops {
         ArrayList<Stacks> FishShopStock = new ArrayList<>();
         FishShopStock.add(new Stacks(Recipe.FishSmokerRecipe , 1));
         FishShopStock.add(new Stacks(ShopItems.TroutSoup , 1));
-        FishShopStock.add(new Stacks(ToolType.BambooFishingPole , 1));
+        FishShopStock.add(new Stacks(ToolType.BambooPole , 1));
         FishShopStock.add(new Stacks(ToolType.TrainingRod , 1));
         FishShopStock.add(new Stacks(ToolType.FiberglassRod , 1));
         FishShopStock.add(new Stacks(ToolType.IridiumRod , 1));

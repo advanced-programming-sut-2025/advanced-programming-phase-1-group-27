@@ -12,7 +12,7 @@ public class Shear extends Tool {
         StackLevel level = ToolType.Shear.getLevel();
         this.price = 1000;
         int energyUsage = 4;
-        super(level, energyUsage , ToolType.Shear.getName());
+        super(level, energyUsage , ToolType.Shear.getName(), ToolType.Shear);
     }
 
     @Override

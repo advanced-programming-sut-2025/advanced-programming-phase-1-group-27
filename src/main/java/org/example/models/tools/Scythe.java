@@ -19,7 +19,7 @@ public class Scythe extends Tool{
     public Scythe() {
         StackLevel level = ToolType.Scythe.getLevel();
         int energyUsage = 2;
-        super(level , energyUsage , ToolType.Scythe.getName());
+        super(level , energyUsage , ToolType.Scythe.getName(), ToolType.Scythe);
     }
 
 

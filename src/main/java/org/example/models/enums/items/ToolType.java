@@ -26,7 +26,7 @@ public enum ToolType implements Item {
     GoldWateringCan("Gold Watering Can" , StackLevel.Gold),
     IridiumWateringCan("Iridium Watering Can" , StackLevel.Iridium),
     TrainingRod("Training Rod" , StackLevel.Training),
-    BambooFishingPole("Bamboo Fishing Pole" , StackLevel.Bamboo),
+    BambooPole("Bamboo Pole" , StackLevel.Bamboo),
     FiberglassRod("Fiberglass Rod" , StackLevel.Fiberglass),
     IridiumRod("Iridium Rod" , StackLevel.Iridium),
     Scythe("Scythe" , StackLevel.Basic),
@@ -65,10 +65,20 @@ public enum ToolType implements Item {
 
     public static ToolType getItem(String itemName) {
         for (ToolType toolType : ToolType.values()) {
-            if (toolType.getName().equals(itemName)) {
+            if (toolType.getName().equalsIgnoreCase(itemName)) {
                 return toolType;
             }
         }
         return null;
+    }
+
+    public static ToolType getFishPole(String fishPoleName) {
+        return switch(fishPoleName) {
+            case "Training Rod" -> TrainingRod;
+            case "Bamboo Pole" -> BambooPole;
+            case "Fiberglass Rod" -> FiberglassRod;
+            case "Iridium Rod" -> IridiumRod;
+            default -> null;
+        };
     }
 }

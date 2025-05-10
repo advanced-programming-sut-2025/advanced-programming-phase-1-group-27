@@ -49,7 +49,7 @@ public enum CookingProduct implements Item {
 
     public static CookingProduct getItem(String itemName) {
         for (CookingProduct cookingProduct : CookingProduct.values()) {
-            if (cookingProduct.getName().equals(itemName)) {
+            if (cookingProduct.getName().equalsIgnoreCase(itemName)) {
                 return cookingProduct;
             }
         }

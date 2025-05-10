@@ -24,7 +24,7 @@ public class TrashCan extends Tool{
         }else if(level == StackLevel.Iridium){
             this.percentage = 60;
         }
-        super(level , energyUsage , toolType.getName());
+        super(level , energyUsage , toolType.getName(), toolType);
     }
 
     public void use() {

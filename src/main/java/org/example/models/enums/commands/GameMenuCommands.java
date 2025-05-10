@@ -19,7 +19,8 @@ public enum GameMenuCommands implements MenuCommands {
     HelpReadingMap("help\\s+reading\\s+map"),
     ShowEnergy("energy\\s+show"),
     ToolsUse("tools\\s+use\\s+-d\\s+(?<direction>\\d)"),
-    CropInfo("crop\\s+info\\s+-n\\s+(?<cropName>\\S(.*\\S)?)\\s*");
+    CropInfo("crop\\s+info\\s+-n\\s+(?<cropName>\\S(.*\\S)?)\\s*"),
+    Fishing("fishing\\s+-p\\s+(?<fishPole>.+)");
 
     private final String pattern;
 

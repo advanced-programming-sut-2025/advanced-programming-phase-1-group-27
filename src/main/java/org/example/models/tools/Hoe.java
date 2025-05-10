@@ -24,7 +24,7 @@ public class Hoe extends Tool{
         }else if(level == StackLevel.Iridium){
             energyUsage = 1;
         }
-        super(level , energyUsage , toolType.getName());
+        super(level , energyUsage , toolType.getName(), toolType);
     }
 
     @Override

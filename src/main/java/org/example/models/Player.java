@@ -2,10 +2,7 @@ package org.example.models;
 
 import org.example.models.Map.Map;
 import org.example.models.NPCs.NPC;
-import org.example.models.enums.AbilityType;
-import org.example.models.enums.Gender;
-import org.example.models.enums.Menu;
-import org.example.models.enums.StackLevel;
+import org.example.models.enums.*;
 import org.example.models.enums.items.Recipe;
 import org.example.models.Map.FarmMap;
 import org.example.models.enums.items.ToolType;
@@ -99,10 +96,6 @@ public class Player extends User {
 
     public Tool getCurrentTool() {
         return currentTool;
-    }
-
-    public void setCurrentTool(Tool currentTool) {
-        this.currentTool = currentTool;
     }
 
     public Backpack getBackpack() {
@@ -326,7 +319,15 @@ public class Player extends User {
     public void trashItem(String itemName) {
 
     }
-    
+
+    public boolean isByWater() {
+        for (Cell adjacentCell : currentCell.getAdjacentCells()) {
+            if (adjacentCell.getType() == CellType.Water)
+                return true;
+        }
+        return false;
+    }
+
     private Item getAvailableIngredient(Ingredient ingredient) {
         for (Item item : ingredient.getPossibleIngredients()) {
             if (backpack.hasEnoughItem(item, ingredient.getQuantity()))

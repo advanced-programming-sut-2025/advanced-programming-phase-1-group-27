@@ -31,7 +31,7 @@ public enum ShopItems implements Item {
 
     public static ShopItems getItem(String itemName) {
         for (ShopItems shopItems : ShopItems.values()) {
-            if (shopItems.name().equalsIgnoreCase(itemName)) {
+            if (shopItems.getName().equalsIgnoreCase(itemName)) {
                 return shopItems;
             }
         }

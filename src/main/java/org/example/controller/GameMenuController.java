@@ -12,6 +12,7 @@ import org.example.models.enums.Plants.PlantType;
 import org.example.models.enums.Plants.TreeType;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
+import org.example.models.enums.items.FishType;
 import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
@@ -217,9 +218,11 @@ public class GameMenuController extends MenuController {
         ArtisanTypes artisanType = ArtisanTypes.getArtisan(item);
         if (artisanType == null)
             return new Result(false, "This item cannot be placed!");
+        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
+        if (cell.getType() != CellType.Free)
+            return new Result(false, "The desired cell is currently occupied!");
         player.getBackpack().reduceItems(item, 1);
         Artisan artisan = new Artisan(artisanType);
-        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction); // TODO: age vojood nadasht chi?
         cell.setObject(artisan);
         return new Result(true, "Item placed successfully!");
         // TODO: ba sobhan check kon chejoori place konim
@@ -325,5 +328,17 @@ public class GameMenuController extends MenuController {
         player.setDayEnergy(100000000);
         player.setMaxEnergy(100000000);
         return new Result(true, "Cheat Activated!!");
+    }
+
+    public Result fishing(String fishPoleName) {
+        ToolType type = ToolType.getFishPole(fishPoleName);
+        if (type == null)
+            return new Result(false, "Fish pole type is invalid!");
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        if (!player.getBackpack().hasEnoughItem(type, 1))
+            return new Result(false, "This fish pole is not available in your backpack!");
+        if (!player.isByWater())
+            return new Result(false, "You must be by the water!");
+        ArrayList<FishType> availableFish = FishType.getAvailableFish(App.getCurrentGame().getTime().getSeason());
     }
 }

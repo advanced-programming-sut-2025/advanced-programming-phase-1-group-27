@@ -1,7 +1,9 @@
 package org.example.view.shopview;
 
 import org.example.controller.shopcontroller.CarpenterShopController;
+import org.example.models.Result;
 import org.example.models.enums.Menu;
+import org.example.models.enums.commands.ShopCommands;
 import org.example.view.AppMenu;
 import org.example.view.GameMenuView;
 
@@ -23,5 +25,21 @@ public class CarpenterShop extends AppMenu {
         }
         String input = scanner.nextLine().trim();
         Matcher matcher;
+        if ((matcher = ShopCommands.BuildBuilding.getMatcher(input)) != null) {
+            System.out.println(controller.buildBuilding(
+                    matcher.group("buildingName").trim(),
+                    Integer.parseInt(matcher.group("x").trim()),
+                    Integer.parseInt(matcher.group("y").trim())
+            ));
+        }
+        else if ((matcher = ShopCommands.BuyAnimal.getMatcher(input)) != null) {
+            System.out.println(controller.buyAnimal(
+                    matcher.group("animal").trim(),
+                    matcher.group("name").trim()
+            ));
+        }
+        else {
+            System.out.println(new Result(false, "invalid command!"));
+        }
     }
 }

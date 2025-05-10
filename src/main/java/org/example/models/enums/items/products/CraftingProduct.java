@@ -41,7 +41,7 @@ public enum CraftingProduct implements Item {
 
     public static CraftingProduct getItem(String itemName) {
         for (CraftingProduct craftingProduct : CraftingProduct.values()) {
-            if (craftingProduct.getName().equals(itemName)) {
+            if (craftingProduct.getName().equalsIgnoreCase(itemName)) {
                 return craftingProduct;
             }
         }

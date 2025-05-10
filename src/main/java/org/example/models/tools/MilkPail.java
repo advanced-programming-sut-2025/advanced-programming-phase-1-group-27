@@ -14,7 +14,7 @@ public class MilkPail extends Tool{
         StackLevel level = ToolType.MilkPail.getLevel();
         this.price = 1000;
         int energyUsage = 4;
-        super(level, energyUsage , ToolType.MilkPail.getName());
+        super(level, energyUsage , ToolType.MilkPail.getName(), ToolType.MilkPail);
     }
 
     @Override

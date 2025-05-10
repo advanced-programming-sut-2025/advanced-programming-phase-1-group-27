@@ -57,7 +57,7 @@ public class FarmMap extends Map {
         return coops;
     }
 
-    public boolean freeRectangle(int x, int y, int width, int height) {
+    public boolean freeRectangle(int x, int y, int height, int width) {
         for (int i = x; i < x + height; i++) {
             for (int j = y; j < y + width; j++) {
                 if (cells[i][j].getType() != CellType.Free) {
@@ -68,7 +68,7 @@ public class FarmMap extends Map {
         return true;
     }
 
-    public void placeAnimalEnclosure(AnimalEnclosure animalEnclosure, int r, int c) {
+    private void placeAnimalEnclosure(AnimalEnclosure animalEnclosure, int r, int c) {
         int height = animalEnclosure.getType().getHeight(),
                 width = animalEnclosure.getType().getWidth();
         for (int i = r; i < r + height; i++) {

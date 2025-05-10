@@ -7,7 +7,7 @@ import org.example.models.enums.items.BuildingType;
 import java.util.ArrayList;
 
 public abstract class AnimalEnclosure extends Building {
-    protected ArrayList<Animal> animals;
+    protected ArrayList<Animal> animals = new ArrayList<>();
     protected final BuildingType type;
 
     protected AnimalEnclosure(BuildingType type, Cell topLeftCell) {

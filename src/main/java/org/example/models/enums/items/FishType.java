@@ -62,10 +62,28 @@ public enum FishType implements Item {
 
     public static FishType getItem(String itemName) {
         for (FishType fishType : FishType.values()) {
-            if (fishType.name().equalsIgnoreCase(itemName)) {
+            if (fishType.getName().equalsIgnoreCase(itemName)) {
                 return fishType;
             }
         }
         return null;
+    }
+
+    public static ArrayList<FishType> getAvailableFish(Season season) {
+        ArrayList<FishType> result = new ArrayList<>();
+        for (FishType fish : FishType.values()) {
+            if (!fish.isLegendary && fish.season == season)
+                result.add(fish);
+        }
+        return result;
+    }
+
+    public static ArrayList<FishType> getavailableLegendaryFish(Season season) {
+        ArrayList<FishType> result = new ArrayList<>();
+        for (FishType fish : FishType.values()) {
+            if (fish.isLegendary && fish.season == season)
+                result.add(fish);
+        }
+        return result;
     }
 }
