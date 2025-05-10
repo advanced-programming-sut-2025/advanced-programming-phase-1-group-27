@@ -20,7 +20,7 @@ public enum SaplingType implements Item, PlantSourceType {
         this.tree = plantType;
     }
 
-    public TreeType getTree() {
+    public TreeType getPlant() {
         return tree;
     }
 

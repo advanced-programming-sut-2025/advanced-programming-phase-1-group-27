@@ -105,6 +105,12 @@ public class GameMenuView extends AppMenu {
         else if (GameMenuCommands.BuildGreenHouse.getMatcher(input) != null) {
             System.out.println(controller.buildGreenHouse());
         }
+        else if ((matcher = GameMenuCommands.Plant.getMatcher(input)) != null) {
+            System.out.println(controller.plant(matcher.group("seedName"), matcher.group("direction")));
+        }
+        else if ((matcher = GameMenuCommands.ShowPlant.getMatcher(input)) != null) {
+            System.out.println(controller.showPlant(matcher.group("i"), matcher.group("j")));
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }

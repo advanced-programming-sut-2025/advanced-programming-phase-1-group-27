@@ -11,17 +11,19 @@ public enum GameMenuCommands implements MenuCommands {
     ExitMenu("menu\\s+exit"),
     ShowCurrentMenu("show\\s+current\\s+menu"),
     Home("go\\s+to\\s+home"),
-    PlaceItem("place\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-d\\s+(?<direction>\\d+)"),
+    PlaceItem("place\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-d\\s+(?<direction>\\d)"),
     ShowWeather("weather"),
     ForecastWeather("weather\\s+forecast"),
-    Walk("walk\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)"),
-    PrintMap("print\\s+map\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)\\s+-s\\s+(?<size>\\d+)"),
+    Walk("walk\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)"),
+    PrintMap("print\\s+map\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)\\s+-s\\s+(?<size>\\d+)"),
     HelpReadingMap("help\\s+reading\\s+map"),
     ShowEnergy("energy\\s+show"),
     ToolsUse("tools\\s+use\\s+-d\\s+(?<direction>\\d)"),
     CropInfo("crop\\s+info\\s+-n\\s+(?<cropName>\\S(.*\\S)?)\\s*"),
     Fishing("fishing\\s+-p\\s+(?<fishPole>.+)"),
-    BuildGreenHouse("greenhouse\\s+build");
+    BuildGreenHouse("greenhouse\\s+build"),
+    Plant("plant\\s+-s\\s+(?<seedName>\\S.*\\S)\\s+-d\\s+(?<direction>\\d)"),
+    ShowPlant("show\\s+plant\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)");
 
     private final String pattern;
 

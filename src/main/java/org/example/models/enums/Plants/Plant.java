@@ -36,6 +36,14 @@ public abstract class Plant {
         wateredToday = false;
     }
 
+    public int getTillNextHarvest() {
+        return tillNextHarvest;
+    }
+
+    public int getCurrentStage() {
+        return currentStage;
+    }
+
     public Stacks harvest() {
         if (tillNextHarvest > 0) {
             return null;

@@ -7,9 +7,7 @@ import org.example.models.Map.Map;
 import org.example.models.enums.ArtisanTypes;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Menu;
-import org.example.models.enums.Plants.CropType;
-import org.example.models.enums.Plants.PlantType;
-import org.example.models.enums.Plants.TreeType;
+import org.example.models.enums.Plants.*;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.FishType;
@@ -225,6 +223,84 @@ public class GameMenuController extends MenuController {
         return new Result(true, "GreenHouse Repaired!");
     }
 
+    private boolean subRectCouldBeGiant(int i, int j, Cell cell) {
+        Cell[][] cells = cell.getMap().getCells();
+        Crop crop = (Crop) cell.getObject();
+        CropType type = (CropType) crop.getType();
+
+        if (cells[i][j + 1].getObject() instanceof Crop crop1 && crop1.getType() == type &&
+                cells[i + 1][j].getObject() instanceof Crop crop2 && crop2.getType() == type &&
+                cells[i + 1][j + 1].getObject() instanceof Crop crop3 && crop3.getType() == type) {
+            crop.setGiant(true);
+            cells[i + 1][j + 1].setObject(crop);
+            cells[i][j + 1].setObject(crop);
+            cells[i + 1][j].setObject(crop);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkForGiantCrop(Cell cell) {
+        Crop crop = (Crop) cell.getObject();
+        CropType type = (CropType) crop.getType();
+        int i = cell.getPosition().getX(), j = cell.getPosition().getY();
+        Cell[][] cells = cell.getMap().getCells();
+        if (i > 0 && j > 0)
+            if (subRectCouldBeGiant(i - 1, j - 1, cell)) return true;
+        if (i > 0)
+            if (subRectCouldBeGiant(i - 1, j, cell)) return true;
+        if (j > 0)
+            if (subRectCouldBeGiant(i, j - 1, cell)) return true;
+        return subRectCouldBeGiant(i, j, cell);
+    }
+
+    public Result plant(String sourceName, String directionString) {
+        int direction = Integer.parseInt(directionString);
+        PlantSourceType source = SeedType.getItem(sourceName);
+        if (source == null)
+            source = SaplingType.getItem(sourceName);
+        if (source == null)
+            return new Result(false, "invalid Source!");
+        else if (!App.getCurrentGame().getCurrentPlayer().getBackpack().hasEnoughItem((Item) source, 1))
+            return new Result(false, "You don't Have This Seed/Sapling in Your Inventory!");
+
+        Cell cell = App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells().get(direction);
+
+        if (cell.getType() != CellType.Plowed)
+            return new Result(false, "Cell Not Plowed");
+        else if (cell.getObject() != null)
+            return new Result(false, "Cell is Occupied");
+        else if (source.getPlant() instanceof CropType cropType) {
+            cell.setObject(new Crop(cropType));
+            if (checkForGiantCrop(cell))
+                return new Result(true, "You planted A Crop. A " + cropType.getName() +
+                        ". And It Became GIANT!!!!");
+            else
+                return new Result(true, "You planted A Crop. A " + cropType.getName() + ".");
+        }
+        else if (source.getPlant() instanceof TreeType treeType) {
+            cell.setObject(new Tree(treeType));
+            return new Result(true, "You planted A Tree. A " + treeType.getName() + ".");
+        } else {
+            return new Result(false, "WTF in plant/GameController\n" +
+                    sourceName + " " + direction);
+        }
+
+    }
+
+    public Result showPlant(String iString, String jString) {
+        int i = Integer.parseInt(iString), j = Integer.parseInt(jString);
+        Cell cell = App.getCurrentGame().getCurrentPlayer().getCurrentMap().getCell(i, j);
+
+        if (cell.getObject() instanceof Plant crop) {
+            return new Result(true, "Name: " + crop.getType().getName() + "\n" +
+                        "Total time left: " + crop.getTillNextHarvest() + "\n" +
+                        "Stage: " + crop.getCurrentStage() + " (0-based)\n" +
+                        (crop.getWateredToday()? "Watered today": "Not Watered today"));
+        }
+        else
+            return new Result(false, "No Plant Here!");
+    }
 
     public Result placeItem(String itemName, int direction) {
         Player player = App.getCurrentGame().getCurrentPlayer();
