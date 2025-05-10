@@ -95,6 +95,9 @@ public class GameMenuView extends AppMenu {
                     Integer.parseInt(matcher.group("count"))
             ));
         }
+        else if ((matcher = GameMenuCommands.CropInfo.getMatcher(input)) != null) {
+            System.out.println(controller.cropInfo(matcher.group("cropName")));
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }

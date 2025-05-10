@@ -2,6 +2,7 @@ package org.example.models.enums.Plants;
 
 import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
+import org.example.models.enums.items.MineralType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,5 +93,14 @@ public enum SeedType implements PlantSourceType, Item {
     @Override
     public Integer getPrice() {
         return 0;
+    }
+
+    public static SeedType getItem(String itemName) {
+        for (SeedType seedType : values()) {
+            if (seedType.name().equalsIgnoreCase(itemName.replace(" ", ""))) {
+                return seedType;
+            }
+        }
+        return null;
     }
 }

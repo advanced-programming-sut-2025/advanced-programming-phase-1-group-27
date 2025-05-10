@@ -7,7 +7,10 @@ import org.example.models.Map.NPCMap;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.CellType;
+import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.Plants.Plant;
+import org.example.models.enums.Plants.SaplingType;
+import org.example.models.enums.Plants.SeedType;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -143,7 +146,8 @@ public class Game {
         return npcMap;
     }
 
-    public static Item getItemByName(String itemName) { // for cheat commands
+    public static Item getItemByName(String itemName) {// for cheat commands
+        itemName = itemName.replace(" ", "");
         Item result = AnimalProduct.getItem(itemName);
         if (result != null)
             return result;
@@ -190,6 +194,19 @@ public class Game {
         result = ToolType.getItem(itemName);
         if (result != null)
             return result;
+
+        result = SeedType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = FishType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = SaplingType.getItem(itemName);
+        if (result != null)
+            return result;
+
         return null;
     }
 

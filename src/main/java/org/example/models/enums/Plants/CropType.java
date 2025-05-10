@@ -253,16 +253,20 @@ public enum CropType implements PlantType {
         return totalHarvestTime;
     }
 
-    public Integer getRegrowthTime() {
-        return regrowthTime;
-    }
-
     public int getHarvestCycle() {
         if (regrowthTime == null) {
             return -1;
         } else {
             return (int) regrowthTime;
         }
+    }
+
+    public boolean getOneTime() {
+        return oneTime;
+    }
+
+    public boolean canBecomeGiant() {
+        return canBecomeGiant;
     }
 
     public boolean isOneTime() {
@@ -289,4 +293,14 @@ public enum CropType implements PlantType {
     public String toString() {
         return this.name();
     }
+
+    public static CropType getItem(String itemName) {
+        for (CropType item : values()) {
+            if (item.name().equalsIgnoreCase(itemName.replace(" ", ""))) {
+                return item;
+            }
+        }
+        return null;
+    }
+
 }

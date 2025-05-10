@@ -110,4 +110,13 @@ public enum FruitType implements Item {
     public String getName() {
         return this.toString();
     }
+
+    public static FruitType getItem(String itemName) {
+        for (FruitType item : values()) {
+            if (item.name().equalsIgnoreCase(itemName.replace(" ", ""))) {
+                return item;
+            }
+        }
+        return null;
+    }
 }

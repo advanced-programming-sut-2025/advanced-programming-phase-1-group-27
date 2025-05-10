@@ -18,7 +18,8 @@ public enum GameMenuCommands implements MenuCommands {
     PrintMap("print\\s+map\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)\\s+-s\\s+(?<size>\\d+)"),
     HelpReadingMap("help\\s+reading\\s+map"),
     ShowEnergy("energy\\s+show"),
-    ToolsUse("tools\\s+use\\s+-d\\s+(?<direction>\\d)");
+    ToolsUse("tools\\s+use\\s+-d\\s+(?<direction>\\d)"),
+    CropInfo("crop\\s+info\\s+-n\\s+(?<cropName>\\S(.*\\S)?)\\s*");
 
     private final String pattern;
 

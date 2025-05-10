@@ -7,6 +7,9 @@ import org.example.models.Map.Map;
 import org.example.models.enums.ArtisanTypes;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Menu;
+import org.example.models.enums.Plants.CropType;
+import org.example.models.enums.Plants.PlantType;
+import org.example.models.enums.Plants.TreeType;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.ToolType;
@@ -182,6 +185,26 @@ public class GameMenuController extends MenuController {
             return new Result(false, "You Don't Have A Tool in Hand");
         }
         return tool.use(cell);
+    }
+
+    public Result cropInfo(String plantName) {
+        PlantType plantType = CropType.getItem(plantName);
+        if (plantType == null)
+            plantType = TreeType.getItem(plantName);
+        if (plantType == null)
+            return new Result(false, "Plant Type Not Found");
+        return new Result(true, "Name: " + plantType.getName() +
+                "Source: " + ((Item) plantType.getSource()).getName() +
+                "Stages: " + (plantType.getStages().toString()).replaceAll("\\]|\\[", "") +
+                "Total Harvest Time: " + plantType.getTotalHarvestTime() +
+                "One Time: " + ((Boolean) plantType.getOneTime()).toString().toUpperCase() +
+                "Regrowth Time: " + plantType.getHarvestCycle() +
+                "Base Sell Price: " + plantType.getFruit() +
+                "Is Edible: " + ((Boolean) plantType.getFruit().isFruitEdible()).toString().toUpperCase() +
+                "Base Energy: " + plantType.getFruit().getEnergy() +
+                "Season(s): " + plantType.getSeasons().toString().replaceAll("\\[|\\]", "") +
+                "Can Become Giant: " + (plantType instanceof CropType crop?
+                ((Boolean) crop.canBecomeGiant()).toString().toUpperCase() : ""));
     }
 
     public Result placeItem(String itemName, int direction) {
