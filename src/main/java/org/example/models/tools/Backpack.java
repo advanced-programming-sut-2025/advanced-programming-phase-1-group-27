@@ -23,7 +23,7 @@ public class Backpack extends Tool{
         } else if (level == StackLevel.Deluxe) {
             this.capacity = -1;//infinite
         }
-        super(level, energyUsage, toolType.getName());
+        super(level, energyUsage, toolType.getName() , toolType);
     }
 
     public List<Stacks> getItems() {
@@ -204,5 +204,23 @@ public class Backpack extends Tool{
         if (item instanceof ProcessedProduct)
             return false;
         return item == slotItem;
+    }
+
+    public Item getItemWithName(String itemName) {
+        for (Stacks slot : items) {
+            if(slot.getItem().getName().equals(itemName)){
+                return slot.getItem();
+            }
+        }
+        return null;
+    }
+
+    public StackLevel getStackLevel(Item item) {
+        for (Stacks slot : items) {
+            if(slot.getItem().getName().equals(item.getName())){
+                return slot.getStackLevel();
+            }
+        }
+        return null;
     }
 }

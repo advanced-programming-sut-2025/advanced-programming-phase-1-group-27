@@ -1,45 +1,192 @@
 package org.example.controller.InteractionsWithOthers;
 
-import org.example.models.Result;
+import org.example.models.*;
+import org.example.models.NPCs.NPC;
+import org.example.models.Relations.Dialogue;
+import org.example.models.Relations.Relation;
+import org.example.models.enums.DialogueType;
+import org.example.models.tools.Backpack;
 
 public class InteractionsWithUserController {
-    public Result talk(){
+    public Result friendship() {
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        StringBuilder result = new StringBuilder();
+        result.append("Relations with other players:\n");
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            if (player.getUsername().equals(currentPlayer.getUsername())) {
+                continue;
+            }
+            Relation relation = currentPlayer.getRelations().get(player);
+            if (relation == null) {
+                relation = new Relation();
+                currentPlayer.getRelations().put(player, relation);
+            }
+            result.append(player.getUsername()).append(" : Level = ").append(relation.getLevel())
+                    .append(" XP = ").append(relation.getXp()).append("\n");
+        }
+        return new Result(true, result.toString());
+    }
+
+    public Result talk(String username, String message) {
+        Player player = getPlayerWithUsername(username);
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        if (player == null) {
+            return new Result(false, "Player not found");
+        }
+        if (!isPlayerNear(player)) {
+            return new Result(false, "Player is not near you");
+        }
+        if (currentPlayer.getPlayerMetToday().get(player) == Boolean.FALSE) {
+            currentPlayer.getPlayerMetToday().put(player, Boolean.TRUE);
+            player.getPlayerMetToday().put(currentPlayer, Boolean.TRUE);
+            currentPlayer.addXP(player, 20);
+            player.addXP(currentPlayer, 20);
+        }
+        Dialogue dialogue = new Dialogue(DialogueType.talk, null, message, player, currentPlayer);
+        App.getCurrentGame().addDialogue(dialogue);
+        player.addDialogue(dialogue);
+        currentPlayer.addDialogue(dialogue);
+        return new Result(true, "Message sent to " + player.getUsername());
+    }
+
+    public Result talkHistory(String username) {
+        Player player = getPlayerWithUsername(username);
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        if (player == null) {
+            return new Result(false, "Player not found");
+        }
+        if (!isPlayerNear(player)) {
+            return new Result(false, "Player is not near you");
+        }
+        StringBuilder result = new StringBuilder();
+        result.append("All messages with " + username + " :\n");
+        for (Dialogue dialogue : App.getCurrentGame().getDialogues()) {
+            if (dialogue.getType() == DialogueType.talk) {
+                if (dialogue.getSender().getUsername().equals(username)
+                        && dialogue.getResponder().getUsername().equals(currentPlayer.getUsername())) {
+                    result.append(dialogue.getSender().getUsername()).append(" to ")
+                            .append(dialogue.getResponder().getUsername()).append("\n");
+                    result.append(dialogue.getInput()).append("\n");
+                } else if (dialogue.getSender().getUsername().equals(currentPlayer.getUsername())
+                        && dialogue.getResponder().getUsername().equals(username)) {
+                    result.append(dialogue.getSender().getUsername()).append(" to ")
+                            .append(dialogue.getResponder().getUsername()).append("\n");
+                    result.append(dialogue.getInput()).append("\n");
+                }
+            }
+        }
+        return new Result(true, result.toString());
+    }
+
+    public Result gift(String username, String stringItem, String stringAmount) {
+// TODO: function incomplete
+        Player player = getPlayerWithUsername(username);
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        int amount = Integer.parseInt(stringAmount);
+        if (player == null) {
+            return new Result(false, "Player not found");
+        }
+        if (!isPlayerNear(player)) {
+            return new Result(false, "Player is not near you");
+        }
+        Relation relation = currentPlayer.getRelations().get(player);
+        if (relation == null) {
+            relation = new Relation();
+            currentPlayer.getRelations().put(player, relation);
+        }
+        if (relation.getLevel() == 0) {
+            return new Result(false, "Relation level is 0");
+        }
+        Backpack backpack1 = currentPlayer.getBackpack();
+        Item itemType = backpack1.getItemWithName(stringItem);
+        if (itemType == null) {
+            return new Result(false, "Item not found");
+        }
+        if (!backpack1.hasEnoughItem(itemType, amount)) {
+            return new Result(false, "Item is not enough");
+        }
+        String respond = null;
+        if (currentPlayer.getPlayerGiftToday().get(player) == Boolean.FALSE) {
+            currentPlayer.getPlayerGiftToday().put(player, Boolean.TRUE);
+            player.getPlayerGiftToday().put(currentPlayer, Boolean.TRUE);
+            respond = "1";//That means first time in day
+        }
+        Dialogue dialogue = new Dialogue(DialogueType.gift, respond, "You have been gifted "
+                + amount + " * " + itemType.getName(), player, currentPlayer);
+        App.getCurrentGame().addDialogue(dialogue);
+        player.addDialogue(dialogue);
+        currentPlayer.addDialogue(dialogue);
+        backpack1.reduceItems(itemType, amount);
+        player.getBackpack().addItems(itemType, backpack1.getStackLevel(itemType), amount);
+        return new Result(true, "Gift has been send successfully");
+        //TODO : nomre dehi
+    }
+
+    public Result giftList() {
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        for(Dialogue dialogue : currentPlayer.getDialogues()) {
+            if(dialogue.getType() == DialogueType.gift) {
+                if(dialogue.getResponder().getUsername().equals(currentPlayer.getUsername())) {
+
+                }
+            }
+        }
+        return null;
+    }
+
+    public Result giftRate() {
 // TODO: function incomplete
         return null;
     }
 
-    public Result talkHistory(){
+    public Result giftHistory(String username) {
+        Player player = getPlayerWithUsername(username);
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        StringBuilder result = new StringBuilder();
+        result.append("All Gifts with ").append(username).append(" :\n");
+        for (Dialogue dialogue : App.getCurrentGame().getDialogues()) {
+            if (dialogue.getType().equals(DialogueType.gift)) {
+                if (dialogue.getSender().getUsername().equals(player.getUsername())
+                        && dialogue.getResponder().getUsername().equals(currentPlayer.getUsername())) {
+                    result.append(dialogue.getSender().getUsername()).append(" to ").append(dialogue.getResponder().getUsername()).append(" : ").
+                            append(dialogue.getInput()).append("\n");
+                } else if (dialogue.getSender().getUsername().equals(currentPlayer.getUsername())
+                        && dialogue.getResponder().getUsername().equals(player.getUsername())) {
+                    result.append(dialogue.getSender().getUsername()).append(" to ").append(dialogue.getResponder().getUsername()).append(" : ").
+                            append(dialogue.getInput()).append("\n");
+                }
+            }
+        }
+        return new Result(true, result.toString());
+    }
+
+    public Result hug() {
 // TODO: function incomplete
         return null;
     }
 
-    public Result gift(){
+    public Result flower() {
 // TODO: function incomplete
         return null;
     }
 
-    public Result giftList(){
-// TODO: function incomplete
-        return null;
+    private boolean isPlayerNear(Player player) {
+        int playerX = player.getPosition().getX();
+        int playerY = player.getPosition().getY();
+        int currentX = App.getCurrentGame().getCurrentPlayer().getPosition().getX();
+        int currentY = App.getCurrentGame().getCurrentPlayer().getPosition().getY();
+        int distanceX = Math.abs(playerX - currentX);
+        int distanceY = Math.abs(playerY - currentY);
+        return distanceY <= 1
+                && distanceX <= 1;
     }
 
-    public Result giftRate(){
-// TODO: function incomplete
-        return null;
-    }
-
-    public Result giftHistory(){
-// TODO: function incomplete
-        return null;
-    }
-
-    public Result hug(){
-// TODO: function incomplete
-        return null;
-    }
-
-    public Result flower(){
-// TODO: function incomplete
+    private Player getPlayerWithUsername(String username) {
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            if (player.getUsername().equals(username)) {
+                return player;
+            }
+        }
         return null;
     }
 

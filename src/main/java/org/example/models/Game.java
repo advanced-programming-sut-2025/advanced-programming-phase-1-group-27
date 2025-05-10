@@ -29,7 +29,7 @@ public class Game {
     private Weather currentWeather, tomorrowWeather = null;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
-    private static ArrayList<Dialogue> dialogues = new ArrayList<>();
+    private ArrayList<Dialogue> dialogues = new ArrayList<>();
 
     public Game(ArrayList<Player> players) {
         this.admin = players.getFirst();
@@ -219,5 +219,13 @@ public class Game {
                 }
             }
         }
+    }
+
+    public ArrayList<Dialogue> getDialogues() {
+        return dialogues;
+    }
+
+    public void addDialogue(Dialogue dialogue) {
+        dialogues.add(dialogue);
     }
 }

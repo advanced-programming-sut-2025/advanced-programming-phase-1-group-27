@@ -19,7 +19,7 @@ public class NPC {
     private Features features;
     private ArrayList<Item> favorites;
     private int daysForThirdQuest;
-    private Map<Player , Relation> relations = new HashMap<>();
+    private Map<Player, Relation> relations = new HashMap<>();
     private Quest[] quests = new Quest[3];
 
 
@@ -54,21 +54,24 @@ public class NPC {
     public ArrayList<Item> getFavorites() {
         return favorites;
     }
-    public void addXP(Player player , int xp) {
+
+    public void addXP(Player player, int xp) {
+        if (!relations.containsKey(player)) {
+            relations.put(player, new Relation());
+        }
         Relation relation = relations.get(player);
-        if(relation == null) {
-            relation = new Relation();
-        }
         int currentXp = relation.getXp();
+        int level = relation.getLevel();
         currentXp += xp;
-        if(currentXp > 200) {
-            relation.setLevel(relation.getLevel() + 1);
-            currentXp -= 200;
-            relation.setXp(currentXp);
+        if (currentXp > 200) {
+            if (level == 799) {
+                currentXp = 200;
+            } else {
+                relation.setLevel(relation.getLevel() + 1);
+                currentXp -= 200;
+            }
         }
-        if(relation.getLevel() > 799){
-            relation.setLevel(799);
-        }
+        relation.setXp(currentXp);
     }
 
 }
