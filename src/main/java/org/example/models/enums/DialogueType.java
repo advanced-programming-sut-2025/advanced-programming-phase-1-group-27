@@ -4,6 +4,7 @@ public enum DialogueType {
     Marriage,
     Trade,
     gift,
-    talk;
-
+    talk,
+    TradeOffer,
+    TradeRequest;
 }

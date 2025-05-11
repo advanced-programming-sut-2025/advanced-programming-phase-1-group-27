@@ -4,19 +4,26 @@ import org.example.models.Item;
 import org.example.models.Player;
 import org.example.models.enums.DialogueType;
 
-public class Trade extends Dialogue{
+public class Trade extends Dialogue {
 
     private Item offeredItem;
     private Item requestedItem;
     private int offeredItemQuantity;
     private int requestedItemQuantity;
     private int moneyOffered;
-    private int moneyRequested;
+    private DialogueType tradeType;
     private int id;
     private static int idCounter = 1;
 
-    public Trade(Player responder, Player sender) {
-        super(DialogueType.Trade, null , null , responder, sender);
+    public Trade(Player responder, Player sender, Item offeredItem, int offeredItemQuantity, Item requestedItem,
+                 int requestedItemQuantity, int moneyOffered , DialogueType tradeType) {
+        super(DialogueType.Trade, null, null, responder, sender);
+        this.offeredItem = offeredItem;
+        this.offeredItemQuantity = offeredItemQuantity;
+        this.requestedItem = requestedItem;
+        this.requestedItemQuantity = requestedItemQuantity;
+        this.moneyOffered = moneyOffered;
+        this.tradeType = tradeType;
         id = idCounter;
         idCounter++;
     }
@@ -41,20 +48,16 @@ public class Trade extends Dialogue{
         return moneyOffered;
     }
 
-    public int getMoneyRequested() {
-        return moneyRequested;
-    }
-
     public int getId() {
         return id;
     }
 
-    public void setOfferedItem(Item offeredItem , int offeredItemQuantity) {
+    public void setOfferedItem(Item offeredItem, int offeredItemQuantity) {
         this.offeredItem = offeredItem;
         this.offeredItemQuantity = offeredItemQuantity;
     }
 
-    public void setRequestedItem(Item requestedItem , int requestedItemQuantity) {
+    public void setRequestedItem(Item requestedItem, int requestedItemQuantity) {
         this.requestedItem = requestedItem;
         this.requestedItemQuantity = requestedItemQuantity;
     }
@@ -62,9 +65,4 @@ public class Trade extends Dialogue{
     public void setMoneyOffered(int moneyOffered) {
         this.moneyOffered = moneyOffered;
     }
-
-    public void setMoneyRequested(int moneyRequested) {
-        this.moneyRequested = moneyRequested;
-    }
-
 }

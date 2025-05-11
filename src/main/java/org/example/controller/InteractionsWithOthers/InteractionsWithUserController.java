@@ -12,61 +12,61 @@ import java.util.ArrayList;
 
 public class InteractionsWithUserController {
 
-    public Result getNotification(){
+    public Result getNotification() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         StringBuilder result = new StringBuilder();
         ArrayList<Player> talk = new ArrayList<>();
         ArrayList<Player> trade = new ArrayList<>();
         ArrayList<Player> gift = new ArrayList<>();
         ArrayList<Player> marriage = new ArrayList<>();
-        for(Dialogue dialogue : currentPlayer.getDialogues()){
-            if(dialogue.getType() == DialogueType.talk){
-                if(!talk.contains(dialogue.getSender())){
+        for (Dialogue dialogue : currentPlayer.getDialogues()) {
+            if (dialogue.getType() == DialogueType.talk) {
+                if (!talk.contains(dialogue.getSender())) {
                     talk.add(dialogue.getSender());
                 }
             }
-            if(dialogue.getType() == DialogueType.gift){
-                if(!gift.contains(dialogue.getSender())){
+            if (dialogue.getType() == DialogueType.gift) {
+                if (!gift.contains(dialogue.getSender())) {
                     gift.add(dialogue.getSender());
                 }
             }
-            if(dialogue.getType() == DialogueType.Trade){
-                if(!trade.contains(dialogue.getSender())){
+            if (dialogue.getType() == DialogueType.Trade) {
+                if (!trade.contains(dialogue.getSender())) {
                     trade.add(dialogue.getSender());
                 }
             }
-            if(dialogue.getType() == DialogueType.Marriage){
-                if(!marriage.contains(dialogue.getSender())){
+            if (dialogue.getType() == DialogueType.Marriage) {
+                if (!marriage.contains(dialogue.getSender())) {
                     marriage.add(dialogue.getSender());
                 }
             }
         }
-        if(!talk.isEmpty()){
+        if (!talk.isEmpty()) {
             result.append("Talk : \n");
-            for(Player player : talk){
+            for (Player player : talk) {
                 result.append(player.getUsername()).append("\n");
             }
             currentPlayer.deleteTalk();
         }
-        if(!gift.isEmpty()){
+        if (!gift.isEmpty()) {
             result.append("Gift : \n");
-            for(Player player : gift){
+            for (Player player : gift) {
                 result.append(player.getUsername()).append("\n");
             }
         }
-        if(!trade.isEmpty()){
+        if (!trade.isEmpty()) {
             result.append("Trade : \n");
-            for(Player player : trade){
+            for (Player player : trade) {
                 result.append(player.getUsername()).append("\n");
             }
         }
-        if(!marriage.isEmpty()){
+        if (!marriage.isEmpty()) {
             result.append("Marriage : \n");
-            for(Player player : marriage){
+            for (Player player : marriage) {
                 result.append(player.getUsername()).append("\n");
             }
         }
-        return new Result(true , result.toString());
+        return new Result(true, result.toString());
     }
 
     public Result friendship() {
@@ -77,7 +77,7 @@ public class InteractionsWithUserController {
             if (player.getUsername().equals(currentPlayer.getUsername())) {
                 continue;
             }
-            if(!currentPlayer.getRelations().containsKey(player)) {
+            if (!currentPlayer.getRelations().containsKey(player)) {
                 currentPlayer.getRelations().put(player, new Relation());
             }
             Relation relation = currentPlayer.getRelations().get(player);
@@ -148,7 +148,7 @@ public class InteractionsWithUserController {
         if (!isPlayerNear(player)) {
             return new Result(false, "Player is not near you");
         }
-        if(!currentPlayer.getRelations().containsKey(player)) {
+        if (!currentPlayer.getRelations().containsKey(player)) {
             currentPlayer.getRelations().put(player, new Relation());
         }
         Relation relation = currentPlayer.getRelations().get(player);
@@ -221,27 +221,27 @@ public class InteractionsWithUserController {
                 }
             }
         }
-        if(dialogue1 == null) {
+        if (dialogue1 == null) {
             return new Result(false, "Gift number is invalid");
         }
         Player player1 = dialogue1.getResponder();
         Player player2 = dialogue1.getSender();
         String add = "";
-        if(dialogue1.getRespond().equals("1")) {//It is first time
+        if (dialogue1.getRespond().equals("1")) {//It is first time
             int xp = (rate - 3) * 30 + 15;
             add = String.valueOf(xp);
-            if(xp < 0){
+            if (xp < 0) {
                 xp *= -1;
-                player1.decreaseXP(player2 , xp);
-                player2.decreaseXP(player1 , xp);
-            }else {
-                player1.addXP(player2 , xp);
-                player2.addXP(player1 , xp);
+                player1.decreaseXP(player2, xp);
+                player2.decreaseXP(player1, xp);
+            } else {
+                player1.addXP(player2, xp);
+                player2.addXP(player1, xp);
             }
         }
         player2.deleteDialogue(dialogue1);
         player1.deleteDialogue(dialogue1);
-        return new Result(true , "Your rate has been added " + add);
+        return new Result(true, "Your rate has been added " + add);
     }
 
     public Result giftHistory(String username) {
@@ -268,51 +268,51 @@ public class InteractionsWithUserController {
     public Result hug(String username) {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Player player = getPlayerWithUsername(username);
-        if(player == null) {
+        if (player == null) {
             return new Result(false, "Player not found");
         }
-        if(!isPlayerNear(player)) {
+        if (!isPlayerNear(player)) {
             return new Result(false, "Player is not near");
         }
-        if(!currentPlayer.getRelations().containsKey(player)) {
+        if (!currentPlayer.getRelations().containsKey(player)) {
             currentPlayer.getRelations().put(player, new Relation());
         }
         Relation relation = currentPlayer.getRelations().get(player);
-        if(relation.getLevel() < 2){
+        if (relation.getLevel() < 2) {
             return new Result(false, "Your level is too low");
         }
-        if(currentPlayer.getPlayerHuggedToday().get(player) == null
+        if (currentPlayer.getPlayerHuggedToday().get(player) == null
                 || currentPlayer.getPlayerHuggedToday().get(player) == Boolean.FALSE) {
             currentPlayer.getPlayerHuggedToday().put(player, Boolean.TRUE);
             player.getPlayerHuggedToday().put(player, Boolean.TRUE);
             currentPlayer.addXP(player, 60);
             player.addXP(currentPlayer, 60);
         }
-        return new Result(true , "You hugged your friend!");
+        return new Result(true, "You hugged your friend!");
     }
 
     public Result flower(String username) {
         Player player = getPlayerWithUsername(username);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Backpack backpack = currentPlayer.getBackpack();
-        if(player == null) {
+        if (player == null) {
             return new Result(false, "Player not found");
         }
-        if(!isPlayerNear(player)) {
+        if (!isPlayerNear(player)) {
             return new Result(false, "Player is not near");
         }
-        if(!backpack.hasEnoughItem(FruitType.FairyRose , 1)){
+        if (!backpack.hasEnoughItem(FruitType.FairyRose, 1)) {
             return new Result(false, "You don't have Rose!");
         }
-        backpack.reduceItems(FruitType.FairyRose , 1);
-        player.getBackpack().addItems(FruitType.FairyRose , backpack.getStackLevel(FruitType.FairyRose) , 1);
+        backpack.reduceItems(FruitType.FairyRose, 1);
+        player.getBackpack().addItems(FruitType.FairyRose, backpack.getStackLevel(FruitType.FairyRose), 1);
         String add = "";
-        if(currentPlayer.canFlowered(player)){
+        if (currentPlayer.canFlowered(player)) {
             currentPlayer.goNextLevel(player);
             player.goNextLevel(currentPlayer);
             add = "Relation is in level 3";
         }
-        return new Result(true , "You have give your friend flower!" + add);
+        return new Result(true, "You have give your friend flower!" + add);
     }
 
     private boolean isPlayerNear(Player player) {
