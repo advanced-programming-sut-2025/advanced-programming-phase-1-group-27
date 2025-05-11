@@ -14,7 +14,8 @@ public enum ShopItems implements Item {
     WheatFlour(125, null),
     Hay(50, null),
     TroutSoup(250, null),
-    Coin(1, null);
+    Coin(1, null),
+    Rice(250, null);
 
     private final int price;
     private final Recipe recipe;

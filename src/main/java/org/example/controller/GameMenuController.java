@@ -11,7 +11,9 @@ import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.FishType;
 import org.example.models.enums.items.MineralType;
+import org.example.models.enums.items.Recipe;
 import org.example.models.enums.items.ToolType;
+import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
 
@@ -468,6 +470,7 @@ public class GameMenuController extends MenuController {
             else
                 break;
         }
+        player.fishXp(5);
         return new Result(false, result.toString());
     }
 
@@ -475,25 +478,31 @@ public class GameMenuController extends MenuController {
         ArtisanTypes artisanType = ArtisanTypes.getArtisan(artisanName);
         if (artisanType == null)
             return new Result(false, "Artisan name is invalid!");
-        Player player = App.getCurrentGame().getCurrentPlayer();
-        Artisan artisan = null;
-        for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
-            if (adjacentCell.getObject() instanceof Artisan) {
-                if (((Artisan) adjacentCell.getObject()).getType() == artisanType) {
-                    artisan = (Artisan) adjacentCell.getObject();
-                }
-            }
-        }
+        Artisan artisan = getNearArtisan(artisanType);
         if (artisan == null)
             return new Result(false, "The is no " + artisanName + " nearby!");
-        // TODO: sobhan. pokht o paz
-        return null;
+        String[] itemsList = itemList.split("\\s+");
+        Recipe recipe = artisanType.getRecipe(itemsList);
+        if (recipe == null)
+            return new Result(false, "There is no recipe for the desired items!");
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        if (!player.hasEnoughIngredients(recipe))
+            return new Result(false, "You don't have enough ingredients!");
+
     }
 
     public Result getArtisanProduct(String artisanName) {
         ArtisanTypes artisanType = ArtisanTypes.getArtisan(artisanName);
         if (artisanType == null)
             return new Result(false, "Artisan name is invalid!");
+        Artisan artisan = getNearArtisan(artisanType);
+        if (artisan == null)
+            return new Result(false, "The is no " + artisanName + " nearby!");
+        // TODO: sobhan. pokht o paz
+        return null;
+    }
+
+    private Artisan getNearArtisan(ArtisanTypes artisanType) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Artisan artisan = null;
         for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
@@ -503,10 +512,7 @@ public class GameMenuController extends MenuController {
                 }
             }
         }
-        if (artisan == null)
-            return new Result(false, "The is no " + artisanName + " nearby!");
-        // TODO: sobhan. pokht o paz
-        return null;
+        return artisan;
     }
 
     private int getNumberOfFish() {

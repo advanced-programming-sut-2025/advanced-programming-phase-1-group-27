@@ -7,7 +7,7 @@ public enum CheatCommands {
     CheatCode("\\s*cheat\\s+code\\s*"),
     CheatAdvanceTime("\\s*cheat\\s+advance\\s+time\\s+(?<X>\\d+)h\\s*"),
     CheatAdvanceDate("\\s*cheat\\s+advance\\s+date\\s+(?<X>\\d+)d\\s*"),
-    CheatThor("cheat\\s+Thor\\s+-l\\s+(?<i>\\d)\\s+(?<j>\\d)"),
+    CheatThor("cheat\\s+Thor\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)"),
     CheatSetWeather("cheat\\s+weather\\s+set\\s+(?<weatherName>\\S+)"),
     CheatSetEnergy("energy\\s+set\\s+-v\\s+(?<value>\\d+)"),
     CheatEnergyUnlimited("energy\\s+unlimited"),
