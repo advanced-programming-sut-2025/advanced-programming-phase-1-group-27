@@ -8,8 +8,15 @@ import org.example.models.Relations.Trade;
 import org.example.models.Result;
 import org.example.models.enums.DialogueType;
 import org.example.models.tools.Backpack;
+import org.example.view.TradeView;
 
 public class TradeController {
+    private final TradeView view;
+
+    public TradeController(TradeView view) {
+        this.view = view;
+    }
+
     public Result startTrade() {
         StringBuilder result = new StringBuilder();
         result.append("Available players:\n");

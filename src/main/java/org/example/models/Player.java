@@ -50,6 +50,16 @@ public class Player extends User {
     private Player spouse = null; // in case the player gets married
     private Buff currentBuff = null;
 
+    {
+        backpack.addItems(ToolType.BasicAxe, ToolType.BasicAxe.getLevel(), 1);
+        backpack.addItems(ToolType.BasicHoe, ToolType.BasicHoe.getLevel(), 1);
+        backpack.addItems(ToolType.BasicPickaxe, ToolType.BasicPickaxe.getLevel(), 1);
+        backpack.addItems(ToolType.Scythe, ToolType.Scythe.getLevel(), 1);
+        backpack.addItems(ToolType.BasicWateringCan, ToolType.BasicWateringCan.getLevel(), 1);
+        backpack.addItems(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1);
+        backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
+    }
+
     public Player(String username, String password, String nickname, String email, Gender gender) {
         super(username, password, nickname, email, gender);
         initFields();
@@ -485,10 +495,6 @@ public class Player extends User {
 
     public boolean isMarried(){
         return spouse != null;
-    }
-
-    public void marryWIth(Player player){
-        spouse = player;
     }
 
     public java.util.Map<Player, Relation> getRelations() {

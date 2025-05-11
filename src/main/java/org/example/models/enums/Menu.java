@@ -20,6 +20,7 @@ public enum Menu {
     PierreGeneralShop(new PierreGeneralShop()),
     StardropSaloonShop(new StardropSaloonShop()),
     AnimalEnclosure(new AnimalEnclosureView()),
+    Trade(new TradeView()),
     ExitMenu(new ExitMenu());
 
     private final AppMenu menu;

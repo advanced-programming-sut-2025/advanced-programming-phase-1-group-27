@@ -342,12 +342,12 @@ public class GameMenuController extends MenuController {
         Item item = Game.getItemByName(itemName);
         if (item == null)
             return new Result(false, "Item not found!");
+        if (count < 0)
+            return new Result(false, "Invalid quantity!");
         StackLevel level = item instanceof ToolType? ((ToolType) item).getLevel() : StackLevel.Basic;
-        int overflow = player.getBackpack().addItems(item, level, count);
-        if (overflow > 0) {
-            player.getBackpack().reduceItems(item, level, count - overflow);
-            return new Result(false, "You don't have enough space!");
-        }
+        if (!player.getBackpack().canAdd(item, level, count))
+            return new Result(false, "You don't have enough space in your backpack!");
+        player.getBackpack().addItems(item, level, count);
         return new Result(true, count + " of " + itemName + "added to the backpack!");
     }
 

@@ -51,6 +51,7 @@ public class Backpack extends Tool{
                     }
                 }
             }
+            mergeItems();
             return true;
         }
     }
@@ -69,6 +70,7 @@ public class Backpack extends Tool{
                 }
             }
         }
+        mergeItems();
     }
 
     public int addItems(Item item, StackLevel level, int amount) {
@@ -190,22 +192,6 @@ public class Backpack extends Tool{
         return null;
     }
 
-    private boolean isFull() {
-        return items.size() == capacity;
-    }
-
-    private boolean hasSameItemType(Stacks slot, Item item) {
-        Item slotItem = slot.getItem();
-        if (slotItem instanceof ProcessedProduct) {
-            if (item instanceof ProcessedProduct)
-                return slotItem.equals(item);
-            return false;
-        }
-        if (item instanceof ProcessedProduct)
-            return false;
-        return item == slotItem;
-    }
-
     public Item getItemWithName(String itemName) {
         for (Stacks slot : items) {
             if(slot.getItem().getName().equals(itemName)){
@@ -222,5 +208,42 @@ public class Backpack extends Tool{
             }
         }
         return null;
+    }
+
+    private boolean isFull() {
+        return items.size() == capacity;
+    }
+
+    private boolean hasSameItemType(Stacks slot, Item item) {
+        Item slotItem = slot.getItem();
+        if (slotItem instanceof ProcessedProduct) {
+            if (item instanceof ProcessedProduct)
+                return slotItem.equals(item);
+            return false;
+        }
+        if (item instanceof ProcessedProduct)
+            return false;
+        return item == slotItem;
+    }
+
+    private boolean areSameStacks(Stacks s1, Stacks s2) {
+        return s1.getItem().equals(s2.getItem()) && s1.getStackLevel() == s2.getStackLevel();
+    }
+
+    private void mergeItems() {
+        ArrayList<Stacks> copy = new ArrayList<>(items);
+        for (int i = 0; i < copy.size(); i++) {
+            for (int j = 0; j < copy.size(); j++) {
+                if (i != j && areSameStacks(copy.get(i), copy.get(j))) {
+                    copy.get(i).addQuantity(copy.get(j).getQuantity());
+                    copy.set(j, null);
+                }
+            }
+        }
+        items.clear();
+        for (Stacks stacks : copy) {
+            if (stacks != null)
+                items.add(stacks);
+        }
     }
 }

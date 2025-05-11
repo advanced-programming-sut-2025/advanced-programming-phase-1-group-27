@@ -56,20 +56,22 @@ public class MarriageController {
             return new Result(false, "Player not found!");
         }
         if (response.equals("accept")) {
-            player.marryWIth(currentPlayer);
-            currentPlayer.marryWIth(player);
+            player.setSpouse(currentPlayer);
+            currentPlayer.setSpouse(player);
             currentPlayer.deleteMarriage();
             player.getBackpack().reduceItems(ShopItems.WeddingRing, 1);
             StackLevel stackLevel = player.getBackpack().getStackLevel(ShopItems.WeddingRing);
             currentPlayer.getBackpack().addItems(ShopItems.WeddingRing, stackLevel, 1);
             player.goNextLevel(currentPlayer);
             currentPlayer.goNextLevel(player);
-            //TODO : Rassa inja ro chikar konam???
-            return new Result(true, "Congratulations!You married!");
+            int newMoney = player.getMoney() + currentPlayer.getMoney();
+            player.setMoney(newMoney);
+            currentPlayer.setMoney(newMoney);
+            return new Result(true, "Congratulations! You married!");
         } else if (response.equals("reject")) {
             player.getRelations().put(currentPlayer, new Relation());
             currentPlayer.getRelations().put(player, new Relation());
-            //TODO : Energy player bayad ta 7 rooz nesf she!
+            //TODO : sobhan. Energy player bayad ta 7 rooz nesf she!
             return new Result(true, "Unfortunately!");
         } else {
             return new Result(false, "Invalid response!");
