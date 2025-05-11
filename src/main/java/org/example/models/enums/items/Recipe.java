@@ -119,7 +119,6 @@ public enum Recipe implements Item {
                     FruitType.Cherry,
                     FruitType.Cranberry,
                     FruitType.CrystalFruit,
-                    FruitType.Grape,
                     FruitType.HotPepper,
                     FruitType.Mango,
                     FruitType.Melon,

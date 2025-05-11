@@ -616,7 +616,23 @@ public class GameMenuController extends MenuController {
         Player player = App.getCurrentGame().getCurrentPlayer();
         if (!player.hasEnoughIngredients(recipe))
             return new Result(false, "You don't have enough ingredients!");
+        if (artisan.getFinalProduct() != null)
+            return new Result(false, "Artisan is currently in use!");
 
+        ProcessedProductType finalProduct = (ProcessedProductType) recipe.getFinalProduct();
+        if (finalProduct.getPrice() == null) {
+            artisan.setFinalProduct(
+                    finalProduct,
+                    itemsList[0].equalsIgnoreCase("Coal")? itemsList[1] : itemsList[0]
+            );
+        }
+        else
+            artisan.setFinalProduct(finalProduct);
+        if (finalProduct.getProcessingTime() == null)
+            artisan.setTimeLeft(24 - App.getCurrentGame().getTime().getHour()); // TODO: sobhan in okaye?
+        else
+            artisan.setTimeLeft(finalProduct.getProcessingTime());
+        return new Result(true, "New process started!");
     }
 
     public Result getArtisanProduct(String artisanName) {
@@ -626,21 +642,28 @@ public class GameMenuController extends MenuController {
         Artisan artisan = getNearArtisan(artisanType);
         if (artisan == null)
             return new Result(false, "The is no " + artisanName + " nearby!");
-        // TODO: sobhan. pokht o paz
-        return null;
+        if (artisan.getFinalProduct() == null)
+            return new Result(false, "This artisan currently has no product!");
+        if (artisan.getTimeLeft() > 0)
+            return new Result(false, "You should wait. The product is being prepared!");
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        if (!player.getBackpack().canAdd(artisan.getFinalProduct(), StackLevel.Basic, 1))
+            return new Result(false, "You don't have enough space in your backpack!");
+        player.getBackpack().addItems(artisan.getFinalProduct(), StackLevel.Basic, 1);
+        artisan.free();
+        return new Result(true, artisan.getFinalProduct().getName() + " collected successfully!");
     }
 
     private Artisan getNearArtisan(ArtisanTypes artisanType) {
         Player player = App.getCurrentGame().getCurrentPlayer();
-        Artisan artisan = null;
         for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
             if (adjacentCell.getObject() instanceof Artisan) {
                 if (((Artisan) adjacentCell.getObject()).getType() == artisanType) {
-                    artisan = (Artisan) adjacentCell.getObject();
+                    return (Artisan) adjacentCell.getObject();
                 }
             }
         }
-        return artisan;
+        return null;
     }
 
     private int getNumberOfFish() {

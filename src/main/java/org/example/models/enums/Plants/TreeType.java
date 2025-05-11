@@ -81,7 +81,7 @@ public enum TreeType implements PlantType {
 
     public static TreeType getItem(String itemName) {
         for (TreeType item : values()) {
-            if (item.name().equalsIgnoreCase(itemName.replace(" ", ""))) {
+            if (item.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
                 return item;
             }
         }

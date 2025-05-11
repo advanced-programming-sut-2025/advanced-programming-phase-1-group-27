@@ -31,7 +31,7 @@ public enum SaplingType implements Item, PlantSourceType {
 
     public static SaplingType getItem(String itemName) {
         for (SaplingType saplingtype : values()) {
-            if (saplingtype.name().equalsIgnoreCase(itemName.replace(" ", ""))) {
+            if (saplingtype.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
                 return saplingtype;
             }
         }

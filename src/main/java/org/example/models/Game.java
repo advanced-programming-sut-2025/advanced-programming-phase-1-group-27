@@ -77,7 +77,8 @@ public class Game {
 
     public void passAnHour() {
         time.passAnHour();
-        updatePlyersBuff();
+        updatePlayersBuff();
+        // TODO: sobhan. update all artisans in map. chejoori bokonam?
         // TODO
         
         
@@ -213,7 +214,7 @@ public class Game {
         return null;
     }
 
-    private void updatePlyersBuff() {
+    private void updatePlayersBuff() {
         for (Player player : players) {
             if (player.getCurrentBuff() != null) {
                 player.getCurrentBuff().reduceRemainingTime();
