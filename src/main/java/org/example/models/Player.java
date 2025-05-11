@@ -282,7 +282,7 @@ public class Player extends User {
 
     public Item getItemFromBackpack(String itemName) {
         for (Stacks slot : backpack.getItems()) {
-            if (slot.getItem().getName().equals(itemName))
+            if (slot.getItem().getName().equalsIgnoreCase(itemName))
                 return slot.getItem();
         }
         return null;

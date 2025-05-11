@@ -33,7 +33,7 @@ public class Backpack extends Tool{
     public boolean reduceItems(Item item, int amount) {
         int totalAmount = 0;
         for (Stacks stacks : items) {
-            if (stacks.getItem().getName().equals(item.getName())) {
+            if (stacks.getItem().getName().equalsIgnoreCase(item.getName())) {
                 totalAmount += amount;
             }
         }
@@ -41,7 +41,7 @@ public class Backpack extends Tool{
             return false;
         } else {
             for (Stacks stacks : items) {
-                if (stacks.getItem().getName().equals(item.getName())) {
+                if (stacks.getItem().getName().equalsIgnoreCase(item.getName())) {
                     if (stacks.getQuantity() < amount) {
                         amount -= stacks.getQuantity();
                         stacks.setQuantity(0);
@@ -59,7 +59,7 @@ public class Backpack extends Tool{
     // This function can only be used if we are sure that there is enough of an item.
     public void reduceItems(Item item, StackLevel level, int amount) {
         for (Stacks stacks : items) {
-            if (stacks.getItem().getName().equals(item.getName()) && stacks.getStackLevel() == level) {
+            if (stacks.getItem().getName().equalsIgnoreCase(item.getName()) && stacks.getStackLevel() == level) {
                 if (stacks.getQuantity() < amount) {
                     amount -= stacks.getQuantity();
                     stacks.setQuantity(0);
@@ -178,7 +178,7 @@ public class Backpack extends Tool{
     public boolean hasEnoughItem(Item item, int quantity) {
         int counter = 0;
         for (Stacks slot : items) {
-            if (slot.getItem().getName().equals(item.getName()))
+            if (slot.getItem().getName().equalsIgnoreCase(item.getName()))
                 counter += slot.getQuantity();
         }
         return counter >= quantity;
@@ -186,7 +186,7 @@ public class Backpack extends Tool{
 
     public Stacks getSlotByItemName(String itemName) {
         for (Stacks slot : items) {
-            if (slot.getItem().getName().equals(itemName))
+            if (slot.getItem().getName().equalsIgnoreCase(itemName))
                 return slot;
         }
         return null;
@@ -194,7 +194,7 @@ public class Backpack extends Tool{
 
     public Item getItemWithName(String itemName) {
         for (Stacks slot : items) {
-            if(slot.getItem().getName().equals(itemName)){
+            if(slot.getItem().getName().equalsIgnoreCase(itemName)){
                 return slot.getItem();
             }
         }
@@ -203,7 +203,7 @@ public class Backpack extends Tool{
 
     public StackLevel getStackLevel(Item item) {
         for (Stacks slot : items) {
-            if(slot.getItem().getName().equals(item.getName())){
+            if(slot.getItem().getName().equalsIgnoreCase(item.getName())){
                 return slot.getStackLevel();
             }
         }
