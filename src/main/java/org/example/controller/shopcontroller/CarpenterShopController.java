@@ -38,8 +38,4 @@ public class CarpenterShopController {
         return new Result(true, "Animal enclosure successfully placed!");
     }
 
-    public Result buyAnimal(String animalName, String name) {
-        // TODO: sobhan
-
-    }
 }

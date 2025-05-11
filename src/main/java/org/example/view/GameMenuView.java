@@ -111,6 +111,28 @@ public class GameMenuView extends AppMenu {
         else if ((matcher = GameMenuCommands.ShowPlant.getMatcher(input)) != null) {
             System.out.println(controller.showPlant(matcher.group("i"), matcher.group("j")));
         }
+        else if ((matcher = GameMenuCommands.Pet.getMatcher(input)) != null) {
+            System.out.println(controller.pet(matcher.group("name")));
+        }
+        else if (GameMenuCommands.ShowAnimals.getMatcher(input) != null) {
+            System.out.println(controller.showAnimals());
+        }
+        else if ((matcher = GameMenuCommands.Shepherd.getMatcher(input)) != null) {
+            System.out.println(controller.shepherd(matcher.group("name"),
+                    matcher.group("i"), matcher.group("j")));
+        }
+        else if (GameMenuCommands.Products.getMatcher(input) != null) {
+            System.out.println(controller.products());
+        }
+        else if ((matcher = GameMenuCommands.SellAnimal.getMatcher(input)) != null) {
+            System.out.println(controller.sellAnimal(matcher.group("name")));
+        }
+        else if ((matcher = GameMenuCommands.CollectProducts.getMatcher(input)) != null) {
+            System.out.println(controller.collectProduct(matcher.group("name")));
+        }
+        else if ((matcher = GameMenuCommands.FeedHay.getMatcher(input)) != null) {
+            System.out.println(controller.feedHay(matcher.group("name")));
+        }
         else if ((matcher = GameMenuCommands.UseArtisan.getMatcher(input)) != null) {
             System.out.println(controller.useArtisan(
                     matcher.group("artisanName").trim(),

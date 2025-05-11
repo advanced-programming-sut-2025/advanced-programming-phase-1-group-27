@@ -2,6 +2,7 @@ package org.example.view.shopview;
 
 import org.example.controller.shopcontroller.MarnieRanchShopController;
 import org.example.models.enums.Menu;
+import org.example.models.enums.commands.ShopCommands;
 import org.example.view.AppMenu;
 import org.example.view.GameMenuView;
 
@@ -23,5 +24,11 @@ public class MarnieRanchShop extends AppMenu {
         }
         String input = scanner.nextLine().trim();
         Matcher matcher;
+
+        if ((matcher = ShopCommands.BuyAnimal.getMatcher(input)) != null) {
+            System.out.println(controller.buyAnimal(matcher.group("animal"), matcher.group("name")));
+        } else {
+            System.out.println("Invalid Command.");
+        }
     }
 }

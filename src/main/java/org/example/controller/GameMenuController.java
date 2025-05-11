@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.models.*;
+import org.example.models.AnimalProperty.Animal;
 import org.example.models.Map.FarmMap;
 import org.example.models.Map.GreenHouse;
 import org.example.models.Map.Hut;
@@ -317,6 +318,125 @@ public class GameMenuController extends MenuController {
             return new Result(false, "No Plant Here!");
     }
 
+    public Result pet(String animalName) {
+        for (Cell cell: App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells()) {
+            if (cell.getObject() instanceof Animal animal && animal.getName().equals(animalName)) {
+                animal.addFriendShip(15);
+                animal.setWasPet(true);
+                return new Result(true, animalName + " " + animal.getType().getName() +
+                        " was Pet!");
+            }
+        }
+        return new Result(false, "No animal Found!");
+    }
+
+    public Result showAnimals() {
+        String res = "";
+        for (Animal animal: App.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals()) {
+            res += animal.showDetails() + "\n";
+        }
+        return new Result(true, res);
+    }
+
+    public Result shepherd(String name, String iString, String jString) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        int i = Integer.parseInt(iString), j = Integer.parseInt(jString);
+        Animal animal = null;
+        for (Animal a: player.getFarmMap().getAnimals()) {
+            if (a.getName().equals(name)) {
+                animal = a;
+            }
+        }
+        if (animal == null) {
+            return new Result(false, "No animal Found!");
+        }
+        Cell cell = player.getFarmMap().getCell(i, j);
+        if (animal.isOut()) {
+            cell.setObject(null);
+            animal.setOut(false);
+            return new Result(true, "Animal Went Back In");
+        } else {
+            if (cell.getObject() != null) {
+                return new Result(true, "Cell is Occupied " + cell.getObject().getClass().getName());
+            } else if (App.getCurrentGame().getCurrentWeather().equals(Weather.Sunny)){
+                animal.setOut(true);
+                animal.setWasFeed(true);
+                animal.addFriendShip(8);
+                return new Result(true, "Animal is Out!");
+            } else {
+                return new Result(false, "The Weather is not Good!!");
+            }
+        }
+    }
+
+    public Result feedHay(String name) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Animal animal = null;
+        for (Animal a: player.getFarmMap().getAnimals()) {
+            if (a.getName().equals(name)) {
+                animal = a;
+            }
+        }
+        if (animal == null) {
+            return new Result(false, "No animal Found!");
+        }
+
+        animal.setWasFeed(true);
+        return new Result(true, "Animal was Fed");
+    }
+
+    public Result products() {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        String res = "Animals With Available Products\n";
+        for (Animal animal: player.getFarmMap().getAnimals()) {
+            if (animal.getTillNextProduction() == 0) {
+                res += animal.getType().getName() + " : " + animal.getName() + "\n";
+            }
+        }
+        return new Result(true, res);
+    }
+
+    public Result collectProduct(String name) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Animal animal = null;
+        for (Animal a: player.getFarmMap().getAnimals()) {
+            if (a.getName().equals(name)) {
+                animal = a;
+            }
+        }
+
+        if (animal == null) {
+            return new Result(false, "No animal Found!");
+        }
+
+        Stacks product = animal.getProduct();
+        if (product == null) {
+            return new Result(false, "Animal is Not Ready!");
+        }
+        player.getBackpack().addItems(product.getItem(), product.getStackLevel(), product.getQuantity());
+        return new Result(true, "You Got " + product.getQuantity() + " of " + product.getItem().getName() + "!");
+    }
+
+    public Result sellAnimal(String name) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Animal animal = null;
+        for (Animal a: player.getFarmMap().getAnimals()) {
+            if (a.getName().equals(name)) {
+                animal = a;
+            }
+        }
+
+        if (animal == null) {
+            return new Result(false, "No animal Found!");
+        }
+
+        player.addMoney(animal.getPrice());
+        player.getFarmMap().removeAnimal(animal);
+        animal.getEnclosure().removeAnimal(animal);
+        return new Result(true, "You Sold " + animal.getName() + " " +
+                animal.getType().getName() + " for " + animal.getPrice() + " Coins!");
+    }
+
     public Result placeItem(String itemName, int direction) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Item item = player.getItemFromBackpack(itemName);
@@ -391,9 +511,6 @@ public class GameMenuController extends MenuController {
     }
 
     public Result cheatThor(String s, String t) {
-        if (!s.matches("\\d") || !t.matches("\\d")) {
-            return new Result(false, "GO KILL YOURSELF");
-        }
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
         FarmMap map = App.getCurrentGame().getCurrentPlayer().getFarmMap();
         Cell cell = map.getCell(i, j);
@@ -418,6 +535,17 @@ public class GameMenuController extends MenuController {
         player.setDayEnergy(100000000);
         player.setMaxEnergy(100000000);
         return new Result(true, "Cheat Activated!!");
+    }
+
+    public Result cheatSetFriendship(String name, int val) {
+        for (Cell cell: App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells()) {
+            if (cell.getObject() instanceof Animal animal && animal.getName().equals(name)) {
+                animal.cheatSetFriendShip(val);
+                animal.setWasPet(true);
+                return new Result(true, "cheat Activated");
+            }
+        }
+        return new Result(false, "No Animal Found!");
     }
 
     public Result fishing(String fishPoleName) {

@@ -32,12 +32,6 @@ public class CarpenterShop extends AppMenu {
                     Integer.parseInt(matcher.group("y").trim())
             ));
         }
-        else if ((matcher = ShopCommands.BuyAnimal.getMatcher(input)) != null) {
-            System.out.println(controller.buyAnimal(
-                    matcher.group("animal").trim(),
-                    matcher.group("name").trim()
-            ));
-        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }
