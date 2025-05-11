@@ -55,6 +55,10 @@ public class NPC {
         return favorites;
     }
 
+    public Features getFeature(){
+        return features;
+    }
+
     public void addXP(Player player, int xp) {
         if (!relations.containsKey(player)) {
             relations.put(player, new Relation());

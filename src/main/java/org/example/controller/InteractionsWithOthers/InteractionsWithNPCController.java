@@ -47,14 +47,11 @@ public class InteractionsWithNPCController {
         } else {
             result.append(" friend! ");
         }
-        if (time >= 9
-                && time <= 12) {
+        if (time >= 9 && time <= 12) {
             result.append("Good Morning! ");
-        } else if (time > 12
-                && time <= 16) {
+        } else if (time > 12 && time <= 16) {
             result.append("Good Afternoon! ");
-        } else if (time > 16
-                && time <= 19) {
+        } else if (time > 16 && time <= 19) {
             result.append("Good Evening! ");
         } else { //time > 19 && time <= 24
             result.append("Good Night! ");
@@ -78,6 +75,7 @@ public class InteractionsWithNPCController {
         } else { // season == Season.Winter
             result.append("Winter!");
         }
+        result.append(" ").append(npc.getFeature().toString());
         return result.toString();
     }
 
@@ -150,8 +148,7 @@ public class InteractionsWithNPCController {
                     }
                     result.append("\n");
                 }
-                if (!quests[1].isDone()
-                        && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel() > 0) {
+                if (!quests[1].isDone() && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel() > 0) {
                     result.append("2. ").append(quests[1].getRequest().getQuantity());
                     result.append("*").append(quests[1].getRequest().getItem().getName());
                     result.append(" -> ");
@@ -165,9 +162,7 @@ public class InteractionsWithNPCController {
                     }
                     result.append("\n");
                 }
-                if (!quests[2].isDone()
-                        && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel() > 0
-                        && canActivateThirdQuest(npc)) {
+                if (!quests[2].isDone() && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel() > 0 && canActivateThirdQuest(npc)) {
                     result.append("3. ").append(quests[2].getRequest().getQuantity());
                     result.append("*").append(quests[2].getRequest().getItem().getName());
                     result.append(" -> ");
@@ -206,20 +201,17 @@ public class InteractionsWithNPCController {
             //If level is > 1 we get double reward
             ratio = 2;
         }
-        if (index == 0
-                && npc.getName().equals("Abigail")) {
+        if (index == 0 && npc.getName().equals("Abigail")) {
             Relation relation = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer());
             relation.setLevel(Math.min(relation.getLevel() + ratio, 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
-        if (index == 1
-                && npc.getName().equals("Harvey")) {
+        if (index == 1 && npc.getName().equals("Harvey")) {
             Relation relation = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer());
             relation.setLevel(Math.min(relation.getLevel() + ratio, 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
-        if (index == 2
-                && npc.getName().equals("Abigail")) {
+        if (index == 2 && npc.getName().equals("Abigail")) {
             Stacks deletedStack = null;
             for (Stacks stacks1 : backpack.getItems()) {
                 if (stacks1.getItem() instanceof WateringCan) {
@@ -245,8 +237,7 @@ public class InteractionsWithNPCController {
         }
         //TODO : momken hast ja nadashte bashim
         int amount = backpack.addItems(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity() * ratio);
-        return new Result(true, npcName + " : Thank you! ( You get " + stacks.getQuantity() * ratio +
-                "*" + stacks.getItem().getName() + " )");
+        return new Result(true, npcName + " : Thank you! ( You get " + stacks.getQuantity() * ratio + "*" + stacks.getItem().getName() + " )");
     }
 
     private boolean isNPCNear(NPC npc, Player player) {
@@ -256,8 +247,7 @@ public class InteractionsWithNPCController {
         int npcY = npc.getCurrentPosition().getY();
         int distanceX = Math.abs(playerX - npcX);
         int distanceY = Math.abs(playerY - npcY);
-        return distanceY <= 1
-                && distanceX <= 1;
+        return distanceY <= 1 && distanceX <= 1;
     }
 
     private NPC findNPC(String npcName) {
@@ -270,8 +260,7 @@ public class InteractionsWithNPCController {
     }
 
     private boolean firstTimeMet(NPC npc, Player player) {
-        if (player.getNpcMetToday().get(npc) == null
-                || player.getNpcMetToday().get(npc) == Boolean.FALSE) {
+        if (player.getNpcMetToday().get(npc) == null || player.getNpcMetToday().get(npc) == Boolean.FALSE) {
             player.getNpcMetToday().put(npc, Boolean.TRUE);
             return true;
         } else {
@@ -280,8 +269,7 @@ public class InteractionsWithNPCController {
     }
 
     private boolean firstTimeGift(NPC npc, Player player) {
-        if (player.getNpcGiftToday().get(npc) == null
-                || player.getNpcGiftToday().get(npc) == Boolean.FALSE) {
+        if (player.getNpcGiftToday().get(npc) == null || player.getNpcGiftToday().get(npc) == Boolean.FALSE) {
             player.getNpcGiftToday().put(npc, Boolean.TRUE);
             return true;
         } else {

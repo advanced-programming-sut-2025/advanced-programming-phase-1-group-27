@@ -34,7 +34,7 @@ public class MarriageController {
         if (!player.isMarried()) {
             return new Result(false, player.getUsername() + " is married!");
         }
-        if(!currentPlayer.canMarried(player)){
+        if (!currentPlayer.canMarried(player)) {
             return new Result(false, "Your relation level is too low!");
         }
         Backpack backpack = currentPlayer.getBackpack();
@@ -61,13 +61,13 @@ public class MarriageController {
             currentPlayer.deleteMarriage();
             player.getBackpack().reduceItems(ShopItems.WeddingRing, 1);
             StackLevel stackLevel = player.getBackpack().getStackLevel(ShopItems.WeddingRing);
-            currentPlayer.getBackpack().addItems(ShopItems.WeddingRing, stackLevel , 1);
+            currentPlayer.getBackpack().addItems(ShopItems.WeddingRing, stackLevel, 1);
             player.goNextLevel(currentPlayer);
             currentPlayer.goNextLevel(player);
             //TODO : Rassa inja ro chikar konam???
             return new Result(true, "Congratulations!You married!");
         } else if (response.equals("reject")) {
-            player.getRelations().put(currentPlayer , new Relation());
+            player.getRelations().put(currentPlayer, new Relation());
             currentPlayer.getRelations().put(player, new Relation());
             //TODO : Energy player bayad ta 7 rooz nesf she!
             return new Result(true, "Unfortunately!");

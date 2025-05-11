@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player extends User {
-    private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>(); // TODO: this should be filled when abilities are upgraded or recipes are purchased from a shop
+    private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>();
     private ArrayList<Recipe> availableCookingRecipes = new ArrayList<>();
     // player's inventory
     private Backpack backpack = new Backpack(ToolType.BasicBackpack); // TODO: ba parsa check shavad
@@ -33,8 +33,8 @@ public class Player extends User {
     private int energy, dayEnergy, maxEnergy = 200, boostEnergy = 0;
     private Ability farming, mining, foraging, fishing;
     private Cell currentCell;
-    private Menu currentMenu = Menu.Home; // TODO: sobhan. depends on current cell
-    private Map currentMap = null; // TODO rassa reeeedi
+    private Menu currentMenu = Menu.Home; // TODO : sobhan. depends on current cell
+    private Map currentMap = null; // TODO : rassa reeeedi
     private FarmMap farmMap = null;
     private int money;
     private Tool currentTool;
@@ -46,7 +46,6 @@ public class Player extends User {
     private java.util.Map<Player, Boolean> playerMetToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerGiftToday = new HashMap<>();
     private java.util.Map<Player , Boolean> playerHuggedToday = new HashMap<>();
-    private java.util.Map<Player , Boolean> playerFloweredToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerTradeToday = new HashMap<>();
     private Player spouse = null; // in case the player gets married
     private Buff currentBuff = null;
