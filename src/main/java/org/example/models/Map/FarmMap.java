@@ -1,5 +1,6 @@
 package org.example.models.Map;
 
+import org.example.models.AnimalProperty.Animal;
 import org.example.models.AnimalProperty.AnimalEnclosure;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
@@ -18,6 +19,7 @@ public class FarmMap extends Map {
     private GreenHouse greenHouse;
     private ArrayList<Barn> barns;
     private ArrayList<Coop> coops;
+    private ArrayList<Animal> animals;
 
     public FarmMap(int height, int width) {
         super(height, width);

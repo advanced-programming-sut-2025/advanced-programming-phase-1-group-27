@@ -84,4 +84,16 @@ public enum AnimalType implements Item {
         }
         return null;
     }
+
+    public ArrayList<AnimalProduct> getProducts() {
+        return products;
+    }
+
+    public Integer getYieldRate() {
+        return yieldRate;
+    }
+
+    public ArrayList<BuildingType> getAppropriateFarmType() {
+        return appropriateFarmType;
+    }
 }

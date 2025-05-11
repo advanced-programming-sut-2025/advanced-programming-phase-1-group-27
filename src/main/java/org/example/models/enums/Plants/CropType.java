@@ -214,6 +214,13 @@ public enum CropType implements PlantType {
                 CropType.SnowYum, CropType.WinterRoot)));
     }};
 
+    private static HashMap<Season, ArrayList<CropType>> mixedSeedPossibilitiesBySeason = new HashMap<>(){{
+        put(Season.Spring, new ArrayList<>(List.of(Cauliflower, Parsnip, Potato, BlueJazz, Tulip)));
+        put(Season.Summer, new ArrayList<>(List.of(Corn, HotPepper, Radish, Wheat, Poppy, Sunflower, SummerSpangle)));
+        put(Season.Fall, new ArrayList<>(List.of(Artichoke, Corn, Eggplant, Pumpkin, Sunflower, FairyRose)));
+        put(Season.Winter, new ArrayList<>(List.of(PowderMelon)));
+    }};
+
     CropType(FruitType fruit, int[] stages, int price, SeedType source, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons) {
         this.fruit = fruit;
@@ -235,6 +242,10 @@ public enum CropType implements PlantType {
 
     public static HashMap<Season, ArrayList<CropType>> getForagingCropsBySeason() {
         return foragingCropsBySeason;
+    }
+
+    public static HashMap<Season, ArrayList<CropType>> getMixedSeedPossibilitiesBySeason() {
+        return mixedSeedPossibilitiesBySeason;
     }
 
     public FruitType getFruit() {

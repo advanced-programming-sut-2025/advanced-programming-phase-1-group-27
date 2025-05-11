@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.models.*;
 import org.example.models.Map.FarmMap;
+import org.example.models.Map.GreenHouse;
 import org.example.models.Map.Hut;
 import org.example.models.Map.Map;
 import org.example.models.enums.*;
@@ -218,6 +219,8 @@ public class GameMenuController extends MenuController {
         } else if (!player.getBackpack().hasEnoughItem(MineralType.Wood, 500)) {
             return new Result(false, "Not Enough Wood, 500 needed but you only have I dont know How Much.");
         }
+        player.addMoney(-1000);
+        player.getBackpack().reduceItems(MineralType.Wood, 500);
         return new Result(true, "GreenHouse Repaired!");
     }
 
@@ -266,9 +269,23 @@ public class GameMenuController extends MenuController {
 
         if (cell.getType() != CellType.Plowed)
             return new Result(false, "Cell Not Plowed");
-        else if (cell.getObject() != null)
+        else if (cell.getObject() != null || (cell.getBuilding() != null && !(cell.getBuilding() instanceof GreenHouse)))
             return new Result(false, "Cell is Occupied");
+        else if (source.getPlant() == null) {
+            Season season = App.getCurrentGame().getTime().getSeason();
+            ArrayList<CropType> cropTypes = CropType.getMixedSeedPossibilitiesBySeason().get(season);
+            CropType cropType = cropTypes.get((new Random(System.currentTimeMillis())).nextInt(cropTypes.size()));
+
+            cell.setObject(new Crop(cropType));
+            if (checkForGiantCrop(cell))
+                return new Result(true, "You planted A Mixed Seed and it became A " +
+                        cropType.getName() + ". And It also Became GIANT!!!!");
+            else
+                return new Result(true, "You planted A Mixed Seed and it became A " +
+                        cropType.getName() + ".");
+        }
         else if (source.getPlant() instanceof CropType cropType) {
+
             cell.setObject(new Crop(cropType));
             if (checkForGiantCrop(cell))
                 return new Result(true, "You planted A Crop. A " + cropType.getName() +
