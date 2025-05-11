@@ -33,7 +33,7 @@ public class Backpack extends Tool{
     public boolean reduceItems(Item item, int amount) {
         int totalAmount = 0;
         for (Stacks stacks : items) {
-            if (stacks.getItem().getName().equals(item.getName())) {
+            if (stacks.getItem().getName().equalsIgnoreCase(item.getName())) {
                 totalAmount += amount;
             }
         }
@@ -41,7 +41,7 @@ public class Backpack extends Tool{
             return false;
         } else {
             for (Stacks stacks : items) {
-                if (stacks.getItem().getName().equals(item.getName())) {
+                if (stacks.getItem().getName().equalsIgnoreCase(item.getName())) {
                     if (stacks.getQuantity() < amount) {
                         amount -= stacks.getQuantity();
                         stacks.setQuantity(0);
@@ -51,6 +51,7 @@ public class Backpack extends Tool{
                     }
                 }
             }
+            mergeItems();
             return true;
         }
     }
@@ -58,7 +59,7 @@ public class Backpack extends Tool{
     // This function can only be used if we are sure that there is enough of an item.
     public void reduceItems(Item item, StackLevel level, int amount) {
         for (Stacks stacks : items) {
-            if (stacks.getItem().getName().equals(item.getName()) && stacks.getStackLevel() == level) {
+            if (stacks.getItem().getName().equalsIgnoreCase(item.getName()) && stacks.getStackLevel() == level) {
                 if (stacks.getQuantity() < amount) {
                     amount -= stacks.getQuantity();
                     stacks.setQuantity(0);
@@ -69,6 +70,7 @@ public class Backpack extends Tool{
                 }
             }
         }
+        mergeItems();
     }
 
     public int addItems(Item item, StackLevel level, int amount) {
@@ -176,7 +178,7 @@ public class Backpack extends Tool{
     public boolean hasEnoughItem(Item item, int quantity) {
         int counter = 0;
         for (Stacks slot : items) {
-            if (slot.getItem().getName().equals(item.getName()))
+            if (slot.getItem().getName().equalsIgnoreCase(item.getName()))
                 counter += slot.getQuantity();
         }
         return counter >= quantity;
@@ -184,8 +186,26 @@ public class Backpack extends Tool{
 
     public Stacks getSlotByItemName(String itemName) {
         for (Stacks slot : items) {
-            if (slot.getItem().getName().equals(itemName))
+            if (slot.getItem().getName().equalsIgnoreCase(itemName))
                 return slot;
+        }
+        return null;
+    }
+
+    public Item getItemWithName(String itemName) {
+        for (Stacks slot : items) {
+            if(slot.getItem().getName().equalsIgnoreCase(itemName)){
+                return slot.getItem();
+            }
+        }
+        return null;
+    }
+
+    public StackLevel getStackLevel(Item item) {
+        for (Stacks slot : items) {
+            if(slot.getItem().getName().equalsIgnoreCase(item.getName())){
+                return slot.getStackLevel();
+            }
         }
         return null;
     }
@@ -206,21 +226,24 @@ public class Backpack extends Tool{
         return item == slotItem;
     }
 
-    public Item getItemWithName(String itemName) {
-        for (Stacks slot : items) {
-            if(slot.getItem().getName().equals(itemName)){
-                return slot.getItem();
-            }
-        }
-        return null;
+    private boolean areSameStacks(Stacks s1, Stacks s2) {
+        return s1.getItem().equals(s2.getItem()) && s1.getStackLevel() == s2.getStackLevel();
     }
 
-    public StackLevel getStackLevel(Item item) {
-        for (Stacks slot : items) {
-            if(slot.getItem().getName().equals(item.getName())){
-                return slot.getStackLevel();
+    private void mergeItems() {
+        ArrayList<Stacks> copy = new ArrayList<>(items);
+        for (int i = 0; i < copy.size(); i++) {
+            for (int j = 0; j < copy.size(); j++) {
+                if (i != j && areSameStacks(copy.get(i), copy.get(j))) {
+                    copy.get(i).addQuantity(copy.get(j).getQuantity());
+                    copy.set(j, null);
+                }
             }
         }
-        return null;
+        items.clear();
+        for (Stacks stacks : copy) {
+            if (stacks != null)
+                items.add(stacks);
+        }
     }
 }

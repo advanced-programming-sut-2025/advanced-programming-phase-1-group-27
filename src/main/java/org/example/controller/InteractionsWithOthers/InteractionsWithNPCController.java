@@ -99,7 +99,7 @@ public class InteractionsWithNPCController {
         if (firstTimeGift(npc, App.getCurrentGame().getCurrentPlayer())) {
             boolean addItem = false;
             for (Item item : npc.getFavorites()) {
-                if (item.getName().equals(stack.getItem().getName())) {
+                if (item.getName().equalsIgnoreCase(stack.getItem().getName())) {
                     npc.addXP(App.getCurrentGame().getCurrentPlayer(), 200);
                     xp = 200;
                     addItem = true;

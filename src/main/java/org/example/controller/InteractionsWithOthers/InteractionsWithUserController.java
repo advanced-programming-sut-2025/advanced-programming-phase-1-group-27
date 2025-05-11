@@ -6,11 +6,17 @@ import org.example.models.Relations.Relation;
 import org.example.models.enums.DialogueType;
 import org.example.models.enums.Plants.FruitType;
 import org.example.models.tools.Backpack;
+import org.example.view.GameMenuView;
 
 import java.util.ArrayList;
 
 
 public class InteractionsWithUserController {
+    private final GameMenuView view;
+
+    public InteractionsWithUserController(GameMenuView view) {
+        this.view = view;
+    }
 
     public Result getNotification() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
