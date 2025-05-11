@@ -16,5 +16,18 @@ public abstract class AnimalEnclosure extends Building {
         super(topLeftCell, type.getHeight(), type.getWidth());
     }
 
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
+    }
+
+    public void removeAnimal(Animal animal) {
+        animals.remove(animal);
+    }
+
     public abstract BuildingType getType();
+
+    public ArrayList<Animal> getAnimals() {
+        return animals;
+    }
+
 }
