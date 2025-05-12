@@ -22,6 +22,10 @@ public class Dialogue {
         return type;
     }
 
+    public void setRespond(String Respond) {
+        this.Respond = Respond;
+    }
+
     public String getRespond() {
         return Respond;
     }

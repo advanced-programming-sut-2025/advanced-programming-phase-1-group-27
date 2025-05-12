@@ -56,6 +56,14 @@ public class Trade extends Dialogue {
         return id;
     }
 
+    public void tradeIsAccepted(){
+        this.setRespond("accept");
+    }
+
+    public void tradeIsRejected(){
+        this.setRespond("reject");
+    }
+
     public void setOfferedItem(Item offeredItem, int offeredItemQuantity) {
         this.offeredItem = offeredItem;
         this.offeredItemQuantity = offeredItemQuantity;

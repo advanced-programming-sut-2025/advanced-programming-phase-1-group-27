@@ -539,6 +539,16 @@ public class Player extends User {
         dialogues.removeAll(selectedDialogues);
     }
 
+    public void deleteTrades(){
+        ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
+        for(Dialogue dialogue : dialogues){
+            if(dialogue.getType() == DialogueType.Trade){
+                selectedDialogues.add(dialogue);
+            }
+        }
+        dialogues.removeAll(selectedDialogues);
+    }
+
     public boolean isMarried(){
         return spouse != null;
     }
