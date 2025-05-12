@@ -33,7 +33,7 @@ public class Animal {
     }
 
     public Stacks getProduct() {
-        if (tillNextProduction != 0) {
+        if (tillNextProduction != 0 || (type == AnimalType.Sheep && friendship < 70) || !wasFeed ) {
             return null;
         }
         tillNextProduction = type.getYieldRate();

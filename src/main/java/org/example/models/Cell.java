@@ -116,33 +116,33 @@ public class Cell {
         else if (cellType.equals(CellType.Free)) {
             return "\\s";
         } else if (cellType.equals(CellType.Water)) {
-            return "W";
+            return "\u001B[34m" + "W" + "\u001B[0m";
         } else if (cellType.equals(CellType.Door)) {
             return "D";
         } else if (cellType.equals(CellType.Building)) {
             if (building instanceof Hut) {
-                return "H";
+                return "\u001B[41m" + "H" + "\u001B[0m";
             } else if (building instanceof GreenHouse){
-                return "G";
+                return "\u001B[41m" + "G" + "\u001B[0m";
             } else if (building instanceof NPCHouse) {
-                return "N";
+                return "\u001B[41m" + "N" + "\u001B[0m";
             } else if (building instanceof StoreBuilding) {
-                return "S";
+                return "\u001B[41m" + "S" + "\u001B[0m";
             } else if (building instanceof Barn) {
-                return "B";
+                return "\u001B[41m" + "B" + "\u001B[0m";
             } else if (building instanceof Coop) {
-                return "Q";
+                return "\u001B[41m" + "Q" + "\u001B[0m";
             }
         } else if (cellType.equals(CellType.Occupied)) {
             if (object instanceof Tree) {
-                return "T";
+                return "\u001B[32m" + "T" + "\u001B[0m";
             } else if (object instanceof Crop) {
-                return "C";
+                return "\u001B[32m" + "C" + "\u001B[0m";
             } else if(object instanceof MineralType) {
-                return "R";
+                return "\u001B[32m" + "R" + "\u001B[0m";
             }
         } else if (cellType.equals(CellType.View)) {
-            return "~";
+            return "\u001B[35m" + "~" + "\u001B[35m";
         }
         return "?";
     }

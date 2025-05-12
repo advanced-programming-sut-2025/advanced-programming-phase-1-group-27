@@ -10,10 +10,7 @@ import org.example.models.enums.*;
 import org.example.models.enums.Plants.*;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
-import org.example.models.enums.items.FishType;
-import org.example.models.enums.items.MineralType;
-import org.example.models.enums.items.Recipe;
-import org.example.models.enums.items.ToolType;
+import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
@@ -414,6 +411,9 @@ public class GameMenuController extends MenuController {
         Stacks product = animal.getProduct();
         if (product == null) {
             return new Result(false, "Animal is Not Ready!");
+        }
+        if (animal.getType() == AnimalType.Pig && !animal.isOut()) {
+            return new Result(false, "The Pig Must Be Out for You to be Able to Collect its Products!");
         }
         player.getBackpack().addItems(product.getItem(), product.getStackLevel(), product.getQuantity());
         return new Result(true, "You Got " + product.getQuantity() + " of " + product.getItem().getName() + "!");
