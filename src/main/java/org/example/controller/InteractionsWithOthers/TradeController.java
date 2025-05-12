@@ -144,6 +144,10 @@ public class TradeController {
                 }else if(trade.getTradeType().equals(DialogueType.TradeRequest)){
                     // You will give an item and get money or item
                     result.append("You will get : ");
+                    if(item2 != null){
+                        result.append(item2.getName()).append(" * ").append(amount2).append("\n");
+                    }
+                    result.append(item1.getName()).append(" * ").append(amount1).append("\n");
 
                 }
             }

@@ -32,18 +32,39 @@ public enum NPCType {
     private final Quest[] Quests;
     private final Features features;
     private final ArrayList<Item> favorite;
-    private Building home;
     private Cell StandingCell;
-    private FarmMap placeOfShop;
 
     NPCType(String name, ShopType job , Quest[] quests, Features features, ArrayList<Item> favorite) {
         this.name = name;
         this.job = job;
-        Quests = quests;
+        this.Quests = quests;
         this.features = features;
         this.favorite = favorite;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Shops getJob() {
+        return job;
+    }
+
+    public Quest[] getQuests() {
+        return Quests;
+    }
+
+    public Features getFeatures() {
+        return features;
+    }
+
+    public ArrayList<Item> getFavorite() {
+        return favorite;
+    }
+
+    public Cell getStandingCell() {
+        return StandingCell;
+    }
 
     public void setStandingCell(Cell standingCell) {
         StandingCell = standingCell;

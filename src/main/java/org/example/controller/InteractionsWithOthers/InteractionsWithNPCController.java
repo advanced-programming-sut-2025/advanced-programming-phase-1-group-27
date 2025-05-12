@@ -271,8 +271,8 @@ public class InteractionsWithNPCController {
     private boolean isNPCNear(NPC npc, Player player) {
         int playerX = player.getPosition().getX();
         int playerY = player.getPosition().getY();
-        int npcX = npc.getCurrentPosition().getX();
-        int npcY = npc.getCurrentPosition().getY();
+        int npcX = npc.getCurrentPosition().getPosition().getX();
+        int npcY = npc.getCurrentPosition().getPosition().getY();
         int distanceX = Math.abs(playerX - npcX);
         int distanceY = Math.abs(playerY - npcY);
         return distanceY <= 1 && distanceX <= 1;
