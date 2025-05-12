@@ -8,7 +8,7 @@ import org.example.models.enums.items.products.ProcessedProductType;
 public class Artisan {
     private final ArtisanTypes type;
     private ProcessedProduct finalProduct = null;
-    private int timeLeft;
+    private int timeLeft = 0;
 
     public Artisan(ArtisanTypes type) {
         this.type = type;
@@ -84,5 +84,11 @@ public class Artisan {
     public void free() {
         finalProduct = null;
         timeLeft = 0;
+    }
+
+    public void passHour() {
+        if (finalProduct != null) {
+            timeLeft--;
+        }
     }
 }
