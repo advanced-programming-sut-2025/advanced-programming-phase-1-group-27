@@ -105,7 +105,7 @@ public enum StocksForShops {
         JojaMart.add(new Stacks(SeedType.GrassStater, -1));
         JojaMart.add(new Stacks(ShopItems.Sugar, -1));
         JojaMart.add(new Stacks(ShopItems.WheatFlour, -1));
-        JojaMart.add(new Stacks(ProcessedProductType.Rice, -1));
+        JojaMart.add(new Stacks(ShopItems.Rice, -1));
         return JojaMart;
     }
 
@@ -169,7 +169,7 @@ public enum StocksForShops {
 
     private static ArrayList<Stacks> PermanentPierreGeneralStoreStock() {
         ArrayList<Stacks> PermanentPierreGeneralStore = new ArrayList<>();
-        PermanentPierreGeneralStore.add(new Stacks(ProcessedProductType.Rice, -1));
+        PermanentPierreGeneralStore.add(new Stacks(ShopItems.Rice, -1));
         PermanentPierreGeneralStore.add(new Stacks(ShopItems.WheatFlour, -1));
         PermanentPierreGeneralStore.add(new Stacks(ShopItems.Bouquet, 2));
         PermanentPierreGeneralStore.add(new Stacks(ShopItems.WeddingRing, 2));

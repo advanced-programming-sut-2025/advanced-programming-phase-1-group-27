@@ -99,7 +99,7 @@ public enum SeedType implements PlantSourceType, Item {
 
     public static SeedType getItem(String itemName) {
         for (SeedType seedType : values()) {
-            if (seedType.name().equalsIgnoreCase(itemName.replace(" ", ""))) {
+            if (seedType.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
                 return seedType;
             }
         }

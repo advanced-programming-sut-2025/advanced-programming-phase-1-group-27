@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.models.*;
+import org.example.models.AnimalProperty.Animal;
 import org.example.models.Map.FarmMap;
 import org.example.models.Map.GreenHouse;
 import org.example.models.Map.Hut;
@@ -9,9 +10,8 @@ import org.example.models.enums.*;
 import org.example.models.enums.Plants.*;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
-import org.example.models.enums.items.FishType;
-import org.example.models.enums.items.MineralType;
-import org.example.models.enums.items.ToolType;
+import org.example.models.enums.items.*;
+import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
 
@@ -317,6 +317,128 @@ public class GameMenuController extends MenuController {
             return new Result(false, "No Plant Here!");
     }
 
+    public Result pet(String animalName) {
+        for (Cell cell: App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells()) {
+            if (cell.getObject() instanceof Animal animal && animal.getName().equals(animalName)) {
+                animal.addFriendShip(15);
+                animal.setWasPet(true);
+                return new Result(true, animalName + " " + animal.getType().getName() +
+                        " was Pet!");
+            }
+        }
+        return new Result(false, "No animal Found!");
+    }
+
+    public Result showAnimals() {
+        String res = "";
+        for (Animal animal: App.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals()) {
+            res += animal.showDetails() + "\n";
+        }
+        return new Result(true, res);
+    }
+
+    public Result shepherd(String name, String iString, String jString) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        int i = Integer.parseInt(iString), j = Integer.parseInt(jString);
+        Animal animal = null;
+        for (Animal a: player.getFarmMap().getAnimals()) {
+            if (a.getName().equals(name)) {
+                animal = a;
+            }
+        }
+        if (animal == null) {
+            return new Result(false, "No animal Found!");
+        }
+        Cell cell = player.getFarmMap().getCell(i, j);
+        if (animal.isOut()) {
+            cell.setObject(null);
+            animal.setOut(false);
+            return new Result(true, "Animal Went Back In");
+        } else {
+            if (cell.getObject() != null) {
+                return new Result(true, "Cell is Occupied " + cell.getObject().getClass().getName());
+            } else if (App.getCurrentGame().getCurrentWeather().equals(Weather.Sunny)){
+                animal.setOut(true);
+                animal.setWasFeed(true);
+                animal.addFriendShip(8);
+                return new Result(true, "Animal is Out!");
+            } else {
+                return new Result(false, "The Weather is not Good!!");
+            }
+        }
+    }
+
+    public Result feedHay(String name) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Animal animal = null;
+        for (Animal a: player.getFarmMap().getAnimals()) {
+            if (a.getName().equals(name)) {
+                animal = a;
+            }
+        }
+        if (animal == null) {
+            return new Result(false, "No animal Found!");
+        }
+
+        animal.setWasFeed(true);
+        return new Result(true, "Animal was Fed");
+    }
+
+    public Result products() {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        String res = "Animals With Available Products\n";
+        for (Animal animal: player.getFarmMap().getAnimals()) {
+            if (animal.getTillNextProduction() == 0) {
+                res += animal.getType().getName() + " : " + animal.getName() + "\n";
+            }
+        }
+        return new Result(true, res);
+    }
+
+    public Result collectProduct(String name) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Animal animal = null;
+        for (Animal a: player.getFarmMap().getAnimals()) {
+            if (a.getName().equals(name)) {
+                animal = a;
+            }
+        }
+
+        if (animal == null) {
+            return new Result(false, "No animal Found!");
+        }
+
+        Stacks product = animal.getProduct();
+        if (product == null) {
+            return new Result(false, "Animal is Not Ready!");
+        }
+        if (animal.getType() == AnimalType.Pig && !animal.isOut()) {
+            return new Result(false, "The Pig Must Be Out for You to be Able to Collect its Products!");
+        }
+        player.getBackpack().addItems(product.getItem(), product.getStackLevel(), product.getQuantity());
+        return new Result(true, "You Got " + product.getQuantity() + " of " + product.getItem().getName() + "!");
+    }
+
+    public Result sellAnimal(String name) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Animal animal = null;
+        for (Animal a: player.getFarmMap().getAnimals()) {
+            if (a.getName().equals(name)) {
+                animal = a;
+            }
+        }
+
+        if (animal == null) {
+            return new Result(false, "No animal Found!");
+        }
+
+        player.addMoney(animal.getPrice());
+        player.getFarmMap().removeAnimal(animal);
+        animal.getEnclosure().removeAnimal(animal);
+        return new Result(true, "You Sold " + animal.getName() + " " +
+                animal.getType().getName() + " for " + animal.getPrice() + " Coins!");
+    }
+
     public Result placeItem(String itemName, int direction) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Item item = player.getItemFromBackpack(itemName);
@@ -391,9 +513,6 @@ public class GameMenuController extends MenuController {
     }
 
     public Result cheatThor(String s, String t) {
-        if (!s.matches("\\d") || !t.matches("\\d")) {
-            return new Result(false, "GO KILL YOURSELF");
-        }
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
         FarmMap map = App.getCurrentGame().getCurrentPlayer().getFarmMap();
         Cell cell = map.getCell(i, j);
@@ -418,6 +537,17 @@ public class GameMenuController extends MenuController {
         player.setDayEnergy(100000000);
         player.setMaxEnergy(100000000);
         return new Result(true, "Cheat Activated!!");
+    }
+
+    public Result cheatSetFriendship(String name, int val) {
+        for (Cell cell: App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells()) {
+            if (cell.getObject() instanceof Animal animal && animal.getName().equals(name)) {
+                animal.cheatSetFriendShip(val);
+                animal.setWasPet(true);
+                return new Result(true, "cheat Activated");
+            }
+        }
+        return new Result(false, "No Animal Found!");
     }
 
     public Result fishing(String fishPoleName) {
@@ -468,6 +598,7 @@ public class GameMenuController extends MenuController {
             else
                 break;
         }
+        player.fishXp(5);
         return new Result(false, result.toString());
     }
 
@@ -475,37 +606,63 @@ public class GameMenuController extends MenuController {
         ArtisanTypes artisanType = ArtisanTypes.getArtisan(artisanName);
         if (artisanType == null)
             return new Result(false, "Artisan name is invalid!");
-        Player player = App.getCurrentGame().getCurrentPlayer();
-        Artisan artisan = null;
-        for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
-            if (adjacentCell.getObject() instanceof Artisan) {
-                if (((Artisan) adjacentCell.getObject()).getType() == artisanType) {
-                    artisan = (Artisan) adjacentCell.getObject();
-                }
-            }
-        }
+        Artisan artisan = getNearArtisan(artisanType);
         if (artisan == null)
             return new Result(false, "The is no " + artisanName + " nearby!");
-        // TODO: sobhan. pokht o paz
-        return null;
+        String[] itemsList = itemList.split("\\s+");
+        Recipe recipe = artisanType.getRecipe(itemsList);
+        if (recipe == null)
+            return new Result(false, "There is no recipe for the desired items!");
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        if (!player.hasEnoughIngredients(recipe))
+            return new Result(false, "You don't have enough ingredients!");
+        if (artisan.getFinalProduct() != null)
+            return new Result(false, "Artisan is currently in use!");
+
+        ProcessedProductType finalProduct = (ProcessedProductType) recipe.getFinalProduct();
+        if (finalProduct.getPrice() == null) {
+            artisan.setFinalProduct(
+                    finalProduct,
+                    itemsList[0].equalsIgnoreCase("Coal")? itemsList[1] : itemsList[0]
+            );
+        }
+        else
+            artisan.setFinalProduct(finalProduct);
+        if (finalProduct.getProcessingTime() == null)
+            artisan.setTimeLeft(24 - App.getCurrentGame().getTime().getHour()); // TODO: sobhan in okaye?
+        else
+            artisan.setTimeLeft(finalProduct.getProcessingTime());
+        return new Result(true, "New process started!");
     }
 
     public Result getArtisanProduct(String artisanName) {
         ArtisanTypes artisanType = ArtisanTypes.getArtisan(artisanName);
         if (artisanType == null)
             return new Result(false, "Artisan name is invalid!");
+        Artisan artisan = getNearArtisan(artisanType);
+        if (artisan == null)
+            return new Result(false, "The is no " + artisanName + " nearby!");
+        if (artisan.getFinalProduct() == null)
+            return new Result(false, "This artisan currently has no product!");
+        if (artisan.getTimeLeft() > 0)
+            return new Result(false, "You should wait. The product is being prepared!");
         Player player = App.getCurrentGame().getCurrentPlayer();
-        Artisan artisan = null;
+        if (!player.getBackpack().canAdd(artisan.getFinalProduct(), StackLevel.Basic, 1))
+            return new Result(false, "You don't have enough space in your backpack!");
+        player.getBackpack().addItems(artisan.getFinalProduct(), StackLevel.Basic, 1);
+        artisan.free();
+        return new Result(true, artisan.getFinalProduct().getName() + " collected successfully!");
+    }
+
+    private Artisan getNearArtisan(ArtisanTypes artisanType) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
         for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
             if (adjacentCell.getObject() instanceof Artisan) {
                 if (((Artisan) adjacentCell.getObject()).getType() == artisanType) {
-                    artisan = (Artisan) adjacentCell.getObject();
+                    return (Artisan) adjacentCell.getObject();
                 }
             }
         }
-        if (artisan == null)
-            return new Result(false, "The is no " + artisanName + " nearby!");
-        // TODO: sobhan. pokht o paz
         return null;
     }
 

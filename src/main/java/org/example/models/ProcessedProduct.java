@@ -13,6 +13,10 @@ public class ProcessedProduct implements Item { // for all processed products
         this.energy = energy;
     }
 
+    public ProcessedProduct(ProcessedProductType type) {
+        this.type = type;
+    }
+
     public ProcessedProductType getType() {
         return type;
     }
@@ -20,6 +24,18 @@ public class ProcessedProduct implements Item { // for all processed products
     @Override
     public Integer getPrice() {
         return price;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
     }
 
     @Override

@@ -41,7 +41,8 @@ public class GameMenuView extends AppMenu {
             System.out.println(controller.exitMenu());
         } else if (GameMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
-        } else if (GameMenuCommands.ShowWeather.getMatcher(input) != null) {
+        }
+        else if (GameMenuCommands.ShowWeather.getMatcher(input) != null) {
             System.out.println(controller.showWeather());
         } else if (GameMenuCommands.ForecastWeather.getMatcher(input) != null) {
             System.out.println(controller.forecastWeather());
@@ -86,7 +87,30 @@ public class GameMenuView extends AppMenu {
             System.out.println(controller.plant(matcher.group("seedName"), matcher.group("direction")));
         } else if ((matcher = GameMenuCommands.ShowPlant.getMatcher(input)) != null) {
             System.out.println(controller.showPlant(matcher.group("i"), matcher.group("j")));
-        } else if ((matcher = GameMenuCommands.UseArtisan.getMatcher(input)) != null) {
+        }
+        else if ((matcher = GameMenuCommands.Pet.getMatcher(input)) != null) {
+            System.out.println(controller.pet(matcher.group("name")));
+        }
+        else if (GameMenuCommands.ShowAnimals.getMatcher(input) != null) {
+            System.out.println(controller.showAnimals());
+        }
+        else if ((matcher = GameMenuCommands.Shepherd.getMatcher(input)) != null) {
+            System.out.println(controller.shepherd(matcher.group("name"),
+                    matcher.group("i"), matcher.group("j")));
+        }
+        else if (GameMenuCommands.Products.getMatcher(input) != null) {
+            System.out.println(controller.products());
+        }
+        else if ((matcher = GameMenuCommands.SellAnimal.getMatcher(input)) != null) {
+            System.out.println(controller.sellAnimal(matcher.group("name")));
+        }
+        else if ((matcher = GameMenuCommands.CollectProducts.getMatcher(input)) != null) {
+            System.out.println(controller.collectProduct(matcher.group("name")));
+        }
+        else if ((matcher = GameMenuCommands.FeedHay.getMatcher(input)) != null) {
+            System.out.println(controller.feedHay(matcher.group("name")));
+        }
+        else if ((matcher = GameMenuCommands.UseArtisan.getMatcher(input)) != null) {
             System.out.println(controller.useArtisan(
                     matcher.group("artisanName").trim(),
                     matcher.group("itemList").trim()

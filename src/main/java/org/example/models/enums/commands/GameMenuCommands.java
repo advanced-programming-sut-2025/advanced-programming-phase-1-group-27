@@ -18,14 +18,21 @@ public enum GameMenuCommands implements MenuCommands {
     PrintMap("print\\s+map\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)\\s+-s\\s+(?<size>\\d+)"),
     HelpReadingMap("help\\s+reading\\s+map"),
     ShowEnergy("energy\\s+show"),
-    ToolsUse("tools\\s+use\\s+-d\\s+(?<direction>\\d)"),
+    ToolsUse("tools\\s+use\\s+-d\\s+(?<direction>\\d+)"),
     CropInfo("crop\\s+info\\s+-n\\s+(?<cropName>\\S(.*\\S)?)\\s*"),
     Fishing("fishing\\s+-p\\s+(?<fishPole>.+)"),
     BuildGreenHouse("greenhouse\\s+build"),
-    Plant("plant\\s+-s\\s+(?<seedName>\\S.*\\S)\\s+-d\\s+(?<direction>\\d)"),
+    Plant("plant\\s+-s\\s+(?<seedName>\\S.*\\S)\\s+-d\\s+(?<direction>\\d+)"),
     ShowPlant("show\\s+plant\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)"),
-    UseArtisan("artisan\\s+use\\s+(?<artisanName>\\S+)\\s+(?<itemList>.+)"), // TODO: sobhan. \\S zadam bayad avaj she vagarna ghati mishe
-    GetArtisan("artisan\\s+get\\s+(?<artisanName>\\S+)");
+    UseArtisan("artisan\\s+use\\s+(?<artisanName>\\S+)\\s+(?<itemList>.+)"),
+    GetArtisan("artisan\\s+get\\s+(?<artisanName>\\S+)"),
+    Pet("pet\\s+-n\\s+(?<name>\\S.*\\S)"),
+    ShowAnimals("animals"),
+    Shepherd("shepherd\\s+animals\\s+-n\\s+(?<name>\\S.*\\S)\\s+-l\\s+(?<i>\\d+)\\s+(?<j>\\d+)"),
+    FeedHay("feed\\s+hay\\s+-n\\s+(?<name>\\S.*\\S)"),
+    Products("produces"),
+    CollectProducts("collect\\s+produces\\s+-n\\s+(?<name>\\S.*\\S)"),
+    SellAnimal("sell\\s+animal\\s+-n\\s+(?<name>\\S.*\\S)");
 
     private final String pattern;
 

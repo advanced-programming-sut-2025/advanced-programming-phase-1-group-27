@@ -64,6 +64,7 @@ public enum Menu {
             case StardropSaloonShop -> "stardrop shop";
             case AnimalEnclosure -> "animal enclosure";
             case ExitMenu -> "exit menu";
+            default -> "Torke Khar.";
         };
     }
 }

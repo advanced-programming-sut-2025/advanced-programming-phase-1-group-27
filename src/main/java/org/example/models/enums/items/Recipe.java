@@ -33,7 +33,7 @@ public enum Recipe implements Item {
             new Ingredient(FruitType.Wheat, 1)
     ))),
     VinegarRecipe(0, ProcessedProductType.Vinegar, new ArrayList<>(List.of(
-            new Ingredient(ProcessedProductType.Rice, 1)
+            new Ingredient(ShopItems.Rice, 1)
     ))),
     CoffeeRecipe(0, ProcessedProductType.Coffee, new ArrayList<>(List.of(
             new Ingredient(FruitType.CoffeeBean, 5)
@@ -119,7 +119,6 @@ public enum Recipe implements Item {
                     FruitType.Cherry,
                     FruitType.Cranberry,
                     FruitType.CrystalFruit,
-                    FruitType.Grape,
                     FruitType.HotPepper,
                     FruitType.Mango,
                     FruitType.Melon,
@@ -431,7 +430,7 @@ public enum Recipe implements Item {
             new Ingredient(new ArrayList<>(Arrays.asList(
                     FishType.values()
             )), 1),
-            new Ingredient(ProcessedProductType.Rice, 1)
+            new Ingredient(ShopItems.Rice, 1)
     ))),
     TripleShotEspressoRecipe(5000, CookingProduct.TripleShotEspresso, new ArrayList<>(List.of(
             new Ingredient(ProcessedProductType.Coffee, 3)
@@ -503,9 +502,6 @@ public enum Recipe implements Item {
                     AnimalProduct.GoatMilk
             )), 1)
     ))),
-    RiceRecipe(0, ProcessedProductType.Rice, new ArrayList<>(List.of(
-            new Ingredient(FruitType.UnmilledRice, 1)
-    ))),
     BarnRecipe(0, BuildingType.Barn, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 350),
             new Ingredient(MineralType.Stone, 150)
@@ -568,6 +564,24 @@ public enum Recipe implements Item {
             result.append(ingredient.toString()).append("\n");
         }
         return result.toString();
+    }
+
+    public boolean isEqual(String[] itemsList) {
+        if (itemsList.length != ingredients.size())
+            return false;
+        for (Ingredient ingredient : ingredients) {
+            boolean ingredientIsAvailable = false;
+            for (Item item : ingredient.getPossibleIngredients()) {
+                for (String itemName : itemsList) {
+                    if (item.getName().equalsIgnoreCase(itemName)) {
+                        ingredientIsAvailable = true;
+                    }
+                }
+            }
+            if (!ingredientIsAvailable)
+                return false;
+        }
+        return true;
     }
 
     public static Recipe getRecipe(Item item) {

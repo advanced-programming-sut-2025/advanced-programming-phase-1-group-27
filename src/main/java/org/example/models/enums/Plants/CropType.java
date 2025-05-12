@@ -307,7 +307,7 @@ public enum CropType implements PlantType {
 
     public static CropType getItem(String itemName) {
         for (CropType item : values()) {
-            if (item.name().equalsIgnoreCase(itemName.replace(" ", ""))) {
+            if (item.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
                 return item;
             }
         }

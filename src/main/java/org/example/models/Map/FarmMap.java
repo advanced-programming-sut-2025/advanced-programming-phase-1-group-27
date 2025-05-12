@@ -102,6 +102,18 @@ public class FarmMap extends Map {
         placeAnimalEnclosure(barn, i, j);
     }
 
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
+    }
+
+    public void removeAnimal(Animal animal) {
+        animals.remove(animal);
+    }
+
+    public ArrayList<Animal> getAnimals() {
+        return animals;
+    }
+
     public void generateForaging() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {

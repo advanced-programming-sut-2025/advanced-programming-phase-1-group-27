@@ -1,6 +1,7 @@
 package org.example.models.enums;
 
 import org.example.models.Item;
+import org.example.models.enums.items.Recipe;
 import org.example.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
@@ -79,6 +80,14 @@ public enum ArtisanTypes {
         for (ArtisanTypes artisan : ArtisanTypes.values()) {
             if (artisan.toString().equals(artisanName))
                 return artisan;
+        }
+        return null;
+    }
+
+    public Recipe getRecipe(String[] itemsList) {
+        for (ProcessedProductType product : products) {
+            if (product.getRecipe().isEqual(itemsList))
+                return product.getRecipe();
         }
         return null;
     }

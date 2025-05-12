@@ -13,10 +13,11 @@ public enum InteractionsWithUserCommands {
     AskMarriage("\\s*ask\\s+marriage\\s+-u\\s+(?<username>.+)\\s+-r\\s+(?<ring>.+)\\s*"),
     Respond("\\s*respond\\s+(<respond>-accept | –reject)\\s+-u\\s+(?<username>.+)\\s*"),
     StartTrade("\\s*start\\s+trade\\s*"),
-    Trade("trade -u <username> -t <type> -i <item> -a <amount> [-p <price>] [-ti <targetItem> | -ta <targetAmount>]"),
+    Trade("trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(<item>.+)\\s+-a\\s+(?<amount>\\d+)" +
+            "(?:\\s+-p\\s+(?<price>\\d+))?(?:\\s+-ti\\s+(?<targetItem>.+)\\s+\\|\\s+-ta\\s+(?<targetAmount>\\d+))?"),
     TradeList("\\s*trade\\s+list\\s*"),
-    TradeResponse(),
-    TradeHistory();
+    TradeResponse(""),
+    TradeHistory("");
 
     private final String pattern;
 
