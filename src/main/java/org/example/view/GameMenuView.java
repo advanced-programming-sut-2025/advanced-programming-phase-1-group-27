@@ -139,14 +139,14 @@ public class GameMenuView extends AppMenu {
                     matcher.group("itemList").trim()
             ));
         }
-        else if ((matcher = GameMenuCommands.GoToShop.getMatcher(input)) != null) {
-            System.out.println(controller.goToShop(
-                    matcher.group("shopName").trim()
-            ));
-        }
         else if ((matcher = GameMenuCommands.GetArtisan.getMatcher(input)) != null) {
             System.out.println(controller.getArtisanProduct(
                     matcher.group("artisanName")
+            ));
+        }
+        else if ((matcher = GameMenuCommands.GoToShop.getMatcher(input)) != null) {
+            System.out.println(controller.goToShop(
+                    matcher.group("shopName").trim()
             ));
         }
         else {

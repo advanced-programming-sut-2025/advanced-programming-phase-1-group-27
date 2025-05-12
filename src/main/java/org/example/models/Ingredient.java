@@ -21,6 +21,10 @@ public class Ingredient {
         return possibleIngredients;
     }
 
+    public void addPossibleIngredients(Item item) {
+        possibleIngredients.add(item);
+    }
+
     public int getQuantity() {
         return quantity;
     }

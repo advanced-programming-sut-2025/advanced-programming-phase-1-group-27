@@ -14,7 +14,7 @@ public enum AnimalProduct implements Item {
     LargeCowMilk(190),
     GoatMilk(225),
     LargeGoatMilk(345),
-    Truffle(625);
+    Truffle(625); // haram
 
     private final int price;
 
