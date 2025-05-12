@@ -5,14 +5,21 @@ import org.example.models.NPCs.NPC;
 import org.example.models.NPCs.Quest;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.Features;
+import org.example.models.enums.Plants.CropType;
+import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
+import org.example.models.enums.items.Recipe;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.enums.items.ToolType;
+import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.models.tools.Backpack;
 import org.example.models.tools.Tool;
 import org.example.models.tools.WateringCan;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InteractionsWithNPCController {
     public Result meetNPC(String npcName) {
@@ -135,8 +142,12 @@ public class InteractionsWithNPCController {
                 result.append(npc.getName()).append(" : ");
                 Quest[] quests = npc.getQuests();
                 if (!quests[0].isDone()) {
-                    result.append("1. ").append(quests[0].getRequest().getQuantity());
-                    result.append("*").append(quests[0].getRequest().getItem().getName());
+                    if (quests[0].getRequest() == null) {
+                        result.append("1. ").append("12 * Plant");
+                    } else {
+                        result.append("1. ").append(quests[0].getRequest().getQuantity());
+                        result.append("*").append(quests[0].getRequest().getItem().getName());
+                    }
                     result.append(" -> ");
                     if (quests[0].getReward() != null) {
                         result.append(quests[0].getReward().getQuantity());
@@ -162,7 +173,8 @@ public class InteractionsWithNPCController {
                     }
                     result.append("\n");
                 }
-                if (!quests[2].isDone() && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel() > 0 && canActivateThirdQuest(npc)) {
+                if (!quests[2].isDone() && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel()
+                        > 0 && canActivateThirdQuest(npc)) {
                     result.append("3. ").append(quests[2].getRequest().getQuantity());
                     result.append("*").append(quests[2].getRequest().getItem().getName());
                     result.append(" -> ");
@@ -192,8 +204,21 @@ public class InteractionsWithNPCController {
         }
         Stacks stacks = quests[index].getRequest();
         Backpack backpack = App.getCurrentGame().getCurrentPlayer().getBackpack();
-        if (!backpack.reduceItems(stacks.getItem(), stacks.getQuantity())) {
-            return new Result(false, "You do not have enough space in backpack!");
+        if (index == 0 && npc.getName().equals("Harvey")) { // It gets 12 * any plant
+            Ingredient ingredient = new Ingredient(new ArrayList<>(), 12);
+            for (CropType cropType : CropType.values()) {
+                ingredient.addPossibleIngredients(cropType.getFruit());
+            }
+            Player player = App.getCurrentGame().getCurrentPlayer();
+            Item item = player.getAvailableIngredient(ingredient);
+            if (item == null) {
+                return new Result(false, "There is no such plant!");
+            }
+            player.getBackpack().reduceItems(item, 12);
+        } else {
+            if (!backpack.reduceItems(stacks.getItem(), stacks.getQuantity())) {
+                return new Result(false, "You do not have enough item in backpack!");
+            }
         }
         quests[index].setDone(true);
         int ratio = 1;
@@ -211,17 +236,19 @@ public class InteractionsWithNPCController {
             relation.setLevel(Math.min(relation.getLevel() + ratio, 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
+        if(index == 1 && npc.getName().equals("Lia")) {
+            App.getCurrentGame().getCurrentPlayer().getAvailableCookingRecipes().add(Recipe.SalmonDinnerRecipe);
+            return new Result(true, npcName + " : Thank you! (You get 1 * dinner salmon recipe!)");
+        }
         if (index == 2 && npc.getName().equals("Abigail")) {
             Stacks deletedStack = null;
             for (Stacks stacks1 : backpack.getItems()) {
-                if (stacks1.getItem() instanceof WateringCan) {
-                    if (stacks1.getItem().getName().equals("Iridium watering can")) {
-                        backpack.addItems(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity());
-                        quests[index].setDone(false);
-                        return new Result(true, npcName + " : You have Iridium watering can already!");
-                    } else {
-                        deletedStack = stacks1;
-                    }
+                if (stacks1.getItem().getName().equalsIgnoreCase("IridiumWateringCan")) {
+                    backpack.addItems(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity());
+                    quests[index].setDone(false);
+                    return new Result(true, npcName + " : You have Iridium watering can already!");
+                } else {
+                    deletedStack = stacks1;
                 }
             }
             if (deletedStack != null) {
@@ -237,7 +264,8 @@ public class InteractionsWithNPCController {
         }
         //TODO : momken hast ja nadashte bashim
         int amount = backpack.addItems(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity() * ratio);
-        return new Result(true, npcName + " : Thank you! ( You get " + stacks.getQuantity() * ratio + "*" + stacks.getItem().getName() + " )");
+        return new Result(true, npcName + " : Thank you! ( You get " + stacks.getQuantity() *
+                ratio + "*" + stacks.getItem().getName() + " )");
     }
 
     private boolean isNPCNear(NPC npc, Player player) {
@@ -280,7 +308,7 @@ public class InteractionsWithNPCController {
     private Stacks findItem(String itemName) {
         for (Stacks stack : App.getCurrentGame().getCurrentPlayer().getBackpack().getItems()) {
             if (stack.getQuantity() != 0) {
-                if (stack.getItem().getName().equals(itemName)) {
+                if (stack.getItem().getName().equalsIgnoreCase(itemName)) {
                     return stack;
                 }
             }

@@ -350,7 +350,7 @@ public class Player extends User {
         return false;
     }
 
-    private Item getAvailableIngredient(Ingredient ingredient) {
+    public Item getAvailableIngredient(Ingredient ingredient) {
         for (Item item : ingredient.getPossibleIngredients()) {
             if (backpack.hasEnoughItem(item, ingredient.getQuantity()))
                 return item;

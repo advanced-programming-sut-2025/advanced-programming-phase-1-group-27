@@ -10,13 +10,13 @@ public class Trade extends Dialogue {
     private Item requestedItem;
     private int offeredItemQuantity;
     private int requestedItemQuantity;
-    private int moneyOffered;
+    private Integer moneyOffered;
     private DialogueType tradeType;
     private int id;
     private static int idCounter = 1;
 
     public Trade(Player responder, Player sender, Item offeredItem, int offeredItemQuantity, Item requestedItem,
-                 int requestedItemQuantity, int moneyOffered , DialogueType tradeType) {
+                 int requestedItemQuantity, Integer moneyOffered , DialogueType tradeType) {
         super(DialogueType.Trade, null, null, responder, sender);
         this.offeredItem = offeredItem;
         this.offeredItemQuantity = offeredItemQuantity;
@@ -44,8 +44,12 @@ public class Trade extends Dialogue {
         return requestedItemQuantity;
     }
 
-    public int getMoneyOffered() {
+    public Integer getMoneyOffered() {
         return moneyOffered;
+    }
+
+    public DialogueType getTradeType() {
+        return tradeType;
     }
 
     public int getId() {
@@ -62,7 +66,7 @@ public class Trade extends Dialogue {
         this.requestedItemQuantity = requestedItemQuantity;
     }
 
-    public void setMoneyOffered(int moneyOffered) {
+    public void setMoneyOffered(Integer moneyOffered) {
         this.moneyOffered = moneyOffered;
     }
 }

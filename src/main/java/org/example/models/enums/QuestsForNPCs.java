@@ -1,12 +1,12 @@
 package org.example.models.enums;
 
+import org.example.models.Ingredient;
 import org.example.models.Stacks;
 import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.Plants.FruitType;
-import org.example.models.enums.items.MineralType;
-import org.example.models.enums.items.ShopItems;
-import org.example.models.enums.items.ToolType;
+import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.CookingProduct;
+import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.items.products.ProcessedProductType;
 
 public enum QuestsForNPCs {
@@ -17,15 +17,17 @@ public enum QuestsForNPCs {
     AbigailFirstQuest(new Stacks(ProcessedProductType.GoldMetalBar , 1) , null),
     AbigailSecondQuest(new Stacks(FruitType.Pumpkin , 1) , new Stacks(ShopItems.Coin , 500)),
     AbigailThirdQuest(new Stacks(FruitType.Wheat , 50) , null),
-    HarveyFirstQuest(),
-    HarveySecondQuest(),
-    HarveyThirdQuest(),
-    LiaFirstQuest(),
-    LiaSecondQuest(),
-    LiaThirdQuest(),
-    RobbinFirstQuest(),
-    RobbinSecondQuest(),
-    RobbinThirdQuest();
+    HarveyFirstQuest(null , new Stacks(ShopItems.Coin , 750)),
+    HarveySecondQuest(new Stacks(FishType.Salmon , 1) , null),
+    HarveyThirdQuest(new Stacks(ProcessedProductType.Wine , 1) , new Stacks(CookingProduct.Salad , 5)),
+    LiaFirstQuest(new Stacks(MineralType.Wood , 10) , new Stacks(ShopItems.Coin , 500)),
+    // Recipe
+    LiaSecondQuest(new Stacks(FishType.Salmon , 1) , new Stacks(Recipe.SalmonDinnerRecipe , 1)),
+    LiaThirdQuest(new Stacks(MineralType.Wood , 200) , new Stacks(CraftingProduct.Scarecrow , 3)),
+    RobbinFirstQuest(new Stacks(MineralType.Wood , 80) , new Stacks(ShopItems.Coin , 1000)),
+    RobbinSecondQuest(new Stacks(ProcessedProductType.IronMetalBar , 10) ,
+            new Stacks(CraftingProduct.BeeHouse , 3)),
+    RobbinThirdQuest(new Stacks(MineralType.Wood , 1000) , new Stacks(ShopItems.Coin , 25000)),;
 
     private final Stacks request;
     private final Stacks reward;
