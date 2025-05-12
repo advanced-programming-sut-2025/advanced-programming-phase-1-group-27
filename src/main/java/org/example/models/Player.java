@@ -60,6 +60,48 @@ public class Player extends User {
         backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
     }
 
+    public void refreshNPCThings() {
+        npcMetToday.clear();
+        npcGiftToday.clear();
+        for(NPC npc : App.getCurrentGame().getNPCs()){
+            npcMetToday.put(npc, false);
+            npcGiftToday.put(npc, false);
+        }
+    }
+
+    public void refreshPlayerThings() {
+        java.util.Map<Player , Boolean> players = new HashMap<>();
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            if(playerMetToday.get(player) == Boolean.TRUE
+                    || playerGiftToday.get(player) == Boolean.TRUE
+                    || playerHuggedToday.get(player) == Boolean.TRUE
+                    || playerTradeToday.get(player) == Boolean.TRUE) {
+                players.put(player, true);
+            }else {
+                players.put(player, false);
+            }
+        }
+        for(Player player : App.getCurrentGame().getPlayers()) {
+            if(player == App.getCurrentGame().getCurrentPlayer()) {
+                continue;
+            }else {
+                if(players.get(player) == Boolean.FALSE) {
+                    decreaseXP(player , 10);
+                }
+            }
+        }
+        playerMetToday.clear();
+        playerGiftToday.clear();
+        playerHuggedToday.clear();
+        playerTradeToday.clear();
+        for(Player player : App.getCurrentGame().getPlayers()){
+            playerMetToday.put(player, false);
+            playerGiftToday.put(player, false);
+            playerHuggedToday.put(player, false);
+            playerTradeToday.put(player, false);
+        }
+    }
+
     public Player(String username, String password, String nickname, String email, Gender gender) {
         super(username, password, nickname, email, gender);
         initFields();

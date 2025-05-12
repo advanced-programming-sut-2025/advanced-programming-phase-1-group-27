@@ -3,6 +3,7 @@ package org.example.models;
 import org.example.models.Map.*;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
+import org.example.models.Relations.Relation;
 import org.example.models.enums.CellType;
 import org.example.models.enums.NPCType;
 import org.example.models.enums.Plants.CropType;
@@ -169,7 +170,12 @@ public class Game {
                 }
             }
         }
-        //TODO
+        //refresh relations :
+        for (Player player : players) {
+            player.refreshNPCThings();
+            player.refreshPlayerThings();
+        }
+        //TODO : refresh shop stocks
         currentWeather.applyWeatherEffect();
     }
 
