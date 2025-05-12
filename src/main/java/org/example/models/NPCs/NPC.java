@@ -20,6 +20,7 @@ public class NPC {
     private ShopType shop;
     private Map<Player, Relation> relations = new HashMap<>();
     private Quest[] quests = new Quest[3];
+    private Building home;
 
     public NPC(NPCType type, int daysForThirdQuest) {
         this.name = type.getName();
@@ -99,5 +100,18 @@ public class NPC {
         }
         relation.setXp(currentXp);
     }
+
+    public Building getHome() {
+        return home;
+    }
+
+    public void setHome(Building home) {
+        this.home = home;
+    }
+
+    public void setCurrentPosition(Cell currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
 
 }

@@ -26,7 +26,7 @@ public class Game {
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players;
     private final FarmMap[] farmMaps = new FarmMap[4];
-    private final NPCMap npcMap = new NPCMap();
+    private  NPCMap npcMap;
     private Weather currentWeather, tomorrowWeather = null;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
@@ -41,12 +41,7 @@ public class Game {
     }
 
     public void init() {
-        for (int i = 0; i < 4; i++) {
-            FarmMapBuilder builder = new FarmMapBuilder();
-            FarmMapDirector director = new FarmMapDirector();
-            director.BuildMap(builder, i);
-            farmMaps[i] = builder.getFinalProduct();
-        }
+
         blacksmith = new Shop(ShopType.Blacksmith);
         jojaMart = new Shop(ShopType.JojaMart);
         pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
@@ -80,6 +75,14 @@ public class Game {
         npcs.add(Marnie);
         npcs.add(Morris);
         npcs.add(Gus);
+
+        npcMap = new NPCMap();
+        for (int i = 0; i < 4; i++) {
+            FarmMapBuilder builder = new FarmMapBuilder();
+            FarmMapDirector director = new FarmMapDirector();
+            director.BuildMap(builder, i);
+            farmMaps[i] = builder.getFinalProduct();
+        }
 
         // TODO: initialize npc and shops enums
     }
@@ -213,6 +216,54 @@ public class Game {
 
     public Shop getStardropSaloon() {
         return stardropSaloon;
+    }
+
+    public NPC getSebastian() {
+        return Sebastian;
+    }
+
+    public NPC getAbigail() {
+        return Abigail;
+    }
+
+    public NPC getHarvey() {
+        return Harvey;
+    }
+
+    public NPC getLia() {
+        return Lia;
+    }
+
+    public NPC getRobbin() {
+        return Robbin;
+    }
+
+    public NPC getClint() {
+        return Clint;
+    }
+
+    public NPC getPierre() {
+        return Pierre;
+    }
+
+    public NPC getRobin() {
+        return Robin;
+    }
+
+    public NPC getWilly() {
+        return Willy;
+    }
+
+    public NPC getMarnie() {
+        return Marnie;
+    }
+
+    public NPC getMorris() {
+        return Morris;
+    }
+
+    public NPC getGus() {
+        return Gus;
     }
 
     public ArrayList<NPC> getNPCs() {
