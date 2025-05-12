@@ -4,9 +4,7 @@ import org.example.models.Building;
 import org.example.models.Cell;
 import org.example.models.Map.FarmMap;
 import org.example.models.Item;
-import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.Quest;
-import org.example.models.Relations.Relation;
 import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -21,16 +19,16 @@ public enum NPCType {
     Harvey("Harvey", null, HarveyQuests(), Features.Happy, HarveyFavouriteItems()),
     Lia("Lia", null, LiaQuests(), Features.Lazy, LiaFavouriteItems()),
     Robbin("Robbin", null, RobbinQuests(), Features.Scared, RobbinFavouriteItems()),
-    Clint("Clint", Shops.Blacksmith, null, Features.Anxious, ClinicFavouriteItems()),
-    Pierre("Pierre", Shops.PierreGeneralStore, null, Features.Angry, PierreFavouriteItems()),
-    Robin("Robin", Shops.CarpenterShop, null, Features.Happy, RobinFavouriteItems()),
-    Willy("Willy", Shops.FishShop, null, Features.Sad, WillyFavouriteItems()),
-    Marnie("Marnie", Shops.MarnieShop, null, Features.Lazy, MarnieFavouriteItems()),
-    Morris("Morris", Shops.JojaMart, null, Features.Sad, MorrisFavouriteItems()),
-    Gus("Gus", Shops.TheStardropSaloon, null, Features.Happy, GusFavouriteItems());
+    Clint("Clint", ShopType.Blacksmith, null, Features.Anxious, ClinicFavouriteItems()),
+    Pierre("Pierre", ShopType.PierreGeneralStore, null, Features.Angry, PierreFavouriteItems()),
+    Robin("Robin", ShopType.CarpenterShop, null, Features.Happy, RobinFavouriteItems()),
+    Willy("Willy", ShopType.PierreGeneralStore, null, Features.Sad, WillyFavouriteItems()),
+    Marnie("Marnie", ShopType.MarnieRanch, null, Features.Lazy, MarnieFavouriteItems()),
+    Morris("Morris", ShopType.JojaMart, null, Features.Sad, MorrisFavouriteItems()),
+    Gus("Gus", ShopType.StardropSaloon, null, Features.Happy, GusFavouriteItems());
 
     private final String name;
-    private final Shops job;
+    private final ShopType job;
     private final Quest[] Quests;
     private final Features features;
     private final ArrayList<Item> favorite;
@@ -38,7 +36,7 @@ public enum NPCType {
     private Cell StandingCell;
     private FarmMap placeOfShop;
 
-    NPCType(String name, Shops job , Quest[] quests, Features features, ArrayList<Item> favorite) {
+    NPCType(String name, ShopType job , Quest[] quests, Features features, ArrayList<Item> favorite) {
         this.name = name;
         this.job = job;
         Quests = quests;
@@ -200,6 +198,10 @@ public enum NPCType {
         favouriteItems.add(CookingProduct.SurvivalBurger);
         favouriteItems.add(CookingProduct.HashBrowns);
         return favouriteItems;
+    }
+
+    public Building getHome() {
+        return home;
     }
 
     public void setHome(Building home) {

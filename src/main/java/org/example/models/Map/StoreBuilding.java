@@ -2,19 +2,19 @@ package org.example.models.Map;
 
 import org.example.models.Building;
 import org.example.models.Cell;
-import org.example.models.Stores.Store;
+import org.example.models.Shop;
 
 public class StoreBuilding extends Building {
-    private final Store store;
+    private final Shop shop;
     private Cell door = null;
 
-    public StoreBuilding(Store store, Cell topLeftCell) {
-        this.store = store;
+    public StoreBuilding(Shop shop, Cell topLeftCell) {
+        this.shop = shop;
         super(topLeftCell, 4, 4);
     }
 
-    public Store getStore() {
-        return store;
+    public Shop getStore() {
+        return shop;
     }
 
     public Cell getDoor() {

@@ -87,7 +87,7 @@ public class GameMenuController extends MenuController {
                 return new Result(true, "Redirecting to home ...");
             }
         }
-        return new Result(false, "There are no house nearby!");
+        return new Result(false, "There are no houses nearby!");
     }
 
     public Result showWeather() {
@@ -632,7 +632,7 @@ public class GameMenuController extends MenuController {
         else
             artisan.setFinalProduct(finalProduct);
         if (finalProduct.getProcessingTime() == null)
-            artisan.setTimeLeft(24 - App.getCurrentGame().getTime().getHour()); // TODO: sobhan in okaye?
+            artisan.setTimeLeft(24 - App.getCurrentGame().getTime().getHour());
         else
             artisan.setTimeLeft(finalProduct.getProcessingTime());
         return new Result(true, "New process started!");
@@ -655,6 +655,11 @@ public class GameMenuController extends MenuController {
         player.getBackpack().addItems(artisan.getFinalProduct(), StackLevel.Basic, 1);
         artisan.free();
         return new Result(true, artisan.getFinalProduct().getName() + " collected successfully!");
+    }
+
+    public Result goToShop(String shopName) {
+        // TODO: rassa. dorostesh kon
+        return null;
     }
 
     private Artisan getNearArtisan(ArtisanTypes artisanType) {

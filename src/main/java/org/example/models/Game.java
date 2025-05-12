@@ -9,6 +9,7 @@ import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
 import org.example.models.enums.Seasons.Season;
+import org.example.models.enums.ShopType;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -28,6 +29,7 @@ public class Game {
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
+    private Shop blacksmith, jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
 
     public Game(ArrayList<Player> players) {
         this.admin = players.getFirst();
@@ -41,6 +43,14 @@ public class Game {
             director.BuildMap(builder, i);
             farmMaps[i] = builder.getFinalProduct();
         }
+        blacksmith = new Shop(ShopType.Blacksmith);
+        jojaMart = new Shop(ShopType.JojaMart);
+        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
+        carpenterShop = new Shop(ShopType.CarpenterShop);
+        fishShop = new Shop(ShopType.FishShop);
+        marnieRanch = new Shop(ShopType.MarnieRanch);
+        stardropSaloon = new Shop(ShopType.StardropSaloon);
+        // TODO: initialize npc and shops enums
     }
 
     public Player getAdmin() {
@@ -81,6 +91,7 @@ public class Game {
     public void passAnHour() {
         time.passAnHour();
         updatePlayersBuff();
+        updateArtisans();
         // TODO: sobhan. update all artisans in map. chejoori bokonam?
         // TODO
         
@@ -138,6 +149,34 @@ public class Game {
 
     public Time getTime() {
         return time;
+    }
+
+    public Shop getBlacksmith() {
+        return blacksmith;
+    }
+
+    public Shop getJojaMart() {
+        return jojaMart;
+    }
+
+    public Shop getPierreGeneralStore() {
+        return pierreGeneralStore;
+    }
+
+    public Shop getCarpenterShop() {
+        return carpenterShop;
+    }
+
+    public Shop getFishShop() {
+        return fishShop;
+    }
+
+    public Shop getMarnieRanch() {
+        return marnieRanch;
+    }
+
+    public Shop getStardropSaloon() {
+        return stardropSaloon;
     }
 
     public ArrayList<NPC> getNPCs() {
@@ -216,6 +255,13 @@ public class Game {
 
         return null;
     }
+    public ArrayList<Dialogue> getDialogues() {
+        return dialogues;
+    }
+
+    public void addDialogue(Dialogue dialogue) {
+        dialogues.add(dialogue);
+    }
 
     private void updatePlayersBuff() {
         for (Player player : players) {
@@ -228,11 +274,15 @@ public class Game {
         }
     }
 
-    public ArrayList<Dialogue> getDialogues() {
-        return dialogues;
-    }
-
-    public void addDialogue(Dialogue dialogue) {
-        dialogues.add(dialogue);
+    private void updateArtisans() {
+        for (FarmMap map: farmMaps) {
+            for (int i = 0; i < map.getHeight(); i++) {
+                for (int j = 0; j < map.getWidth(); j++) {
+                    Cell cell = map.getCell(i, j);
+                    if (cell.getObject() instanceof Artisan)
+                        ((Artisan) cell.getObject()).passHour();
+                }
+            }
+        }
     }
 }

@@ -63,8 +63,8 @@ public enum Menu {
             case PierreGeneralShop -> "pierre shop";
             case StardropSaloonShop -> "stardrop shop";
             case AnimalEnclosure -> "animal enclosure";
+            case Trade -> "trade menu";
             case ExitMenu -> "exit menu";
-            default -> "Torke Khar.";
         };
     }
 }
