@@ -1,10 +1,12 @@
 package org.example.controller.shopcontroller;
 
+import org.example.controller.MenuController;
 import org.example.models.App;
+import org.example.models.Result;
 import org.example.view.shopview.PierreGeneralShop;
 import org.example.view.shopview.StardropSaloonShop;
 
-public class StardropSaloonShopController {
+public class StardropSaloonShopController extends MenuController {
     private final StardropSaloonShop view;
 
     public StardropSaloonShopController(StardropSaloonShop view) {
@@ -13,5 +15,16 @@ public class StardropSaloonShopController {
 
     public boolean playerPassedOut() {
         return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
+    }
+
+    @Override
+    public Result enterMenu(String menuName) {
+        return new Result(false, "You can't enter any menu from here!");
+    }
+
+    @Override
+    public Result exitMenu() {
+        // TODO: rassa
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package org.example.controller.shopcontroller;
 
+import org.example.controller.MenuController;
 import org.example.models.AnimalProperty.Animal;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
@@ -7,12 +8,12 @@ import org.example.models.App;
 import org.example.models.Player;
 import org.example.models.Result;
 import org.example.models.enums.items.AnimalType;
-import org.example.view.shopview.MarnieRanchShop;
+import org.example.view.shopview.MarnieRanch;
 
-public class MarnieRanchShopController {
-    private final MarnieRanchShop view;
+public class MarnieRanchShopController extends MenuController {
+    private final MarnieRanch view;
 
-    public MarnieRanchShopController(MarnieRanchShop view) {
+    public MarnieRanchShopController(MarnieRanch view) {
         this.view = view;
     }
 
@@ -49,5 +50,16 @@ public class MarnieRanchShopController {
             return new Result(false, "You dont Have Enough Money! You Have " + player.getMoney() +
                     " while you need " + type.getPrice());
         }
+    }
+
+    @Override
+    public Result enterMenu(String menuName) {
+        return new Result(false, "You can't enter any menu from here!");
+    }
+
+    @Override
+    public Result exitMenu() {
+        // TODO: rassa
+        return null;
     }
 }

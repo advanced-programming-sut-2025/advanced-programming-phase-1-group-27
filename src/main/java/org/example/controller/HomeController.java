@@ -10,11 +10,15 @@ import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.tools.Backpack;
 import org.example.view.HomeView;
 
-public class HomeController {
+public class HomeController extends MenuController {
     private final HomeView view;
 
     public HomeController(HomeView view) {
         this.view = view;
+    }
+
+    public Result enterMenu(String menuName) {
+        return new Result(false, "You can't enter any menu from home!");
     }
 
     public Result showCraftingRecipes() {
@@ -126,7 +130,7 @@ public class HomeController {
         return null;
     }
 
-    public Result exit() {
+    public Result exitMenu() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         App.setCurrentMenu(Menu.GameMenu);
         currentPlayer.setCurrentMenu(Menu.GameMenu);

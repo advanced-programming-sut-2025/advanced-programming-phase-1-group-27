@@ -5,6 +5,8 @@ import org.example.models.enums.Menu;
 import org.example.models.enums.commands.CheatCommands;
 import org.example.models.enums.commands.GameMenuCommands;
 import org.example.models.Result;
+import org.example.models.enums.commands.LoginMenuCommands;
+import org.example.models.enums.commands.MainMenuCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -29,6 +31,9 @@ public class GameMenuView extends AppMenu {
         Matcher matcher;
         if ((matcher = GameMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
+        }
+        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+            System.out.println(controller.showCurrentMenu());
         }
         else if (GameMenuCommands.ExitGame.getMatcher(input) != null) {
             System.out.println(controller.exitGame());

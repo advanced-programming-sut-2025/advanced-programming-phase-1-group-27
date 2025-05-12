@@ -23,5 +23,6 @@ public class BlackSmithShop extends AppMenu {
         }
         String input = scanner.nextLine().trim();
         Matcher matcher;
+
     }
 }

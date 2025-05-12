@@ -1,5 +1,6 @@
 package org.example.controller.shopcontroller;
 
+import org.example.controller.MenuController;
 import org.example.models.*;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
@@ -8,7 +9,7 @@ import org.example.models.enums.items.BuildingType;
 import org.example.models.enums.items.Recipe;
 import org.example.view.shopview.CarpenterShop;
 
-public class CarpenterShopController {
+public class CarpenterShopController extends MenuController {
     private final CarpenterShop view;
 
     public CarpenterShopController(CarpenterShop view) {
@@ -38,4 +39,14 @@ public class CarpenterShopController {
         return new Result(true, "Animal enclosure successfully placed!");
     }
 
+    @Override
+    public Result enterMenu(String menuName) {
+        return new Result(false, "You can't enter any menu from here!");
+    }
+
+    @Override
+    public Result exitMenu() {
+        // TODO: rassa bodo
+        return null;
+    }
 }
