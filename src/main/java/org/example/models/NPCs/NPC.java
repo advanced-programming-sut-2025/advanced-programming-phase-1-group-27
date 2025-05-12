@@ -4,11 +4,10 @@ import org.example.models.*;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.Features;
 import org.example.models.enums.NPCType;
-import org.example.models.enums.Shops;
+import org.example.models.enums.ShopType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class NPC {
@@ -18,7 +17,7 @@ public class NPC {
     private Features features;
     private ArrayList<Item> favorites;
     private final int daysForThirdQuest;
-    private Shops shop;
+    private ShopType shop;
     private Map<Player, Relation> relations = new HashMap<>();
     private Quest[] quests = new Quest[3];
 
@@ -58,7 +57,7 @@ public class NPC {
         return features;
     }
 
-    public Shops getShop() {
+    public ShopType getShop() {
         return shop;
     }
 

@@ -46,7 +46,7 @@ public enum NPCType {
         return name;
     }
 
-    public Shops getJob() {
+    public ShopType getJob() {
         return job;
     }
 

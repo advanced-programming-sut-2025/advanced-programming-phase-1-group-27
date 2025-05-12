@@ -4,6 +4,7 @@ import org.example.models.Map.*;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.CellType;
+import org.example.models.enums.NPCType;
 import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.SaplingType;
@@ -28,8 +29,10 @@ public class Game {
     private Weather currentWeather, tomorrowWeather = null;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
+    // dialogoue ro ki niaz dare?
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
     private Shop blacksmith, jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
+    private NPC Sebastian , Abigail , Harvey , Lia , Robbin , Clint , Pierre , Robin , Willy , Marnie , Morris , Gus;
 
     public Game(ArrayList<Player> players) {
         this.admin = players.getFirst();
@@ -50,6 +53,33 @@ public class Game {
         fishShop = new Shop(ShopType.FishShop);
         marnieRanch = new Shop(ShopType.MarnieRanch);
         stardropSaloon = new Shop(ShopType.StardropSaloon);
+
+        Sebastian = new NPC(NPCType.Sebastian , 10);
+        Abigail = new NPC(NPCType.Abigail , 20);
+        Harvey = new NPC(NPCType.Harvey , 30);
+        Lia = new NPC(NPCType.Lia , 40);
+        Robbin = new NPC(NPCType.Robbin , 50);
+        Clint = new NPC(NPCType.Clint , 60);
+        Pierre = new NPC(NPCType.Pierre , 70);
+        Robin = new NPC(NPCType.Robin , 80);
+        Willy = new NPC(NPCType.Willy , 90);
+        Marnie = new NPC(NPCType.Marnie , 100);
+        Morris = new NPC(NPCType.Morris , 110);
+        Gus = new NPC(NPCType.Gus , 120);
+
+        npcs.add(Sebastian);
+        npcs.add(Abigail);
+        npcs.add(Harvey);
+        npcs.add(Lia);
+        npcs.add(Robbin);
+        npcs.add(Clint);
+        npcs.add(Pierre);
+        npcs.add(Robin);
+        npcs.add(Willy);
+        npcs.add(Marnie);
+        npcs.add(Morris);
+        npcs.add(Gus);
+
         // TODO: initialize npc and shops enums
     }
 
