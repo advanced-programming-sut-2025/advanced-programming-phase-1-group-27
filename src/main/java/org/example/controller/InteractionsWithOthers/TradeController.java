@@ -169,7 +169,6 @@ public class TradeController {
     }
 
     public Result tradeResponse(String response, String stringId) {
-        // TODO: function incomplete
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         int id = Integer.parseInt(stringId);
         Trade trade = getTradeWithId(id);
@@ -264,7 +263,6 @@ public class TradeController {
     }
 
     public Result tradeHistory() {
-        // TODO: function incomplete
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         StringBuilder result = new StringBuilder();
         result.append("Trade History : \n");

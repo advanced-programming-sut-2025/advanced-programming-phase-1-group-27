@@ -23,6 +23,10 @@ public class Stacks {
         return item;
     }
 
+    public void setStackLevel(StackLevel stackLevel) {
+        this.stackLevel = stackLevel;
+    }
+
     public void setItem(Item item) {
         this.item = item;
     }

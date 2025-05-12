@@ -132,6 +132,10 @@ public class Player extends User {
         availableCookingRecipes.add(Recipe.SaladRecipe);
     }
 
+    public void setCurrentTool(Tool currentTool) {
+        this.currentTool = currentTool;
+    }
+
     public int getMoney() {
         return money;
     }

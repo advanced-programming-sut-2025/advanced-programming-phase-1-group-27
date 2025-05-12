@@ -8,7 +8,7 @@ import org.example.models.enums.items.ToolType;
 
 import java.util.*;
 
-public class Backpack extends Tool{
+public class Backpack extends Tool {
 
     private int capacity;
     private ArrayList<Stacks> items = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Backpack extends Tool{
         } else if (level == StackLevel.Deluxe) {
             this.capacity = -1;//infinite
         }
-        super(level, energyUsage, toolType.getName() , toolType);
+        super(level, energyUsage, toolType.getName(), toolType);
     }
 
     public List<Stacks> getItems() {
@@ -63,8 +63,7 @@ public class Backpack extends Tool{
                 if (stacks.getQuantity() < amount) {
                     amount -= stacks.getQuantity();
                     stacks.setQuantity(0);
-                }
-                else {
+                } else {
                     stacks.setQuantity(stacks.getQuantity() - amount);
                     break;
                 }
@@ -157,16 +156,16 @@ public class Backpack extends Tool{
 //        }
 //    }
 
-    public boolean isToolAvailable(String toolName) {
+    public Stacks getStackToolWithName(String toolName) {
         for (Stacks stacks : items) {
             if (stacks.getItem() instanceof ToolType) {
                 if (stacks.getItem().getName().equalsIgnoreCase(toolName)) {
-                    return true;
+                    return stacks;
                 }
 
             }
         }
-        return false;
+        return null;
     }
 
     public boolean canAdd(Item item, StackLevel level, int amount) {
@@ -194,7 +193,7 @@ public class Backpack extends Tool{
 
     public Item getItemWithName(String itemName) {
         for (Stacks slot : items) {
-            if(slot.getItem().getName().equalsIgnoreCase(itemName)){
+            if (slot.getItem().getName().equalsIgnoreCase(itemName)) {
                 return slot.getItem();
             }
         }
@@ -203,7 +202,7 @@ public class Backpack extends Tool{
 
     public StackLevel getStackLevel(Item item) {
         for (Stacks slot : items) {
-            if(slot.getItem().getName().equalsIgnoreCase(item.getName())){
+            if (slot.getItem().getName().equalsIgnoreCase(item.getName())) {
                 return slot.getStackLevel();
             }
         }
@@ -244,6 +243,75 @@ public class Backpack extends Tool{
         for (Stacks stacks : copy) {
             if (stacks != null)
                 items.add(stacks);
+        }
+    }
+
+    public void upgradeLevel(Stacks stack) {
+        Item item = stack.getItem();
+        if (item == ToolType.BasicHoe) {
+            stack.setItem(ToolType.BronzeHoe);
+            stack.setStackLevel(StackLevel.Bronze);
+        } else if (item == ToolType.BronzeHoe) {
+            stack.setItem(ToolType.IronHoe);
+            stack.setStackLevel(StackLevel.Iron);
+        } else if (item == ToolType.IronHoe) {
+            stack.setItem(ToolType.GoldHoe);
+            stack.setStackLevel(StackLevel.Gold);
+        } else if (item == ToolType.GoldHoe) {
+            stack.setItem(ToolType.IridiumHoe);
+            stack.setStackLevel(StackLevel.Iridium);
+        }
+        if (item == ToolType.BasicAxe) {
+            stack.setItem(ToolType.BronzeAxe);
+            stack.setStackLevel(StackLevel.Bronze);
+        } else if (item == ToolType.BronzeAxe) {
+            stack.setItem(ToolType.IronAxe);
+            stack.setStackLevel(StackLevel.Iron);
+        } else if (item == ToolType.IronAxe) {
+            stack.setItem(ToolType.GoldAxe);
+            stack.setStackLevel(StackLevel.Gold);
+        } else if (item == ToolType.GoldAxe) {
+            stack.setItem(ToolType.IridiumAxe);
+            stack.setStackLevel(StackLevel.Iridium);
+        }
+        if (item == ToolType.BasicPickaxe) {
+            stack.setItem(ToolType.BronzePickaxe);
+            stack.setStackLevel(StackLevel.Bronze);
+        } else if (item == ToolType.BronzePickaxe) {
+            stack.setItem(ToolType.IronPickaxe);
+            stack.setStackLevel(StackLevel.Iron);
+        } else if (item == ToolType.IronPickaxe) {
+            stack.setItem(ToolType.GoldPickaxe);
+            stack.setStackLevel(StackLevel.Gold);
+        } else if (item == ToolType.GoldPickaxe) {
+            stack.setItem(ToolType.IridiumPickaxe);
+            stack.setStackLevel(StackLevel.Iridium);
+        }
+        if (item == ToolType.BasicWateringCan) {
+            stack.setItem(ToolType.BronzeWateringCan);
+            stack.setStackLevel(StackLevel.Bronze);
+        } else if (item == ToolType.BronzeWateringCan) {
+            stack.setItem(ToolType.IronWateringCan);
+            stack.setStackLevel(StackLevel.Iron);
+        } else if (item == ToolType.IronWateringCan) {
+            stack.setItem(ToolType.GoldWateringCan);
+            stack.setStackLevel(StackLevel.Gold);
+        } else if (item == ToolType.GoldWateringCan) {
+            stack.setItem(ToolType.IridiumWateringCan);
+            stack.setStackLevel(StackLevel.Iridium);
+        }
+        if (item == ToolType.BasicTrashCan) {
+            stack.setItem(ToolType.BronzeTrashCan);
+            stack.setStackLevel(StackLevel.Bronze);
+        } else if (item == ToolType.BronzeTrashCan) {
+            stack.setItem(ToolType.IronTrashCan);
+            stack.setStackLevel(StackLevel.Iron);
+        } else if (item == ToolType.IronTrashCan) {
+            stack.setItem(ToolType.GoldTrashCan);
+            stack.setStackLevel(StackLevel.Gold);
+        } else if (item == ToolType.GoldTrashCan) {
+            stack.setItem(ToolType.IridiumTrashCan);
+            stack.setStackLevel(StackLevel.Iridium);
         }
     }
 }
