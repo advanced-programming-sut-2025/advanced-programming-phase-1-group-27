@@ -34,6 +34,9 @@ public class TradeController {
         // TODO: function incomplete
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Player player = getPlayerWithUsername(username);
+        if (player == null) {
+            return new Result(false, "No player found with username " + username);
+        }
         Backpack currentBackpack = currentPlayer.getBackpack();
         Backpack playerBackpack = player.getBackpack();
         Item itemType1 = null;
@@ -43,9 +46,6 @@ public class TradeController {
         Integer price = null;
         if (stringPrice != null) {
             price = Integer.parseInt(stringPrice);
-        }
-        if (player == null) {
-            return new Result(false, "No player found with username " + username);
         }
         if (stringPrice != null
                 && stringItem2 != null) {
