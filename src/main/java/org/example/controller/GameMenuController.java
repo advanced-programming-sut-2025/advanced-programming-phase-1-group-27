@@ -130,6 +130,7 @@ public class GameMenuController extends MenuController {
                                             ((Cell) destination.getObject()).getMap() == currentPlayer.getSpouse().getFarmMap())) {
                                 Cell newDestination = (Cell) destination.getObject();
                                 currentPlayer.setCurrentCell(newDestination);
+                                currentPlayer.setCurrentMap(newDestination.getMap());
                                 return new Result(true, "You Changed your Map And Now Are On Cell(" +
                                         newDestination.getPosition().getX() + "," +
                                         newDestination.getPosition().getY() + ")");
@@ -158,8 +159,10 @@ public class GameMenuController extends MenuController {
         int x = Integer.parseInt(s), y = Integer.parseInt(t), size = Integer.parseInt(sizeString);
         String view = "";
         Map map = App.getCurrentGame().getCurrentPlayer().getCurrentMap();
+        System.out.println(map.getHeight());
         for (int i = x; i < Integer.min(x + size, map.getHeight()); i++) {
-            if (i > 0) view += "\n";
+            if (i > 0) view += "|\n";
+            view += "|";
             for (int j = y; j < Integer.min(y + size, map.getWidth()); j++) {
                 view += map.getCell(i, j).toString();
             }
@@ -274,7 +277,7 @@ public class GameMenuController extends MenuController {
         else if (source.getPlant() == null) {
             Season season = App.getCurrentGame().getTime().getSeason();
             ArrayList<CropType> cropTypes = CropType.getMixedSeedPossibilitiesBySeason().get(season);
-            CropType cropType = cropTypes.get((new Random(System.currentTimeMillis())).nextInt(cropTypes.size()));
+            CropType cropType = cropTypes.get((new Random( )).nextInt(cropTypes.size()));
 
             cell.setObject(new Crop(cropType));
             if (checkForGiantCrop(cell))
@@ -581,7 +584,7 @@ public class GameMenuController extends MenuController {
 
         int numberOfFish = Math.min(6, getNumberOfFish());
         ArrayList<Stacks> capturedFish = new ArrayList<>();
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random( );
         for (int i = 0; i < numberOfFish; i++) {
             double coefficient = getFishCoefficient(type);
             StackLevel fishLevel = getStackLevel(coefficient);
@@ -667,7 +670,7 @@ public class GameMenuController extends MenuController {
     }
 
     private int getNumberOfFish() {
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random( );
         return (int) Math.ceil(
                 App.getCurrentGame().getCurrentWeather().getFishingModifier() *
                 random.nextInt() *
@@ -676,7 +679,7 @@ public class GameMenuController extends MenuController {
     }
 
     private double getFishCoefficient(ToolType type) {
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random( );
         return (ToolType.getFishPoleModifier(type) *
                 (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() + 2) *
                 random.nextInt(2)) / (7.0 - App.getCurrentGame().getCurrentWeather().getFishingModifier());

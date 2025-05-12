@@ -3,15 +3,20 @@ package org.example.models;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.items.Recipe;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Ability {
     private int xp = 0, level = 0;
 
-    public static List<ArrayList<Recipe>> farmingRecipes, foragingRecipes, fishingRecipes, miningRecipes;
+    public static ArrayList<ArrayList<Recipe>> farmingRecipes, foragingRecipes, fishingRecipes, miningRecipes;
 
     static {
+        farmingRecipes = new ArrayList<>();
+        foragingRecipes = new ArrayList<>();
+        fishingRecipes = new ArrayList<>();
+        miningRecipes = new ArrayList<>();
         // level 1 farming recipes
         farmingRecipes.add(new ArrayList<>(List.of(
                 Recipe.SprinklerRecipe,

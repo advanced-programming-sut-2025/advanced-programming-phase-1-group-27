@@ -11,7 +11,7 @@ import java.util.*;
 public class Backpack extends Tool{
 
     private int capacity;
-    private List<Stacks> items;
+    private ArrayList<Stacks> items = new ArrayList<>();
 
     public Backpack(ToolType toolType) {
         StackLevel level = toolType.getLevel();

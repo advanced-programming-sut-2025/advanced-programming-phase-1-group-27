@@ -201,4 +201,8 @@ public enum NPCType {
         favouriteItems.add(CookingProduct.HashBrowns);
         return favouriteItems;
     }
+
+    public void setHome(Building home) {
+        this.home = home;
+    }
 }

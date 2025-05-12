@@ -51,16 +51,17 @@ public class MainMenuMenuController extends MenuController {
         for (User user : users) {
             players.add(new Player(user));
         }
-        Game game = new Game(players);
+        Game game;
+        App.setCurrentGame(game = new Game(players));
+        game.init();
         for (User user : users) {
             user.setCurrentGame(game);
         }
         for (Player player : players) {
             getPlayerMap(player, game, scanner);
         }
-        App.setCurrentGame(game);
         App.setCurrentMenu(Menu.Home);
-        return new Result(true, "Game created!");
+        return new Result(true, "Game created! You are now in your House!");
     }
 
     public Result loadGame() {

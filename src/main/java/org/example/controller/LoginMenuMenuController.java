@@ -91,7 +91,7 @@ public class LoginMenuMenuController extends MenuController {
     public Result checkAnswer(Matcher matcher) { // checking answers for register questions
         if (matcher == null)
             return new Result(false, "Command format is invalid. Registration failed!");
-        int questionId = Integer.parseInt(matcher.group("questionId").trim());
+        int questionId = Integer.parseInt(matcher.group("questionId").trim()) - 1;
         SecurityQuestion question = App.getSecurityQuestion(questionId);
         if (question == null)
             return new Result(false, "Question not found. Registration failed");
@@ -134,7 +134,7 @@ public class LoginMenuMenuController extends MenuController {
     }
 
     private String generatePassword() {
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random( );
         int passwordLen = 8 + random.nextInt(5);
         String lowercase = "abcdefghijklmnopqrstuvwxyz";
         String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

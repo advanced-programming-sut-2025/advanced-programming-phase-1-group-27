@@ -130,6 +130,7 @@ public class HomeController {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         App.setCurrentMenu(Menu.GameMenu);
         currentPlayer.setCurrentMenu(Menu.GameMenu);
+        currentPlayer.setCurrentMap(currentPlayer.getFarmMap());
         return new Result(true, "Exiting home ...");
     }
 

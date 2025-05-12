@@ -64,6 +64,7 @@ public class Cell {
     }
 
     public void plant(Plant plant) {
+        System.out.println("asdfasFDSALAMSALAM");
         cellType = CellType.Occupied;
         object = plant;
         plant.setCell(this);
@@ -71,14 +72,16 @@ public class Cell {
 
     public void placeForagingCrop() {
         Season currentSeason = App.getCurrentGame().getTime().getSeason();
-        int randomInt = new Random(System.currentTimeMillis()).nextInt(
+        int randomInt = new Random( ).nextInt(
                 CropType.getForagingCropsBySeason().get(currentSeason).size());
-        plant(new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt)));
+        Crop crop = new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt));
+        crop.setTillNextHarvest(0);
+        plant(crop);
     }
 
     public void placeForagingMineral() {
         ArrayList<MineralType> foragingMinerals = MineralType.getForagingMinerals();
-        int randomInt = new Random(System.currentTimeMillis()).nextInt(foragingMinerals.size());
+        int randomInt = new Random( ).nextInt(foragingMinerals.size());
         cellType = CellType.Occupied;
         object = foragingMinerals.get(randomInt);
     }
@@ -114,7 +117,7 @@ public class Cell {
             return "Y";
         }
         else if (cellType.equals(CellType.Free)) {
-            return "\\s";
+            return "\s";
         } else if (cellType.equals(CellType.Water)) {
             return "\u001B[34m" + "W" + "\u001B[0m";
         } else if (cellType.equals(CellType.Door)) {
@@ -123,7 +126,7 @@ public class Cell {
             if (building instanceof Hut) {
                 return "\u001B[41m" + "H" + "\u001B[0m";
             } else if (building instanceof GreenHouse){
-                return "\u001B[41m" + "G" + "\u001B[0m";
+                return "\u001B[42m" + "G" + "\u001B[0m";
             } else if (building instanceof NPCHouse) {
                 return "\u001B[41m" + "N" + "\u001B[0m";
             } else if (building instanceof StoreBuilding) {
@@ -142,7 +145,9 @@ public class Cell {
                 return "\u001B[32m" + "R" + "\u001B[0m";
             }
         } else if (cellType.equals(CellType.View)) {
-            return "\u001B[35m" + "~" + "\u001B[35m";
+            return "\u001B[35m" + "~" + "\u001B[0m";
+        } else if (cellType.equals(CellType.MapLink)) {
+            return "\u001B[33m" + "L" + "\u001B[0m";
         }
         return "?";
     }

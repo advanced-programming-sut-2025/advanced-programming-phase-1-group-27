@@ -1,5 +1,6 @@
 package org.example.models.Map;
 
+import org.example.models.App;
 import org.example.models.Cell;
 import org.example.models.enums.CellType;
 import org.example.models.enums.NPCType;
@@ -37,12 +38,17 @@ public class NPCMap extends Map{
         npcHouse.getNpc().setStandingCell(cells[x + 4][y + 1]);
     }
 
+    public void setPassageToFarmMap(int i, int j, FarmMap farmMap, int x, int y) {
+        cells[i][j].setType(CellType.MapLink);
+        cells[i][j].setObject(farmMap.getCell(x, y));
+    }
+
     private void build() {
-        buildNPCHouse(new NPCHouse(NPCType.Abigail, cells[11][1]));
-        buildNPCHouse(new NPCHouse(NPCType.Sebastian, cells[11][6]));
-        buildNPCHouse(new NPCHouse(NPCType.Harvey, cells[11][12]));
-        buildNPCHouse(new NPCHouse(NPCType.Lia, cells[11][18]));
-        buildNPCHouse(new NPCHouse(NPCType.Robbin, cells[11][23]));
+        buildNPCHouse(new NPCHouse(NPCType.Abigail, cells[9][1]));
+        buildNPCHouse(new NPCHouse(NPCType.Sebastian, cells[9][6]));
+        buildNPCHouse(new NPCHouse(NPCType.Harvey, cells[9][12]));
+        buildNPCHouse(new NPCHouse(NPCType.Lia, cells[9][18]));
+        buildNPCHouse(new NPCHouse(NPCType.Robbin, cells[9][23]));
 
 
 

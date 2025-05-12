@@ -59,7 +59,7 @@ public class Map {
     private void dfs(Cell cell) {
         markedCells.add(cell);
         for (Cell adj : cell.getAdjacentCells()) {
-            if (adj.isPassable() && !markedCells.contains(adj)) {
+            if (adj != null && adj.isPassable() && !markedCells.contains(adj)) {
                 dfs(adj);
             }
         }
@@ -78,7 +78,7 @@ public class Map {
         while (!queue.isEmpty()) {
             Cell current = queue.remove();
             for (Cell adj : current.getAdjacentCells()) {
-                if (adj.isPassable() && !markedCells.contains(adj)) {
+                if (adj != null && adj.isPassable() && !markedCells.contains(adj)) {
                     markedCells.add(adj);
                     distance.put(adj, distance.get(current) + 1);
                     queue.add(adj);

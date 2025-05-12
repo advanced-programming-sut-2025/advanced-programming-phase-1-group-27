@@ -39,10 +39,10 @@ public enum Menu {
 
     public static Menu getMenu(String menuName) {
         return switch (menuName) {
-            case "login" -> LoginMenu;
-            case "main" -> MainMenu;
-            case "game" -> GameMenu;
-            case "profile" -> ProfileMenu;
+            case "login menu" -> LoginMenu;
+            case "main menu" -> MainMenu;
+            case "game menu" -> GameMenu;
+            case "profile menu" -> ProfileMenu;
             default -> null;
         };
     }
@@ -54,7 +54,7 @@ public enum Menu {
             case MainMenu -> "main menu";
             case ProfileMenu -> "profile menu";
             case GameMenu -> "game menu";
-            case Home -> "Home";
+            case Home -> "home";
             case BlackSmithShop -> "black smith shop";
             case CarpenterShop -> "carpenter shop";
             case FishShop -> "fish shop";

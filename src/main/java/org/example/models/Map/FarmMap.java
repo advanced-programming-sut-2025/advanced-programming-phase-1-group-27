@@ -118,7 +118,7 @@ public class FarmMap extends Map {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (cells[i][j].getType() == CellType.Free) {
-                    int randomInt =  (new Random(System.currentTimeMillis())).nextInt(1000);
+                    int randomInt =  (new Random( )).nextInt(1000);
                     if (randomInt / 10 == 15) {
                         if (randomInt == 151) cells[i][j].placeForagingMineral();
                         else cells[i][j].placeForagingCrop();

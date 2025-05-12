@@ -19,7 +19,7 @@ public enum Season {
     }
 
     public Weather pickARandomWeather() {
-        int randomIndex = new Random(System.currentTimeMillis()).nextInt(possibleWeathers.length);
+        int randomIndex = new Random( ).nextInt(possibleWeathers.length);
         return possibleWeathers[randomIndex];
     }
 

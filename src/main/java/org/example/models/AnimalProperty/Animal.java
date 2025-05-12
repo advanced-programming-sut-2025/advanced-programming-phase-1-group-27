@@ -37,7 +37,7 @@ public class Animal {
             return null;
         }
         tillNextProduction = type.getYieldRate();
-        Random generator = new Random(System.currentTimeMillis());
+        Random generator = new Random( );
         AnimalProduct product;
 
         if (type.getProducts().size() > 1 && friendship >= 100) {

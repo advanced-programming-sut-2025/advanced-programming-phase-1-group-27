@@ -83,4 +83,8 @@ public abstract class Plant {
     public void setGiant(boolean giant) {
         isGiant = giant;
     }
+
+    public void setTillNextHarvest(int tillNextHarvest) {
+        this.tillNextHarvest = tillNextHarvest;
+    }
 }

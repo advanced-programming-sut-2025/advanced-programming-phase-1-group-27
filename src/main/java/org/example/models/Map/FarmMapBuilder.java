@@ -21,7 +21,7 @@ public class FarmMapBuilder {
         for (int i = 4; i < 8; i++) {
             for (int j = m - 6; j < m - 2; j++) {
                 finalProduct.getCell(i, j).setType(CellType.Building);
-                finalProduct.getCell(j, i).setBuilding(hut);
+                finalProduct.getCell(i, j).setBuilding(hut);
             }
         }
         finalProduct.getCell(7, m - 5).setType(CellType.Door);
@@ -69,15 +69,15 @@ public class FarmMapBuilder {
     }
 
     public void generateForagingItems() {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+        for (int i = 1; i < n - 1; i++) {
+            for (int j = 1; j < m - 1; j++) {
                 Cell cell = finalProduct.getCell(i, j);
-                int randomInt = (new Random(System.currentTimeMillis())).nextInt(100);
+                int randomInt = (new Random()).nextInt(100);
                 if (cell.getType() == CellType.Free) {
                     if (randomInt < 3) {
                         cell.placeForagingMineral();
                     }
-                    else if (randomInt < 30) {
+                    else if (randomInt < 7) {
                         cell.placeForagingCrop();
                     }
                 }

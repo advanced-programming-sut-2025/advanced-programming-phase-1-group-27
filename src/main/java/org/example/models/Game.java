@@ -32,6 +32,9 @@ public class Game {
     public Game(ArrayList<Player> players) {
         this.admin = players.getFirst();
         this.players = players;
+    }
+
+    public void init() {
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();

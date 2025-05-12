@@ -57,8 +57,8 @@ public enum Weather {
             FarmMap map = player.getFarmMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < 3; i++) {
-                int x = (new Random(System.currentTimeMillis())).nextInt(cells.length);
-                int y = (new Random(System.currentTimeMillis())).nextInt(cells[0].length);
+                int x = (new Random( )).nextInt(cells.length);
+                int y = (new Random( )).nextInt(cells[0].length);
                 cells[x][y].thor();
             }
         }

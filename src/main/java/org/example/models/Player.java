@@ -418,6 +418,10 @@ public class Player extends User {
         return false;
     }
 
+    public void setCurrentMap(Map map) {
+        currentMap = map;
+    }
+
     public boolean canFlowered(Player player){
         if(!relations.containsKey(player)){
             relations.put(player, new Relation());
