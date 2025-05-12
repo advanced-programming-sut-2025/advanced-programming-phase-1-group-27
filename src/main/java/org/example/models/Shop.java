@@ -16,6 +16,14 @@ public class Shop {
         Season season = App.getCurrentGame().getTime().getSeason();
         this.stock = shopType.getStock(season);
     }
+
+    public ShopType getShopType() {
+        return shopType;
+    }
+
+    public ArrayList<Stacks> getStock() {
+        return stock;
+    }
 }
 
 

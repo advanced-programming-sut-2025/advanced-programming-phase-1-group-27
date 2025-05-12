@@ -5,6 +5,7 @@ import org.example.controller.HomeController;
 import org.example.models.Result;
 import org.example.models.enums.Menu;
 import org.example.models.enums.commands.HomeCommands;
+import org.example.models.enums.commands.MainMenuCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -50,8 +51,16 @@ public class HomeView extends AppMenu {
                     matcher.group("itemName").trim()
             ));
         }
-        else if (HomeCommands.Exit.getMatcher(input) != null) {
-            System.out.println(controller.exit());
+        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+            System.out.println(controller.showCurrentMenu());
+        }
+        else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
+            System.out.println(controller.enterMenu(
+                    matcher.group("menuName").trim()
+            ));
+        }
+        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+            System.out.println(controller.exitMenu());
         }
         else {
             System.out.println(new Result(false, "invalid command!"));

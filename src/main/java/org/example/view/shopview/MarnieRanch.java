@@ -9,10 +9,10 @@ import org.example.view.GameMenuView;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class MarnieRanchShop extends AppMenu {
+public class MarnieRanch extends AppMenu {
     private final MarnieRanchShopController controller;
 
-    public MarnieRanchShop() {
+    public MarnieRanch() {
         controller = new MarnieRanchShopController(this);
     }
 

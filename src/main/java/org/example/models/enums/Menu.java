@@ -16,7 +16,7 @@ public enum Menu {
     CarpenterShop(new CarpenterShop()),
     FishShop(new FishShop()),
     JojaMartShop(new JojaMartShop()),
-    MarnieRanchShop(new MarnieRanchShop()),
+    MarnieRanch(new MarnieRanch()),
     PierreGeneralShop(new PierreGeneralShop()),
     StardropSaloonShop(new StardropSaloonShop()),
     AnimalEnclosure(new AnimalEnclosureView()),
@@ -59,7 +59,7 @@ public enum Menu {
             case CarpenterShop -> "carpenter shop";
             case FishShop -> "fish shop";
             case JojaMartShop -> "joja shop";
-            case MarnieRanchShop -> "marnie shop";
+            case MarnieRanch -> "marnie shop";
             case PierreGeneralShop -> "pierre shop";
             case StardropSaloonShop -> "stardrop shop";
             case AnimalEnclosure -> "animal enclosure";

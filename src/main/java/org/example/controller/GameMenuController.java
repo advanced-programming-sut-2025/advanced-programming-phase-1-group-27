@@ -2,9 +2,7 @@ package org.example.controller;
 
 import org.example.models.*;
 import org.example.models.AnimalProperty.Animal;
-import org.example.models.Map.FarmMap;
-import org.example.models.Map.GreenHouse;
-import org.example.models.Map.Hut;
+import org.example.models.Map.*;
 import org.example.models.Map.Map;
 import org.example.models.enums.*;
 import org.example.models.enums.Plants.*;
@@ -658,8 +656,35 @@ public class GameMenuController extends MenuController {
     }
 
     public Result goToShop(String shopName) {
-        // TODO: rassa. dorostesh kon
-        return null;
+        ShopType shopType = ShopType.getShopType(shopName);
+        if (shopType == null)
+            return new Result(false, "There is no shop with that name!");
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Cell cell = player.getCurrentCell();
+        if (cell.getType() == CellType.Door && cell.getBuilding() instanceof StoreBuilding building) {
+            Shop shop = building.getStore();
+            if (shop.getShopType() != shopType)
+                return new Result(false, "There is no " + shopName + " nearby!");
+        }
+        Menu newMenu = getMenu(shopType);
+        App.setCurrentMenu(newMenu);
+        player.setCurrentMenu(newMenu);
+        return new Result(true, "Redirecting to " + shopName + " ...");
+    }
+
+    private static Menu getMenu(ShopType shopType) {
+        Menu newMenu = null;
+        switch (shopType) {
+            case Blacksmith -> newMenu = Menu.BlackSmithShop;
+            case JojaMart -> newMenu = Menu.JojaMartShop;
+            case PierreGeneralStore -> newMenu = Menu.PierreGeneralShop;
+            case CarpenterShop -> newMenu = Menu.CarpenterShop;
+            case FishShop -> newMenu = Menu.FishShop;
+            case MarnieRanch -> newMenu = Menu.MarnieRanch;
+            case StardropSaloon -> newMenu = Menu.StardropSaloonShop;
+        }
+        assert newMenu != null;
+        return newMenu;
     }
 
     private Artisan getNearArtisan(ArtisanTypes artisanType) {

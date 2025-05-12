@@ -68,6 +68,19 @@ public enum ShopType {
         }
     }
 
+    public static ShopType getShopType(String shopName) {
+        return switch (shopName) {
+            case "blacksmith" -> ShopType.Blacksmith;
+            case "joja mart" -> ShopType.JojaMart;
+            case "pierre general store" -> ShopType.PierreGeneralStore;
+            case "carpenter shop" -> ShopType.CarpenterShop;
+            case "fish shop" -> ShopType.FishShop;
+            case "marnie ranch" -> ShopType.MarnieRanch;
+            case "stardrop saloon" -> ShopType.StardropSaloon;
+            default -> null;
+        };
+    }
+
     public ArrayList<Stacks> getStock(Season season) {
         // creating a copy ...
         ArrayList<Stacks> result = new ArrayList<>();
