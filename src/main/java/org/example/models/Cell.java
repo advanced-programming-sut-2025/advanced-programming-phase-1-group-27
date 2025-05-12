@@ -3,6 +3,7 @@ package org.example.models;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Map.*;
+import org.example.models.NPCs.NPC;
 import org.example.models.enums.Plants.Crop;
 import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.Tree;
@@ -118,6 +119,8 @@ public class Cell {
         }
         else if (cellType.equals(CellType.Free)) {
             return "\s";
+        } else if (object instanceof NPC) {
+            return "\u001B[36m" + "N" + "\u001B[0m";
         } else if (cellType.equals(CellType.Water)) {
             return "\u001B[34m" + "W" + "\u001B[0m";
         } else if (cellType.equals(CellType.Door)) {
@@ -130,11 +133,11 @@ public class Cell {
             } else if (building instanceof NPCHouse) {
                 return "\u001B[41m" + "N" + "\u001B[0m";
             } else if (building instanceof StoreBuilding) {
-                return "\u001B[41m" + "S" + "\u001B[0m";
+                return "\u001B[44m" + "S" + "\u001B[0m";
             } else if (building instanceof Barn) {
-                return "\u001B[41m" + "B" + "\u001B[0m";
+                return "\u001B[43m" + "B" + "\u001B[0m";
             } else if (building instanceof Coop) {
-                return "\u001B[41m" + "Q" + "\u001B[0m";
+                return "\u001B[43m" + "Q" + "\u001B[0m";
             }
         } else if (cellType.equals(CellType.Occupied)) {
             if (object instanceof Tree) {

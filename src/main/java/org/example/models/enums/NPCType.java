@@ -221,11 +221,5 @@ public enum NPCType {
         return favouriteItems;
     }
 
-    public Building getHome() {
-        return home;
-    }
 
-    public void setHome(Building home) {
-        this.home = home;
-    }
 }
