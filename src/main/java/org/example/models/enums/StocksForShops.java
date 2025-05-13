@@ -3,6 +3,7 @@ package org.example.models.enums;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
 import org.example.models.Stock;
+import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.ProcessedProductType;
@@ -19,35 +20,29 @@ public enum StocksForShops {
     SummerJojaMartStock(getSummerJojaMartStock()),
     FallJojaMartStock(getFallJojaMartStock()),
     WinterJojaMartStock(getWinterJojaMartStock()),
-    PermanentPierreGeneralStoreStock(getPermanentPierreGeneralStoreStock()),
-    SpringPierreGeneralStoreStock(getSpringPierreGeneralStoreStock()),
-    SummerPierreGeneralStoreStock(getSummerPierreGeneralStoreStock()),
-    WinterPierreGeneralStoreStock(new ArrayList<Stock>()),
+    PierreGeneralStoreStock(getPermanentPierreGeneralStoreStock()),
     FallPierreGeneralStoreStock(getFallPierreGeneralStoreStock()),
     FishShopStock(getFishShopStock());
 
-    private ArrayList<Stock> Stock;
+    private ArrayList<Stock> stock;
 
     static {
         ArrayList<Stock> permanentJojaMartStock = getPermanentJojaMartStock();
-        SpringJojaMartStock.Stock.addAll(permanentJojaMartStock);
-        SummerJojaMartStock.Stock.addAll(permanentJojaMartStock);
-        FallJojaMartStock.Stock.addAll(permanentJojaMartStock);
-        WinterJojaMartStock.Stock.addAll(permanentJojaMartStock);
+        SpringJojaMartStock.stock.addAll(permanentJojaMartStock);
+        SummerJojaMartStock.stock.addAll(permanentJojaMartStock);
+        FallJojaMartStock.stock.addAll(permanentJojaMartStock);
+        WinterJojaMartStock.stock.addAll(permanentJojaMartStock);
 
-        ArrayList<Stock> permanentPierreGeneralStoreStock = getPermanentPierreGeneralStoreStock();
-        SpringPierreGeneralStoreStock.Stock.addAll(permanentPierreGeneralStoreStock);
-        SummerPierreGeneralStoreStock.Stock.addAll(permanentPierreGeneralStoreStock);
-        FallPierreGeneralStoreStock.Stock.addAll(permanentPierreGeneralStoreStock);
-        WinterPierreGeneralStoreStock.Stock.addAll(permanentPierreGeneralStoreStock);
+        PierreGeneralStoreStock.stock.addAll(getSpringPierreGeneralStoreStock());
+        PierreGeneralStoreStock.stock.addAll(getSummerPierreGeneralStoreStock());
     }
 
-    StocksForShops(ArrayList<Stock> Stock) {
-        this.Stock = Stock;
+    StocksForShops(ArrayList<Stock> stock) {
+        this.stock = stock;
     }
 
     public ArrayList<Stock> getStock() {
-        return Stock;
+        return stock;
     }
 
     //Limits are daily and restock every morning
@@ -111,7 +106,7 @@ public enum StocksForShops {
         carpenterShop.add(new Stock(BuildingType.ShippingBin, -1, 250));
         return carpenterShop;
     }
-//TODO : Rassa joja mart faghat too fasle marbootesh mifrooshe
+
     private static ArrayList<Stock> getPermanentJojaMartStock() {
         ArrayList<Stock> jojaMart = new ArrayList<>();
         jojaMart.add(new Stock(ShopItems.JojaCola, -1, 75));
@@ -210,50 +205,50 @@ public enum StocksForShops {
 
     private static ArrayList<Stock> getSpringPierreGeneralStoreStock() {
         ArrayList<Stock> springPierreGeneralStoreStock = new ArrayList<>();
-        springPierreGeneralStoreStock.add(new Stock(SeedType.ParsnipSeed, 5, 30));
-        springPierreGeneralStoreStock.add(new Stock(SeedType.BeanStarter, 5, 90));
-        springPierreGeneralStoreStock.add(new Stock(SeedType.CauliflowerSeed, 5, 120));
-        springPierreGeneralStoreStock.add(new Stock(SeedType.PotatoSeed, 5, 75));
-        springPierreGeneralStoreStock.add(new Stock(SeedType.TulipBulbSeed, 5, 30));
-        springPierreGeneralStoreStock.add(new Stock(SeedType.KaleSeed, 5, 105));
-        springPierreGeneralStoreStock.add(new Stock(SeedType.JazzSeed, 5, 45));
-        springPierreGeneralStoreStock.add(new Stock(SeedType.GarlicSeed, 5, 60));
-        springPierreGeneralStoreStock.add(new Stock(SeedType.RiceShoot, 5, 60));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.ParsnipSeed, 5, 30, Season.Spring));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.BeanStarter, 5, 90, Season.Spring));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.CauliflowerSeed, 5, 120, Season.Spring));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.PotatoSeed, 5, 75, Season.Spring));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.TulipBulbSeed, 5, 30, Season.Spring));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.KaleSeed, 5, 105, Season.Spring));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.JazzSeed, 5, 45, Season.Spring));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.GarlicSeed, 5, 60, Season.Spring));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.RiceShoot, 5, 60, Season.Spring));
         return springPierreGeneralStoreStock;
     }
 
     private static ArrayList<Stock> getSummerPierreGeneralStoreStock() {
         ArrayList<Stock> summerPierreGeneralStoreStock = new ArrayList<>();
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.MelonSeed, 5, 120));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.TomatoSeed, 5, 75));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.BlueberrySeed, 5, 120));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.PepperSeed, 5, 60));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.WheatSeed, 5, 15));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.RadishSeed, 5, 60));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.PoppySeed, 5, 150));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.SpangleSeed, 5, 75));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.HopsStarter, 5, 90));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.CornSeed, 5, 225));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.SunflowerSeed, 5, 300));
-        summerPierreGeneralStoreStock.add(new Stock(SeedType.RedCabbageSeed, 5, 105));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.MelonSeed, 5, 120, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.TomatoSeed, 5, 75, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.BlueberrySeed, 5, 120, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.PepperSeed, 5, 60, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.WheatSeed, 5, 15, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.RadishSeed, 5, 60, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.PoppySeed, 5, 150, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.SpangleSeed, 5, 75, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.HopsStarter, 5, 90, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.CornSeed, 5, 225, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.SunflowerSeed, 5, 300, Season.Summer));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.RedCabbageSeed, 5, 105, Season.Summer));
         return summerPierreGeneralStoreStock;
     }
 
 
     private static ArrayList<Stock> getFallPierreGeneralStoreStock() {
         ArrayList<Stock> fallPierreGeneralStoreStock = new ArrayList<>();
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.EggplantSeed, 5, 30));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.CornSeed, 5, 225));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.PumpkinSeed, 5, 150));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.BokChoySeed, 5, 75));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.YamSeed, 5, 90));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.CranberrySeed, 5, 360));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.SunflowerSeed, 5, 300));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.FairySeed, 5, 300));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.AmaranthSeed, 5, 105));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.GrapeStarter, 5, 90));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.WheatSeed, 5, 15));
-        fallPierreGeneralStoreStock.add(new Stock(SeedType.ArtichokeSeed, 5, 45));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.EggplantSeed, 5, 30, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.CornSeed, 5, 225, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.PumpkinSeed, 5, 150, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.BokChoySeed, 5, 75, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.YamSeed, 5, 90, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.CranberrySeed, 5, 360, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.SunflowerSeed, 5, 300, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.FairySeed, 5, 300, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.AmaranthSeed, 5, 105, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.GrapeStarter, 5, 90, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.WheatSeed, 5, 15, Season.Fall));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.ArtichokeSeed, 5, 45, Season.Fall));
         return fallPierreGeneralStoreStock;
     }
 

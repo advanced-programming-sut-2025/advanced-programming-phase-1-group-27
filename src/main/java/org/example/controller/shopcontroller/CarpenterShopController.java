@@ -42,7 +42,7 @@ public class CarpenterShopController extends MenuController {
             return new Result(false, "Enclosure type is invalid!");
         }
         Shop carpenterShop = App.getCurrentGame().getCarpenterShop();
-        Stacks stack = carpenterShop.getStack(type.getName());
+        Stacks stack = carpenterShop.getStock(type.getName());
         if (stack.getQuantity() == 0) {
             return new Result(false, "You can not build anymore!");
         }

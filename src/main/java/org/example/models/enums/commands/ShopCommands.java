@@ -7,7 +7,7 @@ public enum ShopCommands {
     BuildBuilding("\\s*build\\s+-a\\s+(?<buildingName>.+)\\s+-l\\s+(?<x>\\d+)\\s+,\\s+(?<y>\\d+)\\s*"),
     ShowAllProducts("\\s*show\\s+all\\s+products\\s*"),
     ShowAllAvailableProducts("\\s*show\\s+all\\s+available\\s+products\\s*"),
-    Purchase("\\s*purchase\\s+(?<productName>.+)\\s+-n\\s+(?<count>.+)\\s*"),
+    Purchase("\\s*purchase\\s+(?<productName>\\S+)(?:\\s+-n\\s+(?<count>\\d+))?\\s*"),
     Sell("\\s*sell\\s+(?<productName).+)\\s+(?-n.+)\\s+count\\s*"),
     BuyAnimal("buy\\s+animal\\s+-a\\s+(?<animal>\\S.*\\S)\\s+-n\\s+(?<name>\\S.*\\S)");
 

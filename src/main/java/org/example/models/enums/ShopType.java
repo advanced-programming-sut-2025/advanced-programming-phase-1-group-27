@@ -55,10 +55,10 @@ public enum ShopType {
             stock.put(Season.Winter, StocksForShops.MarnieRanchStock.getStock());
         }
         else if (manager == NPCType.Pierre) {
-            stock.put(Season.Spring, StocksForShops.SpringPierreGeneralStoreStock.getStock());
-            stock.put(Season.Summer, StocksForShops.SummerPierreGeneralStoreStock.getStock());
-            stock.put(Season.Fall, StocksForShops.FallPierreGeneralStoreStock.getStock());
-            stock.put(Season.Winter, StocksForShops.WinterPierreGeneralStoreStock.getStock());
+            stock.put(Season.Spring, StocksForShops.PierreGeneralStoreStock.getStock());
+            stock.put(Season.Summer, StocksForShops.PierreGeneralStoreStock.getStock());
+            stock.put(Season.Fall, StocksForShops.PierreGeneralStoreStock.getStock());
+            stock.put(Season.Winter, StocksForShops.PierreGeneralStoreStock.getStock());
         }
         else if (manager == NPCType.Gus) {
             stock.put(Season.Spring, StocksForShops.StardropSaloonStock.getStock());

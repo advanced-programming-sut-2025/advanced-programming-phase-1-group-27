@@ -23,24 +23,24 @@ public class Shop {
     }
 
 
-    public Stock getStack(String itemName) {
-        for (Stock stack : stock) {
-            if(stack.getItem().getName().equals(itemName)){
-                return stack;
+    public Stock getStock(String itemName) {
+        for (Stock slot : stock) {
+            if(slot.getItem().getName().equals(itemName)){
+                return slot;
             }
         }
         return null;
     }
 
     public void reduce(Item item , int amount) {
-        for (Stock stack : stock) {
-            if(stack.getItem().getName().equals(item.getName())){
-                int lastAmount = stack.getQuantity();
+        for (Stock slot : stock) {
+            if(slot.getItem().getName().equals(item.getName())){
+                int lastAmount = slot.getQuantity();
                 if(lastAmount == -1){
                     return;
                 }
                 lastAmount -= amount;
-                stack.setQuantity(lastAmount);
+                slot.setQuantity(lastAmount);
                 break;
             }
         }
