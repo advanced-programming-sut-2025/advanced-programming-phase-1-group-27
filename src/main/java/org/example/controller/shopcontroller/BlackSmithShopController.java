@@ -6,6 +6,7 @@ import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
+import org.example.models.enums.Menu;
 import org.example.view.shopview.BlackSmithShop;
 
 import java.util.ArrayList;
@@ -28,14 +29,14 @@ public class BlackSmithShopController extends MenuController {
 
     @Override
     public Result enterMenu(String menuName) {
-        return new Result(false, "You can't enter " +
-                "any menu from here!");
+        return new Result(false, "You can't enter any menu from here!");
     }
 
     @Override
     public Result exitMenu() {
-        // TODO: rassa bodo;
-        return null;
+        App.setCurrentMenu(Menu.GameMenu);
+        App.getCurrentGame().getCurrentPlayer().setCurrentMenu(Menu.GameMenu);
+        return new Result(true, "Redirecting to game menu ...");
     }
 
     public Result upgradeTool(String toolName) {

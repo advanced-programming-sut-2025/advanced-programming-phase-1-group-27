@@ -1,7 +1,9 @@
 package org.example.view.shopview;
 
 import org.example.controller.shopcontroller.JojaMartShopController;
+import org.example.models.Result;
 import org.example.models.enums.Menu;
+import org.example.models.enums.commands.MainMenuCommands;
 import org.example.view.AppMenu;
 import org.example.view.GameMenuView;
 
@@ -23,5 +25,17 @@ public class JojaMartShop extends AppMenu {
         }
         String input = scanner.nextLine().trim();
         Matcher matcher;
+        if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
+            System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
+        }
+        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+            System.out.println(controller.showCurrentMenu());
+        }
+        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+            System.out.println(controller.exitMenu());
+        }
+        else {
+            System.out.println(new Result(false, "invalid command!"));
+        }
     }
 }

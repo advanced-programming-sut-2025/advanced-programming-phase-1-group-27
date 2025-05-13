@@ -19,7 +19,6 @@ public enum Menu {
     MarnieRanch(new MarnieRanch()),
     PierreGeneralShop(new PierreGeneralShop()),
     StardropSaloonShop(new StardropSaloonShop()),
-    AnimalEnclosure(new AnimalEnclosureView()),
     Trade(new TradeView()),
     ExitMenu(new ExitMenu());
 
@@ -70,7 +69,6 @@ public enum Menu {
             case MarnieRanch -> "marnie ranch";
             case PierreGeneralShop -> "pierre general store";
             case StardropSaloonShop -> "stardrop shop";
-            case AnimalEnclosure -> "animal enclosure";
             case Trade -> "trade menu";
             case ExitMenu -> "exit menu";
         };

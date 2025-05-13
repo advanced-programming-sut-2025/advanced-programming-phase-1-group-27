@@ -3,6 +3,7 @@ package org.example.controller.shopcontroller;
 import org.example.controller.MenuController;
 import org.example.models.App;
 import org.example.models.Result;
+import org.example.models.enums.Menu;
 import org.example.view.shopview.FishShop;
 
 public class FishShopController extends MenuController {
@@ -23,7 +24,8 @@ public class FishShopController extends MenuController {
 
     @Override
     public Result exitMenu() {
-        // TODO: rassa
-        return null;
+        App.setCurrentMenu(Menu.GameMenu);
+        App.getCurrentGame().getCurrentPlayer().setCurrentMenu(Menu.GameMenu);
+        return new Result(true, "Redirecting to game menu ...");
     }
 }

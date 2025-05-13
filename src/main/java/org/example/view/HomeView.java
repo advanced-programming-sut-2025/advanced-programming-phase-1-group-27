@@ -24,7 +24,18 @@ public class HomeView extends AppMenu {
         }
         String input = scanner.nextLine();
         Matcher matcher;
-        if (HomeCommands.ShowCraftingRecipes.getMatcher(input) != null) {
+        if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+            System.out.println(controller.showCurrentMenu());
+        }
+        else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
+            System.out.println(controller.enterMenu(
+                    matcher.group("menuName").trim()
+            ));
+        }
+        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+            System.out.println(controller.exitMenu());
+        }
+        else if (HomeCommands.ShowCraftingRecipes.getMatcher(input) != null) {
             System.out.print(controller.showCraftingRecipes());
         }
         else if ((matcher = HomeCommands.CraftItem.getMatcher(input)) != null) {
@@ -50,17 +61,6 @@ public class HomeView extends AppMenu {
             System.out.println(controller.eatFood(
                     matcher.group("itemName").trim()
             ));
-        }
-        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
-            System.out.println(controller.showCurrentMenu());
-        }
-        else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
-            System.out.println(controller.enterMenu(
-                    matcher.group("menuName").trim()
-            ));
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
-            System.out.println(controller.exitMenu());
         }
         else {
             System.out.println(new Result(false, "invalid command!"));

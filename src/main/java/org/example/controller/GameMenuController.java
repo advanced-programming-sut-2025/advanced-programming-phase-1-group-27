@@ -204,15 +204,13 @@ public class GameMenuController extends MenuController {
 
     public Result buildGreenHouse() {
         Player player = App.getCurrentGame().getCurrentPlayer();
-
+        player.getFarmMap().getGreenHouse().repair();
         if (player.getMoney() < 1000) {
             return new Result(false, "Not Enough Money, 1000 coins needed but you only have " +
                     player.getMoney() + ".");
         } else if (!player.getBackpack().hasEnoughItem(MineralType.Wood, 500)) {
             return new Result(false, "Not Enough Wood, 500 needed but you only have I dont know How Much.");
         }
-        player.getFarmMap().getGreenHouse().repair();
-
         player.addMoney(-1000);
         player.getBackpack().reduceItems(MineralType.Wood, 500);
         return new Result(true, "GreenHouse Repaired!");
@@ -469,7 +467,7 @@ public class GameMenuController extends MenuController {
         if (artisanType == null)
             return new Result(false, "This item cannot be placed!");
         Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
-        if (cell == null || cell.getType() != CellType.Free)
+        if (cell.getType() != CellType.Free)
             return new Result(false, "The desired cell is currently occupied!");
         player.getBackpack().reduceItems(item, 1);
         Artisan artisan = new Artisan(artisanType);
@@ -556,20 +554,13 @@ public class GameMenuController extends MenuController {
 
     public Result cheatSetFriendship(String name, String amountString) {
         int val = Integer.parseInt(amountString);
-        for (Animal animal: App.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals()) {
+        for (Animal animal : App.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals()) {
             if (animal.getName().equals(name)) {
                 animal.cheatSetFriendShip(val);
-                return new Result(true, "cheat Activated");
+                return new Result(true, "Cheat acitvated!");
             }
         }
-        return new Result(false, "No Animal Found!");
-    }
-
-    public Result cheatAddMoney(String amountString) {
-        int val = Integer.parseInt(amountString);
-        App.getCurrentGame().getCurrentPlayer().addMoney(val);
-        return new Result(true, "cheat Activated, You Now Have " +
-                App.getCurrentGame().getCurrentPlayer().getMoney() + "$");
+        return new Result(false, "No animal found!");
     }
 
     public Result fishing(String fishPoleName) {

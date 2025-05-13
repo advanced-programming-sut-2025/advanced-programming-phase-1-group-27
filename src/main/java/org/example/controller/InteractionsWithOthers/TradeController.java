@@ -20,6 +20,20 @@ public class TradeController extends MenuController {
         this.view = view;
     }
 
+    @Override
+    public Result enterMenu(String menuName) {
+        return null;
+    }
+
+    @Override
+    public Result exitMenu() {
+        return null;
+    }
+
+    public boolean playerPassedOut() {
+        return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
+    }
+
     public Result trade(String username, String type, String stringItem1, String stringItemAmount1, String stringPrice,
                         String stringItem2, String stringItemAmount2) {
         // TODO: function incomplete

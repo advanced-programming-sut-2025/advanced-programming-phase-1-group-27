@@ -5,6 +5,7 @@ import org.example.models.*;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Map.FarmMap;
+import org.example.models.enums.Menu;
 import org.example.models.enums.items.BuildingType;
 import org.example.models.enums.items.Recipe;
 import org.example.view.shopview.CarpenterShop;
@@ -27,8 +28,9 @@ public class CarpenterShopController extends MenuController {
 
     @Override
     public Result exitMenu() {
-        // TODO: rassa bodo
-        return null;
+        App.setCurrentMenu(Menu.GameMenu);
+        App.getCurrentGame().getCurrentPlayer().setCurrentMenu(Menu.GameMenu);
+        return new Result(true, "Redirecting to game menu ...");
     }
 
     public Result buildBuilding(String buildingName, int x, int y) {

@@ -45,9 +45,6 @@ public class GameMenuView extends AppMenu {
         else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
             System.out.println(controller.terminateGame(scanner));
         }
-        else if (GameMenuCommands.Home.getMatcher(input) != null) {
-            System.out.println(controller.goToHome());
-        }
         else if (GameMenuCommands.ShowWeather.getMatcher(input) != null) {
             System.out.println(controller.showWeather());
         }
@@ -150,10 +147,11 @@ public class GameMenuView extends AppMenu {
                     matcher.group("artisanName")
             ));
         }
-        else if ((matcher = GameMenuCommands.GoToShop.getMatcher(input)) != null) {
-            System.out.println(controller.goToShop(
-                    matcher.group("shopName").trim()
-            ));
+        else if (GameMenuCommands.InventoryShow.getMatcher(input) != null) {
+            System.out.println(controller.inventoryShow());
+        }
+        else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
+
         }
         else {
             System.out.println(new Result(false, "invalid command!"));

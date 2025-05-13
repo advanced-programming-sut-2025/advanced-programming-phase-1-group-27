@@ -7,6 +7,7 @@ import org.example.models.AnimalProperty.Coop;
 import org.example.models.App;
 import org.example.models.Player;
 import org.example.models.Result;
+import org.example.models.enums.Menu;
 import org.example.models.enums.items.AnimalType;
 import org.example.view.shopview.MarnieRanch;
 
@@ -28,8 +29,9 @@ public class MarnieRanchShopController extends MenuController {
 
     @Override
     public Result exitMenu() {
-        // TODO: rassa
-        return null;
+        App.setCurrentMenu(Menu.GameMenu);
+        App.getCurrentGame().getCurrentPlayer().setCurrentMenu(Menu.GameMenu);
+        return new Result(true, "Redirecting to game menu ...");
     }
     public Result buyAnimal(String animalString, String name) {
         // TODO : Sobhan ba stock bokon Inkara ro!!!!!!!!!!!!!!!!

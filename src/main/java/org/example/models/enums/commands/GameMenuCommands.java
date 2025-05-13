@@ -4,13 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenuCommands implements MenuCommands {
-    ExitGame("exit\\s+game"),
     NextTurn("next\\s+turn"),
     TerminateGame("terminate\\s+game"),
-    EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
     ExitMenu("menu\\s+exit"),
-    ShowCurrentMenu("show\\s+current\\s+menu"),
-    Home("go\\s+to\\s+home"),
     PlaceItem("place\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-d\\s+(?<direction>\\d+)"),
     ShowWeather("weather"),
     ForecastWeather("weather\\s+forecast"),
@@ -33,7 +29,8 @@ public enum GameMenuCommands implements MenuCommands {
     Products("produces"),
     CollectProducts("collect\\s+produces\\s+-n\\s+(?<name>\\S.*\\S)"),
     SellAnimal("sell\\s+animal\\s+-n\\s+(?<name>\\S.*\\S)"),
-    GoToShop("go\\s+to\\s+shop\\+(?<shopName>.+)");
+    InventoryShow("inventory\\s+show"),
+    InventoryTrash("inventory\\s+trash\\s+-i\\s+(?<itemName>.+)\\s+-n\\s+(?<number>\\d+)");
 
     private final String pattern;
 
