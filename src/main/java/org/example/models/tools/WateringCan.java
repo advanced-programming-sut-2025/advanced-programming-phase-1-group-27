@@ -19,7 +19,7 @@ public class WateringCan extends Tool{
         if(level == StackLevel.Basic){
             energyUsage = 5;
             this.waterCapacity = 40;
-        }else if(level == StackLevel.Bronze){
+        }else if(level == StackLevel.Copper){
             energyUsage = 4;
             this.waterCapacity = 55;
         }else if(level == StackLevel.Iron){

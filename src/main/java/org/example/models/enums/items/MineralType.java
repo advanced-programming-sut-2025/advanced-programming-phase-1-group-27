@@ -23,7 +23,7 @@ public enum MineralType implements Item {
     PrismaticShard(2000),
     //MINERALS
     Stone(20, StackLevel.Basic),
-    CopperOre(5, StackLevel.Bronze),
+    CopperOre(5, StackLevel.Copper),
     IronOre(10, StackLevel.Iron),
     GoldOre(25, StackLevel.Gold),
     IridiumOre(100, StackLevel.Iridium),

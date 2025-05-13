@@ -1,5 +1,6 @@
 package org.example.controller.InteractionsWithOthers;
 
+import org.example.controller.MenuController;
 import org.example.models.App;
 import org.example.models.Item;
 import org.example.models.Player;
@@ -12,21 +13,11 @@ import org.example.models.tools.Backpack;
 import org.example.view.TradeView;
 
 
-public class TradeController {
+public class TradeController extends MenuController {
     private final TradeView view;
 
     public TradeController(TradeView view) {
         this.view = view;
-    }
-
-    public Result startTrade() {
-        StringBuilder result = new StringBuilder();
-        result.append("Available players:\n");
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            result.append(player.getUsername()).append("\n");
-            //TODO: Trade View
-        }
-        return new Result(true, result.toString());
     }
 
     public Result trade(String username, String type, String stringItem1, String stringItemAmount1, String stringPrice,

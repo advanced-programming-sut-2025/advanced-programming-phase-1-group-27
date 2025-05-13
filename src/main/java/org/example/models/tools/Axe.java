@@ -20,7 +20,7 @@ public class Axe extends Tool {
         int energyUsage = 0;
         if (level == StackLevel.Basic) {
             energyUsage = 5;
-        } else if (level == StackLevel.Bronze) {
+        } else if (level == StackLevel.Copper) {
             energyUsage = 4;
         } else if (level == StackLevel.Iron) {
             energyUsage = 3;

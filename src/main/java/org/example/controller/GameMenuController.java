@@ -4,6 +4,7 @@ import org.example.models.*;
 import org.example.models.AnimalProperty.Animal;
 import org.example.models.Map.*;
 import org.example.models.Map.Map;
+import org.example.models.Shops.Shop;
 import org.example.models.enums.*;
 import org.example.models.enums.Plants.*;
 import org.example.models.enums.Seasons.Season;
@@ -223,6 +224,18 @@ public class GameMenuController extends MenuController {
         player.addMoney(-1000);
         player.getBackpack().reduceItems(MineralType.Wood, 500);
         return new Result(true, "GreenHouse Repaired!");
+    }
+
+    public Result startTrade() {
+        StringBuilder result = new StringBuilder();
+        result.append("Available players:\n");
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            result.append(player.getUsername()).append("\n");
+            //TODO: Trade View
+        }
+        App.setCurrentMenu(Menu.Trade);
+        App.getCurrentGame().getCurrentPlayer().setCurrentMenu(Menu.Trade);
+        return new Result(true, result.toString());
     }
 
     private boolean subRectCouldBeGiant(int i, int j, Cell cell) {

@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 
 public class GameMenuView extends AppMenu {
     private final GameMenuController controller;
-    // controller tradeController
 
     public GameMenuView() {
         controller = new GameMenuController(this);

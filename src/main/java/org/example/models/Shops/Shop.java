@@ -1,7 +1,7 @@
-package org.example.models;
+package org.example.models.Shops;
 
-import org.example.models.enums.NPCType;
-import org.example.models.Map.FarmMap;
+import org.example.models.App;
+import org.example.models.Stacks;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.ShopType;
 

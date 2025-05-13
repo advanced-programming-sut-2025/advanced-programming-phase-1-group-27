@@ -2,7 +2,7 @@ package org.example.models.Map;
 
 import org.example.models.Building;
 import org.example.models.Cell;
-import org.example.models.Shop;
+import org.example.models.Shops.Shop;
 
 public class StoreBuilding extends Building {
     private final Shop shop;

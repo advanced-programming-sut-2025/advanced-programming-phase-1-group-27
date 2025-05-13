@@ -16,7 +16,6 @@ public class ToolController {
     }
 
     public Result upgradeTool(String toolName) {
-        // TODO : current shop should be checked!
         ToolType toolType = getTool(toolName);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Backpack backpack = currentPlayer.getBackpack();
@@ -54,7 +53,7 @@ public class ToolController {
         }else if(toolType.getLevel() == StackLevel.Iron){
             price = 5000;
             item = ProcessedProductType.GoldMetalBar;
-        }else if(toolType.getLevel() == StackLevel.Bronze){
+        }else if(toolType.getLevel() == StackLevel.Copper){
             price = 2500;
             item = ProcessedProductType.IronMetalBar;
         }else{ // toolType.getLevel() == StackLevel.Basic
@@ -62,7 +61,7 @@ public class ToolController {
             item = ProcessedProductType.CopperMetalBar;
         }
         if (toolType == ToolType.BasicTrashCan
-                || toolType == ToolType.BronzeTrashCan
+                || toolType == ToolType.CopperTrashCan
                 || toolType == ToolType.IronTrashCan
                 || toolType == ToolType.GoldTrashCan) {
             ratio = 1;
@@ -125,25 +124,25 @@ public class ToolController {
         Item item = stack.getItem();
         Tool tool = null;
         if(item == ToolType.BasicHoe
-                || item == ToolType.BronzeHoe
+                || item == ToolType.CopperHoe
                 || item == ToolType.IronHoe
                 || item == ToolType.GoldHoe
                 || item == ToolType.IridiumHoe){
             tool = new Hoe(toolType);
         }else if(item == ToolType.BasicAxe
-                || item == ToolType.BronzeAxe
+                || item == ToolType.CopperAxe
                 || item == ToolType.IronAxe
                 || item == ToolType.GoldAxe
                 || item == ToolType.IridiumAxe){
             tool = new Axe(toolType);
         }else if(item == ToolType.BasicWateringCan
-                || item == ToolType.BronzeWateringCan
+                || item == ToolType.CopperWateringCan
                 || item == ToolType.IronWateringCan
                 || item == ToolType.GoldWateringCan
                 || item == ToolType.IridiumWateringCan) {
             tool = new WateringCan(toolType);
         }else if(item == ToolType.BasicTrashCan
-                || item == ToolType.BronzeTrashCan
+                || item == ToolType.CopperTrashCan
                 || item == ToolType.IronTrashCan
                 || item == ToolType.GoldTrashCan
                 || item == ToolType.IridiumTrashCan) {
@@ -164,7 +163,7 @@ public class ToolController {
         }else if(item == ToolType.Scythe){
             tool = new Scythe();
         }else if(item == ToolType.BasicPickaxe
-                || item == ToolType.BronzePickaxe
+                || item == ToolType.CopperPickaxe
                 || item == ToolType.IronPickaxe
                 || item == ToolType.GoldPickaxe
                 || item == ToolType.IridiumPickaxe) {

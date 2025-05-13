@@ -249,9 +249,9 @@ public class Backpack extends Tool {
     public void upgradeLevel(Stacks stack) {
         Item item = stack.getItem();
         if (item == ToolType.BasicHoe) {
-            stack.setItem(ToolType.BronzeHoe);
-            stack.setStackLevel(StackLevel.Bronze);
-        } else if (item == ToolType.BronzeHoe) {
+            stack.setItem(ToolType.CopperHoe);
+            stack.setStackLevel(StackLevel.Copper);
+        } else if (item == ToolType.CopperHoe) {
             stack.setItem(ToolType.IronHoe);
             stack.setStackLevel(StackLevel.Iron);
         } else if (item == ToolType.IronHoe) {
@@ -262,9 +262,9 @@ public class Backpack extends Tool {
             stack.setStackLevel(StackLevel.Iridium);
         }
         if (item == ToolType.BasicAxe) {
-            stack.setItem(ToolType.BronzeAxe);
-            stack.setStackLevel(StackLevel.Bronze);
-        } else if (item == ToolType.BronzeAxe) {
+            stack.setItem(ToolType.CopperAxe);
+            stack.setStackLevel(StackLevel.Copper);
+        } else if (item == ToolType.CopperAxe) {
             stack.setItem(ToolType.IronAxe);
             stack.setStackLevel(StackLevel.Iron);
         } else if (item == ToolType.IronAxe) {
@@ -275,9 +275,9 @@ public class Backpack extends Tool {
             stack.setStackLevel(StackLevel.Iridium);
         }
         if (item == ToolType.BasicPickaxe) {
-            stack.setItem(ToolType.BronzePickaxe);
-            stack.setStackLevel(StackLevel.Bronze);
-        } else if (item == ToolType.BronzePickaxe) {
+            stack.setItem(ToolType.CopperPickaxe);
+            stack.setStackLevel(StackLevel.Copper);
+        } else if (item == ToolType.CopperPickaxe) {
             stack.setItem(ToolType.IronPickaxe);
             stack.setStackLevel(StackLevel.Iron);
         } else if (item == ToolType.IronPickaxe) {
@@ -288,9 +288,9 @@ public class Backpack extends Tool {
             stack.setStackLevel(StackLevel.Iridium);
         }
         if (item == ToolType.BasicWateringCan) {
-            stack.setItem(ToolType.BronzeWateringCan);
-            stack.setStackLevel(StackLevel.Bronze);
-        } else if (item == ToolType.BronzeWateringCan) {
+            stack.setItem(ToolType.CopperWateringCan);
+            stack.setStackLevel(StackLevel.Copper);
+        } else if (item == ToolType.CopperWateringCan) {
             stack.setItem(ToolType.IronWateringCan);
             stack.setStackLevel(StackLevel.Iron);
         } else if (item == ToolType.IronWateringCan) {
@@ -301,9 +301,9 @@ public class Backpack extends Tool {
             stack.setStackLevel(StackLevel.Iridium);
         }
         if (item == ToolType.BasicTrashCan) {
-            stack.setItem(ToolType.BronzeTrashCan);
-            stack.setStackLevel(StackLevel.Bronze);
-        } else if (item == ToolType.BronzeTrashCan) {
+            stack.setItem(ToolType.CopperTrashCan);
+            stack.setStackLevel(StackLevel.Copper);
+        } else if (item == ToolType.CopperTrashCan) {
             stack.setItem(ToolType.IronTrashCan);
             stack.setStackLevel(StackLevel.Iron);
         } else if (item == ToolType.IronTrashCan) {

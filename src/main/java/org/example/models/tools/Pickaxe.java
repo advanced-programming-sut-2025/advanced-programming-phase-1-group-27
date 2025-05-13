@@ -16,7 +16,7 @@ public class Pickaxe extends Tool{
         int energyUsage = 0;
         if(level == StackLevel.Basic){
             energyUsage = 5;
-        }else if(level == StackLevel.Bronze){
+        }else if(level == StackLevel.Copper){
             energyUsage = 4;
         }else if(level == StackLevel.Iron){
             energyUsage = 3;
@@ -64,7 +64,7 @@ public class Pickaxe extends Tool{
                     return new Result(false, "Your Tool is not Strong Enough for This Mineral!");
                 }
             } else if (MineralType.getJewels().contains(mineralType)) {
-                if (level.isBetterThan(StackLevel.Bronze)) {
+                if (level.isBetterThan(StackLevel.Copper)) {
                     player.consumeEnergy(this.getEnergyUsage());
                     cell.setType(CellType.Free);
                     cell.setObject(null);

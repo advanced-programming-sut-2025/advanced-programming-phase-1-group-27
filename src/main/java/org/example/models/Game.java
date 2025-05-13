@@ -3,10 +3,9 @@ package org.example.models;
 import org.example.models.Map.*;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
-import org.example.models.Relations.Relation;
-import org.example.models.enums.CellType;
+import org.example.models.Shops.BlackSmith;
+import org.example.models.Shops.Shop;
 import org.example.models.enums.NPCType;
-import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
@@ -30,7 +29,7 @@ public class Game {
     private Weather currentWeather, tomorrowWeather = null;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
-    // dialogoue ro ki niaz dare?
+    // all dialogues between players
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
     private Shop blacksmith, jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
     private NPC Sebastian , Abigail , Harvey , Lia , Robbin , Clint , Pierre , Robin , Willy , Marnie , Morris , Gus;
@@ -42,7 +41,7 @@ public class Game {
 
     public void init() {
 
-        blacksmith = new Shop(ShopType.Blacksmith);
+        blacksmith = new BlackSmith(ShopType.Blacksmith);
         jojaMart = new Shop(ShopType.JojaMart);
         pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
         carpenterShop = new Shop(ShopType.CarpenterShop);

@@ -15,7 +15,7 @@ public class TrashCan extends Tool{
         int energyUsage = 0;
         if(level == StackLevel.Basic){
             this.percentage = 0;
-        }else if(level == StackLevel.Bronze){
+        }else if(level == StackLevel.Copper){
             this.percentage = 15;
         }else if(level == StackLevel.Iron){
             this.percentage = 30;
