@@ -360,7 +360,7 @@ public enum Recipe implements Item {
             new Ingredient(MineralType.Stone, 20),
             new Ingredient(MineralType.Fiber, 30)
     ))),
-    GrassStarterRecipe(10000, CraftingProduct.GrassStarter, new ArrayList<>(List.of(
+    GrassStarterRecipe(1000, CraftingProduct.GrassStarter, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 1),
             new Ingredient(MineralType.Fiber, 1)
     ))),

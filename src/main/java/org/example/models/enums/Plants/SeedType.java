@@ -77,8 +77,6 @@ public enum SeedType implements PlantSourceType, Item {
         put(Season.Winter, new ArrayList<>(List.of(AncientSeed, MixedSeed, PowderMelonSeed)));
     }};
 
-
-
     public boolean isFarmable() {
         //TODO
         return true;
@@ -94,7 +92,7 @@ public enum SeedType implements PlantSourceType, Item {
 
     @Override
     public Integer getPrice() {
-        return 0;
+        return price;
     }
 
     public static SeedType getItem(String itemName) {

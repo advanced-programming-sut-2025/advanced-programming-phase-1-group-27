@@ -156,6 +156,7 @@ public class BlackSmithShopController extends MenuController {
         App.getCurrentGame().getCurrentPlayer().getBackpack().addItems(stack.getItem(),
                 stack.getStackLevel(), quantity);
         return new Result(true, "You purchased successfully!");
+
     }
 
     private ToolType getTool(String toolName) {

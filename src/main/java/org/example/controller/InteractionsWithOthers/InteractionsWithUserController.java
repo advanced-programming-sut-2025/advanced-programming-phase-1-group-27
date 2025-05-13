@@ -5,6 +5,7 @@ import org.example.models.Relations.Dialogue;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.DialogueType;
 import org.example.models.enums.Plants.FruitType;
+import org.example.models.enums.items.ShopItems;
 import org.example.models.tools.Backpack;
 import org.example.view.GameMenuView;
 
@@ -308,10 +309,10 @@ public class InteractionsWithUserController {
             return new Result(false, "Player is not near");
         }
         if (!backpack.hasEnoughItem(FruitType.FairyRose, 1)) {
-            return new Result(false, "You don't have Rose!");
+            return new Result(false, "You don't have Bouquet!");
         }
-        backpack.reduceItems(FruitType.FairyRose, 1);
-        player.getBackpack().addItems(FruitType.FairyRose, backpack.getStackLevel(FruitType.FairyRose), 1);
+        backpack.reduceItems(ShopItems.Bouquet, 1);
+        player.getBackpack().addItems(ShopItems.Bouquet, backpack.getStackLevel(ShopItems.Bouquet), 1);
         String add = "";
         if (currentPlayer.canFlowered(player)) {
             currentPlayer.goNextLevel(player);
