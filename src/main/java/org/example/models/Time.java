@@ -59,6 +59,7 @@ public class Time {
 
     private void advanceSeason() {
         season = season.getNextSeason();
+        App.getCurrentGame().newSeason();
     }
     public Season getSeason() {
         return this.season;

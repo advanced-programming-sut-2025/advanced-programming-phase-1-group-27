@@ -42,13 +42,7 @@ public class Game {
 
     public void init() {
 
-        blackSmith = new BlackSmith(ShopType.Blacksmith);
-        jojaMart = new Shop(ShopType.JojaMart);
-        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
-        carpenterShop = new Shop(ShopType.CarpenterShop);
-        fishShop = new Shop(ShopType.FishShop);
-        marnieRanch = new Shop(ShopType.MarnieRanch);
-        stardropSaloon = new Shop(ShopType.StardropSaloon);
+        initShops();
 
         Sebastian = new NPC(NPCType.Sebastian , 10);
         Abigail = new NPC(NPCType.Abigail , 20);
@@ -126,11 +120,7 @@ public class Game {
         time.passAnHour();
         updatePlayersBuff();
         updateArtisans();
-        // TODO: sobhan. update all artisans in map. chejoori bokonam?
         // TODO
-        
-        
-        
     }
 
     public void newDay() {
@@ -178,8 +168,14 @@ public class Game {
             player.refreshNPCThings();
             player.refreshPlayerThings();
         }
-        //TODO : refresh shop stocks
+        // refresh shop stock
+        initShops();
+
         currentWeather.applyWeatherEffect();
+    }
+
+    public void newSeason() {
+        initShops();
     }
 
     public Player getCurrentPlayer() {
@@ -348,6 +344,16 @@ public class Game {
 
     public void addDialogue(Dialogue dialogue) {
         dialogues.add(dialogue);
+    }
+
+    private void initShops() {
+        blackSmith = new BlackSmith(ShopType.Blacksmith);
+        jojaMart = new Shop(ShopType.JojaMart);
+        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
+        carpenterShop = new Shop(ShopType.CarpenterShop);
+        fishShop = new Shop(ShopType.FishShop);
+        marnieRanch = new Shop(ShopType.MarnieRanch);
+        stardropSaloon = new Shop(ShopType.StardropSaloon);
     }
 
     private void updatePlayersBuff() {
