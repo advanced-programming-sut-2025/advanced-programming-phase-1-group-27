@@ -52,6 +52,10 @@ public class Stacks {
     }
 
     public int getPrice() {
+        return (int) ((double) item.getPrice() * this.stackLevel.getPriceModifier());
+    }
+
+    public int getTotalPrice() {
         return quantity * (int) ((double)item.getPrice() * this.stackLevel.getPriceModifier());
     }
 }

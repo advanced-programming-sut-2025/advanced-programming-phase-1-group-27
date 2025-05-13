@@ -126,10 +126,10 @@ public class Cell {
             return "Y";
         }
         else if (isQuarry && object == null) {
-            return "\u001B[30m" + "#" + "\u001B[0m";
+            return "\u001B[47m" + "#" + "\u001B[0m";
         }
         else if (cellType.equals(CellType.Free)) {
-            return "\s";
+            return "_";
         } else if (object instanceof NPC) {
             return "\u001B[36m" + "N" + "\u001B[0m";
         } else if (cellType.equals(CellType.Water)) {
@@ -156,7 +156,7 @@ public class Cell {
             } else if (object instanceof Crop) {
                 return "\u001B[32m" + "C" + "\u001B[0m";
             } else if(object instanceof MineralType) {
-                return "\u001B[32m" + "R" + "\u001B[0m";
+                return "\u001B[47m" + "R" + "\u001B[0m";
             }
         } else if (cellType.equals(CellType.View)) {
             return "\u001B[35m" + "~" + "\u001B[0m";

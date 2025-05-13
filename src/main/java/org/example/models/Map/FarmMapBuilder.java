@@ -86,7 +86,7 @@ public class FarmMapBuilder {
             for (int j = 1; j < m - 1; j++) {
                 Cell cell = finalProduct.getCell(i, j);
                 int randomInt = (new Random()).nextInt(100);
-                if (cell.getType() == CellType.Free) {
+                if (cell.getType() == CellType.Free && !cell.isQuarry() && cell.getBuilding() == null) {
                     if (randomInt < 6) {
                         cell.placeForagingCrop();
                     }

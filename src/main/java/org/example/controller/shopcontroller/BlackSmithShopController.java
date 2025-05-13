@@ -10,8 +10,6 @@ import org.example.models.enums.items.ToolType;
 import org.example.models.enums.Menu;
 import org.example.view.shopview.BlackSmithShop;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class BlackSmithShopController extends MenuController {

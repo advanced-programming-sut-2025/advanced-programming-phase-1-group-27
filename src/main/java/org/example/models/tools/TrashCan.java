@@ -1,7 +1,6 @@
 package org.example.models.tools;
 
 import org.example.models.App;
-import org.example.models.Item;
 import org.example.models.Result;
 import org.example.models.Stacks;
 import org.example.models.enums.StackLevel;
@@ -32,7 +31,7 @@ public class TrashCan extends Tool{
     }
 
     public Result deleteItem(Stacks stack) {
-        int refund = stack.getPrice() * this.percentage / 100;
+        int refund = stack.getTotalPrice() * this.percentage / 100;
         App.getCurrentGame().getCurrentPlayer().addMoney(refund);
         return new Result(true, "Item Sold");
     }

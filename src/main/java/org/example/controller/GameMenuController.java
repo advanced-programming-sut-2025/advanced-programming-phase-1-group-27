@@ -277,22 +277,27 @@ public class GameMenuController extends MenuController {
     }
 
     public Result plant(String sourceName, String directionString) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
         int direction = Integer.parseInt(directionString);
         PlantSourceType source = SeedType.getItem(sourceName);
         if (source == null)
             source = SaplingType.getItem(sourceName);
         if (source == null)
             return new Result(false, "invalid Source!");
-        else if (!App.getCurrentGame().getCurrentPlayer().getBackpack().hasEnoughItem((Item) source, 1))
+        else if (!player.getBackpack().hasEnoughItem((Item) source, 1))
             return new Result(false, "You don't Have This Seed/Sapling in Your Inventory!");
 
-        Cell cell = App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells().get(direction);
+        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
 
-        if (cell.getType() != CellType.Plowed)
+
+        if (cell.isQuarry())
+            return new Result(false, "This cell is in the quarry!");
+        else if (cell.getType() != CellType.Plowed)
             return new Result(false, "Cell Not Plowed");
         else if (cell.getObject() != null || (cell.getBuilding() != null && !(cell.getBuilding() instanceof GreenHouse)))
             return new Result(false, "Cell is Occupied");
         else if (source.getPlant() == null) {
+            player.getBackpack().reduceItems((Item) source, 1);
             Season season = App.getCurrentGame().getTime().getSeason();
             ArrayList<CropType> cropTypes = CropType.getMixedSeedPossibilitiesBySeason().get(season);
             CropType cropType = cropTypes.get((new Random( )).nextInt(cropTypes.size()));
@@ -306,6 +311,7 @@ public class GameMenuController extends MenuController {
                         cropType.getName() + ".");
         }
         else if (source.getPlant() instanceof CropType cropType) {
+            player.getBackpack().reduceItems((Item) source, 1);
 
             cell.setObject(new Crop(cropType));
             if (checkForGiantCrop(cell))
@@ -315,6 +321,8 @@ public class GameMenuController extends MenuController {
                 return new Result(true, "You planted A Crop. A " + cropType.getName() + ".");
         }
         else if (source.getPlant() instanceof TreeType treeType) {
+            player.getBackpack().reduceItems((Item) source, 1);
+
             cell.setObject(new Tree(treeType));
             return new Result(true, "You planted A Tree. A " + treeType.getName() + ".");
         } else {
@@ -486,6 +494,9 @@ public class GameMenuController extends MenuController {
         if (artisanType == null && !(item == BuildingType.ShippingBin))
             return new Result(false, "This item cannot be placed!");
         Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
+        if (cell.isQuarry())
+            return new Result(false, "This cell is in the quarry!");
+
         if (cell == null || cell.getType() != CellType.Free || !(cell.getMap() instanceof FarmMap))
             return new Result(false, "The desired cell is currently occupied!");
         player.getBackpack().reduceItems(item, 1);
@@ -561,7 +572,7 @@ public class GameMenuController extends MenuController {
             if (slot.getItem().getName().equalsIgnoreCase(itemName)) {
                 int amount = Math.min(number, slot.getQuantity());
                 number -= amount;
-                money += (int) (slot.getPrice() * amount * trashCan.getTrashCanModifier() / slot.getQuantity());
+                money += (int) (slot.getTotalPrice() * amount * trashCan.getTrashCanModifier() / slot.getQuantity());
                 slot.addQuantity(-amount);
             }
         }
