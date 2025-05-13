@@ -16,6 +16,8 @@ import org.example.view.GameMenuView;
 
 import java.util.*;
 
+import static java.lang.Math.min;
+
 public class GameMenuController extends MenuController {
     private GameMenuView view;
 
@@ -502,7 +504,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result sellItem(String itemName, String amountString) {
-        int amount = (amountString == null? -1: Integer.parseInt(amountString));
+        int amount = (amountString == null? 10000000: Integer.parseInt(amountString));
         Player player = App.getCurrentGame().getCurrentPlayer();
         Item item = player.getItemFromBackpack(itemName);
         ShippingBin shippingBin = null;
@@ -511,20 +513,28 @@ public class GameMenuController extends MenuController {
                 shippingBin = (ShippingBin) cell.getBuilding();
         if (shippingBin == null)
             return new Result(false, "There is no shipping bin near you");
-        if (amount > -1) {
-            player.getBackpack().reduceItems(item, )
-        } else {
-            int cnt = 0;
-            for (Stacks stack: player.getBackpack().getItems()) {
-                if (stack.getItem() == item) {
-                    cnt += stack.getQuantity();
-                }
+        ArrayList<Stacks> removedStacks = new ArrayList<>();
+        int removedCount = 0;
+        for (Stacks stack: player.getBackpack().getItems()) {
+            if (stack.getItem() == item) {
+                int val = min(amount, stack.getQuantity());
+                amount -= val;
+                stack.addQuantity(-val);
+                removedCount += val;
+                if (stack.getQuantity() == 0)
+                    removedStacks.add(stack);
+                shippingBin.addItem(new Stacks(item, stack.getStackLevel(), stack.getQuantity()));
             }
-            player.getBackpack().reduceItems(item, cnt);
-            shippingBin.addItem(new Stacks(item, amount));
-            return new Result(true, "All of your " + itemName + " was Added to the Shipping Bin");
         }
+        for (Stacks stack: removedStacks) {
+            player.getBackpack().getItems().remove(stack);
+        }
+
+        return new Result(true, "You added " + removedCount + " of " + item.getName()
+        + " to the shipping bin!");
     }
+
+    // Cheats :
 
     public Result cheatAddItem(String itemName, int count) {
         Player player = App.getCurrentGame().getCurrentPlayer();
@@ -539,26 +549,6 @@ public class GameMenuController extends MenuController {
         player.getBackpack().addItems(item, level, count);
         return new Result(true, count + " of " + itemName + "added to the backpack!");
     }
-
-    private void eraseGame() {
-        Game game = App.getCurrentGame();
-        for (Player player : game.getPlayers()) {
-            player.setCurrentGame(null);
-        }
-        App.setCurrentGame(null);
-        App.setCurrentMenu(Menu.MainMenu);
-    }
-
-    private int getPlayerVote(Player player, Scanner scanner) {
-        view.printString(player.getUsername() + "! Should we terminate the game? (accept|reject)");
-        Result result;
-        do {
-            result = view.askToVote(scanner);
-        } while (!result.success());
-        return result.message().equals("accept") ? 0 : 1;
-    }
-
-    // Cheats :
     
     public Result cheatSetWeather(String weatherString) {
         Weather weather = null;
@@ -649,7 +639,7 @@ public class GameMenuController extends MenuController {
         if (player.getAbility(AbilityType.Fishing).getLevel() == 4)
             availableFish.addAll(FishType.getAvailableLegendaryFish(currentSeason));
 
-        int numberOfFish = Math.min(6, getNumberOfFish());
+        int numberOfFish = min(6, getNumberOfFish());
         ArrayList<Stacks> capturedFish = new ArrayList<>();
         Random random = new Random( );
         for (int i = 0; i < numberOfFish; i++) {
@@ -722,6 +712,24 @@ public class GameMenuController extends MenuController {
         player.getBackpack().addItems(artisan.getFinalProduct(), StackLevel.Basic, 1);
         artisan.free();
         return new Result(true, artisan.getFinalProduct().getName() + " collected successfully!");
+    }
+
+    private void eraseGame() {
+        Game game = App.getCurrentGame();
+        for (Player player : game.getPlayers()) {
+            player.setCurrentGame(null);
+        }
+        App.setCurrentGame(null);
+        App.setCurrentMenu(Menu.MainMenu);
+    }
+
+    private int getPlayerVote(Player player, Scanner scanner) {
+        view.printString(player.getUsername() + "! Should we terminate the game? (accept|reject)");
+        Result result;
+        do {
+            result = view.askToVote(scanner);
+        } while (!result.success());
+        return result.message().equals("accept") ? 0 : 1;
     }
 
     private Result goToShop(String shopName) {

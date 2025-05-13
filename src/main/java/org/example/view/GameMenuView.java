@@ -142,6 +142,9 @@ public class GameMenuView extends AppMenu {
                     matcher.group("itemList").trim()
             ));
         }
+        else if ((matcher = GameMenuCommands.SellItem.getMatcher(input)) != null) {
+            System.out.println(controller.sellItem(matcher.group("name"), matcher.group("amount")));
+        }
         else if ((matcher = GameMenuCommands.GetArtisan.getMatcher(input)) != null) {
             System.out.println(controller.getArtisanProduct(
                     matcher.group("artisanName")
