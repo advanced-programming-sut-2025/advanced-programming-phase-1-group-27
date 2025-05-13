@@ -65,7 +65,6 @@ public class Cell {
     }
 
     public void plant(Plant plant) {
-        System.out.println("asdfasFDSALAMSALAM");
         cellType = CellType.Occupied;
         object = plant;
         plant.setCell(this);

@@ -171,7 +171,7 @@ public class Backpack extends Tool {
     public boolean canAdd(Item item, StackLevel level, int amount) {
         int overflow = addItems(item, level, amount);
         reduceItems(item, level, amount - overflow);
-        return overflow > 0;
+        return overflow == 0;
     }
 
     public boolean hasEnoughItem(Item item, int quantity) {

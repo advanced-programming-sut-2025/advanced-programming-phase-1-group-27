@@ -26,7 +26,7 @@ public class GreenHouse extends Building {
                 topLeftCell.getMap().getCell(i, j).setType(CellType.Free);
             }
         }
-        topLeftCell.getMap().getCell(x + height, y + width - 4).setType(CellType.View);
+        topLeftCell.getMap().getCell(x + height - 1, y + width - 4).setType(CellType.View);
         topLeftCell.getMap().getCell(x, y + width - 4).setType(CellType.Water);
     }
 }
