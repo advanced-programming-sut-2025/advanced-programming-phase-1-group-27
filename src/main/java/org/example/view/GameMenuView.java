@@ -47,7 +47,6 @@ public class GameMenuView extends AppMenu {
         }
         else if (GameMenuCommands.Home.getMatcher(input) != null) {
             System.out.println(controller.goToHome());
-            
         }
         else if (GameMenuCommands.ShowWeather.getMatcher(input) != null) {
             System.out.println(controller.showWeather());
