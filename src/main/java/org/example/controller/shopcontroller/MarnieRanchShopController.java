@@ -32,6 +32,7 @@ public class MarnieRanchShopController extends MenuController {
         return null;
     }
     public Result buyAnimal(String animalString, String name) {
+        // TODO : Sobhan ba stock bokon Inkara ro!!!!!!!!!!!!!!!!
         AnimalType type = AnimalType.getItem(animalString);
         Animal animal = new Animal(type, name);
         Player player = App.getCurrentGame().getCurrentPlayer();

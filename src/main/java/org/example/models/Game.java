@@ -31,7 +31,8 @@ public class Game {
     private ArrayList<NPC> npcs = new ArrayList<>();
     // all dialogues between players
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
-    private Shop blacksmith, jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
+    private Shop jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
+    private BlackSmith blackSmith;
     private NPC Sebastian , Abigail , Harvey , Lia , Robbin , Clint , Pierre , Robin , Willy , Marnie , Morris , Gus;
 
     public Game(ArrayList<Player> players) {
@@ -41,7 +42,7 @@ public class Game {
 
     public void init() {
 
-        blacksmith = new BlackSmith(ShopType.Blacksmith);
+        blackSmith = new BlackSmith(ShopType.Blacksmith);
         jojaMart = new Shop(ShopType.JojaMart);
         pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
         carpenterShop = new Shop(ShopType.CarpenterShop);
@@ -189,8 +190,8 @@ public class Game {
         return time;
     }
 
-    public Shop getBlacksmith() {
-        return blacksmith;
+    public BlackSmith getBlacksmith() {
+        return blackSmith;
     }
 
     public Shop getJojaMart() {

@@ -9,11 +9,6 @@ import org.example.models.tools.*;
 import org.example.view.menu.ProfileMenu;
 
 public class ToolController {
-    private final ProfileMenu view;
-
-    public ToolController(ProfileMenu view) {
-        this.view = view;
-    }
 
     public Result upgradeTool(String toolName) {
         ToolType toolType = getTool(toolName);
@@ -170,6 +165,7 @@ public class ToolController {
             tool = new Pickaxe(toolType);
         }
         App.getCurrentGame().getCurrentPlayer().setCurrentTool(tool);
+        App.getCurrentGame().getCurrentPlayer().setCurrentTool(null);
         return new Result(true , "Tool equipped!");
     }
 
