@@ -6,6 +6,7 @@ import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Cell;
 import org.example.models.Position;
+import org.example.models.ShippingBin;
 import org.example.models.enums.CellType;
 import org.example.models.enums.items.BuildingType;
 
@@ -17,9 +18,10 @@ public class FarmMap extends Map {
 
     private Hut hut;
     private GreenHouse greenHouse;
-    private ArrayList<Barn> barns;
-    private ArrayList<Coop> coops;
-    private ArrayList<Animal> animals;
+    private ArrayList<Barn> barns = new ArrayList<>();
+    private ArrayList<Coop> coops = new ArrayList<>();
+    private ArrayList<Animal> animals = new ArrayList<>();
+    private ArrayList<ShippingBin> shippingBins = new ArrayList<>();
 
     public FarmMap(int height, int width) {
         super(height, width);
@@ -112,6 +114,14 @@ public class FarmMap extends Map {
 
     public ArrayList<Animal> getAnimals() {
         return animals;
+    }
+
+    public void addShippingBin(ShippingBin shippingBin) {
+        this.shippingBins.add(shippingBin);
+    }
+
+    public ArrayList<ShippingBin> getShippingBins() {
+        return shippingBins;
     }
 
     public void generateForaging() {

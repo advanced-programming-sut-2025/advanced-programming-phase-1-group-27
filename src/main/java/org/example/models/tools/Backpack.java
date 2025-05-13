@@ -209,6 +209,16 @@ public class Backpack extends Tool {
         return null;
     }
 
+    public int getItemTotalCount(Item item) {
+        int cnt = 0;
+        for (Stacks slot : items) {
+            if (slot.getItem().getName().equalsIgnoreCase(item.getName())) {
+                cnt += slot.getQuantity();
+            }
+        }
+        return cnt;
+    }
+
     private boolean isFull() {
         return items.size() == capacity;
     }

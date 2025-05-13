@@ -204,13 +204,15 @@ public class GameMenuController extends MenuController {
 
     public Result buildGreenHouse() {
         Player player = App.getCurrentGame().getCurrentPlayer();
-        player.getFarmMap().getGreenHouse().repair();
+
         if (player.getMoney() < 1000) {
             return new Result(false, "Not Enough Money, 1000 coins needed but you only have " +
                     player.getMoney() + ".");
         } else if (!player.getBackpack().hasEnoughItem(MineralType.Wood, 500)) {
             return new Result(false, "Not Enough Wood, 500 needed but you only have I dont know How Much.");
         }
+        player.getFarmMap().getGreenHouse().repair();
+
         player.addMoney(-1000);
         player.getBackpack().reduceItems(MineralType.Wood, 500);
         return new Result(true, "GreenHouse Repaired!");
@@ -357,8 +359,11 @@ public class GameMenuController extends MenuController {
     public Result shepherd(String name, String iString, String jString) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         int i = Integer.parseInt(iString), j = Integer.parseInt(jString);
+        if (!(player.getCurrentMap() instanceof FarmMap))
+            return new Result(false, "You are not in a Farm!");
+        FarmMap map = (FarmMap) player.getCurrentMap();
         Animal animal = null;
-        for (Animal a: player.getFarmMap().getAnimals()) {
+        for (Animal a: map.getAnimals()) {
             if (a.getName().equals(name)) {
                 animal = a;
             }
@@ -366,7 +371,7 @@ public class GameMenuController extends MenuController {
         if (animal == null) {
             return new Result(false, "No animal Found!");
         }
-        Cell cell = player.getFarmMap().getCell(i, j);
+        Cell cell = map.getCell(i, j);
         if (animal.isOut()) {
             cell.setObject(null);
             animal.setOut(false);
@@ -388,7 +393,10 @@ public class GameMenuController extends MenuController {
     public Result feedHay(String name) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Animal animal = null;
-        for (Animal a: player.getFarmMap().getAnimals()) {
+        if (!(player.getCurrentMap() instanceof FarmMap))
+            return new Result(false, "You are not in a Farm!");
+        FarmMap map = (FarmMap) player.getCurrentMap();
+        for (Animal a: map.getAnimals()) {
             if (a.getName().equals(name)) {
                 animal = a;
             }
@@ -404,7 +412,10 @@ public class GameMenuController extends MenuController {
     public Result products() {
         Player player = App.getCurrentGame().getCurrentPlayer();
         String res = "Animals With Available Products\n";
-        for (Animal animal: player.getFarmMap().getAnimals()) {
+        if (!(player.getCurrentMap() instanceof FarmMap))
+            return new Result(false, "You are not in a Farm!");
+        FarmMap map = (FarmMap) player.getCurrentMap();
+        for (Animal animal: map.getAnimals()) {
             if (animal.getTillNextProduction() == 0) {
                 res += animal.getType().getName() + " : " + animal.getName() + "\n";
             }
@@ -415,7 +426,10 @@ public class GameMenuController extends MenuController {
     public Result collectProduct(String name) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Animal animal = null;
-        for (Animal a: player.getFarmMap().getAnimals()) {
+        if (!(player.getCurrentMap() instanceof FarmMap))
+            return new Result(false, "You are not in a Farm!");
+        FarmMap map = (FarmMap) player.getCurrentMap();
+        for (Animal a: map.getAnimals()) {
             if (a.getName().equals(name)) {
                 animal = a;
             }
@@ -439,7 +453,10 @@ public class GameMenuController extends MenuController {
     public Result sellAnimal(String name) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Animal animal = null;
-        for (Animal a: player.getFarmMap().getAnimals()) {
+        if (!(player.getCurrentMap() instanceof FarmMap))
+            return new Result(false, "You are not in a Farm!");
+        FarmMap map = (FarmMap) player.getCurrentMap();
+        for (Animal a: map.getAnimals()) {
             if (a.getName().equals(name)) {
                 animal = a;
             }
@@ -450,7 +467,7 @@ public class GameMenuController extends MenuController {
         }
 
         player.addMoney(animal.getPrice());
-        player.getFarmMap().removeAnimal(animal);
+        map.removeAnimal(animal);
         animal.getEnclosure().removeAnimal(animal);
         return new Result(true, "You Sold " + animal.getName() + " " +
                 animal.getType().getName() + " for " + animal.getPrice() + " Coins!");
@@ -464,16 +481,49 @@ public class GameMenuController extends MenuController {
         if (direction < 1 || direction > 8)
             return new Result(false, "Invalid direction!");
         ArtisanTypes artisanType = ArtisanTypes.getArtisan(item);
-        if (artisanType == null)
+        if (artisanType == null && !(item == BuildingType.ShippingBin))
             return new Result(false, "This item cannot be placed!");
         Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
-        if (cell.getType() != CellType.Free)
+        if (cell == null || cell.getType() != CellType.Free || !(cell.getMap() instanceof FarmMap))
             return new Result(false, "The desired cell is currently occupied!");
         player.getBackpack().reduceItems(item, 1);
-        Artisan artisan = new Artisan(artisanType);
-        cell.setObject(artisan);
-        cell.setType(CellType.Occupied);
-        return new Result(true, "Item placed successfully!");
+        if (item == BuildingType.ShippingBin) {
+            cell.setType(CellType.Building);
+            ShippingBin shippingBin = new ShippingBin(cell);
+            cell.setBuilding(shippingBin);
+            ((FarmMap) cell.getMap()).addShippingBin(shippingBin);
+            return new Result(true, "Shipping Bin Placed!");
+        } else {
+            Artisan artisan = new Artisan(artisanType);
+            cell.setObject(artisan);
+            cell.setType(CellType.Occupied);
+            return new Result(true, "Artisan placed successfully!");
+        }
+    }
+
+    public Result sellItem(String itemName, String amountString) {
+        int amount = (amountString == null? -1: Integer.parseInt(amountString));
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Item item = player.getItemFromBackpack(itemName);
+        ShippingBin shippingBin = null;
+        for (Cell cell: player.getCurrentCell().getAdjacentCells())
+            if (cell.getType() == CellType.Building && cell.getBuilding() instanceof ShippingBin)
+                shippingBin = (ShippingBin) cell.getBuilding();
+        if (shippingBin == null)
+            return new Result(false, "There is no shipping bin near you");
+        if (amount > -1) {
+            player.getBackpack().reduceItems(item, )
+        } else {
+            int cnt = 0;
+            for (Stacks stack: player.getBackpack().getItems()) {
+                if (stack.getItem() == item) {
+                    cnt += stack.getQuantity();
+                }
+            }
+            player.getBackpack().reduceItems(item, cnt);
+            shippingBin.addItem(new Stacks(item, amount));
+            return new Result(true, "All of your " + itemName + " was Added to the Shipping Bin");
+        }
     }
 
     public Result cheatAddItem(String itemName, int count) {
@@ -561,6 +611,13 @@ public class GameMenuController extends MenuController {
             }
         }
         return new Result(false, "No animal found!");
+    }
+
+    public Result cheatAddMoney(String amountString) {
+        int val = Integer.parseInt(amountString);
+        App.getCurrentGame().getCurrentPlayer().addMoney(val);
+        return new Result(true, "cheat Activated, You Now Have " +
+                App.getCurrentGame().getCurrentPlayer().getMoney() + "$");
     }
 
     public Result fishing(String fishPoleName) {
