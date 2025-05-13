@@ -38,13 +38,21 @@ public enum Menu {
     }
 
     public static Menu getMenu(String menuName) {
-        return switch (menuName) {
-            case "login menu" -> LoginMenu;
-            case "main menu" -> MainMenu;
-            case "game menu" -> GameMenu;
-            case "profile menu" -> ProfileMenu;
-            default -> null;
-        };
+        for (Menu menu : Menu.values()) {
+            if (menu.toString().equals(menuName))
+                return menu;
+        }
+        return null;
+    }
+
+    public boolean isShop() {
+        return this == BlackSmithShop ||
+                this == CarpenterShop ||
+                this == FishShop ||
+                this == JojaMartShop ||
+                this == MarnieRanch ||
+                this == PierreGeneralShop ||
+                this == StardropSaloonShop;
     }
 
     @Override
@@ -55,12 +63,12 @@ public enum Menu {
             case ProfileMenu -> "profile menu";
             case GameMenu -> "game menu";
             case Home -> "home";
-            case BlackSmithShop -> "black smith shop";
+            case BlackSmithShop -> "blacksmith";
             case CarpenterShop -> "carpenter shop";
             case FishShop -> "fish shop";
-            case JojaMartShop -> "joja shop";
-            case MarnieRanch -> "marnie shop";
-            case PierreGeneralShop -> "pierre shop";
+            case JojaMartShop -> "joja mart";
+            case MarnieRanch -> "marnie ranch";
+            case PierreGeneralShop -> "pierre general store";
             case StardropSaloonShop -> "stardrop shop";
             case AnimalEnclosure -> "animal enclosure";
             case Trade -> "trade menu";

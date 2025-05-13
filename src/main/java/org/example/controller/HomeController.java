@@ -21,6 +21,18 @@ public class HomeController extends MenuController {
         return new Result(false, "You can't enter any menu from home!");
     }
 
+    public Result exitMenu() {
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        App.setCurrentMenu(Menu.GameMenu);
+        currentPlayer.setCurrentMenu(Menu.GameMenu);
+        currentPlayer.setCurrentMap(currentPlayer.getFarmMap());
+        return new Result(true, "Exiting home ...");
+    }
+
+    public boolean playerPassedOut() {
+        return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
+    }
+
     public Result showCraftingRecipes() {
         StringBuilder result = new StringBuilder();
         Player player = App.getCurrentGame().getCurrentPlayer();
@@ -128,17 +140,5 @@ public class HomeController extends MenuController {
         player.removeBuff();
         player.setBuff(item.getBuff());
         return null;
-    }
-
-    public Result exitMenu() {
-        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
-        App.setCurrentMenu(Menu.GameMenu);
-        currentPlayer.setCurrentMenu(Menu.GameMenu);
-        currentPlayer.setCurrentMap(currentPlayer.getFarmMap());
-        return new Result(true, "Exiting home ...");
-    }
-
-    public boolean playerPassedOut() {
-        return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
     }
 }

@@ -21,13 +21,23 @@ public class MarnieRanchShopController extends MenuController {
         return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
     }
 
+    @Override
+    public Result enterMenu(String menuName) {
+        return new Result(false, "You can't enter any menu from here!");
+    }
+
+    @Override
+    public Result exitMenu() {
+        // TODO: rassa
+        return null;
+    }
     public Result buyAnimal(String animalString, String name) {
         AnimalType type = AnimalType.getItem(animalString);
         Animal animal = new Animal(type, name);
         Player player = App.getCurrentGame().getCurrentPlayer();
 
         if (player.getMoney() >= type.getPrice()) {
-            for (Barn barn: player.getFarmMap().getBarns()) {
+            for (Barn barn : player.getFarmMap().getBarns()) {
                 if (type.getAppropriateFarmType().contains(barn.getType()) &&
                         barn.getType().getCapacity() > barn.getAnimals().size()) {
                     barn.addAnimal(animal);
@@ -50,16 +60,5 @@ public class MarnieRanchShopController extends MenuController {
             return new Result(false, "You dont Have Enough Money! You Have " + player.getMoney() +
                     " while you need " + type.getPrice());
         }
-    }
-
-    @Override
-    public Result enterMenu(String menuName) {
-        return new Result(false, "You can't enter any menu from here!");
-    }
-
-    @Override
-    public Result exitMenu() {
-        // TODO: rassa
-        return null;
     }
 }

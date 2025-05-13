@@ -27,24 +27,26 @@ public class GameMenuController extends MenuController {
         Menu newMenu = Menu.getMenu(menuName);
         if (newMenu == null)
             return new Result(false, "menu doesn't exist!");
-        if (newMenu != Menu.MainMenu)
-            return new Result(false, "can't enter this menu!");
-        App.setCurrentMenu(Menu.MainMenu);
-        return new Result(true, "Redirecting to main menu ...");
+        if (newMenu == Menu.MainMenu)
+            return exitMenu();
+        else if (newMenu == Menu.Home)
+            return goToHome();
+        else if (newMenu.isShop())
+            return goToShop(menuName);
+        return new Result(false, "can't enter this menu!");
     }
 
     public Result exitMenu() {
-        App.setCurrentMenu(Menu.MainMenu);
-        return new Result(true, "Redirecting to main menu ...");
-    }
-
-    public Result exitGame() {
         Game game = App.getCurrentGame();
         if (!App.getLoggedInUser().getUsername().equals(game.getAdmin().getUsername()))
             return new Result(false, "You cannot end this game!");
         App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);
         return new Result(true, "Redirecting to main menu ...");
+    }
+
+    public boolean playerPassedOut() {
+        return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
     }
 
     public void nextTurn(Scanner scanner) {
@@ -74,19 +76,6 @@ public class GameMenuController extends MenuController {
             return new Result(true, "Redirecting to main menu ...");
         }
         return new Result(false, "Can't terminate this game!");
-    }
-
-    public Result goToHome() {
-        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
-        Cell cell = currentPlayer.getCurrentCell();
-        for (Cell adjacentCell : cell.getAdjacentCells()) {
-            if (adjacentCell.getType() == CellType.Building && adjacentCell.getBuilding() instanceof Hut) {
-                App.setCurrentMenu(Menu.Home);
-                currentPlayer.setCurrentMenu(Menu.Home);
-                return new Result(true, "Redirecting to home ...");
-            }
-        }
-        return new Result(false, "There are no houses nearby!");
     }
 
     public Result showWeather() {
@@ -236,6 +225,19 @@ public class GameMenuController extends MenuController {
         App.setCurrentMenu(Menu.Trade);
         App.getCurrentGame().getCurrentPlayer().setCurrentMenu(Menu.Trade);
         return new Result(true, result.toString());
+    }
+
+    private Result goToHome() {
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        Cell cell = currentPlayer.getCurrentCell();
+        for (Cell adjacentCell : cell.getAdjacentCells()) {
+            if (adjacentCell.getType() == CellType.Building && adjacentCell.getBuilding() instanceof Hut) {
+                App.setCurrentMenu(Menu.Home);
+                currentPlayer.setCurrentMenu(Menu.Home);
+                return new Result(true, "Redirecting to home ...");
+            }
+        }
+        return new Result(false, "There are no houses nearby!");
     }
 
     private boolean subRectCouldBeGiant(int i, int j, Cell cell) {
@@ -505,10 +507,6 @@ public class GameMenuController extends MenuController {
         return result.message().equals("accept") ? 0 : 1;
     }
 
-    public boolean playerPassedOut() {
-        return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
-    }
-
     // Cheats :
     
     public Result cheatSetWeather(String weatherString) {
@@ -668,7 +666,7 @@ public class GameMenuController extends MenuController {
         return new Result(true, artisan.getFinalProduct().getName() + " collected successfully!");
     }
 
-    public Result goToShop(String shopName) {
+    private Result goToShop(String shopName) {
         ShopType shopType = ShopType.getShopType(shopName);
         if (shopType == null)
             return new Result(false, "There is no shop with that name!");
@@ -679,25 +677,10 @@ public class GameMenuController extends MenuController {
             if (shop.getShopType() != shopType)
                 return new Result(false, "There is no " + shopName + " nearby!");
         }
-        Menu newMenu = getMenu(shopType);
+        Menu newMenu = Menu.getMenu(shopName);
         App.setCurrentMenu(newMenu);
         player.setCurrentMenu(newMenu);
         return new Result(true, "Redirecting to " + shopName + " ...");
-    }
-
-    private static Menu getMenu(ShopType shopType) {
-        Menu newMenu = null;
-        switch (shopType) {
-            case Blacksmith -> newMenu = Menu.BlackSmithShop;
-            case JojaMart -> newMenu = Menu.JojaMartShop;
-            case PierreGeneralStore -> newMenu = Menu.PierreGeneralShop;
-            case CarpenterShop -> newMenu = Menu.CarpenterShop;
-            case FishShop -> newMenu = Menu.FishShop;
-            case MarnieRanch -> newMenu = Menu.MarnieRanch;
-            case StardropSaloon -> newMenu = Menu.StardropSaloonShop;
-        }
-        assert newMenu != null;
-        return newMenu;
     }
 
     private Artisan getNearArtisan(ArtisanTypes artisanType) {

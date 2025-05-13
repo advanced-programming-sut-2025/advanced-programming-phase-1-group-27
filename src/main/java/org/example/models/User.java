@@ -1,6 +1,10 @@
 package org.example.models;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +43,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public boolean passwordEquals(String password) {
+        String hashedPassword = hashPassword(password);
+        return MessageDigest.isEqual(
+                Base64.getDecoder().decode(this.password),
+                Base64.getDecoder().decode(hashedPassword)
+        );
     }
 
     public void setPassword(String password) {
@@ -111,6 +123,16 @@ public class User {
         return isValidMail(matcher.group("mail")) &&
                 isValidDomain(matcher.group("domain")) &&
                 isValidTLD(matcher.group("TLD"));
+    }
+
+    public static String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder().encodeToString(hashBytes);
+        } catch(NoSuchAlgorithmException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     public static Result checkPassword(String password) {

@@ -30,14 +30,14 @@ public class GameMenuView extends AppMenu {
         }
         String input = scanner.nextLine().trim();
         Matcher matcher;
-        if ((matcher = GameMenuCommands.EnterMenu.getMatcher(input)) != null) {
+        if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
         }
         else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
         }
-        else if (GameMenuCommands.ExitGame.getMatcher(input) != null) {
-            System.out.println(controller.exitGame());
+        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+            System.out.println(controller.exitMenu());
         }
         else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
             controller.nextTurn(scanner);
@@ -47,12 +47,6 @@ public class GameMenuView extends AppMenu {
         }
         else if (GameMenuCommands.Home.getMatcher(input) != null) {
             System.out.println(controller.goToHome());
-        }
-        else if (GameMenuCommands.ExitMenu.getMatcher(input) != null) {
-            System.out.println(controller.exitMenu());
-        }
-        else if (GameMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
-            System.out.println(controller.showCurrentMenu());
         }
         else if (GameMenuCommands.ShowWeather.getMatcher(input) != null) {
             System.out.println(controller.showWeather());

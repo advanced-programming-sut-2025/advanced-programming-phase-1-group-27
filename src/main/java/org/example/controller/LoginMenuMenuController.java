@@ -59,7 +59,7 @@ public class LoginMenuMenuController extends MenuController {
             return new Result(false, "Gender is invalid!");
 
         // obtaining new username if the username already exists
-        suggestedUser = new User(username, password, nickname, email, Gender.getGender(gender));
+        suggestedUser = new User(username, User.hashPassword(password), nickname, email, Gender.getGender(gender));
         if (App.getUserByUsername(username) != null) {
             String suggestedUsername = App.generateUsername(username);
             if (!view.suggestUsername(suggestedUsername, scanner).success())
@@ -108,7 +108,7 @@ public class LoginMenuMenuController extends MenuController {
         User user = App.getUserByUsername(username);
         if (user == null)
             return new Result(false, "Username not found!");
-        if (!user.getPassword().equals(password))
+        if (!user.passwordEquals(password))
             return new Result(false, "Incorrect password!");
         // TODO: handling stay logged in flag
         App.setLoggedInUser(user);
@@ -129,8 +129,9 @@ public class LoginMenuMenuController extends MenuController {
             if (!answer.equals(recoveryQuestion.getAnswer()))
                 return new Result(false, "Incorrect answer. Recovery failed!");
         }
-        user.setPassword(generatePassword());
-        return new Result(true, "Your new password is: " + user.getPassword());
+        String newPassword = generatePassword();
+        user.setPassword(User.hashPassword(newPassword));
+        return new Result(true, "Your new password is: " + newPassword);
     }
 
     private String generatePassword() {

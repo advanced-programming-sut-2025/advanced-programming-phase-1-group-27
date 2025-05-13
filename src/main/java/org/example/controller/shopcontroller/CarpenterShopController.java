@@ -20,6 +20,17 @@ public class CarpenterShopController extends MenuController {
         return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
     }
 
+    @Override
+    public Result enterMenu(String menuName) {
+        return new Result(false, "You can't enter any menu from here!");
+    }
+
+    @Override
+    public Result exitMenu() {
+        // TODO: rassa bodo
+        return null;
+    }
+
     public Result buildBuilding(String buildingName, int x, int y) {
         BuildingType type = BuildingType.getEnclosureType(buildingName);
         if (type == null)
@@ -37,16 +48,5 @@ public class CarpenterShopController extends MenuController {
         else
             farmMap.placeCoop(x, y, new Coop(type, new Cell(new Position(x, y), farmMap)));
         return new Result(true, "Animal enclosure successfully placed!");
-    }
-
-    @Override
-    public Result enterMenu(String menuName) {
-        return new Result(false, "You can't enter any menu from here!");
-    }
-
-    @Override
-    public Result exitMenu() {
-        // TODO: rassa bodo
-        return null;
     }
 }
