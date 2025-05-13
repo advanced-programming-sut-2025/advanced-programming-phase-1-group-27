@@ -236,16 +236,21 @@ public class Backpack extends Tool {
     }
 
     private boolean areSameStacks(Stacks s1, Stacks s2) {
+        if (s1 == null || s2 == null)
+            return false;
         return s1.getItem().equals(s2.getItem()) && s1.getStackLevel() == s2.getStackLevel();
     }
 
     private void mergeItems() {
         ArrayList<Stacks> copy = new ArrayList<>(items);
         for (int i = 0; i < copy.size(); i++) {
-            for (int j = 0; j < copy.size(); j++) {
-                if (i != j && areSameStacks(copy.get(i), copy.get(j))) {
-                    copy.get(i).addQuantity(copy.get(j).getQuantity());
-                    copy.set(j, null);
+            for (int j = i + 1; j < copy.size(); j++) {
+                if (areSameStacks(copy.get(i), copy.get(j))) {
+                    int amount = Math.min(999 - copy.get(i).getQuantity(), copy.get(j).getQuantity());
+                    copy.get(i).addQuantity(amount);
+                    copy.get(j).addQuantity(-amount);
+                    if (copy.get(j).getQuantity() == 0)
+                        copy.set(j, null);
                 }
             }
         }
