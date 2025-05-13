@@ -2,7 +2,7 @@ package org.example.models.Shops;
 
 import org.example.models.App;
 import org.example.models.Item;
-import org.example.models.Stacks;
+import org.example.models.Stock;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.ShopType;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Shop {
     private final ShopType shopType;
-    private ArrayList<Stacks> stock;
+    private ArrayList<Stock> stock;
 
     public Shop(ShopType shopType) {
         this.shopType = shopType;
@@ -23,8 +23,8 @@ public class Shop {
     }
 
 
-    public Stacks getStack(String itemName) {
-        for (Stacks stack : stock) {
+    public Stock getStack(String itemName) {
+        for (Stock stack : stock) {
             if(stack.getItem().getName().equals(itemName)){
                 return stack;
             }
@@ -33,7 +33,7 @@ public class Shop {
     }
 
     public void reduce(Item item , int amount) {
-        for (Stacks stack : stock) {
+        for (Stock stack : stock) {
             if(stack.getItem().getName().equals(item.getName())){
                 int lastAmount = stack.getQuantity();
                 if(lastAmount == -1){
@@ -46,7 +46,7 @@ public class Shop {
         }
     }
 
-    public ArrayList<Stacks> getStock() {
+    public ArrayList<Stock> getStock() {
         return stock;
     }
 }

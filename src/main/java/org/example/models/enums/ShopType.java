@@ -1,6 +1,6 @@
 package org.example.models.enums;
 
-import org.example.models.Stacks;
+import org.example.models.Stock;
 import org.example.models.enums.Seasons.Season;
 
 import java.util.ArrayList;
@@ -18,53 +18,53 @@ public enum ShopType {
     private final NPCType manager;
     private final int startTime;
     private final int endTime;
-    private HashMap<Season, ArrayList<Stacks>> stock = new HashMap<>();
+    private HashMap<Season, ArrayList<Stock>> stock = new HashMap<>();
 
     ShopType(NPCType manager , int startTime, int endTime) {
         this.manager = manager;
         this.startTime = startTime;
         this.endTime = endTime;
         if (manager == NPCType.Clint) {
-            stock.put(Season.Spring, StocksForShops.BlackSmithStock.getStacks());
-            stock.put(Season.Summer, StocksForShops.BlackSmithStock.getStacks());
-            stock.put(Season.Fall, StocksForShops.BlackSmithStock.getStacks());
-            stock.put(Season.Winter, StocksForShops.BlackSmithStock.getStacks());
+            stock.put(Season.Spring, StocksForShops.BlackSmithStock.getStock());
+            stock.put(Season.Summer, StocksForShops.BlackSmithStock.getStock());
+            stock.put(Season.Fall, StocksForShops.BlackSmithStock.getStock());
+            stock.put(Season.Winter, StocksForShops.BlackSmithStock.getStock());
         }
         else if (manager == NPCType.Robin) {
-            stock.put(Season.Spring, StocksForShops.CarpenterShopStock.getStacks());
-            stock.put(Season.Summer, StocksForShops.CarpenterShopStock.getStacks());
-            stock.put(Season.Fall, StocksForShops.CarpenterShopStock.getStacks());
-            stock.put(Season.Winter, StocksForShops.CarpenterShopStock.getStacks());
+            stock.put(Season.Spring, StocksForShops.CarpenterShopStock.getStock());
+            stock.put(Season.Summer, StocksForShops.CarpenterShopStock.getStock());
+            stock.put(Season.Fall, StocksForShops.CarpenterShopStock.getStock());
+            stock.put(Season.Winter, StocksForShops.CarpenterShopStock.getStock());
         }
         else if (manager == NPCType.Willy) {
-            stock.put(Season.Spring, StocksForShops.FishShopStock.getStacks());
-            stock.put(Season.Summer, StocksForShops.FishShopStock.getStacks());
-            stock.put(Season.Fall, StocksForShops.FishShopStock.getStacks());
-            stock.put(Season.Winter, StocksForShops.FishShopStock.getStacks());
+            stock.put(Season.Spring, StocksForShops.FishShopStock.getStock());
+            stock.put(Season.Summer, StocksForShops.FishShopStock.getStock());
+            stock.put(Season.Fall, StocksForShops.FishShopStock.getStock());
+            stock.put(Season.Winter, StocksForShops.FishShopStock.getStock());
         }
         else if (manager == NPCType.Morris) {
-            stock.put(Season.Spring, StocksForShops.SpringJojaMartStock.getStacks());
-            stock.put(Season.Summer, StocksForShops.SummerJojaMartStock.getStacks());
-            stock.put(Season.Fall, StocksForShops.FallJojaMartStock.getStacks());
-            stock.put(Season.Winter, StocksForShops.WinterJojaMartStock.getStacks());
+            stock.put(Season.Spring, StocksForShops.SpringJojaMartStock.getStock());
+            stock.put(Season.Summer, StocksForShops.SummerJojaMartStock.getStock());
+            stock.put(Season.Fall, StocksForShops.FallJojaMartStock.getStock());
+            stock.put(Season.Winter, StocksForShops.WinterJojaMartStock.getStock());
         }
         else if (manager == NPCType.Marnie) {
-            stock.put(Season.Spring, StocksForShops.MarnieRanchStock.getStacks());
-            stock.put(Season.Summer, StocksForShops.MarnieRanchStock.getStacks());
-            stock.put(Season.Fall, StocksForShops.MarnieRanchStock.getStacks());
-            stock.put(Season.Winter, StocksForShops.MarnieRanchStock.getStacks());
+            stock.put(Season.Spring, StocksForShops.MarnieRanchStock.getStock());
+            stock.put(Season.Summer, StocksForShops.MarnieRanchStock.getStock());
+            stock.put(Season.Fall, StocksForShops.MarnieRanchStock.getStock());
+            stock.put(Season.Winter, StocksForShops.MarnieRanchStock.getStock());
         }
         else if (manager == NPCType.Pierre) {
-            stock.put(Season.Spring, StocksForShops.SpringPierreGeneralStoreStock.getStacks());
-            stock.put(Season.Summer, StocksForShops.SummerPierreGeneralStoreStock.getStacks());
-            stock.put(Season.Fall, StocksForShops.FallPierreGeneralStoreStock.getStacks());
-            stock.put(Season.Winter, StocksForShops.WinterPierreGeneralStoreStock.getStacks());
+            stock.put(Season.Spring, StocksForShops.SpringPierreGeneralStoreStock.getStock());
+            stock.put(Season.Summer, StocksForShops.SummerPierreGeneralStoreStock.getStock());
+            stock.put(Season.Fall, StocksForShops.FallPierreGeneralStoreStock.getStock());
+            stock.put(Season.Winter, StocksForShops.WinterPierreGeneralStoreStock.getStock());
         }
         else if (manager == NPCType.Gus) {
-            stock.put(Season.Spring, StocksForShops.StardropSaloonStock.getStacks());
-            stock.put(Season.Summer, StocksForShops.StardropSaloonStock.getStacks());
-            stock.put(Season.Fall,  StocksForShops.StardropSaloonStock.getStacks());
-            stock.put(Season.Winter, StocksForShops.StardropSaloonStock.getStacks());
+            stock.put(Season.Spring, StocksForShops.StardropSaloonStock.getStock());
+            stock.put(Season.Summer, StocksForShops.StardropSaloonStock.getStock());
+            stock.put(Season.Fall,  StocksForShops.StardropSaloonStock.getStock());
+            stock.put(Season.Winter, StocksForShops.StardropSaloonStock.getStock());
         }
     }
 
@@ -81,11 +81,11 @@ public enum ShopType {
         };
     }
 
-    public ArrayList<Stacks> getStock(Season season) {
+    public ArrayList<Stock> getStock(Season season) {
         // creating a copy ...
-        ArrayList<Stacks> result = new ArrayList<>();
-        for (Stacks stacks : stock.get(season)) {
-            result.add(new Stacks(stacks.getItem(), stacks.getQuantity()));
+        ArrayList<Stock> result = new ArrayList<>();
+        for (Stock stock : stock.get(season)) {
+            result.add(new Stock(stock.getItem(), stock.getQuantity(), stock.getPrice()));
         }
         return result;
     }

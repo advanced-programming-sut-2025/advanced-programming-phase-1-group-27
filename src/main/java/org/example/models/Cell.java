@@ -129,18 +129,18 @@ public class Cell {
             return "\u001B[47m" + "#" + "\u001B[0m";
         }
         else if (cellType.equals(CellType.Free)) {
-            return "_";
+            return "\033[0;33m" + "_" + "\u001B[0m";
         } else if (object instanceof NPC) {
             return "\u001B[36m" + "N" + "\u001B[0m";
         } else if (cellType.equals(CellType.Water)) {
-            return "\u001B[34m" + "W" + "\u001B[0m";
+            return "\u001B[44m" + " " + "\u001B[0m";
         } else if (cellType.equals(CellType.Door)) {
             return "D";
         } else if (cellType.equals(CellType.Building)) {
             if (building instanceof Hut) {
-                return "\u001B[41m" + "H" + "\u001B[0m";
+                return "\u001B[41m" + " " + "\u001B[0m";
             } else if (building instanceof GreenHouse){
-                return "\u001B[42m" + "G" + "\u001B[0m";
+                return "\u001B[42m" + " " + "\u001B[0m";
             } else if (building instanceof NPCHouse) {
                 return "\u001B[41m" + "N" + "\u001B[0m";
             } else if (building instanceof StoreBuilding) {

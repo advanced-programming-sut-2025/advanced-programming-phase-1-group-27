@@ -2,7 +2,7 @@ package org.example.models.enums;
 
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
-import org.example.models.Stacks;
+import org.example.models.Stock;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.ProcessedProductType;
@@ -22,249 +22,249 @@ public enum StocksForShops {
     PermanentPierreGeneralStoreStock(getPermanentPierreGeneralStoreStock()),
     SpringPierreGeneralStoreStock(getSpringPierreGeneralStoreStock()),
     SummerPierreGeneralStoreStock(getSummerPierreGeneralStoreStock()),
-    WinterPierreGeneralStoreStock(new ArrayList<Stacks>()),
+    WinterPierreGeneralStoreStock(new ArrayList<Stock>()),
     FallPierreGeneralStoreStock(getFallPierreGeneralStoreStock()),
     FishShopStock(getFishShopStock());
 
-    private ArrayList<Stacks> stacks;
+    private ArrayList<Stock> Stock;
 
     static {
-        ArrayList<Stacks> permanentJojaMartStock = getPermanentJojaMartStock();
-        SpringJojaMartStock.stacks.addAll(permanentJojaMartStock);
-        SummerJojaMartStock.stacks.addAll(permanentJojaMartStock);
-        FallJojaMartStock.stacks.addAll(permanentJojaMartStock);
-        WinterJojaMartStock.stacks.addAll(permanentJojaMartStock);
+        ArrayList<Stock> permanentJojaMartStock = getPermanentJojaMartStock();
+        SpringJojaMartStock.Stock.addAll(permanentJojaMartStock);
+        SummerJojaMartStock.Stock.addAll(permanentJojaMartStock);
+        FallJojaMartStock.Stock.addAll(permanentJojaMartStock);
+        WinterJojaMartStock.Stock.addAll(permanentJojaMartStock);
 
-        ArrayList<Stacks> permanentPierreGeneralStoreStock = getPermanentPierreGeneralStoreStock();
-        SpringPierreGeneralStoreStock.stacks.addAll(permanentPierreGeneralStoreStock);
-        SummerPierreGeneralStoreStock.stacks.addAll(permanentPierreGeneralStoreStock);
-        FallPierreGeneralStoreStock.stacks.addAll(permanentPierreGeneralStoreStock);
-        WinterPierreGeneralStoreStock.stacks.addAll(permanentPierreGeneralStoreStock);
+        ArrayList<Stock> permanentPierreGeneralStoreStock = getPermanentPierreGeneralStoreStock();
+        SpringPierreGeneralStoreStock.Stock.addAll(permanentPierreGeneralStoreStock);
+        SummerPierreGeneralStoreStock.Stock.addAll(permanentPierreGeneralStoreStock);
+        FallPierreGeneralStoreStock.Stock.addAll(permanentPierreGeneralStoreStock);
+        WinterPierreGeneralStoreStock.Stock.addAll(permanentPierreGeneralStoreStock);
     }
 
-    StocksForShops(ArrayList<Stacks> stacks) {
-        this.stacks = stacks;
+    StocksForShops(ArrayList<Stock> Stock) {
+        this.Stock = Stock;
     }
 
-    public ArrayList<Stacks> getStacks() {
-        return stacks;
+    public ArrayList<Stock> getStock() {
+        return Stock;
     }
 
     //Limits are daily and restock every morning
     //-1 means unlimited
-    private static ArrayList<Stacks> getBlacksmithStoreStock() {
-        ArrayList<Stacks> blacksmithStore = new ArrayList<>();
-        blacksmithStore.add(new Stacks(MineralType.CopperOre, -1));
-        blacksmithStore.add(new Stacks(MineralType.IronOre, -1));
-        blacksmithStore.add(new Stacks(MineralType.GoldOre, -1));
-        blacksmithStore.add(new Stacks(ProcessedProductType.Coal, -1));
+    private static ArrayList<Stock> getBlacksmithStoreStock() {
+        ArrayList<Stock> blacksmithStore = new ArrayList<>();
+        blacksmithStore.add(new Stock(MineralType.CopperOre, -1, 75));
+        blacksmithStore.add(new Stock(MineralType.IronOre, -1, 150));
+        blacksmithStore.add(new Stock(MineralType.GoldOre, -1, 400));
+        blacksmithStore.add(new Stock(ProcessedProductType.Coal, -1, 150));
         return blacksmithStore;
     }
 
-    private static ArrayList<Stacks> getMarnieRanchStock() {
-        ArrayList<Stacks> marnieShop = new ArrayList<>();
-        marnieShop.add(new Stacks(ShopItems.Hay, -1));
-        marnieShop.add(new Stacks(ToolType.MilkPail, ToolType.MilkPail.getLevel(), 1));
-        marnieShop.add(new Stacks(ToolType.Shear, ToolType.Shear.getLevel(), 1));
-        marnieShop.add(new Stacks(AnimalType.Chicken, 2));
-        marnieShop.add(new Stacks(AnimalType.Cow, 2));
-        marnieShop.add(new Stacks(AnimalType.Goat, 2));
-        marnieShop.add(new Stacks(AnimalType.Duck, 2));
-        marnieShop.add(new Stacks(AnimalType.Sheep, 2));
-        marnieShop.add(new Stacks(AnimalType.Rabbit, 2));
-        marnieShop.add(new Stacks(AnimalType.Dinosaur, 2));
-        marnieShop.add(new Stacks(AnimalType.Pig, 2));
+    private static ArrayList<Stock> getMarnieRanchStock() {
+        ArrayList<Stock> marnieShop = new ArrayList<>();
+        marnieShop.add(new Stock(ShopItems.Hay, -1, 50));
+        marnieShop.add(new Stock(ToolType.MilkPail, ToolType.MilkPail.getLevel(), 1, 1000));
+        marnieShop.add(new Stock(ToolType.Shear, ToolType.Shear.getLevel(), 1, 1000));
+        marnieShop.add(new Stock(AnimalType.Chicken, 2, 800));
+        marnieShop.add(new Stock(AnimalType.Cow, 2, 1500));
+        marnieShop.add(new Stock(AnimalType.Goat, 2, 4000));
+        marnieShop.add(new Stock(AnimalType.Duck, 2, 1200));
+        marnieShop.add(new Stock(AnimalType.Sheep, 2, 8000));
+        marnieShop.add(new Stock(AnimalType.Rabbit, 2, 8000));
+        marnieShop.add(new Stock(AnimalType.Dinosaur, 2, 14000));
+        marnieShop.add(new Stock(AnimalType.Pig, 2, 16000));
         return marnieShop;
     }
 
-    private static ArrayList<Stacks> getStardropSaloonStock() {
-        ArrayList<Stacks> stardropSaloon = new ArrayList<>();
-        stardropSaloon.add(new Stacks(ProcessedProductType.Beer, -1));
-        stardropSaloon.add(new Stacks(CookingProduct.Salad, -1));
-        stardropSaloon.add(new Stacks(CookingProduct.Bread, -1));
-        stardropSaloon.add(new Stacks(CookingProduct.Spaghetti, -1));
-        stardropSaloon.add(new Stacks(CookingProduct.Pizza, -1));
-        stardropSaloon.add(new Stacks(ProcessedProductType.Coffee, -1));
-        stardropSaloon.add(new Stacks(Recipe.HashbrownsRecipe, 1));
-        stardropSaloon.add(new Stacks(Recipe.OmeletteRecipe, 1));
-        stardropSaloon.add(new Stacks(Recipe.PancakeRecipe, 1));
-        stardropSaloon.add(new Stacks(Recipe.BreadRecipe, 1));
-        stardropSaloon.add(new Stacks(Recipe.TortillaRecipe, 1));
-        stardropSaloon.add(new Stacks(Recipe.PizzaRecipe, 1));
-        stardropSaloon.add(new Stacks(Recipe.MakiRollRecipe, 1));
-        stardropSaloon.add(new Stacks(Recipe.TripleShotEspressoRecipe, 1));
-        stardropSaloon.add(new Stacks(Recipe.CookieRecipe, 1));
+    private static ArrayList<Stock> getStardropSaloonStock() {
+        ArrayList<Stock> stardropSaloon = new ArrayList<>();
+        stardropSaloon.add(new Stock(ProcessedProductType.Beer, -1, 400));
+        stardropSaloon.add(new Stock(CookingProduct.Salad, -1, 220));
+        stardropSaloon.add(new Stock(CookingProduct.Bread, -1, 120));
+        stardropSaloon.add(new Stock(CookingProduct.Spaghetti, -1, 240));
+        stardropSaloon.add(new Stock(CookingProduct.Pizza, -1, 600));
+        stardropSaloon.add(new Stock(ProcessedProductType.Coffee, -1, 300));
+        stardropSaloon.add(new Stock(Recipe.HashbrownsRecipe, 1, 50));
+        stardropSaloon.add(new Stock(Recipe.OmeletteRecipe, 1, 100));
+        stardropSaloon.add(new Stock(Recipe.PancakeRecipe, 1, 100));
+        stardropSaloon.add(new Stock(Recipe.BreadRecipe, 1, 100));
+        stardropSaloon.add(new Stock(Recipe.TortillaRecipe, 1, 100));
+        stardropSaloon.add(new Stock(Recipe.PizzaRecipe, 1, 150));
+        stardropSaloon.add(new Stock(Recipe.MakiRollRecipe, 1, 300));
+        stardropSaloon.add(new Stock(Recipe.TripleShotEspressoRecipe, 1, 5000));
+        stardropSaloon.add(new Stock(Recipe.CookieRecipe, 1, 300));
         return stardropSaloon;
     }
 
-    private static ArrayList<Stacks> getCarpenterShopStock() {
-        ArrayList<Stacks> carpenterShop = new ArrayList<>();
-        carpenterShop.add(new Stacks(MineralType.Wood, -1));
-        carpenterShop.add(new Stacks(MineralType.Stone, -1));
-        carpenterShop.add(new Stacks(BuildingType.Barn, 1));
-        carpenterShop.add(new Stacks(BuildingType.BigBarn, 1));
-        carpenterShop.add(new Stacks(BuildingType.DeluxeBarn, 1));
-        carpenterShop.add(new Stacks(BuildingType.Coop, 1));
-        carpenterShop.add(new Stacks(BuildingType.BigCoop, 1));
-        carpenterShop.add(new Stacks(BuildingType.DeluxeCoop, 1));
-        carpenterShop.add(new Stacks(BuildingType.Well, 1));
-        carpenterShop.add(new Stacks(BuildingType.ShippingBin, -1));
+    private static ArrayList<Stock> getCarpenterShopStock() {
+        ArrayList<Stock> carpenterShop = new ArrayList<>();
+        carpenterShop.add(new Stock(MineralType.Wood, -1, 10));
+        carpenterShop.add(new Stock(MineralType.Stone, -1, 20));
+        carpenterShop.add(new Stock(BuildingType.Barn, 1, 6000));
+        carpenterShop.add(new Stock(BuildingType.BigBarn, 1, 12000));
+        carpenterShop.add(new Stock(BuildingType.DeluxeBarn, 1, 25000));
+        carpenterShop.add(new Stock(BuildingType.Coop, 1, 4000));
+        carpenterShop.add(new Stock(BuildingType.BigCoop, 1, 10000));
+        carpenterShop.add(new Stock(BuildingType.DeluxeCoop, 1, 20000));
+        carpenterShop.add(new Stock(BuildingType.Well, 1, 1000));
+        carpenterShop.add(new Stock(BuildingType.ShippingBin, -1, 250));
         return carpenterShop;
     }
-
-    private static ArrayList<Stacks> getPermanentJojaMartStock() {
-        ArrayList<Stacks> jojaMart = new ArrayList<>();
-        jojaMart.add(new Stacks(ShopItems.JojaCola, -1));
-        jojaMart.add(new Stacks(SeedType.AncientSeed, 1));
-        jojaMart.add(new Stacks(SeedType.GrassStater, -1));
-        jojaMart.add(new Stacks(ShopItems.Sugar, -1));
-        jojaMart.add(new Stacks(ShopItems.WheatFlour, -1));
-        jojaMart.add(new Stacks(ShopItems.Rice, -1));
+//TODO : Rassa joja mart faghat too fasle marbootesh mifrooshe
+    private static ArrayList<Stock> getPermanentJojaMartStock() {
+        ArrayList<Stock> jojaMart = new ArrayList<>();
+        jojaMart.add(new Stock(ShopItems.JojaCola, -1, 75));
+        jojaMart.add(new Stock(SeedType.AncientSeed, 1, 500));
+        jojaMart.add(new Stock(SeedType.GrassStater, -1, 125));
+        jojaMart.add(new Stock(ShopItems.Sugar, -1, 125));
+        jojaMart.add(new Stock(ShopItems.WheatFlour, -1, 125));
+        jojaMart.add(new Stock(ShopItems.Rice, -1, 250));
         return jojaMart;
     }
 
-    private static ArrayList<Stacks> getSpringJojaMartStock() {
-        ArrayList<Stacks> springJojaMart = new ArrayList<>();
-        springJojaMart.add(new Stacks(SeedType.ParsnipSeed, 5));
-        springJojaMart.add(new Stacks(SeedType.BeanStarter, 5));
-        springJojaMart.add(new Stacks(SeedType.CauliflowerSeed, 5));
-        springJojaMart.add(new Stacks(SeedType.PotatoSeed, 5));
-        springJojaMart.add(new Stacks(SeedType.StrawberrySeed, 5));
-        springJojaMart.add(new Stacks(SeedType.TulipBulbSeed, 5));
-        springJojaMart.add(new Stacks(SeedType.KaleSeed, 5));
-        springJojaMart.add(new Stacks(SeedType.CoffeeBean, 1));
-        springJojaMart.add(new Stacks(SeedType.CarrotSeed, 10));
-        springJojaMart.add(new Stacks(SeedType.RhubarbSeed, 5));
-        springJojaMart.add(new Stacks(SeedType.JazzSeed, 5));
+    private static ArrayList<Stock> getSpringJojaMartStock() {
+        ArrayList<Stock> springJojaMart = new ArrayList<>();
+        springJojaMart.add(new Stock(SeedType.ParsnipSeed, 5, 25));
+        springJojaMart.add(new Stock(SeedType.BeanStarter, 5, 75));
+        springJojaMart.add(new Stock(SeedType.CauliflowerSeed, 5, 100));
+        springJojaMart.add(new Stock(SeedType.PotatoSeed, 5, 62));
+        springJojaMart.add(new Stock(SeedType.StrawberrySeed, 5, 100));
+        springJojaMart.add(new Stock(SeedType.TulipBulbSeed, 5, 25));
+        springJojaMart.add(new Stock(SeedType.KaleSeed, 5, 87));
+        springJojaMart.add(new Stock(SeedType.CoffeeBean, 1, 200));
+        springJojaMart.add(new Stock(SeedType.CarrotSeed, 10, 5));
+        springJojaMart.add(new Stock(SeedType.RhubarbSeed, 5, 100));
+        springJojaMart.add(new Stock(SeedType.JazzSeed, 5, 37));
         return springJojaMart;
     }
 
-    private static ArrayList<Stacks> getSummerJojaMartStock() {
-        ArrayList<Stacks> summerMartJojaMart = new ArrayList<>();
-        summerMartJojaMart.add(new Stacks(SeedType.TomatoSeed, 5));
-        summerMartJojaMart.add(new Stacks(SeedType.PepperSeed, 5));
-        summerMartJojaMart.add(new Stacks(SeedType.WheatSeed, 10));
-        summerMartJojaMart.add(new Stacks(SeedType.SummerSquashSeed, 10));
-        summerMartJojaMart.add(new Stacks(SeedType.RadishSeed, 5));
-        summerMartJojaMart.add(new Stacks(SeedType.MelonSeed, 5));
-        summerMartJojaMart.add(new Stacks(SeedType.HopsStarter, 5));
-        summerMartJojaMart.add(new Stacks(SeedType.PoppySeed, 5));
-        summerMartJojaMart.add(new Stacks(SeedType.SpangleSeed, 5));
-        summerMartJojaMart.add(new Stacks(SeedType.StarfruitSeed, 5));
-        summerMartJojaMart.add(new Stacks(SeedType.CoffeeBean, 1));
-        summerMartJojaMart.add(new Stacks(SeedType.SunflowerSeed, 5));
+    private static ArrayList<Stock> getSummerJojaMartStock() {
+        ArrayList<Stock> summerMartJojaMart = new ArrayList<>();
+        summerMartJojaMart.add(new Stock(SeedType.TomatoSeed, 5, 62));
+        summerMartJojaMart.add(new Stock(SeedType.PepperSeed, 5, 50));
+        summerMartJojaMart.add(new Stock(SeedType.WheatSeed, 10, 12));
+        summerMartJojaMart.add(new Stock(SeedType.SummerSquashSeed, 10, 10));
+        summerMartJojaMart.add(new Stock(SeedType.RadishSeed, 5, 50));
+        summerMartJojaMart.add(new Stock(SeedType.MelonSeed, 5, 100));
+        summerMartJojaMart.add(new Stock(SeedType.HopsStarter, 5, 75));
+        summerMartJojaMart.add(new Stock(SeedType.PoppySeed, 5, 125));
+        summerMartJojaMart.add(new Stock(SeedType.SpangleSeed, 5, 62));
+        summerMartJojaMart.add(new Stock(SeedType.StarfruitSeed, 5, 400));
+        summerMartJojaMart.add(new Stock(SeedType.CoffeeBean, 1, 200));
+        summerMartJojaMart.add(new Stock(SeedType.SunflowerSeed, 5, 125));
         return summerMartJojaMart;
     }
 
-    private static ArrayList<Stacks> getFallJojaMartStock() {
-        ArrayList<Stacks> fallMartJojaMart = new ArrayList<>();
-        fallMartJojaMart.add(new Stacks(SeedType.CornSeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.EggplantSeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.PumpkinSeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.BroccoliSeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.AmaranthSeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.GrapeStarter, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.BeetSeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.YamSeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.BokChoySeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.CranberrySeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.SunflowerSeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.FairySeed, 5));
-        fallMartJojaMart.add(new Stacks(SeedType.RareSeed, 1));
-        fallMartJojaMart.add(new Stacks(SeedType.WheatSeed, 5));
+    private static ArrayList<Stock> getFallJojaMartStock() {
+        ArrayList<Stock> fallMartJojaMart = new ArrayList<>();
+        fallMartJojaMart.add(new Stock(SeedType.CornSeed, 5, 187));
+        fallMartJojaMart.add(new Stock(SeedType.EggplantSeed, 5, 25));
+        fallMartJojaMart.add(new Stock(SeedType.PumpkinSeed, 5,125));
+        fallMartJojaMart.add(new Stock(SeedType.BroccoliSeed, 5, 15));
+        fallMartJojaMart.add(new Stock(SeedType.AmaranthSeed, 5, 87));
+        fallMartJojaMart.add(new Stock(SeedType.GrapeStarter, 5, 75));
+        fallMartJojaMart.add(new Stock(SeedType.BeetSeed, 5, 20));
+        fallMartJojaMart.add(new Stock(SeedType.YamSeed, 5, 75));
+        fallMartJojaMart.add(new Stock(SeedType.BokChoySeed, 5, 62));
+        fallMartJojaMart.add(new Stock(SeedType.CranberrySeed, 5, 300));
+        fallMartJojaMart.add(new Stock(SeedType.SunflowerSeed, 5, 125));
+        fallMartJojaMart.add(new Stock(SeedType.FairySeed, 5, 250));
+        fallMartJojaMart.add(new Stock(SeedType.RareSeed, 1, 1000));
+        fallMartJojaMart.add(new Stock(SeedType.WheatSeed, 5, 12));
         return fallMartJojaMart;
     }
 
-    private static ArrayList<Stacks> getWinterJojaMartStock() {
-        ArrayList<Stacks> winterJojaMart = new ArrayList<>();
-        winterJojaMart.add(new Stacks(SeedType.PowderMelonSeed, 10));
+    private static ArrayList<Stock> getWinterJojaMartStock() {
+        ArrayList<Stock> winterJojaMart = new ArrayList<>();
+        winterJojaMart.add(new Stock(SeedType.PowderMelonSeed, 10, 20));
         return winterJojaMart;
     }
 
-    private static ArrayList<Stacks> getPermanentPierreGeneralStoreStock() {
-        ArrayList<Stacks> permanentPierreGeneralStore = new ArrayList<>();
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.Rice, -1));
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.WheatFlour, -1));
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.Bouquet, 2));
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.WeddingRing, 2));
-        permanentPierreGeneralStore.add(new Stacks(Recipe.DehydratorRecipe, 1));
-        permanentPierreGeneralStore.add(new Stacks(Recipe.GrassStarterRecipe, 1));
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.Sugar, -1));
-        permanentPierreGeneralStore.add(new Stacks(ProcessedProductType.Oil, -1));
-        permanentPierreGeneralStore.add(new Stacks(ProcessedProductType.Vinegar, -1));
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.DeluxeRetainingSoil, -1));
-        permanentPierreGeneralStore.add(new Stacks(SeedType.GrassStater, -1));
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.SpeedGro, -1));
-        permanentPierreGeneralStore.add(new Stacks(SaplingType.AppleSapling, -1));
-        permanentPierreGeneralStore.add(new Stacks(SaplingType.ApricotSapling, -1));
-        permanentPierreGeneralStore.add(new Stacks(SaplingType.CherrySapling, -1));
-        permanentPierreGeneralStore.add(new Stacks(SaplingType.OrangeSapling, -1));
-        permanentPierreGeneralStore.add(new Stacks(SaplingType.PeachSapling, -1));
-        permanentPierreGeneralStore.add(new Stacks(SaplingType.PomegranateSapling, -1));
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.BasicRetainingSoil, -1));
-        permanentPierreGeneralStore.add(new Stacks(ShopItems.QualityRetainingSoil, -1));
-        permanentPierreGeneralStore.add(new Stacks(ToolType.LargeBackpack, ToolType.LargeBackpack.getLevel(), 1));
-        permanentPierreGeneralStore.add(new Stacks(ToolType.DeluxeBackpack, ToolType.DeluxeBackpack.getLevel(), 1));
+    private static ArrayList<Stock> getPermanentPierreGeneralStoreStock() {
+        ArrayList<Stock> permanentPierreGeneralStore = new ArrayList<>();
+        permanentPierreGeneralStore.add(new Stock(ShopItems.Rice, -1, 200));
+        permanentPierreGeneralStore.add(new Stock(ShopItems.WheatFlour, -1, 100));
+        permanentPierreGeneralStore.add(new Stock(ShopItems.Bouquet, 2, 1000));
+        permanentPierreGeneralStore.add(new Stock(ShopItems.WeddingRing, 2, 10000));
+        permanentPierreGeneralStore.add(new Stock(Recipe.DehydratorRecipe, 1, 10000));
+        permanentPierreGeneralStore.add(new Stock(Recipe.GrassStarterRecipe, 1, 1000));
+        permanentPierreGeneralStore.add(new Stock(ShopItems.Sugar, -1, 100));
+        permanentPierreGeneralStore.add(new Stock(ProcessedProductType.Oil, -1, 200));
+        permanentPierreGeneralStore.add(new Stock(ProcessedProductType.Vinegar, -1, 200));
+        permanentPierreGeneralStore.add(new Stock(ShopItems.DeluxeRetainingSoil, -1, 150));
+        permanentPierreGeneralStore.add(new Stock(SeedType.GrassStater, -1, 100));
+        permanentPierreGeneralStore.add(new Stock(ShopItems.SpeedGro, -1, 100));
+        permanentPierreGeneralStore.add(new Stock(SaplingType.AppleSapling, -1, 4000));
+        permanentPierreGeneralStore.add(new Stock(SaplingType.ApricotSapling, -1, 2000));
+        permanentPierreGeneralStore.add(new Stock(SaplingType.CherrySapling, -1, 3400));
+        permanentPierreGeneralStore.add(new Stock(SaplingType.OrangeSapling, -1, 4000));
+        permanentPierreGeneralStore.add(new Stock(SaplingType.PeachSapling, -1, 6000));
+        permanentPierreGeneralStore.add(new Stock(SaplingType.PomegranateSapling, -1, 6000));
+        permanentPierreGeneralStore.add(new Stock(ShopItems.BasicRetainingSoil, -1, 100));
+        permanentPierreGeneralStore.add(new Stock(ShopItems.QualityRetainingSoil, -1, 150));
+        permanentPierreGeneralStore.add(new Stock(ToolType.LargeBackpack, ToolType.LargeBackpack.getLevel(), 1, 2000));
+        permanentPierreGeneralStore.add(new Stock(ToolType.DeluxeBackpack, ToolType.DeluxeBackpack.getLevel(), 1, 10000));
         return permanentPierreGeneralStore;
     }
 
-    private static ArrayList<Stacks> getSpringPierreGeneralStoreStock() {
-        ArrayList<Stacks> springPierreGeneralStoreStock = new ArrayList<>();
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.ParsnipSeed, 5));
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.BeanStarter, 5));
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.CauliflowerSeed, 5));
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.PotatoSeed, 5));
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.TulipBulbSeed, 5));
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.KaleSeed, 5));
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.JazzSeed, 5));
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.GarlicSeed, 5));
-        springPierreGeneralStoreStock.add(new Stacks(SeedType.RiceShoot, 5));
+    private static ArrayList<Stock> getSpringPierreGeneralStoreStock() {
+        ArrayList<Stock> springPierreGeneralStoreStock = new ArrayList<>();
+        springPierreGeneralStoreStock.add(new Stock(SeedType.ParsnipSeed, 5, 30));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.BeanStarter, 5, 90));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.CauliflowerSeed, 5, 120));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.PotatoSeed, 5, 75));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.TulipBulbSeed, 5, 30));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.KaleSeed, 5, 105));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.JazzSeed, 5, 45));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.GarlicSeed, 5, 60));
+        springPierreGeneralStoreStock.add(new Stock(SeedType.RiceShoot, 5, 60));
         return springPierreGeneralStoreStock;
     }
 
-    private static ArrayList<Stacks> getSummerPierreGeneralStoreStock() {
-        ArrayList<Stacks> summerPierreGeneralStoreStock = new ArrayList<>();
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.MelonSeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.TomatoSeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.BlueberrySeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.PepperSeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.WheatSeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.RadishSeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.PoppySeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.SpangleSeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.HopsStarter, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.CornSeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.SunflowerSeed, 5));
-        summerPierreGeneralStoreStock.add(new Stacks(SeedType.RedCabbageSeed, 5));
+    private static ArrayList<Stock> getSummerPierreGeneralStoreStock() {
+        ArrayList<Stock> summerPierreGeneralStoreStock = new ArrayList<>();
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.MelonSeed, 5, 120));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.TomatoSeed, 5, 75));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.BlueberrySeed, 5, 120));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.PepperSeed, 5, 60));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.WheatSeed, 5, 15));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.RadishSeed, 5, 60));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.PoppySeed, 5, 150));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.SpangleSeed, 5, 75));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.HopsStarter, 5, 90));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.CornSeed, 5, 225));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.SunflowerSeed, 5, 300));
+        summerPierreGeneralStoreStock.add(new Stock(SeedType.RedCabbageSeed, 5, 105));
         return summerPierreGeneralStoreStock;
     }
 
 
-    private static ArrayList<Stacks> getFallPierreGeneralStoreStock() {
-        ArrayList<Stacks> fallPierreGeneralStoreStock = new ArrayList<>();
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.EggplantSeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.CornSeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.PumpkinSeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.BokChoySeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.YamSeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.CranberrySeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.SunflowerSeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.FairySeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.AmaranthSeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.GrapeStarter, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.WheatSeed, 5));
-        fallPierreGeneralStoreStock.add(new Stacks(SeedType.ArtichokeSeed, 5));
+    private static ArrayList<Stock> getFallPierreGeneralStoreStock() {
+        ArrayList<Stock> fallPierreGeneralStoreStock = new ArrayList<>();
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.EggplantSeed, 5, 30));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.CornSeed, 5, 225));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.PumpkinSeed, 5, 150));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.BokChoySeed, 5, 75));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.YamSeed, 5, 90));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.CranberrySeed, 5, 360));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.SunflowerSeed, 5, 300));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.FairySeed, 5, 300));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.AmaranthSeed, 5, 105));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.GrapeStarter, 5, 90));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.WheatSeed, 5, 15));
+        fallPierreGeneralStoreStock.add(new Stock(SeedType.ArtichokeSeed, 5, 45));
         return fallPierreGeneralStoreStock;
     }
 
-    private static ArrayList<Stacks> getFishShopStock() {
-        ArrayList<Stacks> fishShopStock = new ArrayList<>();
-        fishShopStock.add(new Stacks(Recipe.FishSmokerRecipe, 1));
-        fishShopStock.add(new Stacks(ShopItems.TroutSoup, 1));
-        fishShopStock.add(new Stacks(ToolType.BambooPole, ToolType.BambooPole.getLevel(), 1));
-        fishShopStock.add(new Stacks(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1));
-        fishShopStock.add(new Stacks(ToolType.FiberglassRod,ToolType.FiberglassRod.getLevel(), 1));
-        fishShopStock.add(new Stacks(ToolType.IridiumRod, ToolType.IridiumRod.getLevel(), 1));
+    private static ArrayList<Stock> getFishShopStock() {
+        ArrayList<Stock> fishShopStock = new ArrayList<>();
+        fishShopStock.add(new Stock(Recipe.FishSmokerRecipe, 1, 10000));
+        fishShopStock.add(new Stock(ShopItems.TroutSoup, 1, 250));
+        fishShopStock.add(new Stock(ToolType.BambooPole, ToolType.BambooPole.getLevel(), 1, 500));
+        fishShopStock.add(new Stock(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1, 25));
+        fishShopStock.add(new Stock(ToolType.FiberglassRod,ToolType.FiberglassRod.getLevel(), 1, 1800));
+        fishShopStock.add(new Stock(ToolType.IridiumRod, ToolType.IridiumRod.getLevel(), 1, 7500));
         return fishShopStock;
     }
 }
