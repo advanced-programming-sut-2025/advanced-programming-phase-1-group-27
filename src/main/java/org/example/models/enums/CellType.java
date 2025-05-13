@@ -8,5 +8,6 @@ public enum CellType {
     Water,
     Door,
     View,
-    MapLink;
+    MapLink,
+
 }

@@ -21,6 +21,7 @@ public class Cell {
     private Object object = null;
     private CellType cellType;
     private Building building = null;
+    boolean isQuarry = false;
 
     private ArrayList<Cell> adjacentCells = new ArrayList<>();
 
@@ -58,6 +59,14 @@ public class Cell {
 
     public Building getBuilding() {
         return building;
+    }
+
+    public boolean isQuarry() {
+        return isQuarry;
+    }
+
+    public void setQuarry(boolean quarry) {
+        isQuarry = quarry;
     }
 
     public void setBuilding(Building building) {
@@ -115,6 +124,9 @@ public class Cell {
     public String toString() {
         if (this == App.getCurrentGame().getCurrentPlayer().getCurrentCell()) {
             return "Y";
+        }
+        else if (isQuarry && object == null) {
+            return "\u001B[30m" + "#" + "\u001B[0m";
         }
         else if (cellType.equals(CellType.Free)) {
             return "\s";

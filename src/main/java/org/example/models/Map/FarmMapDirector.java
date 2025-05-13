@@ -8,6 +8,7 @@ public class FarmMapDirector {
         builder.setDimensions(55, 75);
         builder.createHut();
         builder.createGreenHouse();
+        builder.createStoneQuarry();
         if (index == 0) {
             builder.createSmallLake(30, 64);
             builder.createBigLake(45, 30);
