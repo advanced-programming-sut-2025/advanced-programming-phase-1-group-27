@@ -12,8 +12,8 @@ public enum CheatCommands {
     CheatSetEnergy("energy\\s+set\\s+-v\\s+(?<value>\\d+)"),
     CheatEnergyUnlimited("energy\\s+unlimited"),
     CheatAddItem("\\s*cheat\\s+add\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-c\\s+(?<count>\\d+)\\s*"),
-    CheatSetFriendShip("\\s*cheat\\s+set\\s+friendship\\s+-n\\s+(?<animalName>.+)\\s+-c\\s+(?<amount>\\d+)\\s*"),
-    CheatAdd("\\s*cheat\\s+add\\s+(?<count>\\d+)\\s+dollars\\s*");
+    CheatSetFriendShip("\\s*cheat\\s+set\\s+friendship\\s+-n\\s+(?<name>.+)\\s+-c\\s+(?<amount>\\d+)\\s*"),
+    CheatAddMoney("\\s*cheat\\s+add\\s+(?<amount>\\d+)\\s+dollars\\s*");
 
     private final String pattern;
 

@@ -33,7 +33,7 @@ public enum GameMenuCommands implements MenuCommands {
     Products("produces"),
     CollectProducts("collect\\s+produces\\s+-n\\s+(?<name>\\S.*\\S)"),
     SellAnimal("sell\\s+animal\\s+-n\\s+(?<name>\\S.*\\S)"),
-    GoToShop("go\\s+to\\s+shop\\+(?<shopName>.+)"),;
+    GoToShop("go\\s+to\\s+shop\\+(?<shopName>.+)");
 
     private final String pattern;
 

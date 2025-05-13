@@ -119,7 +119,7 @@ public class Player extends User {
         this.mining = new Ability();
         this.foraging = new Ability();
         this.fishing = new Ability();
-        this.currentCell = null; // TODO: sobhan. ko ja bashe?
+        this.currentCell = null;
         this.money = 8569;
         this.currentTool = null;
         // crafting recipes

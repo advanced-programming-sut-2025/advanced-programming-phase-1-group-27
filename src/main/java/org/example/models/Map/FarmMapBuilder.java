@@ -60,7 +60,8 @@ public class FarmMapBuilder {
         GreenHouse greenHouse = new GreenHouse(finalProduct.getCell(10, 24), finalProduct.getCell(4, 20));
         for (int i = 4; i < 11; i++) {
             for (int j = 20; j < 28; j++) {
-                finalProduct.getCell(i, j).setType(CellType.Building);
+                if (i == 4 || i == 10 || j == 20 || j == 27)
+                    finalProduct.getCell(i, j).setType(CellType.Building);
                 finalProduct.getCell(i, j).setBuilding(greenHouse);
             }
         }

@@ -94,6 +94,12 @@ public class GameMenuView extends AppMenu {
                     Integer.parseInt(matcher.group("count"))
             ));
         }
+        else if ((matcher = CheatCommands.CheatSetFriendShip.getMatcher(input)) != null) {
+            System.out.println(controller.cheatSetFriendship(matcher.group("name"), matcher.group("amount")));
+        }
+        else if ((matcher = CheatCommands.CheatAddMoney.getMatcher(input)) != null) {
+            System.out.println(controller.cheatAddMoney(matcher.group("amount")));
+        }
         else if ((matcher = GameMenuCommands.CropInfo.getMatcher(input)) != null) {
             System.out.println(controller.cropInfo(matcher.group("cropName")));
         }
