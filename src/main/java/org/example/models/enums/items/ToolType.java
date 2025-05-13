@@ -63,6 +63,20 @@ public enum ToolType implements Item {
         return this.name;
     }
 
+    public double getTrashCanModifier() {
+        if (!ToolType.isTrashCan(this))
+            return 0;
+        if (this == ToolType.BasicTrashCan)
+            return 0;
+        if (this == ToolType.CopperTrashCan)
+            return 0.15;
+        if (this == ToolType.IronTrashCan)
+            return 0.3;
+        if (this == ToolType.GoldTrashCan)
+            return 0.45;
+        return 0.6;
+    }
+
     public static ToolType getItem(String itemName) {
         for (ToolType toolType : ToolType.values()) {
             if (toolType.getName().equalsIgnoreCase(itemName)) {
@@ -100,5 +114,13 @@ public enum ToolType implements Item {
             case IridiumRod -> 1.2;
             default -> 0;
         };
+    }
+
+    public static boolean isTrashCan(ToolType type) {
+        return type == BasicTrashCan ||
+                type == CopperTrashCan ||
+                type == IronTrashCan ||
+                type == GoldTrashCan ||
+                type == IridiumTrashCan;
     }
 }

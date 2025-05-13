@@ -576,4 +576,14 @@ public class Player extends User {
     public java.util.Map<Player, Boolean> getPlayerTradeToday() {
         return playerTradeToday;
     }
+
+    public ToolType getTrashCan() {
+        for (Stacks slot : backpack.getItems()) {
+            if (slot.getItem() instanceof ToolType toolType) {
+                if (ToolType.isTrashCan(toolType))
+                    return toolType;
+            }
+        }
+        return null;
+    }
 }

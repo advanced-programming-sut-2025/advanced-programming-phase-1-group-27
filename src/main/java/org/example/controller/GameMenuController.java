@@ -534,6 +534,43 @@ public class GameMenuController extends MenuController {
         + " to the shipping bin!");
     }
 
+    public Result inventoryShow() {
+        StringBuilder result = new StringBuilder("Your inventory:\n");
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        for (Stacks slot : player.getBackpack().getItems()) {
+            if (!(slot.getItem() instanceof ToolType))
+                result.append(slot.getStackLevel().toString()).append(" ");
+            result.append(slot.getItem().getName()).append(" ");
+            result.append(slot.getQuantity());
+            result.append("\n");
+        }
+        return new Result(true, result.toString());
+    }
+
+    public Result inventoryTrash(String itemName, int number) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        ToolType trashCan = player.getTrashCan();
+        assert trashCan != null;
+        int money = 0, numberCopy = number;
+        Item item = player.getItemFromBackpack(itemName);
+        if (item == null)
+            return new Result(false, "Item not found in backpack!");
+        if (!player.getBackpack().hasEnoughItem(item, number))
+            return new Result(false, "You don't have " + number + " of " + itemName);
+        for (Stacks slot : player.getBackpack().getItems()) {
+            if (slot.getItem().getName().equalsIgnoreCase(itemName)) {
+                int amount = Math.min(number, slot.getQuantity());
+                number -= amount;
+                money += (int) (slot.getPrice() * amount * trashCan.getTrashCanModifier() / slot.getQuantity());
+                slot.addQuantity(-amount);
+            }
+        }
+        player.getBackpack().mergeItems();
+        player.addMoney(money);
+        return new Result(false, numberCopy + " of " + itemName + " moved to trash. " +
+                money + " money earned!");
+    }
+
     // Cheats :
 
     public Result cheatAddItem(String itemName, int count) {
@@ -549,7 +586,7 @@ public class GameMenuController extends MenuController {
         player.getBackpack().addItems(item, level, count);
         return new Result(true, count + " of " + itemName + "added to the backpack!");
     }
-    
+
     public Result cheatSetWeather(String weatherString) {
         Weather weather = null;
         for (Weather w : Weather.values()) {

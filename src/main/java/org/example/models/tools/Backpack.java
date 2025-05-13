@@ -241,8 +241,12 @@ public class Backpack extends Tool {
         return s1.getItem().equals(s2.getItem()) && s1.getStackLevel() == s2.getStackLevel();
     }
 
-    private void mergeItems() {
+    public void mergeItems() {
         ArrayList<Stacks> copy = new ArrayList<>(items);
+        for (int i = 0; i < copy.size(); i++) {
+            if (copy.get(i).getQuantity() == 0)
+                copy.set(i, null);
+        }
         for (int i = 0; i < copy.size(); i++) {
             for (int j = i + 1; j < copy.size(); j++) {
                 if (areSameStacks(copy.get(i), copy.get(j))) {

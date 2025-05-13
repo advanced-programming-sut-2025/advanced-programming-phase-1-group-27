@@ -154,7 +154,10 @@ public class GameMenuView extends AppMenu {
             System.out.println(controller.inventoryShow());
         }
         else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
-
+            System.out.println(controller.inventoryTrash(
+                    matcher.group("itemName").trim(),
+                    Integer.parseInt(matcher.group("number").trim())
+            ));
         }
         else {
             System.out.println(new Result(false, "invalid command!"));
