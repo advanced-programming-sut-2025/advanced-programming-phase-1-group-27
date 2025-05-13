@@ -125,7 +125,6 @@ public class TradeController {
     }
 
     public Result tradeList() {
-        // TODO: function incomplete
         StringBuilder result = new StringBuilder();
         result.append("Available Trades : \n");
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();

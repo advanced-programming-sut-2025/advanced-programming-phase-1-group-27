@@ -1,6 +1,7 @@
 package org.example.view;
 
 import org.example.controller.GameMenuController;
+import org.example.controller.InteractionsWithOthers.TradeController;
 import org.example.models.enums.Menu;
 import org.example.models.enums.commands.CheatCommands;
 import org.example.models.enums.commands.GameMenuCommands;
@@ -13,6 +14,7 @@ import java.util.regex.Matcher;
 
 public class GameMenuView extends AppMenu {
     private final GameMenuController controller;
+    // controller tradeController
 
     public GameMenuView() {
         controller = new GameMenuController(this);

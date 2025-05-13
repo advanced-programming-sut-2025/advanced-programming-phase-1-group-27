@@ -6,8 +6,15 @@ import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
 import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.models.tools.*;
+import org.example.view.menu.ProfileMenu;
 
 public class ToolController {
+    private final ProfileMenu view;
+
+    public ToolController(ProfileMenu view) {
+        this.view = view;
+    }
+
     public Result upgradeTool(String toolName) {
         // TODO : current shop should be checked!
         ToolType toolType = getTool(toolName);

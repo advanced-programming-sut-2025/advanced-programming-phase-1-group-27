@@ -1,5 +1,8 @@
 package org.example.models.enums.commands;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum InteractionsWithUserCommands {
     Friendships("\\s*friendships\\s*"),
     TalkToUser("\\s*talk\\s+-u\\s+(?<username>.+)\\s+-m\\s+(?<message>.+)\\s*"),
@@ -16,12 +19,20 @@ public enum InteractionsWithUserCommands {
     Trade("trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(<item>.+)\\s+-a\\s+(?<amount>\\d+)" +
             "(?:\\s+-p\\s+(?<price>\\d+))?(?:\\s+-ti\\s+(?<targetItem>.+)\\s+\\|\\s+-ta\\s+(?<targetAmount>\\d+))?"),
     TradeList("\\s*trade\\s+list\\s*"),
-    TradeResponse(""),
-    TradeHistory("");
+    TradeResponse("trade\\s+response\\s+–(?<response> accept|reject )\\s+-i\\s+(?<id>\\d+)\\s*"),
+    TradeHistory("trade\\s+history\\s*");
 
     private final String pattern;
 
     InteractionsWithUserCommands(String pattern) {
         this.pattern = pattern;
+    }
+
+    public Matcher getMatcher(String input) {
+        Pattern pattern = Pattern.compile(this.pattern);
+        Matcher matcher = pattern.matcher(input);
+        if (matcher.matches())
+            return matcher;
+        return null;
     }
 }
