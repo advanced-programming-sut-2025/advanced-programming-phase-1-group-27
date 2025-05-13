@@ -1,6 +1,7 @@
 package org.example.models.Shops;
 
 import org.example.models.App;
+import org.example.models.Item;
 import org.example.models.Stacks;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.ShopType;
@@ -19,6 +20,30 @@ public class Shop {
 
     public ShopType getShopType() {
         return shopType;
+    }
+
+
+    public Stacks getStack(String itemName) {
+        for (Stacks stack : stock) {
+            if(stack.getItem().getName().equals(itemName)){
+                return stack;
+            }
+        }
+        return null;
+    }
+
+    public void reduce(Item item , int amount) {
+        for (Stacks stack : stock) {
+            if(stack.getItem().getName().equals(item.getName())){
+                int lastAmount = stack.getQuantity();
+                if(lastAmount == -1){
+                    return;
+                }
+                lastAmount -= amount;
+                stack.setQuantity(lastAmount);
+                break;
+            }
+        }
     }
 
     public ArrayList<Stacks> getStock() {
