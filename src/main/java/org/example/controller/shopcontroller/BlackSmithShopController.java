@@ -4,6 +4,7 @@ import org.example.controller.MenuController;
 import org.example.controller.ToolController;
 import org.example.models.App;
 import org.example.models.Result;
+import org.example.models.Stacks;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
 import org.example.models.enums.Menu;
@@ -83,16 +84,80 @@ public class BlackSmithShopController extends MenuController {
         } else if (stackLevel == StackLevel.Iridium) {
             return new Result(false, "You can not upgrade iridium item!");
         }
-        if(limit < 1){
+        if (limit < 1) {
             return new Result(false, "Limit reached!");
         }
-        App.getCurrentGame().getBlacksmith().getUpgradeLimit().put(mode , 0);
+        App.getCurrentGame().getBlacksmith().getUpgradeLimit().put(mode, 0);
         toolController.upgradeTool(toolName);
         return new Result(true, "You upgraded you tool successfully!( " + mode + " )");
     }
 
-    public Result showAllProducts(){
+    public Result showAllProducts() {
+        StringBuilder result = new StringBuilder();
+        result.append("All Products : \n");
+        int i = 1;
+        for (Stacks stack : App.getCurrentGame().getBlacksmith().getStock()) {
+            result.append(i).append(" . ").append(stack.getItem().getName()).append(" - ");
+            if (stack.getQuantity() == -1) {
+                result.append("Unlimited");
+            } else if (stack.getQuantity() == 0) {
+                result.append("Sold Out");
+            } else {
+                result.append(stack.getQuantity());
+            }
+            result.append(" - ");
+            result.append(stack.getPrice()).append(" $ \n");
+            i++;
+        }
+        return new Result(true, result.toString());
+    }
 
+    public Result showAllAvailableProducts() {
+        StringBuilder result = new StringBuilder();
+        result.append("All Available Products : \n");
+        int i = 1;
+        for (Stacks stack : App.getCurrentGame().getBlacksmith().getStock()) {
+            if (stack.getQuantity() == -1) {
+                result.append(i).append(" . ").append(stack.getItem().getName()).append(" - ");
+                result.append("Unlimited").append(" - ");
+                result.append(stack.getPrice()).append(" $ \n");
+                i++;
+            } else if (stack.getQuantity() == 0) {
+                continue;
+            } else {
+                result.append(i).append(" . ").append(stack.getItem().getName()).append(" - ");
+                result.append(stack.getQuantity()).append(" - ");
+                result.append(stack.getPrice()).append(" $ \n");
+                i++;
+            }
+        }
+        return new Result(true, result.toString());
+    }
+
+    public Result Purchase(String productName, String stringQuantity) {
+        int quantity = Integer.parseInt(stringQuantity);
+        Stacks stack = App.getCurrentGame().getBlacksmith().getStack(productName);
+        if (stack == null) {
+            return new Result(false, "Product not found!");
+        }
+        if (stack.getQuantity() == 0) {
+            return new Result(false, "Product is sold out!");
+        }
+        if (stack.getQuantity() != -1 && stack.getQuantity() < quantity) {
+            return new Result(false, "Not enough product in stock!");
+        }
+        if (App.getCurrentGame().getCurrentPlayer().getMoney() < stack.getPrice() * quantity) {
+            return new Result(false, "Not enough money!");
+        }
+        if (App.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(stack.getItem(),
+                stack.getStackLevel(), quantity)) {
+            return new Result(true, "Not enough space in backPack!");
+        }
+        App.getCurrentGame().getCurrentPlayer().spendMoney(stack.getPrice() * quantity);
+        App.getCurrentGame().getBlacksmith().reduce(stack.getItem(), quantity);
+        App.getCurrentGame().getCurrentPlayer().getBackpack().addItems(stack.getItem(),
+                stack.getStackLevel(), quantity);
+        return new Result(true, "You purchased successfully!");
     }
 
     private ToolType getTool(String toolName) {
