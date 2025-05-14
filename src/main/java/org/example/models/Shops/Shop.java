@@ -25,7 +25,7 @@ public class Shop {
 
     public Stock getStock(String itemName) {
         for (Stock slot : stock) {
-            if(slot.getItem().getName().equals(itemName)){
+            if(slot.getItem().getName().equalsIgnoreCase(itemName)){
                 return slot;
             }
         }

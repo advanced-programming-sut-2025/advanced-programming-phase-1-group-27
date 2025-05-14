@@ -42,14 +42,14 @@ public class CarpenterShopController extends MenuController {
             return new Result(false, "Enclosure type is invalid!");
         }
         Shop carpenterShop = App.getCurrentGame().getCarpenterShop();
-        Stacks stack = carpenterShop.getStock(type.getName());
-        if (stack.getQuantity() == 0) {
+        Stock stock = carpenterShop.getStock(type.getName());
+        if (stock.getQuantity() == 0) {
             return new Result(false, "You can not build anymore!");
         }
         Player player = App.getCurrentGame().getCurrentPlayer();
         FarmMap farmMap = player.getFarmMap();
         Recipe recipe = Recipe.getRecipe(type);
-        if (App.getCurrentGame().getCurrentPlayer().getMoney() < stack.getPrice()) {
+        if (App.getCurrentGame().getCurrentPlayer().getMoney() < stock.getPrice()) {
             return new Result(false, "You don't have enough money!");
         }
         if (recipe != null && !player.hasEnoughIngredients(recipe))
@@ -62,8 +62,8 @@ public class CarpenterShopController extends MenuController {
             farmMap.placeBarn(x, y, new Barn(type, new Cell(new Position(x, y), farmMap))); // TODO: sobhan. okaye?
         else
             farmMap.placeCoop(x, y, new Coop(type, new Cell(new Position(x, y), farmMap)));
-        carpenterShop.reduce(stack.getItem(), 1);
-        App.getCurrentGame().getCurrentPlayer().spendMoney(stack.getPrice());
+        carpenterShop.reduce(stock.getItem(), 1);
+        App.getCurrentGame().getCurrentPlayer().spendMoney(stock.getPrice());
         return new Result(true, "Animal enclosure successfully placed!");
     }
 
@@ -71,17 +71,17 @@ public class CarpenterShopController extends MenuController {
         StringBuilder result = new StringBuilder();
         result.append("All Products : \n");
         int i = 1;
-        for (Stacks stack : App.getCurrentGame().getCarpenterShop().getStock()) {
-            result.append(i).append(" . ").append(stack.getItem().getName()).append(" - ");
-            if (stack.getQuantity() == -1) {
+        for (Stock stock : App.getCurrentGame().getCarpenterShop().getStock()) {
+            result.append(i).append(" . ").append(stock.getItem().getName()).append(" - ");
+            if (stock.getQuantity() == -1) {
                 result.append("Unlimited");
-            } else if (stack.getQuantity() == 0) {
+            } else if (stock.getQuantity() == 0) {
                 result.append("Sold Out");
             } else {
-                result.append(stack.getQuantity());
+                result.append(stock.getQuantity());
             }
             result.append(" - ");
-            result.append(stack.getPrice()).append(" $ \n");
+            result.append(stock.getPrice()).append(" $ \n");
             i++;
         }
         return new Result(true, result.toString());
@@ -91,18 +91,18 @@ public class CarpenterShopController extends MenuController {
         StringBuilder result = new StringBuilder();
         result.append("All Available Products : \n");
         int i = 1;
-        for (Stacks stack : App.getCurrentGame().getCarpenterShop().getStock()) {
-            if (stack.getQuantity() == -1) {
-                result.append(i).append(" . ").append(stack.getItem().getName()).append(" - ");
+        for (Stock stock : App.getCurrentGame().getCarpenterShop().getStock()) {
+            if (stock.getQuantity() == -1) {
+                result.append(i).append(" . ").append(stock.getItem().getName()).append(" - ");
                 result.append("Unlimited").append(" - ");
-                result.append(stack.getPrice()).append(" $ \n");
+                result.append(stock.getPrice()).append(" $ \n");
                 i++;
-            } else if (stack.getQuantity() == 0) {
+            } else if (stock.getQuantity() == 0) {
                 continue;
             } else {
-                result.append(i).append(" . ").append(stack.getItem().getName()).append(" - ");
-                result.append(stack.getQuantity()).append(" - ");
-                result.append(stack.getPrice()).append(" $ \n");
+                result.append(i).append(" . ").append(stock.getItem().getName()).append(" - ");
+                result.append(stock.getQuantity()).append(" - ");
+                result.append(stock.getPrice()).append(" $ \n");
                 i++;
             }
         }
