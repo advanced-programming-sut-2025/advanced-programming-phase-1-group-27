@@ -113,7 +113,7 @@ public class MarnieRanchShopController extends MenuController {
         return new Result(true, result.toString());
     }
 
-    public Result Purchase(String productName, String quantityString) {
+    public Result purchase(String productName, String quantityString) {
         int quantity = Integer.parseInt(quantityString);
         Stock stock = App.getCurrentGame().getMarnieRanch().getStock(productName);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();

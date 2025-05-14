@@ -28,15 +28,21 @@ public class MarnieRanch extends AppMenu {
         Matcher matcher;
         if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        }
-        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
-        }
-        else if ((matcher = ShopCommands.BuyAnimal.getMatcher(input)) != null) {
+        } else if ((matcher = ShopCommands.BuyAnimal.getMatcher(input)) != null) {
             System.out.println(controller.buyAnimal(matcher.group("animal"), matcher.group("name")));
+        } else if ((matcher = ShopCommands.ShowAllProducts.getMatcher(input)) != null) {
+            System.out.println(controller.showAllProducts());
+        } else if ((matcher = ShopCommands.ShowAllAvailableProducts.getMatcher(input)) != null) {
+            System.out.println(controller.showAllAvailableProducts());
+        } else if ((matcher = ShopCommands.Purchase.getMatcher(input)) != null) {
+            System.out.println(controller.purchase(
+                    matcher.group("productName").trim(),
+                    matcher.group("count").trim()
+            ));
         } else {
             System.out.println("Invalid Command.");
         }

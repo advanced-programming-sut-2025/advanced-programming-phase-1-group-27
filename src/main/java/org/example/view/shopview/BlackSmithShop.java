@@ -4,6 +4,8 @@ import org.example.controller.shopcontroller.BlackSmithShopController;
 import org.example.models.Result;
 import org.example.models.enums.Menu;
 import org.example.models.enums.commands.MainMenuCommands;
+import org.example.models.enums.commands.ShopCommands;
+import org.example.models.enums.commands.ToolCommands;
 import org.example.view.AppMenu;
 import org.example.view.GameMenuView;
 
@@ -27,14 +29,24 @@ public class BlackSmithShop extends AppMenu {
         Matcher matcher;
         if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        }
-        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+        } else if ((matcher = MainMenuCommands.ShowCurrentMenu.getMatcher(input)) != null) {
             System.out.println(controller.showCurrentMenu());
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+        } else if ((matcher = MainMenuCommands.ExitMenu.getMatcher(input)) != null) {
             System.out.println(controller.exitMenu());
-        }
-        else {
+        }else if((matcher = ToolCommands.ToolsUpgrade.getMatcher(input)) != null) {
+            System.out.println(controller.upgradeTool(
+                    matcher.group("toolName").trim()
+            ));
+        } else if ((matcher = ShopCommands.ShowAllProducts.getMatcher(input)) != null) {
+            System.out.println(controller.showAllProducts());
+        } else if ((matcher = ShopCommands.ShowAllAvailableProducts.getMatcher(input)) != null) {
+            System.out.println(controller.showAllAvailableProducts());
+        }else if((matcher = ShopCommands.Purchase.getMatcher(input)) != null) {
+            System.out.println(controller.purchase(
+                    matcher.group("productName").trim(),
+                    matcher.group("count").trim()
+            ));
+        } else {
             System.out.println(new Result(false, "invalid command!"));
         }
     }

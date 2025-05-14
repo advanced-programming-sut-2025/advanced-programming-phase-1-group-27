@@ -75,7 +75,7 @@ public class StardropSaloonShopController extends MenuController {
         return new Result(true, result.toString());
     }
 
-    public Result Purchase(String productName, String quantityString) {
+    public Result purchase(String productName, String quantityString) {
         int quantity = Integer.parseInt(quantityString);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Stock stock = App.getCurrentGame().getStardropSaloon().getStock(productName);

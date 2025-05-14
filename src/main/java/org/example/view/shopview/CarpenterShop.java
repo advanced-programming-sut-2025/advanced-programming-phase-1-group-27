@@ -28,21 +28,26 @@ public class CarpenterShop extends AppMenu {
         Matcher matcher;
         if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        }
-        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
-        }
-        else if ((matcher = ShopCommands.BuildBuilding.getMatcher(input)) != null) {
+        } else if ((matcher = ShopCommands.BuildBuilding.getMatcher(input)) != null) {
             System.out.println(controller.buildBuilding(
                     matcher.group("buildingName").trim(),
                     Integer.parseInt(matcher.group("x").trim()),
                     Integer.parseInt(matcher.group("y").trim())
             ));
-        }
-        else {
+        } else if ((matcher = ShopCommands.ShowAllProducts.getMatcher(input)) != null) {
+            System.out.println(controller.showAllProducts());
+        } else if ((matcher = ShopCommands.ShowAllAvailableProducts.getMatcher(input)) != null) {
+            System.out.println(controller.showAllAvailableProducts());
+        } else if ((matcher = ShopCommands.Purchase.getMatcher(input)) != null) {
+            System.out.println(controller.purchase(
+                    matcher.group("productName").trim(),
+                    matcher.group("count").trim()
+            ));
+        } else {
             System.out.println(new Result(false, "invalid command!"));
         }
     }
