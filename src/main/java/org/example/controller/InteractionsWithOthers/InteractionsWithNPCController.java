@@ -188,7 +188,7 @@ public class InteractionsWithNPCController {
         return new Result(true, result.toString());
     }
 
-    public Result questsFinish(String stringIndex, String npcName) {
+    public Result questsFinish(String npcName, String stringIndex) {
         NPC npc = findNPC(npcName);
         int index = Integer.parseInt(stringIndex);
         index--;

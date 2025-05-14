@@ -8,6 +8,7 @@ import org.example.models.Relations.Dialogue;
 import org.example.models.Relations.Trade;
 import org.example.models.Result;
 import org.example.models.enums.DialogueType;
+import org.example.models.enums.Menu;
 import org.example.models.enums.StackLevel;
 import org.example.models.tools.Backpack;
 import org.example.view.TradeView;
@@ -22,12 +23,14 @@ public class TradeController extends MenuController {
 
     @Override
     public Result enterMenu(String menuName) {
-        return null;
+        return new Result(true, "You cannot enter any menu from here!");
     }
 
     @Override
     public Result exitMenu() {
-        return null;
+        App.setCurrentMenu(Menu.GameMenu);
+        App.getCurrentGame().getCurrentPlayer().setCurrentMenu(Menu.GameMenu);
+        return new Result(true, "Redirecting to game menu ...");
     }
 
     public boolean playerPassedOut() {

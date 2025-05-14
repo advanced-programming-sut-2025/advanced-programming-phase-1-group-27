@@ -38,6 +38,10 @@ public class Cell {
     }
 
     public boolean isPassable() {
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            if (player.getCurrentCell() == this && player != App.getCurrentGame().getCurrentPlayer())
+                return false;
+        }
         return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View ||
                 cellType == CellType.Door || cellType == CellType.MapLink;
     }
@@ -133,9 +137,13 @@ public class Cell {
 
     @Override
     public String toString() {
-        if (this == App.getCurrentGame().getCurrentPlayer().getCurrentCell()) {
-            return "Y";
-        } else if (cellType.equals(CellType.MapLink)) {
+        int k = 1;
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            if (this == player.getCurrentCell())
+                return "\u001B[36m" + k + "\u001B[0m";
+            k++;
+        }
+        if (cellType.equals(CellType.MapLink)) {
             return "\033[43m" + " " + "\u001B[0m";
         } else if (object != null) {
             switch (object) {
@@ -148,6 +156,9 @@ public class Cell {
                 case MineralType mineralType -> {
                     return "\u001B[47m" + " " + "\u001B[0m";
                 }
+                case NPC npc -> {
+                    return "\u001B[34m" + Character.toUpperCase(npc.getName().charAt(0)) + "\u001B[0m";
+                }
                 default -> {
                 }
             }
@@ -156,8 +167,6 @@ public class Cell {
         }
         else if (cellType.equals(CellType.Free)) {
             return "\033[0;33m" + " " + "\u001B[0m";
-        } else if (object instanceof NPC) {
-            return "\u001B[36m" + "N" + "\u001B[0m";
         } else if (cellType.equals(CellType.Water)) {
             return "\u001B[44m" + " " + "\u001B[0m";
         } else if (cellType.equals(CellType.Door)) {

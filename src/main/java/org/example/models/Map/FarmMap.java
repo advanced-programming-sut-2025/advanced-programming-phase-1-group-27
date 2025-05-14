@@ -8,6 +8,8 @@ import org.example.models.Cell;
 import org.example.models.Position;
 import org.example.models.ShippingBin;
 import org.example.models.enums.CellType;
+import org.example.models.enums.Plants.Plant;
+import org.example.models.enums.Plants.PlantType;
 import org.example.models.enums.items.BuildingType;
 
 import java.sql.Time;
@@ -125,6 +127,16 @@ public class FarmMap extends Map {
     }
 
     public void generateForaging() {
+        int foragingCount = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (cells[i][j].getObject() != null && cells[i][j].getObject() instanceof Plant plant &&
+                plant.isForaging())
+                    foragingCount++;
+            }
+        }
+        if (foragingCount > 200)
+            return;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 int randomInt = new Random().nextInt(100);
