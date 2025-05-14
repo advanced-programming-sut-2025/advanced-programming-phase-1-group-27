@@ -6,6 +6,7 @@ import org.example.models.enums.CellType;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.ToolType;
+import org.example.models.enums.items.products.CraftingProduct;
 
 public class Pickaxe extends Tool{
     //EnergyUsage : 5 - 4 - 3 - 2 - 1;
@@ -51,7 +52,6 @@ public class Pickaxe extends Tool{
             if (MineralType.getMinerals().contains(mineralType)) {
                 if (level.isBetterThan((mineralType).getLevel())) {
                     player.consumeEnergy(this.getEnergyUsage());
-                    cell.setType(CellType.Free);
                     cell.setObject(null);
                     player.getBackpack().addItems(mineralType, null, 5);
                     
@@ -66,7 +66,6 @@ public class Pickaxe extends Tool{
             } else if (MineralType.getJewels().contains(mineralType)) {
                 if (level.isBetterThan(StackLevel.Copper)) {
                     player.consumeEnergy(this.getEnergyUsage());
-                    cell.setType(CellType.Free);
                     cell.setObject(null);
                     player.getBackpack().addItems(mineralType, null, 5);
 
@@ -79,7 +78,6 @@ public class Pickaxe extends Tool{
                 }
             } else {
                 player.consumeEnergy(this.getEnergyUsage());
-                cell.setType(CellType.Free);
                 cell.setObject(null);
                 player.getBackpack().addItems(mineralType, null, 5);
 
@@ -88,9 +86,7 @@ public class Pickaxe extends Tool{
             }
         } else if (cell.getObject() instanceof Artisan artisan) {
             cell.setObject(null);
-            cell.setType(CellType.Free);
-            //player.getBackpack().addItems(artisan, null, 1);
-            //TODO rassa artisian ro chetory bargardunam behesh?
+            player.getBackpack().addItems(CraftingProduct.getItem(artisan.getType().toString()), null, 1);
             return new Result(false, "You Removed And Claimed The Artisan!");
         } else {
             player.consumeEnergy(Math.min(this.getEnergyUsage() - 1, 0));

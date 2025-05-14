@@ -78,7 +78,6 @@ public class Game {
             farmMaps[i] = builder.getFinalProduct();
         }
 
-        // TODO: initialize npc and shops enums
     }
 
     public Player getAdmin() {
@@ -117,7 +116,6 @@ public class Game {
     }
 
     public void passAnHour() {
-        time.passAnHour();
         updatePlayersBuff();
         updateArtisans();
         // TODO
@@ -136,10 +134,11 @@ public class Game {
         }
         // Grow (and deleting) Plants :
         for (Player player : players) {
+            player.getFarmMap().generateForaging();
             Cell[][] cells = player.getFarmMap().getCells();
             for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
                 for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
-                    if (cells[i][j].getObject() instanceof Plant plant) {
+                    if (cells[i][j].getObject() instanceof Plant plant && !plant.isForaging()) {
                         if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
                             cells[i][j].setObject(null);
                         } else if (!plant.isGiant()){

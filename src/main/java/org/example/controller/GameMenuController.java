@@ -57,7 +57,7 @@ public class GameMenuController extends MenuController {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
 
         if (fullTurn)
-            App.getCurrentGame().passAnHour();
+            App.getCurrentGame().getTime().passAnHour();
         if (currentPlayer.getDayEnergy() <= 0) {
             nextTurn(scanner);
             return;
@@ -290,7 +290,7 @@ public class GameMenuController extends MenuController {
         Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
 
 
-        if (cell.isQuarry())
+        if (cell.getType() == CellType.Quarry)
             return new Result(false, "This cell is in the quarry!");
         else if (cell.getType() != CellType.Plowed)
             return new Result(false, "Cell Not Plowed");
@@ -336,11 +336,13 @@ public class GameMenuController extends MenuController {
         int i = Integer.parseInt(iString), j = Integer.parseInt(jString);
         Cell cell = App.getCurrentGame().getCurrentPlayer().getCurrentMap().getCell(i, j);
 
-        if (cell.getObject() instanceof Plant crop) {
-            return new Result(true, "Name: " + crop.getType().getName() + "\n" +
-                        "Total time left: " + crop.getTillNextHarvest() + "\n" +
-                        "Stage: " + crop.getCurrentStage() + " (0-based)\n" +
-                        (crop.getWateredToday()? "Watered today": "Not Watered today"));
+        if (cell.getObject() instanceof Plant plant) {
+            return new Result(true, (plant instanceof Crop? "Crop " : "Tree ") +
+                    "Name: " + plant.getType().getName() + "\n" +
+                        "Total time left: " + plant.getTillNextHarvest() + "\n" +
+                        "Stage: " + plant.getCurrentStage() + " (0-based)\n" +
+                        (plant.getWateredToday()? "Watered today": "Not Watered today") + "\n" +
+                        "Is Foraging: " + plant.isForaging());
         }
         else
             return new Result(false, "No Plant Here!");
@@ -494,9 +496,9 @@ public class GameMenuController extends MenuController {
         if (artisanType == null && !(item == BuildingType.ShippingBin))
             return new Result(false, "This item cannot be placed!");
         Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
-        if (cell.isQuarry())
+        if (cell.getType() == CellType.Quarry) {
             return new Result(false, "This cell is in the quarry!");
-
+        }
         if (cell == null || cell.getType() != CellType.Free || !(cell.getMap() instanceof FarmMap))
             return new Result(false, "The desired cell is currently occupied!");
         player.getBackpack().reduceItems(item, 1);
@@ -509,7 +511,6 @@ public class GameMenuController extends MenuController {
         } else {
             Artisan artisan = new Artisan(artisanType);
             cell.setObject(artisan);
-            cell.setType(CellType.Occupied);
             return new Result(true, "Artisan placed successfully!");
         }
     }
@@ -656,6 +657,22 @@ public class GameMenuController extends MenuController {
         App.getCurrentGame().getCurrentPlayer().addMoney(val);
         return new Result(true, "cheat Activated, You Now Have " +
                 App.getCurrentGame().getCurrentPlayer().getMoney() + "$");
+    }
+
+    public Result cheatAdvanceTime(String hourString) {
+        String oldTime = App.getCurrentGame().getTime().showDateTime();
+        int hour = Integer.parseInt(hourString);
+        App.getCurrentGame().getTime().cheatAdvanceTime(hour);
+        return new Result(true, "The old time was " + oldTime + "\n" +
+                "The new time is " + App.getCurrentGame().getTime().showDateTime());
+    }
+
+    public Result cheatAdvanceDate(String dayString) {
+        String oldTime = App.getCurrentGame().getTime().showDateTime();
+        int day = Integer.parseInt(dayString);
+        App.getCurrentGame().getTime().cheatAdvanceDate(day);
+        return new Result(true, "The old time was " + oldTime + "\n" +
+                "The new time is " + App.getCurrentGame().getTime().showDateTime());
     }
 
     public Result fishing(String fishPoleName) {

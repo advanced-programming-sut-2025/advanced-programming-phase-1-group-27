@@ -56,10 +56,6 @@ public class Stock {
             quantity--;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public StackLevel getStackLevel() {
         return stackLevel;
     }
@@ -71,4 +67,17 @@ public class Stock {
     public Season getSaleSeason() {
         return saleSeason;
     }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setStackLevel(StackLevel stackLevel) {
+        this.stackLevel = stackLevel;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
 }

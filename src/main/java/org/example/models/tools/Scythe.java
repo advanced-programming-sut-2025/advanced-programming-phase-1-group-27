@@ -29,10 +29,9 @@ public class Scythe extends Tool{
             if (fruit == null) {
                 return new Result(false, "The Plant is not Ready to be Harvested Yet");
             }
-            //TODO add to inventory: fruit
+            player.getBackpack().addItems(fruit.getItem(), fruit.getStackLevel(), fruit.getQuantity());
             if (plant instanceof Crop crop) {
                 if (crop.getType().getHarvestCycle() == -1) {
-                    cell.setType(CellType.Plowed);
                     cell.setObject(null);
                 }
             }
@@ -41,10 +40,9 @@ public class Scythe extends Tool{
         } else if (cell.getObject() instanceof MineralType mineralType) {
             if (mineralType == MineralType.Fiber) {
                 cell.setObject(null);
-                cell.setType(CellType.Free);
                 int randomInt = (new Random()).nextInt(2);
                 if (randomInt == 1) {
-                    //TODO add to inventory: 1 fiber
+                    player.getBackpack().addItems(MineralType.Fiber, StackLevel.Basic, 1);
                     player.forageXp(10);
                     return new Result(true, "Found 1 Fiber");
                 } else {

@@ -59,7 +59,7 @@ public class FarmMapBuilder {
     public void createStoneQuarry() {
         for (int i = 3; i < 8; i++) {
             for (int j = 5; j < 10; j++) {
-                finalProduct.getCell(i, j).setQuarry(true);
+                finalProduct.getCell(i, j).setType(CellType.Quarry);
 
                 if (new Random().nextInt(4) == 0) {
                     finalProduct.getCell(i, j).placeForagingMineral();
@@ -86,9 +86,11 @@ public class FarmMapBuilder {
             for (int j = 1; j < m - 1; j++) {
                 Cell cell = finalProduct.getCell(i, j);
                 int randomInt = (new Random()).nextInt(100);
-                if (cell.getType() == CellType.Free && !cell.isQuarry() && cell.getBuilding() == null) {
-                    if (randomInt < 6) {
+                if (cell.getType() == CellType.Free && cell.getBuilding() == null) {
+                    if (randomInt < 2) {
                         cell.placeForagingCrop();
+                    } else if (randomInt < 4) {
+                        cell.placeForagingTree();
                     }
                 }
             }

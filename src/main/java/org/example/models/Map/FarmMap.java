@@ -127,12 +127,23 @@ public class FarmMap extends Map {
     public void generateForaging() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (cells[i][j].getType() == CellType.Free) {
-                    int randomInt =  (new Random()).nextInt(1000);
-                    if (randomInt / 10 == 15) {
-                        if (randomInt == 151) cells[i][j].placeForagingMineral();
-                        else cells[i][j].placeForagingCrop();
-                    }
+                int randomInt = new Random().nextInt(100);
+                Cell cell = cells[i][j];
+
+                if (cell.getObject() != null)
+                    continue;
+
+                if (cell.getType() == CellType.Quarry) {
+                    if (randomInt < 2)
+                        cell.placeForagingMineral();
+                } else if (cell.getBuilding() == null && cell.getType() == CellType.Plowed) {
+                    if (randomInt < 2)
+                        cell.placeForagingSeed();
+                } else if (cell.getBuilding() == null && cell.getType() == CellType.Free) {
+                    if (randomInt < 1)
+                        cell.placeForagingCrop();
+                    if (randomInt < 2)
+                        cell.placeForagingTree();
                 }
             }
         }

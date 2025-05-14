@@ -9,7 +9,7 @@ public abstract class Plant {
     protected PlantType type;
     protected int cnt = 0, currentStage = 0, tillNextHarvest;
     protected Cell cell;
-    protected boolean wateredYesterday = true, wateredToday = false;
+    protected boolean wateredYesterday = true, wateredToday = false, isForaging = false;
     //...
 
     protected Plant(PlantType type) {
@@ -28,7 +28,7 @@ public abstract class Plant {
     public void grow() {
         cnt++;
         tillNextHarvest = Integer.max(tillNextHarvest - 1, 0);
-        if (cnt >= type.getStages()[currentStage] && currentStage < type.getStages().length - 1) {
+        if (currentStage < type.getStages().length - 1 && cnt >= type.getStages()[currentStage]) {
             currentStage++;
             cnt = 0;
         }
@@ -86,5 +86,13 @@ public abstract class Plant {
 
     public void setTillNextHarvest(int tillNextHarvest) {
         this.tillNextHarvest = tillNextHarvest;
+    }
+
+    public boolean isForaging() {
+        return isForaging;
+    }
+
+    public void setForaging(boolean foraging) {
+        isForaging = foraging;
     }
 }
