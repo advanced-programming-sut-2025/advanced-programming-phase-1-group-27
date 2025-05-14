@@ -13,11 +13,6 @@ import java.util.ArrayList;
 
 
 public class InteractionsWithUserController {
-    private final GameMenuView view;
-
-    public InteractionsWithUserController(GameMenuView view) {
-        this.view = view;
-    }
 
     public Result getNotification() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();

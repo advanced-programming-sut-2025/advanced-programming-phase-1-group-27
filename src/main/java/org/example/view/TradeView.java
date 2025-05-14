@@ -39,7 +39,15 @@ public class TradeView extends AppMenu {
             System.out.println(new Result(false, "invalid command!"));
         }
         if((matcher = InteractionsWithUserCommands.Trade.getMatcher(input)) != null) {
-            //TODO : Rassa
+            System.out.println(controller.trade(
+                    matcher.group("username").trim(),
+                    matcher.group("type").trim(),
+                    matcher.group("item").trim(),
+                    matcher.group("amount").trim(),
+                    matcher.group("price").trim(),
+                    matcher.group("targetItem").trim(),
+                    matcher.group("targetAmount").trim()
+            ));
         }
         else if ((matcher = InteractionsWithUserCommands.TradeList.getMatcher(input)) != null) {
             System.out.println(controller.tradeList());

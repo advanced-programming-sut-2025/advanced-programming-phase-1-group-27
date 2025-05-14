@@ -225,7 +225,6 @@ public class GameMenuController extends MenuController {
         result.append("Available players:\n");
         for (Player player : App.getCurrentGame().getPlayers()) {
             result.append(player.getUsername()).append("\n");
-            //TODO: Trade View
         }
         App.setCurrentMenu(Menu.Trade);
         App.getCurrentGame().getCurrentPlayer().setCurrentMenu(Menu.Trade);

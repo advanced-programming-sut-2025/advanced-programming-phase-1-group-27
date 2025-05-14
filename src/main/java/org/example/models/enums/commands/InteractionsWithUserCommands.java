@@ -9,17 +9,17 @@ public enum InteractionsWithUserCommands {
     TalkHistory("\\s*talk\\s+history\\s+-u\\s+(?<username>\\s*"),
     Gift("\\s*gift\\s+-u\\s+(?<username>.+)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>.+)\\s*"),
     GiftList("\\s*gift\\s+list\\s*"),
-    GiftRate("\\s*gift\\s+rate\\s+-i\\s+(?<gift-number>.+)\\s+-r\\s+(?<rate>.+)\\s*"),
+    GiftRate("\\s*gift\\s+rate\\s+-i\\s+(?<giftNumber>.+)\\s+-r\\s+(?<rate>\\d+)\\s*"),
     GiftHistory("\\s*gift\\s+history\\s+-u\\s+(?<username>.+)\\s*"),
     Hug("\\s*hug\\s+-u\\s+(?<username>.+)\\s*"),
     Flower("\\s*flower\\s+-u\\s+(?<username>.+)\\s*"),
     AskMarriage("\\s*ask\\s+marriage\\s+-u\\s+(?<username>.+)\\s+-r\\s+(?<ring>.+)\\s*"),
-    Respond("\\s*respond\\s+(<respond>-accept | –reject)\\s+-u\\s+(?<username>.+)\\s*"),
+    Respond("\\s*respond\\s+-(?<respond>accept|reject)\\s+-u\\s+(?<username>.+)\\s*"),
     StartTrade("\\s*start\\s+trade\\s*"),
     Trade("trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(<item>.+)\\s+-a\\s+(?<amount>\\d+)" +
             "(?:\\s+-p\\s+(?<price>\\d+))?(?:\\s+-ti\\s+(?<targetItem>.+)\\s+\\|\\s+-ta\\s+(?<targetAmount>\\d+))?"),
     TradeList("\\s*trade\\s+list\\s*"),
-    TradeResponse("trade\\s+response\\s+–(?<response> accept|reject )\\s+-i\\s+(?<id>\\d+)\\s*"),
+    TradeResponse("trade\\s+response\\s+–(?<response>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*"),
     TradeHistory("trade\\s+history\\s*");
 
     private final String pattern;

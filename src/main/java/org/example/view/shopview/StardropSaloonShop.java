@@ -45,3 +45,4 @@ public class StardropSaloonShop extends AppMenu {
             System.out.println(new Result(false, "invalid command!"));
         }
     }
+}
