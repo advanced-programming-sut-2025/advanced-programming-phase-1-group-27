@@ -4,11 +4,8 @@ import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Map.*;
 import org.example.models.NPCs.NPC;
-import org.example.models.enums.Plants.Crop;
-import org.example.models.enums.Plants.Plant;
-import org.example.models.enums.Plants.Tree;
+import org.example.models.enums.Plants.*;
 import org.example.models.enums.CellType;
-import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.items.MineralType;
 
@@ -21,7 +18,6 @@ public class Cell {
     private Object object = null;
     private CellType cellType;
     private Building building = null;
-    boolean isQuarry = false;
 
     private ArrayList<Cell> adjacentCells = new ArrayList<>();
 
@@ -61,20 +57,11 @@ public class Cell {
         return building;
     }
 
-    public boolean isQuarry() {
-        return isQuarry;
-    }
-
-    public void setQuarry(boolean quarry) {
-        isQuarry = quarry;
-    }
-
     public void setBuilding(Building building) {
         this.building = building;
     }
 
     public void plant(Plant plant) {
-        cellType = CellType.Occupied;
         object = plant;
         plant.setCell(this);
     }
@@ -85,13 +72,37 @@ public class Cell {
                 CropType.getForagingCropsBySeason().get(currentSeason).size());
         Crop crop = new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt));
         crop.setTillNextHarvest(0);
+        crop.setForaging(true);
         plant(crop);
+    }
+
+    public void placeForagingTree() {
+        Tree tree = new Tree(TreeType.getForagingTrees().get(new Random().nextInt(TreeType.getForagingTrees().size())));
+        tree.setTillNextHarvest(0);
+        tree.setForaging(true);
+        plant(tree);
+    }
+
+    public void placeForagingSeed() {
+        Season currentSeason = App.getCurrentGame().getTime().getSeason();
+        SeedType seedType = SeedType.getForagingSeedsBySeason().get(currentSeason).get(
+                new Random().nextInt(SeedType.getForagingSeedsBySeason().get(currentSeason).size()));
+        if (seedType.getPlant() == null) {
+             CropType cropType = CropType.getMixedSeedPossibilitiesBySeason().get(currentSeason).get(
+                     new Random().nextInt(CropType.getMixedSeedPossibilitiesBySeason().get(currentSeason).size()));
+             Crop crop = new Crop(cropType);
+             crop.setForaging(true);
+             plant(crop);
+        } else {
+            Crop crop = new Crop(seedType.getPlant());
+            crop.setForaging(true);
+            plant(crop);
+        }
     }
 
     public void placeForagingMineral() {
         ArrayList<MineralType> foragingMinerals = MineralType.getForagingMinerals();
         int randomInt = new Random( ).nextInt(foragingMinerals.size());
-        cellType = CellType.Occupied;
         object = foragingMinerals.get(randomInt);
     }
 
@@ -124,18 +135,33 @@ public class Cell {
     public String toString() {
         if (this == App.getCurrentGame().getCurrentPlayer().getCurrentCell()) {
             return "Y";
-        }
-        else if (isQuarry && object == null) {
-            return "\u001B[47m" + "#" + "\u001B[0m";
+        } else if (cellType.equals(CellType.MapLink)) {
+            return "\033[43m" + " " + "\u001B[0m";
+        } else if (object != null) {
+            switch (object) {
+                case Tree tree -> {
+                    return "\u001B[32m" + "T" + "\u001B[0m";
+                }
+                case Crop crop -> {
+                    return "\u001B[32m" + "C" + "\u001B[0m";
+                }
+                case MineralType mineralType -> {
+                    return "\u001B[47m" + " " + "\u001B[0m";
+                }
+                default -> {
+                }
+            }
+        } else if (cellType.equals(CellType.Quarry) && object == null) {
+            return "\033[0;107m" + " " + "\u001B[0m";
         }
         else if (cellType.equals(CellType.Free)) {
-            return "\033[0;33m" + "_" + "\u001B[0m";
+            return "\033[0;33m" + " " + "\u001B[0m";
         } else if (object instanceof NPC) {
             return "\u001B[36m" + "N" + "\u001B[0m";
         } else if (cellType.equals(CellType.Water)) {
             return "\u001B[44m" + " " + "\u001B[0m";
         } else if (cellType.equals(CellType.Door)) {
-            return "D";
+            return "\u001B[47m" + " " + "\u001B[0m";
         } else if (cellType.equals(CellType.Building)) {
             if (building instanceof Hut) {
                 return "\u001B[41m" + " " + "\u001B[0m";
@@ -150,18 +176,8 @@ public class Cell {
             } else if (building instanceof Coop) {
                 return "\u001B[43m" + "Q" + "\u001B[0m";
             }
-        } else if (cellType.equals(CellType.Occupied)) {
-            if (object instanceof Tree) {
-                return "\u001B[32m" + "T" + "\u001B[0m";
-            } else if (object instanceof Crop) {
-                return "\u001B[32m" + "C" + "\u001B[0m";
-            } else if(object instanceof MineralType) {
-                return "\u001B[47m" + "R" + "\u001B[0m";
-            }
         } else if (cellType.equals(CellType.View)) {
             return "\u001B[35m" + "~" + "\u001B[0m";
-        } else if (cellType.equals(CellType.MapLink)) {
-            return "\u001B[33m" + "L" + "\u001B[0m";
         }
         return "?";
     }

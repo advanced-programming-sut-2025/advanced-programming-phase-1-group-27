@@ -33,6 +33,7 @@ public class Time {
             passADay();
             hour = 9;
         }
+        App.getCurrentGame().passAnHour();
     }
 
     private void passADay() {
@@ -46,15 +47,8 @@ public class Time {
     }
 
     private void advanceTime(int hour) {
-        this.hour += hour;
-        advanceDate(this.hour / 24);
-        this.hour %= 24;
-    }
-    
-    private void advanceDate(int day) {
-        while (day-- > 0) {
-            passADay();
-        }
+        while (hour-- > 0)
+            passAnHour();
     }
 
     private void advanceSeason() {
@@ -71,7 +65,7 @@ public class Time {
     }
 
     public void cheatAdvanceDate(int day) {
-        advanceDate(day);
+        advanceTime(day * 15);
     }
 
     public int getDaysPassed() {

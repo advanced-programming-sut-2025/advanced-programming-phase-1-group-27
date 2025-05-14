@@ -7,6 +7,7 @@ import org.example.models.AnimalProperty.Coop;
 import org.example.models.App;
 import org.example.models.Player;
 import org.example.models.Result;
+import org.example.models.Shops.Shop;
 import org.example.models.Stock;
 import org.example.models.enums.Menu;
 import org.example.models.enums.items.AnimalType;
@@ -40,12 +41,16 @@ public class MarnieRanchShopController extends MenuController {
     }
 
     public Result buyAnimal(String animalString, String name) {
-        // TODO : Sobhan ba stock bokon Inkara ro!!!!!!!!!!!!!!!!
         AnimalType type = AnimalType.getItem(animalString);
         Animal animal = new Animal(type, name);
         Player player = App.getCurrentGame().getCurrentPlayer();
+        Shop shop = App.getCurrentGame().getMarnieRanch();
 
-        if (player.getMoney() >= type.getPrice()) {
+        if (shop.getStock(animal.getName()).getQuantity() == 0) {
+            return new Result(false, "Out of stock!");
+        }
+        else if (player.getMoney() >= type.getPrice()) {
+            shop.getStock(animalString).reduceQuantity();
             for (Barn barn : player.getFarmMap().getBarns()) {
                 if (type.getAppropriateFarmType().contains(barn.getType()) &&
                         barn.getType().getCapacity() > barn.getAnimals().size()) {

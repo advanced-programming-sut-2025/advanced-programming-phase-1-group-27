@@ -13,21 +13,19 @@ public class Backpack extends Tool {
     private int capacity;
     private ArrayList<Stacks> items = new ArrayList<>();
 
-    public Backpack(ToolType toolType) {
-        StackLevel level = toolType.getLevel();
+    public Backpack(ToolType backpackType) {
+        StackLevel level = backpackType.getLevel();
         int energyUsage = 0;
-        if (level == StackLevel.Basic) {
-            this.capacity = 12;
-        } else if (level == StackLevel.Large) {
-            this.capacity = 24;
-        } else if (level == StackLevel.Deluxe) {
-            this.capacity = -1;//infinite
-        }
-        super(level, energyUsage, toolType.getName(), toolType);
+        this.capacity = ToolType.getBackpackCapacity(backpackType);
+        super(level, energyUsage, backpackType.getName(), backpackType);
     }
 
     public List<Stacks> getItems() {
         return items;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
     public boolean reduceItems(Item item, int amount) {

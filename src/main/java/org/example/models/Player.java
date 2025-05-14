@@ -164,8 +164,8 @@ public class Player extends User {
         return backpack;
     }
 
-    public void setBackpack(Backpack backpack) {
-        this.backpack = backpack;
+    public void setBackpack(ToolType backpack) {
+
     }
 
     public Backpack getRefrigerator() {
@@ -585,5 +585,14 @@ public class Player extends User {
             }
         }
         return null;
+    }
+
+    public ToolType getBackpackType() {
+        return switch (backpack.getCapacity()) {
+            case 12 -> ToolType.BasicBackpack;
+            case 24 -> ToolType.LargeBackpack;
+            case -1 -> ToolType.DeluxeBackpack;
+            default -> null;
+        };
     }
 }

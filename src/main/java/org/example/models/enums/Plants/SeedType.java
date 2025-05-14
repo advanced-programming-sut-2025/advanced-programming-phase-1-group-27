@@ -92,7 +92,7 @@ public enum SeedType implements PlantSourceType, Item {
 
     @Override
     public Integer getPrice() {
-        return price;
+        return 50;
     }
 
     public static SeedType getItem(String itemName) {

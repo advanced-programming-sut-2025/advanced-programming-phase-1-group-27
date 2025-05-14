@@ -85,6 +85,12 @@ public class GameMenuView extends AppMenu {
                     Integer.parseInt(matcher.group("direction").trim())
             ));
         }
+        else if ((matcher = CheatCommands.CheatAdvanceTime.getMatcher(input)) != null) {
+            System.out.println(controller.cheatAdvanceTime(matcher.group("timeString")));
+        }
+        else if ((matcher = CheatCommands.CheatAdvanceDate.getMatcher(input)) != null) {
+            System.out.println(controller.cheatAdvanceDate(matcher.group("dayString")));
+        }
         else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
             System.out.println(controller.cheatAddItem(
                     matcher.group("itemName").trim(),

@@ -40,7 +40,7 @@ public class BlackSmithShopController extends MenuController {
     }
 
     public Result upgradeTool(String toolName) {
-        ToolType toolType = getTool(toolName);
+        ToolType toolType = ToolType.getItem(toolName);
         if (toolType == null) {
             return new Result(false, "Invalid tool name!");
         }
@@ -153,14 +153,4 @@ public class BlackSmithShopController extends MenuController {
                 quantity);
         return new Result(true, "You purchased successfully!");
     }
-
-    private ToolType getTool(String toolName) {
-        for (ToolType toolType : ToolType.values()) {
-            if (toolType.getName().equalsIgnoreCase(toolName)) {
-                return toolType;
-            }
-        }
-        return null;
-    }
-
 }

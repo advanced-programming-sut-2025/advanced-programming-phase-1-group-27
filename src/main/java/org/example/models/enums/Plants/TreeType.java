@@ -3,6 +3,7 @@ package org.example.models.enums.Plants;
 import org.example.models.enums.Seasons.Season;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public enum TreeType implements PlantType {
     ApricotTree(SaplingType.AppleSapling, new int[]{7, 7, 7, 7}, 28,
@@ -40,7 +41,8 @@ public enum TreeType implements PlantType {
     private final FruitType fruit;
     private final Season[] seasons;
     private final int harvestCycle;
-    private static ArrayList<TreeType> foragings = new ArrayList<>();
+    private static ArrayList<TreeType> foragings = new ArrayList<>(List.of(OakTree, MapleTree, PineTree, MahoganyTree,
+            MushroomTree));
 
     TreeType(PlantSourceType source, int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle) {
         this.source = source;
@@ -88,4 +90,7 @@ public enum TreeType implements PlantType {
         return null;
     }
 
+    public static ArrayList<TreeType> getForagingTrees() {
+        return foragings;
+    }
 }

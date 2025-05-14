@@ -94,7 +94,7 @@ public class FishShopController extends MenuController {
             return new Result(false, "Not enough money!");
         }
         if (stock.getItem() == Recipe.FishSmokerRecipe) {
-            // TODO : chejoori ezafe konam?
+            currentPlayer.getAvailableCraftingRecipes().add(Recipe.FishSmokerRecipe);
         } else {
             if (!currentPlayer.getBackpack().canAdd(
                     stock.getItem(),
@@ -111,10 +111,10 @@ public class FishShopController extends MenuController {
                     return new Result(true, "Not enough fishing skill level!");
                 }
             }
-            App.getCurrentGame().getFishShop().reduce(stock.getItem(), quantity);
-            currentPlayer.spendMoney(stock.getPrice() * quantity);
             currentPlayer.getBackpack().addItems(stock.getItem(), stock.getStackLevel(), quantity);
-            return new Result(true, "You have successfully purchased " + stock.getItem().getName() + "!");
         }
+        App.getCurrentGame().getFishShop().reduce(stock.getItem(), quantity);
+        currentPlayer.spendMoney(stock.getPrice() * quantity);
+        return new Result(true, "You have successfully purchased " + stock.getItem().getName() + "!");
     }
 }
