@@ -33,4 +33,8 @@ public abstract class Tool{
     public Result use(Cell cell) {
         return null;
     }
+
+    public ToolType getToolType() {
+        return toolType;
+    }
 }

@@ -74,10 +74,20 @@ public class ToolController {
         backpack.upgradeLevel(stack);
         return new Result(true, "You upgraded item!");
     }
+    public Result ToolsUse(String directionString) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        int direction = Integer.parseInt(directionString);
+        if (direction < 0 || direction > 7 || player.getCurrentCell().getAdjacentCells().get(direction) == null) {
+            return new Result(false, "Invalid direction!");
+        }
+        Tool tool = player.getCurrentTool();
+        if (tool == null) {
+            return new Result(false, "You have no tools in hand!!");
+        } else {
+            return tool.use(player.getCurrentCell().getAdjacentCells().get(direction));
+        }
 
-    public Result userTool() {
-        // TODO: function incomplete
-        return null;
+
     }
 
     public Result showAvailableTools() {
@@ -165,7 +175,7 @@ public class ToolController {
             tool = new Pickaxe(toolType);
         }
         App.getCurrentGame().getCurrentPlayer().setCurrentTool(tool);
-        App.getCurrentGame().getCurrentPlayer().setCurrentTool(null);
+        //App.getCurrentGame().getCurrentPlayer().setCurrentTool(null);
         return new Result(true , "Tool equipped!");
     }
 

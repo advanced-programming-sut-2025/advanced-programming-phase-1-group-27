@@ -5,6 +5,7 @@ import org.example.controller.InteractionsWithOthers.InteractionsWithNPCControll
 import org.example.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.controller.InteractionsWithOthers.MarriageController;
 import org.example.controller.InteractionsWithOthers.TradeController;
+import org.example.controller.ToolController;
 import org.example.models.enums.Menu;
 import org.example.models.enums.commands.*;
 import org.example.models.Result;
@@ -67,8 +68,6 @@ public class GameMenuView extends AppMenu {
             System.out.println(controller.cheatSetEnergy(matcher.group("value")));
         } else if (CheatCommands.CheatEnergyUnlimited.getMatcher(input) != null) {
             System.out.println(controller.cheatEnergyUnlimited());
-        } else if ((matcher = GameMenuCommands.ToolsUse.getMatcher(input)) != null) {
-            System.out.println(controller.useTool(matcher.group("direction")));
         } else if ((matcher = GameMenuCommands.PlaceItem.getMatcher(input)) != null) {
             System.out.println(controller.placeItem(
                     matcher.group("itemName").trim(),
@@ -143,27 +142,27 @@ public class GameMenuView extends AppMenu {
                     matcher.group("npcName").trim(),
                     matcher.group("item").trim()
             ));
-        }else if((matcher = InteractionsWithNPCCommands.FriendshipNPCList.getMatcher(input)) != null) {
+        } else if((matcher = InteractionsWithNPCCommands.FriendshipNPCList.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.friendshipNPC());
-        }else if((matcher = InteractionsWithNPCCommands.QuestList.getMatcher(input)) != null) {
+        } else if((matcher = InteractionsWithNPCCommands.QuestList.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.questList());
-        }else if((matcher = InteractionsWithNPCCommands.QuestFinish.getMatcher(input)) != null) {
+        } else if((matcher = InteractionsWithNPCCommands.QuestFinish.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.questsFinish(
                     matcher.group("npcName").trim(),
                     matcher.group("index").trim()
             ));
         } else if ((matcher = InteractionsWithUserCommands.Friendships.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.friendship());
-        }else if((matcher = InteractionsWithUserCommands.TalkToUser.getMatcher(input)) != null) {
+        } else if((matcher = InteractionsWithUserCommands.TalkToUser.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.talk(
                     matcher.group("username").trim(),
                     matcher.group("message").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.TalkHistory.getMatcher(input)) != null) {
+        } else if((matcher = InteractionsWithUserCommands.TalkHistory.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.talkHistory(
                     matcher.group("username").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.Gift.getMatcher(input)) != null) {
+        } else if((matcher = InteractionsWithUserCommands.Gift.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.gift(
                     matcher.group("username").trim(),
                     matcher.group("item").trim(),
@@ -200,6 +199,14 @@ public class GameMenuView extends AppMenu {
             ));
         }else if((matcher = InteractionsWithUserCommands.StartTrade.getMatcher(input)) != null) {
             System.out.println(controller.startTrade());
+        } else if ((matcher = ToolCommands.ToolsEquip.getMatcher(input)) != null) {
+            System.out.println(new ToolController().equipTool(matcher.group("toolName").trim()));
+        } else if (ToolCommands.ToolsShowCurrent.getMatcher(input) != null) {
+            System.out.println(new ToolController().showCurrentTool());
+        } else if (ToolCommands.ToolsShowAvailable.getMatcher(input) != null) {
+            System.out.println(new ToolController().showAvailableTools());
+        } else if ((matcher = ToolCommands.ToolsUse.getMatcher(input)) != null) {
+            System.out.println(new ToolController().ToolsUse(matcher.group("direction")));
         } else {
             System.out.println(new Result(false, "invalid command!"));
         }

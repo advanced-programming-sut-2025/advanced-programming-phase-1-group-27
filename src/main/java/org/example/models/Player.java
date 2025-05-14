@@ -24,14 +24,12 @@ public class Player extends User {
     // items which are place in the fridge
     private final Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
     // maps ability type to user's ability
-    private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>() {{
-        put(AbilityType.Farming, farming);
-        put(AbilityType.Fishing, fishing);
-        put(AbilityType.Foraging, foraging);
-        put(AbilityType.Mining, mining);
-    }};
+    private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>();
     private int energy, dayEnergy, maxEnergy = 200, boostEnergy = 0;
-    private Ability farming, mining, foraging, fishing;
+    private Ability farming = new Ability(),
+            mining = new Ability(),
+            foraging = new Ability(),
+            fishing = new Ability();
     private Cell currentCell;
     private Menu currentMenu = Menu.Home; // TODO : sobhan. depends on current cell
     private Map currentMap = null; // TODO : rassa reeeedi
@@ -122,6 +120,10 @@ public class Player extends User {
         this.currentCell = null;
         this.money = 8569;
         this.currentTool = null;
+        abilityFinder.put(AbilityType.Farming, farming);
+        abilityFinder.put(AbilityType.Fishing, fishing);
+        abilityFinder.put(AbilityType.Foraging, foraging);
+        abilityFinder.put(AbilityType.Mining, mining);
         // crafting recipes
         availableCraftingRecipes.add(Recipe.FurnaceRecipe);
         availableCraftingRecipes.add(Recipe.ScarecrowRecipe);

@@ -128,6 +128,47 @@ public class GameMenuController extends MenuController {
                             } else {
                                 return new Result(true, "You Walked But Are Not Able to Change Your Map!!");
                             }
+                        } else if (destination.getType() == CellType.Door) {
+                            if (destination.getBuilding() instanceof StoreBuilding storeBuilding) {
+                                currentPlayer.setCurrentCell(destination);
+                                switch(storeBuilding.getStore().getShopType()) {
+                                    case ShopType.CarpenterShop -> {
+                                        currentPlayer.setCurrentMenu(Menu.CarpenterShop);
+                                        App.setCurrentMenu(Menu.CarpenterShop);
+                                        return new Result(true, "You Entered The Carpenter Shop!");
+                                    }
+                                    case ShopType.FishShop -> {
+                                        currentPlayer.setCurrentMenu(Menu.FishShop);
+                                        App.setCurrentMenu(Menu.FishShop);
+                                        return new Result(true, "You Entered The Fish Shop!");
+                                    }
+                                    case ShopType.Blacksmith -> {
+                                        currentPlayer.setCurrentMenu(Menu.BlackSmithShop);
+                                        App.setCurrentMenu(Menu.BlackSmithShop);
+                                        return new Result(true, "You Entered The Blacksmith Shop!");
+                                    }
+                                    case ShopType.JojaMart -> {
+                                        currentPlayer.setCurrentMenu(Menu.JojaMartShop);
+                                        App.setCurrentMenu(Menu.JojaMartShop);
+                                        return new Result(true, "You Entered The Joja Mart Shop!");
+                                    }
+                                    case ShopType.MarnieRanch -> {
+                                        currentPlayer.setCurrentMenu(Menu.MarnieRanch);
+                                        App.setCurrentMenu(Menu.MarnieRanch);
+                                        return new Result(true, "You Entered The Marnie Ranch!");
+                                    }
+                                    case ShopType.PierreGeneralStore -> {
+                                        currentPlayer.setCurrentMenu(Menu.PierreGeneralShop);
+                                        App.setCurrentMenu(Menu.PierreGeneralShop);
+                                        return new Result(true, "You Entered The Pierre General Shop!");
+                                    }
+                                    case ShopType.StardropSaloon -> {
+                                        currentPlayer.setCurrentMenu(Menu.StardropSaloonShop);
+                                        App.setCurrentMenu(Menu.StardropSaloonShop);
+                                        return new Result(true, "You Entered The Stardrop Saloon Shop!");
+                                    }
+                                }
+                            }
                         }
                         return new Result(true, "You Walked And Now Are On Cell(" +
                                 i + "," + j + ")");
@@ -148,17 +189,23 @@ public class GameMenuController extends MenuController {
     public Result printMap(String s, String t, String sizeString) {
 
         int x = Integer.parseInt(s), y = Integer.parseInt(t), size = Integer.parseInt(sizeString);
-        String view = "";
+        String view = "  ";
         Map map = App.getCurrentGame().getCurrentPlayer().getCurrentMap();
         System.out.println(map.getHeight());
+        for (int j = y; j < Integer.min(y + size, map.getWidth()); j++) {
+            view += " " + j % 10;
+        }
+        view += "\n";
         for (int i = x; i < Integer.min(x + size, map.getHeight()); i++) {
             if (i > 0) view += "|\n";
+            if (i < 10) view += " ";
+            view += i;
             view += "|";
             for (int j = y; j < Integer.min(y + size, map.getWidth()); j++) {
                 view += map.getCell(i, j).toString();
             }
         }
-        return new Result(true, view);
+        return new Result(true, view + "|");
     }
 
     public Result helpReadingMap() {
@@ -170,18 +217,6 @@ public class GameMenuController extends MenuController {
                 App.getCurrentGame().getCurrentPlayer().getDayEnergy() + "\n" +
                 "Energy Remaining for This Turn : " +
                 App.getCurrentGame().getCurrentPlayer().getEnergy());
-    }
-
-    public Result useTool(String directionString) {
-        int direction = Integer.parseInt(directionString);
-        Player player = App.getCurrentGame().getCurrentPlayer();
-        Cell currentCell = player.getCurrentCell();
-        Cell cell = currentCell.getAdjacentCells().get(direction);
-        Tool tool = player.getCurrentTool();
-        if (tool == null) {
-            return new Result(false, "You Don't Have A Tool in Hand");
-        }
-        return tool.use(cell);
     }
 
     public Result cropInfo(String plantName) {
