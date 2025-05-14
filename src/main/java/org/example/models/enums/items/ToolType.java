@@ -123,4 +123,13 @@ public enum ToolType implements Item {
                 type == GoldTrashCan ||
                 type == IridiumTrashCan;
     }
+
+    public static int getBackpackCapacity(ToolType type) {
+        return switch (type) {
+            case BasicBackpack -> 12;
+            case LargeBackpack -> 24;
+            case DeluxeBackpack -> -1;
+            default -> 0;
+        };
+    }
 }

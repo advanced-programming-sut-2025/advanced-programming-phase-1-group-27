@@ -93,7 +93,7 @@ public class StardropSaloonShopController extends MenuController {
             return new Result(false, "Not enough money!");
         }
         if (stock.getItem() instanceof Recipe) {
-            // TODO : Recipe??
+            currentPlayer.getAvailableCookingRecipes().add((Recipe) stock.getItem());
         } else {
             if (!currentPlayer.getBackpack().canAdd(
                     stock.getItem(),
@@ -107,7 +107,7 @@ public class StardropSaloonShopController extends MenuController {
                     stock.getItem(),
                     stock.getStackLevel(),
                     quantity);
-            return new Result(true, "You purchased successfully!");
         }
+        return new Result(true, "You purchased successfully!");
     }
 }
