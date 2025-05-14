@@ -26,7 +26,7 @@ public enum FishType implements Item {
     Legend(5000, Season.Spring, true , 5000),
     Glacierfish(1000, Season.Winter, true , 1000),
     Angler(900, Season.Fall, true , 900),
-    Crimsonfish(1500, Season.Summer, true , 1500),;
+    Crimsonfish(1500, Season.Summer, true , 1500);
 
     private final int price;
     private final int energy;
