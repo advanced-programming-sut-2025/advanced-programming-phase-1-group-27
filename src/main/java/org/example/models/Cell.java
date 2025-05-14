@@ -18,6 +18,7 @@ public class Cell {
     private Object object = null;
     private CellType cellType;
     private Building building = null;
+    private String string = null;
 
     private ArrayList<Cell> adjacentCells = new ArrayList<>();
 
@@ -68,6 +69,10 @@ public class Cell {
     public void plant(Plant plant) {
         object = plant;
         plant.setCell(this);
+    }
+
+    public void setString(String string) {
+        this.string = string;
     }
 
     public void placeForagingCrop() {
@@ -137,10 +142,12 @@ public class Cell {
 
     @Override
     public String toString() {
+        if (string != null)
+            return string;
         int k = 1;
         for (Player player : App.getCurrentGame().getPlayers()) {
             if (this == player.getCurrentCell())
-                return "\u001B[36m" + k + " " + "\u001B[0m";
+                return "\u001B[48;2;57;65;102m" + k + " " + "\u001B[0m";
             k++;
         }
         if (cellType.equals(CellType.MapLink)) {
@@ -148,45 +155,47 @@ public class Cell {
         } else if (object != null) {
             switch (object) {
                 case Tree tree -> {
-                    return "\u001B[32m" + "T " + "\u001B[0m";
+                    return "\u001B[48;2;1;59;19m" + "  " + "\u001B[0m";
                 }
                 case Crop crop -> {
-                    return "\u001B[32m" + "C " + "\u001B[0m";
+                    return "\u001B[48;2;19;138;57m" + "  " + "\u001B[0m";
                 }
                 case MineralType mineralType -> {
-                    return "\u001B[47m" + "  " + "\u001B[0m";
+                    return "\u001B[48;5;240m" + "  " + "\u001B[0m";
                 }
                 case NPC npc -> {
-                    return "\u001B[34m" + Character.toUpperCase(npc.getName().charAt(0)) + " " + "\u001B[0m";
+                    return "\u001B[34m" + "\u001B[48;2;89;89;89m" +
+                            Character.toUpperCase(npc.getName().charAt(0)) + " " + "\u001B[0m";
                 }
                 default -> {
                 }
             }
         } else if (cellType.equals(CellType.Quarry) && object == null) {
-            return "\033[0;107m" + "  " + "\u001B[0m";
-        }
-        else if (cellType.equals(CellType.Free)) {
-            return /*"\u001B[40m" +*/ "  " + "\u001B[0m";
+            return "\u001B[48;5;236m" + "  " + "\u001B[0m";
+        } else if (cellType.equals(CellType.Free) && building == null) {
+            return "\u001B[48;5;179m" + "  " + "\u001B[0m";
+        } else if (cellType.equals(CellType.Free)) {
+            return "\u001B[48;2;191;155;94m" + "  " + "\u001B[0m";
         } else if (cellType.equals(CellType.Water)) {
-            return "\u001B[44m" + "  " + "\u001B[0m";
+            return "\u001B[48;2;64;120;168m" + "  " + "\u001B[0m";
         } else if (cellType.equals(CellType.Door)) {
-            return "\u001B[47m" + "  " + "\u001B[0m";
+            return "\u001B[48;2;138;106;67m" + "  " + "\u001B[0m";
         } else if (cellType.equals(CellType.Building)) {
             if (building instanceof Hut) {
-                return "\u001B[41m" + "  " + "\u001B[0m";
+                return "\u001B[48;2;59;33;1m" + "  " + "\u001B[0m";
             } else if (building instanceof GreenHouse){
-                return "\u001B[42m" + "  " + "\u001B[0m";
+                return "\u001B[48;2;66;54;32m" + "  " + "\u001B[0m";
             } else if (building instanceof NPCHouse) {
-                return "\u001B[41m" + "  " + "\u001B[0m";
+                return "\u001B[48;2;59;33;1m" + "  " + "\u001B[0m";
             } else if (building instanceof StoreBuilding) {
-                return "\u001B[44m" + "  " + "\u001B[0m";
+                return "\u001B[48;2;59;33;1m" + "  " + "\u001B[0m";
             } else if (building instanceof Barn) {
                 return "\u001B[43m" + "B " + "\u001B[0m";
             } else if (building instanceof Coop) {
                 return "\u001B[43m" + "Q " + "\u001B[0m";
             }
         } else if (cellType.equals(CellType.View)) {
-            return "\u001B[35m" + "  " + "\u001B[0m";
+            return "\u001B[48;2;89;89;89m" + "  " + "\u001B[0m";
         } else if (cellType.equals(CellType.Plowed)) {
             return "\u001B[32m" + "__" + "\u001B[0m";
         }
