@@ -95,7 +95,7 @@ public class InteractionsWithNPCController {
         if (stack == null) {
             return new Result(false, "You don't have this item!");
         }
-        if (stack.getItem() instanceof Tool) {
+        if (stack.getItem() instanceof ToolType) {
             return new Result(false, "You can't gift any tool!");
         }
         if (!isNPCNear(npc, App.getCurrentGame().getCurrentPlayer())) {
@@ -139,11 +139,11 @@ public class InteractionsWithNPCController {
         result.append("\n");
         for (NPC npc : App.getCurrentGame().getNPCs()) {
             if (npc.getQuests() != null) {//Some NPCs doesn't have quests
-                result.append(npc.getName()).append(" : ");
+                result.append(npc.getName()).append(" : \n");
                 Quest[] quests = npc.getQuests();
                 if (!quests[0].isDone()) {
                     if (quests[0].getRequest() == null) {
-                        result.append("1. ").append("12 * Plant");
+                        result.append("1. ").append("12*Plant");
                     } else {
                         result.append("1. ").append(quests[0].getRequest().getQuantity());
                         result.append("*").append(quests[0].getRequest().getItem().getName());
@@ -154,7 +154,7 @@ public class InteractionsWithNPCController {
                         result.append("*").append(quests[0].getReward().getItem().getName());
                     } else { // Abigail give Friendship level
                         if (npc.getName().equals("Abigail")) {
-                            result.append("*").append("+1 Friendship level");
+                            result.append("+1 Friendship level");
                         }
                     }
                     result.append("\n");
@@ -168,7 +168,7 @@ public class InteractionsWithNPCController {
                         result.append("*").append(quests[1].getReward().getItem().getName());
                     } else { // Harvey give Friendship level
                         if (npc.getName().equals("Harvey")) {
-                            result.append("*").append("+1 Friendship level");
+                            result.append("+1 Friendship level");
                         }
                     }
                     result.append("\n");
@@ -192,6 +192,9 @@ public class InteractionsWithNPCController {
         NPC npc = findNPC(npcName);
         int index = Integer.parseInt(stringIndex);
         index--;
+        if(index < 0 || index > 2) {
+            return new Result(false, "Invalid quest index!");
+        }
         if (npc == null) {
             return new Result(false, "NPC not found!");
         }
@@ -263,9 +266,9 @@ public class InteractionsWithNPCController {
             return new Result(true, npcName + " : Thank you! ( You get " + amount + " money)");
         }
         //TODO : momken hast ja nadashte bashim
-        int amount = backpack.addItems(stacks.getItem(), stacks.getStackLevel(), stacks.getQuantity() * ratio);
-        return new Result(true, npcName + " : Thank you! ( You get " + stacks.getQuantity() *
-                ratio + "*" + stacks.getItem().getName() + " )");
+        int amount = backpack.addItems(reward.getItem(), reward.getStackLevel(), reward.getQuantity() * ratio);
+        return new Result(true, npcName + " : Thank you! ( You get " + reward.getQuantity() *
+                ratio + "*" + reward.getItem().getName() + " )");
     }
 
     private boolean isNPCNear(NPC npc, Player player) {

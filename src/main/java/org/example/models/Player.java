@@ -597,4 +597,60 @@ public class Player extends User {
             default -> null;
         };
     }
+
+    public String getNotification() {
+        StringBuilder result = new StringBuilder(getUsername() + " notifications:\n");
+        ArrayList<Player> talk = new ArrayList<>();
+        ArrayList<Player> trade = new ArrayList<>();
+        ArrayList<Player> gift = new ArrayList<>();
+        ArrayList<Player> marriage = new ArrayList<>();
+        for (Dialogue dialogue : dialogues) {
+            if (dialogue.getType() == DialogueType.talk) {
+                if (!talk.contains(dialogue.getSender())) {
+                    talk.add(dialogue.getSender());
+                }
+            }
+            if (dialogue.getType() == DialogueType.gift) {
+                if (!gift.contains(dialogue.getSender())) {
+                    gift.add(dialogue.getSender());
+                }
+            }
+            if (dialogue.getType() == DialogueType.Trade) {
+                if (!trade.contains(dialogue.getSender())) {
+                    trade.add(dialogue.getSender());
+                }
+            }
+            if (dialogue.getType() == DialogueType.Marriage) {
+                if (!marriage.contains(dialogue.getSender())) {
+                    marriage.add(dialogue.getSender());
+                }
+            }
+        }
+        if (!talk.isEmpty()) {
+            result.append("Talk : \n");
+            for (Player player : talk) {
+                result.append(player.getUsername()).append("\n");
+            }
+            deleteTalk();
+        }
+        if (!gift.isEmpty()) {
+            result.append("Gift : \n");
+            for (Player player : gift) {
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+        if (!trade.isEmpty()) {
+            result.append("Trade : \n");
+            for (Player player : trade) {
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+        if (!marriage.isEmpty()) {
+            result.append("Marriage : \n");
+            for (Player player : marriage) {
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+        return result.toString();
+    }
 }

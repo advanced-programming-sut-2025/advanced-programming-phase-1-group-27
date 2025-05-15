@@ -653,7 +653,7 @@ public class GameMenuController extends MenuController {
         if (!player.getBackpack().canAdd(item, level, count))
             return new Result(false, "You don't have enough space in your backpack!");
         player.getBackpack().addItems(item, level, count);
-        return new Result(true, count + " " + item.getName() + "(s) added to your backpack!");
+        return new Result(true, count + " of " + itemName + "added to the backpack!");
     }
 
     public Result cheatSetWeather(String weatherString) {

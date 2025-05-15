@@ -1,4 +1,4 @@
-package java.org.example;
+package java;
 
 import org.example.controller.LoginMenuMenuController;
 import org.example.view.AppView;
