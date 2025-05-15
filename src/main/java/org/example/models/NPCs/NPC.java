@@ -90,7 +90,7 @@ public class NPC {
         int currentXp = relation.getXp();
         int level = relation.getLevel();
         currentXp += xp;
-        if (currentXp > 200) {
+        if (currentXp >= 200) {
             if (level == 799) {
                 currentXp = 200;
             } else {

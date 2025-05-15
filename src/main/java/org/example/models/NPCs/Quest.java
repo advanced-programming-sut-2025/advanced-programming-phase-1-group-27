@@ -11,7 +11,7 @@ public class Quest {
     private Stacks Request;
     private boolean isDone;
 
-    public Quest(Stacks reward, Stacks request) {
+    public Quest(Stacks request, Stacks reward) {
         Reward = reward;
         Request = request;
         this.isDone = false;

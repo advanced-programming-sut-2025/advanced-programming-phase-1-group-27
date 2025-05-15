@@ -64,6 +64,7 @@ public class GameMenuController extends MenuController {
         }
         view.printString(currentPlayer.getUsername() + "'s turn!");
         App.setCurrentMenu(currentPlayer.getCurrentMenu());
+        view.printString(currentPlayer.getNotification());
     }
 
     public Result terminateGame(Scanner scanner) {
@@ -630,7 +631,7 @@ public class GameMenuController extends MenuController {
         if (!player.getBackpack().canAdd(item, level, count))
             return new Result(false, "You don't have enough space in your backpack!");
         player.getBackpack().addItems(item, level, count);
-        return new Result(true, count + " of " + itemName + "added to the backpack!");
+        return new Result(true, count + " of " + itemName + " added to the backpack!");
     }
 
     public Result cheatSetWeather(String weatherString) {
