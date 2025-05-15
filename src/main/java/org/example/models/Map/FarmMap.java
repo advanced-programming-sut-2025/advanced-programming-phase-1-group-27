@@ -144,11 +144,11 @@ public class FarmMap extends Map {
                     foragingCount++;
             }
         }
-        if (foragingCount > 200)
+        if (foragingCount > 160)
             return;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                int randomInt = new Random().nextInt(100);
+                int randomInt = new Random().nextInt(200);
                 Cell cell = cells[i][j];
 
                 if (cell.getObject() != null)
