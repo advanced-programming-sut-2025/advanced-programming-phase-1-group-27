@@ -59,7 +59,7 @@ public class CarpenterShopController extends MenuController {
         if (recipe != null)
             player.useRecipe(recipe);
         if (type.isBarn())
-            farmMap.placeBarn(x, y, new Barn(type, new Cell(new Position(x, y), farmMap))); // TODO: sobhan. okaye?
+            farmMap.placeBarn(x, y, new Barn(type, new Cell(new Position(x, y), farmMap)));
         else
             farmMap.placeCoop(x, y, new Coop(type, new Cell(new Position(x, y), farmMap)));
         carpenterShop.reduce(stock.getItem(), 1);

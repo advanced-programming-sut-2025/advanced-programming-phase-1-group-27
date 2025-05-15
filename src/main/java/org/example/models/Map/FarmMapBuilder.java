@@ -98,6 +98,7 @@ public class FarmMapBuilder {
     }
 
     public void setPassageToNpcValley(int x, int y, int x2, int y2) {
+        finalProduct.setPassage(finalProduct.getCell(x, y));
         finalProduct.getCell(x, y).setType(CellType.MapLink);
         finalProduct.getCell(x, y).setObject(App.getCurrentGame().getNpcMap().getCell(x2, y2));
     }

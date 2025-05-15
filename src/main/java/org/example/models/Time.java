@@ -30,7 +30,7 @@ public class Time {
     public void passAnHour() {
         hour++;
         App.getCurrentGame().passAnHour();
-        if (hour == 24) {
+        if (hour == 23) {
             passADay();
             hour = 9;
         }
@@ -66,7 +66,7 @@ public class Time {
     }
 
     public void cheatAdvanceDate(int day) {
-        advanceTime(day * 15);
+        advanceTime(day * 14);
     }
 
     public int getDaysPassed() {

@@ -31,8 +31,8 @@ public class Player extends User {
             foraging = new Ability(),
             fishing = new Ability();
     private Cell currentCell;
-    private Menu currentMenu = Menu.Home; // TODO : sobhan. depends on current cell
-    private Map currentMap = null; // TODO : rassa reeeedi
+    private Menu currentMenu = Menu.Home;
+    private Map currentMap = null;
     private FarmMap farmMap = null;
     private int money;
     private Tool currentTool;
@@ -334,15 +334,6 @@ public class Player extends User {
                 return slot.getItem();
         }
         return null;
-    }
-
-    public void goToSleep() {
-        //set the energy for tommorow and...
-    }
-
-    public void passOut() { // TODO: sobhan. bedard mikhore in?
-
-        // set the 75% energy for tommorow and...
     }
 
     public void farmXp(int xp) {

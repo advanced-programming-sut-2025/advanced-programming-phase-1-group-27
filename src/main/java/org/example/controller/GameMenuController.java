@@ -123,10 +123,12 @@ public class GameMenuController extends MenuController {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Map currentMap = currentPlayer.getCurrentMap();
         Cell destination = currentMap.getCell(i, j);
+        if (destination == null)
+            return new Result(false, "Invalid cell");
         if (!currentMap.areConnected(currentPlayer.getCurrentCell(), destination)) {
             return new Result(false, "There Is No Path Between These Cells");
         } else {
-            int energy = currentMap.getDistance(currentPlayer.getCurrentCell(), destination) / 20;
+            int energy = currentMap.getPathEnergy(currentPlayer.getCurrentCell(), destination);
             System.out.println("The Energy Needed for This Walk is " +
                      energy + " And You Have " + currentPlayer.getEnergy() +
                     ", Would You Like To Walk? (Y/N)");
@@ -196,9 +198,14 @@ public class GameMenuController extends MenuController {
                         return new Result(true, "You Walked And Now Are On Cell(" +
                                 i + "," + j + ")");
                     } else {
+
+                        Cell trueDestination = currentMap.getPlaceInPath(currentPlayer.getCurrentCell(), destination,
+                                currentPlayer.getEnergy());
                         currentPlayer.setDayEnergy(0);
-                         // TODO rassa passOut kojast?
-                        return new Result(false, "You Passed Out!!");
+                        currentPlayer.setCurrentCell(trueDestination);
+                        return new Result(false, "You Passed Out In Cell (" +
+                                trueDestination.getPosition().getX() + ", " +
+                                trueDestination.getPosition().getY() + ") !");
                     }
                 } else if (answer.trim().equals("N")) {
                     return new Result(false, "Alright.");
@@ -214,7 +221,6 @@ public class GameMenuController extends MenuController {
         int x = Integer.parseInt(s), y = Integer.parseInt(t), size = Integer.parseInt(sizeString);
         String view = "  ";
         Map map = App.getCurrentGame().getCurrentPlayer().getCurrentMap();
-        System.out.println(map.getHeight());
         for (int j = y; j < Integer.min(y + size, map.getWidth()); j++) {
             view += " " + j % 10;
         }
@@ -689,6 +695,7 @@ public class GameMenuController extends MenuController {
         int energy = Integer.parseInt(energyString);
 
         App.getCurrentGame().getCurrentPlayer().setEnergy(energy);
+        App.getCurrentGame().getCurrentPlayer().setDayEnergy(energy);
         return new Result(true, "Energy Set to " + energy);
     }
 

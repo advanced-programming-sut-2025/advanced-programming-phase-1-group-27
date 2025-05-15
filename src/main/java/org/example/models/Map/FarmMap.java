@@ -24,6 +24,7 @@ public class FarmMap extends Map {
     private ArrayList<Coop> coops = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
     private ArrayList<ShippingBin> shippingBins = new ArrayList<>();
+    private Cell passage = null;
 
     public FarmMap(int height, int width) {
         super(height, width);
@@ -112,6 +113,14 @@ public class FarmMap extends Map {
 
     public void removeAnimal(Animal animal) {
         animals.remove(animal);
+    }
+
+    public Cell getPassage() {
+        return passage;
+    }
+
+    public void setPassage(Cell passage) {
+        this.passage = passage;
     }
 
     public ArrayList<Animal> getAnimals() {

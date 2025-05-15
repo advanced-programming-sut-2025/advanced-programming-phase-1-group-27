@@ -6,6 +6,7 @@ import org.example.controller.InteractionsWithOthers.InteractionsWithUserControl
 import org.example.controller.InteractionsWithOthers.MarriageController;
 import org.example.controller.InteractionsWithOthers.TradeController;
 import org.example.controller.ToolController;
+import org.example.models.App;
 import org.example.models.enums.Menu;
 import org.example.models.enums.commands.*;
 import org.example.models.Result;
@@ -32,6 +33,7 @@ public class GameMenuView extends AppMenu {
 
     public void executeCommands(Scanner scanner) {
         if (controller.playerPassedOut()) {
+            System.out.println(App.getCurrentGame().getCurrentPlayer().getUsername() + " has passed out!");
             ((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner);
             return;
         }

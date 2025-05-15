@@ -20,4 +20,8 @@ public class Hut extends Building {
     public void setOwner(Player owner) {
         this.owner = owner;
     }
+
+    public Cell getDoor() {
+        return door;
+    }
 }

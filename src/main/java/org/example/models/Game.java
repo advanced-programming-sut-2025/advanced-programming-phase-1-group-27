@@ -6,6 +6,7 @@ import org.example.models.NPCs.NPC;
 import org.example.models.Relations.Relation;
 import org.example.models.Shops.BlackSmith;
 import org.example.models.Shops.Shop;
+import org.example.models.enums.Menu;
 import org.example.models.enums.NPCType;
 import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Plants.Plant;
@@ -122,12 +123,61 @@ public class Game {
     public void passAnHour() {
         updatePlayersBuff();
         updateArtisans();
+        for (Player player : players) {
+            player.setNextTurnEnergy();
+        }
     }
 
     public void newDay() {
+        // Walking to their houses
+        for (Player player : players) {
+            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
+            Cell currentCell = player.getCurrentCell();
+            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
+            int energy = player.getDayEnergy();
+            if (energy <= 0)
+                continue;
+            if (player.getCurrentMap() instanceof NPCMap npcMap1) {
+                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
+                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
+                        passageToFarm,
+                        energy);
+                energy -= npcMap1.getPathEnergy(currentCell, newDest);
+                player.setCurrentCell(newDest);
+                if (energy <= 0) {
+                    System.out.println(player.getUsername() + " passed out in cell(" +
+                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+                            ") in the NpcValley, on his way home");
+                    player.setDayEnergy(0);
+                    continue;
+                }
+                player.setCurrentCell((Cell) passageToFarm.getObject());
+            }
+            currentCell = player.getCurrentCell();
+            FarmMap farmMap = player.getFarmMap();
+            Cell newDest = farmMap.getPlaceInPath(player.getCurrentCell(),
+                    destCell,
+                    energy);
+            player.setCurrentCell(newDest);
+            if (newDest != destCell) {
+                System.out.println(player.getUsername() + " passed out in cell(" +
+                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+                        ") in his Farm, on his way home");
+                player.setDayEnergy(0);
+            } else {
+                player.setCurrentMenu(Menu.Home);
+            }
+        }
+
         // Setting Energies :
         for (Player player : players) {
-            player.setDayEnergy(player.getMaxEnergy());
+            if (player.getDayEnergy() <= 0)
+                player.setDayEnergy(player.getMaxEnergy() * 3 / 4);
+
+            else
+                player.setDayEnergy(player.getMaxEnergy());
+            player.setNextTurnEnergy();
+
         }
         // Setting Weather :
         if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
@@ -172,6 +222,7 @@ public class Game {
         // refresh shop stock
         initShops();
 
+        // Apply weather effect
         currentWeather.applyWeatherEffect();
     }
 

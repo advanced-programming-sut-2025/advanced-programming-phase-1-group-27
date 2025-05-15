@@ -4,20 +4,19 @@ import org.example.models.Cell;
 import org.example.models.Position;
 import org.example.models.enums.CellType;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Map {
 
     protected int height, width;
     protected Cell[][] cells;
+    protected Cell[][] par;
 
     Map(int height, int width) {
         this.height = height;
         this.width = width;
         this.cells = new Cell[height][width];
+        this.par = new Cell[height][width];
         buildCellsGraph();
     }
 
@@ -46,7 +45,10 @@ public class Map {
 
 
     public Cell getCell(int x, int y) {
-        return cells[x][y];
+        if (x >= 0 && x < height && y >= 0 && y < width)
+            return cells[x][y];
+        else
+            return null;
     }
 
     public Cell[][] getCells() {
@@ -82,19 +84,62 @@ public class Map {
                     markedCells.add(adj);
                     distance.put(adj, distance.get(current) + 1);
                     queue.add(adj);
+                    par[adj.getPosition().getX()][adj.getPosition().getY()] = current;
                 }
             }
         }
     }
 
-    public int getDistance(Cell A, Cell B) {
-        markedCells.clear();
-        distance.clear();
-        distance.put(A, 0);
-        bfs(A);
-        return (distance.containsKey(B)? distance.get(B): -1);
+    public int getPathEnergy(Cell A, Cell B) {
+        int energy = 0;
+        ArrayList<Cell> path = getPath(A, B);
+        for (int i = 1; i < path.size(); i++) {
+            Cell previous = path.get(i - 1), next = path.get(i);
+
+            if (previous.getPosition().getX() == next.getPosition().getX() ||
+                    previous.getPosition().getY() == next.getPosition().getY()) {
+                energy++;
+            }
+            else {
+                energy += 10;
+            }
+        }
+        return energy / 20;
     }
 
+    public Cell getPlaceInPath(Cell A, Cell B, int energy) {
+        int neededEnergy = 0;
+        ArrayList<Cell> path = getPath(A, B);
+        for (int i = 1; i < path.size(); i++) {
+            Cell previous = path.get(i - 1), next = path.get(i);
+            if (energy <= neededEnergy / 20)
+                return previous;
+
+            if (previous.getPosition().getX() == next.getPosition().getX() ||
+            previous.getPosition().getY() == next.getPosition().getY()) {
+                neededEnergy++;
+            }
+            else {
+                neededEnergy += 10;
+            }
+        }
+        return B;
+    }
+
+    public ArrayList<Cell> getPath(Cell A, Cell B) {
+        markedCells.clear();
+        distance.clear();
+        distance.put(B, 0);
+        bfs(B);
+        Cell temp = A;
+        ArrayList<Cell> path = new ArrayList<>();
+        while (temp != B) {
+            path.add(temp);
+            temp = par[temp.getPosition().getX()][temp.getPosition().getY()];
+        }
+        path.add(B);
+        return path;
+    }
 
     private static final String mapReadingManual = new String(
             "Map Manual :\n" +
@@ -125,5 +170,87 @@ public class Map {
 
     public int getWidth() {
         return width;
+    }
+
+
+
+    private void dijkstra(Cell cell) {
+        HashSet<Node> markedNodes = new HashSet<>();
+        PriorityQueue<Node> queue = new PriorityQueue<>();
+
+        queue.add(new Node(new Vertex(cell, 0), 0));
+        queue.add(new Node(new Vertex(cell, 1), 0));
+        queue.add(new Node(new Vertex(cell, 2), 0));
+        queue.add(new Node(new Vertex(cell, 3), 0));
+        while (!queue.isEmpty()) {
+            Node current = queue.remove();
+            if (markedNodes.contains(current)) {
+                continue;
+            }
+            markedNodes.add(current);
+            Cell currentCell = current.getVertex().getCell();
+
+        }
+    }
+}
+
+class Node implements Comparable<Node> {
+    private final Vertex vertex;
+    private int distance;
+
+    public Node(Vertex vertex, int distance) {
+        this.vertex = vertex;
+        this.distance = distance;
+    }
+
+    public Vertex getVertex() {
+        return vertex;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        if (distance != o.distance)
+            return distance - o.distance;
+        else
+            return vertex.compareTo(o.vertex);
+    }
+}
+
+class Vertex implements Comparable<Vertex> {
+    private final int direction;
+    private final Cell cell;
+
+    public Vertex(Cell cell, int direction) {
+        this.direction = direction;
+        this.cell = cell;
+    }
+
+
+    public Cell getCell() {
+        return cell;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    @Override
+    public int compareTo(Vertex o) {
+        int i = cell.getPosition().getX(), j = cell.getPosition().getY();
+        int i2 = o.getCell().getPosition().getX(), j2 = o.getCell().getPosition().getY();
+        if (i != i2)
+            return i - i2;
+        else if (j != j2)
+            return j - j2;
+        else
+            return direction - o.direction;
     }
 }
