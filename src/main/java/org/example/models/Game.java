@@ -220,7 +220,8 @@ public class Game {
         }
         // refresh shop stock
         initShops();
-
+        //TODO : Rassa print mikone!
+        System.out.println(App.getCurrentGame().NPCGiftingLevel3());
         // Apply weather effect
         currentWeather.applyWeatherEffect();
     }

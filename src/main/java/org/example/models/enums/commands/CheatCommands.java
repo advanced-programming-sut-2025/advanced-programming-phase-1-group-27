@@ -14,6 +14,7 @@ public enum CheatCommands {
     CheatAddItem("\\s*cheat\\s+add\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-c\\s+(?<count>\\d+)\\s*"),
     CheatSetFriendShip("\\s*cheat\\s+set\\s+friendship\\s+-n\\s+(?<name>.+)\\s+-c\\s+(?<amount>\\d+)\\s*"),
     CheatAddLevelNPC("\\s*cheat\\s+add\\s+level\\s+NPC\\s+-n\\s+(?<name>.+)\\s+-l\\s+(?<level>\\d+)\\s*"),
+    CheatAddLevelPlayer("\\s*cheat\\s+add\\s+level\\s+player\\s+-n\\s+(?<name>.+)\\s+-l\\s+(?<level>\\d+)\\s*"),
     CheatAddMoney("\\s*cheat\\s+add\\s+(?<amount>\\d+)\\s+dollars\\s*");
 
     private final String pattern;

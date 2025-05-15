@@ -182,14 +182,16 @@ public class TradeController extends MenuController {
         if (trade == null) {
             return new Result(false, "Trade with id " + id + " not found");
         }
-        if (trade.getRespond().equals("reject")
-                || trade.getRespond().equals("accept")) {
-            return new Result(false, "Trade with id " + id + " has already Done");
+        if(trade.getRespond() != null) {
+            if (trade.getRespond().equals("reject")
+                    || trade.getRespond().equals("accept")) {
+                return new Result(false, "Trade with id " + id + " has already Done");
+            }
+            if (!trade.getResponder().equals(currentPlayer)) {
+                return new Result(false, "Trade with id " + id + " is not for you!");
+            }
         }
-        if (!trade.getResponder().equals(currentPlayer)) {
-            return new Result(false, "Trade with id " + id + " is not for you!");
-        }
-        Player player = trade.getResponder();
+        Player player = trade.getSender();
         if (response.equals("accept")) {
             Item item1 = trade.getOfferedItem();
             Item item2 = trade.getRequestedItem();
@@ -254,15 +256,15 @@ public class TradeController extends MenuController {
                     currentPlayer.addMoney(money);
                 }
             }
-            player.addXP(currentPlayer, 10);
-            currentPlayer.addXP(player, 10);
+            player.addXP(currentPlayer, 50);
+            currentPlayer.addXP(player, 50);
             trade.setRespond("accept");
             return new Result(true, "Trade with id " + id + " accepted");
         } else if (response.equals("reject")) {
             trade.setRespond("reject");
             //Amount?
-            player.decreaseXP(currentPlayer, 10);
-            currentPlayer.decreaseXP(player, 10);
+            player.decreaseXP(currentPlayer, 30);
+            currentPlayer.decreaseXP(player, 30);
             return new Result(false, "Trade with id " + id + " rejected");
         } else {
             return new Result(false, "Wrong response");
@@ -292,10 +294,10 @@ public class TradeController extends MenuController {
                     result.append("From : ").append(trade.getSender().getUsername()).append("\n");
                     result.append("To : ").append(trade.getResponder().getUsername()).append("\n");
                     result.append("Item : ").append(trade.getOfferedItem().getName()).append(" * ");
-                    result.append("Quantity :").append(trade.getOfferedItemQuantity()).append(" for ");
+                    result.append(trade.getOfferedItemQuantity()).append("\n for \n");
                     if (trade.getRequestedItem() != null) {
                         result.append("Item : ").append(trade.getRequestedItem().getName()).append(" * ");
-                        result.append("Quantity : ").append(trade.getRequestedItemQuantity()).append("\n");
+                        result.append(trade.getRequestedItemQuantity()).append("\n");
                     }
                     if (trade.getMoneyOffered() != null) {
                         result.append("Money : ").append(trade.getMoneyOffered()).append(" $\n");

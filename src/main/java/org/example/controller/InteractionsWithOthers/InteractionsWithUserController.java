@@ -50,7 +50,7 @@ public class InteractionsWithUserController {
         }
         Dialogue dialogue = new Dialogue(DialogueType.talk, null, message, player, currentPlayer);
         App.getCurrentGame().addDialogue(dialogue);
-        currentPlayer.addDialogue(dialogue);
+        player.addDialogue(dialogue);
         return new Result(true, "Message sent to " + player.getUsername());
     }
 
@@ -113,7 +113,7 @@ public class InteractionsWithUserController {
                 || currentPlayer.getPlayerGiftToday().get(player) == null) {
             currentPlayer.getPlayerGiftToday().put(player, Boolean.TRUE);
             player.getPlayerGiftToday().put(currentPlayer, Boolean.TRUE);
-            respond = "1";//That means first time in day
+            respond = "-1";//That means first time in day
         }
         Dialogue dialogue = new Dialogue(DialogueType.gift, respond, "You have been gifted "
                 + amount + " * " + itemType.getName(), player, currentPlayer);
@@ -138,6 +138,7 @@ public class InteractionsWithUserController {
                         message = message.substring(prefix.length());
                     }
                     result.append(i).append("-");
+                    result.append("From ").append(dialogue.getSender().getUsername()).append(" : ");
                     result.append(message).append("\n");
                     i++;
                 }
@@ -172,7 +173,7 @@ public class InteractionsWithUserController {
         Player player1 = dialogue1.getResponder();
         Player player2 = dialogue1.getSender();
         String add = "";
-        if (dialogue1.getRespond().equals("1")) {//It is first time
+        if (dialogue1.getRespond().equals("-1")) {//It is first time
             int xp = (rate - 3) * 30 + 15;
             add = String.valueOf(xp);
             if (xp < 0) {
@@ -184,9 +185,10 @@ public class InteractionsWithUserController {
                 player2.addXP(player1, xp);
             }
         }
+        dialogue1.setRespond(String.valueOf(rate));
         player2.deleteDialogue(dialogue1);
         player1.deleteDialogue(dialogue1);
-        return new Result(true, "Your rate has been added " + add);
+        return new Result(true, "Your rate has been added (added Xp = " + add + ")");
     }
 
     public Result giftHistory(String username) {
@@ -196,14 +198,23 @@ public class InteractionsWithUserController {
         result.append("All Gifts with ").append(username).append(" :\n");
         for (Dialogue dialogue : App.getCurrentGame().getDialogues()) {
             if (dialogue.getType().equals(DialogueType.gift)) {
+                String original = dialogue.getInput();
+                String modified = original.replace("You have been gifted ", "");
                 if (dialogue.getSender().getUsername().equals(player.getUsername())
                         && dialogue.getResponder().getUsername().equals(currentPlayer.getUsername())) {
-                    result.append(dialogue.getSender().getUsername()).append(" to ").append(dialogue.getResponder().getUsername()).append(" : ").
-                            append(dialogue.getInput()).append("\n");
+                    result.append(dialogue.getSender().getUsername()).append(" to ").append(dialogue.getResponder()
+                                    .getUsername()).append(" : ").
+                            append(modified).append("\n");
                 } else if (dialogue.getSender().getUsername().equals(currentPlayer.getUsername())
                         && dialogue.getResponder().getUsername().equals(player.getUsername())) {
-                    result.append(dialogue.getSender().getUsername()).append(" to ").append(dialogue.getResponder().getUsername()).append(" : ").
-                            append(dialogue.getInput()).append("\n");
+                    result.append(dialogue.getSender().getUsername()).append(" to ").append(dialogue.getResponder()
+                                    .getUsername()).append(" : ").
+                            append(modified).append("\n");
+                }
+                if(dialogue.getRespond().equals("-1")) {
+                    result.append("rate = unknown").append("\n");
+                }else {
+                    result.append("rate = ").append(dialogue.getRespond()).append("\n");
                 }
             }
         }
@@ -246,7 +257,7 @@ public class InteractionsWithUserController {
         if (!isPlayerNear(player)) {
             return new Result(false, "Player is not near");
         }
-        if (!backpack.hasEnoughItem(FruitType.FairyRose, 1)) {
+        if (!backpack.hasEnoughItem(ShopItems.Bouquet, 1)) {
             return new Result(false, "You don't have Bouquet!");
         }
         backpack.reduceItems(ShopItems.Bouquet, 1);
@@ -254,7 +265,7 @@ public class InteractionsWithUserController {
         String add = "";
         if (currentPlayer.canFlowered(player)) {
             currentPlayer.goNextLevel(player);
-            player.goNextLevel(currentPlayer);
+            //player.goNextLevel(currentPlayer);
             add = "Relation is in level 3";
         }
         return new Result(true, "You have give your friend flower!" + add);
@@ -278,6 +289,30 @@ public class InteractionsWithUserController {
             }
         }
         return null;
+    }
+
+    public Result cheatAddPlayerLevel(String playerName , String quantityString){
+        int quantity = Integer.parseInt(quantityString);
+        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        Player player = getPlayerWithUsername(playerName);
+        if(player == null){
+            return new Result(false, "Player not found");
+        }
+        if(!currentPlayer.getRelations().containsKey(player)){
+            currentPlayer.getRelations().put(player, new Relation());
+        }
+        if(!player.getRelations().containsKey(currentPlayer)){
+            player.getRelations().put(currentPlayer, new Relation());
+        }
+        Relation relation = currentPlayer.getRelations().get(player);
+        if(relation.getLevel() + quantity > 4){
+            return new Result(false, "Level is too high");
+        }
+        int amount = relation.getLevel() + quantity;
+        Relation relation2 = player.getRelations().get(currentPlayer);
+        relation.setLevel(amount);
+        relation2.setLevel(amount);
+        return new Result(true, "Level has been added successfully (" + relation.getLevel() + ")");
     }
 
 }

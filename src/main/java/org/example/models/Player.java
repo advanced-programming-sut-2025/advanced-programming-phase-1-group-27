@@ -74,9 +74,9 @@ public class Player extends User {
                     || playerGiftToday.get(player) == Boolean.TRUE
                     || playerHuggedToday.get(player) == Boolean.TRUE
                     || playerTradeToday.get(player) == Boolean.TRUE) {
-                players.put(player, true);
+                players.put(player, Boolean.TRUE);
             }else {
-                players.put(player, false);
+                players.put(player, Boolean.FALSE);
             }
         }
         for(Player player : App.getCurrentGame().getPlayers()) {
@@ -500,7 +500,7 @@ public class Player extends User {
             if (level == 0) {
                 xp = 0;
             }else {
-                xp -= level * 100;
+                xp += level * 100;
                 level--;
                 relation.setLevel(level);
             }
