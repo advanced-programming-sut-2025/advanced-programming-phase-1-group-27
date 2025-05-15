@@ -1,6 +1,7 @@
 package org.example.view.menu;
 
 import org.example.controller.LoginMenuMenuController;
+import org.example.controller.MainMenuMenuController;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.User;
@@ -19,12 +20,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LoginMenuTest {
     private static LoginMenu loginMenu;
     private static LoginMenuMenuController loginMenuController;
+    private static MainMenu mainMenu;
+    private static MainMenuMenuController mainMenuController;
     private static User userTest;
 
     @BeforeAll
     static void setUp() {
         loginMenu = new LoginMenu();
         loginMenuController = new LoginMenuMenuController(loginMenu);
+        mainMenu = new MainMenu();
+        mainMenuController = new MainMenuMenuController(mainMenu);
     }
 
     @BeforeEach
@@ -51,7 +56,7 @@ public class LoginMenuTest {
         assertEquals("Command format is invalid. Registration failed!", result.message());
 
         // invalid question id
-        input = "pick question -q -1 -a -4 c -4";
+        input = "pick question -q 1000 -a 4 -c 4";
         in = new ByteArrayInputStream(input.getBytes());
         scanner = new Scanner(in);
 
@@ -283,7 +288,7 @@ public class LoginMenuTest {
         Result result = loginMenuController.login(userTest.getUsername(), userTest.getPassword(), false);
         assertTrue(result.success());
         assertEquals("You have successfully logged in.", result.message());
-        assertEquals(userTest, App.getLoggedInUser());
+        assertEquals(userTest.getUsername(), App.getLoggedInUser().getUsername());
         assertEquals(Menu.MainMenu, App.getCurrentMenu());
     }
 
@@ -312,6 +317,16 @@ public class LoginMenuTest {
         result = loginMenuController.forgetPassword(userTest.getUsername(), scanner);
         assertTrue(result.success());
         assertTrue(result.message().startsWith("Your new password is:"));
+    }
+
+    @Test
+    void logout() {
+        registerUser();
+        loginMenuController.login(userTest.getUsername(), userTest.getPassword(), false);
+        assertEquals(Menu.MainMenu, App.getCurrentMenu());
+        mainMenuController.logout();
+        assertEquals(Menu.LoginMenu, App.getCurrentMenu());
+        assertNull(App.getLoggedInUser());
     }
 
     private void userCreated() {

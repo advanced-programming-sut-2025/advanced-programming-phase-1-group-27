@@ -9,8 +9,8 @@ public enum LoginMenuCommands implements MenuCommands {
             "-n\\s+(?<nickname>.+)\\s+" +
             "-e\\s+(?<email>.+)\\s+" +
             "-g\\s+(?<gender>.+)"),
-    PickQuestion("pick\\s+question\\s+-q\\s+(?<questionId>\\d+)\\s+-a\\s+(?<answer>.+)\\s+-c\\s+(?<reenteredAnswer>.+)"),
-    Login("login\\s+-u\\s+(?<username>.+)\\s+-p\\s+(?<password>.+)(?:\\s+(?<stay>--stay-logged-in))?"),
+    PickQuestion("pick\\s+question\\s+-q\\s+(?<questionId>-?\\d+)\\s+-a\\s+(?<answer>.+)\\s+-c\\s+(?<reenteredAnswer>.+)"),
+    Login("login\\s+-u\\s+(?<username>.+)logout\\s+-p\\s+(?<password>.+)(?:\\s+(?<stay>--stay-logged-in))?"),
     ForgetPassword("forget\\s+password\\s+-u\\s+(?<username>.+)"),
     AnswerQuestion("answer\\s+-a\\s+(?<answer>.+)"),
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
