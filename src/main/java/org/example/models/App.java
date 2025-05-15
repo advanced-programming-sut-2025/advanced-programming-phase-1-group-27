@@ -103,11 +103,20 @@ public class App {
 
     public static String generateUsername(String username) {
         String result;
-        Random random = new Random( );
-        do {
-            int randomInt = random.nextInt(20);
-            result = username + randomInt;
-        } while (getUserByUsername(result) != null);
-        return result;
+        for (int i = 1; i <= 20; i++) {
+            result = username + i;
+            if (getUserByUsername(result) == null)
+                return result;
+        }
+        return null;
+    }
+
+    public static void removeUser(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                users.remove(user);
+                return;
+            }
+        }
     }
 }

@@ -59,7 +59,7 @@ public class LoginMenu extends AppMenu {
 
     public Result suggestUsername(String suggestedUsername, Scanner scanner) {
         System.out.println("Username already taken!");
-        System.out.println("How about " + suggestedUsername + ".");
+        System.out.println("How about " + suggestedUsername + "?");
         System.out.println("Press [Y/y] to approve.");
         String response = scanner.nextLine().trim();
         return controller.reRegister(response);

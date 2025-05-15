@@ -47,10 +47,10 @@ public class ProfileMenuController extends MenuController {
     }
 
     public Result changeEmail(String email) {
-        if (!User.isValidEmail(email))
-            return new Result(false, "Email format is invalid!");
         if (App.getLoggedInUser().getEmail().equals(email))
             return new Result(false, "New email should be different from current email!");
+        if (!User.isValidEmail(email))
+            return new Result(false, "Email format is invalid!");
         App.getLoggedInUser().setEmail(email);
         return new Result(true, "Email changed successfully!");
     }
