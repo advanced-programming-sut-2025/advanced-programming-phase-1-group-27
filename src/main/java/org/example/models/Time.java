@@ -27,14 +27,15 @@ public class Time {
                 getHour() + ":00\n");
     }
 
-    public void passAnHour() {
+    public boolean passAnHour() {
         hour++;
         App.getCurrentGame().passAnHour();
         if (hour == 24) {
             passADay();
             hour = 9;
+            return true;
         }
-
+        return false;
     }
 
     private void passADay() {

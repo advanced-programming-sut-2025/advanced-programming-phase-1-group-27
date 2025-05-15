@@ -41,12 +41,18 @@ public class LoginMenuMenuController extends MenuController {
         if (!User.isValidEmail(email))
             return new Result(false, "Email format is invalid!");
 
+        // checking whether the reentered password matches the password
+        while (!password.equals(reEnteredPassword)) {
+            reEnteredPassword = view.reTypePassword(scanner);
+            if (reEnteredPassword.equals("RANDOM"))
+                password = reEnteredPassword;
+        }
         // handling random password generator
         while (password.equals("RANDOM")) {
             String newPassword = generatePassword();
             String result = view.isPasswordAccepted(newPassword, scanner);
             if (result.equals("Y") || result.equals("y"))
-                password = reEnteredPassword = newPassword;
+                password = newPassword;
             else if (result.equals("E"))
                 return new Result(false, "Registration failed! Redirecting to login menu ...");
         }
@@ -62,14 +68,13 @@ public class LoginMenuMenuController extends MenuController {
         suggestedUser = new User(username, User.hashPassword(password), nickname, email, Gender.getGender(gender));
         if (App.getUserByUsername(username) != null) {
             String suggestedUsername = App.generateUsername(username);
+            if (suggestedUsername == null)
+                return new Result(false, "Username already taken. Registration failed!");
             if (!view.suggestUsername(suggestedUsername, scanner).success())
-                return new Result(false, "Registration failed!");
+                return new Result(false, "Username already taken. Registration failed!");
             suggestedUser.setUsername(suggestedUsername);
         }
-        // checking whether the reentered password matches the password
-        while (!password.equals(reEnteredPassword)) {
-            reEnteredPassword = view.reTypePassword(scanner);
-        }
+
         // handling security questions ...
         String securityQuestions = App.getSecurityQuestions();
         view.printString(securityQuestions);

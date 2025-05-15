@@ -55,15 +55,16 @@ public class GameMenuController extends MenuController {
         boolean fullTurn =  App.getCurrentGame().nextPlayer();
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
 
-        if (fullTurn)
-            App.getCurrentGame().getTime().passAnHour();
+        if (fullTurn) {
+            if (App.getCurrentGame().getTime().passAnHour())
+                view.printString(App.getCurrentGame().NPCGiftingLevel3());
+        }
+
         if (currentPlayer.getDayEnergy() <= 0) {
             nextTurn(scanner);
             return;
         }
         view.printString(currentPlayer.getUsername() + "'s turn!");
-        String gifts = App.getCurrentGame().NPCGiftingLevel3();
-        // TODO : In bayad chap she!
         App.setCurrentMenu(currentPlayer.getCurrentMenu());
     }
 
@@ -813,7 +814,7 @@ public class GameMenuController extends MenuController {
         else
             artisan.setFinalProduct(finalProduct);
         if (finalProduct.getProcessingTime() == null)
-            artisan.setTimeLeft(24 - App.getCurrentGame().getTime().getHour());
+            artisan.setTimeLeft(23 - App.getCurrentGame().getTime().getHour());
         else
             artisan.setTimeLeft(finalProduct.getProcessingTime());
         return new Result(true, "New process started!");
