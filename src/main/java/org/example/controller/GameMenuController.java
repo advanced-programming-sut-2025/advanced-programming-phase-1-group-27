@@ -60,7 +60,10 @@ public class GameMenuController extends MenuController {
         if (currentPlayer.hasPassedOut())
             return nextTurn(scanner);
         App.setCurrentMenu(currentPlayer.getCurrentMenu());
-        return new Result(true, currentPlayer.getUsername() + "'s turn!");
+        String result =
+                currentPlayer.getUsername() + "'s turn!\n" +
+                App.getCurrentGame().getCurrentPlayer().getNotification();
+        return new Result(true, result);
     }
 
     public Result terminateGame(Scanner scanner) {
