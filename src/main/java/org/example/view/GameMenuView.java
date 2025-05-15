@@ -34,7 +34,7 @@ public class GameMenuView extends AppMenu {
     public void executeCommands(Scanner scanner) {
         if (controller.playerPassedOut()) {
             System.out.println(App.getCurrentGame().getCurrentPlayer().getUsername() + " has passed out!");
-            ((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner);
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
             return;
         }
         String input = scanner.nextLine().trim();

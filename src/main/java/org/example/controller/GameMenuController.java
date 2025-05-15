@@ -50,22 +50,17 @@ public class GameMenuController extends MenuController {
         return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
     }
 
-    public void nextTurn(Scanner scanner) {
-        App.getCurrentGame().getCurrentPlayer().setNextTurnEnergy();
+    public Result nextTurn(Scanner scanner) {
         boolean fullTurn =  App.getCurrentGame().nextPlayer();
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
 
-        if (fullTurn) {
-            if (App.getCurrentGame().getTime().passAnHour())
-                view.printString(App.getCurrentGame().NPCGiftingLevel3());
-        }
+        if (fullTurn)
+            App.getCurrentGame().getTime().passAnHour();
 
-        if (currentPlayer.getDayEnergy() <= 0) {
-            nextTurn(scanner);
-            return;
-        }
-        view.printString(currentPlayer.getUsername() + "'s turn!");
+        if (currentPlayer.hasPassedOut())
+            return nextTurn(scanner);
         App.setCurrentMenu(currentPlayer.getCurrentMenu());
+        return new Result(true, currentPlayer.getUsername() + "'s turn!");
     }
 
     public Result terminateGame(Scanner scanner) {
@@ -773,7 +768,7 @@ public class GameMenuController extends MenuController {
 
         int numberOfFish = min(6, getNumberOfFish());
         ArrayList<Stacks> capturedFish = new ArrayList<>();
-        Random random = new Random( );
+        Random random = new Random();
         for (int i = 0; i < numberOfFish; i++) {
             double coefficient = getFishCoefficient(type);
             StackLevel fishLevel = getStackLevel(coefficient);
@@ -850,6 +845,9 @@ public class GameMenuController extends MenuController {
         Game game = App.getCurrentGame();
         for (Player player : game.getPlayers()) {
             player.setCurrentGame(null);
+            User user = App.getUserByUsername(player.getUsername());
+            assert user != null;
+            user.setMaxMoneyEarned(Math.max(player.getMoney(), user.getMaxMoneyEarned()));
         }
         App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);
@@ -875,6 +873,9 @@ public class GameMenuController extends MenuController {
             if (shop.getShopType() != shopType)
                 return new Result(false, "There is no " + shopName + " nearby!");
         }
+        int hour = App.getCurrentGame().getTime().getHour();
+        if (hour < shopType.getStartTime() || hour > shopType.getEndTime())
+            return new Result(false, "This shop is currently closed!");
         Menu newMenu = Menu.getMenu(shopName);
         App.setCurrentMenu(newMenu);
         player.setCurrentMenu(newMenu);

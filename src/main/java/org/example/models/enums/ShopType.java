@@ -89,4 +89,12 @@ public enum ShopType {
         }
         return result;
     }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public int getEndTime() {
+        return endTime;
+    }
 }

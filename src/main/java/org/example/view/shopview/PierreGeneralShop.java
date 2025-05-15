@@ -1,8 +1,11 @@
 package org.example.view.shopview;
 
 import org.example.controller.shopcontroller.PierreGeneralShopController;
+import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.enums.Menu;
+import org.example.models.enums.commands.CheatCommands;
+import org.example.models.enums.commands.GameMenuCommands;
 import org.example.models.enums.commands.MainMenuCommands;
 import org.example.models.enums.commands.ShopCommands;
 import org.example.view.AppMenu;
@@ -21,7 +24,8 @@ public class PierreGeneralShop extends AppMenu {
     @Override
     public void executeCommands(Scanner scanner) {
         if (controller.playerPassedOut()) {
-            ((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner);
+            System.out.println(App.getCurrentGame().getCurrentPlayer().getUsername() + " has passed out!");
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
             return;
         }
         String input = scanner.nextLine().trim();
@@ -35,6 +39,12 @@ public class PierreGeneralShop extends AppMenu {
         else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
         }
+        else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().terminateGame(scanner));
+        }
+        else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
+        }
         else if (ShopCommands.ShowAllProducts.getMatcher(input) != null) {
             System.out.println(controller.showAllProducts());
         }
@@ -45,6 +55,21 @@ public class PierreGeneralShop extends AppMenu {
             System.out.println(controller.purchase(
                     matcher.group("productName").trim(),
                     matcher.group("count")
+            ));
+        }
+        else if (GameMenuCommands.InventoryShow.getMatcher(input) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().inventoryShow());
+        }
+        else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().inventoryTrash(
+                    matcher.group("itemName").trim(),
+                    Integer.parseInt(matcher.group("number").trim())
+            ));
+        }
+        else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().cheatAddItem(
+                    matcher.group("itemName").trim(),
+                    Integer.parseInt(matcher.group("count"))
             ));
         }
         else {

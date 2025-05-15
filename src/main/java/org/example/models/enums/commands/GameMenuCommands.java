@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public enum GameMenuCommands implements MenuCommands {
     NextTurn("next\\s+turn"),
-    TerminateGame("terminate\\s+game"),
+    TerminateGame("exit\\s+game"),
     ExitMenu("menu\\s+exit"),
     PlaceItem("place\\s+item\\s+-n\\s+(?<itemName>.+)\\s+-d\\s+(?<direction>\\d+)"),
     ShowWeather("weather"),

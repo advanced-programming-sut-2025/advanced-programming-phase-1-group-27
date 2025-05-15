@@ -12,7 +12,6 @@ import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
-import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.ShopType;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
@@ -171,7 +170,7 @@ public class Game {
 
         // Setting Energies :
         for (Player player : players) {
-            if (player.getDayEnergy() <= 0)
+            if (player.hasPassedOut())
                 player.setDayEnergy(player.getMaxEnergy() * 3 / 4);
 
             else
