@@ -129,7 +129,9 @@ public class Cell {
 
     public void thor() {
         if (object instanceof Tree) {
-            object = new Stacks(MineralType.Coal, 1);
+            object = MineralType.Coal;
+            if (cellType == CellType.Plowed)
+                cellType = CellType.Free;
         } else if (object instanceof Plant && building == null) {
             cellType = CellType.Free;
             object = null;
@@ -158,7 +160,10 @@ public class Cell {
                     return "\u001B[48;2;1;59;19m" + "  " + "\u001B[0m";
                 }
                 case Crop crop -> {
-                    return "\u001B[48;2;19;138;57m" + "  " + "\u001B[0m";
+                    if (crop.isGiant())
+                        return "\u001B[48;2;15;245;80m" + "  " + "\u001B[0m";
+                    else
+                        return "\u001B[48;2;19;138;57m" + "  " + "\u001B[0m";
                 }
                 case MineralType mineralType -> {
                     return "\u001B[48;5;240m" + "  " + "\u001B[0m";
@@ -190,14 +195,14 @@ public class Cell {
             } else if (building instanceof StoreBuilding) {
                 return "\u001B[48;2;59;33;1m" + "  " + "\u001B[0m";
             } else if (building instanceof Barn) {
-                return "\u001B[43m" + "B " + "\u001B[0m";
+                return "\u001B[48;2;66;54;32m" + "  " + "\u001B[0m";
             } else if (building instanceof Coop) {
-                return "\u001B[43m" + "Q " + "\u001B[0m";
+                return "\u001B[48;2;66;54;32m" + "  " + "\u001B[0m";
             }
         } else if (cellType.equals(CellType.View)) {
             return "\u001B[48;2;89;89;89m" + "  " + "\u001B[0m";
         } else if (cellType.equals(CellType.Plowed)) {
-            return "\u001B[32m" + "__" + "\u001B[0m";
+            return "\u001B[38;2;59;33;1m" + "\u001B[48;5;179m" + "__" + "\u001B[0m";
         }
         return "? ";
     }

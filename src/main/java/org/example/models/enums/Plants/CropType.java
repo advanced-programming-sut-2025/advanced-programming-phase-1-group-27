@@ -194,15 +194,15 @@ public enum CropType implements PlantType {
             , null , 25 , false , true , false
             , new Season[]{Season.Winter});
 
-    private FruitType fruit;
-    private int price;
-    private SeedType source;
-    private int[] stages;
-    private int totalHarvestTime, energy;
-    private Integer regrowthTime;
-    private boolean oneTime, isEdible, canBecomeGiant;
-    private Season[] seasons;
-    private static HashMap<Season, ArrayList<CropType>> foragingCropsBySeason = new HashMap<>(){{
+    private final FruitType fruit;
+    private final int price;
+    private final SeedType source;
+    private final int[] stages;
+    private final int totalHarvestTime, energy;
+    private final Integer regrowthTime;
+    private final boolean oneTime, isEdible, canBecomeGiant;
+    private final ArrayList<Season> seasons;
+    private static final HashMap<Season, ArrayList<CropType>> foragingCropsBySeason = new HashMap<>(){{
         put(Season.Spring, new ArrayList<>(List.of(CropType.Daffodil,
         CropType.Dandelion, CropType.Leek, CropType.Morel, CropType.SalmonBerry, CropType.SpringOnion,
             CropType.WildHorseradish)));
@@ -233,7 +233,7 @@ public enum CropType implements PlantType {
         this.oneTime = oneTime;
         this.isEdible = isEdible;
         this.canBecomeGiant = canBecomeGiant;
-        this.seasons = seasons;
+        this.seasons = new ArrayList<>(List.of(seasons));
     }
 
     public int getEnergy() {
@@ -292,7 +292,7 @@ public enum CropType implements PlantType {
         return canBecomeGiant;
     }
 
-    public Season[] getSeasons() {
+    public ArrayList<Season> getSeasons() {
         return seasons;
     }
 

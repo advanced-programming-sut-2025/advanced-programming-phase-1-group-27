@@ -98,17 +98,21 @@ public class Map {
 
     private static final String mapReadingManual = new String(
             "Map Manual :\n" +
-                    "Y -> You !!\n" +
-                    "C -> Crop\n" +
-            "T -> Tree\n" +
-            "R -> Mineral\n" +
-            "H -> Hut\n" +
-            "G -> GreenHouse\n" +
-            "W -> Water\n" +
-            "D -> Door\n" +
-            "N -> NPC House\n" +
-            "S -> Store\n" +
-            "~ -> City Grounds\n"
+                    "[1, 2, 3, 4] -> Players (By Id) \n" +
+                    "\u001B[48;5;179m" + "  " + "\u001B[0m" + " -> Empty farm grounds\n" +
+                    "\u001B[48;2;19;138;57m" + "  " + "\u001B[0m" + " -> Crops\n" +
+                    "\u001B[48;2;1;59;19m" + "  " + "\u001B[0m" + " -> Trees\n" +
+                    "\u001B[48;5;240m" + "  " + "\u001B[0m" + " -> Minerals\n" +
+                    "\u001B[48;5;236m" + "  " + "\u001B[0m" + " -> Quarry\n" +
+                    "\u001B[48;2;59;33;1m" + "  " + "\u001B[0m" + " -> Huts, NPCHouses and Stores\n" +
+                    "\u001B[48;2;66;54;32m" + "  " + "\u001B[0m" + " -> GreenHouse, Barns and Coops\n" +
+                    "\u001B[48;2;64;120;168m" + "  " + "\u001B[0m" + " -> Water\n" +
+                    "\u001B[48;2;138;106;67m" + "  " + "\u001B[0m" + " -> Doors\n" +
+                    "\u001B[38;2;59;33;1m" + "\u001B[48;5;179m" + "__" + "\u001B[0m" + " -> Plowed cells\n" +
+                    "\u001B[48;2;89;89;89m" + "  " + "\u001B[0m" + " -> NPC valley grounds\n" +
+                    "\033[43m" + "  " + "\u001B[0m" + " -> Passages between maps\n" +
+                    "\u001B[34m" + "\u001B[48;2;89;89;89m" + "A" + " " + "\u001B[0m" +
+                    " -> Npcs (by the first of their names\n"
     );
 
     public String getMapReadingManual() {

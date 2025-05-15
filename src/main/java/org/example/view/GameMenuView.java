@@ -64,6 +64,16 @@ public class GameMenuView extends AppMenu {
             System.out.println(controller.helpReadingMap());
         } else if (GameMenuCommands.ShowEnergy.getMatcher(input) != null) {
             System.out.println(controller.showEnergy());
+        } else if(GameMenuCommands.Time.getMatcher(input) != null) {
+            System.out.println(controller.showTime());
+        } else if(GameMenuCommands.Date.getMatcher(input) != null) {
+            System.out.println(controller.showDate());
+        } else if (GameMenuCommands.DateTime.getMatcher(input) != null) {
+            System.out.println(controller.showDateTime());
+        } else if(GameMenuCommands.DayOfWeek.getMatcher(input) != null) {
+            System.out.println(controller.showDayOfWeek());
+        } else if(GameMenuCommands.Season.getMatcher(input) != null) {
+            System.out.println(controller.showSeason());
         } else if ((matcher = CheatCommands.CheatSetEnergy.getMatcher(input)) != null) {
             System.out.println(controller.cheatSetEnergy(matcher.group("value")));
         } else if (CheatCommands.CheatEnergyUnlimited.getMatcher(input) != null) {

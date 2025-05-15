@@ -30,7 +30,12 @@ public enum GameMenuCommands implements MenuCommands {
     SellAnimal("sell\\s+animal\\s+-n\\s+(?<name>\\S.*\\S)"),
     InventoryShow("inventory\\s+show"),
     InventoryTrash("inventory\\s+trash\\s+-i\\s+(?<itemName>.+)\\s+-n\\s+(?<number>\\d+)"),
-    SellItem("sell\\s+(?<name>\\S.*\\S)(\\s+-n\\s+(?<amount>\\d+))?");
+    SellItem("sell\\s+(?<name>\\S.*\\S)(\\s+-n\\s+(?<amount>\\d+))?"),
+    Time("time"),
+    Date("date"),
+    DateTime("datetime"),
+    DayOfWeek("day\\s+of\\s+the\\s+week"),
+    Season("season");
 
     private final String pattern;
 

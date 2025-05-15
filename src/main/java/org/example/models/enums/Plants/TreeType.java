@@ -39,9 +39,9 @@ public enum TreeType implements PlantType {
     private final int[] stages;
     private final int harvestTime;
     private final FruitType fruit;
-    private final Season[] seasons;
+    private final ArrayList<Season> seasons;
     private final int harvestCycle;
-    private static ArrayList<TreeType> foragings = new ArrayList<>(List.of(OakTree, MapleTree, PineTree, MahoganyTree,
+    private static final ArrayList<TreeType> foragings = new ArrayList<>(List.of(OakTree, MapleTree, PineTree, MahoganyTree,
             MushroomTree));
 
     TreeType(PlantSourceType source, int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle) {
@@ -49,7 +49,7 @@ public enum TreeType implements PlantType {
         this.stages = stages;
         this.harvestTime = harvestTime;
         this.fruit = fruit;
-        this.seasons = seasons;
+        this.seasons = new ArrayList<>(List.of(seasons));
         this.harvestCycle = harvestCycle;
     }
 
@@ -69,7 +69,7 @@ public enum TreeType implements PlantType {
         return fruit;
     }
 
-    public Season[] getSeasons() {
+    public ArrayList<Season> getSeasons() {
         return seasons;
     }
 

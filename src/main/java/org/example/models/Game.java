@@ -26,7 +26,7 @@ public class Game {
     private ArrayList<Player> players;
     private final FarmMap[] farmMaps = new FarmMap[4];
     private  NPCMap npcMap;
-    private Weather currentWeather, tomorrowWeather = null;
+    private Weather currentWeather = Weather.Sunny, tomorrowWeather = null;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
     // all dialogues between players
@@ -141,7 +141,11 @@ public class Game {
                     if (cells[i][j].getObject() instanceof Plant plant && !plant.isForaging()) {
                         if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
                             cells[i][j].setObject(null);
-                        } else if (!plant.isGiant()){
+                        } else if (cells[i][j].getBuilding() instanceof GreenHouse) {
+                            plant.grow();
+                        } else if (!plant.getType().getSeasons().contains(App.getCurrentGame().getTime().getSeason())) {
+                            cells[i][j].setObject(null);
+                        } else if (!plant.isGiant()) {
                             plant.grow();
                         } else {
                             if ((cells[i][j].getAdjacentCells().get(4) != null &&
@@ -149,13 +153,8 @@ public class Game {
                                     (cells[i][j].getAdjacentCells().get(6) != null &&
                                             cells[i][j].getAdjacentCells().get(6).getObject() == plant)) {
 
-                            } else if (cells[i][j].getBuilding() != null && cells[i][j].getBuilding() instanceof GreenHouse) {
+                            } else  {
                                 plant.grow();
-                            } else {
-                                for (Season season: plant.getType().getSeasons())
-                                    if (season == App.getCurrentGame().getTime().getSeason())
-                                        plant.grow();
-
                             }
                         }
                     }

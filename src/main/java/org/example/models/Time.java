@@ -22,7 +22,7 @@ public class Time {
         return this.daysOfWeek[this.day % 7];
     }
 
-    public String showDateTime() {
+    public String getDateTime() {
         return new String(getDayOfWeek() + ", " + getSeason() + " " + getDate() + "\n" +
                 getHour() + ":00\n");
     }

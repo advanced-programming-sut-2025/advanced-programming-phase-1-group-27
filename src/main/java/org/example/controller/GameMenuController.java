@@ -11,7 +11,6 @@ import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.ProcessedProductType;
-import org.example.models.tools.Tool;
 import org.example.view.GameMenuView;
 
 import java.util.*;
@@ -92,6 +91,28 @@ public class GameMenuController extends MenuController {
         else game.setTomorrowWeather(weather = game.getTime().getSeason().pickARandomWeather());
         return new Result(true, "The Weather Forecasted For Tomorrow is " +
                 weather.toString() + " Weather!");
+    }
+
+    public Result showTime() {
+        return new Result(true, "The current time is: " + App.getCurrentGame().getTime().getHour());
+    }
+
+    public Result showDate() {
+        return new Result(true, "The current date is: " + App.getCurrentGame().getTime().getSeason() +
+                " " + App.getCurrentGame().getTime().getDate());
+    }
+
+    public Result showDateTime() {
+        return new Result(true, "The current date&time is: " +
+                App.getCurrentGame().getTime().getDateTime());
+    }
+
+    public Result showDayOfWeek() {
+        return new Result(true, "The current weekday is: " +
+                App.getCurrentGame().getTime().getDayOfWeek());
+    }
+    public Result showSeason() {
+        return new Result(true, "The current season is: " + App.getCurrentGame().getTime().getSeason());
     }
 
     public Result walk(String s, String t, Scanner scanner) {
@@ -297,6 +318,8 @@ public class GameMenuController extends MenuController {
     }
 
     private boolean checkForGiantCrop(Cell cell) {
+        if (cell.getBuilding() != null && cell.getBuilding() instanceof GreenHouse)
+            return false;
         Crop crop = (Crop) cell.getObject();
         CropType type = (CropType) crop.getType();
         int i = cell.getPosition().getX(), j = cell.getPosition().getY();
@@ -372,7 +395,7 @@ public class GameMenuController extends MenuController {
 
         if (cell.getObject() instanceof Plant plant) {
             return new Result(true, (plant instanceof Crop? "Crop " : "Tree ") +
-                    "Name: " + plant.getType().getName() + "\n" +
+                    "Name: " + (plant.isGiant()? "GIANT ": "") + plant.getType().getName() + "\n" +
                         "Total time left: " + plant.getTillNextHarvest() + "\n" +
                         "Stage: " + plant.getCurrentStage() + " (0-based)\n" +
                         (plant.getWateredToday()? "Watered today": "Not Watered today") + "\n" +
@@ -630,7 +653,7 @@ public class GameMenuController extends MenuController {
         if (!player.getBackpack().canAdd(item, level, count))
             return new Result(false, "You don't have enough space in your backpack!");
         player.getBackpack().addItems(item, level, count);
-        return new Result(true, count + " of " + itemName + "added to the backpack!");
+        return new Result(true, count + " " + item.getName() + "(s) added to your backpack!");
     }
 
     public Result cheatSetWeather(String weatherString) {
@@ -641,10 +664,10 @@ public class GameMenuController extends MenuController {
             }
         }
         if (weather == null) {
-            return new Result(false, "Please a valid weather type from " + Weather.values());
+            return new Result(false, "Please choose a valid weather type from " + Weather.values());
         }
         Game game = App.getCurrentGame();
-        game.setTomorrowWeather(game.getTime().getSeason().pickARandomWeather());
+        game.setTomorrowWeather(weather);
         return new Result(true, "Weather set to " + weather.toString() + " Weather!");
     }
 
@@ -652,7 +675,7 @@ public class GameMenuController extends MenuController {
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
         FarmMap map = App.getCurrentGame().getCurrentPlayer().getFarmMap();
         Cell cell = map.getCell(i, j);
-        if (cell.getType() == CellType.Building) {
+        if (cell.getBuilding() != null) {
             return new Result(false, "There is A Building!!");
         } else {
             cell.thor();
@@ -694,19 +717,19 @@ public class GameMenuController extends MenuController {
     }
 
     public Result cheatAdvanceTime(String hourString) {
-        String oldTime = App.getCurrentGame().getTime().showDateTime();
+        String oldTime = App.getCurrentGame().getTime().getDateTime();
         int hour = Integer.parseInt(hourString);
         App.getCurrentGame().getTime().cheatAdvanceTime(hour);
         return new Result(true, "The old time was " + oldTime + "\n" +
-                "The new time is " + App.getCurrentGame().getTime().showDateTime());
+                "The new time is " + App.getCurrentGame().getTime().getDateTime());
     }
 
     public Result cheatAdvanceDate(String dayString) {
-        String oldTime = App.getCurrentGame().getTime().showDateTime();
+        String oldTime = App.getCurrentGame().getTime().getDateTime();
         int day = Integer.parseInt(dayString);
         App.getCurrentGame().getTime().cheatAdvanceDate(day);
         return new Result(true, "The old time was " + oldTime + "\n" +
-                "The new time is " + App.getCurrentGame().getTime().showDateTime());
+                "The new time is " + App.getCurrentGame().getTime().getDateTime());
     }
 
     public Result fishing(String fishPoleName) {
