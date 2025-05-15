@@ -19,6 +19,7 @@ public class Cell {
     private CellType cellType;
     private Building building = null;
     private String string = null;
+    private boolean isProtected;
 
     private ArrayList<Cell> adjacentCells = new ArrayList<>();
 
@@ -113,6 +114,14 @@ public class Cell {
         ArrayList<MineralType> foragingMinerals = MineralType.getForagingMinerals();
         int randomInt = new Random( ).nextInt(foragingMinerals.size());
         object = foragingMinerals.get(randomInt);
+    }
+
+    public boolean isProtected() {
+        return isProtected;
+    }
+
+    public void setProtected(boolean aProtected) {
+        isProtected = aProtected;
     }
 
     public Position getPosition() {

@@ -10,11 +10,13 @@ import org.example.models.enums.Plants.*;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
+import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.view.GameMenuView;
 
 import java.util.*;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class GameMenuController extends MenuController {
@@ -154,7 +156,7 @@ public class GameMenuController extends MenuController {
                             }
                         } else if (destination.getType() == CellType.Door) {
                             if (destination.getBuilding() instanceof StoreBuilding storeBuilding) {
-                                currentPlayer.setCurrentCell(destination);
+                                currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
                                 switch(storeBuilding.getStore().getShopType()) {
                                     case ShopType.CarpenterShop -> {
                                         currentPlayer.setCurrentMenu(Menu.CarpenterShop);
@@ -192,6 +194,11 @@ public class GameMenuController extends MenuController {
                                         return new Result(true, "You Entered The Stardrop Saloon Shop!");
                                     }
                                 }
+                            } else if (destination.getBuilding() instanceof Hut) {
+                                currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
+                                currentPlayer.setCurrentMenu(Menu.Home);
+                                App.setCurrentMenu(Menu.Home);
+                                return new Result(true, "You Entered Your Home :)");
                             }
                         }
                         return new Result(true, "You Walked And Now Are On Cell(" +
@@ -200,7 +207,8 @@ public class GameMenuController extends MenuController {
 
                         Cell trueDestination = currentMap.getPlaceInPath(currentPlayer.getCurrentCell(), destination,
                                 currentPlayer.getEnergy());
-                        currentPlayer.setDayEnergy(0);
+                        currentPlayer.consumeEnergy(100000);
+
                         currentPlayer.setCurrentCell(trueDestination);
                         return new Result(false, "You Passed Out In Cell (" +
                                 trueDestination.getPosition().getX() + ", " +
@@ -554,29 +562,51 @@ public class GameMenuController extends MenuController {
         Item item = player.getItemFromBackpack(itemName);
         if (item == null)
             return new Result(false, "Item not found in backpack!");
-        if (direction < 1 || direction > 8)
+        if (direction < 1 || direction > 7)
             return new Result(false, "Invalid direction!");
-        ArtisanTypes artisanType = ArtisanTypes.getArtisan(item);
-        if (artisanType == null && !(item == BuildingType.ShippingBin))
-            return new Result(false, "This item cannot be placed!");
         Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
+
+        if (cell == null || cell.getType() != CellType.Free || cell.getObject() != null ||
+                !(cell.getMap() instanceof FarmMap))
+            return new Result(false, "Can't place anything in this cell!");
         if (cell.getType() == CellType.Quarry) {
             return new Result(false, "This cell is in the quarry!");
         }
-        if (cell == null || cell.getType() != CellType.Free || !(cell.getMap() instanceof FarmMap))
-            return new Result(false, "The desired cell is currently occupied!");
+
+        ArtisanTypes artisanType = ArtisanTypes.getArtisan(item);
         player.getBackpack().reduceItems(item, 1);
-        if (item == BuildingType.ShippingBin) {
+
+        if (artisanType != null) {
+            Artisan artisan = new Artisan(artisanType);
+            cell.setObject(artisan);
+            return new Result(true, "Artisan placed successfully!");
+        } else if (item == BuildingType.ShippingBin) {
             cell.setType(CellType.Building);
             ShippingBin shippingBin = new ShippingBin(cell);
             cell.setBuilding(shippingBin);
             ((FarmMap) cell.getMap()).addShippingBin(shippingBin);
             return new Result(true, "Shipping Bin Placed!");
-        } else {
-            Artisan artisan = new Artisan(artisanType);
-            cell.setObject(artisan);
-            return new Result(true, "Artisan placed successfully!");
         }
+        else if (item == CraftingProduct.CherryBomb)
+            return bombMap(cell.getPosition().getX(), cell.getPosition().getY(), 3);
+        else if (item == CraftingProduct.Bomb)
+            return bombMap(cell.getPosition().getX(), cell.getPosition().getY(), 5);
+        else if (item == CraftingProduct.MegaBomb)
+            return bombMap(cell.getPosition().getX(), cell.getPosition().getY(), 7);
+        else if (item == CraftingProduct.Sprinkler)
+            return waterMap(cell.getPosition().getX(), cell.getPosition().getY(), 0);
+        else if (item == CraftingProduct.QualitySprinkler)
+            return waterMap(cell.getPosition().getX(), cell.getPosition().getY(), 1);
+        else if (item == CraftingProduct.IridiumSprinkler)
+            return waterMap(cell.getPosition().getX(), cell.getPosition().getY(), 2);
+        else if (item == CraftingProduct.Scarecrow)
+            return protectMap(cell.getPosition().getX(), cell.getPosition().getY(), 8);
+        else if (item == CraftingProduct.DeluxeScarecrow)
+            return protectMap(cell.getPosition().getX(), cell.getPosition().getY(), 12);
+        else {
+            return new Result(false, "You can't place this item!");
+        }
+//TODO grass starter sobhan
     }
 
     public Result sellItem(String itemName, String amountString) {
@@ -850,7 +880,7 @@ public class GameMenuController extends MenuController {
             player.setCurrentGame(null);
             User user = App.getUserByUsername(player.getUsername());
             assert user != null;
-            user.setMaxMoneyEarned(Math.max(player.getMoney(), user.getMaxMoneyEarned()));
+            user.setMaxMoneyEarned(max(player.getMoney(), user.getMaxMoneyEarned()));
         }
         App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);
@@ -922,5 +952,52 @@ public class GameMenuController extends MenuController {
             return StackLevel.Gold;
         else
             return StackLevel.Iridium;
+    }
+
+    private Result protectMap(int x, int y, int r) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        FarmMap farmMap = (FarmMap) player.getCurrentMap();
+        for (int i = max(x - r, 0); i < min(x + r, farmMap.getHeight()); i++) {
+            for (int j = max(y - r, 0); j < min(y + r, farmMap.getWidth()); j++) {
+                farmMap.getCell(i, j).setProtected(true);
+            }
+        }
+        return new Result(true, "Fu#k crows");
+    }
+
+    private Result waterMap(int x, int y, int r) {
+        FarmMap farmMap = (FarmMap) App.getCurrentGame().getCurrentPlayer().getCurrentMap();
+        Cell[][] cells = farmMap.getCells();
+        if (cells[x - 1][y].getObject() instanceof Plant plant)
+            plant.water();
+        if (cells[x + 1][y].getObject() instanceof Plant plant)
+            plant.water();
+        if (cells[x][y - 1].getObject() instanceof Plant plant)
+            plant.water();
+        if (cells[x][y + 1].getObject() instanceof Plant plant)
+            plant.water();
+        for (int i = max(x - r, 0); i < min(x + r, farmMap.getHeight()); i++) {
+            for (int j = max(y - r, 0); j < min(y + r, farmMap.getWidth()); j++) {
+                if (cells[i][j].getObject() instanceof Plant plant)
+                    plant.water();
+            }
+        }
+        return new Result(true, "Map watered!");
+    }
+
+    private Result bombMap(int x, int y, int r) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        FarmMap farmMap = (FarmMap) player.getCurrentMap();
+        for (int i = max(x - r, 0); i < min(x + r, farmMap.getHeight()); i++) {
+            for (int j = max(y - r, 0); j < min(y + r, farmMap.getWidth()); j++) {
+                Cell cell = farmMap.getCell(i, j);
+                if (cell.getType() != CellType.Building && !(cell.getObject() instanceof Building)) {}
+                cell.setObject(null);
+                if (cell.getType() == CellType.Plowed) {
+                    cell.setType(CellType.Free);
+                }
+            }
+        }
+        return new Result(true, "BOOOOOM!");
     }
 }

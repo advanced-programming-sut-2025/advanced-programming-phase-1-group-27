@@ -157,7 +157,7 @@ public class Map {
                     "\u001B[48;2;89;89;89m" + "  " + "\u001B[0m" + " -> NPC valley grounds\n" +
                     "\033[43m" + "  " + "\u001B[0m" + " -> Passages between maps\n" +
                     "\u001B[34m" + "\u001B[48;2;89;89;89m" + "A" + " " + "\u001B[0m" +
-                    " -> Npcs (by the first of their names\n"
+                    " -> Npcs (by the first of their names)\n"
     );
 
     public String getMapReadingManual() {
@@ -174,24 +174,6 @@ public class Map {
 
 
 
-    private void dijkstra(Cell cell) {
-        HashSet<Node> markedNodes = new HashSet<>();
-        PriorityQueue<Node> queue = new PriorityQueue<>();
-
-        queue.add(new Node(new Vertex(cell, 0), 0));
-        queue.add(new Node(new Vertex(cell, 1), 0));
-        queue.add(new Node(new Vertex(cell, 2), 0));
-        queue.add(new Node(new Vertex(cell, 3), 0));
-        while (!queue.isEmpty()) {
-            Node current = queue.remove();
-            if (markedNodes.contains(current)) {
-                continue;
-            }
-            markedNodes.add(current);
-            Cell currentCell = current.getVertex().getCell();
-
-        }
-    }
 }
 
 class Node implements Comparable<Node> {

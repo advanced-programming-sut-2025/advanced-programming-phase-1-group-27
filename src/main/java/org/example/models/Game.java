@@ -6,14 +6,11 @@ import org.example.models.NPCs.NPC;
 import org.example.models.Relations.Relation;
 import org.example.models.Shops.BlackSmith;
 import org.example.models.Shops.Shop;
-import org.example.models.enums.Menu;
-import org.example.models.enums.NPCType;
+import org.example.models.enums.*;
 import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
-import org.example.models.enums.ShopType;
-import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -147,14 +144,15 @@ public class Game {
                     System.out.println(player.getUsername() + " passed out in cell(" +
                             newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
                             ") in the NpcValley, on his way home");
-                    player.setDayEnergy(0);
+                    player.consumeEnergy(100000);
+
                     continue;
                 }
                 player.setCurrentCell((Cell) passageToFarm.getObject());
             }
             currentCell = player.getCurrentCell();
             FarmMap farmMap = player.getFarmMap();
-            Cell newDest = farmMap.getPlaceInPath(player.getCurrentCell(),
+            Cell newDest = farmMap.getPlaceInPath(currentCell,
                     destCell,
                     energy);
             player.setCurrentCell(newDest);
@@ -162,7 +160,7 @@ public class Game {
                 System.out.println(player.getUsername() + " passed out in cell(" +
                         newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
                         ") in his Farm, on his way home");
-                player.setDayEnergy(0);
+                player.consumeEnergy(100000);
             } else {
                 player.setCurrentMenu(Menu.Home);
             }
@@ -191,23 +189,20 @@ public class Game {
             for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
                 for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
                     if (cells[i][j].getObject() instanceof Plant plant && !plant.isForaging()) {
+                        if (plant.isGiant() && ((cells[i][j].getAdjacentCells().get(6) != null &&
+                                cells[i][j].getAdjacentCells().get(6).getObject() == plant) ||
+                                (cells[i][j].getAdjacentCells().get(4) != null &&
+                                        cells[i][j].getAdjacentCells().get(4).getObject() == plant))) {
+                            continue;
+                        }
                         if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
                             cells[i][j].setObject(null);
                         } else if (cells[i][j].getBuilding() instanceof GreenHouse) {
                             plant.grow();
                         } else if (!plant.getType().getSeasons().contains(App.getCurrentGame().getTime().getSeason())) {
                             cells[i][j].setObject(null);
-                        } else if (!plant.isGiant()) {
-                            plant.grow();
                         } else {
-                            if ((cells[i][j].getAdjacentCells().get(4) != null &&
-                                    cells[i][j].getAdjacentCells().get(4).getObject() == plant) ||
-                                    (cells[i][j].getAdjacentCells().get(6) != null &&
-                                            cells[i][j].getAdjacentCells().get(6).getObject() == plant)) {
-
-                            } else {
-                                plant.grow();
-                            }
+                            plant.grow();
                         }
                     }
                 }
