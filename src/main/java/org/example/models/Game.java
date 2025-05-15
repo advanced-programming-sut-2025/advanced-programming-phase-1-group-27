@@ -3,14 +3,17 @@ package org.example.models;
 import org.example.models.Map.*;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
+import org.example.models.Relations.Relation;
 import org.example.models.Shops.BlackSmith;
 import org.example.models.Shops.Shop;
 import org.example.models.enums.NPCType;
+import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.ShopType;
+import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -19,13 +22,14 @@ import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
     private Player admin;
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players;
     private final FarmMap[] farmMaps = new FarmMap[4];
-    private  NPCMap npcMap;
+    private NPCMap npcMap;
     private Weather currentWeather = Weather.Sunny, tomorrowWeather = null;
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
@@ -33,7 +37,7 @@ public class Game {
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
     private Shop jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
     private BlackSmith blackSmith;
-    private NPC Sebastian , Abigail , Harvey , Lia , Robbin , Clint , Pierre , Robin , Willy , Marnie , Morris , Gus;
+    private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
 
     public Game(ArrayList<Player> players) {
         this.admin = players.getFirst();
@@ -44,18 +48,18 @@ public class Game {
 
         initShops();
 
-        Sebastian = new NPC(NPCType.Sebastian , 10);
-        Abigail = new NPC(NPCType.Abigail , 20);
-        Harvey = new NPC(NPCType.Harvey , 30);
-        Lia = new NPC(NPCType.Lia , 40);
-        Robbin = new NPC(NPCType.Robbin , 50);
-        Clint = new NPC(NPCType.Clint , 60);
-        Pierre = new NPC(NPCType.Pierre , 70);
-        Robin = new NPC(NPCType.Robin , 80);
-        Willy = new NPC(NPCType.Willy , 90);
-        Marnie = new NPC(NPCType.Marnie , 100);
-        Morris = new NPC(NPCType.Morris , 110);
-        Gus = new NPC(NPCType.Gus , 120);
+        Sebastian = new NPC(NPCType.Sebastian, 10);
+        Abigail = new NPC(NPCType.Abigail, 20);
+        Harvey = new NPC(NPCType.Harvey, 30);
+        Lia = new NPC(NPCType.Lia, 40);
+        Robbin = new NPC(NPCType.Robbin, 50);
+        Clint = new NPC(NPCType.Clint, 60);
+        Pierre = new NPC(NPCType.Pierre, 70);
+        Robin = new NPC(NPCType.Robin, 80);
+        Willy = new NPC(NPCType.Willy, 90);
+        Marnie = new NPC(NPCType.Marnie, 100);
+        Morris = new NPC(NPCType.Morris, 110);
+        Gus = new NPC(NPCType.Gus, 120);
 
         npcs.add(Sebastian);
         npcs.add(Abigail);
@@ -118,7 +122,6 @@ public class Game {
     public void passAnHour() {
         updatePlayersBuff();
         updateArtisans();
-        // TODO
     }
 
     public void newDay() {
@@ -153,7 +156,7 @@ public class Game {
                                     (cells[i][j].getAdjacentCells().get(6) != null &&
                                             cells[i][j].getAdjacentCells().get(6).getObject() == plant)) {
 
-                            } else  {
+                            } else {
                                 plant.grow();
                             }
                         }
@@ -336,6 +339,7 @@ public class Game {
 
         return null;
     }
+
     public ArrayList<Dialogue> getDialogues() {
         return dialogues;
     }
@@ -366,7 +370,7 @@ public class Game {
     }
 
     private void updateArtisans() {
-        for (FarmMap map: farmMaps) {
+        for (FarmMap map : farmMaps) {
             for (int i = 0; i < map.getHeight(); i++) {
                 for (int j = 0; j < map.getWidth(); j++) {
                     Cell cell = map.getCell(i, j);
@@ -375,5 +379,105 @@ public class Game {
                 }
             }
         }
+    }
+
+    public String NPCGiftingLevel3() {
+        Random rand = new Random();
+        StringBuilder result = new StringBuilder();
+        result.append("NPC Gifts : \n");
+        for (Player player : players) {
+            for (NPC npc : npcs) {
+                if(!npc.getRelations().containsKey(player)){
+                    npc.getRelations().put(player , new Relation());
+                }
+                Relation relation = npc.getRelations().get(player);
+                if (relation.getLevel() >= 3) {
+                    if (Math.random() < 0.5) {
+                        int choice = rand.nextInt(3);
+                        if (npc.getName().equals("Sebastian")) {
+                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
+                                    .append(" : ");
+                            if (choice == 0) {
+                                result.append("1 * Pizza");
+                                player.getBackpack().addItems(CookingProduct.Pizza, StackLevel.Basic, 1);
+                            } else if (choice == 1) {
+                                result.append("1 * Pumpkin pie");
+                                player.getBackpack().addItems(CookingProduct.PumpkinPie, StackLevel.Basic, 1);
+                            } else if (choice == 2) {
+                                result.append("1 * Wool");
+                                player.getBackpack().addItems(AnimalProduct.Wool, StackLevel.Basic, 1);
+                            }
+                            result.append("\n");
+                        } else if (npc.getName().equals("Abigail")) {
+                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
+                                    .append(" : ");
+                            if (choice == 0) {
+                                result.append("1 * Coffee");
+                                player.getBackpack().addItems(ProcessedProductType.Coffee, StackLevel.Basic, 1);
+                            } else if (choice == 1) {
+                                result.append("1 * Iron ore");
+                                player.getBackpack().addItems(MineralType.IronOre, StackLevel.Basic, 1);
+                            } else if (choice == 2) {
+                                result.append("1 * Stone");
+                                player.getBackpack().addItems(MineralType.Stone, StackLevel.Basic, 1);
+                            }
+                            result.append("\n");
+                        } else if (npc.getName().equals("Harvey")) {
+                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
+                                    .append(" : ");
+                            if (choice == 0) {
+                                result.append("1 * Wine");
+                                int energy = (int) (1.75 * FruitType.Grape.getEnergy());
+                                int price = 3 * FruitType.Grape.getPrice();
+                                player.getBackpack().addItems(new ProcessedProduct(ProcessedProductType.Wine,
+                                        price, energy), StackLevel.Basic, 1);
+                            } else if (choice == 1) {
+                                result.append("1 * Pickle");
+                                int energy = (int) (1.75 * FruitType.Carrot.getEnergy());
+                                int price = 2 * FruitType.Carrot.getPrice() + 50;
+                                player.getBackpack().addItems(new ProcessedProduct(ProcessedProductType.Pickle, price
+                                        , energy), StackLevel.Basic, 1);
+                            } else if (choice == 2) {
+                                result.append("1 * Coffee");
+                            }
+                            result.append("\n");
+                        } else if (npc.getName().equals("Lia")) {
+                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
+                                    .append(" : ");
+                            if (choice == 0) {
+                                result.append("1 * Wine");
+                                int energy = (int) (1.75 * FruitType.Blueberry.getEnergy());
+                                int price = 3 * FruitType.Blueberry.getPrice();
+                                player.getBackpack().addItems(new ProcessedProduct(ProcessedProductType.Wine,
+                                        price, energy), StackLevel.Basic, 1);
+                            } else if (choice == 1) {
+                                result.append("1 * Grape");
+                                player.getBackpack().addItems(FruitType.Grape, StackLevel.Basic, 1);
+                            } else if (choice == 2) {
+                                result.append("1 * Salad");
+                                player.getBackpack().addItems(CookingProduct.Salad, StackLevel.Basic, 1);
+                            }
+                            result.append("\n");
+                        } else if (npc.getName().equals("Robbin")) {
+                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
+                                    .append(" : ");
+                            if (choice == 0) {
+                                result.append("1 * Iron metal bar");
+                                player.getBackpack().addItems(ProcessedProductType.IronMetalBar,
+                                        StackLevel.Basic, 1);
+                            } else if (choice == 1) {
+                                result.append("1 * Wood");
+                                player.getBackpack().addItems(MineralType.Wood, StackLevel.Basic, 1);
+                            } else if (choice == 2) {
+                                result.append("1 * Spaghetti");
+                                player.getBackpack().canAdd(CookingProduct.Spaghetti, StackLevel.Basic, 1);
+                            }
+                            result.append("\n");
+                        }
+                    }
+                }
+            }
+        }
+        return result.toString();
     }
 }

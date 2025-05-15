@@ -62,6 +62,8 @@ public class GameMenuController extends MenuController {
             return;
         }
         view.printString(currentPlayer.getUsername() + "'s turn!");
+        String gifts = App.getCurrentGame().NPCGiftingLevel3();
+        // TODO : In bayad chap she!
         App.setCurrentMenu(currentPlayer.getCurrentMenu());
     }
 
