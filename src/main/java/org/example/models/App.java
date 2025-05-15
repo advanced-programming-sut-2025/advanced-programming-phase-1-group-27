@@ -22,7 +22,8 @@ public class App {
 
     public static void initSecurityQuestions() {
         securityQuestions.add(new SecurityQuestion("2 + 2 = ?", "4"));
-        // TODO: more security questions need to be added
+        securityQuestions.add(new SecurityQuestion("2 * 3 = ?", "6"));
+        securityQuestions.add(new SecurityQuestion("Turk?", "no"));
     }
 
     public static User getLoggedInUser() {

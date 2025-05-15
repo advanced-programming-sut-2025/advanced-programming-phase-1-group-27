@@ -132,6 +132,10 @@ public class Player extends User {
         availableCookingRecipes.add(Recipe.FriedEggRecipe);
         availableCookingRecipes.add(Recipe.BakedFishRecipe);
         availableCookingRecipes.add(Recipe.SaladRecipe);
+        availableCookingRecipes.add(Recipe.PumpkinPieRecipe);
+        availableCookingRecipes.add(Recipe.SpaghettiRecipe);
+        availableCookingRecipes.add(Recipe.FruitSaladRecipe);
+        availableCookingRecipes.add(Recipe.RedPlateRecipe);
     }
 
     public void setCurrentTool(Tool currentTool) {
