@@ -207,6 +207,11 @@ public class GameMenuView extends AppMenu {
                     matcher.group("respond").trim(),
                     matcher.group("username").trim()
             ));
+        }else if((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
+            System.out.println(interactionsWithNPCController.cheatAddLevel(
+                    matcher.group("name").trim(),
+                    matcher.group("level").trim()
+            ));
         }else if((matcher = InteractionsWithUserCommands.StartTrade.getMatcher(input)) != null) {
             System.out.println(controller.startTrade());
         } else if ((matcher = ToolCommands.ToolsEquip.getMatcher(input)) != null) {

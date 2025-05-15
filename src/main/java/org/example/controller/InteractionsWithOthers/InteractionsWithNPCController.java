@@ -159,7 +159,8 @@ public class InteractionsWithNPCController {
                     }
                     result.append("\n");
                 }
-                if (!quests[1].isDone() && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel() > 0) {
+                if (!quests[1].isDone()
+                        && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel() > 0) {
                     result.append("2. ").append(quests[1].getRequest().getQuantity());
                     result.append("*").append(quests[1].getRequest().getItem().getName());
                     result.append(" -> ");
@@ -173,7 +174,8 @@ public class InteractionsWithNPCController {
                     }
                     result.append("\n");
                 }
-                if (!quests[2].isDone() && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel()
+                if (!quests[2].isDone()
+                        && npc.getRelations().get(App.getCurrentGame().getCurrentPlayer()).getLevel()
                         > 0 && canActivateThirdQuest(npc)) {
                     result.append("3. ").append(quests[2].getRequest().getQuantity());
                     result.append("*").append(quests[2].getRequest().getItem().getName());
@@ -321,6 +323,25 @@ public class InteractionsWithNPCController {
 
     private boolean canActivateThirdQuest(NPC npc) {
         int daysPassed = App.getCurrentGame().getTime().getDaysPassed();
-        return npc.getDaysForThirdQuest() >= daysPassed;
+        return npc.getDaysForThirdQuest() <= daysPassed;
+    }
+
+    public Result cheatAddLevel(String NPCName , String amountString){
+        int amount = Integer.parseInt(amountString);
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        NPC npc = findNPC(NPCName);
+        if(npc == null){
+            return new Result(false , "NPC not found!");
+        }
+        if(!npc.getRelations().containsKey(player)){
+            npc.getRelations().put(player , new Relation());
+        }
+        Relation relation = npc.getRelations().get(player);
+        if(relation.getLevel() + amount > 799){
+            return new Result(false , "Level is too high!");
+        }
+        relation.setLevel(relation.getLevel() + amount);
+        int finalAmount = relation.getLevel();
+        return new Result(true , "Level is added! ( " + finalAmount + " )");
     }
 }
