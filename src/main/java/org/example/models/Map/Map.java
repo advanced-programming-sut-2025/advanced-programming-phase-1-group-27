@@ -74,9 +74,11 @@ public class Map {
     }
 
     private void bfs(Cell cell) {
+        par = new Cell[height][width];
         Queue<Cell> queue = new LinkedList<>();
         markedCells.add(cell);
         queue.add(cell);
+        distance.put(cell, 0);
         while (!queue.isEmpty()) {
             Cell current = queue.remove();
             for (Cell adj : current.getAdjacentCells()) {

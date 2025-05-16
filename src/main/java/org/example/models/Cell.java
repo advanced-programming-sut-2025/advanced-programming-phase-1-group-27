@@ -41,10 +41,10 @@ public class Cell {
     }
 
     public boolean isPassable() {
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            if (player.getCurrentCell() == this && player != App.getCurrentGame().getCurrentPlayer())
-                return false;
-        }
+//        for (Player player : App.getCurrentGame().getPlayers()) {
+//            if (player.getCurrentCell() == this && player != App.getCurrentGame().getCurrentPlayer())
+//                return false;
+//        }
         return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View ||
                 cellType == CellType.Door || cellType == CellType.MapLink;
     }

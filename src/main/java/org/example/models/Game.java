@@ -150,7 +150,7 @@ public class Game {
             int energy = player.getDayEnergy();
             if (energy <= 0)
                 continue;
-            if (player.getCurrentMap() instanceof NPCMap npcMap1) {
+            if (player.getCurrentCell().getMap() instanceof NPCMap npcMap1) {
                 Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
                 if (i < 2)
                     passageToFarm = passageToFarm.getAdjacentCells().get(4);
