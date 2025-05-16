@@ -688,28 +688,27 @@ public class GameMenuController extends MenuController {
         Stacks slot = player.getBackpack().getSlotByItemName(foodName);
         if (slot == null)
             return new Result(false, "This item doesn't exist in your inventory!");
-        if (slot.getItem() instanceof CookingProduct) {
-            CookingProduct cookingProduct = (CookingProduct) slot.getItem();
-            player.getBackpack()
+        if (!(slot.getItem() instanceof CookingProduct) &&
+                !(slot.getItem() instanceof ProcessedProduct) &&
+                !(slot.getItem() instanceof FruitType)) {
+            return new Result(false, "Invalid food!");
+        }
+        if (slot.getItem() instanceof FruitType fruit && !fruit.isFruitEdible())
+            return new Result(false, "This item isn't edible!");
+
+        player.getBackpack().reduceItems(slot.getItem(), slot.getStackLevel(), 1);
+        if (slot.getItem() instanceof CookingProduct cookingProduct) {
+            player.addEnergy(cookingProduct.getEnergy());
+            player.removeBuff();
+            player.setBuff(cookingProduct.getBuff());
         }
         else if (slot.getItem() instanceof ProcessedProduct) {
-
+            player.addEnergy(((ProcessedProduct) slot.getItem()).getEnergy());
         }
         else if (slot.getItem() instanceof FruitType) {
-
+            player.addEnergy(((FruitType) slot.getItem()).getEnergy());
         }
-        else
-            return new Result(false, "Invalid food!");
-        CookingProduct cookingProduct = CookingProduct.getItem(foodName);
-        if (cookingProduct == null)
-            return new Result(false, "Invalid food!");
-        if (slot == null)
-            return new Result(false, "This food doesn't exist in inventory!");
-        player.getBackpack().reduceItems(slot.getItem(), 1);
-        player.addEnergy(cookingProduct.getEnergy());
-        player.removeBuff();
-        player.setBuff(cookingProduct.getBuff());
-        return null;
+        return new Result(true, "Yum Yum!");
     }
 
     // Cheats :
