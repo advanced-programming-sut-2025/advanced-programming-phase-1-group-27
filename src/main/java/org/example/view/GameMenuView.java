@@ -223,6 +223,8 @@ public class GameMenuView extends AppMenu {
                     matcher.group("respond").trim(),
                     matcher.group("username").trim()
             ));
+        }else if((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
+            System.out.println(controller.showMoney());
         }else if((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.cheatAddLevel(
                     matcher.group("name").trim(),

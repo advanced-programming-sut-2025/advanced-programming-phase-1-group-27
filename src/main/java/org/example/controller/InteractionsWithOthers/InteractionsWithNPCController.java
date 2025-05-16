@@ -153,7 +153,7 @@ public class InteractionsWithNPCController {
                         result.append(quests[0].getReward().getQuantity());
                         result.append("*").append(quests[0].getReward().getItem().getName());
                     } else { // Abigail give Friendship level
-                        if (npc.getName().equals("Abigail")) {
+                        if (npc.getName().equalsIgnoreCase("Abigail")) {
                             result.append("+1 Friendship level");
                         }
                     }
@@ -168,7 +168,7 @@ public class InteractionsWithNPCController {
                         result.append(quests[1].getReward().getQuantity());
                         result.append("*").append(quests[1].getReward().getItem().getName());
                     } else { // Harvey give Friendship level
-                        if (npc.getName().equals("Harvey")) {
+                        if (npc.getName().equalsIgnoreCase("Harvey")) {
                             result.append("+1 Friendship level");
                         }
                     }
@@ -209,7 +209,7 @@ public class InteractionsWithNPCController {
         }
         Stacks stacks = quests[index].getRequest();
         Backpack backpack = App.getCurrentGame().getCurrentPlayer().getBackpack();
-        if (index == 0 && npc.getName().equals("Harvey")) { // It gets 12 * any plant
+        if (index == 0 && npc.getName().equalsIgnoreCase("Harvey")) { // It gets 12 * any plant
             Ingredient ingredient = new Ingredient(new ArrayList<>(), 12);
             for (CropType cropType : CropType.values()) {
                 ingredient.addPossibleIngredients(cropType.getFruit());
@@ -231,21 +231,21 @@ public class InteractionsWithNPCController {
             //If level is > 1 we get double reward
             ratio = 2;
         }
-        if (index == 0 && npc.getName().equals("Abigail")) {
+        if (index == 0 && npc.getName().equalsIgnoreCase("Abigail")) {
             Relation relation = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer());
             relation.setLevel(Math.min(relation.getLevel() + ratio, 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
-        if (index == 1 && npc.getName().equals("Harvey")) {
+        if (index == 1 && npc.getName().equalsIgnoreCase("Harvey")) {
             Relation relation = npc.getRelations().get(App.getCurrentGame().getCurrentPlayer());
             relation.setLevel(Math.min(relation.getLevel() + ratio, 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
-        if(index == 1 && npc.getName().equals("Lia")) {
+        if(index == 1 && npc.getName().equalsIgnoreCase("Lia")) {
             App.getCurrentGame().getCurrentPlayer().getAvailableCookingRecipes().add(Recipe.SalmonDinnerRecipe);
             return new Result(true, npcName + " : Thank you! (You get 1 * dinner salmon recipe!)");
         }
-        if (index == 2 && npc.getName().equals("Abigail")) {
+        if (index == 2 && npc.getName().equalsIgnoreCase("Abigail")) {
             Stacks deletedStack = null;
             for (Stacks stacks1 : backpack.getItems()) {
                 if (stacks1.getItem().getName().equalsIgnoreCase("IridiumWateringCan")) {
@@ -285,7 +285,7 @@ public class InteractionsWithNPCController {
 
     private NPC findNPC(String npcName) {
         for (NPC npc : App.getCurrentGame().getNPCs()) {
-            if (npc.getName().equals(npcName)) {
+            if (npc.getName().equalsIgnoreCase(npcName)) {
                 return npc;
             }
         }

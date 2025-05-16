@@ -1,5 +1,6 @@
 package org.example.view.shopview;
 
+import org.example.controller.GameMenuController;
 import org.example.controller.shopcontroller.MarnieRanchShopController;
 import org.example.models.App;
 import org.example.models.Result;
@@ -36,14 +37,11 @@ public class MarnieRanch extends AppMenu {
             System.out.println(controller.showCurrentMenu());
         } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
-        }
-        else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
+        } else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
             System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().terminateGame(scanner));
-        }
-        else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
+        } else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
             System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
-        }
-        else if ((matcher = ShopCommands.BuyAnimal.getMatcher(input)) != null) {
+        } else if ((matcher = ShopCommands.BuyAnimal.getMatcher(input)) != null) {
             System.out.println(controller.buyAnimal(matcher.group("animal"), matcher.group("name")));
         } else if ((matcher = ShopCommands.ShowAllProducts.getMatcher(input)) != null) {
             System.out.println(controller.showAllProducts());
@@ -54,23 +52,22 @@ public class MarnieRanch extends AppMenu {
                     matcher.group("productName").trim(),
                     matcher.group("count").trim()
             ));
-        }
-        else if (GameMenuCommands.InventoryShow.getMatcher(input) != null) {
+        } else if ((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
+            GameMenuController gameMenuController = ((GameMenuView) Menu.GameMenu.getMenu()).getController();
+            System.out.println(gameMenuController.showMoney());
+        } else if (GameMenuCommands.InventoryShow.getMatcher(input) != null) {
             System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().inventoryShow());
-        }
-        else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
+        } else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
             System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().inventoryTrash(
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("number").trim())
             ));
-        }
-        else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
+        } else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
             System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().cheatAddItem(
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("count"))
             ));
-        }
-        else {
+        } else {
             System.out.println("Invalid Command.");
         }
     }

@@ -97,7 +97,7 @@ public class JojaMartShopController extends MenuController {
             return new Result(true, "Not enough space in backPack!");
         }
         currentPlayer.spendMoney(stock.getSalePrice() * quantity);
-        App.getCurrentGame().getPierreGeneralStore().reduce(stock.getItem(), quantity);
+        App.getCurrentGame().getJojaMart().reduce(stock.getItem(), quantity);
         currentPlayer.getBackpack().addItems(
                 stock.getItem(),
                 stock.getStackLevel(),

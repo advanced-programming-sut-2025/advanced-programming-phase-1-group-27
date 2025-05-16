@@ -7,7 +7,6 @@ import org.example.models.Result;
 import org.example.models.Stock;
 import org.example.models.enums.Menu;
 import org.example.models.enums.items.Recipe;
-import org.example.view.shopview.PierreGeneralShop;
 import org.example.view.shopview.StardropSaloonShop;
 
 public class StardropSaloonShopController extends MenuController {
