@@ -31,6 +31,7 @@ public enum GameMenuCommands implements MenuCommands {
     InventoryShow("inventory\\s+show"),
     InventoryTrash("inventory\\s+trash\\s+-i\\s+(?<itemName>.+)\\s+-n\\s+(?<number>\\d+)"),
     SellItem("sell\\s+(?<name>\\S.*\\S)(\\s+-n\\s+(?<amount>\\d+))?"),
+    ShowMoney("show\\s+money"),
     Time("time"),
     Date("date"),
     DateTime("datetime"),

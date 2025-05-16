@@ -764,6 +764,11 @@ public class GameMenuController extends MenuController {
         return new Result(true, "Weather set to " + weather.toString() + " Weather!");
     }
 
+    public Result showMoney(){
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        return new Result(true, player.getMoney() + "$");
+    }
+
     public Result cheatThor(String s, String t) {
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
         FarmMap map = App.getCurrentGame().getCurrentPlayer().getFarmMap();

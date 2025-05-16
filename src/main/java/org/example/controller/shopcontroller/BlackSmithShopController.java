@@ -92,24 +92,29 @@ public class BlackSmithShopController extends MenuController {
     }
 
     public Result showAllProducts() {
-        StringBuilder result = new StringBuilder("All Products : \n");
-        for (int i = 0; i < App.getCurrentGame().getPierreGeneralStore().getStock().size(); i++) {
-            Stock stock = App.getCurrentGame().getBlacksmith().getStock().get(i);
-            result.append(i).append(". ").append(stock.getItem().getName()).append(" - ");
-            if (stock.getQuantity() == -1)
+        StringBuilder result = new StringBuilder();
+        result.append("All Products : \n");
+        int i = 1;
+        for (Stock stock : App.getCurrentGame().getBlacksmith().getStock()) {
+            result.append(i).append(" . ").append(stock.getItem().getName()).append(" - ");
+            if (stock.getQuantity() == -1) {
                 result.append("Unlimited");
-            else if (stock.getQuantity() == 0)
-                result.append("Sold out");
-            else
+            } else if (stock.getQuantity() == 0) {
+                result.append("Sold Out");
+            } else {
                 result.append(stock.getQuantity());
-            result.append(" - ").append(stock.getSalePrice()).append("$\n");
+            }
+            result.append(" - ");
+            result.append(stock.getPrice()).append(" $ \n");
+            i++;
         }
+
         return new Result(true, result.toString());
     }
 
     public Result showAllAvailableProducts() {
         StringBuilder result = new StringBuilder("All Available Products: \n");
-        for (int i = 0; i < App.getCurrentGame().getPierreGeneralStore().getStock().size(); i++) {
+        for (int i = 0; i < App.getCurrentGame().getBlacksmith().getStock().size(); i++) {
             Stock stock = App.getCurrentGame().getBlacksmith().getStock().get(i);
             if (stock.getQuantity() == -1) {
                 result.append(i).append(". ").append(stock.getItem().getName()).append(" - ");

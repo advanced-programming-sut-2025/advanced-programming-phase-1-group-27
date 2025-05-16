@@ -72,8 +72,10 @@ public class ToolController {
         currentPlayer.spendMoney(price * ratio);
         backpack.reduceItems(item , 5);
         backpack.upgradeLevel(stack);
+        App.getCurrentGame().getCurrentPlayer().setCurrentTool(null);
         return new Result(true, "You upgraded item!");
     }
+
     public Result ToolsUse(String directionString) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         int direction = Integer.parseInt(directionString);
@@ -175,7 +177,6 @@ public class ToolController {
             tool = new Pickaxe(toolType);
         }
         App.getCurrentGame().getCurrentPlayer().setCurrentTool(tool);
-        //App.getCurrentGame().getCurrentPlayer().setCurrentTool(null);
         return new Result(true , "Tool equipped!");
     }
 
