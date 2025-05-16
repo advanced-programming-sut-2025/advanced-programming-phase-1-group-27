@@ -176,7 +176,10 @@ public class Cell {
                         return "\u001B[48;2;19;138;57m" + "  " + "\u001B[0m";
                 }
                 case MineralType mineralType -> {
-                    return "\u001B[48;5;240m" + "  " + "\u001B[0m";
+                    if (mineralType == MineralType.Coal)
+                        return "\u001B[48;2;18;18;18m" + "  " + "\u001B[0m";
+                    else
+                        return "\u001B[48;5;240m" + "  " + "\u001B[0m";
                 }
                 case NPC npc -> {
                     return "\u001B[34m" + "\u001B[48;2;89;89;89m" +

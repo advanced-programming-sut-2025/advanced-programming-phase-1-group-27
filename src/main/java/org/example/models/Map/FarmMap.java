@@ -133,7 +133,7 @@ public class FarmMap extends Map {
                     foragingCount++;
             }
         }
-        if (foragingCount > 160)
+        if (foragingCount > 110)
             return;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {

@@ -24,6 +24,9 @@ public class FarmMapBuilder {
                 finalProduct.getCell(i, j).setBuilding(hut);
             }
         }
+        for (int j = m - 6; j < m - 2; j++) {
+            finalProduct.getCell(8, j).setType(CellType.View);
+        }
         finalProduct.getCell(7, m - 5).setType(CellType.Door);
         finalProduct.setHut(hut);
     }
