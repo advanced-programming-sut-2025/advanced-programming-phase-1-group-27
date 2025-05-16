@@ -29,6 +29,10 @@ public enum SaplingType implements Item, PlantSourceType {
         return 0;
     }
 
+    public String toString() {
+        return this.name();
+    }
+
     public static SaplingType getItem(String itemName) {
         for (SaplingType saplingtype : values()) {
             if (saplingtype.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {

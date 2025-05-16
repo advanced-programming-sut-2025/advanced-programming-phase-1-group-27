@@ -91,6 +91,10 @@ public enum TreeType implements PlantType {
         return false;
     }
 
+    public String toString() {
+        return this.name();
+    }
+
     public static TreeType getItem(String itemName) {
         for (TreeType item : values()) {
             if (item.toString().equalsIgnoreCase(itemName.replace(" ", ""))) {

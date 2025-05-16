@@ -119,4 +119,8 @@ public enum FruitType implements Item {
         }
         return null;
     }
+
+    public String toString() {
+        return this.name();
+    }
 }

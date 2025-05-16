@@ -12,6 +12,7 @@ public interface PlantType {
     public PlantSourceType getSource();
     public boolean getOneTime();
     public ArrayList<Season> getSeasons();
+    public String toString();
 
     default String getName() {
         return this.toString().replaceAll("([A-Z])", " $1").trim();

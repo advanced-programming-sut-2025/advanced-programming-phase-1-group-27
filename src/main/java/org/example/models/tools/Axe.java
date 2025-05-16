@@ -12,6 +12,8 @@ import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.ToolType;
 import org.example.models.tools.Tool;
 
+import java.util.Random;
+
 public class Axe extends Tool {
     //If usage is failed -1
     //If foraging talent is max -1
@@ -45,13 +47,15 @@ public class Axe extends Tool {
     @Override
     public Result use(Cell cell) {
         Player player = App.getCurrentGame().getCurrentPlayer();
-        if (cell.getObject() instanceof Tree) {
+        if (cell.getObject() instanceof Tree tree) {
             cell.setObject(null);
             cell.setType(CellType.Free);
             player.consumeEnergy(this.getEnergyUsage());
             player.getBackpack().addItems(MineralType.Wood, null, 5);
+            int cnt = new Random().nextInt(2) + 1;
 
-            return new Result(true, "You Cut The Tree!");
+            return new Result(true, "You Cut The Tree! You Got 5 Wood and " +
+                    cnt + " " + tree.getType().getSource() + "(s).");
         }
         return new Result(false, "Not A Tree Here!");
     }

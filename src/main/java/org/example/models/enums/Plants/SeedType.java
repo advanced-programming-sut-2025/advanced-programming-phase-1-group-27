@@ -90,6 +90,10 @@ public enum SeedType implements PlantSourceType, Item {
         return 50;
     }
 
+    public String toString() {
+        return this.name();
+    }
+
     public static SeedType getItem(String itemName) {
         for (SeedType seedType : values()) {
             if (seedType.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {

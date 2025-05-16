@@ -322,10 +322,13 @@ public class GameMenuController extends MenuController {
         Cell[][] cells = cell.getMap().getCells();
         Crop crop = (Crop) cell.getObject();
         CropType type = (CropType) crop.getType();
+        cell = cells[i][j];
+
 
         if (cells[i][j + 1].getObject() instanceof Crop crop1 && crop1.getType() == type &&
                 cells[i + 1][j].getObject() instanceof Crop crop2 && crop2.getType() == type &&
-                cells[i + 1][j + 1].getObject() instanceof Crop crop3 && crop3.getType() == type) {
+                cells[i + 1][j + 1].getObject() instanceof Crop crop3 && crop3.getType() == type &&
+                cells[i][j].getObject() instanceof Crop crop4 && crop4.getType() == type) {
             crop.setGiant(true);
             cells[i + 1][j + 1].setObject(crop);
             cells[i][j + 1].setObject(crop);

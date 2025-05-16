@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface PlantSourceType {
     public PlantType getPlant();
+    public String toString();
 }
