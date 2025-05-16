@@ -58,7 +58,7 @@ public class HomeController extends MenuController {
         player.useRecipe(recipe);
         if (player.getEnergy() < 2) {
             player.consumeEnergy(player.getEnergy());
-            player.getBackpack().reduceItems(recipe.getFinalProduct(), StackLevel.Basic, 1);
+            player.getBackpack().reduceItems(recipe.getFinalProduct(), 1);
             return new Result(false, "Crafting failed! You don't have enough energy!");
         }
         player.consumeEnergy(2);
@@ -123,20 +123,5 @@ public class HomeController extends MenuController {
         }
         player.consumeEnergy(3);
         return new Result(true, itemName + " cooked successfully!");
-    }
-
-    public Result eatFood(String foodName) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
-        Stacks slot = player.getBackpack().getSlotByItemName(foodName);
-        CookingProduct item = CookingProduct.getItem(foodName);
-        if (item == null)
-            return new Result(false, "Invalid food!");
-        if (slot == null)
-            return new Result(false, "This food doesn't exist in inventory!");
-        player.getBackpack().reduceItems(slot.getItem(), slot.getStackLevel(), 1);
-        player.addEnergy(item.getEnergy());
-        player.removeBuff();
-        player.setBuff(item.getBuff());
-        return null;
     }
 }

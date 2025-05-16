@@ -85,6 +85,11 @@ public class GameMenuView extends AppMenu {
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("direction").trim())
             ));
+        }
+        else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
+            System.out.println(controller.eatFood(
+                    matcher.group("itemName").trim()
+            ));
         } else if ((matcher = CheatCommands.CheatAdvanceTime.getMatcher(input)) != null) {
             System.out.println(controller.cheatAdvanceTime(matcher.group("timeString")));
         } else if ((matcher = CheatCommands.CheatAdvanceDate.getMatcher(input)) != null) {
@@ -98,6 +103,12 @@ public class GameMenuView extends AppMenu {
             System.out.println(controller.cheatSetFriendship(matcher.group("name"), matcher.group("amount")));
         } else if ((matcher = CheatCommands.CheatAddMoney.getMatcher(input)) != null) {
             System.out.println(controller.cheatAddMoney(matcher.group("amount")));
+        }
+        else if ((matcher = CheatCommands.CheatSetAbility.getMatcher(input)) != null) {
+            System.out.println(controller.cheatSetAbility(
+                    matcher.group("abilityName").trim(),
+                    Integer.parseInt(matcher.group("level").trim())
+            ));
         } else if ((matcher = GameMenuCommands.CropInfo.getMatcher(input)) != null) {
             System.out.println(controller.cropInfo(matcher.group("cropName")));
         } else if ((matcher = GameMenuCommands.Fishing.getMatcher(input)) != null) {

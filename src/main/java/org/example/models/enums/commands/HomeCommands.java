@@ -8,8 +8,7 @@ public enum HomeCommands {
     CraftItem("crafting\\s+craft\\s+(?<itemName>.+)"),
     PutPickRefrigerator("cooking\\s+refrigerator\\s+(?<function>put|pick)\\s+(?<itemName>.+)"),
     ShowCookingRecipes("cooking\\s+show\\s+recipes"),
-    CookItem("cooking\\s+prepare\\s+(?<itemName>.+)"),
-    EatFood("eat\\s+(?<itemName>.+)");
+    CookItem("cooking\\s+prepare\\s+(?<itemName>.+)");
 
     private final String pattern;
 

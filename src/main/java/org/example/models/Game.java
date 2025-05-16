@@ -98,9 +98,12 @@ public class Game {
     }
 
     public void setAdmin(User user) {
-        for (Player player : players) {
-            if (player.getUsername().equals(user.getUsername()))
-                admin = player;
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getUsername().equals(user.getUsername())) {
+                admin = players.get(i);
+                currentPlayerIndex = i;
+                break;
+            }
         }
     }
 
@@ -341,8 +344,13 @@ public class Game {
     }
 
     public static Item getItemByName(String itemName) {// for cheat commands
+        Item result = ToolType.getItem(itemName);
+        if (result != null)
+            return result;
+
         itemName = itemName.replace(" ", "");
-        Item result = AnimalProduct.getItem(itemName);
+
+        result = AnimalProduct.getItem(itemName);
         if (result != null)
             return result;
 
@@ -382,10 +390,6 @@ public class Game {
             return result;
 
         result = ShopItems.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = ToolType.getItem(itemName);
         if (result != null)
             return result;
 

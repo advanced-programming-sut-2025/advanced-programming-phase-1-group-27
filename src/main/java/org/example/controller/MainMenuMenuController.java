@@ -73,6 +73,7 @@ public class MainMenuMenuController extends MenuController {
             return new Result(false, "There are no game to load!");
         game.setAdmin(user);
         App.setCurrentGame(game);
+        App.setCurrentMenu(game.getCurrentPlayer().getCurrentMenu());
         return new Result(true, "Game loaded!");
     }
 

@@ -57,7 +57,7 @@ public class Backpack extends Tool {
     // This function can only be used if we are sure that there is enough of an item.
     public void reduceItems(Item item, StackLevel level, int amount) {
         for (Stacks stacks : items) {
-            if (stacks.getItem().getName().equalsIgnoreCase(item.getName()) && stacks.getStackLevel() == level) {
+            if (stacks.getItem().equals(item) && stacks.getStackLevel() == level) {
                 if (stacks.getQuantity() < amount) {
                     amount -= stacks.getQuantity();
                     stacks.setQuantity(0);

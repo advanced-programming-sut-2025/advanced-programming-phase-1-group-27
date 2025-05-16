@@ -67,8 +67,8 @@ public class HomeView extends AppMenu {
                     matcher.group("itemName").trim()
             ));
         }
-        else if ((matcher = HomeCommands.EatFood.getMatcher(input)) != null) {
-            System.out.println(controller.eatFood(
+        else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().eatFood(
                     matcher.group("itemName").trim()
             ));
         }

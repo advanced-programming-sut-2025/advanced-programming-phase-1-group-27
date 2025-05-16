@@ -382,19 +382,6 @@ public class Player extends User {
         }
     }
 
-    public String showItems() {
-        // TODO
-        return null;
-    }
-
-    public void trashItem(String itemName, int n) {
-
-    }
-
-    public void trashItem(String itemName) {
-
-    }
-
     public boolean isByWater() {
         for (Cell adjacentCell : currentCell.getAdjacentCells()) {
             if (adjacentCell.getType() == CellType.Water)
@@ -412,17 +399,20 @@ public class Player extends User {
     }
 
     private void removeRecipes(AbilityType type, int level) {
+        if (level > 4)
+            return;
         ArrayList<Recipe> recipes = Ability.getRecipeList(type, level);
         for (Recipe recipe : recipes) {
             if (recipe.getFinalProduct() instanceof CraftingProduct)
                 availableCraftingRecipes.remove(recipe);
             else if (recipe.getFinalProduct() instanceof CookingProduct)
                 availableCookingRecipes.remove(recipe);
-            // TODO
         }
     }
 
     private void addRecipes(AbilityType type, int level) {
+        if (level > 4)
+            return;
         ArrayList<Recipe> recipes = Ability.getRecipeList(type, level);
         for (Recipe recipe : recipes) {
             if (recipe.getFinalProduct() instanceof CraftingProduct)

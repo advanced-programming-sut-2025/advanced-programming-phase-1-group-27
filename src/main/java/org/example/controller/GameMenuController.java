@@ -10,6 +10,7 @@ import org.example.models.enums.Plants.*;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
+import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.view.GameMenuView;
@@ -41,7 +42,7 @@ public class GameMenuController extends MenuController {
 
     public Result exitMenu() {
         Game game = App.getCurrentGame();
-        if (!App.getLoggedInUser().getUsername().equals(game.getAdmin().getUsername()))
+        if (!game.getCurrentPlayer().getUsername().equals(game.getAdmin().getUsername()))
             return new Result(false, "You cannot end this game!");
         App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);
@@ -649,7 +650,7 @@ public class GameMenuController extends MenuController {
         StringBuilder result = new StringBuilder("Your inventory:\n");
         Player player = App.getCurrentGame().getCurrentPlayer();
         for (Stacks slot : player.getBackpack().getItems()) {
-            if (!(slot.getItem() instanceof ToolType) && slot.getItem() instanceof FruitType)
+            if (!(slot.getItem() instanceof ToolType))
                 result.append(slot.getStackLevel().toString()).append(" ");
             result.append(slot.getItem().getName()).append(" ");
             result.append(slot.getQuantity());
@@ -680,6 +681,35 @@ public class GameMenuController extends MenuController {
         player.addMoney(money);
         return new Result(false, numberCopy + " of " + itemName + " moved to trash. " +
                 money + " money earned!");
+    }
+
+    public Result eatFood(String foodName) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        Stacks slot = player.getBackpack().getSlotByItemName(foodName);
+        if (slot == null)
+            return new Result(false, "This item doesn't exist in your inventory!");
+        if (slot.getItem() instanceof CookingProduct) {
+            CookingProduct cookingProduct = (CookingProduct) slot.getItem();
+            player.getBackpack()
+        }
+        else if (slot.getItem() instanceof ProcessedProduct) {
+
+        }
+        else if (slot.getItem() instanceof FruitType) {
+
+        }
+        else
+            return new Result(false, "Invalid food!");
+        CookingProduct cookingProduct = CookingProduct.getItem(foodName);
+        if (cookingProduct == null)
+            return new Result(false, "Invalid food!");
+        if (slot == null)
+            return new Result(false, "This food doesn't exist in inventory!");
+        player.getBackpack().reduceItems(slot.getItem(), 1);
+        player.addEnergy(cookingProduct.getEnergy());
+        player.removeBuff();
+        player.setBuff(cookingProduct.getBuff());
+        return null;
     }
 
     // Cheats :
@@ -775,6 +805,27 @@ public class GameMenuController extends MenuController {
                 "The new time is " + App.getCurrentGame().getTime().getDateTime());
     }
 
+    public Result cheatSetAbility(String abilityName, int level) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        AbilityType type = AbilityType.getAbilityType(abilityName);
+        if (type == null)
+            return new Result(false, "Invalid ability type!");
+        if (level > 4)
+            return new Result(false, "Cannot reach this level!");
+        while (player.getAbility(type).getLevel() < level) {
+            if (type == AbilityType.Farming)
+                player.farmXp(1);
+            else if (type == AbilityType.Mining)
+                player.mineXp(1);
+            else if (type == AbilityType.Fishing)
+                player.fishXp(1);
+            else { // foraging
+                player.forageXp(1);
+            }
+        }
+        return new Result(true, abilityName + " level set to " + level);
+    }
+
     public Result fishing(String fishPoleName) {
         ToolType type = ToolType.getFishPole(fishPoleName);
         if (type == null)
@@ -793,7 +844,7 @@ public class GameMenuController extends MenuController {
             player.consumeEnergy(player.getEnergy());
             return new Result(false, "Fishing failed! You don't have enough energy!");
         }
-        player.consumeEnergy(player.getEnergy());
+        player.consumeEnergy(energyNeeded);
 
         Season currentSeason = App.getCurrentGame().getTime().getSeason();
         ArrayList<FishType> availableFish;
@@ -804,7 +855,9 @@ public class GameMenuController extends MenuController {
         if (player.getAbility(AbilityType.Fishing).getLevel() == 4)
             availableFish.addAll(FishType.getAvailableLegendaryFish(currentSeason));
 
-        int numberOfFish = min(6, getNumberOfFish());
+        int val = getNumberOfFish();
+        System.out.println("VAL:" + val);
+        int numberOfFish = min(6, val);
         ArrayList<Stacks> capturedFish = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < numberOfFish; i++) {
@@ -895,6 +948,7 @@ public class GameMenuController extends MenuController {
             assert user != null;
             user.setMaxMoneyEarned(max(player.getMoney(), user.getMaxMoneyEarned()));
             user.addNumberOfGamesPlayed();
+            user.setCurrentGame(null);
         }
         App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);
@@ -942,10 +996,10 @@ public class GameMenuController extends MenuController {
     }
 
     private int getNumberOfFish() {
-        Random random = new Random( );
+        Random random = new Random();
         return (int) Math.ceil(
                 App.getCurrentGame().getCurrentWeather().getFishingModifier() *
-                random.nextInt() *
+                random.nextDouble() *
                 (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() + 2)
         );
     }
@@ -954,7 +1008,7 @@ public class GameMenuController extends MenuController {
         Random random = new Random( );
         return (ToolType.getFishPoleModifier(type) *
                 (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() + 2) *
-                random.nextInt(2)) / (7.0 - App.getCurrentGame().getCurrentWeather().getFishingModifier());
+                random.nextDouble()) / (7.0 - App.getCurrentGame().getCurrentWeather().getFishingModifier());
     }
 
     private StackLevel getStackLevel(double coefficient) {

@@ -35,7 +35,8 @@ public enum GameMenuCommands implements MenuCommands {
     Date("date"),
     DateTime("datetime"),
     DayOfWeek("day\\s+of\\s+the\\s+week"),
-    Season("season");
+    Season("season"),
+    EatFood("eat\\s+(?<itemName>.+)");
 
     private final String pattern;
 
