@@ -70,7 +70,7 @@ public enum ArtisanTypes {
 
     public static ArtisanTypes getArtisan(Item item) {
         for (ArtisanTypes artisan : ArtisanTypes.values()) {
-            if (artisan.toString().equals(item.getName()))
+            if (artisan.toString().equalsIgnoreCase(item.getName()))
                 return artisan;
         }
         return null;
@@ -92,10 +92,5 @@ public enum ArtisanTypes {
                 return product.getRecipe();
         }
         return null;
-    }
-
-    @Override
-    public String toString() {
-        return this.name().replaceAll("([A-Z])", " $1").trim();
     }
 }

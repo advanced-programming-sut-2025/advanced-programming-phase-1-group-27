@@ -61,6 +61,7 @@ public class GameMenuController extends MenuController {
 
         if (currentPlayer.hasPassedOut())
             return nextTurn(scanner);
+
         App.setCurrentMenu(currentPlayer.getCurrentMenu());
         String result =
                 currentPlayer.getUsername() + "'s turn!\n" +
@@ -579,6 +580,10 @@ public class GameMenuController extends MenuController {
         if (artisanType != null) {
             Artisan artisan = new Artisan(artisanType);
             cell.setObject(artisan);
+            if (artisanType == ArtisanTypes.BeeHouse) {
+                artisan.setFinalProduct(ProcessedProductType.Honey);
+                artisan.setTimeLeft(ProcessedProductType.Honey.getProcessingTime());
+            }
             return new Result(true, "Artisan placed successfully!");
         } else if (item == BuildingType.ShippingBin) {
             cell.setType(CellType.Building);
@@ -826,6 +831,8 @@ public class GameMenuController extends MenuController {
         ArtisanTypes artisanType = ArtisanTypes.getArtisan(artisanName);
         if (artisanType == null)
             return new Result(false, "Artisan name is invalid!");
+        if (artisanType == ArtisanTypes.BeeHouse)
+            return new Result(false, "Bee house doesn't need any ingredient!");
         Artisan artisan = getNearArtisan(artisanType);
         if (artisan == null)
             return new Result(false, "The is no " + artisanName + " nearby!");
@@ -839,6 +846,7 @@ public class GameMenuController extends MenuController {
         if (artisan.getFinalProduct() != null)
             return new Result(false, "Artisan is currently in use!");
 
+        player.useRecipeWithoutAdd(recipe);
         ProcessedProductType finalProduct = (ProcessedProductType) recipe.getFinalProduct();
         if (finalProduct.getPrice() == null) {
             artisan.setFinalProduct(
@@ -863,15 +871,20 @@ public class GameMenuController extends MenuController {
         if (artisan == null)
             return new Result(false, "The is no " + artisanName + " nearby!");
         if (artisan.getFinalProduct() == null)
-            return new Result(false, "This artisan currently has no product!");
+            return new Result(false, "This artisan has no product currently!");
         if (artisan.getTimeLeft() > 0)
             return new Result(false, "You should wait. The product is being prepared!");
         Player player = App.getCurrentGame().getCurrentPlayer();
         if (!player.getBackpack().canAdd(artisan.getFinalProduct(), StackLevel.Basic, 1))
             return new Result(false, "You don't have enough space in your backpack!");
         player.getBackpack().addItems(artisan.getFinalProduct(), StackLevel.Basic, 1);
+        String productName = artisan.getFinalProduct().getName();
         artisan.free();
-        return new Result(true, artisan.getFinalProduct().getName() + " collected successfully!");
+        if (artisanType == ArtisanTypes.BeeHouse) {
+            artisan.setFinalProduct(ProcessedProductType.Honey);
+            artisan.setTimeLeft(ProcessedProductType.Honey.getProcessingTime());
+        }
+        return new Result(true, productName + " collected successfully!");
     }
 
     private void eraseGame() {

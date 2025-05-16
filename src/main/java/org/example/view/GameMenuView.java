@@ -46,7 +46,7 @@ public class GameMenuView extends AppMenu {
         } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
         } else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
-            controller.nextTurn(scanner);
+            System.out.println(controller.nextTurn(scanner));
         } else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
             System.out.println(controller.terminateGame(scanner));
         } else if (GameMenuCommands.ShowWeather.getMatcher(input) != null) {

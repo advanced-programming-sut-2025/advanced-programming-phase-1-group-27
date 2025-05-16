@@ -332,6 +332,13 @@ public class Player extends User {
         backpack.addItems(recipe.getFinalProduct(), StackLevel.Basic, 1);
     }
 
+    public void useRecipeWithoutAdd(Recipe recipe) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            Item item = getAvailableIngredient(ingredient);
+            backpack.reduceItems(item, ingredient.getQuantity());
+        }
+    }
+
     public Item getItemFromBackpack(String itemName) {
         for (Stacks slot : backpack.getItems()) {
             if (slot.getItem().getName().equalsIgnoreCase(itemName))

@@ -126,45 +126,45 @@ public class Game {
 
     public void newDay() {
         // Walking to their houses
-        for (Player player : players) {
-            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
-            Cell currentCell = player.getCurrentCell();
-            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
-            int energy = player.getDayEnergy();
-            if (energy <= 0)
-                continue;
-            if (player.getCurrentMap() instanceof NPCMap npcMap1) {
-                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
-                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
-                        passageToFarm,
-                        energy);
-                energy -= npcMap1.getPathEnergy(currentCell, newDest);
-                player.setCurrentCell(newDest);
-                if (energy <= 0) {
-                    System.out.println(player.getUsername() + " passed out in cell(" +
-                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
-                            ") in the NpcValley, on his way home");
-                    player.consumeEnergy(100000);
-
-                    continue;
-                }
-                player.setCurrentCell((Cell) passageToFarm.getObject());
-            }
-            currentCell = player.getCurrentCell();
-            FarmMap farmMap = player.getFarmMap();
-            Cell newDest = farmMap.getPlaceInPath(currentCell,
-                    destCell,
-                    energy);
-            player.setCurrentCell(newDest);
-            if (newDest != destCell) {
-                System.out.println(player.getUsername() + " passed out in cell(" +
-                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
-                        ") in his Farm, on his way home");
-                player.consumeEnergy(100000);
-            } else {
-                player.setCurrentMenu(Menu.Home);
-            }
-        }
+//        for (Player player : players) {
+//            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
+//            Cell currentCell = player.getCurrentCell();
+//            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
+//            int energy = player.getDayEnergy();
+//            if (energy <= 0)
+//                continue;
+//            if (player.getCurrentMap() instanceof NPCMap npcMap1) {
+//                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
+//                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
+//                        passageToFarm,
+//                        energy);
+//                energy -= npcMap1.getPathEnergy(currentCell, newDest);
+//                player.setCurrentCell(newDest);
+//                if (energy <= 0) {
+//                    System.out.println(player.getUsername() + " passed out in cell(" +
+//                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+//                            ") in the NpcValley, on his way home");
+//                    player.consumeEnergy(100000);
+//
+//                    continue;
+//                }
+//                player.setCurrentCell((Cell) passageToFarm.getObject());
+//            }
+//            currentCell = player.getCurrentCell();
+//            FarmMap farmMap = player.getFarmMap();
+//            Cell newDest = farmMap.getPlaceInPath(currentCell,
+//                    destCell,
+//                    energy);
+//            player.setCurrentCell(newDest);
+//            if (newDest != destCell) {
+//                System.out.println(player.getUsername() + " passed out in cell(" +
+//                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+//                        ") in his Farm, on his way home");
+//                player.consumeEnergy(100000);
+//            } else {
+//                player.setCurrentMenu(Menu.Home);
+//            }
+//        }
 
         // Setting Energies :
         for (Player player : players) {
@@ -314,7 +314,7 @@ public class Game {
     }
 
     public boolean nextPlayer() { // returns true if everyone has played one turn
-        currentPlayerIndex = (currentPlayerIndex + 1) % 4;
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         return players.get(currentPlayerIndex) == admin;
     }
 
@@ -380,6 +380,10 @@ public class Game {
             return result;
 
         result = SaplingType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = FruitType.getItem(itemName);
         if (result != null)
             return result;
 

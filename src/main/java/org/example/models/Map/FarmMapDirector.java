@@ -34,7 +34,7 @@ public class FarmMapDirector {
             App.getCurrentGame().getNpcMap().setPassageToFarmMap(15, 33, builder.getFinalProduct(), 0, 1);
 
         }
-        builder.generateForagingItems();
+//        builder.generateForagingItems();
     }
 
 }

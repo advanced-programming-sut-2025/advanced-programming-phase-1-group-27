@@ -88,7 +88,7 @@ public class Artisan {
 
     public void passHour() {
         if (finalProduct != null) {
-            timeLeft--;
+            timeLeft = Math.max(0, timeLeft - 1);
         }
     }
 }

@@ -224,8 +224,9 @@ public class Backpack extends Tool {
     private boolean hasSameItemType(Stacks slot, Item item) {
         Item slotItem = slot.getItem();
         if (slotItem instanceof ProcessedProduct) {
-            if (item instanceof ProcessedProduct)
+            if (item instanceof ProcessedProduct) {
                 return slotItem.equals(item);
+            }
             return false;
         }
         if (item instanceof ProcessedProduct)
