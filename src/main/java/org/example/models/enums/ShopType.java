@@ -85,7 +85,7 @@ public enum ShopType {
         // creating a copy ...
         ArrayList<Stock> result = new ArrayList<>();
         for (Stock stock : stock.get(season)) {
-            result.add(new Stock(stock.getItem(), stock.getQuantity(), stock.getPrice()));
+            result.add(new Stock(stock.getItem(), stock.getQuantity(), stock.getPrice() , stock.getSaleSeason()));
         }
         return result;
     }

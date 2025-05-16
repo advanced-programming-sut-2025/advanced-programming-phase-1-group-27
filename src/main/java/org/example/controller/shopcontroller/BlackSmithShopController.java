@@ -56,7 +56,7 @@ public class BlackSmithShopController extends MenuController {
                 || toolType == ToolType.DeluxeBackpack) {
             return new Result(false, "You can not upgrade your backpack!");
         }
-        if(toolType == ToolType.MilkPail
+        if (toolType == ToolType.MilkPail
                 || toolType == ToolType.Shear
                 || toolType == ToolType.Scythe) {
             return new Result(false, "You can not upgrade your milk pail or shear or scythe!");
@@ -100,7 +100,7 @@ public class BlackSmithShopController extends MenuController {
             return new Result(false, "Limit reached!");
         }
         Result result = toolController.upgradeTool(toolName);
-        if(!result.success()){
+        if (!result.success()) {
             return new Result(false, result.toString());
         }
         App.getCurrentGame().getBlacksmith().getUpgradeLimit().put(mode, 0);
@@ -150,8 +150,39 @@ public class BlackSmithShopController extends MenuController {
         return new Result(true, result.toString());
     }
 
+    public Result purchase(String productName, String quantityString) {
+        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
+        Stock stock = App.getCurrentGame().getBlacksmith().getStock(productName);
+        if (stock == null) {
+            return new Result(false, "Product not found!");
+        }
+        if (stock.getQuantity() == 0) {
+            return new Result(false, "Product is sold out!");
+        }
+        if (stock.getQuantity() != -1 && stock.getQuantity() < quantity) {
+            return new Result(false, "Not enough product in stock!");
+        }
+        if (App.getCurrentGame().getCurrentPlayer().getMoney() < stock.getSalePrice() * quantity) {
+            return new Result(false, "Not enough money!");
+        }
+        if (!App.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(
+                stock.getItem(),
+                stock.getStackLevel(),
+                quantity)) {
+            return new Result(true, "Not enough space in backPack!");
+        }
+        App.getCurrentGame().getCurrentPlayer().spendMoney(stock.getSalePrice() * quantity);
+        App.getCurrentGame().getBlacksmith().reduce(stock.getItem(), quantity);
+        App.getCurrentGame().getCurrentPlayer().getBackpack().addItems(
+                stock.getItem(),
+                stock.getStackLevel(),
+                quantity);
+        return new Result(true, "You purchased successfully!");
+    }
+
 //    public Result purchase(String productName, String quantityString) {
-//        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
+//        int quantity = Integer.parseInt(quantityString);
+//        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
 //        Stock stock = App.getCurrentGame().getBlacksmith().getStock(productName);
 //        if (stock == null) {
 //            return new Result(false, "Product not found!");
@@ -159,56 +190,25 @@ public class BlackSmithShopController extends MenuController {
 //        if (stock.getQuantity() == 0) {
 //            return new Result(false, "Product is sold out!");
 //        }
-//        if (stock.getQuantity() != -1 && stock.getQuantity() < quantity) {
+//        if (stock.getQuantity() != -1
+//                && stock.getQuantity() < quantity) {
 //            return new Result(false, "Not enough product in stock!");
 //        }
-//        if (App.getCurrentGame().getCurrentPlayer().getMoney() < stock.getSalePrice() * quantity) {
+//        if (currentPlayer.getMoney() < stock.getSalePrice() * quantity) {
 //            return new Result(false, "Not enough money!");
 //        }
-//        if (!App.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(
+//        if (!currentPlayer.getBackpack().canAdd(
 //                stock.getItem(),
 //                stock.getStackLevel(),
 //                quantity)) {
 //            return new Result(true, "Not enough space in backPack!");
 //        }
-//        App.getCurrentGame().getCurrentPlayer().spendMoney(stock.getSalePrice() * quantity);
+//        currentPlayer.spendMoney(stock.getSalePrice() * quantity);
 //        App.getCurrentGame().getBlacksmith().reduce(stock.getItem(), quantity);
-//        App.getCurrentGame().getCurrentPlayer().getBackpack().addItems(
+//        currentPlayer.getBackpack().addItems(
 //                stock.getItem(),
 //                stock.getStackLevel(),
 //                quantity);
 //        return new Result(true, "You purchased successfully!");
 //    }
-
-public Result purchase(String productName , String quantityString) {
-    int quantity = Integer.parseInt(quantityString);
-    Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
-    Stock stock = App.getCurrentGame().getBlacksmith().getStock(productName);
-    if (stock == null) {
-        return new Result(false, "Product not found!");
-    }
-    if (stock.getQuantity() == 0) {
-        return new Result(false, "Product is sold out!");
-    }
-    if (stock.getQuantity() != -1
-            && stock.getQuantity() < quantity) {
-        return new Result(false, "Not enough product in stock!");
-    }
-    if (currentPlayer.getMoney() < stock.getSalePrice() * quantity) {
-        return new Result(false, "Not enough money!");
-    }
-    if (!currentPlayer.getBackpack().canAdd(
-            stock.getItem(),
-            stock.getStackLevel(),
-            quantity)) {
-        return new Result(true, "Not enough space in backPack!");
-    }
-    currentPlayer.spendMoney(stock.getSalePrice() * quantity);
-    App.getCurrentGame().getBlacksmith().reduce(stock.getItem(), quantity);
-    currentPlayer.getBackpack().addItems(
-            stock.getItem(),
-            stock.getStackLevel(),
-            quantity);
-    return new Result(true, "You purchased successfully!");
-}
 }

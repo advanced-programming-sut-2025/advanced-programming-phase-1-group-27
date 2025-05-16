@@ -77,7 +77,8 @@ public class FishShopController extends MenuController {
     }
 
     public Result purchase(String productName, String quantityString) {
-        int quantity = Integer.parseInt(quantityString);
+        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
+        //TODO :
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Stock stock = App.getCurrentGame().getFishShop().getStock(productName);
         if (stock == null) {

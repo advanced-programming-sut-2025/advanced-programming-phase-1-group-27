@@ -174,7 +174,12 @@ public class Player extends User {
     }
 
     public void setBackpack(ToolType backpack) {
-
+        // TODO : Rassa dige chia baladi???
+        Backpack backpack1 = new Backpack(backpack);
+        for(Stacks stack : this.backpack.getItems()){
+            backpack1.addItems(stack.getItem() , stack.getStackLevel() , stack.getQuantity());
+        }
+        this.backpack = backpack1;
     }
 
     public Backpack getRefrigerator() {
