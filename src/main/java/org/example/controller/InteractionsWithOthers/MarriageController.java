@@ -25,13 +25,13 @@ public class MarriageController {
         if (currentPlayer.getGender() == Gender.Female) {
             return new Result(false, "You are not male!!");
         }
-        if (!currentPlayer.isMarried()) {
+        if (currentPlayer.isMarried()) {
             return new Result(false, "You are married!");
         }
         if (player.getGender() == Gender.Male) {
             return new Result(false, "Why are u gay?");
         }
-        if (!player.isMarried()) {
+        if (player.isMarried()) {
             return new Result(false, player.getUsername() + " is married!");
         }
         if (!currentPlayer.canMarried(player)) {
@@ -41,11 +41,31 @@ public class MarriageController {
         if (!backpack.hasEnoughItem(ShopItems.WeddingRing, 2)) {
             return new Result(false, "You don't have 2 wedding rings!");
         }
+        Dialogue dialogue1 = null;
+        for(Dialogue dialogue : player.getDialogues()){
+            if(dialogue.getType() == DialogueType.Marriage){
+                if(dialogue.getSender().getUsername().equals(currentPlayer.getUsername())){
+                    dialogue1 = dialogue;
+                }
+            }
+        }
+        if(dialogue1 != null){
+            return new Result(false, "You are already ask her!");
+        }
         Dialogue dialogue = new Dialogue(DialogueType.Marriage, null, "Will you marry me?"
                 , player, currentPlayer);
         player.addDialogue(dialogue);
         App.getCurrentGame().addDialogue(dialogue);
         return new Result(true, "Wait for her respond!");
+    }
+
+    public Result showCouple(){
+        if(App.getCurrentGame().getCurrentPlayer().getSpouse() == null){
+            return new Result(false, "You are not married");
+        }else {
+            return new Result(true, "You are married with " +
+                    App.getCurrentGame().getCurrentPlayer().getSpouse().getUsername());
+        }
     }
 
     public Result respond(String response, String username) {
@@ -55,7 +75,21 @@ public class MarriageController {
         if (player == null) {
             return new Result(false, "Player not found!");
         }
+        Dialogue dialogue1 = null;
+        for(Dialogue dialogue : currentPlayer.getDialogues()){
+            if(dialogue.getType() == DialogueType.Marriage){
+                if(dialogue.getSender().getUsername().equals(username)){
+                    dialogue1 = dialogue;
+                }
+            }
+        }
+        if(dialogue1 == null){
+            return new Result(false, "You don't have marriage request from " + player.getUsername());
+        }
         if (response.equals("accept")) {
+            if(!player.getBackpack().hasEnoughItem(ShopItems.WeddingRing, 2)) {
+                return new Result(false , username + " doesn't have 2 wedding rings!");
+            }
             player.setSpouse(currentPlayer);
             currentPlayer.setSpouse(player);
             currentPlayer.deleteMarriage();
@@ -67,10 +101,11 @@ public class MarriageController {
             int newMoney = player.getMoney() + currentPlayer.getMoney();
             player.setMoney(newMoney);
             currentPlayer.setMoney(newMoney);
-            return new Result(true, "Congratulations! You married!");
+            return new Result(true, "Congratulations!");
         } else if (response.equals("reject")) {
             player.getRelations().put(currentPlayer, new Relation());
             currentPlayer.getRelations().put(player, new Relation());
+            currentPlayer.deleteDialogue(dialogue1);
             //TODO : sobhan. Energy player bayad ta 7 rooz nesf she!
             return new Result(true, "Unfortunately!");
         } else {
@@ -91,7 +126,7 @@ public class MarriageController {
 
     private Player getPlayerWithUsername(String username) {
         for (Player player : App.getCurrentGame().getPlayers()) {
-            if (player.getUsername().equals(username)) {
+            if (player.getUsername().equalsIgnoreCase(username)) {
                 return player;
             }
         }

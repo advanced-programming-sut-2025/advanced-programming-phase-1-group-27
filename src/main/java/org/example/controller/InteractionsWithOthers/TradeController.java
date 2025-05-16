@@ -233,7 +233,7 @@ public class TradeController extends MenuController {
                     return new Result(false, "You don't have enough items to trade");
                 }
                 if (item2 != null) {
-                    if (playerBackpack.hasEnoughItem(item2, amount2)) {
+                    if (!playerBackpack.hasEnoughItem(item2, amount2)) {
                         return new Result(false, player.getUsername() + " doesn't have " +
                                 "enough items to trade");
                     }
@@ -259,9 +259,11 @@ public class TradeController extends MenuController {
             player.addXP(currentPlayer, 50);
             currentPlayer.addXP(player, 50);
             trade.setRespond("accept");
+            currentPlayer.deleteDialogue(trade);
             return new Result(true, "Trade with id " + id + " accepted");
         } else if (response.equals("reject")) {
             trade.setRespond("reject");
+            currentPlayer.deleteDialogue(trade);
             //Amount?
             player.decreaseXP(currentPlayer, 30);
             currentPlayer.decreaseXP(player, 30);

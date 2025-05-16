@@ -15,9 +15,10 @@ public enum InteractionsWithUserCommands {
     Flower("\\s*flower\\s+-u\\s+(?<username>.+)\\s*"),
     AskMarriage("\\s*ask\\s+marriage\\s+-u\\s+(?<username>.+)\\s+-r\\s+(?<ring>.+)\\s*"),
     Respond("\\s*respond\\s+-(?<respond>accept|reject)\\s+-u\\s+(?<username>.+)\\s*"),
+    ShowCouple("\\s*show\\s+couple\\s*"),
     StartTrade("\\s*start\\s+trade\\s*"),
     Trade("trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>\\d+)" +
-            "(?:\\s+-p\\s+(?<price>\\d+))?(?:\\s+-ti\\s+(?<targetItem>\\S.*\\S)\\s+\\|\\s+-ta\\s+(?<targetAmount>\\d+))?"),
+            "(?:\\s+-p\\s+(?<price>\\d+))?(?:\\s+-ti\\s+(?<targetItem>\\S.*\\S)\\s+-ta\\s+(?<targetAmount>\\d+))?"),
     TradeList("\\s*trade\\s+list\\s*"),
     TradeResponse("trade\\s+response\\s+-(?<response>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*"),
     TradeHistory("trade\\s+history\\s*");

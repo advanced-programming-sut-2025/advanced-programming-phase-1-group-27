@@ -39,6 +39,18 @@ public class Game {
     public Game(ArrayList<Player> players) {
         this.admin = players.getFirst();
         this.players = players;
+        for(Player player : players){
+            for(Player otherPlayer : players){
+                if(otherPlayer.getUsername().equals(player.getUsername())){
+                    continue;
+                }
+                player.getRelations().put(otherPlayer , new Relation());
+                player.getPlayerMetToday().put(otherPlayer , Boolean.FALSE);
+                player.getPlayerHuggedToday().put(otherPlayer , Boolean.FALSE);
+                player.getPlayerGiftToday().put(otherPlayer , Boolean.FALSE);
+                player.getPlayerTradeToday().put(otherPlayer , Boolean.FALSE);
+            }
+        }
     }
 
     public void init() {

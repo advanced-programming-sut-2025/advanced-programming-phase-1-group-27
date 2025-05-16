@@ -43,7 +43,7 @@ public class Player extends User {
     private java.util.Map<NPC, Boolean> npcGiftToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerMetToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerGiftToday = new HashMap<>();
-    private java.util.Map<Player , Boolean> playerHuggedToday = new HashMap<>();
+    private java.util.Map<Player, Boolean> playerHuggedToday = new HashMap<>();
     private java.util.Map<Player, Boolean> playerTradeToday = new HashMap<>();
     private Player spouse = null; // in case the player gets married
     private Buff currentBuff = null;
@@ -61,30 +61,33 @@ public class Player extends User {
     public void refreshNPCThings() {
         npcMetToday.clear();
         npcGiftToday.clear();
-        for(NPC npc : App.getCurrentGame().getNPCs()){
+        for (NPC npc : App.getCurrentGame().getNPCs()) {
             npcMetToday.put(npc, false);
             npcGiftToday.put(npc, false);
         }
     }
 
     public void refreshPlayerThings() {
-        java.util.Map<Player , Boolean> players = new HashMap<>();
+        java.util.Map<Player, Boolean> players = new HashMap<>();
         for (Player player : App.getCurrentGame().getPlayers()) {
-            if(playerMetToday.get(player) == Boolean.TRUE
+            if (player.getUsername().equals(this.getUsername())) {
+                continue;
+            }
+            if (playerMetToday.get(player) == Boolean.TRUE
                     || playerGiftToday.get(player) == Boolean.TRUE
                     || playerHuggedToday.get(player) == Boolean.TRUE
                     || playerTradeToday.get(player) == Boolean.TRUE) {
                 players.put(player, Boolean.TRUE);
-            }else {
+            } else {
                 players.put(player, Boolean.FALSE);
             }
         }
-        for(Player player : App.getCurrentGame().getPlayers()) {
-            if(player == App.getCurrentGame().getCurrentPlayer()) {
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            if (player.getUsername().equals(this.getUsername())) {
                 continue;
-            }else {
-                if(players.get(player) == Boolean.FALSE) {
-                    decreaseXP(player , 10);
+            } else {
+                if (players.get(player) == Boolean.FALSE) {
+                    decreaseXP(player, 10);
                 }
             }
         }
@@ -92,7 +95,7 @@ public class Player extends User {
         playerGiftToday.clear();
         playerHuggedToday.clear();
         playerTradeToday.clear();
-        for(Player player : App.getCurrentGame().getPlayers()){
+        for (Player player : App.getCurrentGame().getPlayers()) {
             playerMetToday.put(player, false);
             playerGiftToday.put(player, false);
             playerHuggedToday.put(player, false);
@@ -441,9 +444,9 @@ public class Player extends User {
         if (xp > max) {
             if (level == 4) {
                 xp = max;
-            }else if (level == 2) {
+            } else if (level == 2) {
                 xp = max;
-            }else if (level == 3) {
+            } else if (level == 3) {
                 xp = max;
             } else {
                 xp -= max;
@@ -454,15 +457,15 @@ public class Player extends User {
     }
 
     public boolean canMarried(Player player) {
-        if(!relations.containsKey(player)){
+        if (!relations.containsKey(player)) {
             relations.put(player, new Relation());
         }
         Relation relation = relations.get(player);
         int level = relation.getLevel();
         int xp = relation.getXp();
         int max = (level + 1) * 100;
-        if(level == 3
-                && xp == max){
+        if (level == 3
+                && xp == max) {
             return true;
         }
         return false;
@@ -472,16 +475,16 @@ public class Player extends User {
         currentMap = map;
     }
 
-    public boolean canFlowered(Player player){
-        if(!relations.containsKey(player)){
+    public boolean canFlowered(Player player) {
+        if (!relations.containsKey(player)) {
             relations.put(player, new Relation());
         }
         Relation relation = relations.get(player);
         int level = relation.getLevel();
         int xp = relation.getXp();
         int max = (level + 1) * 100;
-        if(level == 2
-                && xp == max){
+        if (level == 2
+                && xp == max) {
             return true;
         }
         return false;
@@ -506,7 +509,9 @@ public class Player extends User {
         if (xp < 0) {
             if (level == 0) {
                 xp = 0;
-            }else {
+            } else if (level == 4) {
+                xp = 0;
+            } else {
                 xp += level * 100;
                 level--;
                 relation.setLevel(level);
@@ -527,37 +532,37 @@ public class Player extends User {
         dialogues.add(dialogue);
     }
 
-    public void deleteTalk(){
+    public void deleteTalk() {
         ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
-        for(Dialogue dialogue : dialogues){
-            if(dialogue.getType() == DialogueType.talk){
+        for (Dialogue dialogue : dialogues) {
+            if (dialogue.getType() == DialogueType.talk) {
                 selectedDialogues.add(dialogue);
             }
         }
         dialogues.removeAll(selectedDialogues);
     }
 
-    public void deleteMarriage(){
+    public void deleteMarriage() {
         ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
-        for(Dialogue dialogue : dialogues){
-            if(dialogue.getType() == DialogueType.Marriage){
+        for (Dialogue dialogue : dialogues) {
+            if (dialogue.getType() == DialogueType.Marriage) {
                 selectedDialogues.add(dialogue);
             }
         }
         dialogues.removeAll(selectedDialogues);
     }
 
-    public void deleteTrades(){
+    public void deleteTrades() {
         ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
-        for(Dialogue dialogue : dialogues){
-            if(dialogue.getType() == DialogueType.Trade){
+        for (Dialogue dialogue : dialogues) {
+            if (dialogue.getType() == DialogueType.Trade) {
                 selectedDialogues.add(dialogue);
             }
         }
         dialogues.removeAll(selectedDialogues);
     }
 
-    public boolean isMarried(){
+    public boolean isMarried() {
         return spouse != null;
     }
 

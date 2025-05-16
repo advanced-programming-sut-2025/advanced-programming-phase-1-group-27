@@ -123,7 +123,6 @@ public class InteractionsWithUserController {
         player.getBackpack().addItems(itemType, backpack1.getStackLevel(itemType), amount);
         return new Result(true, "Gift has been send successfully");
     }
-
     public Result giftList() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         StringBuilder result = new StringBuilder();
@@ -265,7 +264,7 @@ public class InteractionsWithUserController {
         String add = "";
         if (currentPlayer.canFlowered(player)) {
             currentPlayer.goNextLevel(player);
-            //player.goNextLevel(currentPlayer);
+            player.goNextLevel(currentPlayer);
             add = "Relation is in level 3";
         }
         return new Result(true, "You have give your friend flower!" + add);
