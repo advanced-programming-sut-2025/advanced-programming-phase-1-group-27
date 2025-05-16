@@ -994,14 +994,15 @@ public class GameMenuController extends MenuController {
             Shop shop = building.getStore();
             if (shop.getShopType() != shopType)
                 return new Result(false, "There is no " + shopName + " nearby!");
+            int hour = App.getCurrentGame().getTime().getHour();
+            if (hour < shopType.getStartTime() || hour > shopType.getEndTime())
+                return new Result(false, "This shop is currently closed!");
+            Menu newMenu = Menu.getMenu(shopName);
+            App.setCurrentMenu(newMenu);
+            player.setCurrentMenu(newMenu);
+            return new Result(true, "Redirecting to " + shopName + " ...");
         }
-        int hour = App.getCurrentGame().getTime().getHour();
-        if (hour < shopType.getStartTime() || hour > shopType.getEndTime())
-            return new Result(false, "This shop is currently closed!");
-        Menu newMenu = Menu.getMenu(shopName);
-        App.setCurrentMenu(newMenu);
-        player.setCurrentMenu(newMenu);
-        return new Result(true, "Redirecting to " + shopName + " ...");
+        return new Result(false, "You should first reach this shop door!");
     }
 
     private Artisan getNearArtisan(ArtisanTypes artisanType) {
