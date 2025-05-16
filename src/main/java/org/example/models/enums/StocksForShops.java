@@ -35,6 +35,7 @@ public enum StocksForShops {
 
         PierreGeneralStoreStock.stock.addAll(getSpringPierreGeneralStoreStock());
         PierreGeneralStoreStock.stock.addAll(getSummerPierreGeneralStoreStock());
+        PierreGeneralStoreStock.stock.addAll(getFallPierreGeneralStoreStock());
     }
 
     StocksForShops(ArrayList<Stock> stock) {
@@ -198,8 +199,10 @@ public enum StocksForShops {
         permanentPierreGeneralStore.add(new Stock(SaplingType.PomegranateSapling, -1, 6000));
         permanentPierreGeneralStore.add(new Stock(ShopItems.BasicRetainingSoil, -1, 100));
         permanentPierreGeneralStore.add(new Stock(ShopItems.QualityRetainingSoil, -1, 150));
-        permanentPierreGeneralStore.add(new Stock(ToolType.LargeBackpack, ToolType.LargeBackpack.getLevel(), 1, 2000));
-        permanentPierreGeneralStore.add(new Stock(ToolType.DeluxeBackpack, ToolType.DeluxeBackpack.getLevel(), 1, 10000));
+        permanentPierreGeneralStore.add(new Stock(ToolType.LargeBackpack, ToolType.LargeBackpack.getLevel(),
+                1, 2000));
+        permanentPierreGeneralStore.add(new Stock(ToolType.DeluxeBackpack, ToolType.DeluxeBackpack.getLevel(),
+                1, 10000));
         return permanentPierreGeneralStore;
     }
 

@@ -4,6 +4,7 @@ import org.example.models.*;
 import org.example.models.NPCs.NPC;
 import org.example.models.NPCs.Quest;
 import org.example.models.Relations.Relation;
+import org.example.models.enums.ArtisanTypes;
 import org.example.models.enums.Features;
 import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.Seasons.Season;
@@ -92,6 +93,9 @@ public class InteractionsWithNPCController {
         }
         if (stack.getItem() instanceof ToolType) {
             return new Result(false, "You can't gift any tool!");
+        }
+        if (ArtisanTypes.getArtisan(stack.getItem().getName()) != null) {
+            return new Result(false, "You can't gift any artisan!");
         }
         if (!isNPCNear(npc, App.getCurrentGame().getCurrentPlayer())) {
             return new Result(false, "NPC is not near you!");
@@ -189,7 +193,7 @@ public class InteractionsWithNPCController {
         NPC npc = findNPC(npcName);
         int index = Integer.parseInt(stringIndex);
         index--;
-        if(index < 0 || index > 2) {
+        if (index < 0 || index > 2) {
             return new Result(false, "Invalid quest index!");
         }
         if (npc == null) {
@@ -236,7 +240,7 @@ public class InteractionsWithNPCController {
             relation.setLevel(Math.min(relation.getLevel() + ratio, 799));
             return new Result(true, npcName + " : Thank you! (You get " + ratio + " friendship level)");
         }
-        if(index == 1 && npc.getName().equalsIgnoreCase("Lia")) {
+        if (index == 1 && npc.getName().equalsIgnoreCase("Lia")) {
             App.getCurrentGame().getCurrentPlayer().getAvailableCookingRecipes().add(Recipe.SalmonDinnerRecipe);
             return new Result(true, npcName + " : Thank you! (You get 1 * dinner salmon recipe!)");
         }
@@ -315,22 +319,22 @@ public class InteractionsWithNPCController {
         return npc.getDaysForThirdQuest() <= daysPassed;
     }
 
-    public Result cheatAddLevel(String NPCName , String amountString){
+    public Result cheatAddLevel(String NPCName, String amountString) {
         int amount = Integer.parseInt(amountString);
         Player player = App.getCurrentGame().getCurrentPlayer();
         NPC npc = findNPC(NPCName);
-        if(npc == null){
-            return new Result(false , "NPC not found!");
+        if (npc == null) {
+            return new Result(false, "NPC not found!");
         }
-        if(!npc.getRelations().containsKey(player)){
-            npc.getRelations().put(player , new Relation());
+        if (!npc.getRelations().containsKey(player)) {
+            npc.getRelations().put(player, new Relation());
         }
         Relation relation = npc.getRelations().get(player);
-        if(relation.getLevel() + amount > 799){
-            return new Result(false , "Level is too high!");
+        if (relation.getLevel() + amount > 799) {
+            return new Result(false, "Level is too high!");
         }
         relation.setLevel(relation.getLevel() + amount);
         int finalAmount = relation.getLevel();
-        return new Result(true , "Level is added! ( " + finalAmount + " )");
+        return new Result(true, "Level is added! ( " + finalAmount + " )");
     }
 }

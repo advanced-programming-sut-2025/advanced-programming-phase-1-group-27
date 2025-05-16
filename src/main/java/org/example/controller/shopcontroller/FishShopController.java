@@ -7,6 +7,7 @@ import org.example.models.Result;
 import org.example.models.Stock;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.Menu;
+import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.Recipe;
 import org.example.models.enums.items.ToolType;
 import org.example.view.shopview.FishShop;
@@ -77,7 +78,16 @@ public class FishShopController extends MenuController {
     }
 
     public Result purchase(String productName, String quantityString) {
-        int quantity = Integer.parseInt(quantityString);
+        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
+        if(productName.equalsIgnoreCase("TrainingRod")){
+            productName = "Training Rod";
+        }else if(productName.equalsIgnoreCase("BambooPole")){
+            productName = "Bamboo Pole";
+        }else if(productName.equalsIgnoreCase("FiberglassRod")){
+            productName = "Fiberglass Rod";
+        }else if(productName.equalsIgnoreCase("IridiumRod")){
+            productName = "Iridium Rod";
+        }
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Stock stock = App.getCurrentGame().getFishShop().getStock(productName);
         if (stock == null) {

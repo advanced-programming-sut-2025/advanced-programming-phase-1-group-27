@@ -12,7 +12,7 @@ public class BlackSmith extends Shop{
     public BlackSmith(ShopType shopType) {
         super(shopType);
         upgradeLimit.put("Copper Tool" , 1);
-        upgradeLimit.put("Steel Tool" , 1);
+        upgradeLimit.put("Iron Tool" , 1);
         upgradeLimit.put("Gold Tool" , 1);
         upgradeLimit.put("Iridium Tool" , 1);
         upgradeLimit.put("Copper Trash Can" , 1);

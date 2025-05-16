@@ -123,7 +123,7 @@ public class MarnieRanchShopController extends MenuController {
     }
 
     public Result purchase(String productName, String quantityString) {
-        int quantity = Integer.parseInt(quantityString);
+        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
         Stock stock = App.getCurrentGame().getMarnieRanch().getStock(productName);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         if (stock == null) {

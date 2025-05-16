@@ -1005,6 +1005,7 @@ public class GameMenuController extends MenuController {
             if (shop.getShopType() != shopType)
                 return new Result(false, "There is no " + shopName + " nearby!");
             int hour = App.getCurrentGame().getTime().getHour();
+            //TODO : Sobhan! time!
             if (hour < shopType.getStartTime() || hour > shopType.getEndTime())
                 return new Result(false, "This shop is currently closed!");
             Menu newMenu = Menu.getMenu(shopName);

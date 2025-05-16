@@ -110,8 +110,8 @@ public class CarpenterShopController extends MenuController {
         return new Result(true, result.toString());
     }
 
-    public Result purchase(String itemName, String quantity) {
-        int amount = Integer.parseInt(quantity);
+    public Result purchase(String itemName, String quantityString) {
+        int amount = quantityString == null? 1 : Integer.parseInt(quantityString);
         int price = 0;
         Player player = App.getCurrentGame().getCurrentPlayer();
         if (itemName.equalsIgnoreCase(MineralType.Wood.getName())) {
