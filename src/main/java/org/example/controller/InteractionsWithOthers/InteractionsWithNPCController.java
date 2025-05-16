@@ -6,20 +6,15 @@ import org.example.models.NPCs.Quest;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.Features;
 import org.example.models.enums.Plants.CropType;
-import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.Recipe;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.enums.items.ToolType;
-import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.models.tools.Backpack;
-import org.example.models.tools.Tool;
-import org.example.models.tools.WateringCan;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InteractionsWithNPCController {
     public Result meetNPC(String npcName) {
@@ -274,13 +269,7 @@ public class InteractionsWithNPCController {
     }
 
     private boolean isNPCNear(NPC npc, Player player) {
-        int playerX = player.getPosition().getX();
-        int playerY = player.getPosition().getY();
-        int npcX = npc.getCurrentPosition().getPosition().getX();
-        int npcY = npc.getCurrentPosition().getPosition().getY();
-        int distanceX = Math.abs(playerX - npcX);
-        int distanceY = Math.abs(playerY - npcY);
-        return distanceY <= 1 && distanceX <= 1;
+        return player.getCurrentCell().getAdjacentCells().contains(npc.getCurrentCell());
     }
 
     private NPC findNPC(String npcName) {

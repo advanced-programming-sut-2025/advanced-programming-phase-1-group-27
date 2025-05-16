@@ -4,7 +4,6 @@ import org.example.models.App;
 import org.example.models.Cell;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.CellType;
-import org.example.models.enums.NPCType;
 
 public class NPCMap extends Map{
 
@@ -46,7 +45,7 @@ public class NPCMap extends Map{
         cells[x + 3][y + 1].setType(CellType.Door);
         npcHouse.setDoor(cells[x + 3][y + 1]);
 
-        npc.setCurrentPosition(cells[x + 4][y + 1]);
+        npc.setCurrentCell(cells[x + 4][y + 1]);
         npc.setHome(npcHouse);
         cells[x + 4][y + 1].setObject(npc);
 

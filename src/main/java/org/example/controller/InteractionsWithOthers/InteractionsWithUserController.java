@@ -271,14 +271,8 @@ public class InteractionsWithUserController {
     }
 
     private boolean isPlayerNear(Player player) {
-        int playerX = player.getPosition().getX();
-        int playerY = player.getPosition().getY();
-        int currentX = App.getCurrentGame().getCurrentPlayer().getPosition().getX();
-        int currentY = App.getCurrentGame().getCurrentPlayer().getPosition().getY();
-        int distanceX = Math.abs(playerX - currentX);
-        int distanceY = Math.abs(playerY - currentY);
-        return distanceY <= 1
-                && distanceX <= 1;
+        return App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells().contains(
+                player.getCurrentCell());
     }
 
     private Player getPlayerWithUsername(String username) {

@@ -13,7 +13,7 @@ import java.util.Map;
 public class NPC {
     private String name;
     private NPCType type;
-    private Cell currentPosition;
+    private Cell currentCell;
     private Features features;
     private ArrayList<Item> favorites;
     private final int daysForThirdQuest;
@@ -25,7 +25,7 @@ public class NPC {
     public NPC(NPCType type, int daysForThirdQuest) {
         this.name = type.getName();
         this.type = type;
-        this.currentPosition = type.getStandingCell();
+        this.currentCell = type.getStandingCell();
         this.features = type.getFeatures();
         this.favorites = type.getFavorite();
         this.daysForThirdQuest = daysForThirdQuest;
@@ -34,8 +34,8 @@ public class NPC {
         this.quests = type.getQuests();
     }
 
-    public Cell getCurrentPosition() {
-        return currentPosition;
+    public Cell getCurrentCell() {
+        return currentCell;
     }
 
     public String getName() {
@@ -109,8 +109,8 @@ public class NPC {
         this.home = home;
     }
 
-    public void setCurrentPosition(Cell currentPosition) {
-        this.currentPosition = currentPosition;
+    public void setCurrentCell(Cell currentCell) {
+        this.currentCell = currentCell;
     }
 
 
