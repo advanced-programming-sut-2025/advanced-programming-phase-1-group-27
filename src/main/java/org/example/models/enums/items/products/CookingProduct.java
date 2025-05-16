@@ -6,38 +6,38 @@ import org.example.models.enums.AbilityType;
 import org.example.models.enums.items.Recipe;
 
 public enum CookingProduct implements Item {
-    FriedEgg(35, Recipe.FriedEggRecipe, null, 50),
-    BakedFish(100, Recipe.BakedFishRecipe, null, 75),
-    Salad(110, Recipe.SaladRecipe, null, 113),
-    Omelette(125, Recipe.OmeletteRecipe, null, 100),
-    PumpkinPie(385, Recipe.PumpkinPieRecipe, null, 225),
-    Spaghetti(120, Recipe.SpaghettiRecipe, null, 75),
-    Pizza(300, Recipe.PizzaRecipe, null, 150),
-    Tortilla(50, Recipe.TortillaRecipe, null, 50),
-    MakiRoll(220, Recipe.MakiRollRecipe, null, 100),
-    TripleShotEspresso(450, Recipe.TortillaRecipe, new Buff(AbilityType.MaxEnergyUltimate, 5), 200),
-    Cookie(140, Recipe.CookieRecipe, null, 90),
-    HashBrowns(120, Recipe.HashbrownsRecipe, new Buff(AbilityType.Farming, 5), 90),
-    Pancakes(80, Recipe.PancakeRecipe, new Buff(AbilityType.Foraging, 11), 90),
-    FruitSalad(450, Recipe.FruitSaladRecipe, null, 263),
-    RedPlate(400, Recipe.RedPlateRecipe, new Buff(AbilityType.MaxEnergyCommunity, 3), 240),
-    Bread(60, Recipe.BreadRecipe, null, 50),
-    SalmonDinner(300, Recipe.SalmonDinnerRecipe, null, 125),
-    VegetableMedley(120, Recipe.VegetableMedleyRecipe, null, 165),
-    FarmersLunch(150, Recipe.FarmerLunchRecipe, new Buff(AbilityType.Farming, 5), 200),
-    SurvivalBurger(180, Recipe.SurvivalBurgerRecipe, new Buff(AbilityType.Foraging, 5), 125),
-    DishOfTheSea(220, Recipe.DishOfTheSeaRecipe, new Buff(AbilityType.Fishing, 5), 150),
-    SeaformPudding(300, Recipe.SeaformPuddingRecipe, new Buff(AbilityType.Fishing, 10), 175),
-    MinersTreat(200, Recipe.MinerTreatRecipe, new Buff(AbilityType.Mining, 5), 125);
+    FriedEgg(35, null, 50),
+    BakedFish(100, null, 75),
+    Salad(110, null, 113),
+    Omelette(125, null, 100),
+    PumpkinPie(385, null, 225),
+    Spaghetti(120, null, 75),
+    Pizza(300, null, 150),
+    Tortilla(50, null, 50),
+    MakiRoll(220, null, 100),
+    TripleShotEspresso(450, new Buff(AbilityType.MaxEnergyUltimate, 5), 200),
+    Cookie(140, null, 90),
+    HashBrowns(120, new Buff(AbilityType.Farming, 5), 90),
+    Pancakes(80, new Buff(AbilityType.Foraging, 11), 90),
+    FruitSalad(450, null, 263),
+    RedPlate(400, new Buff(AbilityType.MaxEnergyCommunity, 3), 240),
+    Bread(60, null, 50),
+    SalmonDinner(300, null, 125),
+    VegetableMedley(120, null, 165),
+    FarmersLunch(150, new Buff(AbilityType.Farming, 5), 200),
+    SurvivalBurger(180, new Buff(AbilityType.Foraging, 5), 125),
+    DishOfTheSea(220, new Buff(AbilityType.Fishing, 5), 150),
+    SeaformPudding(300, new Buff(AbilityType.Fishing, 10), 175),
+    MinersTreat(200, new Buff(AbilityType.Mining, 5), 125);
 
     private final int price;
-    private final Recipe recipe;
+    private Recipe recipe;
     private final Buff buff;
     private final int energy;
 
-    CookingProduct(int price, Recipe recipe, Buff buff, int energy) {
+    CookingProduct(int price, Buff buff, int energy) {
         this.price = price;
-        this.recipe = recipe;
+        this.recipe = null;
         this.buff = buff;
         this.energy = energy;
     }
@@ -57,6 +57,13 @@ public enum CookingProduct implements Item {
     }
 
     public Recipe getRecipe() {
+        if (recipe == null) {
+            for (Recipe recipe : Recipe.values()) {
+                if (recipe.getFinalProduct() == this) {
+                    return this.recipe = recipe;
+                }
+            }
+        }
         return recipe;
     }
 

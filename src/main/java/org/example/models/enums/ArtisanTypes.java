@@ -86,6 +86,8 @@ public enum ArtisanTypes {
 
     public Recipe getRecipe(String[] itemsList) {
         for (ProcessedProductType product : products) {
+            if (product.getRecipe() == null)
+                System.out.println(product.getName());
             if (product.getRecipe().isEqual(itemsList))
                 return product.getRecipe();
         }

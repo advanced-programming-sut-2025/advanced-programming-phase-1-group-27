@@ -3,27 +3,27 @@ package org.example.models.enums.items;
 import org.example.models.Item;
 
 public enum BuildingType implements Item {
-    Barn(6000, 7, 4, 4, Recipe.BarnRecipe),
-    BigBarn(12000, 7, 4, 8, Recipe.BigBarnRecipe),
-    DeluxeBarn(25000, 7, 4, 12, Recipe.DeluxeBarnRecipe),
-    Coop(4000, 6, 3, 4, Recipe.CoopRecipe),
-    BigCoop(10000, 6, 3, 8, Recipe.BigCoopRecipe),
-    DeluxeCoop(20000, 6, 3, 12, Recipe.DeluxeCoopRecipe),
-    Well(1000, 3, 3, null, Recipe.WellRecipe),
-    ShippingBin(250, 1, 1, null, Recipe.ShippingBinRecipe);
+    Barn(6000, 7, 4, 4),
+    BigBarn(12000, 7, 4, 8),
+    DeluxeBarn(25000, 7, 4, 12),
+    Coop(4000, 6, 3, 4),
+    BigCoop(10000, 6, 3, 8),
+    DeluxeCoop(20000, 6, 3, 12),
+    Well(1000, 3, 3, null),
+    ShippingBin(250, 1, 1, null);
 
     private final int price;
     private final int width;
     private final int height;
     private final Integer capacity;
-    private final Recipe recipe;
+    private Recipe recipe;
 
-    BuildingType(int price, int width, int height, Integer capacity, Recipe recipe) {
+    BuildingType(int price, int width, int height, Integer capacity) {
         this.price = price;
         this.width = width;
         this.height = height;
         this.capacity = capacity;
-        this.recipe = recipe;
+        this.recipe = null;
     }
 
     public int getWidth() {
@@ -39,6 +39,13 @@ public enum BuildingType implements Item {
     }
 
     public Recipe getRecipe() {
+        if (recipe == null) {
+            for (Recipe recipe : Recipe.values()) {
+                if (recipe.getFinalProduct() == this) {
+                    return this.recipe = recipe;
+                }
+            }
+        }
         return recipe;
     }
 

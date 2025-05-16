@@ -24,6 +24,7 @@ public class App {
         securityQuestions.add(new SecurityQuestion("2 + 2 = ?", "4"));
         securityQuestions.add(new SecurityQuestion("2 * 3 = ?", "6"));
         securityQuestions.add(new SecurityQuestion("Turk?", "no"));
+        securityQuestions.add(new SecurityQuestion("Pass misham?", "nmd"));
     }
 
     public static User getLoggedInUser() {

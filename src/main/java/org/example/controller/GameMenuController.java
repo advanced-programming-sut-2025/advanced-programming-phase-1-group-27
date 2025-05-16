@@ -562,9 +562,9 @@ public class GameMenuController extends MenuController {
         Item item = player.getItemFromBackpack(itemName);
         if (item == null)
             return new Result(false, "Item not found in backpack!");
-        if (direction < 1 || direction > 8)
+        if (direction < 0 || direction > 7)
             return new Result(false, "Invalid direction!");
-        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction - 1);
+        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
 
         if (cell == null || cell.getType() != CellType.Free || cell.getObject() != null ||
                 !(cell.getMap() instanceof FarmMap))

@@ -96,7 +96,6 @@ public class MainMenuMenuController extends MenuController {
             if (!result.success())
                 continue;
             mapId = Integer.parseInt(result.message());
-            --mapId;
             for (Player thisPlayer : game.getPlayers()) {
                 if (thisPlayer.getFarmMap() != null && thisPlayer.getFarmMap() == game.getFarmMap(mapId))
                     result = new Result(false, "");
