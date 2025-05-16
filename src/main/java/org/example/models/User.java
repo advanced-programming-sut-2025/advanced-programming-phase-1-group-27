@@ -97,6 +97,10 @@ public class User {
         return numberOfGamesPlayed;
     }
 
+    public void addNumberOfGamesPlayed() {
+        numberOfGamesPlayed++;
+    }
+
     public void setNumberOfGamesPlayed(int numberOfGamesPlayed) {
         this.numberOfGamesPlayed = numberOfGamesPlayed;
     }

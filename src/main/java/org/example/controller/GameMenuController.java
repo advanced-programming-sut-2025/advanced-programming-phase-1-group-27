@@ -562,9 +562,9 @@ public class GameMenuController extends MenuController {
         Item item = player.getItemFromBackpack(itemName);
         if (item == null)
             return new Result(false, "Item not found in backpack!");
-        if (direction < 1 || direction > 7)
+        if (direction < 1 || direction > 8)
             return new Result(false, "Invalid direction!");
-        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
+        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction - 1);
 
         if (cell == null || cell.getType() != CellType.Free || cell.getObject() != null ||
                 !(cell.getMap() instanceof FarmMap))
@@ -644,7 +644,7 @@ public class GameMenuController extends MenuController {
         StringBuilder result = new StringBuilder("Your inventory:\n");
         Player player = App.getCurrentGame().getCurrentPlayer();
         for (Stacks slot : player.getBackpack().getItems()) {
-            if (!(slot.getItem() instanceof ToolType))
+            if (!(slot.getItem() instanceof ToolType) && slot.getItem() instanceof FruitType)
                 result.append(slot.getStackLevel().toString()).append(" ");
             result.append(slot.getItem().getName()).append(" ");
             result.append(slot.getQuantity());
@@ -690,7 +690,7 @@ public class GameMenuController extends MenuController {
         if (!player.getBackpack().canAdd(item, level, count))
             return new Result(false, "You don't have enough space in your backpack!");
         player.getBackpack().addItems(item, level, count);
-        return new Result(true, count + " of " + itemName + "added to the backpack!");
+        return new Result(true, count + " of " + itemName + " added to the backpack!");
     }
 
     public Result cheatSetWeather(String weatherString) {
@@ -881,6 +881,7 @@ public class GameMenuController extends MenuController {
             User user = App.getUserByUsername(player.getUsername());
             assert user != null;
             user.setMaxMoneyEarned(max(player.getMoney(), user.getMaxMoneyEarned()));
+            user.addNumberOfGamesPlayed();
         }
         App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);

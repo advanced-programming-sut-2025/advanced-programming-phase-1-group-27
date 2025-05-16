@@ -80,7 +80,7 @@ public class LoginMenu extends AppMenu {
     }
 
     public Result pickQuestion(Scanner scanner) {
-        System.out.println("Pick one question: \n");
+        System.out.println("Pick one question: ");
         String input = scanner.nextLine().trim();
         return controller.checkAnswer(LoginMenuCommands.PickQuestion.getMatcher(input));
     }

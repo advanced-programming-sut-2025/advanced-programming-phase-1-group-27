@@ -8,10 +8,7 @@ public enum ProfileMenuCommands implements MenuCommands {
     ChangeNickname("change\\s+nickname\\s+-u\\s+(?<nickname>.+)"),
     ChangeEmail("change\\s+email\\s+-e\\s+(?<email>.+)"),
     ChangePassword("change\\s+password\\s+-p\\s+(?<newPassword>.+)\\s+-o\\s+(?<oldPassword>.+)"),
-    UserInfo("user\\s+info"),
-    EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
-    ExitMenu("menu\\s+exit"),
-    ShowCurrentMenu("show\\s+current\\s+menu");
+    UserInfo("user\\s+info");
 
     private final String pattern;
 

@@ -1,6 +1,7 @@
 package org.example.view.menu;
 
 import org.example.controller.ProfileMenuController;
+import org.example.models.enums.commands.MainMenuCommands;
 import org.example.models.enums.commands.ProfileMenuCommands;
 import org.example.models.Result;
 import org.example.view.AppMenu;
@@ -18,13 +19,13 @@ public class ProfileMenu extends AppMenu {
     public void executeCommands(Scanner scanner) {
         String input = scanner.nextLine().trim();
         Matcher matcher;
-        if ((matcher = ProfileMenuCommands.EnterMenu.getMatcher(input)) != null) {
+        if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
         }
-        else if (ProfileMenuCommands.ExitMenu.getMatcher(input) != null) {
+        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
         }
-        else if (ProfileMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
         }
         else if ((matcher = ProfileMenuCommands.ChangeUsername.getMatcher(input)) != null) {

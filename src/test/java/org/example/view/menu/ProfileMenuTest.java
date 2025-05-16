@@ -68,6 +68,7 @@ public class ProfileMenuTest {
         result = profileMenuController.changeUsername("newUsername");
         assertTrue(result.success());
         assertEquals("Username successfully changed!", result.message());
+        assertEquals("newUsername", App.getLoggedInUser().getUsername());
     }
 
     @Test
@@ -110,6 +111,7 @@ public class ProfileMenuTest {
         // successful password change
         result = profileMenuController.changePassword("123Test!", "123Pass!");
         assertTrue(result.success());
+        assertEquals("Password changed successfully!", result.message());
         assertTrue(App.getLoggedInUser().passwordEquals("123Pass!"));
     }
 
@@ -124,6 +126,7 @@ public class ProfileMenuTest {
         result = profileMenuController.changeNickname("newNickname");
         assertTrue(result.success());
         assertEquals("Nickname changed successfully!", result.message());
+        assertEquals("newNickname", App.getLoggedInUser().getNickname());
     }
 
     @Test
@@ -183,6 +186,7 @@ public class ProfileMenuTest {
         result = profileMenuController.changeEmail("new_email@gmail.com");
         assertTrue(result.success());
         assertEquals("Email changed successfully!", result.message());
+        assertEquals("new_email@gmail.com", App.getLoggedInUser().getEmail());
     }
 
     private static void registerUser(User user) {

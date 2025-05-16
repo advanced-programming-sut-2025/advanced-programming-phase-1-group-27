@@ -78,7 +78,7 @@ public enum ArtisanTypes {
 
     public static ArtisanTypes getArtisan(String artisanName) {
         for (ArtisanTypes artisan : ArtisanTypes.values()) {
-            if (artisan.toString().equals(artisanName))
+            if (artisan.toString().equalsIgnoreCase(artisanName))
                 return artisan;
         }
         return null;

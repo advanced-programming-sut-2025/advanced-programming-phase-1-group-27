@@ -51,9 +51,7 @@ public class HomeController extends MenuController {
         Recipe recipe = Recipe.getRecipe(item);
         if (!player.getAvailableCraftingRecipes().contains(recipe))
             return new Result(false, "You don't have this recipe!");
-        if (player.getEnergy() < 2)
-            return new Result(false, "You don't have enough energy to craft " + itemName);
-        if (player.getBackpack().canAdd(recipe.getFinalProduct(), StackLevel.Basic, 1))
+        if (!player.getBackpack().canAdd(recipe.getFinalProduct(), StackLevel.Basic, 1))
             return new Result(false, "Your backpack is full!");
         if (!player.hasEnoughIngredients(recipe))
             return new Result(false, "You don't have enough ingredients!");
@@ -113,7 +111,7 @@ public class HomeController extends MenuController {
         Recipe recipe = Recipe.getRecipe(item);
         if (!player.getAvailableCookingRecipes().contains(recipe))
             return new Result(false, "You don't have this recipe!");
-        if (player.getBackpack().canAdd(recipe.getFinalProduct(), StackLevel.Basic, 1))
+        if (!player.getBackpack().canAdd(recipe.getFinalProduct(), StackLevel.Basic, 1))
             return new Result(false, "Your backpack is full!");
         if (!player.hasEnoughIngredients(recipe))
             return new Result(false, "You don't have enough ingredients!");

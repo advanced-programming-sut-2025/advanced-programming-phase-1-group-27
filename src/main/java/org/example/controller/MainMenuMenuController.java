@@ -20,6 +20,8 @@ public class MainMenuMenuController extends MenuController {
             return new Result(false, "menu doesn't exist!");
         if (newMenu == Menu.LoginMenu)
             return new Result(false, "you should logout to enter this menu!");
+        if (newMenu != Menu.ProfileMenu)
+            return new Result(false, "Can't enter this menu!");
         App.setCurrentMenu(newMenu);
         return new Result(true, "Redirecting to " + newMenu + " ...");
     }
@@ -86,14 +88,17 @@ public class MainMenuMenuController extends MenuController {
     }
 
     private void getPlayerMap(Player player, Game game, Scanner scanner) {
-        view.printString("Choosing " + player.getUsername() + "'s map:");
         Result result;
-        int mapId;
+        int mapId = 1;
         do {
+            view.printString("Choosing " + player.getUsername() + "'s map:");
             result = view.inputMap(scanner);
-            mapId = result.success()? Integer.parseInt(result.message()): -1;
+            if (!result.success())
+                continue;
+            mapId = Integer.parseInt(result.message());
+            --mapId;
             for (Player thisPlayer : game.getPlayers()) {
-                if (thisPlayer.getCurrentMap() != null && thisPlayer.getCurrentMap() == game.getFarmMap(mapId))
+                if (thisPlayer.getFarmMap() != null && thisPlayer.getFarmMap() == game.getFarmMap(mapId))
                     result = new Result(false, "");
             }
         } while (!result.success());

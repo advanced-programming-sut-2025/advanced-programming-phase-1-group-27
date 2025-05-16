@@ -5,12 +5,12 @@ import java.util.regex.Pattern;
 
 public enum LoginMenuCommands implements MenuCommands {
     Register("register\\s+-u\\s+(?<username>.+)\\s+" +
-            "-p\\s+(?<password>.+)\\s+(?<reEnteredPassword>.+)\\s+" +
+            "-p\\s+(?<password>\\S+)\\s+(?<reEnteredPassword>\\S+)\\s+" +
             "-n\\s+(?<nickname>.+)\\s+" +
             "-e\\s+(?<email>.+)\\s+" +
             "-g\\s+(?<gender>.+)"),
     PickQuestion("pick\\s+question\\s+-q\\s+(?<questionId>-?\\d+)\\s+-a\\s+(?<answer>.+)\\s+-c\\s+(?<reenteredAnswer>.+)"),
-    Login("login\\s+-u\\s+(?<username>.+)\\s+-p\\s+(?<password>.+)(?:\\s+(?<stay>--stay-logged-in))?"),
+    Login("login\\s+-u\\s+(?<username>.+)\\s+-p\\s+(?<password>\\S+)(?:\\s+(?<stay>--stay-logged-in))?"),
     ForgetPassword("forget\\s+password\\s+-u\\s+(?<username>.+)"),
     AnswerQuestion("answer\\s+-a\\s+(?<answer>.+)"),
     EnterMenu("menu\\s+enter\\s+(?<menuName>.+)"),
