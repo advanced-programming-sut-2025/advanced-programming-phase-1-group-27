@@ -2,14 +2,13 @@ package org.example.models.enums.Plants;
 
 import org.example.models.Cell;
 import org.example.models.Stacks;
-import org.example.models.enums.CellType;
 
 public abstract class Plant {
     protected boolean isGiant = false;
     protected PlantType type;
     protected int cnt = 0, currentStage = 0, tillNextHarvest;
     protected Cell cell;
-    protected boolean wateredYesterday = true, wateredToday = false, isForaging = false;
+    protected boolean wateredYesterday = true, wateredToday = false, isForaging = false, alwaysWatered = false;
     //...
 
     protected Plant(PlantType type) {
@@ -73,7 +72,11 @@ public abstract class Plant {
     }
 
     public boolean getWateredToday() {
-        return wateredToday;
+        return wateredToday | alwaysWatered;
+    }
+
+    public void setAlwaysWatered(boolean alwaysWatered) {
+        this.alwaysWatered = alwaysWatered;
     }
 
     public boolean isGiant() {

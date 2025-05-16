@@ -713,6 +713,26 @@ public class GameMenuController extends MenuController {
         return new Result(true, "Yum Yum!");
     }
 
+    public Result fertilize(String fertilizerName, String directionString) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        int direction = Integer.parseInt(directionString);
+        if (direction > 7 || direction < 0 || player.getCurrentCell().getAdjacentCells().get(direction) == null)
+            return new Result(false, "Invalid direction!");
+        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
+        if (!(cell.getObject() instanceof Plant plant))
+            return new Result(false, "There is not a plant in this cell!");
+        if (fertilizerName.replaceAll("\\s", "").equalsIgnoreCase(ShopItems.SpeedGro.name())) {
+            plant.setTillNextHarvest(max(plant.getTillNextHarvest() - 1, 0));
+            return new Result(true, "The selected plant will bear fruit sooner!");
+        } else if (fertilizerName.replaceAll("\\s", "").equalsIgnoreCase(
+                ShopItems.DeluxeRetainingSoil.name())) {
+            plant.setAlwaysWatered(true);
+            return new Result(true, "The selected plant will never need water!");
+        } else {
+            return new Result(false, "Invalid fertilizer!");
+        }
+    }
+
     // Cheats :
 
     public Result cheatAddItem(String itemName, int count) {

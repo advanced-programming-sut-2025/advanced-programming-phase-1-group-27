@@ -161,6 +161,7 @@ public class Game {
                         energy);
                 energy -= npcMap1.getPathEnergy(currentCell, newDest);
                 player.setCurrentCell(newDest);
+
                 if (energy <= 0) {
                     System.out.println(player.getUsername() + " passed out in cell(" +
                             newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
@@ -170,6 +171,7 @@ public class Game {
                     continue;
                 }
                 player.setCurrentCell((Cell) passageToFarm.getObject());
+                player.setCurrentMap(player.getFarmMap());
             }
             currentCell = player.getCurrentCell();
             FarmMap farmMap = player.getFarmMap();
