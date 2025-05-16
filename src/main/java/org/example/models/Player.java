@@ -257,11 +257,13 @@ public class Player extends User {
     }
 
     public void setEnergy(int energy) {
-        this.energy = energy;
+        this.energy = this.dayEnergy = energy;
     }
 
     public void addEnergy(int amount) {
-        energy += amount;
+        int val = Math.min(maxEnergy - dayEnergy, amount);
+        energy += val;
+        dayEnergy += val;
     }
 
     public void setMaxEnergy(int maxEnergy) {

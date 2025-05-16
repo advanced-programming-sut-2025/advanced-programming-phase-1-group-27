@@ -23,10 +23,10 @@ public enum FishType implements Item {
     Dorado(100, Season.Summer, false , 100),
     Sunfish(30, Season.Summer, false , 30),
     RainbowTrout(65, Season.Summer, false , 65),
-    Legend(5000, Season.Spring, true , 5000),
-    Glacierfish(1000, Season.Winter, true , 1000),
-    Angler(900, Season.Fall, true , 900),
-    Crimsonfish(1500, Season.Summer, true , 1500);
+    Legend(5000, Season.Spring, true , 500),
+    Glacierfish(1000, Season.Winter, true , 200),
+    Angler(900, Season.Fall, true , 200),
+    Crimsonfish(1500, Season.Summer, true , 250);
 
     private final int price;
     private final int energy;

@@ -657,7 +657,7 @@ public class GameMenuController extends MenuController {
         StringBuilder result = new StringBuilder("Your inventory:\n");
         Player player = App.getCurrentGame().getCurrentPlayer();
         for (Stacks slot : player.getBackpack().getItems()) {
-            if (!(slot.getItem() instanceof ToolType))
+            if (slot.getItem() instanceof FruitType || slot.getItem() instanceof FishType)
                 result.append(slot.getStackLevel().toString()).append(" ");
             result.append(slot.getItem().getName()).append(" ");
             result.append(slot.getQuantity());

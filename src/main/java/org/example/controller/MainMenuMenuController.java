@@ -43,6 +43,13 @@ public class MainMenuMenuController extends MenuController {
             if (user == null)
                 return new Result(false, "Username not found!");
         }
+        for (int i = 0; i < users.size(); i++) {
+            for (int j = i + 1; j < users.size(); j++) {
+                if (users.get(i).equals(users.get(j))) {
+                    return new Result(false, "Duplicate username found!");
+                }
+            }
+        }
         if (users.getFirst().getCurrentGame() != null)
             return new Result(false, "You are already in a game!");
         for (int i = 1; i < users.size(); i++) {
@@ -50,6 +57,7 @@ public class MainMenuMenuController extends MenuController {
                 return new Result(false, "User is already in a game!");
         }
         ArrayList<Player> players = new ArrayList<>();
+
         for (User user : users) {
             players.add(new Player(user));
         }
