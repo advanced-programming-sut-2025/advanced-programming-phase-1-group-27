@@ -624,6 +624,8 @@ public class GameMenuController extends MenuController {
         int amount = (amountString == null? 10000000: Integer.parseInt(amountString));
         Player player = App.getCurrentGame().getCurrentPlayer();
         Item item = player.getItemFromBackpack(itemName);
+        if (item instanceof ToolType || ArtisanTypes.getArtisan(item) != null)
+            return new Result(false, "You cant sell tools!");
         ShippingBin shippingBin = null;
         for (Cell cell: player.getCurrentCell().getAdjacentCells())
             if (cell.getType() == CellType.Building && cell.getBuilding() instanceof ShippingBin)

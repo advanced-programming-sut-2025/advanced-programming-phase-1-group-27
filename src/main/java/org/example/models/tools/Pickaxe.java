@@ -54,6 +54,9 @@ public class Pickaxe extends Tool{
                     player.consumeEnergy(this.getEnergyUsage());
                     cell.setObject(null);
                     player.getBackpack().addItems(mineralType, null, 5);
+                    if (player.getAbility(AbilityType.Mining).getLevel() >= 2)
+                        player.getBackpack().addItems(mineralType, null, 5);
+
                     
                     player.mineXp(10);
                     return new Result(true, "You Extracted A " + (mineralType).getName() +
@@ -68,6 +71,8 @@ public class Pickaxe extends Tool{
                     player.consumeEnergy(this.getEnergyUsage());
                     cell.setObject(null);
                     player.getBackpack().addItems(mineralType, null, 5);
+                    if (player.getAbility(AbilityType.Mining).getLevel() >= 2)
+                        player.getBackpack().addItems(mineralType, null, 5);
 
                     player.mineXp(10);
                     return new Result(true, "You Extracted A " + mineralType.getName() +
@@ -80,6 +85,8 @@ public class Pickaxe extends Tool{
                 player.consumeEnergy(this.getEnergyUsage());
                 cell.setObject(null);
                 player.getBackpack().addItems(mineralType, null, 5);
+                if (player.getAbility(AbilityType.Mining).getLevel() >= 2)
+                    player.getBackpack().addItems(mineralType, null, 5);
 
                 player.mineXp(10);
                 return new Result(true, "You Extracted A " + mineralType.getName());

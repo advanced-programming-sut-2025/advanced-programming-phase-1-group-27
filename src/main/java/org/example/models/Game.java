@@ -140,6 +140,12 @@ public class Game {
     }
 
     public void newDay() {
+        // Emptying shipping bin
+        for (Player player : players) {
+            for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
+                player.addMoney(shippingBin.refresh());
+            }
+        }
         // Walking to their houses
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);

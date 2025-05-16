@@ -1,5 +1,6 @@
 package org.example.models.tools;
 
+import org.example.models.App;
 import org.example.models.Cell;
 import org.example.models.Result;
 import org.example.models.enums.StackLevel;
@@ -19,7 +20,7 @@ public abstract class Tool{
     }
 
     protected int getEnergyUsage(){
-        return energyUsage;
+        return (int) ((double) energyUsage * App.getCurrentGame().getCurrentWeather().getToolEnergyModifier());
     }
 
     public StackLevel getLevel() {
