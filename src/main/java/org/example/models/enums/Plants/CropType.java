@@ -7,196 +7,196 @@ import java.util.HashMap;
 import java.util.List;
 
 public enum CropType implements PlantType {
-    BlueJazz(FruitType.BlueJazz, new int[]{1, 2, 2, 2}, 50, SeedType.JazzSeed, 7
+    BlueJazz(FruitType.BlueJazz, new int[]{1, 2, 2, 2}, 50, 7
             , null, 45, true, true, false
             , new Season[]{Season.Spring}),
-    Carrot(FruitType.Carrot, new int[]{1, 1, 1}, 35, SeedType.CarrotSeed, 3
+    Carrot(FruitType.Carrot, new int[]{1, 1, 1}, 35, 3
             , null, 75, true, true, false
             , new Season[]{Season.Spring}),
-    Cauliflower(FruitType.Cauliflower, new int[]{1, 2, 4, 4, 1}, 175, SeedType.CauliflowerSeed, 12
+    Cauliflower(FruitType.Cauliflower, new int[]{1, 2, 4, 4, 1}, 175, 12
             , null, 75, true, true, true
             , new Season[]{Season.Spring}),
-    CoffeeBean(FruitType.CoffeeBean, new int[]{1, 2, 2, 3, 2}, 15, SeedType.CoffeeBean, 10
+    CoffeeBean(FruitType.CoffeeBean, new int[]{1, 2, 2, 3, 2}, 15, 10
             , 2, 0, false, false, false
             , new Season[]{Season.Spring, Season.Summer}),
-    Garlic(FruitType.Garlic, new int[]{1, 1, 1, 1}, 60, SeedType.GarlicSeed, 4
+    Garlic(FruitType.Garlic, new int[]{1, 1, 1, 1}, 60, 4
             , null, 20, true, true, false
             , new Season[]{Season.Spring}),
-    GreenBean(FruitType.GreenBean, new int[]{1, 1, 1, 3, 4}, 40, SeedType.BeanStarter, 10
+    GreenBean(FruitType.GreenBean, new int[]{1, 1, 1, 3, 4}, 40, 10
             , 3, 25, false, true, false
             , new Season[]{Season.Spring}),
-    Kale(FruitType.Kale, new int[]{1, 2, 2, 1}, 110, SeedType.KaleSeed, 6
+    Kale(FruitType.Kale, new int[]{1, 2, 2, 1}, 110, 6
             , null, 50, true, true, false
             , new Season[]{Season.Spring}),
-    Parsnip(FruitType.Parsnip, new int[]{1, 1, 1, 1}, 35, SeedType.ParsnipSeed, 4
+    Parsnip(FruitType.Parsnip, new int[]{1, 1, 1, 1}, 35, 4
             , null, 25, true, true, false
             , new Season[]{Season.Spring}),
-    Potato(FruitType.Potato, new int[]{1, 1, 1, 2, 1}, 80, SeedType.PotatoSeed, 6
+    Potato(FruitType.Potato, new int[]{1, 1, 1, 2, 1}, 80, 6
             , null, 25, true, true, false
             , new Season[]{Season.Spring}),
-    Rhubarb(FruitType.Rhubarb, new int[]{2, 2, 2, 3, 4}, 220, SeedType.RhubarbSeed, 13
+    Rhubarb(FruitType.Rhubarb, new int[]{2, 2, 2, 3, 4}, 220, 13
             , null, 0, true, false, false
             , new Season[]{Season.Spring}),
-    Strawberry(FruitType.Strawberry, new int[]{1, 1, 2, 2, 2}, 120, SeedType.StrawberrySeed, 8
+    Strawberry(FruitType.Strawberry, new int[]{1, 1, 2, 2, 2}, 120, 8
             , 4, 50, false, true, false
             , new Season[]{Season.Spring}),
-    Tulip(FruitType. Tulip, new int[]{1, 1, 2, 2}, 30, SeedType.TulipBulbSeed, 6
+    Tulip(FruitType. Tulip, new int[]{1, 1, 2, 2}, 30, 6
             , null, 45, true, true, false
             , new Season[]{Season.Spring}),
-    UnmilledRice(FruitType.UnmilledRice, new int[]{1, 2, 2, 3}, 30, SeedType.RiceShoot, 8
+    UnmilledRice(FruitType.UnmilledRice, new int[]{1, 2, 2, 3}, 30, 8
             , null, 3, true, true, false
             , new Season[]{Season.Spring}),
-    Blueberry(FruitType.Blueberry, new int[]{1, 3, 3, 4, 2}, 50, SeedType.BlueberrySeed, 13
+    Blueberry(FruitType.Blueberry, new int[]{1, 3, 3, 4, 2}, 50, 13
             , 4, 25, false, true, false
             , new Season[]{Season.Summer}),
-    Corn(FruitType.Corn, new int[]{2, 3, 3, 3, 3}, 50, SeedType.CornSeed, 14
+    Corn(FruitType.Corn, new int[]{2, 3, 3, 3, 3}, 50, 14
             , 4, 25, false, true, false
             , new Season[]{Season.Summer, Season.Fall}),
-    Hops(FruitType.Hops, new int[]{1, 1, 2, 3, 4}, 25, SeedType.HopsStarter, 11
+    Hops(FruitType.Hops, new int[]{1, 1, 2, 3, 4}, 25, 11
             , 1, 45, false, true, false
             , new Season[]{Season.Summer}),
-    HotPepper(FruitType.HotPepper, new int[]{1, 1, 1, 1, 1}, 40, SeedType.PepperSeed, 5
+    HotPepper(FruitType.HotPepper, new int[]{1, 1, 1, 1, 1}, 40, 5
             , 3, 13, false, true, false
             , new Season[]{Season.Summer}),
-    Melon(FruitType.Melon, new int[]{1, 2, 3, 3, 3}, 250, SeedType.MelonSeed, 12
+    Melon(FruitType.Melon, new int[]{1, 2, 3, 3, 3}, 250, 12
             , null, 113, true, true, true
             , new Season[]{Season.Summer}),
-    Poppy(FruitType.Poppy, new int[]{1, 2, 2, 2}, 140, SeedType.PoppySeed, 7
+    Poppy(FruitType.Poppy, new int[]{1, 2, 2, 2}, 140, 7
             , null, 45, true, true, false
             , new Season[]{Season.Summer}),
-    Radish(FruitType.Radish, new int[]{2, 1, 2, 1}, 90, SeedType.RadishSeed, 6
+    Radish(FruitType.Radish, new int[]{2, 1, 2, 1}, 90, 6
             , null, 45, true, true, false
             , new Season[]{Season.Summer}),
-    RedCabbage(FruitType.RedCabbage, new int[]{2, 1, 2, 2, 2}, 260, SeedType.RedCabbageSeed, 9
+    RedCabbage(FruitType.RedCabbage, new int[]{2, 1, 2, 2, 2}, 260, 9
             , null, 75, true, true, false
             , new Season[]{Season.Summer}),
-    Starfruit(FruitType.Starfruit, new int[]{2, 3, 2, 3, 3}, 750, SeedType.StarfruitSeed, 13
+    Starfruit(FruitType.Starfruit, new int[]{2, 3, 2, 3, 3}, 750, 13
             , null, 125, true, true, false
             , new Season[]{Season.Summer}),
-    SummerSpangle(FruitType.SummerSpangle, new int[]{1, 2, 3, 1}, 90, SeedType.SpangleSeed, 8
+    SummerSpangle(FruitType.SummerSpangle, new int[]{1, 2, 3, 1}, 90, 8
             , null, 45, true, true, false
             , new Season[]{Season.Summer}),
-    SummerSquash(FruitType.SummerSquash, new int[]{1, 1, 1, 2, 1}, 45, SeedType.SummerSquashSeed, 6
+    SummerSquash(FruitType.SummerSquash, new int[]{1, 1, 1, 2, 1}, 45, 6
             , 3, 63, false, true, false
             , new Season[]{Season.Summer}),
-    Sunflower(FruitType.Sunflower, new int[]{1, 2, 3, 2}, 80, SeedType.SunflowerSeed, 8
+    Sunflower(FruitType.Sunflower, new int[]{1, 2, 3, 2}, 80, 8
             , null, 45, true, true, false
             , new Season[]{Season.Summer, Season.Fall}),
-    Tomato(FruitType.Tomato, new int[]{2, 2, 2, 2, 3}, 60, SeedType.TomatoSeed, 11
+    Tomato(FruitType.Tomato, new int[]{2, 2, 2, 2, 3}, 60, 11
             , 4, 20, false, true, false
             , new Season[]{Season.Summer}),
-    Wheat(FruitType.Wheat, new int[]{1, 1, 1, 1}, 25, SeedType.WheatSeed, 4
+    Wheat(FruitType.Wheat, new int[]{1, 1, 1, 1}, 25, 4
             , null, 0, true, false, false
             , new Season[]{Season.Summer, Season.Fall}),
-    Amaranth(FruitType.Amaranth, new int[]{1, 2, 2, 2}, 150, SeedType.AmaranthSeed, 7
+    Amaranth(FruitType.Amaranth, new int[]{1, 2, 2, 2}, 150, 7
             , null, 50, true, true, false
             , new Season[]{Season.Fall}),
-    Artichoke(FruitType.Artichoke, new int[]{2, 2, 1, 2, 1}, 160, SeedType.ArtichokeSeed, 8
+    Artichoke(FruitType.Artichoke, new int[]{2, 2, 1, 2, 1}, 160, 8
             , null, 30, true, true, false
             , new Season[]{Season.Fall}),
-    Beet(FruitType.Beet, new int[]{1, 1, 2, 2}, 100, SeedType.BeetSeed, 6
+    Beet(FruitType.Beet, new int[]{1, 1, 2, 2}, 100, 6
             , null, 30, true, true, false
             , new Season[]{Season.Fall}),
-    BokChoy(FruitType.BokChoy, new int[]{1, 1, 1, 1}, 80, SeedType.BokChoySeed, 4
+    BokChoy(FruitType.BokChoy, new int[]{1, 1, 1, 1}, 80, 4
             , null, 25, true, true, false
             , new Season[]{Season.Fall}),
-    Broccoli(FruitType.Broccoli, new int[]{2, 2, 2, 2}, 70, SeedType.BroccoliSeed, 8
+    Broccoli(FruitType.Broccoli, new int[]{2, 2, 2, 2}, 70, 8
             , 4, 63, true, true, false
             , new Season[]{Season.Fall}),
-    Cranberry(FruitType.Cranberry, new int[]{1, 2, 1, 1, 2}, 75, SeedType.CranberrySeed, 7
+    Cranberry(FruitType.Cranberry, new int[]{1, 2, 1, 1, 2}, 75, 7
             , 5, 38, true, true, false
             , new Season[]{Season.Fall}),
-    Eggplant(FruitType.Eggplant, new int[]{1, 1, 1, 1}, 60, SeedType.EggplantSeed, 5
+    Eggplant(FruitType.Eggplant, new int[]{1, 1, 1, 1}, 60, 5
             , 5, 20, true, true, false
             , new Season[]{Season.Fall}),
-    FairyRose(FruitType.FairyRose, new int[]{1, 4, 4, 3}, 290, SeedType.FairySeed, 12
+    FairyRose(FruitType.FairyRose, new int[]{1, 4, 4, 3}, 290, 12
             , null, 45, true, true, false
             , new Season[]{Season.Fall}),
-    Grape(FruitType.Grape, new int[]{1, 1, 2, 3, 3}, 80, SeedType.GrapeStarter, 10
+    Grape(FruitType.Grape, new int[]{1, 1, 2, 3, 3}, 80, 10
             , 3, 38, true, true, false
             , new Season[]{Season.Fall}),
-    Pumpkin(FruitType.Pumpkin, new int[]{1, 2, 3, 4, 3}, 320, SeedType.PumpkinSeed, 13
+    Pumpkin(FruitType.Pumpkin, new int[]{1, 2, 3, 4, 3}, 320, 13
             , null, 0, false, false, true
             , new Season[]{Season.Fall}),
-    Yam(FruitType.Yam, new int[]{1, 3, 3, 3}, 160, SeedType.YamSeed, 10
+    Yam(FruitType.Yam, new int[]{1, 3, 3, 3}, 160, 10
             , null, 45, true, true, false
             , new Season[]{Season.Fall}),
-    SweetGemBerry(FruitType.SweetGemBerry, new int[]{2, 4, 6, 6, 6}, 3000, SeedType.RareSeed, 24
+    SweetGemBerry(FruitType.SweetGemBerry, new int[]{2, 4, 6, 6, 6}, 3000, 24
             , null, 0, false, false, false
             , new Season[]{Season.Fall}),
-    PowderMelon(FruitType.PowderMelon, new int[]{1, 2, 1, 2, 1}, 60, SeedType.PowderMelonSeed, 7
+    PowderMelon(FruitType.PowderMelon, new int[]{1, 2, 1, 2, 1}, 60, 7
             , null, 63, true, true, false
             , new Season[]{Season.Winter}),
-    AncientFruit(FruitType.AncientFruit, new int[]{2, 7, 7, 7, 5}, 550, SeedType.AncientSeed, 28
+    AncientFruit(FruitType.AncientFruit, new int[]{2, 7, 7, 7, 5}, 550, 28
             , 7, 0, false, false, false
             , new Season[]{Season.Spring, Season.Summer, Season.Fall}),
-    Daffodil(FruitType.Daffodil, new int[]{}, 30, null, 0
+    Daffodil(FruitType.Daffodil, new int[]{}, 30, 0
             , null, 0, false, false, false
             , new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}),
-    Dandelion(FruitType.Dandelion, new int[]{}, 40, null, 0
+    Dandelion(FruitType.Dandelion, new int[]{}, 40, 0
             , null, 25, false, true, false
             , new Season[]{Season.Spring}),
-    Leek(FruitType.Leek, new int[]{} , 60 , null , 0
+    Leek(FruitType.Leek, new int[]{} , 60 , 0
             , null , 40 ,false , true , false
             , new Season[]{Season.Spring}),
-    Morel(FruitType.Morel, new int[]{} , 150 , null , 0
+    Morel(FruitType.Morel, new int[]{} , 150 , 0
             , null , 20 , false , true , false
             , new Season[]{Season.Spring}),
-    SalmonBerry(FruitType.SalmonBerry, new int[]{} , 5 , null , 0
+    SalmonBerry(FruitType.SalmonBerry, new int[]{} , 5 , 0
             , null , 25 , false , true , false
             , new Season[]{Season.Spring}),
-    SpringOnion(FruitType.SpringOnion, new int[]{} , 8 , null , 0
+    SpringOnion(FruitType.SpringOnion, new int[]{} , 8 , 0
             , null , 13 , false , true , false
             , new Season[]{Season.Spring}),
-    WildHorseradish(FruitType.WildHorseradish, new int[]{} , 50 , null , 0
+    WildHorseradish(FruitType.WildHorseradish, new int[]{} , 50 , 0
             , null , 13 , false, true , false
             , new Season[]{Season.Spring}),
-    FiddleheadFern(FruitType.FiddleheadFern, new int[]{} , 90 , null , 0
+    FiddleheadFern(FruitType.FiddleheadFern, new int[]{} , 90 , 0
             , null , 25 , false , true , false
             , new Season[]{Season.Summer}),
-    RedMushroom(FruitType.RedMushroom, new int[]{} , 75 , null , 0
+    RedMushroom(FruitType.RedMushroom, new int[]{} , 75 , 0
             , null , -50 , false , true , false
             , new Season[]{Season.Summer}),
-    SpiceBerry(FruitType.SpiceBerry, new int[]{} , 80 , null , 0
+    SpiceBerry(FruitType.SpiceBerry, new int[]{} , 80 , 0
             , null , 25 , false , true , false
             , new Season[]{Season.Summer}),
-    SweetPea(FruitType.SweetPea, new int[]{} , 50 , null , 0
+    SweetPea(FruitType.SweetPea, new int[]{} , 50 , 0
             , null , 0 , false , false , false
             , new Season[]{Season.Summer}),
-    Blackberry(FruitType.Blackberry, new int[]{} , 25 , null , 0
+    Blackberry(FruitType.Blackberry, new int[]{} , 25 , 0
             , null , 25 , false , true , false
             , new Season[]{Season.Fall}),
-    Chanterelle(FruitType.Chanterelle, new int[]{} , 160 , null , 0
+    Chanterelle(FruitType.Chanterelle, new int[]{} , 160 , 0
             , null , 75 , false , true , false
             , new Season[]{Season.Fall}),
-    Hazelnut(FruitType.Hazelnut, new int[]{} , 40 , null , 0
+    Hazelnut(FruitType.Hazelnut, new int[]{} , 40 , 0
             , null , 38 , false , true , false
             , new Season[]{Season.Fall}),
-    PurpleMushroom(FruitType.PurpleMushroom, new int[]{} , 90 , null , 0
+    PurpleMushroom(FruitType.PurpleMushroom, new int[]{} , 90 , 0
             , null , 30 , false , true , false
             , new Season[]{Season.Fall}),
-    WildPlum(FruitType.WildPlum, new int[]{} , 80 , null , 0
+    WildPlum(FruitType.WildPlum, new int[]{} , 80 , 0
             , null , 25 , false , true , false
             , new Season[]{Season.Fall}),
-    Crocus(FruitType.Crocus, new int[]{} , 60 , null , 0
+    Crocus(FruitType.Crocus, new int[]{} , 60 , 0
             , null , 0 , false , false , false
             , new Season[]{Season.Winter}),
-    CrystalFruit(FruitType.CrystalFruit, new int[]{} , 150 , null , 0
+    CrystalFruit(FruitType.CrystalFruit, new int[]{} , 150 , 0
             , null , 63 , false , true , false
             , new Season[]{Season.Winter}),
-    Holly(FruitType.Holly, new int[]{} , 80 , null , 0
+    Holly(FruitType.Holly, new int[]{} , 80 , 0
             , null , -37 , false , true , false
             , new Season[]{Season.Winter}),
-    SnowYum(FruitType.SnowYam, new int[]{} , 100 , null , 0
+    SnowYum(FruitType.SnowYam, new int[]{} , 100 , 0
             , null , 30 , false , true , false
             , new Season[]{Season.Winter}),
-    WinterRoot(FruitType.WinterRoot, new int[]{} , 70 , null , 0
+    WinterRoot(FruitType.WinterRoot, new int[]{} , 70 , 0
             , null , 25 , false , true , false
             , new Season[]{Season.Winter});
 
     private final FruitType fruit;
     private final int price;
-    private final SeedType source;
+    private SeedType source;
     private final int[] stages;
     private final int totalHarvestTime, energy;
     private final Integer regrowthTime;
@@ -221,7 +221,7 @@ public enum CropType implements PlantType {
         put(Season.Winter, new ArrayList<>(List.of(PowderMelon)));
     }};
 
-    CropType(FruitType fruit, int[] stages, int price, SeedType source, int totalHarvestTime, Integer regrowthTime,
+    CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons) {
         this.fruit = fruit;
         this.stages = stages;
@@ -253,6 +253,11 @@ public enum CropType implements PlantType {
     }
 
     public SeedType getSource() {
+        if (source == null)
+            for (SeedType seedType : SeedType.values()) {
+                if (seedType.getPlant() == this)
+                    return source = seedType;
+            }
         return source;
     }
 
@@ -288,10 +293,6 @@ public enum CropType implements PlantType {
         return isEdible;
     }
 
-    public boolean isCanBecomeGiant() {
-        return canBecomeGiant;
-    }
-
     public ArrayList<Season> getSeasons() {
         return seasons;
     }
@@ -307,7 +308,7 @@ public enum CropType implements PlantType {
 
     public static CropType getItem(String itemName) {
         for (CropType item : values()) {
-            if (item.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
+            if (item.toString().equalsIgnoreCase(itemName.replace(" ", ""))) {
                 return item;
             }
         }

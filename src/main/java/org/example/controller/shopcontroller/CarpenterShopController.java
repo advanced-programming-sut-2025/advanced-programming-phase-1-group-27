@@ -63,6 +63,7 @@ public class CarpenterShopController extends MenuController {
         else
             farmMap.placeCoop(x, y, new Coop(type, new Cell(new Position(x, y), farmMap)));
         carpenterShop.reduce(stock.getItem(), 1);
+        player.getBackpack().reduceItems(type, 1);
         App.getCurrentGame().getCurrentPlayer().spendMoney(stock.getPrice());
         return new Result(true, "Animal enclosure successfully placed!");
     }

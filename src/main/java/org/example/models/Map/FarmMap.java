@@ -67,7 +67,7 @@ public class FarmMap extends Map {
     public boolean freeRectangle(int x, int y, int height, int width) {
         for (int i = x; i < x + height; i++) {
             for (int j = y; j < y + width; j++) {
-                if (cells[i][j].getType() != CellType.Free) {
+                if (cells[i][j].getType() != CellType.Free || cells[i][j].getObject() != null) {
                     return false;
                 }
             }
@@ -79,19 +79,8 @@ public class FarmMap extends Map {
         int height = animalEnclosure.getType().getHeight(),
                 width = animalEnclosure.getType().getWidth();
         for (int i = r; i < r + height; i++) {
-            cells[i][c].setType(CellType.Building);
-            cells[i][c].setBuilding(animalEnclosure);
-            cells[i][c + width - 1].setType(CellType.Building);
-            cells[i][c + width - 1].setBuilding(animalEnclosure);
-        }
-        for (int j = c; j < c + width; j++) {
-            cells[r][j].setType(CellType.Building);
-            cells[r][j].setBuilding(animalEnclosure);
-            cells[r + height - 1][j].setType(CellType.Building);
-            cells[r + height - 1][j].setBuilding(animalEnclosure);
-        }
-        for (int i = r; i < r + height; i++) {
             for (int j = c; j < c + width; j++) {
+                cells[i][j].setType(CellType.Building);
                 cells[i][j].setBuilding(animalEnclosure);
             }
         }

@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ShopCommands {
-    BuildBuilding("\\s*build\\s+-a\\s+(?<buildingName>.+)\\s+-l\\s+(?<x>\\d+)\\s+,\\s+(?<y>\\d+)\\s*"),
+    BuildBuilding("\\s*build\\s+-a\\s+(?<buildingName>.+)\\s+-l\\s+(?<x>\\d+)\\s+(?<y>\\d+)\\s*"),
     ShowAllProducts("\\s*show\\s+all\\s+products\\s*"),
     ShowAllAvailableProducts("\\s*show\\s+all\\s+available\\s+products\\s*"),
     Purchase("\\s*purchase\\s+(?<productName>\\S+)(?:\\s+-n\\s+(?<count>\\d+))?\\s*"),

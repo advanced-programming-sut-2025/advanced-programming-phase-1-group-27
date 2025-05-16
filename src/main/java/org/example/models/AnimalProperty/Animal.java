@@ -74,7 +74,8 @@ public class Animal {
     }
 
     public String showDetails() {
-        return "Animal Name: " + name + "\n" +
+        return "Animal Type: " + type.name() + "\n" +
+                "Animal Name: " + name + "\n" +
                 (wasFeed? "Was Feed Today": "Wasn't Feed Today!!") + "\n" +
                 (wasPet? "Was Pet Today": "Wasn't Pet Today!!") + "\n";
     }
