@@ -138,45 +138,51 @@ public class Game {
 
     public void newDay() {
         // Walking to their houses
-//        for (Player player : players) {
-//            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
-//            Cell currentCell = player.getCurrentCell();
-//            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
-//            int energy = player.getDayEnergy();
-//            if (energy <= 0)
-//                continue;
-//            if (player.getCurrentMap() instanceof NPCMap npcMap1) {
-//                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
-//                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
-//                        passageToFarm,
-//                        energy);
-//                energy -= npcMap1.getPathEnergy(currentCell, newDest);
-//                player.setCurrentCell(newDest);
-//                if (energy <= 0) {
-//                    System.out.println(player.getUsername() + " passed out in cell(" +
-//                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
-//                            ") in the NpcValley, on his way home");
-//                    player.consumeEnergy(100000);
-//
-//                    continue;
-//                }
-//                player.setCurrentCell((Cell) passageToFarm.getObject());
-//            }
-//            currentCell = player.getCurrentCell();
-//            FarmMap farmMap = player.getFarmMap();
-//            Cell newDest = farmMap.getPlaceInPath(currentCell,
-//                    destCell,
-//                    energy);
-//            player.setCurrentCell(newDest);
-//            if (newDest != destCell) {
-//                System.out.println(player.getUsername() + " passed out in cell(" +
-//                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
-//                        ") in his Farm, on his way home");
-//                player.consumeEnergy(100000);
-//            } else {
-//                player.setCurrentMenu(Menu.Home);
-//            }
-//        }
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+
+            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
+            Cell currentCell = player.getCurrentCell();
+            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
+            int energy = player.getDayEnergy();
+            if (energy <= 0)
+                continue;
+            if (player.getCurrentMap() instanceof NPCMap npcMap1) {
+                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
+                if (i < 2)
+                    passageToFarm = passageToFarm.getAdjacentCells().get(4);
+                else
+                    passageToFarm = passageToFarm.getAdjacentCells().get(0);
+                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
+                        passageToFarm,
+                        energy);
+                energy -= npcMap1.getPathEnergy(currentCell, newDest);
+                player.setCurrentCell(newDest);
+                if (energy <= 0) {
+                    System.out.println(player.getUsername() + " passed out in cell(" +
+                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+                            ") in the NpcValley, on his way home");
+                    player.consumeEnergy(100000);
+
+                    continue;
+                }
+                player.setCurrentCell((Cell) passageToFarm.getObject());
+            }
+            currentCell = player.getCurrentCell();
+            FarmMap farmMap = player.getFarmMap();
+            Cell newDest = farmMap.getPlaceInPath(currentCell,
+                    destCell,
+                    energy);
+            player.setCurrentCell(newDest);
+            if (newDest != destCell) {
+                System.out.println(player.getUsername() + " passed out in cell(" +
+                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+                        ") in his Farm, on his way home");
+                player.consumeEnergy(100000);
+            } else {
+                player.setCurrentMenu(Menu.Home);
+            }
+        }
 
         // Setting Energies :
         for (Player player : players) {
