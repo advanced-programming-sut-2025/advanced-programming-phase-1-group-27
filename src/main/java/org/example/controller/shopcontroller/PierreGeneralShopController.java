@@ -31,76 +31,117 @@ public class PierreGeneralShopController extends MenuController {
     }
 
     public Result showAllProducts() {
-        StringBuilder result = new StringBuilder("All Products : \n");
-        for (int i = 0; i < App.getCurrentGame().getPierreGeneralStore().getStock().size(); i++) {
-            Stock stock = App.getCurrentGame().getBlacksmith().getStock().get(i);
-            result.append(i).append(". ").append(stock.getItem().getName()).append(" - ");
-            if (stock.getQuantity() == -1)
+        StringBuilder result = new StringBuilder();
+        result.append("All Products : \n");
+        int i = 1;
+        for (Stock stock : App.getCurrentGame().getPierreGeneralStore().getStock()) {
+            result.append(i).append(" . ").append(stock.getItem().getName()).append(" - ");
+            if (stock.getQuantity() == -1) {
                 result.append("Unlimited");
-            else if (stock.getQuantity() == 0)
-                result.append("Sold out");
-            else
+            } else if (stock.getQuantity() == 0) {
+                result.append("Sold Out");
+            } else {
                 result.append(stock.getQuantity());
-            result.append(" - ").append(stock.getSalePrice()).append("$\n");
+            }
+            result.append(" - ");
+            result.append(stock.getPrice()).append(" $ \n");
+            i++;
         }
         return new Result(true, result.toString());
     }
 
     public Result showAllAvailableProducts() {
-        StringBuilder result = new StringBuilder("All Available Products: \n");
-        for (int i = 0; i < App.getCurrentGame().getPierreGeneralStore().getStock().size(); i++) {
-            Stock stock = App.getCurrentGame().getBlacksmith().getStock().get(i);
+        StringBuilder result = new StringBuilder();
+        result.append("All Available Products : \n");
+        int i = 1;
+        for (Stock stock : App.getCurrentGame().getPierreGeneralStore().getStock()) {
             if (stock.getQuantity() == -1) {
-                result.append(i).append(". ").append(stock.getItem().getName()).append(" - ");
-                result.append("Unlimited").append(" - ").append(stock.getSalePrice()).append("$\n");
-            }
-            else if (stock.getQuantity() > 0) {
-                result.append(i).append(". ").append(stock.getItem().getName()).append(" - ");
+                result.append(i).append(" . ").append(stock.getItem().getName()).append(" - ");
+                result.append("Unlimited").append(" - ");
+                result.append(stock.getPrice()).append(" $ \n");
+                i++;
+            } else if (stock.getQuantity() == 0) {
+                continue;
+            } else {
+                result.append(i).append(" . ").append(stock.getItem().getName()).append(" - ");
                 result.append(stock.getQuantity()).append(" - ");
-                result.append(stock.getSalePrice()).append("$\n");
+                result.append(stock.getPrice()).append(" $ \n");
+                i++;
             }
         }
         return new Result(true, result.toString());
     }
 
-    public Result purchase(String productName, String quantityString) {
-        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
-        Stock stock = App.getCurrentGame().getPierreGeneralStore().getStock(productName);
+//    public Result purchase(String productName, String quantityString) {
+//        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
+//        Stock stock = App.getCurrentGame().getPierreGeneralStore().getStock(productName);
+//        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+//        if (stock == null) {
+//            return new Result(false, "Product not found!");
+//        }
+//        if (stock.getQuantity() == 0) {
+//            return new Result(false, "Product is sold out!");
+//        }
+//        if (stock.getQuantity() != -1 && stock.getQuantity() < quantity) {
+//            return new Result(false, "Not enough product in stock!");
+//        }
+//        if (App.getCurrentGame().getCurrentPlayer().getMoney() < stock.getSalePrice() * quantity) {
+//            return new Result(false, "Not enough money!");
+//        }
+//        if (stock.getItem() instanceof Recipe) {
+//             currentPlayer.getAvailableCraftingRecipes().add((Recipe) stock.getItem());
+//        }
+//        else if (stock.getItem() instanceof ToolType backpack) {
+//            if (currentPlayer.getBackpackType() == ToolType.BasicBackpack)
+//                return new Result(false, "You should first unlock large backpack!");
+//            currentPlayer.setBackpack(backpack);
+//        }
+//        else {
+//            if (!App.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(
+//                    stock.getItem(),
+//                    stock.getStackLevel(),
+//                    quantity)) {
+//                return new Result(true, "Not enough space in backPack!");
+//            }
+//            App.getCurrentGame().getCurrentPlayer().getBackpack().addItems(
+//                    stock.getItem(),
+//                    stock.getStackLevel(),
+//                    quantity);
+//        }
+//        App.getCurrentGame().getCurrentPlayer().spendMoney(stock.getSalePrice() * quantity);
+//        App.getCurrentGame().getPierreGeneralStore().reduce(stock.getItem(), quantity);
+//        return new Result(true, "You purchased successfully!");
+//    }
+
+    public Result purchase(String productName , String quantityString) {
+        int quantity = Integer.parseInt(quantityString);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        Stock stock = App.getCurrentGame().getPierreGeneralStore().getStock(productName);
         if (stock == null) {
             return new Result(false, "Product not found!");
         }
         if (stock.getQuantity() == 0) {
             return new Result(false, "Product is sold out!");
         }
-        if (stock.getQuantity() != -1 && stock.getQuantity() < quantity) {
+        if (stock.getQuantity() != -1
+                && stock.getQuantity() < quantity) {
             return new Result(false, "Not enough product in stock!");
         }
-        if (App.getCurrentGame().getCurrentPlayer().getMoney() < stock.getSalePrice() * quantity) {
+        if (currentPlayer.getMoney() < stock.getSalePrice() * quantity) {
             return new Result(false, "Not enough money!");
         }
-        if (stock.getItem() instanceof Recipe) {
-             currentPlayer.getAvailableCraftingRecipes().add((Recipe) stock.getItem());
+        if (!currentPlayer.getBackpack().canAdd(
+                stock.getItem(),
+                stock.getStackLevel(),
+                quantity)) {
+            return new Result(true, "Not enough space in backPack!");
         }
-        else if (stock.getItem() instanceof ToolType backpack) {
-            if (currentPlayer.getBackpackType() == ToolType.BasicBackpack)
-                return new Result(false, "You should first unlock large backpack!");
-            currentPlayer.setBackpack(backpack);
-        }
-        else {
-            if (!App.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(
-                    stock.getItem(),
-                    stock.getStackLevel(),
-                    quantity)) {
-                return new Result(true, "Not enough space in backPack!");
-            }
-            App.getCurrentGame().getCurrentPlayer().getBackpack().addItems(
-                    stock.getItem(),
-                    stock.getStackLevel(),
-                    quantity);
-        }
-        App.getCurrentGame().getCurrentPlayer().spendMoney(stock.getSalePrice() * quantity);
+        currentPlayer.spendMoney(stock.getSalePrice() * quantity);
         App.getCurrentGame().getPierreGeneralStore().reduce(stock.getItem(), quantity);
+        currentPlayer.getBackpack().addItems(
+                stock.getItem(),
+                stock.getStackLevel(),
+                quantity);
         return new Result(true, "You purchased successfully!");
     }
 }

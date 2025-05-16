@@ -1,6 +1,7 @@
 package org.example.view.shopview;
 
 import org.example.controller.GameMenuController;
+import org.example.controller.ToolController;
 import org.example.controller.shopcontroller.BlackSmithShopController;
 import org.example.models.App;
 import org.example.models.Result;
@@ -66,6 +67,12 @@ public class BlackSmithShop extends AppMenu {
         }else if((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
             GameMenuController gameMenuController = ((GameMenuView) Menu.GameMenu.getMenu()).getController();
             System.out.println(gameMenuController.showMoney());
+        }else if((matcher = ToolCommands.ToolsShowAvailable.getMatcher(input)) != null) {
+            ToolController toolController = new ToolController();
+            System.out.println(toolController.showAvailableTools());
+        }else if((matcher = ToolCommands.ToolsShowCurrent.getMatcher(input)) != null) {
+            ToolController toolController = new ToolController();
+            System.out.println(toolController.showCurrentTool());
         } else {
             System.out.println(new Result(false, "invalid command!"));
         }
