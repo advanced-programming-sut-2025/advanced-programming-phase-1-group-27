@@ -42,11 +42,15 @@ public class MarnieRanchShopController extends MenuController {
 
     public Result buyAnimal(String animalString, String name) {
         AnimalType type = AnimalType.getItem(animalString);
+        if (type == null) {
+            return new Result(false, "Invalid animal type!");
+        }
         Animal animal = new Animal(type, name);
         Player player = App.getCurrentGame().getCurrentPlayer();
         Shop shop = App.getCurrentGame().getMarnieRanch();
 
-        if (shop.getStock(animal.getName()).getQuantity() == 0) {
+
+        if (shop.getStock(type.getName()).getQuantity() == 0) {
             return new Result(false, "Out of stock!");
         }
         else if (player.getMoney() >= type.getPrice()) {

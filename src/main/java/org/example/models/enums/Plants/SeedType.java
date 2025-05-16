@@ -77,11 +77,6 @@ public enum SeedType implements PlantSourceType, Item {
         put(Season.Winter, new ArrayList<>(List.of(AncientSeed, MixedSeed, PowderMelonSeed)));
     }};
 
-    public boolean isFarmable() {
-        //TODO
-        return true;
-    }
-
     public PlantType getPlant() {
         return plant;
     }

@@ -263,16 +263,17 @@ public class GameMenuController extends MenuController {
             plantType = TreeType.getItem(plantName);
         if (plantType == null)
             return new Result(false, "Plant Type Not Found");
-        return new Result(true, "Name: " + plantType.getName() +
-                "Source: " + ((Item) plantType.getSource()).getName() +
-                "Stages: " + (plantType.getStages().toString()).replaceAll("\\]|\\[", "") +
-                "Total Harvest Time: " + plantType.getTotalHarvestTime() +
-                "One Time: " + ((Boolean) plantType.getOneTime()).toString().toUpperCase() +
-                "Regrowth Time: " + plantType.getHarvestCycle() +
-                "Base Sell Price: " + plantType.getFruit() +
-                "Is Edible: " + ((Boolean) plantType.getFruit().isFruitEdible()).toString().toUpperCase() +
-                "Base Energy: " + plantType.getFruit().getEnergy() +
-                "Season(s): " + plantType.getSeasons().toString().replaceAll("\\[|\\]", "") +
+        return new Result(true,
+                "Name: " + plantType.getName() + "\n" +
+                "Source: " + ((Item) plantType.getSource()).getName() + "\n" +
+                "Stages: " + (plantType.getStages()) + "\n" +
+                "Total Harvest Time: " + plantType.getTotalHarvestTime() + "\n" +
+                "One Time: " + ((Boolean) plantType.getOneTime()).toString().toUpperCase() + "\n" +
+                "Regrowth Time: " + plantType.getHarvestCycle() + "\n" +
+                "Base Sell Price: " + plantType.getFruit() + "\n" +
+                "Is Edible: " + ((Boolean) plantType.getFruit().isFruitEdible()).toString().toUpperCase() + "\n" +
+                "Base Energy: " + plantType.getFruit().getEnergy() + "\n" +
+                "Season(s): " + plantType.getSeasons().toString().replaceAll("\\[|\\]", "") + "\n" +
                 "Can Become Giant: " + (plantType instanceof CropType crop?
                 ((Boolean) crop.canBecomeGiant()).toString().toUpperCase() : ""));
     }
@@ -424,7 +425,7 @@ public class GameMenuController extends MenuController {
 
     public Result pet(String animalName) {
         for (Cell cell: App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells()) {
-            if (cell.getObject() instanceof Animal animal && animal.getName().equals(animalName)) {
+            if (cell != null && cell.getObject() instanceof Animal animal && animal.getName().equals(animalName)) {
                 animal.addFriendShip(15);
                 animal.setWasPet(true);
                 return new Result(true, animalName + " " + animal.getType().getName() +
@@ -469,6 +470,7 @@ public class GameMenuController extends MenuController {
                 animal.setOut(true);
                 animal.setWasFeed(true);
                 animal.addFriendShip(8);
+                cell.setObject(animal);
                 return new Result(true, "Animal is Out!");
             } else {
                 return new Result(false, "The Weather is not Good!!");

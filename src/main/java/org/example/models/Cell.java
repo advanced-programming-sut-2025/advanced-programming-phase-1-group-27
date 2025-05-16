@@ -1,5 +1,6 @@
 package org.example.models;
 
+import org.example.models.AnimalProperty.Animal;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Map.*;
@@ -180,6 +181,9 @@ public class Cell {
                 case NPC npc -> {
                     return "\u001B[34m" + "\u001B[48;2;89;89;89m" +
                             Character.toUpperCase(npc.getName().charAt(0)) + " " + "\u001B[0m";
+                }
+                case Animal animal -> {
+                    return "\u001B[48;2;201;129;129m" + "  " + "\u001B[0m";
                 }
                 default -> {
                 }

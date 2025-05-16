@@ -56,7 +56,7 @@ public enum AnimalType implements Item {
     ))),
     Pig(new ArrayList<>(List.of(
             AnimalProduct.Truffle
-    )), 16000, null, new ArrayList<>(List.of(
+    )), 16000, 0, new ArrayList<>(List.of(
             BuildingType.DeluxeBarn
     )));
 
