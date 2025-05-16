@@ -16,6 +16,7 @@ public class MarriageController {
     public Result askMarriage(String username, String ring) {
         Player player = getPlayerWithUsername(username);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        //TODO : faghat zamani ke level 3 max
         if (player == null) {
             return new Result(false, "Player not found!");
         }

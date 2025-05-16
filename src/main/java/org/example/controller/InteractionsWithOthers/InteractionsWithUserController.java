@@ -250,6 +250,7 @@ public class InteractionsWithUserController {
         Player player = getPlayerWithUsername(username);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Backpack backpack = currentPlayer.getBackpack();
+        //TODO : faghat zamani gol mishe dad ke level 2 max bashe!
         if (player == null) {
             return new Result(false, "Player not found");
         }

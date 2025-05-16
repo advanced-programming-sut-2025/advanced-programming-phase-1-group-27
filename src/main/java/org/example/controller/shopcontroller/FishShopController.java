@@ -79,7 +79,6 @@ public class FishShopController extends MenuController {
 
     public Result purchase(String productName, String quantityString) {
         int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
-        //TODO :
         if(productName.equalsIgnoreCase("TrainingRod")){
             productName = "Training Rod";
         }else if(productName.equalsIgnoreCase("BambooPole")){
