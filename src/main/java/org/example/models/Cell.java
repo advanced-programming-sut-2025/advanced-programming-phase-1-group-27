@@ -167,11 +167,13 @@ public class Cell {
         } else if (object != null) {
             switch (object) {
                 case Tree tree -> {
-                    return "\u001B[48;2;1;59;19m" + "  " + "\u001B[0m";
+                    return "\u001B[48;2;3;79;34m" + "  " + "\u001B[0m";
                 }
                 case Crop crop -> {
                     if (crop.isGiant())
                         return "\u001B[48;2;15;245;80m" + "  " + "\u001B[0m";
+                    else if (crop.getType() == CropType.Grass)
+                        return "\u001B[48;2;83;130;102m" + "  " + "\u001B[0m";
                     else
                         return "\u001B[48;2;19;138;57m" + "  " + "\u001B[0m";
                 }
@@ -214,6 +216,8 @@ public class Cell {
                 return "\u001B[48;2;66;54;32m" + "  " + "\u001B[0m";
             } else if (building instanceof Coop) {
                 return "\u001B[48;2;66;54;32m" + "  " + "\u001B[0m";
+            } else if (building instanceof ShippingBin) {
+                return "\u001B[48;2;201;68;68m" + "  " + "\u001B[0m";
             }
         } else if (cellType.equals(CellType.View)) {
             return "\u001B[48;2;89;89;89m" + "  " + "\u001B[0m";

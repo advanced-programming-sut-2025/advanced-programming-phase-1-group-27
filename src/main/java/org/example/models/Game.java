@@ -1,5 +1,6 @@
 package org.example.models;
 
+import org.example.models.AnimalProperty.Animal;
 import org.example.models.Map.*;
 import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
@@ -140,6 +141,12 @@ public class Game {
     }
 
     public void newDay() {
+        // Updating animals
+        for (Player player : players) {
+            for (Animal animal : player.getFarmMap().getAnimals()) {
+                animal.passADay();
+            }
+        }
         // Emptying shipping bin
         for (Player player : players) {
             for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {

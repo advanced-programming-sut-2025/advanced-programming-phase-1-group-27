@@ -10,6 +10,7 @@ import org.example.models.enums.Plants.*;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
+import org.example.models.enums.items.products.AnimalProduct;
 import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.items.products.ProcessedProductType;
@@ -159,6 +160,12 @@ public class GameMenuController extends MenuController {
                         } else if (destination.getType() == CellType.Door) {
                             if (destination.getBuilding() instanceof StoreBuilding storeBuilding) {
                                 currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
+                                int time = App.getCurrentGame().getTime().getHour();
+                                if (storeBuilding.getStore().getShopType().getStartTime() > time ||
+                                storeBuilding.getStore().getShopType().getEndTime() < time) {
+                                    return new Result(true,
+                                            "The shop you want to enter is closed at the moment.");
+                                }
                                 switch(storeBuilding.getStore().getShopType()) {
                                     case ShopType.CarpenterShop -> {
                                         currentPlayer.setCurrentMenu(Menu.CarpenterShop);
@@ -486,15 +493,18 @@ public class GameMenuController extends MenuController {
         Animal animal = null;
         if (!(player.getCurrentMap() instanceof FarmMap))
             return new Result(false, "You are not in a Farm!");
+        if (player.getBackpack().getSlotByItemName("Hay") == null)
+            return new Result(false, "You should have hey in you inventory!");
         FarmMap map = (FarmMap) player.getCurrentMap();
         for (Animal a: map.getAnimals()) {
             if (a.getName().equals(name)) {
                 animal = a;
             }
         }
-        if (animal == null) {
+        if (animal == null)
             return new Result(false, "No animal Found!");
-        }
+        else if (animal.isWasFeed())
+            return new Result(true, "Animal was fed before");
 
         animal.setWasFeed(true);
         return new Result(true, "Animal was Fed");
@@ -614,16 +624,25 @@ public class GameMenuController extends MenuController {
             return protectMap(cell.getPosition().getX(), cell.getPosition().getY(), 8);
         else if (item == CraftingProduct.DeluxeScarecrow)
             return protectMap(cell.getPosition().getX(), cell.getPosition().getY(), 12);
+        else if (item == CraftingProduct.GrassStarter) {
+            if (cell.getObject() != null)
+                return new Result(false, "The cell is Ocuupied");
+            Crop grass = new Crop(CropType.Grass);
+            grass.setForaging(true);
+            cell.plant(grass);
+            return new Result(true, "The cell has grass now!");
+        }
         else {
             return new Result(false, "You can't place this item!");
         }
-//TODO grass starter sobhan
     }
 
     public Result sellItem(String itemName, String amountString) {
         int amount = (amountString == null? 10000000: Integer.parseInt(amountString));
         Player player = App.getCurrentGame().getCurrentPlayer();
         Item item = player.getItemFromBackpack(itemName);
+        if (item == null)
+            return new Result(false,"You don't have this item!");
         if (item instanceof ToolType || ArtisanTypes.getArtisan(item) != null)
             return new Result(false, "You cant sell tools!");
         ShippingBin shippingBin = null;
@@ -638,11 +657,11 @@ public class GameMenuController extends MenuController {
             if (stack.getItem() == item) {
                 int val = min(amount, stack.getQuantity());
                 amount -= val;
-                stack.addQuantity(-val);
                 removedCount += val;
+                shippingBin.addItem(new Stacks(item, stack.getStackLevel(), stack.getQuantity()));
+                stack.addQuantity(-val);
                 if (stack.getQuantity() == 0)
                     removedStacks.add(stack);
-                shippingBin.addItem(new Stacks(item, stack.getStackLevel(), stack.getQuantity()));
             }
         }
         for (Stacks stack: removedStacks) {
@@ -657,7 +676,7 @@ public class GameMenuController extends MenuController {
         StringBuilder result = new StringBuilder("Your inventory:\n");
         Player player = App.getCurrentGame().getCurrentPlayer();
         for (Stacks slot : player.getBackpack().getItems()) {
-            if (slot.getItem() instanceof FruitType || slot.getItem() instanceof FishType)
+            if (slot.getItem() instanceof FruitType || slot.getItem() instanceof FishType || slot.getItem() instanceof AnimalProduct)
                 result.append(slot.getStackLevel().toString()).append(" ");
             result.append(slot.getItem().getName()).append(" ");
             result.append(slot.getQuantity());
@@ -796,9 +815,7 @@ public class GameMenuController extends MenuController {
 
     public Result cheatEnergyUnlimited() {
         Player player = App.getCurrentGame().getCurrentPlayer();
-        player.setEnergy(100000000);
-        player.setDayEnergy(100000000);
-        player.setMaxEnergy(100000000);
+        player.setCheater(true);
         return new Result(true, "Cheat Activated!!");
     }
 

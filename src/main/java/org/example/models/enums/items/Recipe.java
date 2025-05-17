@@ -304,7 +304,7 @@ public enum Recipe implements Item {
                     MineralType.Coal,
                     ProcessedProductType.Coal
             )), 1),
-            new Ingredient(MineralType.Fiber, 20)
+            new Ingredient(FruitType.Fiber, 20)
     ))),
     DeluxeScarecrowRecipe(0, CraftingProduct.DeluxeScarecrow, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 50),
@@ -312,7 +312,7 @@ public enum Recipe implements Item {
                     MineralType.Coal,
                     ProcessedProductType.Coal
             )), 1),
-            new Ingredient(MineralType.Fiber, 20),
+            new Ingredient(FruitType.Fiber, 20),
             new Ingredient(MineralType.IridiumOre, 1)
     ))),
     BeeHouseRecipe(0, CraftingProduct.BeeHouse, new ArrayList<>(List.of(
@@ -335,7 +335,7 @@ public enum Recipe implements Item {
     ))),
     LoomRecipe(0, CraftingProduct.Loom, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 60),
-            new Ingredient(MineralType.Fiber, 30)
+            new Ingredient(FruitType.Fiber, 30)
     ))),
     MayonnaiseMachineRecipe(0, CraftingProduct.MayonnaiseMachine, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 15),
@@ -358,11 +358,11 @@ public enum Recipe implements Item {
     DehydratorRecipe(10000, CraftingProduct.Dehydrator, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 30),
             new Ingredient(MineralType.Stone, 20),
-            new Ingredient(MineralType.Fiber, 30)
+            new Ingredient(FruitType.Fiber, 30)
     ))),
     GrassStarterRecipe(1000, CraftingProduct.GrassStarter, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 1),
-            new Ingredient(MineralType.Fiber, 1)
+            new Ingredient(FruitType.Fiber, 1)
     ))),
     FishSmokerRecipe(10000, CraftingProduct.FishSmoker, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 50),

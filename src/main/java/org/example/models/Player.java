@@ -26,6 +26,7 @@ public class Player extends User {
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>();
     private int energy, dayEnergy, maxEnergy = 200, boostEnergy = 0;
+    private boolean cheater = false;
     private Ability farming = new Ability(),
             mining = new Ability(),
             foraging = new Ability(),
@@ -240,6 +241,8 @@ public class Player extends User {
     }
 
     public void consumeEnergy(int amount) {
+        if (cheater)
+            return;
         energy -= amount;
         if (amount > boostEnergy) {
             dayEnergy -= amount - boostEnergy;
@@ -264,6 +267,10 @@ public class Player extends User {
         int val = Math.min(maxEnergy - dayEnergy, amount);
         energy += val;
         dayEnergy += val;
+    }
+
+    public void setCheater(boolean cheater) {
+        this.cheater = cheater;
     }
 
     public void setMaxEnergy(int maxEnergy) {

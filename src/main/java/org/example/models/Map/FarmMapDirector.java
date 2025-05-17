@@ -17,14 +17,14 @@ public class FarmMapDirector {
         } else if (index == 1) {
             builder.createBigLake(25, 7);
             builder.setPassageToNpcValley(0, 74, 15, 1);
-            App.getCurrentGame().getNpcMap().setPassageToFarmMap(15, 0, builder.getFinalProduct(), 0, 73);
+            App.getCurrentGame().getNpcMap().setPassageToFarmMap(15, 0, builder.getFinalProduct(), 54, 1);
 
         } else if (index == 2) {
             builder.createSmallLake(47, 8);
             builder.createSmallLake(32, 40);
             builder.createSmallLake(21, 21);
             builder.setPassageToNpcValley(54, 0, 6, 32);
-            App.getCurrentGame().getNpcMap().setPassageToFarmMap(6, 33, builder.getFinalProduct(), 54, 1);
+            App.getCurrentGame().getNpcMap().setPassageToFarmMap(6, 33, builder.getFinalProduct(), 0, 73);
 
 
         } else {

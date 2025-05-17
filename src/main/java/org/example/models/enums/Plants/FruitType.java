@@ -3,6 +3,8 @@ package org.example.models.enums.Plants;
 import org.example.models.Item;
 
 public enum FruitType implements Item {
+//Grass :
+    Fiber(50, false, 0),
 //Trees :
     Apricot(59 , true ,38),
     Cherry(80 , true ,38),

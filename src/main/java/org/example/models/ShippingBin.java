@@ -16,6 +16,7 @@ public class ShippingBin extends Building {
     public int refresh() {
         int totalMoney = 0;
         for (Stacks stack : items) {
+            System.out.println(stack.getQuantity());
             totalMoney += stack.getTotalPrice();
         }
         items.clear();

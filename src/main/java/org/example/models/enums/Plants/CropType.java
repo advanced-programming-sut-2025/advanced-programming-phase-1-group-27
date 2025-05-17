@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public enum CropType implements PlantType {
+    Grass(FruitType.Fiber, new int[] {1}, 50, 0, -1, 0, true,
+            false, false, new Season[] {Season.Spring, Season.Summer, Season.Fall, Season.Winter}),
     BlueJazz(FruitType.BlueJazz, new int[]{1, 2, 2, 2}, 50, 7
             , null, 45, true, true, false
             , new Season[]{Season.Spring}),
@@ -203,15 +205,13 @@ public enum CropType implements PlantType {
     private final boolean oneTime, isEdible, canBecomeGiant;
     private final ArrayList<Season> seasons;
     private static final HashMap<Season, ArrayList<CropType>> foragingCropsBySeason = new HashMap<>(){{
-        put(Season.Spring, new ArrayList<>(List.of(CropType.Daffodil,
-        CropType.Dandelion, CropType.Leek, CropType.Morel, CropType.SalmonBerry, CropType.SpringOnion,
-            CropType.WildHorseradish)));
-        put(Season.Summer, new ArrayList<>(List.of(CropType.FiddleheadFern, CropType.Grape, CropType.RedMushroom,
-            CropType.SpiceBerry, CropType.SweetPea)));
-        put(Season.Fall, new ArrayList<>(List.of(CropType.Blackberry, CropType.Chanterelle, CropType.Hazelnut,
-                CropType.PurpleMushroom, CropType.WildPlum)));
-        put(Season.Winter, new ArrayList<>(List.of(CropType.Crocus, CropType.CrystalFruit, CropType.Holly,
-                CropType.SnowYum, CropType.WinterRoot)));
+        put(Season.Spring, new ArrayList<>(List.of(Grass, Daffodil, Dandelion, Leek, Morel, SalmonBerry,
+                SpringOnion, WildHorseradish)));
+        put(Season.Summer, new ArrayList<>(List.of(Grass, FiddleheadFern, Grape, RedMushroom, SpiceBerry,
+                SweetPea)));
+        put(Season.Fall, new ArrayList<>(List.of(Grass, Blackberry, Chanterelle, Hazelnut, PurpleMushroom,
+                WildPlum)));
+        put(Season.Winter, new ArrayList<>(List.of(Grass, Crocus, CrystalFruit, Holly, SnowYum, WinterRoot)));
     }};
 
     private static HashMap<Season, ArrayList<CropType>> mixedSeedPossibilitiesBySeason = new HashMap<>(){{
