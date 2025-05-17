@@ -8,10 +8,7 @@ import org.example.models.Relations.Relation;
 import org.example.models.Shops.BlackSmith;
 import org.example.models.Shops.Shop;
 import org.example.models.enums.*;
-import org.example.models.enums.Plants.FruitType;
-import org.example.models.enums.Plants.Plant;
-import org.example.models.enums.Plants.SaplingType;
-import org.example.models.enums.Plants.SeedType;
+import org.example.models.enums.Plants.*;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -21,6 +18,8 @@ import org.example.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static java.lang.Math.min;
 
 public class Game {
     private Player admin;
@@ -141,6 +140,32 @@ public class Game {
     }
 
     public void newDay() {
+        // Crows Attacking
+        for (Player player : players) {
+            ArrayList<Plant> allPlants = new ArrayList<>();
+            for (int i = 0; i < player.getFarmMap().getHeight(); i++)
+                for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
+                    Cell cell = player.getFarmMap().getCell(i, j);
+                    if (cell.getObject() != null && !(cell.getBuilding() instanceof GreenHouse)) {
+                        if (cell.getObject() instanceof Plant plant) {
+                            allPlants.add(plant);
+                        }
+                    }
+                }
+            int crowsCount = allPlants.size() / 16;
+            for (int i = 0; i < crowsCount; i++) {
+                if (new Random().nextInt(4) == 0) {
+                    Plant plant = allPlants.get(new Random().nextInt(allPlants.size()));
+                    if (plant.getCell().isProtected())
+                        continue;
+                    if (plant instanceof Crop crop) {
+                        crop.getCell().setObject(null);
+                    } else if (plant instanceof Tree tree) {
+                        tree.setTillNextHarvest(min(1, tree.getTillNextHarvest()));
+                    }
+                }
+            }
+        }
         // Updating animals
         for (Player player : players) {
             for (Animal animal : player.getFarmMap().getAnimals()) {
@@ -251,8 +276,8 @@ public class Game {
         }
         // refresh shop stock
         initShops();
-        //TODO : Rassa print mikone!
-        System.out.println(App.getCurrentGame().NPCGiftingLevel3());
+
+        //System.out.println(App.getCurrentGame().NPCGiftingLevel3());
         // Apply weather effect
         currentWeather.applyWeatherEffect();
     }

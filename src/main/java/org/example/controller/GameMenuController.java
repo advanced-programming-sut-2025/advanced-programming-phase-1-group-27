@@ -272,7 +272,7 @@ public class GameMenuController extends MenuController {
             return new Result(false, "Plant Type Not Found");
         return new Result(true,
                 "Name: " + plantType.getName() + "\n" +
-                "Source: " + ((Item) plantType.getSource()).getName() + "\n" +
+                        "Source: " + ((Item) plantType.getSource() != null? ((Item) plantType.getSource()).getName(): " is foraging, no source") + "\n" +
                 "Stages: " + (plantType.getStages()) + "\n" +
                 "Total Harvest Time: " + plantType.getTotalHarvestTime() + "\n" +
                 "One Time: " + ((Boolean) plantType.getOneTime()).toString().toUpperCase() + "\n" +

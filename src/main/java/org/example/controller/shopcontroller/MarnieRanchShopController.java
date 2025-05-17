@@ -59,6 +59,7 @@ public class MarnieRanchShopController extends MenuController {
                 if (type.getAppropriateFarmType().contains(barn.getType()) &&
                         barn.getType().getCapacity() > barn.getAnimals().size()) {
                     barn.addAnimal(animal);
+                    animal.setEnclosure(barn);
                     player.getFarmMap().addAnimal(animal);
                     return new Result(true, "You have bought a " + animalString +
                             " and it is in the " + barn.getType().getName());
@@ -68,6 +69,7 @@ public class MarnieRanchShopController extends MenuController {
                 if (type.getAppropriateFarmType().contains(coop.getType()) &&
                         coop.getType().getCapacity() > coop.getAnimals().size()) {
                     coop.addAnimal(animal);
+                    animal.setEnclosure(coop);
                     player.getFarmMap().addAnimal(animal);
                     return new Result(true, "You have bought a " + animalString +
                             " and it is in the " + coop.getType().getName());
