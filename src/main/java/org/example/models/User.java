@@ -18,7 +18,7 @@ import org.example.models.tools.Tool;
 public class User {
 
     private String username, password, nickname, email;
-    private final Gender gender;
+    private Gender gender;
     // security questions to recover forgotten password
     private ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
     private Game currentGame = null;
@@ -31,6 +31,10 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
+    }
+
+    public User() {
+
     }
 
     public String getUsername() {
@@ -67,6 +71,10 @@ public class User {
 
     public Gender getGender() {
         return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public Game getCurrentGame() {

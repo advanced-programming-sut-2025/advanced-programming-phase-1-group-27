@@ -7,7 +7,11 @@ import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
 import org.example.models.Result;
 import org.example.view.menu.LoginMenu;
+import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -115,7 +119,10 @@ public class LoginMenuMenuController extends MenuController {
             return new Result(false, "Username not found!");
         if (!user.passwordEquals(password))
             return new Result(false, "Incorrect password!");
-        // TODO: handling stay logged in flag
+        if (stayLoggedIn)
+            updateFile(user);
+        else
+            clearFile();
         App.setLoggedInUser(user);
         App.setCurrentMenu(Menu.MainMenu);
         return new Result(true, "You have successfully logged in.");
@@ -164,5 +171,33 @@ public class LoginMenuMenuController extends MenuController {
             password.append(c);
         }
         return password.toString();
+    }
+
+    private void updateFile(User user) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", user.getUsername());
+        jsonObject.put("password", user.getPassword());
+        jsonObject.put("email", user.getEmail());
+        jsonObject.put("nickname", user.getNickname());
+        jsonObject.put("gender", user.getGender());
+        jsonObject.put("maxMoneyEarned", user.getMaxMoneyEarned());
+        jsonObject.put("numberOfGamesPlayed", user.getNumberOfGamesPlayed());
+
+        File file = new File("data/login_user.json");
+        file.getParentFile().mkdirs();
+
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(jsonObject.toString(4));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void clearFile() {
+        try (FileWriter writer = new FileWriter("data/login_user.json")) {
+            writer.write("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

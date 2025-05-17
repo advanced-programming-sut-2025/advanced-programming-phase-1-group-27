@@ -1,8 +1,15 @@
 package org.example.models;
 
+import org.example.models.enums.Gender;
 import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.Menu;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,6 +24,12 @@ public class App {
     private static ArrayList<SecurityQuestion> securityQuestions = new ArrayList<>();
 
     static  {
+        User savedUser = getSavedUser();
+        if (savedUser != null) {
+            LoggedInUser = savedUser;
+            users.add(savedUser);
+            currentMenu = Menu.MainMenu;
+        }
         initSecurityQuestions();
     }
 
@@ -119,6 +132,27 @@ public class App {
                 users.remove(user);
                 return;
             }
+        }
+    }
+
+    private static User getSavedUser() {
+        File file  = new File("data/login_user.json");
+        if (!file.exists() || file.length() == 0)
+            return null;
+
+        try (FileReader reader = new FileReader(file)) {
+            JSONObject json = new JSONObject(new JSONTokener(reader));
+            User result = new User();
+            result.setUsername(json.optString("username"));
+            result.setPassword(json.optString("password"));
+            result.setNickname(json.optString("nickname"));
+            result.setEmail(json.optString("email"));
+            result.setGender(Gender.getGender(json.optString("gender")));
+            result.setMaxMoneyEarned(json.optInt("maxMoneyEarned"));
+            result.setNumberOfGamesPlayed(json.optInt("numberOfGamesPlayed"));
+            return result;
+        } catch (Exception e) {
+            return null;
         }
     }
 }
