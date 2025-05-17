@@ -87,6 +87,25 @@ public class HomeView extends AppMenu {
                     Integer.parseInt(matcher.group("count"))
             ));
         }
+        else if (GameMenuCommands.ShowEnergy.getMatcher(input) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().showEnergy());
+        }
+        else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().eatFood(
+                    matcher.group("itemName").trim()
+            ));
+        }
+        else if ((matcher = CheatCommands.CheatSetEnergy.getMatcher(input)) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().cheatSetEnergy(
+                    matcher.group("value").trim()
+            ));
+        }
+        else if ((matcher = CheatCommands.CheatSetAbility.getMatcher(input)) != null) {
+            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().cheatSetAbility(
+                    matcher.group("abilityName").trim(),
+                    Integer.parseInt(matcher.group("level").trim())
+            ));
+        }
         else {
             System.out.println(new Result(false, "invalid command!"));
         }

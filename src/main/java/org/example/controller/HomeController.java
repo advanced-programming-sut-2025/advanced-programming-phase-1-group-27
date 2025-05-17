@@ -3,8 +3,10 @@ package org.example.controller;
 import org.example.models.*;
 import org.example.models.Map.Hut;
 import org.example.models.enums.Menu;
+import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.Recipe;
+import org.example.models.enums.items.products.AnimalProduct;
 import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.tools.Backpack;
@@ -72,7 +74,9 @@ public class HomeController extends MenuController {
         if (func.equals("put")) {
             Stacks slot = player.getBackpack().getSlotByItemName(itemName);
             if (slot == null)
-                return new Result(false, "Item not found!");
+                return new Result(false, "Item not found in inventory!");
+            if (!canBePlacedInRefrigerator(slot.getItem()))
+                return new Result(false, "Cannot place this item in refrigerator!");
             if (refrigerator.canAdd(slot.getItem(), slot.getStackLevel(), 1)) {
                 refrigerator.addItems(slot.getItem(), slot.getStackLevel(), 1);
                 player.getBackpack().reduceItems(slot.getItem(), slot.getStackLevel(), 1);
@@ -83,11 +87,11 @@ public class HomeController extends MenuController {
         else {
             Stacks slot = refrigerator.getSlotByItemName(itemName);
             if (slot == null)
-                return new Result(false, "Item not found!");
+                return new Result(false, "Item not found in refrigerator!");
             if (player.getBackpack().canAdd(slot.getItem(), slot.getStackLevel(), 1)) {
                 player.getBackpack().addItems(slot.getItem(), slot.getStackLevel(), 1);
                 refrigerator.reduceItems(slot.getItem(), slot.getStackLevel(), 1);
-                return new Result(true, itemName + "picked successfully!");
+                return new Result(true, itemName + " picked successfully!");
             }
             return new Result(false, "Inventory is full!");
         }
@@ -123,5 +127,21 @@ public class HomeController extends MenuController {
         }
         player.consumeEnergy(3);
         return new Result(true, itemName + " cooked successfully!");
+    }
+
+    private boolean canBePlacedInRefrigerator(Item item) {
+        if (!(item instanceof CookingProduct) &&
+                !(item instanceof ProcessedProduct) &&
+                !(item instanceof FruitType) &&
+                !(item instanceof AnimalProduct)) {
+            return false;
+        }
+        if (item instanceof FruitType fruit && !fruit.isFruitEdible())
+            return false;
+        if (item instanceof ProcessedProduct processedProduct && !processedProduct.isEdible())
+            return false;
+        if (item instanceof AnimalProduct animalProduct && !animalProduct.isFood())
+            return false;
+        return true;
     }
 }

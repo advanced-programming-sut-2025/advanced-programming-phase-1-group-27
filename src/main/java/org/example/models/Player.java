@@ -262,6 +262,7 @@ public class Player extends User {
 
     public void addEnergy(int amount) {
         int val = Math.min(maxEnergy - dayEnergy, amount);
+        val = Math.min(50 - energy, val);
         energy += val;
         dayEnergy += val;
     }
