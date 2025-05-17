@@ -257,6 +257,9 @@ public class InteractionsWithUserController {
         if (!isPlayerNear(player)) {
             return new Result(false, "Player is not near");
         }
+        if(!currentPlayer.canFlowered(player)){
+            return new Result(false, "You can't give flower");
+        }
         if (!backpack.hasEnoughItem(ShopItems.Bouquet, 1)) {
             return new Result(false, "You don't have Bouquet!");
         }
