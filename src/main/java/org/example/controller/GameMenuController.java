@@ -714,19 +714,15 @@ public class GameMenuController extends MenuController {
         Stacks slot = player.getBackpack().getSlotByItemName(foodName);
         if (slot == null)
             return new Result(false, "This item doesn't exist in your inventory!");
-        if (!(slot.getItem() instanceof CookingProduct) &&
-                !(slot.getItem() instanceof ProcessedProduct) &&
-                !(slot.getItem() instanceof FruitType)) {
-            return new Result(false, "Invalid food!");
-        }
-        if (slot.getItem() instanceof FruitType fruit && !fruit.isFruitEdible())
-            return new Result(false, "This item isn't edible!");
-
+        if (!isEdible(slot.getItem()))
+            return new Result(false, "This item is not edible!");
         player.getBackpack().reduceItems(slot.getItem(), slot.getStackLevel(), 1);
         if (slot.getItem() instanceof CookingProduct cookingProduct) {
             player.addEnergy(cookingProduct.getEnergy());
-            player.removeBuff();
-            player.setBuff(cookingProduct.getBuff());
+            if (cookingProduct.getBuff() != null) {
+                player.removeBuff();
+                player.setBuff(cookingProduct.getBuff());
+            }
         }
         else if (slot.getItem() instanceof ProcessedProduct) {
             player.addEnergy(((ProcessedProduct) slot.getItem()).getEnergy());
@@ -770,7 +766,7 @@ public class GameMenuController extends MenuController {
         if (!player.getBackpack().canAdd(item, level, count))
             return new Result(false, "You don't have enough space in your backpack!");
         player.getBackpack().addItems(item, level, count);
-        return new Result(true, count + " of " + itemName + " added to the backpack!");
+        return new Result(true, count + " of " + item.getName() + " added to the backpack!");
     }
 
     public Result cheatSetWeather(String weatherString) {
@@ -903,9 +899,7 @@ public class GameMenuController extends MenuController {
         if (player.getAbility(AbilityType.Fishing).getLevel() == 4)
             availableFish.addAll(FishType.getAvailableLegendaryFish(currentSeason));
 
-        int val = getNumberOfFish();
-        System.out.println("VAL:" + val);
-        int numberOfFish = min(6, val);
+        int numberOfFish = min(6, getNumberOfFish());
         ArrayList<Stacks> capturedFish = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < numberOfFish; i++) {
@@ -1117,5 +1111,18 @@ public class GameMenuController extends MenuController {
             }
         }
         return new Result(true, "BOOOOOM!");
+    }
+
+    private boolean isEdible(Item item) {
+        if (!(item instanceof CookingProduct) &&
+                !(item instanceof ProcessedProduct) &&
+                !(item instanceof FruitType)) {
+            return false;
+        }
+        if (item instanceof FruitType fruit && !fruit.isFruitEdible())
+            return false;
+        if (item instanceof ProcessedProduct processedProduct && !processedProduct.isEdible())
+            return false;
+        return true;
     }
 }

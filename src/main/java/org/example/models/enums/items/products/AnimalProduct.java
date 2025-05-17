@@ -27,6 +27,10 @@ public enum AnimalProduct implements Item {
         return price;
     }
 
+    public boolean isFood() {
+        return this != DuckFeather && this != Wool;
+    }
+
     public static AnimalProduct getItem(String itemName) {
         for (AnimalProduct animalProduct : AnimalProduct.values()) {
             if (animalProduct.getName().equalsIgnoreCase(itemName)) {
