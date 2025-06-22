@@ -11,6 +11,23 @@ import org.example.models.enums.items.ToolType;
 public class Hoe extends Tool{
 
     public Hoe(ToolType toolType) {
+
+        super(toolType.getLevel() , getEnergyUsageByType(toolType) , toolType.getName(), toolType);
+    }
+
+    @Override
+    public Result use(Cell cell) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        player.consumeEnergy(this.getEnergyUsage());
+        if (cell.getType() == CellType.Free) {
+            cell.setType(CellType.Plowed);
+            return new Result(true, "Plowed!");
+        }
+        return new Result(true, "Cannot Plow, Not a Free Cell!");
+    }
+
+    private static int getEnergyUsageByType(ToolType toolType) {
+
         StackLevel level = toolType.getLevel();
         int energyUsage = 0;
         if(level == StackLevel.Basic){
@@ -24,18 +41,9 @@ public class Hoe extends Tool{
         }else if(level == StackLevel.Iridium){
             energyUsage = 1;
         }
-        super(level , energyUsage , toolType.getName(), toolType);
-    }
 
-    @Override
-    public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
-        player.consumeEnergy(this.getEnergyUsage());
-        if (cell.getType() == CellType.Free) {
-            cell.setType(CellType.Plowed);
-            return new Result(true, "Plowed!");
-        }
-        return new Result(true, "Cannot Plow, Not a Free Cell!");
+        return energyUsage;
+
     }
 
 }

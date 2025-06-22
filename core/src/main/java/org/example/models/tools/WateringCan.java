@@ -11,29 +11,14 @@ public class WateringCan extends Tool{
     //Water: 40 - 55 - 70 - 85 - 100
     //EnergyUsage : 5 - 4 - 3 - 2 - 1;
     //If farming talent is max -1
-    private final int maxCapacity;
+    private int maxCapacity;
     private int waterCapacity;
+
     public WateringCan(ToolType toolType) {
-        StackLevel level = toolType.getLevel();
-        int energyUsage = 0;
-        if(level == StackLevel.Basic){
-            energyUsage = 5;
-            this.waterCapacity = 40;
-        }else if(level == StackLevel.Copper){
-            energyUsage = 4;
-            this.waterCapacity = 55;
-        }else if(level == StackLevel.Iron){
-            energyUsage = 3;
-            this.waterCapacity = 70;
-        }else if(level == StackLevel.Gold){
-            energyUsage = 2;
-            this.waterCapacity = 85;
-        }else if(level == StackLevel.Iridium){
-            energyUsage = 1;
-            this.waterCapacity = 100;
-        }
-        super(level , energyUsage , toolType.getName(), toolType);
-        this.maxCapacity = this.waterCapacity;
+
+        super(toolType.getLevel() , getEnergyUsageByLevel(toolType) , toolType.getName(), toolType);
+        setCapacity(toolType);
+
     }
 
     @Override
@@ -64,4 +49,44 @@ public class WateringCan extends Tool{
             return new Result(false, "Invalid Cell!");
         }
     }
+
+    private static int getEnergyUsageByLevel(ToolType toolType) {
+
+        StackLevel level = toolType.getLevel();
+        int energyUsage = 0;
+        if(level == StackLevel.Basic){
+            energyUsage = 5;
+        }else if(level == StackLevel.Copper){
+            energyUsage = 4;
+        }else if(level == StackLevel.Iron){
+            energyUsage = 3;
+        }else if(level == StackLevel.Gold){
+            energyUsage = 2;
+        }else if(level == StackLevel.Iridium){
+            energyUsage = 1;
+        }
+
+        return energyUsage;
+
+    }
+
+    private void setCapacity(ToolType toolType) {
+
+        StackLevel level = toolType.getLevel();
+        if(level == StackLevel.Basic){
+            this.waterCapacity = 40;
+        }else if(level == StackLevel.Copper){
+            this.waterCapacity = 55;
+        }else if(level == StackLevel.Iron){
+            this.waterCapacity = 70;
+        }else if(level == StackLevel.Gold){
+            this.waterCapacity = 85;
+        }else if(level == StackLevel.Iridium){
+            this.waterCapacity = 100;
+        }
+
+    }
+
+
+
 }

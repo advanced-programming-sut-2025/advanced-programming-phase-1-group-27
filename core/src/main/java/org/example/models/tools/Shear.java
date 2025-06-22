@@ -8,13 +8,13 @@ import org.example.models.enums.items.ToolType;
 import org.example.models.enums.items.products.AnimalProduct;
 
 public class Shear extends Tool {
-    private int price;
+    private final int price;
 
     public Shear() {
-        StackLevel level = ToolType.Shear.getLevel();
+//        StackLevel level = ToolType.Shear.getLevel();
+        super(ToolType.Shear.getLevel(), 4 , ToolType.Shear.getName(), ToolType.Shear);
         this.price = 1000;
-        int energyUsage = 4;
-        super(level, energyUsage , ToolType.Shear.getName(), ToolType.Shear);
+//        int energyUsage = 4;
     }
 
     @Override

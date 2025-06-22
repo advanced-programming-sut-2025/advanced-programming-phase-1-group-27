@@ -12,8 +12,8 @@ public abstract class AnimalEnclosure extends Building {
     protected final BuildingType type;
 
     protected AnimalEnclosure(BuildingType type, Cell topLeftCell) {
-        this.type = type;
         super(topLeftCell, type.getHeight(), type.getWidth());
+        this.type = type;
     }
 
     public void addAnimal(Animal animal) {

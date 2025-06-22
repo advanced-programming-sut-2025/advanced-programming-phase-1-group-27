@@ -1,8 +1,11 @@
 package org.example.models;
 
+import org.example.Main;
 import org.example.models.enums.Gender;
 import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.Menu;
+import org.example.view.menu.LoginMenu;
+import org.example.view.menu.MainMenu;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -14,14 +17,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class App {
+
     private static User LoggedInUser = null;
     private static Game currentGame = null;
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<SecurityQuestion> questions = new ArrayList<>();
     private static Menu currentMenu = Menu.LoginMenu;
     private static ArrayList<CraftingProduct> allRecipes = new ArrayList<>(); // TODO: arraylist should be initialized
+
     // list of questions in order to recover password
     private static ArrayList<SecurityQuestion> securityQuestions = new ArrayList<>();
+
+    private static final String loggedInUserFilePath = "data/login_user.json";
 
     static  {
         User savedUser = getSavedUser();
@@ -39,6 +46,7 @@ public class App {
         securityQuestions.add(new SecurityQuestion("Turk?", "no"));
         securityQuestions.add(new SecurityQuestion("Pass misham?", "nmd"));
     }
+
 
     public static User getLoggedInUser() {
         return LoggedInUser;
@@ -135,8 +143,8 @@ public class App {
         }
     }
 
-    private static User getSavedUser() {
-        File file  = new File("data/login_user.json");
+    public static User getSavedUser() {
+        File file  = new File(loggedInUserFilePath);
         if (!file.exists() || file.length() == 0)
             return null;
 
@@ -154,5 +162,12 @@ public class App {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static void deleteLoginUserFile() {
+        File file = new File(loggedInUserFilePath);
+        if (!file.exists() || file.length() == 0)
+            return;
+        file.delete();
     }
 }

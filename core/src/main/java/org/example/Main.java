@@ -1,36 +1,61 @@
 package org.example;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import org.example.models.App;
 import org.example.view.AppView;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends ApplicationAdapter {
-    private SpriteBatch batch;
-    private Texture image;
+public class Main extends Game {
+
+    private static SpriteBatch batch;
+    private static Main main;
+
 
     @Override
     public void create() {
+
+        main = this;
         batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
-        (new AppView()).run(); // TODO: ino inja gozashtam ke faz 1 ro test koni age khasti vali baraye gerafik bayad baresh darim
+
+
+        //  TODO: Yeki az ina comment bayad beshe. Terminal baraye test phase 1
+
+//        (new AppView()).runViaTerminal();
+
+        (new AppView()).runViaGraphics();
+
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, 140, 210);
-        batch.end();
+        super.render();
     }
 
     @Override
     public void dispose() {
         batch.dispose();
-        image.dispose();
     }
+
+    public static Main getMain() {
+        return main;
+    }
+
+    public static void setMain(Main main) {
+        Main.main = main;
+    }
+
+    public static SpriteBatch getBatch() {
+        return batch;
+    }
+
+    public static void setBatch(SpriteBatch batch) {
+        Main.batch = batch;
+    }
+
 }

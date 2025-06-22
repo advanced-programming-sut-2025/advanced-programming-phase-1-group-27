@@ -10,8 +10,9 @@ public class TrashCan extends Tool{
     private int percentage;
 
     public TrashCan(ToolType toolType) {
-        StackLevel level = toolType.getLevel();
-        int energyUsage = 0;
+
+        super(toolType.getLevel() , 0 , toolType.getName(), toolType);
+
         if(level == StackLevel.Basic){
             this.percentage = 0;
         }else if(level == StackLevel.Copper){
@@ -23,7 +24,7 @@ public class TrashCan extends Tool{
         }else if(level == StackLevel.Iridium){
             this.percentage = 60;
         }
-        super(level , energyUsage , toolType.getName(), toolType);
+
     }
 
     public void use() {

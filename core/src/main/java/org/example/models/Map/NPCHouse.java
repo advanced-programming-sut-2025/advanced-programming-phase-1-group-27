@@ -11,8 +11,8 @@ public class NPCHouse extends Building {
     private Cell door;
 
     public NPCHouse(NPC npc, Cell topLeftCell) {
-        this.npc = npc;
         super(topLeftCell, 4, 4);
+        this.npc = npc;
     }
 
     public NPC getNpc() {

@@ -11,10 +11,10 @@ public class MilkPail extends Tool{
     private int price;
 
     public MilkPail() {
-        StackLevel level = ToolType.MilkPail.getLevel();
+
+        super(ToolType.MilkPail.getLevel(), 4 , ToolType.MilkPail.getName(), ToolType.MilkPail);
         this.price = 1000;
-        int energyUsage = 4;
-        super(level, energyUsage , ToolType.MilkPail.getName(), ToolType.MilkPail);
+
     }
 
     @Override

@@ -15,23 +15,14 @@ import org.example.models.tools.Tool;
 import java.util.Random;
 
 public class Axe extends Tool {
+
     //If usage is failed -1
     //If foraging talent is max -1
+
     public Axe(ToolType toolType) {
-        StackLevel level = toolType.getLevel();
-        int energyUsage = 0;
-        if (level == StackLevel.Basic) {
-            energyUsage = 5;
-        } else if (level == StackLevel.Copper) {
-            energyUsage = 4;
-        } else if (level == StackLevel.Iron) {
-            energyUsage = 3;
-        } else if (level == StackLevel.Gold) {
-            energyUsage = 2;
-        } else if (level == StackLevel.Iridium) {
-            energyUsage = 1;
-        }
-        super(level, energyUsage, toolType.getName(), toolType);
+
+        super(toolType.getLevel(), getEnergyUsageLevel(toolType) , toolType.getName(), toolType);
+
     }
 
     @Override
@@ -59,5 +50,27 @@ public class Axe extends Tool {
         }
         return new Result(false, "Not A Tree Here!");
     }
+
+
+    private static int getEnergyUsageLevel(ToolType toolType) {
+
+        StackLevel level = toolType.getLevel();
+        int energyUsage = 0;
+        if (level == StackLevel.Basic) {
+            energyUsage = 5;
+        } else if (level == StackLevel.Copper) {
+            energyUsage = 4;
+        } else if (level == StackLevel.Iron) {
+            energyUsage = 3;
+        } else if (level == StackLevel.Gold) {
+            energyUsage = 2;
+        } else if (level == StackLevel.Iridium) {
+            energyUsage = 1;
+        }
+
+        return energyUsage;
+
+    }
+
 
 }

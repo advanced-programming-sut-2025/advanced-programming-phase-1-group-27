@@ -1,5 +1,12 @@
 package org.example.view.menu;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.Main;
 import org.example.controller.LoginMenuMenuController;
 import org.example.models.enums.Gender;
 import org.example.models.enums.commands.LoginMenuCommands;
@@ -10,10 +17,64 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class LoginMenu extends AppMenu {
+
     private final LoginMenuMenuController controller;
+    private Stage stage;
 
     public LoginMenu() {
         controller = new LoginMenuMenuController(this);
+    }
+
+
+    @Override
+    public void show() {
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+
+        stage.addActor(new Label("LOGIN",skin));
+
+
+    }
+
+    @Override
+    public void render(float v) {
+
+//        ScreenUtils.clear(0,0,0,1);
+
+        Main.getBatch().begin();
+        Main.getBatch().end();
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+
+        controller.handleLoginMenuButtons();
+
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 
     public void executeCommands(Scanner scanner) {

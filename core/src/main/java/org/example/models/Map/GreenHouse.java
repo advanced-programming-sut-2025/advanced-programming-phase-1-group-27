@@ -9,8 +9,8 @@ public class GreenHouse extends Building {
     private boolean isRepaired = false;
 
     public GreenHouse(Cell door, Cell topLeftCell) {
-        this.door = door;
         super(topLeftCell, 7, 8);
+        this.door = door;
     }
 
     public boolean isRepaired() {

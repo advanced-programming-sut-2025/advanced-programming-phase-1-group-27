@@ -26,6 +26,14 @@ public class LoginMenuMenuController extends MenuController {
         this.view = view;
     }
 
+    public void handleLoginMenuButtons(){
+
+
+
+
+    }
+
+
     public Result enterMenu(String menuName) {
         Menu newMenu = Menu.getMenu(menuName);
         if (newMenu == null)

@@ -4,6 +4,7 @@ import org.example.models.*;
 import org.example.models.enums.Menu;
 import org.example.view.menu.MainMenu;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,6 +14,13 @@ public class MainMenuMenuController extends MenuController {
     public MainMenuMenuController(MainMenu view) {
         this.view = view;
     }
+
+
+    public void handleMainMenuButtons() {
+
+
+    }
+
 
     public Result enterMenu(String menuName) {
         Menu newMenu = Menu.getMenu(menuName);
@@ -93,6 +101,7 @@ public class MainMenuMenuController extends MenuController {
     public Result logout() {
         App.setLoggedInUser(null);
         App.setCurrentMenu(Menu.LoginMenu);
+        App.deleteLoginUserFile();
         return new Result(true, "User logged out successfully!");
     }
 

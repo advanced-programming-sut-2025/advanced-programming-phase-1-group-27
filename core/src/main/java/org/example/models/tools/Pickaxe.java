@@ -13,20 +13,9 @@ public class Pickaxe extends Tool{
     //If usage is failed -1
     //If mining talent is max -1
     public Pickaxe(ToolType toolType) {
-        StackLevel level = toolType.getLevel();
-        int energyUsage = 0;
-        if(level == StackLevel.Basic){
-            energyUsage = 5;
-        }else if(level == StackLevel.Copper){
-            energyUsage = 4;
-        }else if(level == StackLevel.Iron){
-            energyUsage = 3;
-        }else if(level == StackLevel.Gold){
-            energyUsage = 2;
-        }else if(level == StackLevel.Iridium){
-            energyUsage = 1;
-        }
-        super(level , energyUsage , toolType.getName(), toolType);
+
+        super(toolType.getLevel() , getEnergyUsageByLevel(toolType) , toolType.getName(), toolType);
+
     }
 
     @Override
@@ -100,4 +89,26 @@ public class Pickaxe extends Tool{
             return new Result(false, "Cannot Use A Pickaxe Here !");
         }
     }
+
+    private static int getEnergyUsageByLevel(ToolType toolType) {
+
+        StackLevel level = toolType.getLevel();
+
+        int energyUsage = 0;
+        if(level == StackLevel.Basic){
+            energyUsage = 5;
+        }else if(level == StackLevel.Copper){
+            energyUsage = 4;
+        }else if(level == StackLevel.Iron){
+            energyUsage = 3;
+        }else if(level == StackLevel.Gold){
+            energyUsage = 2;
+        }else if(level == StackLevel.Iridium){
+            energyUsage = 1;
+        }
+
+        return energyUsage;
+
+    }
+
 }
