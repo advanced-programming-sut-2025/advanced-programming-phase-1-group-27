@@ -6,11 +6,14 @@ import org.example.models.enums.Menu;
 import org.example.view.menu.WelcomeMenuView;
 
 public class WelcomeMenuController extends MenuController {
+
     private WelcomeMenuView view;
 
     public WelcomeMenuController(WelcomeMenuView view) {
         this.view = view;
     }
+
+    public void handleWelcomeMenuButtons() {}
 
     @Override
     public Result enterMenu(String menuName) {

@@ -40,7 +40,6 @@ public class LoginMenuView extends AppMenu {
     @Override
     public void render(float v) {
 
-//        ScreenUtils.clear(0,0,0,1);
 
         Main.getBatch().begin();
         Main.getBatch().end();

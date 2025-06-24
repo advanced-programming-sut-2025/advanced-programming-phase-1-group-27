@@ -19,6 +19,9 @@ public class RegisterMenuController extends MenuController {
         this.view = view;
     }
 
+    public void handleRegisterMenuButtons() {}
+
+
     @Override
     public Result enterMenu(String menuName) {
         return new Result(false, "You can't enter any menu from this menu!");

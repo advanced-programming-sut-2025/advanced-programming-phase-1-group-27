@@ -1,5 +1,10 @@
 package org.example.view.menu;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.Main;
 import org.example.controller.RegisterMenuController;
 import org.example.models.Result;
 import org.example.models.enums.commands.MainMenuCommands;
@@ -10,11 +15,66 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class RegisterMenuView extends AppMenu {
+
     private final RegisterMenuController controller;
+    private Stage stage;
 
     public RegisterMenuView() {
         controller = new RegisterMenuController(this);
     }
+
+
+
+    @Override
+    public void show() {
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+
+        stage.addActor(menuBackground);
+
+        stage.addActor(new Label("REGISTER",skin));
+
+    }
+
+    @Override
+    public void render(float delta) {
+
+        Main.getBatch().begin();
+        Main.getBatch().end();
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+
+        controller.handleRegisterMenuButtons();
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
 
     @Override
     public void executeCommands(Scanner scanner) {
@@ -73,38 +133,4 @@ public class RegisterMenuView extends AppMenu {
         return controller.checkAnswer(RegisterMenuCommands.PickQuestion.getMatcher(input));
     }
 
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta) {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
 }
