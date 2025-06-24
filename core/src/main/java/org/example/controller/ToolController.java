@@ -6,7 +6,6 @@ import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
 import org.example.models.enums.items.products.ProcessedProductType;
 import org.example.models.tools.*;
-import org.example.view.menu.ProfileMenu;
 
 public class ToolController {
 

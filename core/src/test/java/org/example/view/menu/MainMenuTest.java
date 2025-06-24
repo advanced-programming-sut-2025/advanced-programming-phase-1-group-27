@@ -1,14 +1,13 @@
 package org.example.view.menu;
 
-import org.example.controller.LoginMenuMenuController;
-import org.example.controller.MainMenuMenuController;
+import org.example.controller.LoginMenuController;
+import org.example.controller.MainMenuController;
 import org.example.controller.ProfileMenuController;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.User;
 import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -18,21 +17,21 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MainMenuTest {
-    private static MainMenu mainMenu;
-    private static MainMenuMenuController mainMenuController;
-    private static LoginMenu loginMenu;
-    private static LoginMenuMenuController loginMenuController;
-    private static ProfileMenu profileMenu;
+    private static MainMenuView mainMenu;
+    private static MainMenuController mainMenuController;
+    private static LoginMenuView loginMenu;
+    private static LoginMenuController loginMenuController;
+    private static ProfileMenuView profileMenu;
     private static ProfileMenuController profileMenuController;
     private static User[] users = new User[4];
 
     @BeforeAll
     static void setUp() {
-        mainMenu = new MainMenu();
-        mainMenuController = new MainMenuMenuController(mainMenu);
-        loginMenu = new LoginMenu();
-        loginMenuController = new LoginMenuMenuController(loginMenu);
-        profileMenu = new ProfileMenu();
+        mainMenu = new MainMenuView();
+        mainMenuController = new MainMenuController(mainMenu);
+        loginMenu = new LoginMenuView();
+        loginMenuController = new LoginMenuController(loginMenu);
+        profileMenu = new ProfileMenuView();
         profileMenuController = new ProfileMenuController(profileMenu);
         users[0] = new User("rassa", "R@Ssa!384", "rassa", "rassa@gmail.com", Gender.Male);
         users[1] = new User("parsa", "Parsa!384", "parsa", "parsa@gmail.com", Gender.Male);

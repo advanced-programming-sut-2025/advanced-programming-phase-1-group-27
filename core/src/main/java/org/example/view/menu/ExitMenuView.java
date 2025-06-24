@@ -4,7 +4,7 @@ import org.example.view.AppMenu;
 
 import java.util.Scanner;
 
-public class ExitMenu extends AppMenu {
+public class ExitMenuView extends AppMenu {
     public void executeCommands(Scanner scanner) {}
 
 

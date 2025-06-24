@@ -9,10 +9,10 @@ import org.example.view.AppMenu;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class ProfileMenu extends AppMenu {
+public class ProfileMenuView extends AppMenu {
     private final ProfileMenuController controller;
 
-    public ProfileMenu() {
+    public ProfileMenuView() {
         controller = new ProfileMenuController(this);
     }
 

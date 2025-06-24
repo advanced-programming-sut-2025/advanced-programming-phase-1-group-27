@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
-import org.example.controller.MainMenuMenuController;
+import org.example.controller.MainMenuController;
 import org.example.models.enums.commands.MainMenuCommands;
 import org.example.models.Result;
 import org.example.view.AppMenu;
@@ -14,13 +14,13 @@ import org.example.view.AppMenu;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class MainMenu extends AppMenu {
+public class MainMenuView extends AppMenu {
 
-    private final MainMenuMenuController controller;
+    private final MainMenuController controller;
     private Stage stage;
 
-    public MainMenu() {
-        controller = new MainMenuMenuController(this);
+    public MainMenuView() {
+        controller = new MainMenuController(this);
     }
 
 

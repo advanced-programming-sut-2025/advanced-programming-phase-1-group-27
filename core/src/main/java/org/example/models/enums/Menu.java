@@ -7,10 +7,12 @@ import org.example.view.shopview.*;
 import java.util.Scanner;
 
 public enum Menu {
-    LoginMenu(new LoginMenu()),
-    MainMenu(new MainMenu()),
-    GameMenu(new GameMenuView()),
-    ProfileMenu(new ProfileMenu()),
+    WelcomeMenu(new WelcomeMenuView()),
+    LoginMenu(new LoginMenuView()),
+    RegisterMenu(new RegisterMenuView()),
+    MainMenu(new MainMenuView()),
+    GameMenu(new GameView()),
+    ProfileMenu(new ProfileMenuView()),
     Home(new HomeView()),
     BlackSmithShop(new BlackSmithShop()),
     CarpenterShop(new CarpenterShop()),
@@ -20,7 +22,7 @@ public enum Menu {
     PierreGeneralShop(new PierreGeneralShop()),
     StardropSaloonShop(new StardropSaloonShop()),
     Trade(new TradeView()),
-    ExitMenu(new ExitMenu());
+    ExitMenu(new ExitMenuView());
 
     private final AppMenu menu;
 
@@ -57,6 +59,8 @@ public enum Menu {
     @Override
     public String toString() {
         return switch (this) {
+            case WelcomeMenu -> "welcome menu";
+            case RegisterMenu -> "register menu";
             case LoginMenu -> "login menu";
             case MainMenu -> "main menu";
             case ProfileMenu -> "profile menu";

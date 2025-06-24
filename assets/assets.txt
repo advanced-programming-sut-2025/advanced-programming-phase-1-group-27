@@ -2,6 +2,7 @@ Fonts/lantern_lightred.fnt
 Fonts/lantern_lightred.png
 Fonts/lantern_white.fnt
 Fonts/lantern_white.png
+Images/menu_background.png
 logo.jpg
 skin/font-export.fnt
 skin/font-subtitle-export.fnt

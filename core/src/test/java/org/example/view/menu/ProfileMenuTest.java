@@ -1,6 +1,6 @@
 package org.example.view.menu;
 
-import org.example.controller.LoginMenuMenuController;
+import org.example.controller.LoginMenuController;
 import org.example.controller.ProfileMenuController;
 import org.example.models.App;
 import org.example.models.Result;
@@ -9,7 +9,6 @@ import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -18,19 +17,19 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProfileMenuTest {
-    private static ProfileMenu profileMenu;
+    private static ProfileMenuView profileMenu;
     private static ProfileMenuController profileMenuController;
-    private static LoginMenu loginMenu;
-    private static LoginMenuMenuController loginMenuController;
+    private static LoginMenuView loginMenu;
+    private static LoginMenuController loginMenuController;
     private static User otherUser;
     private static User userTest;
 
     @BeforeAll
     static void setUp() {
-        profileMenu = new ProfileMenu();
+        profileMenu = new ProfileMenuView();
         profileMenuController = new ProfileMenuController(profileMenu);
-        loginMenu = new LoginMenu();
-        loginMenuController = new LoginMenuMenuController(loginMenu);
+        loginMenu = new LoginMenuView();
+        loginMenuController = new LoginMenuController(loginMenu);
         otherUser = new User("rassa", "123Rassa!", "rassa",
                 "rassa.mohammadi@gmail.com", Gender.Male);
         userTest = new User("testUser", "123Test!", "testNickname",

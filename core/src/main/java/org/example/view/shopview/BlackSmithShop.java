@@ -8,7 +8,7 @@ import org.example.models.Result;
 import org.example.models.enums.Menu;
 import org.example.models.enums.commands.*;
 import org.example.view.AppMenu;
-import org.example.view.GameMenuView;
+import org.example.view.GameView;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -60,7 +60,7 @@ public class BlackSmithShop extends AppMenu {
     public void executeCommands(Scanner scanner) {
         if (controller.playerPassedOut()) {
             System.out.println(App.getCurrentGame().getCurrentPlayer().getUsername() + " has passed out!");
-            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
+            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
             return;
         }
         String input = scanner.nextLine().trim();
@@ -72,9 +72,9 @@ public class BlackSmithShop extends AppMenu {
         } else if ((matcher = MainMenuCommands.ExitMenu.getMatcher(input)) != null) {
             System.out.println(controller.exitMenu());
         } else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
-            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().terminateGame(scanner));
+            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().terminateGame(scanner));
         } else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
-            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
+            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
         } else if ((matcher = ToolCommands.ToolsUpgrade.getMatcher(input)) != null) {
             System.out.println(controller.upgradeTool(
                     matcher.group("toolName").trim()
@@ -89,19 +89,19 @@ public class BlackSmithShop extends AppMenu {
                     matcher.group("count").trim()
             ));
         } else if (GameMenuCommands.InventoryShow.getMatcher(input) != null) {
-            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().inventoryShow());
+            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().inventoryShow());
         } else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
-            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().inventoryTrash(
+            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().inventoryTrash(
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("number").trim())
             ));
         } else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
-            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().cheatAddItem(
+            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().cheatAddItem(
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("count"))
             ));
         }else if((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
-            GameMenuController gameMenuController = ((GameMenuView) Menu.GameMenu.getMenu()).getController();
+            GameMenuController gameMenuController = ((GameView) Menu.GameMenu.getMenu()).getController();
             System.out.println(gameMenuController.showMoney());
         }else if((matcher = ToolCommands.ToolsShowAvailable.getMatcher(input)) != null) {
             ToolController toolController = new ToolController();

@@ -4,12 +4,8 @@ import org.example.models.*;
 import org.example.models.Relations.Dialogue;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.DialogueType;
-import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.tools.Backpack;
-import org.example.view.GameMenuView;
-
-import java.util.ArrayList;
 
 
 public class InteractionsWithUserController {

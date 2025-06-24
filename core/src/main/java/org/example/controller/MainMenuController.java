@@ -2,16 +2,15 @@ package org.example.controller;
 
 import org.example.models.*;
 import org.example.models.enums.Menu;
-import org.example.view.menu.MainMenu;
+import org.example.view.menu.MainMenuView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MainMenuMenuController extends MenuController {
-    private MainMenu view;
+public class MainMenuController extends MenuController {
+    private MainMenuView view;
 
-    public MainMenuMenuController(MainMenu view) {
+    public MainMenuController(MainMenuView view) {
         this.view = view;
     }
 
@@ -100,7 +99,7 @@ public class MainMenuMenuController extends MenuController {
 
     public Result logout() {
         App.setLoggedInUser(null);
-        App.setCurrentMenu(Menu.LoginMenu);
+        App.setCurrentMenu(Menu.WelcomeMenu);
         App.deleteLoginUserFile();
         return new Result(true, "User logged out successfully!");
     }

@@ -14,7 +14,7 @@ import org.example.models.enums.items.products.AnimalProduct;
 import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.items.products.ProcessedProductType;
-import org.example.view.GameMenuView;
+import org.example.view.GameView;
 
 import java.util.*;
 
@@ -22,9 +22,9 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class GameMenuController extends MenuController {
-    private GameMenuView view;
+    private GameView view;
 
-    public GameMenuController(GameMenuView view) {
+    public GameMenuController(GameView view) {
         this.view = view;
     }
 

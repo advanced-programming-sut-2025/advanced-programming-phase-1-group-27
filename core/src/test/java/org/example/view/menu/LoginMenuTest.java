@@ -1,7 +1,7 @@
 package org.example.view.menu;
 
-import org.example.controller.LoginMenuMenuController;
-import org.example.controller.MainMenuMenuController;
+import org.example.controller.LoginMenuController;
+import org.example.controller.MainMenuController;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.User;
@@ -18,18 +18,18 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginMenuTest {
-    private static LoginMenu loginMenu;
-    private static LoginMenuMenuController loginMenuController;
-    private static MainMenu mainMenu;
-    private static MainMenuMenuController mainMenuController;
+    private static LoginMenuView loginMenu;
+    private static LoginMenuController loginMenuController;
+    private static MainMenuView mainMenu;
+    private static MainMenuController mainMenuController;
     private static User userTest;
 
     @BeforeAll
     static void setUp() {
-        loginMenu = new LoginMenu();
-        loginMenuController = new LoginMenuMenuController(loginMenu);
-        mainMenu = new MainMenu();
-        mainMenuController = new MainMenuMenuController(mainMenu);
+        loginMenu = new LoginMenuView();
+        loginMenuController = new LoginMenuController(loginMenu);
+        mainMenu = new MainMenuView();
+        mainMenuController = new MainMenuController(mainMenu);
     }
 
     @BeforeEach

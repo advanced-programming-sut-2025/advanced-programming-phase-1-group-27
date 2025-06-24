@@ -4,7 +4,6 @@ import org.example.controller.GameMenuController;
 import org.example.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.controller.InteractionsWithOthers.MarriageController;
-import org.example.controller.InteractionsWithOthers.TradeController;
 import org.example.controller.ToolController;
 import org.example.models.App;
 import org.example.models.enums.Menu;
@@ -14,13 +13,13 @@ import org.example.models.Result;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class GameMenuView extends AppMenu {
+public class GameView extends AppMenu {
     private final GameMenuController controller;
     private final InteractionsWithNPCController interactionsWithNPCController;
     private final InteractionsWithUserController interactionsWithUserController;
     private final MarriageController marriageController;
 
-    public GameMenuView() {
+    public GameView() {
         controller = new GameMenuController(this);
         interactionsWithNPCController = new InteractionsWithNPCController();
         interactionsWithUserController = new InteractionsWithUserController();
@@ -70,7 +69,7 @@ public class GameMenuView extends AppMenu {
     public void executeCommands(Scanner scanner) {
         if (controller.playerPassedOut()) {
             System.out.println(App.getCurrentGame().getCurrentPlayer().getUsername() + " has passed out!");
-            System.out.println(((GameMenuView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
+            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
             return;
         }
         String input = scanner.nextLine().trim();

@@ -4,12 +4,12 @@ import org.example.models.App;
 import org.example.models.User;
 import org.example.models.enums.Menu;
 import org.example.models.Result;
-import org.example.view.menu.ProfileMenu;
+import org.example.view.menu.ProfileMenuView;
 
 public class ProfileMenuController extends MenuController {
-    private final ProfileMenu view;
+    private final ProfileMenuView view;
 
-    public ProfileMenuController(ProfileMenu view) {
+    public ProfileMenuController(ProfileMenuView view) {
         this.view = view;
     }
 
