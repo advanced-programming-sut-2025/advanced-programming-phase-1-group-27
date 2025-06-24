@@ -1,15 +1,18 @@
 package org.example.view.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.WelcomeMenuController;
 import org.example.models.GameAssetManager;
 import org.example.models.Result;
+import org.example.models.enums.Menu;
 import org.example.models.enums.commands.MainMenuCommands;
 import org.example.view.AppMenu;
 
@@ -20,7 +23,6 @@ public class WelcomeMenuView extends AppMenu {
 
     private final WelcomeMenuController controller;
     private final Table table;
-    private final Image stardewValleyText;
     private Stage stage;
     private float textScale;
     private final TextButton registerButton;
@@ -31,16 +33,15 @@ public class WelcomeMenuView extends AppMenu {
     public WelcomeMenuView() {
 
         controller = new WelcomeMenuController(this);
-        stardewValleyText = GameAssetManager.getGameAssetManager().getStardewValleyText();
+
         table = new Table();
 
         registerButton = new TextButton("Register", GameAssetManager.getGameAssetManager().getSkin());
         loginButton = new TextButton("Login", GameAssetManager.getGameAssetManager().getSkin());
         exitButton = new TextButton("Exit", GameAssetManager.getGameAssetManager().getSkin());
 
-        registerButton.setDisabled(true);
-        loginButton.setDisabled(true);
-        exitButton.setDisabled(true);
+        setListeners();
+
 
     }
 
@@ -70,13 +71,7 @@ public class WelcomeMenuView extends AppMenu {
             buttonTransparency += delta;
 
         }
-        else{
 
-            registerButton.setDisabled(false);
-            loginButton.setDisabled(false);
-            exitButton.setDisabled(false);
-
-        }
 
         registerButton.setSize(Gdx.graphics.getWidth()/5f, Gdx.graphics.getHeight()/10f);
         registerButton.setPosition((Gdx.graphics.getWidth() - registerButton.getWidth())/2,
@@ -129,7 +124,7 @@ public class WelcomeMenuView extends AppMenu {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        controller.handleWelcomeMenuButtons();
+//        controller.handleWelcomeMenuButtons();
 
         placeStardewValleyText(delta);
         placeButtons(delta);
@@ -174,6 +169,45 @@ public class WelcomeMenuView extends AppMenu {
     public TextButton getExitButton() {
         return exitButton;
     }
+
+    public float getButtonTransparency() {
+        return buttonTransparency;
+    }
+
+    private void setListeners(){
+
+        registerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                controller.goToRegisterMenu();
+
+            }
+        });
+
+        loginButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                controller.goToLoginMenu();
+
+            }
+        });
+
+
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                controller.exitMenu();
+                System.exit(0);
+
+            }
+        });
+
+
+    }
+
 
     @Override
     public void executeCommands(Scanner scanner) {

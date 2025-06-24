@@ -1,5 +1,8 @@
 package org.example.controller;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.SecurityQuestion;
@@ -20,6 +23,45 @@ public class RegisterMenuController extends MenuController {
     }
 
     public void handleRegisterMenuButtons() {
+
+        if ( view != null ){
+
+
+            if ( view.getRegisterButton().isPressed() ){
+
+                playClickSound();
+
+                Result registerAttemptResult = checkAllFields();
+
+                if ( ! registerAttemptResult.success() ){
+                    view.setErrorLabel(registerAttemptResult.message());
+                }
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+    private Result checkAllFields(){
+
+        if ( view.getUsernameField().getText().isEmpty() ||
+        view.getPasswordField().getText().isEmpty() ||
+        view.getEmailField().getText().isEmpty() ||
+        view.getNicknameField().getText().isEmpty() ){
+
+            return new Result(false, "Please fill all the required fields");
+
+        }
+
+        return new Result(true, "");
+
+
+
     }
 
 

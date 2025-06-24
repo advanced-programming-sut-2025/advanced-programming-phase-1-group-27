@@ -3,10 +3,14 @@ package org.example.view.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.RegisterMenuController;
 import org.example.models.Result;
+import org.example.models.enums.StackLevel;
 import org.example.models.enums.commands.MainMenuCommands;
 import org.example.models.enums.commands.RegisterMenuCommands;
 import org.example.view.AppMenu;
@@ -19,10 +23,140 @@ public class RegisterMenuView extends AppMenu {
     private final RegisterMenuController controller;
     private Stage stage;
 
+    private final Label menuTitle;
+    private final Label usernameLabel;
+    private final Label passwordLabel;
+    private final Label nicknameLabel;
+    private final Label emailLabel;
+    private final Label genderLabel;
+    private final Label errorLabel;
+
+
+    private final TextField usernameField;
+    private final TextField passwordField;
+    private final TextField nicknameField;
+    private final TextField emailField;
+
+    private final SelectBox<String> genderBox;
+
+    private final TextButton backButton;
+    private final TextButton registerButton;
+
+
     public RegisterMenuView() {
+
         controller = new RegisterMenuController(this);
+
+        menuTitle = new Label("Register Menu", skin);
+        usernameLabel = new Label("Username:", skin);
+        passwordLabel = new Label("Password:", skin);
+        nicknameLabel = new Label("Nickname:", skin);
+        emailLabel = new Label("Email:", skin);
+        genderLabel = new Label("Gender:", skin);
+        errorLabel = new Label("", skin);
+
+        usernameField = new TextField("", skin);
+        passwordField = new TextField("", skin);
+        nicknameField = new TextField("", skin);
+        emailField = new TextField("", skin);
+
+        genderBox = new SelectBox<>(skin);
+        genderBox.setItems("Male", "Female");
+
+        backButton = new TextButton("Back", skin);
+        registerButton = new TextButton("Register", skin);
+
+
+
     }
 
+
+    private void showMenuTitle(){
+
+        menuTitle.setFontScale(2f);
+        menuTitle.setColor(0.878f, 0.627f, 0f,1f);
+        menuTitle.setPosition(Gdx.graphics.getWidth()/9f, 6 * Gdx.graphics.getHeight()/7f);
+        stage.addActor(menuTitle);
+
+    }
+
+    private void showErrorMessage(){
+
+        errorLabel.setPosition(Gdx.graphics.getWidth()/9f, 6 * Gdx.graphics.getHeight()/7f - Gdx.graphics.getHeight()/9f);
+        stage.addActor(errorLabel);
+
+    }
+
+    private void showFields(){
+
+        usernameLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 2 * Gdx.graphics.getHeight()/9f);
+        passwordLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 3 * Gdx.graphics.getHeight()/9f);
+        nicknameLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 4 * Gdx.graphics.getHeight()/9f);
+        emailLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 5 * Gdx.graphics.getHeight()/9f);
+        genderLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 6 * Gdx.graphics.getHeight()/9f);
+
+
+
+        usernameField.setWidth(Gdx.graphics.getWidth()/5f);
+        passwordField.setWidth(Gdx.graphics.getWidth()/5f);
+        nicknameField.setWidth(Gdx.graphics.getWidth()/5f);
+        emailField.setWidth(Gdx.graphics.getWidth()/5f);
+        genderBox.setWidth(Gdx.graphics.getWidth()/5f);
+
+        usernameField.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 2 * Gdx.graphics.getHeight()/9f-20);
+        passwordField.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 3 * Gdx.graphics.getHeight()/9f-20);
+        nicknameField.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 4 * Gdx.graphics.getHeight()/9f-20);
+        emailField.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 5 * Gdx.graphics.getHeight()/9f-20);
+        genderBox.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 6 * Gdx.graphics.getHeight()/9f-20);
+
+
+
+
+        stage.addActor(usernameLabel);
+        stage.addActor(passwordLabel);
+        stage.addActor(nicknameLabel);
+        stage.addActor(emailLabel);
+        stage.addActor(genderLabel);
+
+        stage.addActor(usernameField);
+        stage.addActor(passwordField);
+        stage.addActor(nicknameField);
+        stage.addActor(emailField);
+        stage.addActor(genderBox);
+
+
+    }
+
+    private void showGameLogo(){
+
+        stardewValleyText.setScale(2f);
+
+        stardewValleyText.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f - stardewValleyText.getWidth()*2)/2,
+                (Gdx.graphics.getHeight() - stardewValleyText.getHeight()*2)/2 + 2 * Gdx.graphics.getHeight()/10f
+        );
+
+        stage.addActor(stardewValleyText);
+
+    }
+
+    private void showButtons(){
+
+        backButton.setWidth(Gdx.graphics.getWidth()/5f);
+        registerButton.setWidth(Gdx.graphics.getWidth()/5f);
+
+        registerButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f - registerButton.getWidth())/2,
+                (Gdx.graphics.getHeight() - registerButton.getHeight())/2 - Gdx.graphics.getHeight()/20f
+        );
+
+        backButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f - backButton.getWidth())/2,
+                (Gdx.graphics.getHeight() - backButton.getHeight())/2 - 2f * Gdx.graphics.getHeight()/10f
+        );
+
+        stage.addActor(registerButton);
+        stage.addActor(backButton);
+
+
+    }
 
     @Override
     public void show() {
@@ -31,13 +165,18 @@ public class RegisterMenuView extends AppMenu {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(menuBackground);
-
-        stage.addActor(new Label("REGISTER", skin));
+        showGameLogo();
+        showMenuTitle();
+        showFields();
+        showErrorMessage();
+        showButtons();
 
     }
 
     @Override
     public void render(float delta) {
+
+
 
         Main.getBatch().begin();
         Main.getBatch().end();
@@ -46,6 +185,8 @@ public class RegisterMenuView extends AppMenu {
         stage.draw();
 
         controller.handleRegisterMenuButtons();
+
+
 
     }
 
@@ -74,6 +215,37 @@ public class RegisterMenuView extends AppMenu {
 
     }
 
+    public void setErrorLabel(String message) {
+        this.errorLabel.setText(message);
+    }
+
+    public TextField getUsernameField() {
+        return usernameField;
+    }
+
+    public TextField getPasswordField() {
+        return passwordField;
+    }
+
+    public TextField getNicknameField() {
+        return nicknameField;
+    }
+
+    public TextField getEmailField() {
+        return emailField;
+    }
+
+    public SelectBox<String> getGenderBox() {
+        return genderBox;
+    }
+
+    public TextButton getBackButton() {
+        return backButton;
+    }
+
+    public TextButton getRegisterButton() {
+        return registerButton;
+    }
 
     @Override
     public void executeCommands(Scanner scanner) {

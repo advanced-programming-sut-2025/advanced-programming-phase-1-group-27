@@ -15,6 +15,8 @@ public abstract class AppMenu implements Screen {
     protected final Skin skin = GameAssetManager.getGameAssetManager().getSkin();
     private final Texture backgroundTexture = GameAssetManager.getGameAssetManager().getMenuBackground();
     protected final Image menuBackground = new Image(backgroundTexture);
+    protected final Image stardewValleyText = GameAssetManager.getGameAssetManager().getStardewValleyText();
+
 
 
     public AppMenu() {
@@ -30,4 +32,7 @@ public abstract class AppMenu implements Screen {
         System.out.println(string);
     }
 
+    public Skin getSkin() {
+        return skin;
+    }
 }

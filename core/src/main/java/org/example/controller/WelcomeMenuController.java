@@ -14,43 +14,7 @@ public class WelcomeMenuController extends MenuController {
         this.view = view;
     }
 
-    public void handleWelcomeMenuButtons() {
 
-        if ( view != null ){
-
-            if ( view.getExitButton().isPressed() && !view.getExitButton().isDisabled() ){
-
-                playClickSound();
-
-                Main.getMain().getScreen().dispose();
-                exitMenu();
-                System.exit(0);
-
-            }
-            else if ( view.getLoginButton().isPressed() && !view.getLoginButton().isDisabled() ){
-
-                playClickSound();
-
-                goToLoginMenu();
-                Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(Menu.LoginMenu.getMenu());
-
-
-            }
-            else if ( view.getRegisterButton().isPressed() && !view.getRegisterButton().isDisabled() ){
-
-                playClickSound();
-
-                goToRegisterMenu();
-                Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(Menu.RegisterMenu.getMenu());
-
-            }
-
-
-        }
-
-    }
 
     @Override
     public Result enterMenu(String menuName) {
@@ -66,17 +30,24 @@ public class WelcomeMenuController extends MenuController {
 
     @Override
     public Result exitMenu() {
+        playClickSound();
         App.setCurrentMenu(Menu.ExitMenu);
         return null;
     }
 
-    private Result goToRegisterMenu() {
+    public Result goToRegisterMenu() {
+        playClickSound();
         App.setCurrentMenu(Menu.RegisterMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(Menu.RegisterMenu.getMenu());
         return new Result(true, "Redirecting to register menu ...");
     }
 
-    private Result goToLoginMenu() {
+    public Result goToLoginMenu() {
+        playClickSound();
         App.setCurrentMenu(Menu.LoginMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(Menu.RegisterMenu.getMenu());
         return new Result(true, "Redirecting to login menu ...");
     }
 }
