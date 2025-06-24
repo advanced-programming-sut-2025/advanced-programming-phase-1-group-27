@@ -13,7 +13,7 @@ public class GameAssetManager {
     private final Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
 
     private final Texture background = new Texture(Gdx.files.internal("Images/menu_background.png"));
-    private final Texture stardewVallleyText = new Texture(Gdx.files.internal("Images/stardew_valley_text.png"));
+    private final Texture StardewValleyText = new Texture(Gdx.files.internal("Images/stardew_valley_text.png"));
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -32,8 +32,8 @@ public class GameAssetManager {
         return background;
     }
 
-    public Image getStardewVallleyText() {
-        return new Image(stardewVallleyText);
+    public Image getStardewValleyText() {
+        return new Image(StardewValleyText);
     }
 
 
