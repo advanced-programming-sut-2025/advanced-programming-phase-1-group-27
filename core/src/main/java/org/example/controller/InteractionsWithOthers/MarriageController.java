@@ -43,14 +43,14 @@ public class MarriageController {
             return new Result(false, "You don't have 2 wedding rings!");
         }
         Dialogue dialogue1 = null;
-        for(Dialogue dialogue : player.getDialogues()){
-            if(dialogue.getType() == DialogueType.Marriage){
-                if(dialogue.getSender().getUsername().equals(currentPlayer.getUsername())){
+        for (Dialogue dialogue : player.getDialogues()) {
+            if (dialogue.getType() == DialogueType.Marriage) {
+                if (dialogue.getSender().getUsername().equals(currentPlayer.getUsername())) {
                     dialogue1 = dialogue;
                 }
             }
         }
-        if(dialogue1 != null){
+        if (dialogue1 != null) {
             return new Result(false, "You are already ask her!");
         }
         Dialogue dialogue = new Dialogue(DialogueType.Marriage, null, "Will you marry me?"
@@ -60,10 +60,10 @@ public class MarriageController {
         return new Result(true, "Wait for her respond!");
     }
 
-    public Result showCouple(){
-        if(App.getCurrentGame().getCurrentPlayer().getSpouse() == null){
+    public Result showCouple() {
+        if (App.getCurrentGame().getCurrentPlayer().getSpouse() == null) {
             return new Result(false, "You are not married");
-        }else {
+        } else {
             return new Result(true, "You are married with " +
                     App.getCurrentGame().getCurrentPlayer().getSpouse().getUsername());
         }
@@ -77,19 +77,19 @@ public class MarriageController {
             return new Result(false, "Player not found!");
         }
         Dialogue dialogue1 = null;
-        for(Dialogue dialogue : currentPlayer.getDialogues()){
-            if(dialogue.getType() == DialogueType.Marriage){
-                if(dialogue.getSender().getUsername().equals(username)){
+        for (Dialogue dialogue : currentPlayer.getDialogues()) {
+            if (dialogue.getType() == DialogueType.Marriage) {
+                if (dialogue.getSender().getUsername().equals(username)) {
                     dialogue1 = dialogue;
                 }
             }
         }
-        if(dialogue1 == null){
+        if (dialogue1 == null) {
             return new Result(false, "You don't have marriage request from " + player.getUsername());
         }
         if (response.equals("accept")) {
-            if(!player.getBackpack().hasEnoughItem(ShopItems.WeddingRing, 2)) {
-                return new Result(false , username + " doesn't have 2 wedding rings!");
+            if (!player.getBackpack().hasEnoughItem(ShopItems.WeddingRing, 2)) {
+                return new Result(false, username + " doesn't have 2 wedding rings!");
             }
             player.setSpouse(currentPlayer);
             currentPlayer.setSpouse(player);

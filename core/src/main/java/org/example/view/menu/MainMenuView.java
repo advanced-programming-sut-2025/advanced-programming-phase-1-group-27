@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.MainMenuController;
-import org.example.models.enums.commands.MainMenuCommands;
 import org.example.models.Result;
+import org.example.models.enums.commands.MainMenuCommands;
 import org.example.view.AppMenu;
 
 import java.util.Scanner;
@@ -30,14 +30,14 @@ public class MainMenuView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        stage.addActor(new Label("MAIN",skin));
+        stage.addActor(new Label("MAIN", skin));
 
     }
 
     @Override
     public void render(float v) {
 
-        ScreenUtils.clear(0,0,0,1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         Main.getBatch().begin();
         Main.getBatch().end();
@@ -79,8 +79,7 @@ public class MainMenuView extends AppMenu {
         Matcher matcher;
         if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        }
-        else if ((matcher = MainMenuCommands.NewGame.getMatcher(input)) != null) {
+        } else if ((matcher = MainMenuCommands.NewGame.getMatcher(input)) != null) {
             System.out.println(controller.createNewGame(
                     matcher.group("username1"),
                     matcher.group("username2"),
@@ -88,20 +87,15 @@ public class MainMenuView extends AppMenu {
                     matcher.group("overflow"),
                     scanner
             ));
-        }
-        else if (MainMenuCommands.LoadGame.getMatcher(input) != null) {
+        } else if (MainMenuCommands.LoadGame.getMatcher(input) != null) {
             System.out.println(controller.loadGame());
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
-        }
-        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
-        }
-        else if (MainMenuCommands.Logout.getMatcher(input) != null) {
+        } else if (MainMenuCommands.Logout.getMatcher(input) != null) {
             System.out.println(controller.logout());
-        }
-        else {
+        } else {
             System.out.println(new Result(false, "invalid command!"));
         }
     }

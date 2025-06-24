@@ -3,7 +3,6 @@ package org.example.view.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
@@ -19,9 +18,9 @@ import java.util.regex.Matcher;
 public class WelcomeMenuView extends AppMenu {
 
     private final WelcomeMenuController controller;
-    private Stage stage;
     private final Table table;
     private final Image stardewVallleyText;
+    private Stage stage;
 
     public WelcomeMenuView() {
         controller = new WelcomeMenuController(this);
@@ -92,14 +91,11 @@ public class WelcomeMenuView extends AppMenu {
         Matcher matcher;
         if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             controller.exitMenu();
-        }
-        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
-        }
-        else {
+        } else {
             System.out.println(new Result(false, "invalid command!"));
         }
     }

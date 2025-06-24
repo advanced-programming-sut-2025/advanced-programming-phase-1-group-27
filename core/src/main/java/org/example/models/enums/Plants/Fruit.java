@@ -14,8 +14,8 @@ public class Fruit implements Item {
         this.type = type;
         this.price = type.getPrice();
         this.energy = type.getEnergy();
-        quality = new StackLevel[] {StackLevel.Basic, StackLevel.Silver, StackLevel.Gold, StackLevel.Iridium}
-                [((new Random( )).nextInt(4))];
+        quality = new StackLevel[]{StackLevel.Basic, StackLevel.Silver, StackLevel.Gold, StackLevel.Iridium}
+                [((new Random()).nextInt(4))];
     }
 
     @Override

@@ -13,7 +13,7 @@ public class Stacks {
         this.stackLevel = StackLevel.Basic;
     }
 
-    public Stacks(Item item, StackLevel stackLevel , int quantity) {
+    public Stacks(Item item, StackLevel stackLevel, int quantity) {
         this.item = item;
         this.stackLevel = stackLevel;
         this.quantity = quantity;
@@ -21,10 +21,6 @@ public class Stacks {
 
     public Item getItem() {
         return item;
-    }
-
-    public void setStackLevel(StackLevel stackLevel) {
-        this.stackLevel = stackLevel;
     }
 
     public void setItem(Item item) {
@@ -51,11 +47,15 @@ public class Stacks {
         return stackLevel;
     }
 
+    public void setStackLevel(StackLevel stackLevel) {
+        this.stackLevel = stackLevel;
+    }
+
     public int getPrice() {
         return (int) ((double) item.getPrice() * this.stackLevel.getPriceModifier());
     }
 
     public int getTotalPrice() {
-        return quantity * (int) ((double)item.getPrice() * this.stackLevel.getPriceModifier());
+        return quantity * (int) ((double) item.getPrice() * this.stackLevel.getPriceModifier());
     }
 }

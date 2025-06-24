@@ -1,9 +1,9 @@
 package org.example.controller;
 
 import org.example.models.App;
+import org.example.models.Result;
 import org.example.models.User;
 import org.example.models.enums.Menu;
-import org.example.models.Result;
 import org.example.view.menu.ProfileMenuView;
 
 public class ProfileMenuController extends MenuController {

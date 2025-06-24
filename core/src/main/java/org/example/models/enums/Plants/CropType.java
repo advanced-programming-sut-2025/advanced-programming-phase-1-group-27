@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public enum CropType implements PlantType {
-    Grass(FruitType.Fiber, new int[] {1}, 50, 0, -1, 0, true,
-            false, false, new Season[] {Season.Spring, Season.Summer, Season.Fall, Season.Winter}),
+    Grass(FruitType.Fiber, new int[]{1}, 50, 0, -1, 0, true,
+            false, false, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}),
     BlueJazz(FruitType.BlueJazz, new int[]{1, 2, 2, 2}, 50, 7
             , null, 45, true, true, false
             , new Season[]{Season.Spring}),
@@ -42,7 +42,7 @@ public enum CropType implements PlantType {
     Strawberry(FruitType.Strawberry, new int[]{1, 1, 2, 2, 2}, 120, 8
             , 4, 50, false, true, false
             , new Season[]{Season.Spring}),
-    Tulip(FruitType. Tulip, new int[]{1, 1, 2, 2}, 30, 6
+    Tulip(FruitType.Tulip, new int[]{1, 1, 2, 2}, 30, 6
             , null, 45, true, true, false
             , new Season[]{Season.Spring}),
     UnmilledRice(FruitType.UnmilledRice, new int[]{1, 2, 2, 3}, 30, 8
@@ -138,73 +138,65 @@ public enum CropType implements PlantType {
     Dandelion(FruitType.Dandelion, new int[]{}, 40, 0
             , null, 25, false, true, false
             , new Season[]{Season.Spring}),
-    Leek(FruitType.Leek, new int[]{} , 60 , 0
-            , null , 40 ,false , true , false
+    Leek(FruitType.Leek, new int[]{}, 60, 0
+            , null, 40, false, true, false
             , new Season[]{Season.Spring}),
-    Morel(FruitType.Morel, new int[]{} , 150 , 0
-            , null , 20 , false , true , false
+    Morel(FruitType.Morel, new int[]{}, 150, 0
+            , null, 20, false, true, false
             , new Season[]{Season.Spring}),
-    SalmonBerry(FruitType.SalmonBerry, new int[]{} , 5 , 0
-            , null , 25 , false , true , false
+    SalmonBerry(FruitType.SalmonBerry, new int[]{}, 5, 0
+            , null, 25, false, true, false
             , new Season[]{Season.Spring}),
-    SpringOnion(FruitType.SpringOnion, new int[]{} , 8 , 0
-            , null , 13 , false , true , false
+    SpringOnion(FruitType.SpringOnion, new int[]{}, 8, 0
+            , null, 13, false, true, false
             , new Season[]{Season.Spring}),
-    WildHorseradish(FruitType.WildHorseradish, new int[]{} , 50 , 0
-            , null , 13 , false, true , false
+    WildHorseradish(FruitType.WildHorseradish, new int[]{}, 50, 0
+            , null, 13, false, true, false
             , new Season[]{Season.Spring}),
-    FiddleheadFern(FruitType.FiddleheadFern, new int[]{} , 90 , 0
-            , null , 25 , false , true , false
+    FiddleheadFern(FruitType.FiddleheadFern, new int[]{}, 90, 0
+            , null, 25, false, true, false
             , new Season[]{Season.Summer}),
-    RedMushroom(FruitType.RedMushroom, new int[]{} , 75 , 0
-            , null , -50 , false , true , false
+    RedMushroom(FruitType.RedMushroom, new int[]{}, 75, 0
+            , null, -50, false, true, false
             , new Season[]{Season.Summer}),
-    SpiceBerry(FruitType.SpiceBerry, new int[]{} , 80 , 0
-            , null , 25 , false , true , false
+    SpiceBerry(FruitType.SpiceBerry, new int[]{}, 80, 0
+            , null, 25, false, true, false
             , new Season[]{Season.Summer}),
-    SweetPea(FruitType.SweetPea, new int[]{} , 50 , 0
-            , null , 0 , false , false , false
+    SweetPea(FruitType.SweetPea, new int[]{}, 50, 0
+            , null, 0, false, false, false
             , new Season[]{Season.Summer}),
-    Blackberry(FruitType.Blackberry, new int[]{} , 25 , 0
-            , null , 25 , false , true , false
+    Blackberry(FruitType.Blackberry, new int[]{}, 25, 0
+            , null, 25, false, true, false
             , new Season[]{Season.Fall}),
-    Chanterelle(FruitType.Chanterelle, new int[]{} , 160 , 0
-            , null , 75 , false , true , false
+    Chanterelle(FruitType.Chanterelle, new int[]{}, 160, 0
+            , null, 75, false, true, false
             , new Season[]{Season.Fall}),
-    Hazelnut(FruitType.Hazelnut, new int[]{} , 40 , 0
-            , null , 38 , false , true , false
+    Hazelnut(FruitType.Hazelnut, new int[]{}, 40, 0
+            , null, 38, false, true, false
             , new Season[]{Season.Fall}),
-    PurpleMushroom(FruitType.PurpleMushroom, new int[]{} , 90 , 0
-            , null , 30 , false , true , false
+    PurpleMushroom(FruitType.PurpleMushroom, new int[]{}, 90, 0
+            , null, 30, false, true, false
             , new Season[]{Season.Fall}),
-    WildPlum(FruitType.WildPlum, new int[]{} , 80 , 0
-            , null , 25 , false , true , false
+    WildPlum(FruitType.WildPlum, new int[]{}, 80, 0
+            , null, 25, false, true, false
             , new Season[]{Season.Fall}),
-    Crocus(FruitType.Crocus, new int[]{} , 60 , 0
-            , null , 0 , false , false , false
+    Crocus(FruitType.Crocus, new int[]{}, 60, 0
+            , null, 0, false, false, false
             , new Season[]{Season.Winter}),
-    CrystalFruit(FruitType.CrystalFruit, new int[]{} , 150 , 0
-            , null , 63 , false , true , false
+    CrystalFruit(FruitType.CrystalFruit, new int[]{}, 150, 0
+            , null, 63, false, true, false
             , new Season[]{Season.Winter}),
-    Holly(FruitType.Holly, new int[]{} , 80 , 0
-            , null , -37 , false , true , false
+    Holly(FruitType.Holly, new int[]{}, 80, 0
+            , null, -37, false, true, false
             , new Season[]{Season.Winter}),
-    SnowYum(FruitType.SnowYam, new int[]{} , 100 , 0
-            , null , 30 , false , true , false
+    SnowYum(FruitType.SnowYam, new int[]{}, 100, 0
+            , null, 30, false, true, false
             , new Season[]{Season.Winter}),
-    WinterRoot(FruitType.WinterRoot, new int[]{} , 70 , 0
-            , null , 25 , false , true , false
+    WinterRoot(FruitType.WinterRoot, new int[]{}, 70, 0
+            , null, 25, false, true, false
             , new Season[]{Season.Winter});
 
-    private final FruitType fruit;
-    private final int price;
-    private SeedType source;
-    private final int[] stages;
-    private final int totalHarvestTime, energy;
-    private final Integer regrowthTime;
-    private final boolean oneTime, isEdible, canBecomeGiant;
-    private final ArrayList<Season> seasons;
-    private static final HashMap<Season, ArrayList<CropType>> foragingCropsBySeason = new HashMap<>(){{
+    private static final HashMap<Season, ArrayList<CropType>> foragingCropsBySeason = new HashMap<>() {{
         put(Season.Spring, new ArrayList<>(List.of(Grass, Daffodil, Dandelion, Leek, Morel, SalmonBerry,
                 SpringOnion, WildHorseradish)));
         put(Season.Summer, new ArrayList<>(List.of(Grass, FiddleheadFern, Grape, RedMushroom, SpiceBerry,
@@ -213,13 +205,20 @@ public enum CropType implements PlantType {
                 WildPlum)));
         put(Season.Winter, new ArrayList<>(List.of(Grass, Crocus, CrystalFruit, Holly, SnowYum, WinterRoot)));
     }};
-
-    private static HashMap<Season, ArrayList<CropType>> mixedSeedPossibilitiesBySeason = new HashMap<>(){{
+    private static HashMap<Season, ArrayList<CropType>> mixedSeedPossibilitiesBySeason = new HashMap<>() {{
         put(Season.Spring, new ArrayList<>(List.of(Cauliflower, Parsnip, Potato, BlueJazz, Tulip)));
         put(Season.Summer, new ArrayList<>(List.of(Corn, HotPepper, Radish, Wheat, Poppy, Sunflower, SummerSpangle)));
         put(Season.Fall, new ArrayList<>(List.of(Artichoke, Corn, Eggplant, Pumpkin, Sunflower, FairyRose)));
         put(Season.Winter, new ArrayList<>(List.of(PowderMelon)));
     }};
+    private final FruitType fruit;
+    private final int price;
+    private final int[] stages;
+    private final int totalHarvestTime, energy;
+    private final Integer regrowthTime;
+    private final boolean oneTime, isEdible, canBecomeGiant;
+    private final ArrayList<Season> seasons;
+    private SeedType source;
 
     CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons) {
@@ -236,16 +235,25 @@ public enum CropType implements PlantType {
         this.seasons = new ArrayList<>(List.of(seasons));
     }
 
-    public int getEnergy() {
-        return energy;
-    }
-
     public static HashMap<Season, ArrayList<CropType>> getForagingCropsBySeason() {
         return foragingCropsBySeason;
     }
 
     public static HashMap<Season, ArrayList<CropType>> getMixedSeedPossibilitiesBySeason() {
         return mixedSeedPossibilitiesBySeason;
+    }
+
+    public static CropType getItem(String itemName) {
+        for (CropType item : values()) {
+            if (item.toString().equalsIgnoreCase(itemName.replace(" ", ""))) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public int getEnergy() {
+        return energy;
     }
 
     public FruitType getFruit() {
@@ -304,15 +312,6 @@ public enum CropType implements PlantType {
     @Override
     public String toString() {
         return this.name();
-    }
-
-    public static CropType getItem(String itemName) {
-        for (CropType item : values()) {
-            if (item.toString().equalsIgnoreCase(itemName.replace(" ", ""))) {
-                return item;
-            }
-        }
-        return null;
     }
 
 }

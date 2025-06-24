@@ -1,7 +1,5 @@
 package org.example.models.enums;
 
-import java.util.Arrays;
-
 public enum StackLevel {
     Basic,
     Copper,

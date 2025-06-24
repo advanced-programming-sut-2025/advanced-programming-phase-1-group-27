@@ -1,10 +1,8 @@
 package org.example.models;
 
-import org.example.models.Map.Map;
-
 public abstract class Building {
-    protected Cell topLeftCell;
     protected final int height, width;
+    protected Cell topLeftCell;
 
     public Building(Cell topLeftCell, int height, int width) {
         this.topLeftCell = topLeftCell;

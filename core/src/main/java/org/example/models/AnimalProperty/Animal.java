@@ -1,9 +1,9 @@
 package org.example.models.AnimalProperty;
 
+import org.example.models.Position;
 import org.example.models.Stacks;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.AnimalType;
-import org.example.models.Position;
 import org.example.models.enums.items.products.AnimalProduct;
 
 import java.util.Random;
@@ -37,19 +37,17 @@ public class Animal {
             return null;
         }
         tillNextProduction = type.getYieldRate();
-        Random generator = new Random( );
+        Random generator = new Random();
         AnimalProduct product;
 
         if (type.getProducts().size() > 1 && friendship >= 100) {
             int randInt = generator.nextInt(1500);
             if (randInt < (generator.nextInt(3) + 1) * 75 + friendship) {
                 product = type.getProducts().get(1);
-            }
-            else {
+            } else {
                 product = type.getProducts().get(0);
             }
-        }
-        else {
+        } else {
             product = type.getProducts().get(0);
         }
         double d = (double) friendship / 1000.0;
@@ -76,13 +74,17 @@ public class Animal {
     public String showDetails() {
         return "Animal Type: " + type.name() + "\n" +
                 "Animal Name: " + name + "\n" +
-                (wasFeed? "Was Feed Today": "Wasn't Feed Today!!") + "\n" +
-                (wasPet? "Was Pet Today": "Wasn't Pet Today!!") + "\n" +
+                (wasFeed ? "Was Feed Today" : "Wasn't Feed Today!!") + "\n" +
+                (wasPet ? "Was Pet Today" : "Wasn't Pet Today!!") + "\n" +
                 "FriendShip: " + friendship + "\n";
     }
 
     public boolean isWasFeed() {
         return wasFeed;
+    }
+
+    public void setWasFeed(boolean wasFeed) {
+        this.wasFeed = wasFeed;
     }
 
     public int getPrice() {
@@ -97,20 +99,16 @@ public class Animal {
         return name;
     }
 
-    public void setWasFeed(boolean wasFeed) {
-        this.wasFeed = wasFeed;
-    }
-
     public void setWasPet(boolean wasPet) {
         this.wasPet = wasPet;
     }
 
-    public void setOut(boolean out) {
-        isOut = out;
-    }
-
     public boolean isOut() {
         return isOut;
+    }
+
+    public void setOut(boolean out) {
+        isOut = out;
     }
 
     public int getTillNextProduction() {

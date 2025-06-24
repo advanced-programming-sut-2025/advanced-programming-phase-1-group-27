@@ -64,10 +64,6 @@ public enum ArtisanTypes {
         this.products = products;
     }
 
-    public ArrayList<ProcessedProductType> getProducts() {
-        return products;
-    }
-
     public static ArtisanTypes getArtisan(Item item) {
         if (item == null)
             return null;
@@ -84,6 +80,10 @@ public enum ArtisanTypes {
                 return artisan;
         }
         return null;
+    }
+
+    public ArrayList<ProcessedProductType> getProducts() {
+        return products;
     }
 
     public Recipe getRecipe(String[] itemsList) {

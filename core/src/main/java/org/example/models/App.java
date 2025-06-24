@@ -1,8 +1,8 @@
 package org.example.models;
 
 import org.example.models.enums.Gender;
-import org.example.models.enums.items.products.CraftingProduct;
 import org.example.models.enums.Menu;
+import org.example.models.enums.items.products.CraftingProduct;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -14,19 +14,17 @@ import java.util.Random;
 
 public class App {
 
+    private static final String loggedInUserFilePath = "data/login_user.json";
     private static User LoggedInUser = null;
     private static Game currentGame = null;
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<SecurityQuestion> questions = new ArrayList<>();
     private static Menu currentMenu = Menu.WelcomeMenu;
     private static ArrayList<CraftingProduct> allRecipes = new ArrayList<>(); // TODO: arraylist should be initialized
-
     // list of questions in order to recover password
     private static ArrayList<SecurityQuestion> securityQuestions = new ArrayList<>();
 
-    private static final String loggedInUserFilePath = "data/login_user.json";
-
-    static  {
+    static {
         User savedUser = getSavedUser();
         if (savedUser != null) {
             LoggedInUser = savedUser;
@@ -102,14 +100,14 @@ public class App {
         return result.toString();
     }
 
+    public static void setSecurityQuestions(ArrayList<SecurityQuestion> securityQuestions) {
+        App.securityQuestions = securityQuestions;
+    }
+
     public static SecurityQuestion getSecurityQuestion(int id) {
         if (id >= securityQuestions.size())
             return null;
         return securityQuestions.get(id);
-    }
-
-    public static void setSecurityQuestions(ArrayList<SecurityQuestion> securityQuestions) {
-        App.securityQuestions = securityQuestions;
     }
 
     public static User getUserByUsername(String username) {
@@ -140,7 +138,7 @@ public class App {
     }
 
     public static User getSavedUser() {
-        File file  = new File(loggedInUserFilePath);
+        File file = new File(loggedInUserFilePath);
         if (!file.exists() || file.length() == 0)
             return null;
 
@@ -168,7 +166,7 @@ public class App {
     }
 
     public static String generatePassword() {
-        Random random = new Random( );
+        Random random = new Random();
         int passwordLen = 8 + random.nextInt(5);
         String lowercase = "abcdefghijklmnopqrstuvwxyz";
         String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

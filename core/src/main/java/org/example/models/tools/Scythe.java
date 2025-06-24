@@ -1,8 +1,10 @@
 package org.example.models.tools;
 
 import org.example.models.*;
-import org.example.models.enums.CellType;
-import org.example.models.enums.Plants.*;
+import org.example.models.enums.Plants.Crop;
+import org.example.models.enums.Plants.CropType;
+import org.example.models.enums.Plants.FruitType;
+import org.example.models.enums.Plants.Plant;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.ToolType;
@@ -12,11 +14,11 @@ import java.util.Random;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class Scythe extends Tool{
+public class Scythe extends Tool {
 
     public Scythe() {
 
-        super(ToolType.Scythe.getLevel() , 2 , ToolType.Scythe.getName(), ToolType.Scythe);
+        super(ToolType.Scythe.getLevel(), 2, ToolType.Scythe.getName(), ToolType.Scythe);
 
     }
 

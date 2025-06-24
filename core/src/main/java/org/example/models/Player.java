@@ -1,12 +1,12 @@
 package org.example.models;
 
+import org.example.models.Map.FarmMap;
 import org.example.models.Map.Map;
 import org.example.models.NPCs.NPC;
 import org.example.models.Relations.Dialogue;
 import org.example.models.Relations.Relation;
 import org.example.models.enums.*;
 import org.example.models.enums.items.Recipe;
-import org.example.models.Map.FarmMap;
 import org.example.models.enums.items.ToolType;
 import org.example.models.enums.items.products.CookingProduct;
 import org.example.models.enums.items.products.CraftingProduct;
@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player extends User {
+    // items which are place in the fridge
+    private final Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
     private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>();
     private ArrayList<Recipe> availableCookingRecipes = new ArrayList<>();
     // player's inventory
     private Backpack backpack = new Backpack(ToolType.BasicBackpack); // TODO: ba parsa check shavad
-    // items which are place in the fridge
-    private final Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>();
     private int energy, dayEnergy, maxEnergy = 200, boostEnergy = 0;
@@ -57,6 +57,16 @@ public class Player extends User {
         backpack.addItems(ToolType.BasicWateringCan, ToolType.BasicWateringCan.getLevel(), 1);
         backpack.addItems(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1);
         backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
+    }
+
+    public Player(String username, String password, String nickname, String email, Gender gender) {
+        super(username, password, nickname, email, gender);
+        initFields();
+    }
+
+    public Player(User user) {
+        super(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getGender());
+        initFields();
     }
 
     public void refreshNPCThings() {
@@ -104,16 +114,6 @@ public class Player extends User {
         }
     }
 
-    public Player(String username, String password, String nickname, String email, Gender gender) {
-        super(username, password, nickname, email, gender);
-        initFields();
-    }
-
-    public Player(User user) {
-        super(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getGender());
-        initFields();
-    }
-
     private void initFields() {
         this.energy = 50;
         this.dayEnergy = 200;
@@ -142,10 +142,6 @@ public class Player extends User {
         availableCookingRecipes.add(Recipe.RedPlateRecipe);
     }
 
-    public void setCurrentTool(Tool currentTool) {
-        this.currentTool = currentTool;
-    }
-
     public int getMoney() {
         return money;
     }
@@ -170,6 +166,10 @@ public class Player extends User {
         return currentTool;
     }
 
+    public void setCurrentTool(Tool currentTool) {
+        this.currentTool = currentTool;
+    }
+
     public Backpack getBackpack() {
         return backpack;
     }
@@ -177,8 +177,8 @@ public class Player extends User {
     public void setBackpack(ToolType backpack) {
         // TODO : Rassa dige chia baladi???
         Backpack backpack1 = new Backpack(backpack);
-        for(Stacks stack : this.backpack.getItems()){
-            backpack1.addItems(stack.getItem() , stack.getStackLevel() , stack.getQuantity());
+        for (Stacks stack : this.backpack.getItems()) {
+            backpack1.addItems(stack.getItem(), stack.getStackLevel(), stack.getQuantity());
         }
         this.backpack = backpack1;
     }
@@ -191,16 +191,16 @@ public class Player extends User {
         return currentMap;
     }
 
-    public void setFarmMap(Map farmMap) {
-        this.currentMap = farmMap;
-    }
-
-    public void setSpouse(Player spouse) {
-        this.spouse = spouse;
+    public void setCurrentMap(Map map) {
+        currentMap = map;
     }
 
     public Player getSpouse() {
         return spouse;
+    }
+
+    public void setSpouse(Player spouse) {
+        this.spouse = spouse;
     }
 
     public void removeBuff() {
@@ -274,10 +274,6 @@ public class Player extends User {
         this.cheater = cheater;
     }
 
-    public void setMaxEnergy(int maxEnergy) {
-        this.maxEnergy = maxEnergy;
-    }
-
     public int getDayEnergy() {
         return dayEnergy;
     }
@@ -288,6 +284,10 @@ public class Player extends User {
 
     public int getMaxEnergy() {
         return maxEnergy;
+    }
+
+    public void setMaxEnergy(int maxEnergy) {
+        this.maxEnergy = maxEnergy;
     }
 
     public boolean hasPassedOut() {
@@ -328,6 +328,10 @@ public class Player extends User {
 
     public FarmMap getFarmMap() {
         return farmMap;
+    }
+
+    public void setFarmMap(Map farmMap) {
+        this.currentMap = farmMap;
     }
 
     public void setFarmMap(FarmMap farmMap) {
@@ -474,10 +478,6 @@ public class Player extends User {
             return true;
         }
         return false;
-    }
-
-    public void setCurrentMap(Map map) {
-        currentMap = map;
     }
 
     public boolean canFlowered(Player player) {

@@ -73,8 +73,8 @@ public class JojaMartShopController extends MenuController {
         return new Result(true, result.toString());
     }
 
-    public Result purchase(String productName , String quantityString) {
-        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
+    public Result purchase(String productName, String quantityString) {
+        int quantity = quantityString == null ? 1 : Integer.parseInt(quantityString);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Stock stock = App.getCurrentGame().getJojaMart().getStock(productName);
         if (stock == null) {

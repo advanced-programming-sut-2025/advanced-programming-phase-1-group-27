@@ -22,12 +22,16 @@ public class Artisan {
         return finalProduct;
     }
 
+    public void setFinalProduct(ProcessedProductType finalProduct) {
+        this.finalProduct = new ProcessedProduct(finalProduct, finalProduct.getPrice(), finalProduct.getEnergy());
+    }
+
     public int getTimeLeft() {
         return timeLeft;
     }
 
-    public void setFinalProduct(ProcessedProductType finalProduct) {
-        this.finalProduct = new ProcessedProduct(finalProduct, finalProduct.getPrice(), finalProduct.getEnergy());
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
     }
 
     public void setFinalProduct(ProcessedProductType finalProductType, String ingredientName) {
@@ -43,42 +47,32 @@ public class Artisan {
             assert fruit != null;
             processedProduct.setPrice((int) (2.25 * fruit.getPrice()));
             processedProduct.setEnergy(2 * fruit.getEnergy());
-        }
-        else if (finalProductType == ProcessedProductType.Wine) {
+        } else if (finalProductType == ProcessedProductType.Wine) {
             assert fruit != null;
             processedProduct.setPrice(3 * fruit.getPrice());
             processedProduct.setEnergy((int) (1.75 * fruit.getEnergy()));
-        }
-        else if (finalProductType == ProcessedProductType.DriedMushroom) {
+        } else if (finalProductType == ProcessedProductType.DriedMushroom) {
             assert fruit != null;
             processedProduct.setPrice((int) (7.5 * fruit.getPrice()) + 25);
             processedProduct.setEnergy(50);
-        }
-        else if (finalProductType == ProcessedProductType.DriedFruit) {
+        } else if (finalProductType == ProcessedProductType.DriedFruit) {
             assert fruit != null;
             processedProduct.setPrice((int) (7.5 * fruit.getPrice()) + 25);
             processedProduct.setEnergy(75);
-        }
-        else if (finalProductType == ProcessedProductType.Pickle) {
+        } else if (finalProductType == ProcessedProductType.Pickle) {
             assert fruit != null;
             processedProduct.setPrice(2 * fruit.getPrice() + 50);
             processedProduct.setEnergy((int) (1.75 * fruit.getEnergy()));
-        }
-        else if (finalProductType == ProcessedProductType.Jelly) {
+        } else if (finalProductType == ProcessedProductType.Jelly) {
             assert fruit != null;
             processedProduct.setPrice(2 * fruit.getPrice() + 50);
             processedProduct.setEnergy(2 * fruit.getEnergy());
-        }
-        else if (finalProductType == ProcessedProductType.SmokedFish) {
+        } else if (finalProductType == ProcessedProductType.SmokedFish) {
             assert fish != null;
             processedProduct.setPrice(2 * fish.getPrice());
             processedProduct.setEnergy((int) (1.5 * fish.getEnergy()));
         }
         finalProduct = processedProduct;
-    }
-
-    public void setTimeLeft(int timeLeft) {
-        this.timeLeft = timeLeft;
     }
 
     public void free() {

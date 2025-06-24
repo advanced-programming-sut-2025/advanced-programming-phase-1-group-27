@@ -3,24 +3,24 @@ package org.example.models.enums.Plants;
 import org.example.models.Item;
 
 public enum FruitType implements Item {
-//Grass :
+    //Grass :
     Fiber(50, false, 0),
-//Trees :
-    Apricot(59 , true ,38),
-    Cherry(80 , true ,38),
-    Banana(150 , true ,75),
-    Mango(130 , true ,100),
-    Orange(100 , true ,38),
-    Peach(140 , true ,38),
-    Apple(100 , true ,38),
-    Pomegranate(140 , true ,38),
-    OakResin(150 , false , 0),
-    MapleSyrup(200 , false , 0),
-    PineTar(100 , false , 0),
-    Sap(2 , true , -2),
-    CommonMushroom(40 , true , 38),
-    MysticSyrup(1000 , true , 500),
-//Foraging Crops :
+    //Trees :
+    Apricot(59, true, 38),
+    Cherry(80, true, 38),
+    Banana(150, true, 75),
+    Mango(130, true, 100),
+    Orange(100, true, 38),
+    Peach(140, true, 38),
+    Apple(100, true, 38),
+    Pomegranate(140, true, 38),
+    OakResin(150, false, 0),
+    MapleSyrup(200, false, 0),
+    PineTar(100, false, 0),
+    Sap(2, true, -2),
+    CommonMushroom(40, true, 38),
+    MysticSyrup(1000, true, 500),
+    //Foraging Crops :
     Daffodil(30, true, 0),
     Dandelion(40, true, 25),
     Leek(60, true, 40),
@@ -43,7 +43,7 @@ public enum FruitType implements Item {
     Holly(80, true, -37),
     SnowYam(100, true, 30),
     WinterRoot(70, true, 25),
-//All Crops :
+    //All Crops :
     BlueJazz(50, true, 45),
     Carrot(35, true, 75),
     Cauliflower(175, true, 75),
@@ -97,11 +97,20 @@ public enum FruitType implements Item {
         this.energy = energy;
     }
 
+    public static FruitType getItem(String itemName) {
+        for (FruitType item : values()) {
+            if (item.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public boolean isFruitEdible() {
         return isFruitEdible;
     }
 
-    public int getEnergy(){
+    public int getEnergy() {
         return energy;
     }
 
@@ -111,15 +120,6 @@ public enum FruitType implements Item {
 
     public String getName() {
         return this.toString();
-    }
-
-    public static FruitType getItem(String itemName) {
-        for (FruitType item : values()) {
-            if (item.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
-                return item;
-            }
-        }
-        return null;
     }
 
     public String toString() {

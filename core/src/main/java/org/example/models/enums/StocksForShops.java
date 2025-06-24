@@ -1,8 +1,8 @@
 package org.example.models.enums;
 
+import org.example.models.Stock;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
-import org.example.models.Stock;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.CookingProduct;
@@ -24,8 +24,6 @@ public enum StocksForShops {
     FallPierreGeneralStoreStock(getFallPierreGeneralStoreStock()),
     FishShopStock(getFishShopStock());
 
-    private ArrayList<Stock> stock;
-
     static {
         ArrayList<Stock> permanentJojaMartStock = getPermanentJojaMartStock();
         SpringJojaMartStock.stock.addAll(permanentJojaMartStock);
@@ -38,12 +36,10 @@ public enum StocksForShops {
         PierreGeneralStoreStock.stock.addAll(getFallPierreGeneralStoreStock());
     }
 
+    private ArrayList<Stock> stock;
+
     StocksForShops(ArrayList<Stock> stock) {
         this.stock = stock;
-    }
-
-    public ArrayList<Stock> getStock() {
-        return stock;
     }
 
     //Limits are daily and restock every morning
@@ -156,7 +152,7 @@ public enum StocksForShops {
         ArrayList<Stock> fallMartJojaMart = new ArrayList<>();
         fallMartJojaMart.add(new Stock(SeedType.CornSeed, 5, 187));
         fallMartJojaMart.add(new Stock(SeedType.EggplantSeed, 5, 25));
-        fallMartJojaMart.add(new Stock(SeedType.PumpkinSeed, 5,125));
+        fallMartJojaMart.add(new Stock(SeedType.PumpkinSeed, 5, 125));
         fallMartJojaMart.add(new Stock(SeedType.BroccoliSeed, 5, 15));
         fallMartJojaMart.add(new Stock(SeedType.AmaranthSeed, 5, 87));
         fallMartJojaMart.add(new Stock(SeedType.GrapeStarter, 5, 75));
@@ -237,7 +233,6 @@ public enum StocksForShops {
         return summerPierreGeneralStoreStock;
     }
 
-
     private static ArrayList<Stock> getFallPierreGeneralStoreStock() {
         ArrayList<Stock> fallPierreGeneralStoreStock = new ArrayList<>();
         fallPierreGeneralStoreStock.add(new Stock(SeedType.EggplantSeed, 5, 30, Season.Fall));
@@ -261,8 +256,12 @@ public enum StocksForShops {
         fishShopStock.add(new Stock(ShopItems.TroutSoup, 1, 250));
         fishShopStock.add(new Stock(ToolType.BambooPole, ToolType.BambooPole.getLevel(), 1, 500));
         fishShopStock.add(new Stock(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1, 25));
-        fishShopStock.add(new Stock(ToolType.FiberglassRod,ToolType.FiberglassRod.getLevel(), 1, 1800));
+        fishShopStock.add(new Stock(ToolType.FiberglassRod, ToolType.FiberglassRod.getLevel(), 1, 1800));
         fishShopStock.add(new Stock(ToolType.IridiumRod, ToolType.IridiumRod.getLevel(), 1, 7500));
         return fishShopStock;
+    }
+
+    public ArrayList<Stock> getStock() {
+        return stock;
     }
 }

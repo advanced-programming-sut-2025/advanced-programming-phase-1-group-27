@@ -28,12 +28,12 @@ public class ProcessedProduct implements Item { // for all processed products
         return price;
     }
 
-    public int getEnergy() {
-        return energy;
-    }
-
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getEnergy() {
+        return energy;
     }
 
     public void setEnergy(int energy) {

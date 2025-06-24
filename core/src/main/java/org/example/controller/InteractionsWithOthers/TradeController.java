@@ -182,7 +182,7 @@ public class TradeController extends MenuController {
         if (trade == null) {
             return new Result(false, "Trade with id " + id + " not found");
         }
-        if(trade.getRespond() != null) {
+        if (trade.getRespond() != null) {
             if (trade.getRespond().equals("reject")
                     || trade.getRespond().equals("accept")) {
                 return new Result(false, "Trade with id " + id + " has already Done");
@@ -283,14 +283,14 @@ public class TradeController extends MenuController {
                 if (trade.getResponder() == currentPlayer
                         || trade.getSender() == currentPlayer) {
                     result.append("Trade ID: ").append(trade.getId()).append("\n");
-                    if(trade.getTradeType() == DialogueType.TradeOffer){
+                    if (trade.getTradeType() == DialogueType.TradeOffer) {
                         result.append("Trade Type: offer").append("\n");
-                    }else {
+                    } else {
                         result.append("Trade Type: request").append("\n");
                     }
-                    if(trade.getRespond() == null){
+                    if (trade.getRespond() == null) {
                         result.append("condition : unknown\n");
-                    }else {
+                    } else {
                         result.append("condition : ").append(trade.getRespond()).append("\n");
                     }
                     result.append("From : ").append(trade.getSender().getUsername()).append("\n");

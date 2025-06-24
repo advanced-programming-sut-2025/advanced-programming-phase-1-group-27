@@ -1,10 +1,10 @@
 package org.example.controller;
 
 import org.example.models.App;
+import org.example.models.Result;
 import org.example.models.SecurityQuestion;
 import org.example.models.User;
 import org.example.models.enums.Menu;
-import org.example.models.Result;
 import org.example.view.menu.LoginMenuView;
 import org.json.JSONObject;
 
@@ -21,9 +21,7 @@ public class LoginMenuController extends MenuController {
         this.view = view;
     }
 
-    public void handleLoginMenuButtons(){
-
-
+    public void handleLoginMenuButtons() {
 
 
     }

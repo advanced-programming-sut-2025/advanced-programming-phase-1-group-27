@@ -35,14 +35,14 @@ public enum TreeType implements PlantType {
     MysticTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.MysticSyrup, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 7);
 
-    private PlantSourceType source;
+    private static final ArrayList<TreeType> foragings = new ArrayList<>(List.of(OakTree, MapleTree, PineTree, MahoganyTree,
+            MushroomTree));
     private final int[] stages;
     private final int harvestTime;
     private final FruitType fruit;
     private final ArrayList<Season> seasons;
     private final int harvestCycle;
-    private static final ArrayList<TreeType> foragings = new ArrayList<>(List.of(OakTree, MapleTree, PineTree, MahoganyTree,
-            MushroomTree));
+    private PlantSourceType source;
 
     TreeType(int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle) {
         this.source = source;
@@ -51,6 +51,19 @@ public enum TreeType implements PlantType {
         this.fruit = fruit;
         this.seasons = new ArrayList<>(List.of(seasons));
         this.harvestCycle = harvestCycle;
+    }
+
+    public static TreeType getItem(String itemName) {
+        for (TreeType item : values()) {
+            if (item.toString().equalsIgnoreCase(itemName.replace(" ", ""))) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<TreeType> getForagingTrees() {
+        return foragings;
     }
 
     public PlantSourceType getSource() {
@@ -93,18 +106,5 @@ public enum TreeType implements PlantType {
 
     public String toString() {
         return this.name();
-    }
-
-    public static TreeType getItem(String itemName) {
-        for (TreeType item : values()) {
-            if (item.toString().equalsIgnoreCase(itemName.replace(" ", ""))) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public static ArrayList<TreeType> getForagingTrees() {
-        return foragings;
     }
 }

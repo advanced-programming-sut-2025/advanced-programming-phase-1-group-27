@@ -1,7 +1,10 @@
 package org.example.controller.shopcontroller;
 
 import org.example.controller.MenuController;
-import org.example.models.*;
+import org.example.models.App;
+import org.example.models.Player;
+import org.example.models.Result;
+import org.example.models.Stock;
 import org.example.models.enums.Menu;
 import org.example.models.enums.items.Recipe;
 import org.example.models.enums.items.ToolType;
@@ -73,10 +76,10 @@ public class PierreGeneralShopController extends MenuController {
     }
 
     public Result purchase(String productName, String quantityString) {
-        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
-        if(productName.equalsIgnoreCase("DeluxeBackpack")){
+        int quantity = quantityString == null ? 1 : Integer.parseInt(quantityString);
+        if (productName.equalsIgnoreCase("DeluxeBackpack")) {
             productName = "Deluxe Backpack";
-        }else if(productName.equalsIgnoreCase("LargeBackPack")){
+        } else if (productName.equalsIgnoreCase("LargeBackPack")) {
             productName = "Large Backpack";
         }
         Stock stock = App.getCurrentGame().getPierreGeneralStore().getStock(productName);
@@ -94,15 +97,13 @@ public class PierreGeneralShopController extends MenuController {
             return new Result(false, "Not enough money!");
         }
         if (stock.getItem() instanceof Recipe) {
-             currentPlayer.getAvailableCraftingRecipes().add((Recipe) stock.getItem());
-        }
-        else if (stock.getItem() instanceof ToolType backpack) {
+            currentPlayer.getAvailableCraftingRecipes().add((Recipe) stock.getItem());
+        } else if (stock.getItem() instanceof ToolType backpack) {
             if (currentPlayer.getBackpackType() == ToolType.BasicBackpack
                     && stock.getItem().equals(ToolType.DeluxeBackpack))
                 return new Result(false, "You should first unlock large backpack!");
             currentPlayer.setBackpack(backpack);
-        }
-        else {
+        } else {
             if (!App.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(
                     stock.getItem(),
                     stock.getStackLevel(),

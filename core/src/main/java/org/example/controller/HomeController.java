@@ -83,8 +83,7 @@ public class HomeController extends MenuController {
                 return new Result(true, itemName + " added to refrigerator successfully!");
             }
             return new Result(false, "Refrigerator is full!");
-        }
-        else {
+        } else {
             Stacks slot = refrigerator.getSlotByItemName(itemName);
             if (slot == null)
                 return new Result(false, "Item not found in refrigerator!");

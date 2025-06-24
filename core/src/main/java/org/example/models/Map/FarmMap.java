@@ -5,16 +5,12 @@ import org.example.models.AnimalProperty.AnimalEnclosure;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Cell;
-import org.example.models.Position;
 import org.example.models.ShippingBin;
 import org.example.models.enums.CellType;
 import org.example.models.enums.Plants.Plant;
-import org.example.models.enums.Plants.PlantType;
-import org.example.models.enums.items.BuildingType;
 
-import java.sql.Time;
-import java.util.*;
-import java.util.random.RandomGenerator;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class FarmMap extends Map {
 
@@ -129,7 +125,7 @@ public class FarmMap extends Map {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (cells[i][j].getObject() != null && cells[i][j].getObject() instanceof Plant plant &&
-                plant.isForaging())
+                        plant.isForaging())
                     foragingCount++;
             }
         }

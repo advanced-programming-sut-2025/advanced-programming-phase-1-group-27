@@ -21,36 +21,9 @@ public class Axe extends Tool {
 
     public Axe(ToolType toolType) {
 
-        super(toolType.getLevel(), getEnergyUsageLevel(toolType) , toolType.getName(), toolType);
+        super(toolType.getLevel(), getEnergyUsageLevel(toolType), toolType.getName(), toolType);
 
     }
-
-    @Override
-    public int getEnergyUsage() {
-        int energy = super.getEnergyUsage();
-        if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Foraging).getLevel() == 4) {
-            energy--;
-        }
-
-        return Math.min(energy , 0);
-    }
-
-    @Override
-    public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
-        if (cell.getObject() instanceof Tree tree) {
-            cell.setObject(null);
-            cell.setType(CellType.Free);
-            player.consumeEnergy(this.getEnergyUsage());
-            player.getBackpack().addItems(MineralType.Wood, null, 5);
-            int cnt = new Random().nextInt(2) + 1;
-
-            return new Result(true, "You Cut The Tree! You Got 5 Wood and " +
-                    cnt + " " + tree.getType().getSource() + "(s).");
-        }
-        return new Result(false, "Not A Tree Here!");
-    }
-
 
     private static int getEnergyUsageLevel(ToolType toolType) {
 
@@ -70,6 +43,32 @@ public class Axe extends Tool {
 
         return energyUsage;
 
+    }
+
+    @Override
+    public int getEnergyUsage() {
+        int energy = super.getEnergyUsage();
+        if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Foraging).getLevel() == 4) {
+            energy--;
+        }
+
+        return Math.min(energy, 0);
+    }
+
+    @Override
+    public Result use(Cell cell) {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        if (cell.getObject() instanceof Tree tree) {
+            cell.setObject(null);
+            cell.setType(CellType.Free);
+            player.consumeEnergy(this.getEnergyUsage());
+            player.getBackpack().addItems(MineralType.Wood, null, 5);
+            int cnt = new Random().nextInt(2) + 1;
+
+            return new Result(true, "You Cut The Tree! You Got 5 Wood and " +
+                    cnt + " " + tree.getType().getSource() + "(s).");
+        }
+        return new Result(false, "Not A Tree Here!");
     }
 
 

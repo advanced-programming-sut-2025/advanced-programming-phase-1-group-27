@@ -19,7 +19,8 @@ public class RegisterMenuController extends MenuController {
         this.view = view;
     }
 
-    public void handleRegisterMenuButtons() {}
+    public void handleRegisterMenuButtons() {
+    }
 
 
     @Override

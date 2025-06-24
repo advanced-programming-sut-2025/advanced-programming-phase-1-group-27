@@ -3,12 +3,12 @@ package org.example.models;
 import org.example.models.enums.Seasons.Season;
 
 public class Time {
+    private final String[] daysOfWeek = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday"};
     //implement as instance
     private int daysPassed = 0;
     private int hour = 9, day = 1;
     private Season season = Season.Spring;
-    private final String[] daysOfWeek = new String[] {"Sunday", "Monday", "Tuesday", "Wednesday",
-            "Thursday", "Friday", "Saturday"};
 
     public int getHour() {
         return this.hour;
@@ -57,6 +57,7 @@ public class Time {
         season = season.getNextSeason();
         App.getCurrentGame().newSeason();
     }
+
     public Season getSeason() {
         return this.season;
     }

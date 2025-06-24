@@ -1,8 +1,11 @@
 package org.example.controller.InteractionsWithOthers;
 
-import org.example.models.*;
+import org.example.models.App;
+import org.example.models.Item;
+import org.example.models.Player;
 import org.example.models.Relations.Dialogue;
 import org.example.models.Relations.Relation;
+import org.example.models.Result;
 import org.example.models.enums.DialogueType;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.tools.Backpack;
@@ -119,6 +122,7 @@ public class InteractionsWithUserController {
         player.getBackpack().addItems(itemType, backpack1.getStackLevel(itemType), amount);
         return new Result(true, "Gift has been send successfully");
     }
+
     public Result giftList() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         StringBuilder result = new StringBuilder();
@@ -206,9 +210,9 @@ public class InteractionsWithUserController {
                                     .getUsername()).append(" : ").
                             append(modified).append("\n");
                 }
-                if(dialogue.getRespond().equals("-1")) {
+                if (dialogue.getRespond().equals("-1")) {
                     result.append("rate = unknown").append("\n");
-                }else {
+                } else {
                     result.append("rate = ").append(dialogue.getRespond()).append("\n");
                 }
             }
@@ -253,7 +257,7 @@ public class InteractionsWithUserController {
         if (!isPlayerNear(player)) {
             return new Result(false, "Player is not near");
         }
-        if(!currentPlayer.canFlowered(player)){
+        if (!currentPlayer.canFlowered(player)) {
             return new Result(false, "You can't give flower");
         }
         if (!backpack.hasEnoughItem(ShopItems.Bouquet, 1)) {
@@ -284,21 +288,21 @@ public class InteractionsWithUserController {
         return null;
     }
 
-    public Result cheatAddPlayerLevel(String playerName , String quantityString){
+    public Result cheatAddPlayerLevel(String playerName, String quantityString) {
         int quantity = Integer.parseInt(quantityString);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Player player = getPlayerWithUsername(playerName);
-        if(player == null){
+        if (player == null) {
             return new Result(false, "Player not found");
         }
-        if(!currentPlayer.getRelations().containsKey(player)){
+        if (!currentPlayer.getRelations().containsKey(player)) {
             currentPlayer.getRelations().put(player, new Relation());
         }
-        if(!player.getRelations().containsKey(currentPlayer)){
+        if (!player.getRelations().containsKey(currentPlayer)) {
             player.getRelations().put(currentPlayer, new Relation());
         }
         Relation relation = currentPlayer.getRelations().get(player);
-        if(relation.getLevel() + quantity > 4){
+        if (relation.getLevel() + quantity > 4) {
             return new Result(false, "Level is too high");
         }
         int amount = relation.getLevel() + quantity;

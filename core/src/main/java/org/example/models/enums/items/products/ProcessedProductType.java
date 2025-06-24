@@ -1,7 +1,8 @@
 package org.example.models.enums.items.products;
 
 import org.example.models.Item;
-import org.example.models.enums.items.*;
+import org.example.models.enums.items.MineralType;
+import org.example.models.enums.items.Recipe;
 
 public enum ProcessedProductType implements Item {
     Honey(75, 350, 4 * 14),
@@ -35,16 +36,29 @@ public enum ProcessedProductType implements Item {
     GoldMetalBar(0, getPriceWithMultiplier(MineralType.GoldOre, 10), 4),
     IridiumMetalBar(0, getPriceWithMultiplier(MineralType.IridiumOre, 10), 4);
 
-    private Recipe recipe;
     private final Integer energy;
     private final Integer price;
     private final Integer processingTime;
+    private Recipe recipe;
 
     ProcessedProductType(Integer energy, Integer price, Integer processingTime) {
         this.recipe = null;
         this.energy = energy;
         this.price = price;
         this.processingTime = processingTime;
+    }
+
+    private static int getPriceWithMultiplier(Item item, double multiplier) {
+        return (int) (item.getPrice() * multiplier);
+    }
+
+    public static ProcessedProductType getItem(String itemName) {
+        for (ProcessedProductType processedProductType : ProcessedProductType.values()) {
+            if (processedProductType.getName().equalsIgnoreCase(itemName)) {
+                return processedProductType;
+            }
+        }
+        return null;
     }
 
     public Recipe getRecipe() {
@@ -68,18 +82,5 @@ public enum ProcessedProductType implements Item {
 
     public Integer getProcessingTime() {
         return processingTime;
-    }
-
-    private static int getPriceWithMultiplier(Item item, double multiplier) {
-        return (int) (item.getPrice() * multiplier);
-    }
-
-    public static ProcessedProductType getItem(String itemName) {
-        for (ProcessedProductType processedProductType : ProcessedProductType.values()) {
-            if (processedProductType.getName().equalsIgnoreCase(itemName)) {
-                return processedProductType;
-            }
-        }
-        return null;
     }
 }

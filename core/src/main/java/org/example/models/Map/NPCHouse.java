@@ -1,10 +1,8 @@
 package org.example.models.Map;
 
-import org.example.models.App;
 import org.example.models.Building;
 import org.example.models.Cell;
 import org.example.models.NPCs.NPC;
-import org.example.models.enums.NPCType;
 
 public class NPCHouse extends Building {
     private final NPC npc;

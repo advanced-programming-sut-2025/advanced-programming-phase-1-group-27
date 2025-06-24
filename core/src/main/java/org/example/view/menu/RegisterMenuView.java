@@ -24,7 +24,6 @@ public class RegisterMenuView extends AppMenu {
     }
 
 
-
     @Override
     public void show() {
 
@@ -33,7 +32,7 @@ public class RegisterMenuView extends AppMenu {
 
         stage.addActor(menuBackground);
 
-        stage.addActor(new Label("REGISTER",skin));
+        stage.addActor(new Label("REGISTER", skin));
 
     }
 
@@ -90,17 +89,13 @@ public class RegisterMenuView extends AppMenu {
                     matcher.group("gender").trim(),
                     scanner
             ));
-        }
-        else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
+        } else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
-        }
-        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
-        }
-        else {
+        } else {
             System.out.println(new Result(false, "invalid command!"));
         }
     }

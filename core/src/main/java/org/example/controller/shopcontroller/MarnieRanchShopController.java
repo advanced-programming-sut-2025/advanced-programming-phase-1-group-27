@@ -11,10 +11,8 @@ import org.example.models.Shops.Shop;
 import org.example.models.Stock;
 import org.example.models.enums.Menu;
 import org.example.models.enums.items.AnimalType;
-import org.example.models.enums.items.Recipe;
 import org.example.models.enums.items.ShopItems;
 import org.example.models.enums.items.ToolType;
-import org.example.models.tools.Tool;
 import org.example.view.shopview.MarnieRanch;
 
 public class MarnieRanchShopController extends MenuController {
@@ -52,8 +50,7 @@ public class MarnieRanchShopController extends MenuController {
 
         if (shop.getStock(type.getName()).getQuantity() == 0) {
             return new Result(false, "Out of stock!");
-        }
-        else if (player.getMoney() >= type.getPrice()) {
+        } else if (player.getMoney() >= type.getPrice()) {
             shop.getStock(animalString).reduceQuantity();
             for (Barn barn : player.getFarmMap().getBarns()) {
                 if (type.getAppropriateFarmType().contains(barn.getType()) &&
@@ -125,7 +122,7 @@ public class MarnieRanchShopController extends MenuController {
     }
 
     public Result purchase(String productName, String quantityString) {
-        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
+        int quantity = quantityString == null ? 1 : Integer.parseInt(quantityString);
         Stock stock = App.getCurrentGame().getMarnieRanch().getStock(productName);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         if (stock == null) {

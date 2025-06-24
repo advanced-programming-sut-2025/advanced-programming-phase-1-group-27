@@ -5,7 +5,7 @@ import org.example.models.Cell;
 import org.example.models.NPCs.NPC;
 import org.example.models.enums.CellType;
 
-public class NPCMap extends Map{
+public class NPCMap extends Map {
 
     public NPCMap() {
         super(16, 34);
@@ -23,9 +23,9 @@ public class NPCMap extends Map{
         }
         for (int j = y; j < y + 4; j++) {
             int i = x;
-            cells[i][j].setString("\u001B[48;2;59;33;1m" + "\u001B[38;2;138;106;67m" + new String(new char[] {
-                    (storeName.length() > (j - y) * 2? storeName.charAt((j - y) * 2): ' '),
-                    (storeName.length() > (j - y) * 2 + 1?storeName.charAt((j - y) * 2 + 1): ' ')})
+            cells[i][j].setString("\u001B[48;2;59;33;1m" + "\u001B[38;2;138;106;67m" + new String(new char[]{
+                    (storeName.length() > (j - y) * 2 ? storeName.charAt((j - y) * 2) : ' '),
+                    (storeName.length() > (j - y) * 2 + 1 ? storeName.charAt((j - y) * 2 + 1) : ' ')})
                     + "\u001B[0m");
         }
         cells[x + 3][y + 1].setType(CellType.Door);

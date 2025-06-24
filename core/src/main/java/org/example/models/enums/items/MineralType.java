@@ -4,7 +4,6 @@ import org.example.models.Item;
 import org.example.models.enums.StackLevel;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public enum MineralType implements Item {
@@ -32,9 +31,7 @@ public enum MineralType implements Item {
     Fiber(2),
     Coal(15);
 
-    private int price;
-    private StackLevel level = null;
-    private static ArrayList<MineralType> foragingMinerals = new ArrayList<MineralType>(List.of(MineralType.values())){{
+    private static ArrayList<MineralType> foragingMinerals = new ArrayList<MineralType>(List.of(MineralType.values())) {{
         remove(Wood);
         remove(Fiber);
     }};
@@ -47,6 +44,8 @@ public enum MineralType implements Item {
     private static ArrayList<MineralType> noneMinerals = new ArrayList<MineralType>(List.of(
             Wood, Fiber, Coal
     ));
+    private int price;
+    private StackLevel level = null;
 
     MineralType(int price) {
         this.price = price;
@@ -55,10 +54,6 @@ public enum MineralType implements Item {
     MineralType(int price, StackLevel level) {
         this.price = price;
         this.level = level;
-    }
-
-    public StackLevel getLevel() {
-        return level;
     }
 
     public static ArrayList<MineralType> getForagingMinerals() {
@@ -77,11 +72,6 @@ public enum MineralType implements Item {
         return noneMinerals;
     }
 
-    @Override
-    public Integer getPrice() {
-        return price;
-    }
-
     public static MineralType getItem(String itemName) {
         for (MineralType mineralType : MineralType.values()) {
             if (mineralType.getName().equalsIgnoreCase(itemName)) {
@@ -89,5 +79,14 @@ public enum MineralType implements Item {
             }
         }
         return null;
+    }
+
+    public StackLevel getLevel() {
+        return level;
+    }
+
+    @Override
+    public Integer getPrice() {
+        return price;
     }
 }

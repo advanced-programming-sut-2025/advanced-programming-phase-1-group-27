@@ -6,9 +6,9 @@ import org.example.controller.InteractionsWithOthers.InteractionsWithUserControl
 import org.example.controller.InteractionsWithOthers.MarriageController;
 import org.example.controller.ToolController;
 import org.example.models.App;
+import org.example.models.Result;
 import org.example.models.enums.Menu;
 import org.example.models.enums.commands.*;
-import org.example.models.Result;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -101,15 +101,15 @@ public class GameView extends AppMenu {
             System.out.println(controller.helpReadingMap());
         } else if (GameMenuCommands.ShowEnergy.getMatcher(input) != null) {
             System.out.println(controller.showEnergy());
-        } else if(GameMenuCommands.Time.getMatcher(input) != null) {
+        } else if (GameMenuCommands.Time.getMatcher(input) != null) {
             System.out.println(controller.showTime());
-        } else if(GameMenuCommands.Date.getMatcher(input) != null) {
+        } else if (GameMenuCommands.Date.getMatcher(input) != null) {
             System.out.println(controller.showDate());
         } else if (GameMenuCommands.DateTime.getMatcher(input) != null) {
             System.out.println(controller.showDateTime());
-        } else if(GameMenuCommands.DayOfWeek.getMatcher(input) != null) {
+        } else if (GameMenuCommands.DayOfWeek.getMatcher(input) != null) {
             System.out.println(controller.showDayOfWeek());
-        } else if(GameMenuCommands.Season.getMatcher(input) != null) {
+        } else if (GameMenuCommands.Season.getMatcher(input) != null) {
             System.out.println(controller.showSeason());
         } else if ((matcher = CheatCommands.CheatSetEnergy.getMatcher(input)) != null) {
             System.out.println(controller.cheatSetEnergy(matcher.group("value")));
@@ -120,8 +120,7 @@ public class GameView extends AppMenu {
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("direction").trim())
             ));
-        }
-        else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
+        } else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
             System.out.println(controller.eatFood(
                     matcher.group("itemName").trim()
             ));
@@ -138,8 +137,7 @@ public class GameView extends AppMenu {
             System.out.println(controller.cheatSetFriendship(matcher.group("name"), matcher.group("amount")));
         } else if ((matcher = CheatCommands.CheatAddMoney.getMatcher(input)) != null) {
             System.out.println(controller.cheatAddMoney(matcher.group("amount")));
-        }
-        else if ((matcher = CheatCommands.CheatSetAbility.getMatcher(input)) != null) {
+        } else if ((matcher = CheatCommands.CheatSetAbility.getMatcher(input)) != null) {
             System.out.println(controller.cheatSetAbility(
                     matcher.group("abilityName").trim(),
                     Integer.parseInt(matcher.group("level").trim())
@@ -198,32 +196,32 @@ public class GameView extends AppMenu {
             System.out.println(interactionsWithNPCController.meetNPC(
                     matcher.group("npcName").trim()
             ));
-        }else if((matcher = InteractionsWithNPCCommands.GiftNPC.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithNPCCommands.GiftNPC.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.giftNPC(
                     matcher.group("npcName").trim(),
                     matcher.group("item").trim()
             ));
-        } else if((matcher = InteractionsWithNPCCommands.FriendshipNPCList.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithNPCCommands.FriendshipNPCList.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.friendshipNPC());
-        } else if((matcher = InteractionsWithNPCCommands.QuestList.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithNPCCommands.QuestList.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.questList());
-        } else if((matcher = InteractionsWithNPCCommands.QuestFinish.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithNPCCommands.QuestFinish.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.questsFinish(
                     matcher.group("npcName").trim(),
                     matcher.group("index").trim()
             ));
         } else if ((matcher = InteractionsWithUserCommands.Friendships.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.friendship());
-        } else if((matcher = InteractionsWithUserCommands.TalkToUser.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.TalkToUser.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.talk(
                     matcher.group("username").trim(),
                     matcher.group("message").trim()
             ));
-        } else if((matcher = InteractionsWithUserCommands.TalkHistory.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.TalkHistory.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.talkHistory(
                     matcher.group("username").trim()
             ));
-        } else if((matcher = InteractionsWithUserCommands.Gift.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.Gift.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.gift(
                     matcher.group("username").trim(),
                     matcher.group("item").trim(),
@@ -231,48 +229,48 @@ public class GameView extends AppMenu {
             ));
         } else if ((matcher = InteractionsWithUserCommands.GiftList.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.giftList());
-        }else if((matcher = InteractionsWithUserCommands.GiftRate.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.GiftRate.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.giftRate(
                     matcher.group("giftNumber").trim(),
                     matcher.group("rate").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.GiftHistory.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.GiftHistory.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.giftHistory(
                     matcher.group("username").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.Hug.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.Hug.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.hug(
                     matcher.group("username").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.Flower.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.Flower.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.flower(
                     matcher.group("username").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.AskMarriage.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.AskMarriage.getMatcher(input)) != null) {
             System.out.println(marriageController.askMarriage(
                     matcher.group("username").trim(),
                     matcher.group("ring").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.Respond.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.Respond.getMatcher(input)) != null) {
             System.out.println(marriageController.respond(
                     matcher.group("respond").trim(),
                     matcher.group("username").trim()
             ));
-        }else if((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
+        } else if ((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
             System.out.println(controller.showMoney());
-        }else if((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
+        } else if ((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
             System.out.println(interactionsWithNPCController.cheatAddLevel(
                     matcher.group("name").trim(),
                     matcher.group("level").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.ShowCouple.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.ShowCouple.getMatcher(input)) != null) {
             System.out.println(marriageController.showCouple());
-        }else if((matcher = CheatCommands.CheatAddLevelPlayer.getMatcher(input)) != null) {
+        } else if ((matcher = CheatCommands.CheatAddLevelPlayer.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.cheatAddPlayerLevel(
                     matcher.group("name").trim(),
                     matcher.group("level").trim()
             ));
-        }else if((matcher = InteractionsWithUserCommands.StartTrade.getMatcher(input)) != null) {
+        } else if ((matcher = InteractionsWithUserCommands.StartTrade.getMatcher(input)) != null) {
             System.out.println(controller.startTrade());
         } else if ((matcher = ToolCommands.ToolsEquip.getMatcher(input)) != null) {
             System.out.println(new ToolController().equipTool(matcher.group("toolName").trim()));

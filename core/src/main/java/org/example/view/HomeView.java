@@ -64,83 +64,65 @@ public class HomeView extends AppMenu {
         Matcher matcher;
         if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
-        }
-        else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
+        } else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(
                     matcher.group("menuName").trim()
             ));
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
-        }
-        else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
+        } else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().terminateGame(scanner));
-        }
-        else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
+        } else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
-        }
-        else if (HomeCommands.ShowCraftingRecipes.getMatcher(input) != null) {
+        } else if (HomeCommands.ShowCraftingRecipes.getMatcher(input) != null) {
             System.out.print(controller.showCraftingRecipes());
-        }
-        else if ((matcher = HomeCommands.CraftItem.getMatcher(input)) != null) {
+        } else if ((matcher = HomeCommands.CraftItem.getMatcher(input)) != null) {
             System.out.println(controller.craft(
                     matcher.group("itemName").trim()
             ));
-        }
-        else if ((matcher = HomeCommands.PutPickRefrigerator.getMatcher(input)) != null) {
+        } else if ((matcher = HomeCommands.PutPickRefrigerator.getMatcher(input)) != null) {
             System.out.println(controller.putOrPickFromRefrigerator(
                     matcher.group("itemName").trim(),
                     matcher.group("function").trim()
             ));
-        }
-        else if (HomeCommands.ShowCookingRecipes.getMatcher(input) != null) {
+        } else if (HomeCommands.ShowCookingRecipes.getMatcher(input) != null) {
             System.out.println(controller.showCookingRecipes());
-        }
-        else if ((matcher = HomeCommands.CookItem.getMatcher(input)) != null) {
+        } else if ((matcher = HomeCommands.CookItem.getMatcher(input)) != null) {
             System.out.println(controller.cook(
                     matcher.group("itemName").trim()
             ));
-        }
-        else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
+        } else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().eatFood(
                     matcher.group("itemName").trim()
             ));
-        }
-        else if (GameMenuCommands.InventoryShow.getMatcher(input) != null) {
+        } else if (GameMenuCommands.InventoryShow.getMatcher(input) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().inventoryShow());
-        }
-        else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
+        } else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().inventoryTrash(
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("number").trim())
             ));
-        }
-        else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
+        } else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().cheatAddItem(
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("count"))
             ));
-        }
-        else if (GameMenuCommands.ShowEnergy.getMatcher(input) != null) {
+        } else if (GameMenuCommands.ShowEnergy.getMatcher(input) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().showEnergy());
-        }
-        else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
+        } else if ((matcher = GameMenuCommands.EatFood.getMatcher(input)) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().eatFood(
                     matcher.group("itemName").trim()
             ));
-        }
-        else if ((matcher = CheatCommands.CheatSetEnergy.getMatcher(input)) != null) {
+        } else if ((matcher = CheatCommands.CheatSetEnergy.getMatcher(input)) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().cheatSetEnergy(
                     matcher.group("value").trim()
             ));
-        }
-        else if ((matcher = CheatCommands.CheatSetAbility.getMatcher(input)) != null) {
+        } else if ((matcher = CheatCommands.CheatSetAbility.getMatcher(input)) != null) {
             System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().cheatSetAbility(
                     matcher.group("abilityName").trim(),
                     Integer.parseInt(matcher.group("level").trim())
             ));
-        }
-        else {
+        } else {
             System.out.println(new Result(false, "invalid command!"));
         }
     }

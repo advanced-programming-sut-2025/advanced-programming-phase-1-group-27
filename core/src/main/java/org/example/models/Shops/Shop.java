@@ -25,18 +25,18 @@ public class Shop {
 
     public Stock getStock(String itemName) {
         for (Stock slot : stock) {
-            if(slot.getItem().getName().equalsIgnoreCase(itemName)){
+            if (slot.getItem().getName().equalsIgnoreCase(itemName)) {
                 return slot;
             }
         }
         return null;
     }
 
-    public void reduce(Item item , int amount) {
+    public void reduce(Item item, int amount) {
         for (Stock slot : stock) {
-            if(slot.getItem().getName().equals(item.getName())){
+            if (slot.getItem().getName().equals(item.getName())) {
                 int lastAmount = slot.getQuantity();
-                if(lastAmount == -1){
+                if (lastAmount == -1) {
                     return;
                 }
                 lastAmount -= amount;

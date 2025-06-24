@@ -1,8 +1,8 @@
 package org.example.models.enums.Seasons;
 
-import java.util.Random;
-
 import org.example.models.enums.Weathers.Weather;
+
+import java.util.Random;
 
 public enum Season {
     Spring(0, new Weather[]{Weather.Sunny, Weather.Rainy, Weather.Stormy}),
@@ -12,14 +12,14 @@ public enum Season {
 
     private final int index;
     private final Weather[] possibleWeathers;
-    
+
     Season(int index, Weather[] possibleWeathers) {
         this.index = index;
         this.possibleWeathers = possibleWeathers;
     }
 
     public Weather pickARandomWeather() {
-        int randomIndex = new Random( ).nextInt(possibleWeathers.length);
+        int randomIndex = new Random().nextInt(possibleWeathers.length);
         return possibleWeathers[randomIndex];
     }
 

@@ -3,13 +3,10 @@ package org.example.models;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.items.Recipe;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Ability {
-    private int xp = 0, level = 0;
-
     public static ArrayList<ArrayList<Recipe>> farmingRecipes, foragingRecipes, fishingRecipes, miningRecipes;
 
     static {
@@ -92,6 +89,18 @@ public class Ability {
         )));
     }
 
+    private int xp = 0, level = 0;
+
+    public static ArrayList<Recipe> getRecipeList(AbilityType type, int level) {
+        return switch (type) {
+            case AbilityType.Farming -> farmingRecipes.get(level - 1);
+            case AbilityType.Foraging -> foragingRecipes.get(level - 1);
+            case AbilityType.Fishing -> fishingRecipes.get(level - 1);
+            case AbilityType.Mining -> miningRecipes.get(level - 1);
+            default -> new ArrayList<>();
+        };
+    }
+
     public void addXp(int xp) {
         this.xp += xp;
         if (this.level < 4 && this.xp >= this.level * 100 + 150) {
@@ -112,17 +121,7 @@ public class Ability {
         this.level--;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return level;
-    }
-
-    public static ArrayList<Recipe> getRecipeList(AbilityType type, int level) {
-        return switch (type) {
-            case AbilityType.Farming -> farmingRecipes.get(level - 1);
-            case AbilityType.Foraging -> foragingRecipes.get(level - 1);
-            case AbilityType.Fishing -> fishingRecipes.get(level - 1);
-            case AbilityType.Mining -> miningRecipes.get(level - 1);
-            default -> new ArrayList<>();
-        };
     }
 }

@@ -42,6 +42,24 @@ public class MainMenuTest {
         }
     }
 
+    private static void registerUser(User user) {
+        String input = "pick question -q 1 -a 4 -c 4";
+        ByteArrayInputStream in = new ByteArrayInputStream(input.trim().getBytes());
+        Scanner scanner = new Scanner(in);
+
+        Result result = loginMenuController.register(user.getUsername(), user.getPassword(),
+                user.getPassword(), user.getNickname(), user.getEmail(), "male", scanner);
+        assertTrue(result.success());
+    }
+
+    private static void loginUser(User user) {
+        Result result = loginMenuController.login(user.getUsername(), user.getPassword(), false);
+        assertTrue(result.success());
+        assertEquals("You have successfully logged in.", result.message());
+        assertEquals(user.getUsername(), App.getLoggedInUser().getUsername());
+        assertEquals(Menu.MainMenu, App.getCurrentMenu());
+    }
+
     @Test
     void enterExitMenuTest() {
         Result result = mainMenuController.enterMenu("login menu");
@@ -104,23 +122,5 @@ public class MainMenuTest {
         result = mainMenuController.createNewGame("rassa", null, null, null, null);
         assertFalse(result.success());
         assertEquals("User is already in a game!", result.message());
-    }
-
-    private static void registerUser(User user) {
-        String input = "pick question -q 1 -a 4 -c 4";
-        ByteArrayInputStream in = new ByteArrayInputStream(input.trim().getBytes());
-        Scanner scanner = new Scanner(in);
-
-        Result result = loginMenuController.register(user.getUsername(), user.getPassword(),
-                user.getPassword(), user.getNickname(), user.getEmail(), "male", scanner);
-        assertTrue(result.success());
-    }
-
-    private static void loginUser(User user) {
-        Result result = loginMenuController.login(user.getUsername(), user.getPassword(), false);
-        assertTrue(result.success());
-        assertEquals("You have successfully logged in.", result.message());
-        assertEquals(user.getUsername(), App.getLoggedInUser().getUsername());
-        assertEquals(Menu.MainMenu, App.getCurrentMenu());
     }
 }

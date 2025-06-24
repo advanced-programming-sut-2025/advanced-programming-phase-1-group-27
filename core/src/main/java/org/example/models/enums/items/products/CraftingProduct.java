@@ -27,17 +27,12 @@ public enum CraftingProduct implements Item {
     MysticTreeSeed(100);
 
 
-    private Recipe recipe;
     private final int price;
+    private Recipe recipe;
 
     CraftingProduct(int price) {
         this.recipe = null;
         this.price = price;
-    }
-
-    @Override
-    public Integer getPrice() {
-        return price;
     }
 
     public static CraftingProduct getItem(String itemName) {
@@ -47,6 +42,11 @@ public enum CraftingProduct implements Item {
             }
         }
         return null;
+    }
+
+    @Override
+    public Integer getPrice() {
+        return price;
     }
 
     public Recipe getRecipe() {

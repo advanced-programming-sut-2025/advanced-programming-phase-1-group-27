@@ -25,11 +25,6 @@ public enum ShopItems implements Item {
         this.recipe = recipe;
     }
 
-    @Override
-    public Integer getPrice() {
-        return 0;
-    }
-
     public static ShopItems getItem(String itemName) {
         for (ShopItems shopItems : ShopItems.values()) {
             if (shopItems.getName().equalsIgnoreCase(itemName)) {
@@ -37,5 +32,10 @@ public enum ShopItems implements Item {
             }
         }
         return null;
+    }
+
+    @Override
+    public Integer getPrice() {
+        return 0;
     }
 }

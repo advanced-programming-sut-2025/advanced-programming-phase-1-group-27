@@ -1,10 +1,6 @@
 package org.example.models.NPCs;
 
 import org.example.models.Stacks;
-import org.example.models.Time;
-import org.example.models.Item;
-
-import java.util.ArrayList;
 
 public class Quest {
     private Stacks Reward;

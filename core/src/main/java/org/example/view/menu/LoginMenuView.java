@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.LoginMenuController;
-import org.example.models.enums.commands.LoginMenuCommands;
 import org.example.models.Result;
+import org.example.models.enums.commands.LoginMenuCommands;
 import org.example.models.enums.commands.MainMenuCommands;
 import org.example.view.AppMenu;
 
@@ -32,7 +32,7 @@ public class LoginMenuView extends AppMenu {
 
         stage.addActor(menuBackground);
 
-        stage.addActor(new Label("LOGIN",skin));
+        stage.addActor(new Label("LOGIN", skin));
 
 
     }
@@ -85,23 +85,18 @@ public class LoginMenuView extends AppMenu {
                     matcher.group("password").trim(),
                     matcher.group("stay") != null
             ));
-        }
-        else if ((matcher = LoginMenuCommands.ForgetPassword.getMatcher(input)) != null) {
+        } else if ((matcher = LoginMenuCommands.ForgetPassword.getMatcher(input)) != null) {
             System.out.println(controller.forgetPassword(
                     matcher.group("username").trim(),
                     scanner
             ));
-        }
-        else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
+        } else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
             System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        }
-        else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
             System.out.println(controller.exitMenu());
-        }
-        else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
             System.out.println(controller.showCurrentMenu());
-        }
-        else {
+        } else {
             System.out.println(new Result(false, "invalid command!"));
         }
     }

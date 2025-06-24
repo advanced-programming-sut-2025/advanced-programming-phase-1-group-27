@@ -13,12 +13,12 @@ public class Relation {
         return level;
     }
 
-    public int getXp() {
-        return xp;
-    }
-
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getXp() {
+        return xp;
     }
 
     public void setXp(int xp) {

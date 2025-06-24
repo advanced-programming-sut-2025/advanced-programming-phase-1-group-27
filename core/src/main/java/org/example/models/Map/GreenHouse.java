@@ -1,7 +1,7 @@
 package org.example.models.Map;
 
-import org.example.models.Cell;
 import org.example.models.Building;
+import org.example.models.Cell;
 import org.example.models.enums.CellType;
 
 public class GreenHouse extends Building {

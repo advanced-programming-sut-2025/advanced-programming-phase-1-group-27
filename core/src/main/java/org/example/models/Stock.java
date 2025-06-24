@@ -51,6 +51,10 @@ public class Stock {
         return quantity;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public void reduceQuantity() {
         if (quantity != -1)
             quantity--;
@@ -60,24 +64,20 @@ public class Stock {
         return stackLevel;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
-    public Season getSaleSeason() {
-        return saleSeason;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public void setStackLevel(StackLevel stackLevel) {
         this.stackLevel = stackLevel;
     }
 
+    public Item getItem() {
+        return item;
+    }
+
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public Season getSaleSeason() {
+        return saleSeason;
     }
 
 }

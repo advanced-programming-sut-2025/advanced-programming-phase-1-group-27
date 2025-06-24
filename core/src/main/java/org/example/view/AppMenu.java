@@ -17,7 +17,7 @@ public abstract class AppMenu implements Screen {
     protected final Image menuBackground = new Image(backgroundTexture);
 
 
-    public AppMenu(){
+    public AppMenu() {
 
         menuBackground.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 

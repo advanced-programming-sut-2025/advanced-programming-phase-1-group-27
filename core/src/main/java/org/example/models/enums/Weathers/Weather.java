@@ -23,22 +23,8 @@ public enum Weather {
         this.fishingModifier = fishingModifier;
     }
 
-    public double getToolEnergyModifier() {
-        return toolEnergyModifier;
-    }
-
-    public double getFishingModifier() {
-        return fishingModifier;
-    }
-
-    public void applyWeatherEffect() {
-        if (this == Stormy) applyThor();
-        if (this == Stormy || this == Rainy) applyRain();
-
-    }
-
     private static void applyRain() {
-        for (Player player: App.getCurrentGame().getPlayers()) {
+        for (Player player : App.getCurrentGame().getPlayers()) {
             FarmMap map = player.getFarmMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < cells.length; i++) {
@@ -53,14 +39,28 @@ public enum Weather {
     }
 
     private static void applyThor() {
-        for (Player player: App.getCurrentGame().getPlayers()) {
+        for (Player player : App.getCurrentGame().getPlayers()) {
             FarmMap map = player.getFarmMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < 3; i++) {
-                int x = (new Random( )).nextInt(cells.length);
-                int y = (new Random( )).nextInt(cells[0].length);
+                int x = (new Random()).nextInt(cells.length);
+                int y = (new Random()).nextInt(cells[0].length);
                 cells[x][y].thor();
             }
         }
+    }
+
+    public double getToolEnergyModifier() {
+        return toolEnergyModifier;
+    }
+
+    public double getFishingModifier() {
+        return fishingModifier;
+    }
+
+    public void applyWeatherEffect() {
+        if (this == Stormy) applyThor();
+        if (this == Stormy || this == Rainy) applyRain();
+
     }
 }

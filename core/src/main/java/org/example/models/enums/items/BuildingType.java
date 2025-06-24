@@ -26,6 +26,27 @@ public enum BuildingType implements Item {
         this.recipe = null;
     }
 
+    public static BuildingType getItem(String itemName) {
+        for (BuildingType buildingType : BuildingType.values()) {
+            if (buildingType.getName().equalsIgnoreCase(itemName)) {
+                return buildingType;
+            }
+        }
+        return null;
+    }
+
+    public static BuildingType getEnclosureType(String buildingName) {
+        return switch (buildingName) {
+            case "Barn" -> Barn;
+            case "Big Barn" -> BigBarn;
+            case "Deluxe Barn" -> DeluxeBarn;
+            case "Coop" -> Coop;
+            case "Big Coop" -> BigCoop;
+            case "Deluxe Coop" -> DeluxeCoop;
+            default -> null;
+        };
+    }
+
     public int getWidth() {
         return width;
     }
@@ -60,26 +81,5 @@ public enum BuildingType implements Item {
 
     public boolean isCoop() {
         return this == Coop || this == BigCoop || this == DeluxeCoop;
-    }
-
-    public static BuildingType getItem(String itemName) {
-        for (BuildingType buildingType : BuildingType.values()) {
-            if (buildingType.getName().equalsIgnoreCase(itemName)) {
-                return buildingType;
-            }
-        }
-        return null;
-    }
-
-    public static BuildingType getEnclosureType(String buildingName) {
-        return switch (buildingName) {
-            case "Barn" -> Barn;
-            case "Big Barn" -> BigBarn;
-            case "Deluxe Barn" -> DeluxeBarn;
-            case "Coop" -> Coop;
-            case "Big Coop" -> BigCoop;
-            case "Deluxe Coop" -> DeluxeCoop;
-            default -> null;
-        };
     }
 }

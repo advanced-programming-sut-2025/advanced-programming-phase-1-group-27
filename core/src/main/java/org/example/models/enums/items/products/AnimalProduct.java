@@ -22,15 +22,6 @@ public enum AnimalProduct implements Item {
         this.price = price;
     }
 
-    @Override
-    public Integer getPrice() {
-        return price;
-    }
-
-    public boolean isFood() {
-        return this != DuckFeather && this != Wool;
-    }
-
     public static AnimalProduct getItem(String itemName) {
         for (AnimalProduct animalProduct : AnimalProduct.values()) {
             if (animalProduct.getName().equalsIgnoreCase(itemName)) {
@@ -38,5 +29,14 @@ public enum AnimalProduct implements Item {
             }
         }
         return null;
+    }
+
+    @Override
+    public Integer getPrice() {
+        return price;
+    }
+
+    public boolean isFood() {
+        return this != DuckFeather && this != Wool;
     }
 }

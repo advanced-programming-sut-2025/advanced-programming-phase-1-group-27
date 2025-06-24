@@ -1,7 +1,6 @@
 package org.example.models.enums.items;
 
 import org.example.models.Item;
-import org.example.models.enums.Plants.CropType;
 import org.example.models.enums.items.products.AnimalProduct;
 
 import java.util.ArrayList;
@@ -72,11 +71,6 @@ public enum AnimalType implements Item {
         this.appropriateFarmType = appropriateFarmType;
     }
 
-    @Override
-    public Integer getPrice() {
-        return price;
-    }
-
     public static AnimalType getItem(String itemName) {
         for (AnimalType animalType : AnimalType.values()) {
             if (animalType.getName().equalsIgnoreCase(itemName)) {
@@ -84,6 +78,11 @@ public enum AnimalType implements Item {
             }
         }
         return null;
+    }
+
+    @Override
+    public Integer getPrice() {
+        return price;
     }
 
     public ArrayList<AnimalProduct> getProducts() {

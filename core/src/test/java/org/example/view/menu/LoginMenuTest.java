@@ -34,7 +34,7 @@ public class LoginMenuTest {
 
     @BeforeEach
     void init() {
-         userTest = new User("testUser", "123Test!", "testNickname",
+        userTest = new User("testUser", "123Test!", "testNickname",
                 "t._-est1@gmail.com", Gender.Female);
     }
 

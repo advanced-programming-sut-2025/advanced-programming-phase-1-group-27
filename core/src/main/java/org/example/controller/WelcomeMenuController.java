@@ -13,7 +13,8 @@ public class WelcomeMenuController extends MenuController {
         this.view = view;
     }
 
-    public void handleWelcomeMenuButtons() {}
+    public void handleWelcomeMenuButtons() {
+    }
 
     @Override
     public Result enterMenu(String menuName) {

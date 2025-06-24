@@ -20,6 +20,15 @@ public enum SaplingType implements Item, PlantSourceType {
         this.tree = plantType;
     }
 
+    public static SaplingType getItem(String itemName) {
+        for (SaplingType saplingtype : values()) {
+            if (saplingtype.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
+                return saplingtype;
+            }
+        }
+        return null;
+    }
+
     public TreeType getPlant() {
         return tree;
     }
@@ -31,14 +40,5 @@ public enum SaplingType implements Item, PlantSourceType {
 
     public String toString() {
         return this.name();
-    }
-
-    public static SaplingType getItem(String itemName) {
-        for (SaplingType saplingtype : values()) {
-            if (saplingtype.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {
-                return saplingtype;
-            }
-        }
-        return null;
     }
 }

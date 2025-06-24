@@ -6,6 +6,7 @@ import org.example.models.enums.DialogueType;
 
 public class Trade extends Dialogue {
 
+    private static int idCounter = 1;
     private Item offeredItem;
     private Item requestedItem;
     private int offeredItemQuantity;
@@ -13,10 +14,9 @@ public class Trade extends Dialogue {
     private Integer moneyOffered;
     private DialogueType tradeType;
     private int id;
-    private static int idCounter = 1;
 
     public Trade(Player responder, Player sender, Item offeredItem, int offeredItemQuantity, Item requestedItem,
-                 int requestedItemQuantity, Integer moneyOffered , DialogueType tradeType) {
+                 int requestedItemQuantity, Integer moneyOffered, DialogueType tradeType) {
         super(DialogueType.Trade, null, null, responder, sender);
         this.offeredItem = offeredItem;
         this.offeredItemQuantity = offeredItemQuantity;
@@ -48,6 +48,10 @@ public class Trade extends Dialogue {
         return moneyOffered;
     }
 
+    public void setMoneyOffered(Integer moneyOffered) {
+        this.moneyOffered = moneyOffered;
+    }
+
     public DialogueType getTradeType() {
         return tradeType;
     }
@@ -56,11 +60,11 @@ public class Trade extends Dialogue {
         return id;
     }
 
-    public void tradeIsAccepted(){
+    public void tradeIsAccepted() {
         this.setRespond("accept");
     }
 
-    public void tradeIsRejected(){
+    public void tradeIsRejected() {
         this.setRespond("reject");
     }
 
@@ -72,9 +76,5 @@ public class Trade extends Dialogue {
     public void setRequestedItem(Item requestedItem, int requestedItemQuantity) {
         this.requestedItem = requestedItem;
         this.requestedItemQuantity = requestedItemQuantity;
-    }
-
-    public void setMoneyOffered(Integer moneyOffered) {
-        this.moneyOffered = moneyOffered;
     }
 }

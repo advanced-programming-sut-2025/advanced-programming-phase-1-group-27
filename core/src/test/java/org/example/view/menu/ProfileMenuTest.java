@@ -39,6 +39,25 @@ public class ProfileMenuTest {
         App.setCurrentMenu(Menu.ProfileMenu);
     }
 
+    private static void registerUser(User user) {
+        String input = "pick question -q 1 -a 4 -c 4";
+        ByteArrayInputStream in = new ByteArrayInputStream(input.trim().getBytes());
+        Scanner scanner = new Scanner(in);
+
+        Result result = loginMenuController.register(user.getUsername(), user.getPassword(),
+                user.getPassword(), user.getNickname(), user.getEmail(), "female", scanner);
+        assertTrue(result.success());
+    }
+
+    private static void loginUser() {
+        registerUser(userTest);
+        Result result = loginMenuController.login(userTest.getUsername(), userTest.getPassword(), false);
+        assertTrue(result.success());
+        assertEquals("You have successfully logged in.", result.message());
+        assertEquals(userTest.getUsername(), App.getLoggedInUser().getUsername());
+        assertEquals(Menu.MainMenu, App.getCurrentMenu());
+    }
+
     @AfterEach
     void tearDown() {
         userTest = new User("testUser", "123Test!", "testNickname",
@@ -186,24 +205,5 @@ public class ProfileMenuTest {
         assertTrue(result.success());
         assertEquals("Email changed successfully!", result.message());
         assertEquals("new_email@gmail.com", App.getLoggedInUser().getEmail());
-    }
-
-    private static void registerUser(User user) {
-        String input = "pick question -q 1 -a 4 -c 4";
-        ByteArrayInputStream in = new ByteArrayInputStream(input.trim().getBytes());
-        Scanner scanner = new Scanner(in);
-
-        Result result = loginMenuController.register(user.getUsername(), user.getPassword(),
-                user.getPassword(), user.getNickname(), user.getEmail(), "female", scanner);
-        assertTrue(result.success());
-    }
-
-    private static void loginUser() {
-        registerUser(userTest);
-        Result result = loginMenuController.login(userTest.getUsername(), userTest.getPassword(), false);
-        assertTrue(result.success());
-        assertEquals("You have successfully logged in.", result.message());
-        assertEquals(userTest.getUsername(), App.getLoggedInUser().getUsername());
-        assertEquals(Menu.MainMenu, App.getCurrentMenu());
     }
 }

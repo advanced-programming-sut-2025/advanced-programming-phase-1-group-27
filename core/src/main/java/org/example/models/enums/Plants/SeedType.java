@@ -2,7 +2,6 @@ package org.example.models.enums.Plants;
 
 import org.example.models.Item;
 import org.example.models.enums.Seasons.Season;
-import org.example.models.enums.items.MineralType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,15 +55,10 @@ public enum SeedType implements PlantSourceType, Item {
     MapleSeed(TreeType.MapleTree),
     MahoganySeed(TreeType.MahoganyTree),
     MushroomTreeSeed(TreeType.MushroomTree),
-    MysticTreeSeed(TreeType.MysticTree),;
+    MysticTreeSeed(TreeType.MysticTree),
+    ;
 
-    private final PlantType plant;
-
-    SeedType(PlantType plant) {
-        this.plant = plant;
-    }
-
-    private static HashMap<Season, ArrayList<SeedType>> foragingSeedsBySeason = new HashMap<>(){{
+    private static HashMap<Season, ArrayList<SeedType>> foragingSeedsBySeason = new HashMap<>() {{
         put(Season.Spring, new ArrayList<>(List.of(AncientSeed, MixedSeed, JazzSeed, CarrotSeed, CauliflowerSeed,
                 CoffeeBean, GarlicSeed, BeanStarter, KaleSeed, ParsnipSeed, PotatoSeed, RhubarbSeed, StrawberrySeed,
                 TulipBulbSeed, RiceShoot)));
@@ -76,22 +70,14 @@ public enum SeedType implements PlantSourceType, Item {
                 RareSeed)));
         put(Season.Winter, new ArrayList<>(List.of(AncientSeed, MixedSeed, PowderMelonSeed)));
     }};
+    private final PlantType plant;
 
-    public PlantType getPlant() {
-        return plant;
+    SeedType(PlantType plant) {
+        this.plant = plant;
     }
 
     public static HashMap<Season, ArrayList<SeedType>> getForagingSeedsBySeason() {
         return foragingSeedsBySeason;
-    }
-
-    @Override
-    public Integer getPrice() {
-        return 50;
-    }
-
-    public String toString() {
-        return this.name();
     }
 
     public static SeedType getItem(String itemName) {
@@ -101,5 +87,18 @@ public enum SeedType implements PlantSourceType, Item {
             }
         }
         return null;
+    }
+
+    public PlantType getPlant() {
+        return plant;
+    }
+
+    @Override
+    public Integer getPrice() {
+        return 50;
+    }
+
+    public String toString() {
+        return this.name();
     }
 }

@@ -1,6 +1,9 @@
 package org.example.models.enums;
 
-import org.example.view.*;
+import org.example.view.AppMenu;
+import org.example.view.GameView;
+import org.example.view.HomeView;
+import org.example.view.TradeView;
 import org.example.view.menu.*;
 import org.example.view.shopview.*;
 
@@ -30,20 +33,20 @@ public enum Menu {
         this.menu = menu;
     }
 
-    public void executeCommands(Scanner scanner) {
-        menu.executeCommands(scanner);
-    }
-
-    public AppMenu getMenu() {
-        return menu;
-    }
-
     public static Menu getMenu(String menuName) {
         for (Menu menu : Menu.values()) {
             if (menu.toString().equals(menuName))
                 return menu;
         }
         return null;
+    }
+
+    public void executeCommands(Scanner scanner) {
+        menu.executeCommands(scanner);
+    }
+
+    public AppMenu getMenu() {
+        return menu;
     }
 
     public boolean isShop() {

@@ -17,9 +17,9 @@ public class AppView {
         } while (App.getCurrentMenu() != Menu.ExitMenu);
     }
 
-    public void runViaGraphics(){
+    public void runViaGraphics() {
 
-        if ( App.getSavedUser() != null ) {
+        if (App.getSavedUser() != null) {
             Main.getMain().setScreen(new MainMenuView());
             return;
         }

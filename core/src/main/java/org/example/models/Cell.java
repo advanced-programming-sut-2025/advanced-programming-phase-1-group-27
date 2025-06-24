@@ -5,8 +5,8 @@ import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
 import org.example.models.Map.*;
 import org.example.models.NPCs.NPC;
-import org.example.models.enums.Plants.*;
 import org.example.models.enums.CellType;
+import org.example.models.enums.Plants.*;
 import org.example.models.enums.Seasons.Season;
 import org.example.models.enums.items.MineralType;
 
@@ -53,11 +53,12 @@ public class Cell {
         return adjacentCells;
     }
 
-    public void setType(CellType cellType) {
-        this.cellType = cellType;
-    }
     public CellType getType() {
         return cellType;
+    }
+
+    public void setType(CellType cellType) {
+        this.cellType = cellType;
     }
 
     public Building getBuilding() {
@@ -79,7 +80,7 @@ public class Cell {
 
     public void placeForagingCrop() {
         Season currentSeason = App.getCurrentGame().getTime().getSeason();
-        int randomInt = new Random( ).nextInt(
+        int randomInt = new Random().nextInt(
                 CropType.getForagingCropsBySeason().get(currentSeason).size());
         Crop crop = new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt));
         crop.setTillNextHarvest(0);
@@ -99,11 +100,11 @@ public class Cell {
         SeedType seedType = SeedType.getForagingSeedsBySeason().get(currentSeason).get(
                 new Random().nextInt(SeedType.getForagingSeedsBySeason().get(currentSeason).size()));
         if (seedType.getPlant() == null) {
-             CropType cropType = CropType.getMixedSeedPossibilitiesBySeason().get(currentSeason).get(
-                     new Random().nextInt(CropType.getMixedSeedPossibilitiesBySeason().get(currentSeason).size()));
-             Crop crop = new Crop(cropType);
-             crop.setForaging(true);
-             plant(crop);
+            CropType cropType = CropType.getMixedSeedPossibilitiesBySeason().get(currentSeason).get(
+                    new Random().nextInt(CropType.getMixedSeedPossibilitiesBySeason().get(currentSeason).size()));
+            Crop crop = new Crop(cropType);
+            crop.setForaging(true);
+            plant(crop);
         } else {
             Crop crop = new Crop(seedType.getPlant());
             crop.setForaging(true);
@@ -113,7 +114,7 @@ public class Cell {
 
     public void placeForagingMineral() {
         ArrayList<MineralType> foragingMinerals = MineralType.getForagingMinerals();
-        int randomInt = new Random( ).nextInt(foragingMinerals.size());
+        int randomInt = new Random().nextInt(foragingMinerals.size());
         object = foragingMinerals.get(randomInt);
     }
 
@@ -206,7 +207,7 @@ public class Cell {
         } else if (cellType.equals(CellType.Building)) {
             if (building instanceof Hut) {
                 return "\u001B[48;2;59;33;1m" + "  " + "\u001B[0m";
-            } else if (building instanceof GreenHouse){
+            } else if (building instanceof GreenHouse) {
                 return "\u001B[48;2;66;54;32m" + "  " + "\u001B[0m";
             } else if (building instanceof NPCHouse) {
                 return "\u001B[48;2;59;33;1m" + "  " + "\u001B[0m";

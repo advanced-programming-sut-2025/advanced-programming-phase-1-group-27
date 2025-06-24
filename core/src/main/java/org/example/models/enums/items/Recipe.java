@@ -3,7 +3,6 @@ package org.example.models.enums.items;
 import org.example.models.Ingredient;
 import org.example.models.Item;
 import org.example.models.enums.Plants.FruitType;
-import org.example.models.enums.Plants.FruitType;
 import org.example.models.enums.Plants.SaplingType;
 import org.example.models.enums.Plants.SeedType;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -39,32 +38,32 @@ public enum Recipe implements Item {
             new Ingredient(FruitType.CoffeeBean, 5)
     ))),
     JuiceRecipe(0, ProcessedProductType.Juice, new ArrayList<>(List.of(
-          new Ingredient(new ArrayList<>(List.of(
-                  FruitType.Amaranth,
-                  FruitType.Artichoke,
-                  FruitType.Beet,
-                  FruitType.BokChoy,
-                  FruitType.Broccoli,
-                  FruitType.Carrot,
-                  FruitType.Cauliflower,
-                  FruitType.Corn,
-                  FruitType.Eggplant,
-                  FruitType.FiddleheadFern,
-                  FruitType.Garlic,
-                  FruitType.GreenBean,
-                  FruitType.Hops,
-                  FruitType.Kale,
-                  FruitType.Parsnip,
-                  FruitType.Potato,
-                  FruitType.Pumpkin,
-                  FruitType.Radish,
-                  FruitType.RedCabbage,
-                  FruitType.SummerSquash,
-                  FruitType.Tomato,
-                  FruitType.UnmilledRice,
-                  FruitType.Wheat,
-                  FruitType.Yam
-          )), 1)
+            new Ingredient(new ArrayList<>(List.of(
+                    FruitType.Amaranth,
+                    FruitType.Artichoke,
+                    FruitType.Beet,
+                    FruitType.BokChoy,
+                    FruitType.Broccoli,
+                    FruitType.Carrot,
+                    FruitType.Cauliflower,
+                    FruitType.Corn,
+                    FruitType.Eggplant,
+                    FruitType.FiddleheadFern,
+                    FruitType.Garlic,
+                    FruitType.GreenBean,
+                    FruitType.Hops,
+                    FruitType.Kale,
+                    FruitType.Parsnip,
+                    FruitType.Potato,
+                    FruitType.Pumpkin,
+                    FruitType.Radish,
+                    FruitType.RedCabbage,
+                    FruitType.SummerSquash,
+                    FruitType.Tomato,
+                    FruitType.UnmilledRice,
+                    FruitType.Wheat,
+                    FruitType.Yam
+            )), 1)
     ))),
     MeadRecipe(0, ProcessedProductType.Mead, new ArrayList<>(List.of(
             new Ingredient(ProcessedProductType.Honey, 1)
@@ -134,29 +133,29 @@ public enum Recipe implements Item {
                     FruitType.WildPlum
             )), 1)
     ))),
-    RaisinsRecipe(0 , ProcessedProductType.Raisins, new ArrayList<>(List.of(
-            new Ingredient(FruitType.Grape , 5)
+    RaisinsRecipe(0, ProcessedProductType.Raisins, new ArrayList<>(List.of(
+            new Ingredient(FruitType.Grape, 5)
     ))),
-    CoalRecipe(0 , ProcessedProductType.Coal, new ArrayList<>(List.of(
-            new Ingredient(MineralType.Wood , 10)
+    CoalRecipe(0, ProcessedProductType.Coal, new ArrayList<>(List.of(
+            new Ingredient(MineralType.Wood, 10)
     ))),
-    ClothRecipe(0 , ProcessedProductType.Cloth, new ArrayList<>(List.of(
-            new Ingredient(AnimalProduct.Wool , 1)
+    ClothRecipe(0, ProcessedProductType.Cloth, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.Wool, 1)
     ))),
-    MayonnaiseRecipe(0 , ProcessedProductType.Mayonnaise, new ArrayList<>(List.of(
-            new Ingredient(AnimalProduct.Egg , 1)
+    MayonnaiseRecipe(0, ProcessedProductType.Mayonnaise, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.Egg, 1)
     ))),
-    LargeMayonnaiseRecipe(0 , ProcessedProductType.LargeMayonnaise, new ArrayList<>(List.of(
-            new Ingredient(AnimalProduct.LargeEgg , 1)
+    LargeMayonnaiseRecipe(0, ProcessedProductType.LargeMayonnaise, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.LargeEgg, 1)
     ))),
-    DuckMayonnaiseRecipe(0 , ProcessedProductType.DuckMayonnaise, new ArrayList<>(List.of(
-            new Ingredient(AnimalProduct.DuckEgg , 1)
+    DuckMayonnaiseRecipe(0, ProcessedProductType.DuckMayonnaise, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.DuckEgg, 1)
     ))),
-    DinosaurMayonnaiseRecipe(0 , ProcessedProductType.DinosaurMayonnaise, new ArrayList<>(List.of(
-            new Ingredient(AnimalProduct.DinosaurEgg , 1)
+    DinosaurMayonnaiseRecipe(0, ProcessedProductType.DinosaurMayonnaise, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.DinosaurEgg, 1)
     ))),
-    TruffleOilRecipe(0 , ProcessedProductType.TruffleOil, new ArrayList<>(List.of(
-            new Ingredient(AnimalProduct.Truffle , 1)
+    TruffleOilRecipe(0, ProcessedProductType.TruffleOil, new ArrayList<>(List.of(
+            new Ingredient(AnimalProduct.Truffle, 1)
     ))),
     OilRecipe(0, ProcessedProductType.Oil, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
@@ -165,7 +164,7 @@ public enum Recipe implements Item {
                     SeedType.SunflowerSeed
             )), 1)
     ))),
-    PickleRecipe(0 , ProcessedProductType.Pickle, new ArrayList<>(List.of(
+    PickleRecipe(0, ProcessedProductType.Pickle, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
                     FruitType.Amaranth,
                     FruitType.Artichoke,
@@ -193,7 +192,7 @@ public enum Recipe implements Item {
                     FruitType.Yam
             )), 1)
     ))),
-    JellyRecipe(0 , ProcessedProductType.Jelly, new ArrayList<>(List.of(
+    JellyRecipe(0, ProcessedProductType.Jelly, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
                     FruitType.AncientFruit,
                     FruitType.Apple,
@@ -220,7 +219,7 @@ public enum Recipe implements Item {
                     FruitType.WildPlum
             )), 1)
     ))),
-    SmokedFishRecipe(0 , ProcessedProductType.SmokedFish, new ArrayList<>(List.of(
+    SmokedFishRecipe(0, ProcessedProductType.SmokedFish, new ArrayList<>(List.of(
             new Ingredient(new ArrayList<>(List.of(
                     FishType.values()
             )), 1),
@@ -229,29 +228,29 @@ public enum Recipe implements Item {
                     ProcessedProductType.Coal
             )), 1)
     ))),
-    CopperMetalBarRecipe(0 , ProcessedProductType.CopperMetalBar, new ArrayList<>(List.of(
-            new Ingredient(MineralType.CopperOre , 5),
+    CopperMetalBarRecipe(0, ProcessedProductType.CopperMetalBar, new ArrayList<>(List.of(
+            new Ingredient(MineralType.CopperOre, 5),
             new Ingredient(new ArrayList<>(List.of(
                     MineralType.Coal,
                     ProcessedProductType.Coal
             )), 1)
     ))),
-    IronMetalBarRecipe(0 , ProcessedProductType.IronMetalBar, new ArrayList<>(List.of(
-            new Ingredient(MineralType.IronOre , 5),
+    IronMetalBarRecipe(0, ProcessedProductType.IronMetalBar, new ArrayList<>(List.of(
+            new Ingredient(MineralType.IronOre, 5),
             new Ingredient(new ArrayList<>(List.of(
                     MineralType.Coal,
                     ProcessedProductType.Coal
             )), 1)
     ))),
-    GoldMetalBarRecipe(0 , ProcessedProductType.GoldMetalBar, new ArrayList<>(List.of(
-            new Ingredient(MineralType.GoldOre , 5),
+    GoldMetalBarRecipe(0, ProcessedProductType.GoldMetalBar, new ArrayList<>(List.of(
+            new Ingredient(MineralType.GoldOre, 5),
             new Ingredient(new ArrayList<>(List.of(
                     MineralType.Coal,
                     ProcessedProductType.Coal
             )), 1)
     ))),
-    IridiumMetalBarRecipe(0 , ProcessedProductType.IridiumMetalBar, new ArrayList<>(List.of(
-            new Ingredient(MineralType.IridiumOre , 5),
+    IridiumMetalBarRecipe(0, ProcessedProductType.IridiumMetalBar, new ArrayList<>(List.of(
+            new Ingredient(MineralType.IridiumOre, 5),
             new Ingredient(new ArrayList<>(List.of(
                     MineralType.Coal,
                     ProcessedProductType.Coal
@@ -387,7 +386,7 @@ public enum Recipe implements Item {
     ))),
     BakedFishRecipe(0, CookingProduct.BakedFish, new ArrayList<>(List.of(
             new Ingredient(FishType.Sardine, 1),
-            new Ingredient(FishType.Salmon , 1),
+            new Ingredient(FishType.Salmon, 1),
             new Ingredient(FruitType.Wheat, 1)
     ))),
     SaladRecipe(0, CookingProduct.Salad, new ArrayList<>(List.of(
@@ -543,6 +542,14 @@ public enum Recipe implements Item {
         this.ingredients = ingredients;
     }
 
+    public static Recipe getRecipe(Item item) {
+        for (Recipe recipe : Recipe.values()) {
+            if (recipe.finalProduct == item)
+                return recipe;
+        }
+        return null;
+    }
+
     @Override
     public Integer getPrice() {
         return price;
@@ -582,13 +589,5 @@ public enum Recipe implements Item {
                 return false;
         }
         return true;
-    }
-
-    public static Recipe getRecipe(Item item) {
-        for (Recipe recipe : Recipe.values()) {
-            if (recipe.finalProduct == item)
-                return recipe;
-        }
-        return null;
     }
 }

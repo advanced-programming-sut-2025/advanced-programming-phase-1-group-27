@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NPC {
+    private final int daysForThirdQuest;
     private String name;
     private NPCType type;
     private Cell currentCell;
     private Features features;
     private ArrayList<Item> favorites;
-    private final int daysForThirdQuest;
     private ShopType shop;
     private Map<Player, Relation> relations = new HashMap<>();
     private Quest[] quests = new Quest[3];
@@ -36,6 +36,10 @@ public class NPC {
 
     public Cell getCurrentCell() {
         return currentCell;
+    }
+
+    public void setCurrentCell(Cell currentCell) {
+        this.currentCell = currentCell;
     }
 
     public String getName() {
@@ -70,13 +74,13 @@ public class NPC {
         return favorites;
     }
 
-    public Features getFeature(){
+    public Features getFeature() {
         return features;
     }
 
-    private Map<Player , Relation> relationMap(){
-        Map<Player , Relation> map = new HashMap<>();
-        for (Player player : App.getCurrentGame().getPlayers()){
+    private Map<Player, Relation> relationMap() {
+        Map<Player, Relation> map = new HashMap<>();
+        for (Player player : App.getCurrentGame().getPlayers()) {
             map.put(player, new Relation());
         }
         return map;
@@ -107,10 +111,6 @@ public class NPC {
 
     public void setHome(Building home) {
         this.home = home;
-    }
-
-    public void setCurrentCell(Cell currentCell) {
-        this.currentCell = currentCell;
     }
 
 

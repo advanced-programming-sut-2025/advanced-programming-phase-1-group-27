@@ -1,7 +1,7 @@
 package org.example.models.enums.items.products;
 
-import org.example.models.Item;
 import org.example.models.Buff;
+import org.example.models.Item;
 import org.example.models.enums.AbilityType;
 import org.example.models.enums.items.Recipe;
 
@@ -31,20 +31,15 @@ public enum CookingProduct implements Item {
     MinersTreat(200, new Buff(AbilityType.Mining, 5), 125);
 
     private final int price;
-    private Recipe recipe;
     private final Buff buff;
     private final int energy;
+    private Recipe recipe;
 
     CookingProduct(int price, Buff buff, int energy) {
         this.price = price;
         this.recipe = null;
         this.buff = buff;
         this.energy = energy;
-    }
-
-    @Override
-    public Integer getPrice() {
-        return price;
     }
 
     public static CookingProduct getItem(String itemName) {
@@ -54,6 +49,11 @@ public enum CookingProduct implements Item {
             }
         }
         return null;
+    }
+
+    @Override
+    public Integer getPrice() {
+        return price;
     }
 
     public Recipe getRecipe() {

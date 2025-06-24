@@ -2,13 +2,16 @@ package org.example.models;
 
 import org.example.models.AnimalProperty.Animal;
 import org.example.models.Map.*;
-import org.example.models.Relations.Dialogue;
 import org.example.models.NPCs.NPC;
+import org.example.models.Relations.Dialogue;
 import org.example.models.Relations.Relation;
 import org.example.models.Shops.BlackSmith;
 import org.example.models.Shops.Shop;
-import org.example.models.enums.*;
+import org.example.models.enums.Menu;
+import org.example.models.enums.NPCType;
 import org.example.models.enums.Plants.*;
+import org.example.models.enums.ShopType;
+import org.example.models.enums.StackLevel;
 import org.example.models.enums.Weathers.Weather;
 import org.example.models.enums.items.*;
 import org.example.models.enums.items.products.AnimalProduct;
@@ -22,10 +25,10 @@ import java.util.Random;
 import static java.lang.Math.min;
 
 public class Game {
+    private final FarmMap[] farmMaps = new FarmMap[4];
     private Player admin;
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players;
-    private final FarmMap[] farmMaps = new FarmMap[4];
     private NPCMap npcMap;
     private Weather currentWeather = Weather.Sunny, tomorrowWeather = null;
     private Time time = new Time();
@@ -39,18 +42,87 @@ public class Game {
     public Game(ArrayList<Player> players) {
         this.admin = players.getFirst();
         this.players = players;
-        for(Player player : players){
-            for(Player otherPlayer : players){
-                if(otherPlayer.getUsername().equals(player.getUsername())){
+        for (Player player : players) {
+            for (Player otherPlayer : players) {
+                if (otherPlayer.getUsername().equals(player.getUsername())) {
                     continue;
                 }
-                player.getRelations().put(otherPlayer , new Relation());
-                player.getPlayerMetToday().put(otherPlayer , Boolean.FALSE);
-                player.getPlayerHuggedToday().put(otherPlayer , Boolean.FALSE);
-                player.getPlayerGiftToday().put(otherPlayer , Boolean.FALSE);
-                player.getPlayerTradeToday().put(otherPlayer , Boolean.FALSE);
+                player.getRelations().put(otherPlayer, new Relation());
+                player.getPlayerMetToday().put(otherPlayer, Boolean.FALSE);
+                player.getPlayerHuggedToday().put(otherPlayer, Boolean.FALSE);
+                player.getPlayerGiftToday().put(otherPlayer, Boolean.FALSE);
+                player.getPlayerTradeToday().put(otherPlayer, Boolean.FALSE);
             }
         }
+    }
+
+    public static Item getItemByName(String itemName) {// for cheat commands
+        Item result = ToolType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        itemName = itemName.replace(" ", "");
+
+        result = AnimalProduct.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = CookingProduct.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = CraftingProduct.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = ProcessedProductType.getItem(itemName);
+        if (result != null) {
+            if (result.getPrice() == null)
+                return new ProcessedProduct((ProcessedProductType) result, 0, 0);
+            return new ProcessedProduct(
+                    (ProcessedProductType) result,
+                    result.getPrice(),
+                    ((ProcessedProductType) result).getEnergy()
+            );
+        }
+
+        result = AnimalType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = BuildingType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = FishType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = MineralType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = ShopItems.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = SeedType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = FishType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = SaplingType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        result = FruitType.getItem(itemName);
+        if (result != null)
+            return result;
+
+        return null;
     }
 
     public void init() {
@@ -383,75 +455,6 @@ public class Game {
         return npcMap;
     }
 
-    public static Item getItemByName(String itemName) {// for cheat commands
-        Item result = ToolType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        itemName = itemName.replace(" ", "");
-
-        result = AnimalProduct.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = CookingProduct.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = CraftingProduct.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = ProcessedProductType.getItem(itemName);
-        if (result != null) {
-            if (result.getPrice() == null)
-                return new ProcessedProduct((ProcessedProductType) result, 0, 0);
-            return new ProcessedProduct(
-                    (ProcessedProductType) result,
-                    result.getPrice(),
-                    ((ProcessedProductType) result).getEnergy()
-            );
-        }
-
-        result = AnimalType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = BuildingType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = FishType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = MineralType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = ShopItems.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = SeedType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = FishType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = SaplingType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = FruitType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        return null;
-    }
-
     public ArrayList<Dialogue> getDialogues() {
         return dialogues;
     }
@@ -499,8 +502,8 @@ public class Game {
         result.append("NPC Gifts : \n");
         for (Player player : players) {
             for (NPC npc : npcs) {
-                if(!npc.getRelations().containsKey(player)){
-                    npc.getRelations().put(player , new Relation());
+                if (!npc.getRelations().containsKey(player)) {
+                    npc.getRelations().put(player, new Relation());
                 }
                 Relation relation = npc.getRelations().get(player);
                 if (relation.getLevel() >= 3) {

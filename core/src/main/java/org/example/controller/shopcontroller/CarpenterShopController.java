@@ -1,9 +1,9 @@
 package org.example.controller.shopcontroller;
 
 import org.example.controller.MenuController;
-import org.example.models.*;
 import org.example.models.AnimalProperty.Barn;
 import org.example.models.AnimalProperty.Coop;
+import org.example.models.*;
 import org.example.models.Map.FarmMap;
 import org.example.models.Shops.Shop;
 import org.example.models.enums.Menu;
@@ -111,7 +111,7 @@ public class CarpenterShopController extends MenuController {
     }
 
     public Result purchase(String itemName, String quantityString) {
-        int amount = quantityString == null? 1 : Integer.parseInt(quantityString);
+        int amount = quantityString == null ? 1 : Integer.parseInt(quantityString);
         int price = 0;
         Player player = App.getCurrentGame().getCurrentPlayer();
         if (itemName.equalsIgnoreCase(MineralType.Wood.getName())) {

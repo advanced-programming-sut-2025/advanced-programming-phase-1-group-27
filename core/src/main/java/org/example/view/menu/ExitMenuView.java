@@ -5,7 +5,8 @@ import org.example.view.AppMenu;
 import java.util.Scanner;
 
 public class ExitMenuView extends AppMenu {
-    public void executeCommands(Scanner scanner) {}
+    public void executeCommands(Scanner scanner) {
+    }
 
 
     @Override

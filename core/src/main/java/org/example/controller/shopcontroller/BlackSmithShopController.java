@@ -2,27 +2,28 @@ package org.example.controller.shopcontroller;
 
 import org.example.controller.MenuController;
 import org.example.controller.ToolController;
-import org.example.models.*;
+import org.example.models.App;
+import org.example.models.Result;
+import org.example.models.Stock;
+import org.example.models.enums.Menu;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.ToolType;
-import org.example.models.enums.Menu;
 import org.example.view.shopview.BlackSmithShop;
 
 import java.util.Map;
 
 public class BlackSmithShopController extends MenuController {
     private final BlackSmithShop view;
+    private final ToolController toolController = new ToolController();
+
 
     public BlackSmithShopController(BlackSmithShop view) {
         this.view = view;
     }
 
-
     public boolean playerPassedOut() {
         return App.getCurrentGame().getCurrentPlayer().hasPassedOut();
     }
-
-    private final ToolController toolController = new ToolController();
 
     @Override
     public Result enterMenu(String menuName) {
@@ -151,7 +152,7 @@ public class BlackSmithShopController extends MenuController {
     }
 
     public Result purchase(String productName, String quantityString) {
-        int quantity = quantityString == null? 1 : Integer.parseInt(quantityString);
+        int quantity = quantityString == null ? 1 : Integer.parseInt(quantityString);
         Stock stock = App.getCurrentGame().getBlacksmith().getStock(productName);
         if (stock == null) {
             return new Result(false, "Product not found!");

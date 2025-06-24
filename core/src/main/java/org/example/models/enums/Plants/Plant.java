@@ -16,12 +16,12 @@ public abstract class Plant {
         tillNextHarvest = type.getTotalHarvestTime();
     }
 
-    public void setCell(Cell cell) {
-        this.cell = cell;
-    }
-
     public Cell getCell() {
         return cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 
     public void grow() {
@@ -39,6 +39,10 @@ public abstract class Plant {
         return tillNextHarvest;
     }
 
+    public void setTillNextHarvest(int tillNextHarvest) {
+        this.tillNextHarvest = tillNextHarvest;
+    }
+
     public int getCurrentStage() {
         return currentStage;
     }
@@ -48,7 +52,7 @@ public abstract class Plant {
             return null;
         }
         tillNextHarvest = type.getHarvestCycle();
-        return new Stacks(new Fruit(type.getFruit()), (isGiant? 10: 1));
+        return new Stacks(new Fruit(type.getFruit()), (isGiant ? 10 : 1));
     }
 
     public PlantType getType() {
@@ -59,20 +63,20 @@ public abstract class Plant {
         wateredToday = true;
     }
 
-    public void setWateredYesterday(boolean wateredYesterday) {
-        this.wateredYesterday = wateredYesterday;
-    }
-
-    public void setWateredToday(boolean wateredToday) {
-        this.wateredToday = wateredToday;
-    }
-
     public boolean getWateredYesterday() {
         return wateredYesterday;
     }
 
+    public void setWateredYesterday(boolean wateredYesterday) {
+        this.wateredYesterday = wateredYesterday;
+    }
+
     public boolean getWateredToday() {
         return wateredToday | alwaysWatered;
+    }
+
+    public void setWateredToday(boolean wateredToday) {
+        this.wateredToday = wateredToday;
     }
 
     public void setAlwaysWatered(boolean alwaysWatered) {
@@ -85,10 +89,6 @@ public abstract class Plant {
 
     public void setGiant(boolean giant) {
         isGiant = giant;
-    }
-
-    public void setTillNextHarvest(int tillNextHarvest) {
-        this.tillNextHarvest = tillNextHarvest;
     }
 
     public boolean isForaging() {

@@ -100,13 +100,13 @@ public class BlackSmithShop extends AppMenu {
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("count"))
             ));
-        }else if((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
+        } else if ((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
             GameMenuController gameMenuController = ((GameView) Menu.GameMenu.getMenu()).getController();
             System.out.println(gameMenuController.showMoney());
-        }else if((matcher = ToolCommands.ToolsShowAvailable.getMatcher(input)) != null) {
+        } else if ((matcher = ToolCommands.ToolsShowAvailable.getMatcher(input)) != null) {
             ToolController toolController = new ToolController();
             System.out.println(toolController.showAvailableTools());
-        }else if((matcher = ToolCommands.ToolsShowCurrent.getMatcher(input)) != null) {
+        } else if ((matcher = ToolCommands.ToolsShowCurrent.getMatcher(input)) != null) {
             ToolController toolController = new ToolController();
             System.out.println(toolController.showCurrentTool());
         } else {

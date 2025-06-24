@@ -6,12 +6,19 @@ import java.util.ArrayList;
 
 public interface PlantType {
     public int[] getStages();
+
     public int getHarvestCycle();
+
     public FruitType getFruit();
+
     public int getTotalHarvestTime();
+
     public PlantSourceType getSource();
+
     public boolean getOneTime();
+
     public ArrayList<Season> getSeasons();
+
     public String toString();
 
     default String getName() {
