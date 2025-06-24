@@ -1,6 +1,7 @@
 package org.example.models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,6 +15,10 @@ public class GameAssetManager {
 
     private final Texture background = new Texture(Gdx.files.internal("Images/menu_background.png"));
     private final Texture StardewValleyText = new Texture(Gdx.files.internal("Images/stardew_valley_text.png"));
+
+
+    private final Sound clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/click.wav"));
+
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -36,5 +41,8 @@ public class GameAssetManager {
         return new Image(StardewValleyText);
     }
 
+    public Sound getClickSound() {
+        return clickSound;
+    }
 
 }

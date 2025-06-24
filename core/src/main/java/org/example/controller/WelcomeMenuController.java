@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.Main;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.enums.Menu;
@@ -14,6 +15,41 @@ public class WelcomeMenuController extends MenuController {
     }
 
     public void handleWelcomeMenuButtons() {
+
+        if ( view != null ){
+
+            if ( view.getExitButton().isPressed() && !view.getExitButton().isDisabled() ){
+
+                playClickSound();
+
+                Main.getMain().getScreen().dispose();
+                exitMenu();
+                System.exit(0);
+
+            }
+            else if ( view.getLoginButton().isPressed() && !view.getLoginButton().isDisabled() ){
+
+                playClickSound();
+
+                goToLoginMenu();
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(Menu.LoginMenu.getMenu());
+
+
+            }
+            else if ( view.getRegisterButton().isPressed() && !view.getRegisterButton().isDisabled() ){
+
+                playClickSound();
+
+                goToRegisterMenu();
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(Menu.RegisterMenu.getMenu());
+
+            }
+
+
+        }
+
     }
 
     @Override

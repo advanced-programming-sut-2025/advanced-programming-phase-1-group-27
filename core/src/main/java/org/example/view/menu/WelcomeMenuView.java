@@ -25,6 +25,7 @@ public class WelcomeMenuView extends AppMenu {
     private float textScale;
     private final TextButton registerButton;
     private final TextButton loginButton;
+    private final TextButton exitButton;
     private float buttonTransparency;
 
     public WelcomeMenuView() {
@@ -35,6 +36,11 @@ public class WelcomeMenuView extends AppMenu {
 
         registerButton = new TextButton("Register", GameAssetManager.getGameAssetManager().getSkin());
         loginButton = new TextButton("Login", GameAssetManager.getGameAssetManager().getSkin());
+        exitButton = new TextButton("Exit", GameAssetManager.getGameAssetManager().getSkin());
+
+        registerButton.setDisabled(true);
+        loginButton.setDisabled(true);
+        exitButton.setDisabled(true);
 
     }
 
@@ -64,6 +70,13 @@ public class WelcomeMenuView extends AppMenu {
             buttonTransparency += delta;
 
         }
+        else{
+
+            registerButton.setDisabled(false);
+            loginButton.setDisabled(false);
+            exitButton.setDisabled(false);
+
+        }
 
         registerButton.setSize(Gdx.graphics.getWidth()/5f, Gdx.graphics.getHeight()/10f);
         registerButton.setPosition((Gdx.graphics.getWidth() - registerButton.getWidth())/2,
@@ -73,16 +86,23 @@ public class WelcomeMenuView extends AppMenu {
 
 
         loginButton.setSize(Gdx.graphics.getWidth()/5f, Gdx.graphics.getHeight()/10f);
-        loginButton.setPosition((Gdx.graphics.getWidth() - registerButton.getWidth())/2,
-                (Gdx.graphics.getHeight() - registerButton.getHeight())/2 - Gdx.graphics.getHeight()/8f
+        loginButton.setPosition((Gdx.graphics.getWidth() - loginButton.getWidth())/2,
+                (Gdx.graphics.getHeight() - loginButton.getHeight())/2 - Gdx.graphics.getHeight()/8f
+        );
+
+        exitButton.setSize(Gdx.graphics.getWidth()/5f, Gdx.graphics.getHeight()/10f);
+        exitButton.setPosition((Gdx.graphics.getWidth() - exitButton.getWidth())/2,
+                (Gdx.graphics.getHeight() - exitButton.getHeight())/2 - 2 * Gdx.graphics.getHeight()/8f
         );
 
         registerButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
         loginButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
+        exitButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
+
 
         stage.addActor(registerButton);
         stage.addActor(loginButton);
-
+        stage.addActor(exitButton);
 
 
     }
@@ -143,6 +163,17 @@ public class WelcomeMenuView extends AppMenu {
 
     }
 
+    public TextButton getRegisterButton() {
+        return registerButton;
+    }
+
+    public TextButton getLoginButton() {
+        return loginButton;
+    }
+
+    public TextButton getExitButton() {
+        return exitButton;
+    }
 
     @Override
     public void executeCommands(Scanner scanner) {
