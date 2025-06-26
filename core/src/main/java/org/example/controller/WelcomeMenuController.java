@@ -40,16 +40,16 @@ public class WelcomeMenuController extends MenuController {
     public Result goToRegisterMenu() {
         playClickSound();
         App.setCurrentMenu(Menu.RegisterMenu);
-        Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new RegisterMenuView());
+//        Main.getMain().getScreen().dispose();
+//        Main.getMain().setScreen(new RegisterMenuView());
         return new Result(true, "Redirecting to register menu ...");
     }
 
     public Result goToLoginMenu() {
         playClickSound();
         App.setCurrentMenu(Menu.LoginMenu);
-        Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new LoginMenuView());
+//        Main.getMain().getScreen().dispose();
+//        Main.getMain().setScreen(new LoginMenuView());
         return new Result(true, "Redirecting to login menu ...");
     }
 }

@@ -35,9 +35,10 @@ public class Main extends Game {
         batch = new SpriteBatch();
 
         //  TODO: Yeki az ina comment bayad beshe. Terminal baraye test phase 1
-        // TODO: rassa commit
-//        (new AppView()).runViaTerminal();
-        (new AppView()).runViaGraphics();
+
+        (new AppView()).runViaTerminal();
+//        (new AppView()).runViaGraphics();
+
     }
 
     @Override
