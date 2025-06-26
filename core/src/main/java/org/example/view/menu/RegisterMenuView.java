@@ -326,6 +326,13 @@ public class RegisterMenuView extends AppMenu {
             }
         });
 
+        usernameField.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                playClickSound();
+            }
+        });
+
 
     }
 
