@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.RegisterMenuController;
+import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.commands.MainMenuCommands;
@@ -46,8 +47,13 @@ public class RegisterMenuView extends AppMenu {
     private final TextButton backButton;
     private final TextButton registerButton;
     private final TextButton randomPasswordButton;
+    private final TextButton acceptSuggestedUsernameButton;
+    private final TextButton declineSuggestedUsernameButton;
 
     private float fadeInCoEfficient = 0;
+    private float errorTimer = 5;
+
+    private boolean reRegister = false;
 
     public RegisterMenuView() {
 
@@ -72,6 +78,11 @@ public class RegisterMenuView extends AppMenu {
         backButton = new TextButton("Back", skin);
         registerButton = new TextButton("Register", skin);
         randomPasswordButton = new TextButton("???", skin);
+        acceptSuggestedUsernameButton = new TextButton("Y", skin);
+        declineSuggestedUsernameButton = new TextButton("N", skin);
+
+        acceptSuggestedUsernameButton.setVisible(reRegister);
+        declineSuggestedUsernameButton.setVisible(reRegister);
 
         setListeners();
 
@@ -91,6 +102,7 @@ public class RegisterMenuView extends AppMenu {
     private void showErrorMessage(){
 
         errorLabel.setPosition(Gdx.graphics.getWidth()/9f, 6 * Gdx.graphics.getHeight()/7f - Gdx.graphics.getHeight()/9f);
+        errorLabel.setColor(1,0.31f,0,errorTimer/5);
         stage.addActor(errorLabel);
 
     }
@@ -139,6 +151,18 @@ public class RegisterMenuView extends AppMenu {
         randomPasswordButton.setColor(randomPasswordButton.getColor().r,randomPasswordButton.getColor().g,randomPasswordButton.getColor().b,fadeInCoEfficient);
         randomPasswordButton.setPosition((5 * Gdx.graphics.getWidth()/10f-100) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 3 * Gdx.graphics.getHeight()/9f-20);
 
+        // SUGGEST USERNAME
+
+        acceptSuggestedUsernameButton.setSize(75,usernameField.getHeight());
+        declineSuggestedUsernameButton.setSize(75,usernameField.getHeight());
+
+        acceptSuggestedUsernameButton.setPosition(usernameField.getX() + Gdx.graphics.getWidth()/5f + 50,usernameField.getY());
+        declineSuggestedUsernameButton.setPosition(usernameField.getX() + Gdx.graphics.getWidth()/5f + 150,usernameField.getY());
+
+        acceptSuggestedUsernameButton.setVisible(reRegister);
+        declineSuggestedUsernameButton.setVisible(reRegister);
+
+
 
         stage.addActor(usernameLabel);
         stage.addActor(passwordLabel);
@@ -153,6 +177,8 @@ public class RegisterMenuView extends AppMenu {
         stage.addActor(genderBox);
 
         stage.addActor(randomPasswordButton);
+        stage.addActor(acceptSuggestedUsernameButton);
+        stage.addActor(declineSuggestedUsernameButton);
 
     }
 
@@ -199,16 +225,24 @@ public class RegisterMenuView extends AppMenu {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(menuBackground);
-//        showGameLogo();
+
         showMenuTitle();
-//        showFields();
-        showErrorMessage();
-//        showButtons();
 
     }
 
     @Override
     public void render(float delta) {
+
+        if ( !errorLabel.getText().isEmpty() && !reRegister){
+
+            errorTimer -= delta;
+
+            if ( errorTimer <= 0 ){
+                errorLabel.setText("");
+                errorTimer = 5;
+            }
+
+        }
 
         if ( fadeInCoEfficient < 1f ){
             fadeInCoEfficient += delta;
@@ -226,6 +260,7 @@ public class RegisterMenuView extends AppMenu {
         showGameLogo();
         showFields();
         showButtons();
+        showErrorMessage();
 
     }
 
@@ -286,6 +321,21 @@ public class RegisterMenuView extends AppMenu {
         return registerButton;
     }
 
+    public TextButton getAcceptSuggestedUsernameButton() {
+        return acceptSuggestedUsernameButton;
+    }
+
+    public TextButton getDeclineSuggestedUsernameButton() {
+        return declineSuggestedUsernameButton;
+    }
+
+    public boolean isReRegister() {
+        return reRegister;
+    }
+
+    public void setReRegister(boolean reRegister) {
+        this.reRegister = reRegister;
+    }
 
     private void setListeners(){
 
@@ -304,6 +354,7 @@ public class RegisterMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
 
                 playClickSound();
+                controller.registerViaGraphics();
 
 
             }
@@ -314,7 +365,7 @@ public class RegisterMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
 
                 playClickSound();
-
+                controller.setRandomPassword();
 
             }
         });
@@ -326,10 +377,19 @@ public class RegisterMenuView extends AppMenu {
             }
         });
 
-        usernameField.addListener(new ChangeListener() {
+        acceptSuggestedUsernameButton.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
+                controller.acceptSuggestedUsername();
+            }
+        });
+
+        declineSuggestedUsernameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.declineSuggestedUsername();
             }
         });
 

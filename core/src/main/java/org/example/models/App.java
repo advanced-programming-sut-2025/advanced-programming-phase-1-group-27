@@ -32,6 +32,9 @@ public class App {
             currentMenu = Menu.MainMenu;
         }
         initSecurityQuestions();
+
+        users.add(new User("yusof","yusof@1384","joe","yusof@gmail.com",Gender.Male));
+
     }
 
     public static void initSecurityQuestions() {

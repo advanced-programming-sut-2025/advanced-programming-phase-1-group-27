@@ -4,6 +4,8 @@ import org.example.Main;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.enums.Menu;
+import org.example.view.menu.LoginMenuView;
+import org.example.view.menu.RegisterMenuView;
 import org.example.view.menu.WelcomeMenuView;
 
 public class WelcomeMenuController extends MenuController {
@@ -14,7 +16,7 @@ public class WelcomeMenuController extends MenuController {
         this.view = view;
     }
 
-
+    public void handleWelcomeMenuButtons(){}
 
     @Override
     public Result enterMenu(String menuName) {
@@ -39,7 +41,7 @@ public class WelcomeMenuController extends MenuController {
         playClickSound();
         App.setCurrentMenu(Menu.RegisterMenu);
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(Menu.RegisterMenu.getMenu());
+        Main.getMain().setScreen(new RegisterMenuView());
         return new Result(true, "Redirecting to register menu ...");
     }
 
@@ -47,7 +49,7 @@ public class WelcomeMenuController extends MenuController {
         playClickSound();
         App.setCurrentMenu(Menu.LoginMenu);
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(Menu.LoginMenu.getMenu());
+        Main.getMain().setScreen(new LoginMenuView());
         return new Result(true, "Redirecting to login menu ...");
     }
 }

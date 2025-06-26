@@ -11,6 +11,7 @@ import org.example.models.User;
 import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
 import org.example.view.menu.RegisterMenuView;
+import org.example.view.menu.WelcomeMenuView;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -18,11 +19,40 @@ import java.util.regex.Matcher;
 public class RegisterMenuController extends MenuController {
     private RegisterMenuView view;
     private User suggestedUser = null;
+    private String suggestedUsername = null;
 
     public RegisterMenuController(RegisterMenuView view) {
         this.view = view;
     }
 
+
+    public void registerViaGraphics(){
+
+        Result registerAttempt = checkAllFieldsAreFilled();
+
+        if ( !registerAttempt.success() ){
+
+            view.setErrorLabel(registerAttempt.message());
+
+            return;
+        }
+
+        String username = view.getUsernameField().getText();
+        String password = view.getPasswordField().getText();
+        String email = view.getEmailField().getText();
+        String nickname = view.getNicknameField().getText();
+
+        Result registerAttemptResult = checkRegistrationAttempt(username, password, email, nickname);
+
+        if ( !registerAttemptResult.success() ){
+            view.setErrorLabel(registerAttemptResult.message());
+            return;
+        }
+
+
+
+
+    }
 
     private Result checkAllFieldsAreFilled(){
 
@@ -39,6 +69,54 @@ public class RegisterMenuController extends MenuController {
 
     }
 
+    public Result checkRegistrationAttempt(String username, String password, String email, String nickname){
+
+        if (!User.isValidUsername(username))
+            return new Result(false, "Username format is invalid!");
+
+        if ( App.getUserByUsername(username) != null ){
+
+            suggestedUsername = App.generateUsername(username);
+            view.setReRegister(true);
+            return new Result(false, "Username already exists! Suggested username: " + suggestedUsername);
+
+
+        }
+
+        if (!User.isValidEmail(email))
+            return new Result(false, "Email format is invalid!");
+
+        Result passwordCheck = User.checkPassword(password);
+        if (!passwordCheck.success())
+            return passwordCheck;
+
+
+
+        return new Result(true, "");
+
+    }
+
+    public void setRandomPassword(){
+
+        view.getPasswordField().setText(App.generatePassword());
+
+    }
+
+    public void acceptSuggestedUsername(){
+
+        view.setReRegister(false);
+        view.getUsernameField().setText(suggestedUsername);
+        view.setErrorLabel("Suggested username accepted!");
+
+    }
+
+    public void declineSuggestedUsername(){
+
+        view.setReRegister(false);
+        view.getUsernameField().setText("");
+        view.setErrorLabel("Suggested username declined!");
+
+    }
 
     @Override
     public Result enterMenu(String menuName) {
@@ -50,9 +128,10 @@ public class RegisterMenuController extends MenuController {
         playClickSound();
         App.setCurrentMenu(Menu.WelcomeMenu);
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(Menu.WelcomeMenu.getMenu());
+        Main.getMain().setScreen(new WelcomeMenuView());
         return new Result(true, "Redirecting to welcome menu ...");
     }
+
 
     public Result register(String username, String password, String reEnteredPassword,
                            String nickname, String email, String gender, Scanner scanner) {
@@ -112,7 +191,7 @@ public class RegisterMenuController extends MenuController {
 
     public Result reRegister(String response) {
         if (response.equals("Y") || response.equals("y"))
-            return new Result(true, "suggested username accepted!");
+            return new Result(true, "Suggested username accepted!");
         return new Result(false, "suggested username rejected!");
     }
 
