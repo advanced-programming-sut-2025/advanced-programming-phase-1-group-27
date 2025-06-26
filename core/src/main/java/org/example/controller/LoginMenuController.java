@@ -61,15 +61,14 @@ public class LoginMenuController extends MenuController {
         User user = App.getUserByUsername(username);
         if (user == null)
             return new Result(false, "Username not found!");
-        for (SecurityQuestion recoveryQuestion : user.getRecoveryQuestions()) {
-            view.printString(recoveryQuestion.getQuestion());
-            Matcher matcher = view.getAnswer(scanner);
-            if (matcher == null)
-                return new Result(false, "Answer format is invalid!");
-            String answer = matcher.group("answer").trim();
-            if (!answer.equals(recoveryQuestion.getAnswer()))
-                return new Result(false, "Incorrect answer. Recovery failed!");
-        }
+        SecurityQuestion recoveryQuestion = user.getRecoveryQuestion();
+        view.printString(recoveryQuestion.getQuestion());
+        Matcher matcher = view.getAnswer(scanner);
+        if (matcher == null)
+            return new Result(false, "Answer format is invalid!");
+        String answer = matcher.group("answer").trim();
+        if (!answer.equals(recoveryQuestion.getAnswer()))
+            return new Result(false, "Incorrect answer. Recovery failed!");
         String newPassword = App.generatePassword();
         user.setPassword(User.hashPassword(newPassword));
         return new Result(true, "Your new password is: " + newPassword);

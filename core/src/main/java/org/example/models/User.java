@@ -14,8 +14,8 @@ public class User {
 
     private String username, password, nickname, email;
     private Gender gender;
-    // security questions to recover forgotten password
-    private ArrayList<SecurityQuestion> recoveryQuestions = new ArrayList<>();
+    // security question to recover forgotten password
+    private SecurityQuestion recoveryQuestion;
     private Game currentGame = null;
     private int maxMoneyEarned = 0;
     private int numberOfGamesPlayed = 0;
@@ -168,13 +168,11 @@ public class User {
         numberOfGamesPlayed++;
     }
 
-    public ArrayList<SecurityQuestion> getRecoveryQuestions() {
-        return recoveryQuestions;
+    public SecurityQuestion getRecoveryQuestion() {
+        return recoveryQuestion;
     }
 
-    public void addRecoveryQuestions() {
-        recoveryQuestions.add(new SecurityQuestion("Eneter your email: ", email));
-        recoveryQuestions.add(new SecurityQuestion("Enter your nickname: ", nickname));
-        // other questions can be added
+    public void setRecoveryQuestion(SecurityQuestion securityQuestion) {
+        recoveryQuestion = securityQuestion;
     }
 }

@@ -186,7 +186,6 @@ public class WelcomeMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("registerButton clicked");
                 controller.goToRegisterMenu();
-
             }
         });
 
@@ -203,7 +202,7 @@ public class WelcomeMenuView extends AppMenu {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                GameAssetManager.getGameAssetManager().getClickSound().play(1.0f);
                 controller.exitMenu();
                 System.exit(0);
 

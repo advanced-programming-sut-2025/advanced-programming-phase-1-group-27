@@ -1,8 +1,5 @@
 package org.example.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.Main;
 import org.example.models.App;
 import org.example.models.Result;
@@ -177,13 +174,12 @@ public class RegisterMenuController extends MenuController {
         }
 
         // handling security questions ...
-        String securityQuestions = App.getSecurityQuestions();
+        String securityQuestions = App.getQuestions();
         view.printString(securityQuestions);
         Result result = view.pickQuestion(scanner);
         if (!result.success())
             return result;
         // successful registration ...
-        suggestedUser.addRecoveryQuestions();
         App.addUser(suggestedUser);
         App.setCurrentMenu(Menu.LoginMenu);
         return new Result(true, "Registration was successful. you can now login!");
@@ -199,15 +195,15 @@ public class RegisterMenuController extends MenuController {
         if (matcher == null)
             return new Result(false, "Command format is invalid. Registration failed!");
         int questionId = Integer.parseInt(matcher.group("questionId").trim()) - 1;
-        SecurityQuestion question = App.getSecurityQuestion(questionId);
+        String question = App.getSecurityQuestion(questionId);
         if (question == null)
             return new Result(false, "Question not found. Registration failed");
         String answer = matcher.group("answer").trim();
         String reenteredAnswer = matcher.group("reenteredAnswer").trim();
         if (!answer.equals(reenteredAnswer))
             return new Result(false, "Reentered answer doesn't match answer. Registration failed!");
-        if (!answer.equals(question.getAnswer()))
-            return new Result(false, "Answer is incorrect. Registration failed!");
+        SecurityQuestion securityQuestion = new SecurityQuestion(question, answer);
+        suggestedUser.setRecoveryQuestion(securityQuestion);
         return new Result(true, "Baba benazam!");
     }
 }

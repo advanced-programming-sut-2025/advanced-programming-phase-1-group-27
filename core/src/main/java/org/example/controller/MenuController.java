@@ -21,7 +21,7 @@ public abstract class MenuController {
     protected void playClickSound(){
 
         if ( true ){                    ///  TODO: age sfx on bood play beshe
-            clickSound.play();
+            clickSound.play(1.0f);
         }
 
     }
