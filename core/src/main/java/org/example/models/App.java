@@ -139,6 +139,10 @@ public class App {
             result.setPassword(json.optString("password"));
             result.setNickname(json.optString("nickname"));
             result.setEmail(json.optString("email"));
+            result.setRecoveryQuestion(new SecurityQuestion(
+                    json.optString("recoveryQuestion"),
+                    json.optString("recoveryAnswer")
+            ));
             result.setGender(Gender.getGender(json.optString("gender")));
             result.setMaxMoneyEarned(json.optInt("maxMoneyEarned"));
             result.setNumberOfGamesPlayed(json.optInt("numberOfGamesPlayed"));

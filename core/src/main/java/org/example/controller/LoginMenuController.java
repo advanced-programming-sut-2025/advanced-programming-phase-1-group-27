@@ -81,6 +81,8 @@ public class LoginMenuController extends MenuController {
         jsonObject.put("email", user.getEmail());
         jsonObject.put("nickname", user.getNickname());
         jsonObject.put("gender", user.getGender());
+        jsonObject.put("recoveryQuestion", user.getRecoveryQuestion().getQuestion());
+        jsonObject.put("recoveryAnswer", user.getRecoveryQuestion().getAnswer());
         jsonObject.put("maxMoneyEarned", user.getMaxMoneyEarned());
         jsonObject.put("numberOfGamesPlayed", user.getNumberOfGamesPlayed());
 
