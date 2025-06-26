@@ -1,7 +1,7 @@
 {
   com.badlogic.gdx.graphics.g2d.BitmapFont: {
     font: {
-      file: "Fonts/lantern_lightred.fnt"
+      file: "Fonts/stardew-font.fnt"
     }
     font2: {
       file: font-export.fnt

@@ -3,6 +3,7 @@ package org.example.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import org.example.Main;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.SecurityQuestion;
@@ -22,32 +23,8 @@ public class RegisterMenuController extends MenuController {
         this.view = view;
     }
 
-    public void handleRegisterMenuButtons() {
 
-        if ( view != null ){
-
-
-            if ( view.getRegisterButton().isPressed() ){
-
-                playClickSound();
-
-                Result registerAttemptResult = checkAllFields();
-
-                if ( ! registerAttemptResult.success() ){
-                    view.setErrorLabel(registerAttemptResult.message());
-                }
-
-
-            }
-
-
-        }
-
-
-    }
-
-
-    private Result checkAllFields(){
+    private Result checkAllFieldsAreFilled(){
 
         if ( view.getUsernameField().getText().isEmpty() ||
         view.getPasswordField().getText().isEmpty() ||
@@ -60,8 +37,6 @@ public class RegisterMenuController extends MenuController {
 
         return new Result(true, "");
 
-
-
     }
 
 
@@ -72,12 +47,17 @@ public class RegisterMenuController extends MenuController {
 
     @Override
     public Result exitMenu() {
+        playClickSound();
         App.setCurrentMenu(Menu.WelcomeMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(Menu.WelcomeMenu.getMenu());
         return new Result(true, "Redirecting to welcome menu ...");
     }
 
     public Result register(String username, String password, String reEnteredPassword,
                            String nickname, String email, String gender, Scanner scanner) {
+
+
         if (!User.isValidUsername(username))
             return new Result(false, "Username format is invalid!");
         if (!User.isValidEmail(email))

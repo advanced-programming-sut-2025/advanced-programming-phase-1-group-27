@@ -47,7 +47,7 @@ public class WelcomeMenuController extends MenuController {
         playClickSound();
         App.setCurrentMenu(Menu.LoginMenu);
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(Menu.RegisterMenu.getMenu());
+        Main.getMain().setScreen(Menu.LoginMenu.getMenu());
         return new Result(true, "Redirecting to login menu ...");
     }
 }

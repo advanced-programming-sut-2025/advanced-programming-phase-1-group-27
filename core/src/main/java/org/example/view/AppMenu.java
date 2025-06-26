@@ -2,6 +2,8 @@ package org.example.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,6 +18,7 @@ public abstract class AppMenu implements Screen {
     private final Texture backgroundTexture = GameAssetManager.getGameAssetManager().getMenuBackground();
     protected final Image menuBackground = new Image(backgroundTexture);
     protected final Image stardewValleyText = GameAssetManager.getGameAssetManager().getStardewValleyText();
+    protected final Sound clickSound = GameAssetManager.getGameAssetManager().getClickSound();
 
 
 
@@ -35,4 +38,13 @@ public abstract class AppMenu implements Screen {
     public Skin getSkin() {
         return skin;
     }
+
+    protected void playClickSound(){
+
+        if ( true ){                    ///  TODO: age sfx on bood play beshe
+            clickSound.play();
+        }
+
+    }
+
 }

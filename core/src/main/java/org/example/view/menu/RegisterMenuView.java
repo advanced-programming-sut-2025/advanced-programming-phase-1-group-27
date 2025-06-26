@@ -1,11 +1,15 @@
 package org.example.view.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.RegisterMenuController;
@@ -41,7 +45,9 @@ public class RegisterMenuView extends AppMenu {
 
     private final TextButton backButton;
     private final TextButton registerButton;
+    private final TextButton randomPasswordButton;
 
+    private float fadeInCoEfficient = 0;
 
     public RegisterMenuView() {
 
@@ -65,15 +71,17 @@ public class RegisterMenuView extends AppMenu {
 
         backButton = new TextButton("Back", skin);
         registerButton = new TextButton("Register", skin);
+        randomPasswordButton = new TextButton("???", skin);
+
+        setListeners();
 
 
 
     }
 
-
     private void showMenuTitle(){
 
-        menuTitle.setFontScale(2f);
+        menuTitle.setFontScale(4f);
         menuTitle.setColor(0.878f, 0.627f, 0f,1f);
         menuTitle.setPosition(Gdx.graphics.getWidth()/9f, 6 * Gdx.graphics.getHeight()/7f);
         stage.addActor(menuTitle);
@@ -89,13 +97,21 @@ public class RegisterMenuView extends AppMenu {
 
     private void showFields(){
 
-        usernameLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 2 * Gdx.graphics.getHeight()/9f);
-        passwordLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 3 * Gdx.graphics.getHeight()/9f);
-        nicknameLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 4 * Gdx.graphics.getHeight()/9f);
-        emailLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 5 * Gdx.graphics.getHeight()/9f);
-        genderLabel.setPosition(2 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 6 * Gdx.graphics.getHeight()/9f);
+        //  LABELS
 
+        usernameLabel.setPosition((2 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 2 * Gdx.graphics.getHeight()/9f);
+        passwordLabel.setPosition((2 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 3 * Gdx.graphics.getHeight()/9f);
+        nicknameLabel.setPosition((2 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 4 * Gdx.graphics.getHeight()/9f);
+        emailLabel.setPosition((2 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 5 * Gdx.graphics.getHeight()/9f);
+        genderLabel.setPosition((2 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 6 * Gdx.graphics.getHeight()/9f);
 
+        usernameLabel.setColor(0,0,0,fadeInCoEfficient);
+        passwordLabel.setColor(0,0,0,fadeInCoEfficient);
+        genderLabel.setColor(0,0,0,fadeInCoEfficient);
+        nicknameLabel.setColor(0,0,0,fadeInCoEfficient);
+        emailLabel.setColor(0,0,0,fadeInCoEfficient);
+
+        // FIELDS
 
         usernameField.setWidth(Gdx.graphics.getWidth()/5f);
         passwordField.setWidth(Gdx.graphics.getWidth()/5f);
@@ -103,13 +119,25 @@ public class RegisterMenuView extends AppMenu {
         emailField.setWidth(Gdx.graphics.getWidth()/5f);
         genderBox.setWidth(Gdx.graphics.getWidth()/5f);
 
-        usernameField.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 2 * Gdx.graphics.getHeight()/9f-20);
-        passwordField.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 3 * Gdx.graphics.getHeight()/9f-20);
-        nicknameField.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 4 * Gdx.graphics.getHeight()/9f-20);
-        emailField.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 5 * Gdx.graphics.getHeight()/9f-20);
-        genderBox.setPosition(3 * Gdx.graphics.getWidth()/10f, 6 * Gdx.graphics.getHeight()/7f - 6 * Gdx.graphics.getHeight()/9f-20);
+        usernameField.setColor(usernameField.getColor().r,usernameField.getColor().g,usernameField.getColor().b,fadeInCoEfficient);
+        passwordField.setColor(passwordField.getColor().r,passwordField.getColor().g,passwordField.getColor().b,fadeInCoEfficient);
+        nicknameField.setColor(nicknameField.getColor().r,nicknameField.getColor().g,nicknameField.getColor().b,fadeInCoEfficient);
+        emailField.setColor(emailField.getColor().r,emailField.getColor().g,emailField.getColor().b,fadeInCoEfficient);
+        genderBox.setColor(genderBox.getColor().r,genderBox.getColor().g,genderBox.getColor().b,fadeInCoEfficient);
 
 
+        usernameField.setPosition((3 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 2 * Gdx.graphics.getHeight()/9f-20);
+        passwordField.setPosition((3 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 3 * Gdx.graphics.getHeight()/9f-20);
+        nicknameField.setPosition((3 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 4 * Gdx.graphics.getHeight()/9f-20);
+        emailField.setPosition((3 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 5 * Gdx.graphics.getHeight()/9f-20);
+        genderBox.setPosition((3 * Gdx.graphics.getWidth()/10f-150) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 6 * Gdx.graphics.getHeight()/9f-20);
+
+
+        // RANDOM PASSWORD
+
+        randomPasswordButton.setSize(120, passwordField.getHeight());
+        randomPasswordButton.setColor(randomPasswordButton.getColor().r,randomPasswordButton.getColor().g,randomPasswordButton.getColor().b,fadeInCoEfficient);
+        randomPasswordButton.setPosition((5 * Gdx.graphics.getWidth()/10f-100) * fadeInCoEfficient, 6 * Gdx.graphics.getHeight()/7f - 3 * Gdx.graphics.getHeight()/9f-20);
 
 
         stage.addActor(usernameLabel);
@@ -124,12 +152,13 @@ public class RegisterMenuView extends AppMenu {
         stage.addActor(emailField);
         stage.addActor(genderBox);
 
+        stage.addActor(randomPasswordButton);
 
     }
 
     private void showGameLogo(){
 
-        stardewValleyText.setScale(2f);
+        stardewValleyText.setScale(fadeInCoEfficient*2);
 
         stardewValleyText.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f - stardewValleyText.getWidth()*2)/2,
                 (Gdx.graphics.getHeight() - stardewValleyText.getHeight()*2)/2 + 2 * Gdx.graphics.getHeight()/10f
@@ -141,8 +170,13 @@ public class RegisterMenuView extends AppMenu {
 
     private void showButtons(){
 
+
         backButton.setWidth(Gdx.graphics.getWidth()/5f);
         registerButton.setWidth(Gdx.graphics.getWidth()/5f);
+
+        backButton.setColor(backButton.getColor().r,backButton.getColor().g,backButton.getColor().b,fadeInCoEfficient);
+        registerButton.setColor(registerButton.getColor().r,registerButton.getColor().g,registerButton.getColor().b,fadeInCoEfficient);
+
 
         registerButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f - registerButton.getWidth())/2,
                 (Gdx.graphics.getHeight() - registerButton.getHeight())/2 - Gdx.graphics.getHeight()/20f
@@ -165,18 +199,23 @@ public class RegisterMenuView extends AppMenu {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(menuBackground);
-        showGameLogo();
+//        showGameLogo();
         showMenuTitle();
-        showFields();
+//        showFields();
         showErrorMessage();
-        showButtons();
+//        showButtons();
 
     }
 
     @Override
     public void render(float delta) {
 
-
+        if ( fadeInCoEfficient < 1f ){
+            fadeInCoEfficient += delta;
+        }
+        else{
+            fadeInCoEfficient = 1f;
+        }
 
         Main.getBatch().begin();
         Main.getBatch().end();
@@ -184,9 +223,9 @@ public class RegisterMenuView extends AppMenu {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        controller.handleRegisterMenuButtons();
-
-
+        showGameLogo();
+        showFields();
+        showButtons();
 
     }
 
@@ -246,6 +285,50 @@ public class RegisterMenuView extends AppMenu {
     public TextButton getRegisterButton() {
         return registerButton;
     }
+
+
+    private void setListeners(){
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.exitMenu();
+
+            }
+        });
+
+        registerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+
+
+            }
+        });
+
+        randomPasswordButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+
+
+            }
+        });
+
+        genderBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                playClickSound();
+            }
+        });
+
+
+    }
+
 
     @Override
     public void executeCommands(Scanner scanner) {

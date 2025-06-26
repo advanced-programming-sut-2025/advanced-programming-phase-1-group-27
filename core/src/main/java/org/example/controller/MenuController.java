@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import org.example.models.App;
 import org.example.models.GameAssetManager;

@@ -90,9 +90,14 @@ public class WelcomeMenuView extends AppMenu {
                 (Gdx.graphics.getHeight() - exitButton.getHeight())/2 - 2 * Gdx.graphics.getHeight()/8f
         );
 
-        registerButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
-        loginButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
-        exitButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
+//        registerButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
+//        loginButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
+//        exitButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
+
+
+        registerButton.setColor(registerButton.getColor().r, registerButton.getColor().g, registerButton.getColor().b,Math.min(1.0f, buttonTransparency));
+        loginButton.setColor(loginButton.getColor().r, loginButton.getColor().g, loginButton.getColor().b,Math.min(1.0f, buttonTransparency));
+        exitButton.setColor(exitButton.getColor().r, exitButton.getColor().g, exitButton.getColor().b,Math.min(1.0f, buttonTransparency));
 
 
         stage.addActor(registerButton);
@@ -179,7 +184,7 @@ public class WelcomeMenuView extends AppMenu {
         registerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                System.out.println("registerButton clicked");
                 controller.goToRegisterMenu();
 
             }
@@ -188,7 +193,7 @@ public class WelcomeMenuView extends AppMenu {
         loginButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                System.out.println("loooggin");
                 controller.goToLoginMenu();
 
             }
