@@ -2,6 +2,7 @@ package org.example.models;
 
 import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
+import org.example.models.enums.Questions;
 import org.example.models.enums.items.products.CraftingProduct;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -20,8 +21,6 @@ public class App {
     private static ArrayList<User> users = new ArrayList<>();
     private static Menu currentMenu = Menu.WelcomeMenu;
     private static ArrayList<CraftingProduct> allRecipes = new ArrayList<>(); // TODO: arraylist should be initialized
-    // list of questions in order to recover password
-    private static final ArrayList<String> questions = new ArrayList<>();
 
     static {
         User savedUser = getSavedUser();
@@ -30,19 +29,9 @@ public class App {
             users.add(savedUser);
             currentMenu = Menu.MainMenu;
         }
-        initSecurityQuestions();
-
         users.add(new User("yusof","yusof@1384","joe","yusof@gmail.com",Gender.Male));
 
     }
-
-    public static void initSecurityQuestions() {
-        questions.add("What is your father's name?");
-        questions.add("2 * 2 = ?");
-        questions.add("Turk?");
-        questions.add("Pass misham?");
-    }
-
 
     public static User getLoggedInUser() {
         return LoggedInUser;
@@ -86,22 +75,18 @@ public class App {
 
     public static String getQuestionsString() {
         StringBuilder result = new StringBuilder("Security Questions:");
-        for (int i = 0; i < questions.size(); i++) {
+        for (int i = 0; i < Questions.values().length; i++) {
             result.append("\n");
             result.append("\t").append(i + 1).append(". ");
-            result.append(questions.get(i));
+            result.append(Questions.values()[i].getQuestion());
         }
         return result.toString();
     }
 
     public static String getSecurityQuestion(int id) {
-        if (id >= questions.size())
+        if (id >= Questions.values().length)
             return null;
-        return questions.get(id);
-    }
-
-    public static ArrayList<String> getQuestionsList() {
-        return questions;
+        return Questions.values()[id].getQuestion();
     }
 
     public static User getUserByUsername(String username) {

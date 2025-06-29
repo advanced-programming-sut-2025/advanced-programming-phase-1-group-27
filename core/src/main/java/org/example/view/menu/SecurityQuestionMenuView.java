@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.SecurityQuestionMenuController;
 import org.example.models.App;
+import org.example.models.enums.Questions;
 import org.example.view.AppMenu;
 
 import java.util.Scanner;
@@ -28,6 +29,14 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     private float fadeInTimer = 0f;
 
+    {
+        securityQuestionsBox = new SelectBox<>(skin);
+        Array<String> questions = new Array<>();
+        for (Questions question : Questions.values()) {
+            questions.add(question.getQuestion());
+        }
+        securityQuestionsBox.setItems(questions);
+    }
 
     public SecurityQuestionMenuView() {
         controller = new SecurityQuestionMenuController();
@@ -35,14 +44,6 @@ public class SecurityQuestionMenuView extends AppMenu {
         submitButton = new TextButton("Submit", skin);
         cancelButton = new TextButton("Cancel", skin);
         descriptionLabel = new Label("Choose one of the questions \n and type down your answer", skin);
-        securityQuestionsBox = new SelectBox<>(skin);
-
-        Array<String> questions = new Array<>();
-
-        for (String question : App.getQuestionsList()) {
-            questions.add(question);
-        }
-        securityQuestionsBox.setItems(questions);
 
 
         setListeners();

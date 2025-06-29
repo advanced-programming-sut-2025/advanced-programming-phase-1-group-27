@@ -93,10 +93,10 @@ public class Ability {
 
     public static ArrayList<Recipe> getRecipeList(AbilityType type, int level) {
         return switch (type) {
-            case AbilityType.Farming -> farmingRecipes.get(level - 1);
-            case AbilityType.Foraging -> foragingRecipes.get(level - 1);
-            case AbilityType.Fishing -> fishingRecipes.get(level - 1);
-            case AbilityType.Mining -> miningRecipes.get(level - 1);
+            case Farming -> farmingRecipes.get(level - 1);
+            case Foraging -> foragingRecipes.get(level - 1);
+            case Fishing -> fishingRecipes.get(level - 1);
+            case Mining -> miningRecipes.get(level - 1);
             default -> new ArrayList<>();
         };
     }
