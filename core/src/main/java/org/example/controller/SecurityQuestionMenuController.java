@@ -13,9 +13,16 @@ public class SecurityQuestionMenuController extends MenuController {
 
     private SecurityQuestionMenuView view;
 
+    public SecurityQuestionMenuController(SecurityQuestionMenuView view) {
+        this.view = view;
+    }
+
     public void submitSecurityQuestion() {
 
-        view.getUser().setRecoveryQuestion(Questions.values()[view.getSecurityQuestionsBox().getSelectedIndex()]);
+        view.getUser().setRecoveryQuestion(new SecurityQuestion(Questions.values()[view.getSecurityQuestionsBox().getSelectedIndex()].getQuestion(),
+                view.getAnswerTextField().getText()));
+
+
 
     }
 

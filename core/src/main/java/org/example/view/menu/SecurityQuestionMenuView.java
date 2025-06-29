@@ -22,7 +22,7 @@ public class SecurityQuestionMenuView extends AppMenu {
     private final SecurityQuestionMenuController controller;
     private Stage stage;
 
-    private User user;
+    private final User user;
 
     private final TextButton submitButton;
     private final TextButton cancelButton;
@@ -39,7 +39,7 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     public SecurityQuestionMenuView(User currentUser) {
 
-        controller = new SecurityQuestionMenuController();
+        controller = new SecurityQuestionMenuController(this);
         user = currentUser;
 
         submitButton = new TextButton("Submit", skin);
@@ -155,7 +155,7 @@ public class SecurityQuestionMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
 
                 playClickSound();
-                controller.exitMenu();
+                controller.submitSecurityQuestion();
 
             }
         });

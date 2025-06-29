@@ -13,7 +13,7 @@ public enum Menu {
     WelcomeMenu(new WelcomeMenuView()),
     LoginMenu(new LoginMenuView()),
     RegisterMenu(new RegisterMenuView()),
-    ForgetPasswordMenu(new SecurityQuestionMenuView()),
+    ForgetPasswordMenu(new SecurityQuestionMenuView(null)),
     MainMenu(new MainMenuView()),
     GameMenu(new GameView()),
     ProfileMenu(new ProfileMenuView()),
