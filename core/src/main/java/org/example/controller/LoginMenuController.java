@@ -1,11 +1,14 @@
 package org.example.controller;
 
+import org.example.Main;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.SecurityQuestion;
 import org.example.models.User;
 import org.example.models.enums.Menu;
 import org.example.view.menu.LoginMenuView;
+import org.example.view.menu.MainMenuView;
+import org.example.view.menu.WelcomeMenuView;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -21,8 +24,17 @@ public class LoginMenuController extends MenuController {
         this.view = view;
     }
 
-    public void handleLoginMenuButtons() {
+    public void loginViaGraphics() {
 
+        User user = App.getUserByUsername(view.getUsernameField().getText());
+        Result loginAttempt = login(user.getUsername(),view.getPasswordField().getText(),false);
+
+        if ( loginAttempt.success() ){
+            App.setLoggedInUser(user);
+            App.setCurrentMenu(Menu.MainMenu);
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new MainMenuView());
+        }
 
     }
 
