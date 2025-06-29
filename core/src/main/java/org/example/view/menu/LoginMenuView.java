@@ -3,6 +3,7 @@ package org.example.view.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.LoginMenuController;
@@ -19,8 +20,27 @@ public class LoginMenuView extends AppMenu {
     private final LoginMenuController controller;
     private Stage stage;
 
+    private final Label menuTitle;
+    private final Label usernameLabel;
+    private final Label passwordLabel;
+
+    private final TextButton loginButton;
+    private final TextButton backButton;
+    private final TextButton forgetPasswordButton;
+
     public LoginMenuView() {
         controller = new LoginMenuController(this);
+
+        menuTitle = new Label("Login Menu", skin);
+        usernameLabel = new Label("Username:", skin);
+        passwordLabel = new Label("Password:", skin);
+
+        loginButton = new TextButton("Login", skin);
+        backButton = new TextButton("Back", skin);
+        forgetPasswordButton = new TextButton("Forget Password", skin);
+
+        setListeners();
+
     }
 
 
@@ -73,6 +93,10 @@ public class LoginMenuView extends AppMenu {
 
     @Override
     public void dispose() {
+
+    }
+
+    private void setListeners(){
 
     }
 

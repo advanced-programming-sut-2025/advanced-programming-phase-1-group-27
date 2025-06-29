@@ -39,7 +39,10 @@ public class SecurityQuestionMenuView extends AppMenu {
 
         Array<String> questions = new Array<>();
 
-
+        for (String question : App.getQuestionsList()) {
+            questions.add(question);
+        }
+        securityQuestionsBox.setItems(questions);
 
 
         setListeners();
@@ -54,7 +57,16 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     }
 
-    private void showSecurityQuestionsBox(){}
+    private void showSecurityQuestionsBox(){
+
+        securityQuestionsBox.setPosition(
+                ( Gdx.graphics.getWidth() - securityQuestionsBox.getWidth() ) / 2,
+                Gdx.graphics.getHeight()/2f
+        );
+
+        stage.addActor(securityQuestionsBox);
+
+    }
 
     @Override
     public void show() {
@@ -84,6 +96,7 @@ public class SecurityQuestionMenuView extends AppMenu {
         stage.draw();
 
         showMenuDescription();
+        showSecurityQuestionsBox();
 
     }
 
