@@ -13,6 +13,7 @@ public enum Menu {
     WelcomeMenu(new WelcomeMenuView()),
     LoginMenu(new LoginMenuView()),
     RegisterMenu(new RegisterMenuView()),
+    ForgetPasswordMenu(new SecurityQuestionMenuView()),
     MainMenu(new MainMenuView()),
     GameMenu(new GameView()),
     ProfileMenu(new ProfileMenuView()),
@@ -65,6 +66,7 @@ public enum Menu {
             case WelcomeMenu -> "welcome menu";
             case RegisterMenu -> "register menu";
             case LoginMenu -> "login menu";
+            case ForgetPasswordMenu -> "forget password menu";
             case MainMenu -> "main menu";
             case ProfileMenu -> "profile menu";
             case GameMenu -> "game menu";

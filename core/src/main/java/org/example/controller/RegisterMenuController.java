@@ -7,6 +7,7 @@ import org.example.models.SecurityQuestion;
 import org.example.models.User;
 import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
+import org.example.view.menu.SecurityQuestionMenuView;
 import org.example.view.menu.RegisterMenuView;
 import org.example.view.menu.WelcomeMenuView;
 
@@ -46,7 +47,10 @@ public class RegisterMenuController extends MenuController {
             return;
         }
 
-
+        App.setCurrentMenu(Menu.ForgetPasswordMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new SecurityQuestionMenuView());
+//        return new Result(true, "Redirecting to forget password menu ...");
 
 
     }
