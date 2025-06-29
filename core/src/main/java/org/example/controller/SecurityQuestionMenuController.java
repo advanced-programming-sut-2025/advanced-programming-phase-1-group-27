@@ -3,13 +3,21 @@ package org.example.controller;
 import org.example.Main;
 import org.example.models.App;
 import org.example.models.Result;
+import org.example.models.SecurityQuestion;
 import org.example.models.enums.Menu;
+import org.example.models.enums.Questions;
 import org.example.view.menu.SecurityQuestionMenuView;
 import org.example.view.menu.RegisterMenuView;
 
 public class SecurityQuestionMenuController extends MenuController {
 
     private SecurityQuestionMenuView view;
+
+    public void submitSecurityQuestion() {
+
+        view.getUser().setRecoveryQuestion(Questions.values()[view.getSecurityQuestionsBox().getSelectedIndex()]);
+
+    }
 
 
     @Override

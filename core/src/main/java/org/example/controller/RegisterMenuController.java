@@ -49,7 +49,7 @@ public class RegisterMenuController extends MenuController {
 
         App.setCurrentMenu(Menu.ForgetPasswordMenu);
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new SecurityQuestionMenuView());
+        Main.getMain().setScreen(new SecurityQuestionMenuView(new User(username,password,nickname,email,Gender.values()[view.getGenderBox().getSelectedIndex()])));
 //        return new Result(true, "Redirecting to forget password menu ...");
 
 

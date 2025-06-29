@@ -22,6 +22,7 @@ public class App {
     private static Menu currentMenu = Menu.WelcomeMenu;
     private static ArrayList<CraftingProduct> allRecipes = new ArrayList<>(); // TODO: arraylist should be initialized
 
+
     static {
         User savedUser = getSavedUser();
         if (savedUser != null) {

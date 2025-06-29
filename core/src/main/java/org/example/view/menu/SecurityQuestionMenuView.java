@@ -1,17 +1,19 @@
 package org.example.view.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.SecurityQuestionMenuController;
 import org.example.models.App;
+import org.example.models.User;
 import org.example.models.enums.Questions;
 import org.example.view.AppMenu;
+import org.w3c.dom.Text;
 
 import java.util.Scanner;
 
@@ -20,30 +22,38 @@ public class SecurityQuestionMenuView extends AppMenu {
     private final SecurityQuestionMenuController controller;
     private Stage stage;
 
+    private User user;
+
     private final TextButton submitButton;
     private final TextButton cancelButton;
 
     private final Label descriptionLabel;
 
+    private final TextField answerTextField;
+
     private final SelectBox<String> securityQuestionsBox;
 
     private float fadeInTimer = 0f;
 
-    {
+
+
+    public SecurityQuestionMenuView(User currentUser) {
+
+        controller = new SecurityQuestionMenuController();
+        user = currentUser;
+
+        submitButton = new TextButton("Submit", skin);
+        cancelButton = new TextButton("Cancel", skin);
+        descriptionLabel = new Label("Choose one of the questions \n and type down your answer", skin);
+
+        answerTextField = new TextField("", skin);
+
         securityQuestionsBox = new SelectBox<>(skin);
         Array<String> questions = new Array<>();
         for (Questions question : Questions.values()) {
             questions.add(question.getQuestion());
         }
         securityQuestionsBox.setItems(questions);
-    }
-
-    public SecurityQuestionMenuView() {
-        controller = new SecurityQuestionMenuController();
-
-        submitButton = new TextButton("Submit", skin);
-        cancelButton = new TextButton("Cancel", skin);
-        descriptionLabel = new Label("Choose one of the questions \n and type down your answer", skin);
 
 
         setListeners();
@@ -67,6 +77,16 @@ public class SecurityQuestionMenuView extends AppMenu {
 
         stage.addActor(securityQuestionsBox);
 
+        answerTextField.setPosition(100,800);
+        stage.addActor(answerTextField);
+
+    }
+
+    private void showButtons(){
+        submitButton.setPosition(0,0);
+        cancelButton.setPosition(0,Gdx.graphics.getHeight()/2f);
+        stage.addActor(submitButton);
+        stage.addActor(cancelButton);
     }
 
     @Override
@@ -98,6 +118,7 @@ public class SecurityQuestionMenuView extends AppMenu {
 
         showMenuDescription();
         showSecurityQuestionsBox();
+        showButtons();
 
     }
 
@@ -129,10 +150,29 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     private void setListeners() {
 
+        submitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
 
+                playClickSound();
+                controller.exitMenu();
+
+            }
+        });
 
     }
 
+    public SelectBox<String> getSecurityQuestionsBox() {
+        return securityQuestionsBox;
+    }
+
+    public TextField getAnswerTextField() {
+        return answerTextField;
+    }
+
+    public User getUser() {
+        return user;
+    }
 
     @Override
     public void executeCommands(Scanner scanner) {
