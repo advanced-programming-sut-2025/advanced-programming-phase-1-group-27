@@ -178,7 +178,7 @@ public class RegisterMenuController extends MenuController {
         }
 
         // handling security questions ...
-        String securityQuestions = App.getQuestions();
+        String securityQuestions = App.getQuestionsString();
         view.printString(securityQuestions);
         Result result = view.pickQuestion(scanner);
         if (!result.success())

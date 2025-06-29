@@ -84,7 +84,7 @@ public class App {
         App.allRecipes = allRecipes;
     }
 
-    public static String getQuestions() {
+    public static String getQuestionsString() {
         StringBuilder result = new StringBuilder("Security Questions:");
         for (int i = 0; i < questions.size(); i++) {
             result.append("\n");
@@ -98,6 +98,10 @@ public class App {
         if (id >= questions.size())
             return null;
         return questions.get(id);
+    }
+
+    public static ArrayList<String> getQuestionsList() {
+        return questions;
     }
 
     public static User getUserByUsername(String username) {
