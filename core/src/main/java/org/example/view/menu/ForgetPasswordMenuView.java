@@ -2,23 +2,29 @@ package org.example.view.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
-import org.example.controller.PreGameMenuController;
+import org.example.controller.ForgetPasswordMenuController;
+import org.example.controller.SecurityQuestionMenuController;
 import org.example.view.AppMenu;
 
+import javax.swing.text.View;
+import java.awt.*;
 import java.util.Scanner;
 
-public class PreGameMenuView extends AppMenu {
+public class ForgetPasswordMenuView extends AppMenu {
 
-
-    private final PreGameMenuController controller;
+    private final ForgetPasswordMenuController controller;
     private Stage stage;
 
+//    private final Label menuTitleLabel;
+//    private final Label usernameLabel;
+//    private final Label answerLabel;
+//    private final
 
-    public PreGameMenuView() {
-        this.controller = new PreGameMenuController(this);
+    public ForgetPasswordMenuView() {
+
+        this.controller = new ForgetPasswordMenuController(this);
 
 
         setListeners();
@@ -33,8 +39,6 @@ public class PreGameMenuView extends AppMenu {
 
         stage.addActor(menuBackground);
 
-        stage.addActor(new Label("PREGAME", skin));
-
     }
 
     @Override
@@ -45,7 +49,6 @@ public class PreGameMenuView extends AppMenu {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
 
     }
 
@@ -74,7 +77,10 @@ public class PreGameMenuView extends AppMenu {
 
     }
 
+
     private void setListeners() {
+
+
 
     }
 
@@ -82,5 +88,6 @@ public class PreGameMenuView extends AppMenu {
     public void executeCommands(Scanner scanner) {
 
     }
+
 
 }

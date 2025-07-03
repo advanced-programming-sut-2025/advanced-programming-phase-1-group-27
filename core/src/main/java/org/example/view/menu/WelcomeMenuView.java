@@ -184,7 +184,6 @@ public class WelcomeMenuView extends AppMenu {
         registerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("registerButton clicked");
                 controller.goToRegisterMenu();
             }
         });
@@ -192,7 +191,6 @@ public class WelcomeMenuView extends AppMenu {
         loginButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("loooggin");
                 controller.goToLoginMenu();
 
             }

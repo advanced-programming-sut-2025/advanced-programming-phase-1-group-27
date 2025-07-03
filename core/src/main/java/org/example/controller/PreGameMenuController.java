@@ -6,6 +6,7 @@ public class PreGameMenuController {
 
     private final PreGameMenuView view;
 
+
     public PreGameMenuController(PreGameMenuView view) {
         this.view = view;
     }

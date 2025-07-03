@@ -28,13 +28,16 @@ public class SecurityQuestionMenuView extends AppMenu {
     private final TextButton cancelButton;
 
     private final Label descriptionLabel;
+    private final Label errorLabel;
 
     private final TextField answerTextField;
 
     private final SelectBox<String> securityQuestionsBox;
 
     private float fadeInTimer = 0f;
+    private float errorTimer = 5;
 
+    private boolean errorPhase = false;
 
 
     public SecurityQuestionMenuView(User currentUser) {
@@ -44,7 +47,9 @@ public class SecurityQuestionMenuView extends AppMenu {
 
         submitButton = new TextButton("Submit", skin);
         cancelButton = new TextButton("Cancel", skin);
+
         descriptionLabel = new Label("Choose one of the questions \n and type down your answer", skin);
+        errorLabel = new Label("Please enter a valid answer", skin);
 
         answerTextField = new TextField("", skin);
 
@@ -70,23 +75,59 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     private void showSecurityQuestionsBox(){
 
+        securityQuestionsBox.setWidth(3 * Gdx.graphics.getWidth()/8f * fadeInTimer);
+        answerTextField.setWidth(3 * Gdx.graphics.getWidth()/8f * fadeInTimer);
+
         securityQuestionsBox.setPosition(
                 ( Gdx.graphics.getWidth() - securityQuestionsBox.getWidth() ) / 2,
-                Gdx.graphics.getHeight()/2f
+                2 * Gdx.graphics.getHeight()/3f - 100
+        );
+        answerTextField.setPosition(
+                ( Gdx.graphics.getWidth() - answerTextField.getWidth() ) / 2,
+                2 * Gdx.graphics.getHeight()/3f - securityQuestionsBox.getHeight() - 50 - 100
         );
 
-        stage.addActor(securityQuestionsBox);
 
-        answerTextField.setPosition(100,800);
+
+
+        stage.addActor(securityQuestionsBox);
         stage.addActor(answerTextField);
 
     }
 
     private void showButtons(){
-        submitButton.setPosition(0,0);
-        cancelButton.setPosition(0,Gdx.graphics.getHeight()/2f);
+
+        submitButton.setWidth(Gdx.graphics.getWidth()/8f);
+        cancelButton.setWidth(Gdx.graphics.getWidth()/8f);
+
+        submitButton.setColor(submitButton.getColor().r,submitButton.getColor().g,submitButton.getColor().b,fadeInTimer);
+        cancelButton.setColor(cancelButton.getColor().r,cancelButton.getColor().g,cancelButton.getColor().b,fadeInTimer);
+
+
+        submitButton.setPosition(
+                5 * Gdx.graphics.getWidth()/16f,
+                answerTextField.getY() - submitButton.getHeight() - 50
+        );
+        cancelButton.setPosition(
+                5 * Gdx.graphics.getWidth()/16f + Gdx.graphics.getWidth()/4f,
+                answerTextField.getY() - submitButton.getHeight() - 50
+        );
         stage.addActor(submitButton);
         stage.addActor(cancelButton);
+
+    }
+
+    private void showError(){
+
+        errorLabel.setPosition(
+
+                (Gdx.graphics.getWidth()-errorLabel.getWidth())/2f,
+                2 * Gdx.graphics.getHeight()/3f
+
+        );
+        errorLabel.setColor(1,0.31f,0,Math.min(errorTimer/5,errorPhase?1:0));
+        stage.addActor(errorLabel);
+
     }
 
     @Override
@@ -102,6 +143,17 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     @Override
     public void render(float delta) {
+
+        if ( errorPhase ){
+
+            errorTimer -= delta;
+
+            if ( errorTimer <= 0 ){
+                errorPhase = false;
+                errorTimer = 5;
+            }
+
+        }
 
         if ( fadeInTimer < 1f ){
             fadeInTimer += delta;
@@ -119,6 +171,7 @@ public class SecurityQuestionMenuView extends AppMenu {
         showMenuDescription();
         showSecurityQuestionsBox();
         showButtons();
+        showError();
 
     }
 
@@ -160,6 +213,20 @@ public class SecurityQuestionMenuView extends AppMenu {
             }
         });
 
+        cancelButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.exitMenu();
+
+            }
+        });
+
+    }
+
+    public void setErrorLabel(String message) {
+        this.errorLabel.setText(message);
     }
 
     public SelectBox<String> getSecurityQuestionsBox() {
@@ -168,6 +235,14 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     public TextField getAnswerTextField() {
         return answerTextField;
+    }
+
+    public boolean isErrorPhase() {
+        return errorPhase;
+    }
+
+    public void setErrorPhase(boolean errorPhase) {
+        this.errorPhase = errorPhase;
     }
 
     public User getUser() {

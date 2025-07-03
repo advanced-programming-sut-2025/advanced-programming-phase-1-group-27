@@ -293,6 +293,14 @@ public class RegisterMenuView extends AppMenu {
         this.errorLabel.setText(message);
     }
 
+    public float getErrorTimer() {
+        return errorTimer;
+    }
+
+    public void setErrorTimer(float errorTimer) {
+        this.errorTimer = errorTimer;
+    }
+
     public TextField getUsernameField() {
         return usernameField;
     }

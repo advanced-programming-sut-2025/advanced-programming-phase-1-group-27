@@ -31,7 +31,7 @@ public class RegisterMenuController extends MenuController {
         if ( !registerAttempt.success() ){
 
             view.setErrorLabel(registerAttempt.message());
-
+            view.setErrorTimer(5f);
             return;
         }
 
@@ -44,13 +44,13 @@ public class RegisterMenuController extends MenuController {
 
         if ( !registerAttemptResult.success() ){
             view.setErrorLabel(registerAttemptResult.message());
+            view.setErrorTimer(5f);
             return;
         }
 
         App.setCurrentMenu(Menu.ForgetPasswordMenu);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new SecurityQuestionMenuView(new User(username,password,nickname,email,Gender.values()[view.getGenderBox().getSelectedIndex()])));
-//        return new Result(true, "Redirecting to forget password menu ...");
 
 
     }

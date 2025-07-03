@@ -26,18 +26,29 @@ public class LoginMenuController extends MenuController {
 
     public void loginViaGraphics() {
 
-        User user = App.getUserByUsername(view.getUsernameField().getText());
-        Result loginAttempt = login(user.getUsername(),view.getPasswordField().getText(),false);
-
-        if ( loginAttempt.success() ){
-            App.setLoggedInUser(user);
-            App.setCurrentMenu(Menu.MainMenu);
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new MainMenuView());
+        if ( hasEmptyField() ){
+            view.setErrorLabel("Please fill all the required fields");
+            view.setErrorTimer(5f);
+            return;
         }
+
+        Result loginAttempt = login(view.getUsernameField().getText(),view.getPasswordField().getText(),view.getStayLoggedInCheckBox().isChecked());
+
+        if ( !loginAttempt.success() ){
+            view.setErrorLabel(loginAttempt.message());
+            view.setErrorTimer(5f);
+            return;
+        }
+
+        System.out.println("login done");
 
     }
 
+    private boolean hasEmptyField(){
+
+        return view.getUsernameField().getText().isEmpty() || view.getPasswordField().getText().isEmpty();
+
+    }
 
     public Result enterMenu(String menuName) {
         Menu newMenu = Menu.getMenu(menuName);
