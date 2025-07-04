@@ -1,5 +1,10 @@
 package org.example.view.menu;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.Main;
 import org.example.controller.ProfileMenuController;
 import org.example.models.Result;
 import org.example.models.enums.commands.MainMenuCommands;
@@ -10,20 +15,39 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ProfileMenuView extends AppMenu {
+
     private final ProfileMenuController controller;
+    private Stage stage;
 
     public ProfileMenuView() {
+
         controller = new ProfileMenuController(this);
+
+        setListeners();
+
     }
 
 
     @Override
     public void show() {
 
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+
+        stage.addActor(menuBackground);
+
+        stage.addActor(new Label("PROFILE", skin));
+
     }
 
     @Override
     public void render(float v) {
+
+        Main.getBatch().begin();
+        Main.getBatch().end();
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
 
     }
 
@@ -51,6 +75,8 @@ public class ProfileMenuView extends AppMenu {
     public void dispose() {
 
     }
+
+    private void setListeners() {}
 
     public void executeCommands(Scanner scanner) {
         String input = scanner.nextLine().trim();

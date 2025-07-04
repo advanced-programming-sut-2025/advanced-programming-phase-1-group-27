@@ -1,8 +1,12 @@
 package org.example.controller;
 
+import org.example.Main;
 import org.example.models.*;
 import org.example.models.enums.Menu;
 import org.example.view.menu.MainMenuView;
+import org.example.view.menu.PreGameMenuView;
+import org.example.view.menu.ProfileMenuView;
+import org.example.view.menu.WelcomeMenuView;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,11 +18,33 @@ public class MainMenuController extends MenuController {
         this.view = view;
     }
 
+    public void goToPregameMenu() {
 
-    public void handleMainMenuButtons() {
-
+        App.setCurrentMenu(Menu.PregameMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new PreGameMenuView());
 
     }
+
+    public void goToProfileMenu() {
+
+        App.setCurrentMenu(Menu.ProfileMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new ProfileMenuView());
+
+    }
+
+    public Result logout() {
+
+        App.setLoggedInUser(null);
+        App.setCurrentMenu(Menu.WelcomeMenu);
+        App.deleteLoginUserFile();
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new WelcomeMenuView());
+        return new Result(true, "User logged out successfully!");
+
+    }
+
 
 
     public Result enterMenu(String menuName) {
@@ -97,12 +123,6 @@ public class MainMenuController extends MenuController {
         return new Result(true, "Redirecting to login menu ...");
     }
 
-    public Result logout() {
-        App.setLoggedInUser(null);
-        App.setCurrentMenu(Menu.WelcomeMenu);
-        App.deleteLoginUserFile();
-        return new Result(true, "User logged out successfully!");
-    }
 
     private void getPlayerMap(Player player, Game game, Scanner scanner) {
         Result result;

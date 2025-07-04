@@ -30,7 +30,12 @@ public class App {
             users.add(savedUser);
             currentMenu = Menu.MainMenu;
         }
-        users.add(new User("yusof","yusof@1384","joe","yusof@gmail.com",Gender.Male));
+
+        // TEST USERS
+        User userYusof = new User("Yusof",User.hashPassword("!Yusof@1384"),"joe","yusof@gmail.com",Gender.Male);
+        userYusof.setRecoveryQuestion(new SecurityQuestion("This is yusof","yes"));
+        users.add(userYusof);
+
 
     }
 

@@ -50,7 +50,7 @@ public class RegisterMenuController extends MenuController {
 
         App.setCurrentMenu(Menu.ForgetPasswordMenu);
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new SecurityQuestionMenuView(new User(username,password,nickname,email,Gender.values()[view.getGenderBox().getSelectedIndex()])));
+        Main.getMain().setScreen(new SecurityQuestionMenuView(new User(username,User.hashPassword(password),nickname,email,Gender.values()[view.getGenderBox().getSelectedIndex()])));
 
 
     }

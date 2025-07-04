@@ -40,7 +40,10 @@ public class LoginMenuController extends MenuController {
             return;
         }
 
-        System.out.println("login done");
+        App.setCurrentMenu(Menu.MainMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new MainMenuView());
+        App.setLoggedInUser(App.getUserByUsername(view.getUsernameField().getText()));
 
     }
 
@@ -62,6 +65,8 @@ public class LoginMenuController extends MenuController {
 
     public Result exitMenu() {
         App.setCurrentMenu(Menu.WelcomeMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new WelcomeMenuView());
         return new Result(true, "Redirecting to welcome menu ...");
     }
 

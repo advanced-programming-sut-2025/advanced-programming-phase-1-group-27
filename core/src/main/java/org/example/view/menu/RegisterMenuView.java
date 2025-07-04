@@ -186,8 +186,8 @@ public class RegisterMenuView extends AppMenu {
 
         stardewValleyText.setScale(fadeInCoEfficient*2);
 
-        stardewValleyText.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f - stardewValleyText.getWidth()*2)/2,
-                (Gdx.graphics.getHeight() - stardewValleyText.getHeight()*2)/2 + 2 * Gdx.graphics.getHeight()/10f
+        stardewValleyText.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f - stardewValleyText.getWidth()*fadeInCoEfficient*2)/2,
+                (Gdx.graphics.getHeight() - stardewValleyText.getHeight()*fadeInCoEfficient*2)/2 + 2 * Gdx.graphics.getHeight()/10f
         );
 
         stage.addActor(stardewValleyText);

@@ -238,6 +238,21 @@ public class LoginMenuView extends AppMenu {
 
         });
 
+        backButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.exitMenu();
+
+            }
+
+        });
+
+
+
+
     }
 
     public CheckBox getStayLoggedInCheckBox() {
