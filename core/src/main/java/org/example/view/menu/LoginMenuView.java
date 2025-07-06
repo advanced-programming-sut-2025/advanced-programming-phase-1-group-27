@@ -250,6 +250,17 @@ public class LoginMenuView extends AppMenu {
 
         });
 
+        forgetPasswordButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.goToForgetPassword();
+
+            }
+
+        });
 
 
 

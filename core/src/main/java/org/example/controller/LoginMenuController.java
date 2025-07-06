@@ -6,6 +6,7 @@ import org.example.models.Result;
 import org.example.models.SecurityQuestion;
 import org.example.models.User;
 import org.example.models.enums.Menu;
+import org.example.view.menu.ForgetPasswordMenuView;
 import org.example.view.menu.LoginMenuView;
 import org.example.view.menu.MainMenuView;
 import org.example.view.menu.WelcomeMenuView;
@@ -61,6 +62,12 @@ public class LoginMenuController extends MenuController {
             return new Result(false, "you should first login to enter this menu.");
         else
             return new Result(false, "Can't enter this menu!");
+    }
+
+    public void goToForgetPassword(){
+        App.setCurrentMenu(Menu.ForgetPasswordMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new ForgetPasswordMenuView());
     }
 
     public Result exitMenu() {
