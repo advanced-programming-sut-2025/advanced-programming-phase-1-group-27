@@ -22,6 +22,8 @@ public class GameAssetManager {
 
     private final Sound clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/click.wav"));
 
+    private final Color errorColor = new Color(1, 0.31f, 0, 1);
+    private final Color acceptColor = new Color(0.216f, 0.831f, 0.255f, 1);
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -48,4 +50,11 @@ public class GameAssetManager {
         return clickSound;
     }
 
+    public Color getErrorColor() {
+        return errorColor;
+    }
+
+    public Color getAcceptColor() {
+        return acceptColor;
+    }
 }

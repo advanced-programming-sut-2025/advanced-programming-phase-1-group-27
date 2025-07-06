@@ -1,10 +1,8 @@
 package org.example.controller;
 
+import com.badlogic.gdx.graphics.Color;
 import org.example.Main;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.SecurityQuestion;
-import org.example.models.User;
+import org.example.models.*;
 import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
 import org.example.view.menu.SecurityQuestionMenuView;
@@ -24,15 +22,16 @@ public class RegisterMenuController extends MenuController {
     }
 
 
-    public void registerViaGraphics(){
+    public GraphicalResult registerViaGraphics(){
 
         Result registerAttempt = checkAllFieldsAreFilled();
 
-        if ( !registerAttempt.success() ){
+        if (!registerAttempt.success()) {
+            return new GraphicalResult(
+                    registerAttempt.message(),
+                    GameAssetManager.getGameAssetManager().getErrorColor()
 
-            view.setErrorLabel(registerAttempt.message());
-            view.setErrorTimer(5f);
-            return;
+            );
         }
 
         String username = view.getUsernameField().getText();
@@ -42,17 +41,17 @@ public class RegisterMenuController extends MenuController {
 
         Result registerAttemptResult = checkRegistrationAttempt(username, password, email, nickname);
 
-        if ( !registerAttemptResult.success() ){
-            view.setErrorLabel(registerAttemptResult.message());
-            view.setErrorTimer(5f);
-            return;
+        if (!registerAttemptResult.success()) {
+            return new GraphicalResult(
+                    registerAttemptResult.message(),
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
         }
 
         App.setCurrentMenu(Menu.ForgetPasswordMenu);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new SecurityQuestionMenuView(new User(username,User.hashPassword(password),nickname,email,Gender.values()[view.getGenderBox().getSelectedIndex()])));
-
-
+        return new GraphicalResult("Successful registration!", Color.GREEN);
     }
 
     private Result checkAllFieldsAreFilled(){
@@ -103,19 +102,24 @@ public class RegisterMenuController extends MenuController {
 
     }
 
-    public void acceptSuggestedUsername(){
+    public GraphicalResult acceptSuggestedUsername(){
 
         view.setReRegister(false);
         view.getUsernameField().setText(suggestedUsername);
-        view.setErrorLabel("Suggested username accepted!");
+        return new GraphicalResult(
+                "Suggested username accepted!",
+                GameAssetManager.getGameAssetManager().getAcceptColor()
+        );
 
     }
 
-    public void declineSuggestedUsername(){
-
+    public GraphicalResult declineSuggestedUsername(){
         view.setReRegister(false);
         view.getUsernameField().setText("");
-        view.setErrorLabel("Suggested username declined!");
+        return new GraphicalResult(
+                "Suggested username declined!",
+                GameAssetManager.getGameAssetManager().getErrorColor()
+        );
 
     }
 

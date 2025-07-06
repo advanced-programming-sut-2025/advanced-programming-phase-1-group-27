@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.RegisterMenuController;
 import org.example.models.App;
+import org.example.models.GameAssetManager;
+import org.example.models.GraphicalResult;
 import org.example.models.Result;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.commands.MainMenuCommands;
@@ -34,7 +36,7 @@ public class RegisterMenuView extends AppMenu {
     private final Label nicknameLabel;
     private final Label emailLabel;
     private final Label genderLabel;
-    private final Label errorLabel;
+    private final GraphicalResult errorLabel;
 
 
     private final TextField usernameField;
@@ -65,7 +67,7 @@ public class RegisterMenuView extends AppMenu {
         nicknameLabel = new Label("Nickname:", skin);
         emailLabel = new Label("Email:", skin);
         genderLabel = new Label("Gender:", skin);
-        errorLabel = new Label("", skin);
+        errorLabel = new GraphicalResult();
 
         usernameField = new TextField("", skin);
         passwordField = new TextField("", skin);
@@ -102,8 +104,8 @@ public class RegisterMenuView extends AppMenu {
     private void showErrorMessage(){
 
         errorLabel.setPosition(Gdx.graphics.getWidth()/9f, 6 * Gdx.graphics.getHeight()/7f - Gdx.graphics.getHeight()/9f);
-        errorLabel.setColor(1,0.31f,0,errorTimer/5);
-        stage.addActor(errorLabel);
+        errorLabel.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
+        stage.addActor(errorLabel.getMessage());
 
     }
 
@@ -227,22 +229,24 @@ public class RegisterMenuView extends AppMenu {
         stage.addActor(menuBackground);
 
         showMenuTitle();
+        showErrorMessage();
 
     }
 
     @Override
     public void render(float delta) {
 
-        if ( !errorLabel.getText().isEmpty() && !reRegister){
-
-            errorTimer -= delta;
-
-            if ( errorTimer <= 0 ){
-                errorLabel.setText("");
-                errorTimer = 5;
-            }
-
-        }
+        errorLabel.update(delta);
+//        if ( !errorLabel.getText().isEmpty() && !reRegister){
+//
+//            errorTimer -= delta;
+//
+//            if ( errorTimer <= 0 ){
+//                errorLabel.setText("");
+//                errorTimer = 5;
+//            }
+//
+//        }
 
         if ( fadeInCoEfficient < 1f ){
             fadeInCoEfficient += delta;
@@ -260,7 +264,6 @@ public class RegisterMenuView extends AppMenu {
         showGameLogo();
         showFields();
         showButtons();
-        showErrorMessage();
 
     }
 
@@ -290,7 +293,7 @@ public class RegisterMenuView extends AppMenu {
     }
 
     public void setErrorLabel(String message) {
-        this.errorLabel.setText(message);
+        this.errorLabel.getMessage().setText(message);
     }
 
     public float getErrorTimer() {
@@ -362,7 +365,7 @@ public class RegisterMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
 
                 playClickSound();
-                controller.registerViaGraphics();
+                errorLabel.set(controller.registerViaGraphics());
 
 
             }
@@ -389,7 +392,7 @@ public class RegisterMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.acceptSuggestedUsername();
+                errorLabel.set(controller.acceptSuggestedUsername());
             }
         });
 
@@ -397,7 +400,7 @@ public class RegisterMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.declineSuggestedUsername();
+                errorLabel.set(controller.declineSuggestedUsername());
             }
         });
 

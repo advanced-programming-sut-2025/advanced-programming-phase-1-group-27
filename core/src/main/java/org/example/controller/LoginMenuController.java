@@ -104,6 +104,7 @@ public class LoginMenuController extends MenuController {
         String answer = matcher.group("answer").trim();
         if (!answer.equals(recoveryQuestion.getAnswer()))
             return new Result(false, "Incorrect answer. Recovery failed!");
+//        view.printString("");
         String newPassword = App.generatePassword();
         user.setPassword(User.hashPassword(newPassword));
         return new Result(true, "Your new password is: " + newPassword);
