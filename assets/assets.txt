@@ -7,6 +7,10 @@ Fonts/stardew-font.png
 Fonts/stardew-valley.ttf
 Images/menu_background.png
 Images/stardew_valley_text.png
+MapImage/avatar1.png
+MapImage/avatar2.png
+MapImage/avatar3.png
+MapImage/avatar4.png
 Sounds/click.wav
 logo.jpg
 skin/font-export.fnt

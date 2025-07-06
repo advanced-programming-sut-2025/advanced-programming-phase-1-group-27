@@ -1,8 +1,9 @@
 package org.example.controller;
 
+import org.example.models.Result;
 import org.example.view.menu.PreGameMenuView;
 
-public class PreGameMenuController {
+public class PreGameMenuController extends MenuController{
 
     private final PreGameMenuView view;
 
@@ -12,6 +13,13 @@ public class PreGameMenuController {
     }
 
 
+    @Override
+    public Result enterMenu(String menuName) {
+        return null;
+    }
 
-
+    @Override
+    public Result exitMenu() {
+        return null;
+    }
 }

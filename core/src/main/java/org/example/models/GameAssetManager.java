@@ -19,11 +19,16 @@ public class GameAssetManager {
     private final Texture background = new Texture(Gdx.files.internal("Images/menu_background.png"));
     private final Texture StardewValleyText = new Texture(Gdx.files.internal("Images/stardew_valley_text.png"));
 
-
     private final Sound clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/click.wav"));
 
     private final Color errorColor = new Color(1, 0.31f, 0, 1);
     private final Color acceptColor = new Color(0.216f, 0.831f, 0.255f, 1);
+
+    private final Texture map1 = new Texture(Gdx.files.internal("MapImage/avatar1.png"));
+    private final Texture map2 = new Texture(Gdx.files.internal("MapImage/avatar2.png"));
+    private final Texture map3 = new Texture(Gdx.files.internal("MapImage/avatar3.png"));
+    private final Texture map4 = new Texture(Gdx.files.internal("MapImage/avatar4.png"));
+
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -32,6 +37,22 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Texture getMap1() {
+        return map1;
+    }
+
+    public Texture getMap2() {
+        return map2;
+    }
+
+    public Texture getMap3() {
+        return map3;
+    }
+
+    public Texture getMap4() {
+        return map4;
     }
 
     public Skin getSkin() {
