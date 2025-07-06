@@ -20,7 +20,7 @@ public class MainMenuController extends MenuController {
 
     public void goToPregameMenu() {
 
-        App.setCurrentMenu(Menu.PregameMenu);
+//        App.setCurrentMenu(Menu.PregameMenu);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new PreGameMenuView());
 

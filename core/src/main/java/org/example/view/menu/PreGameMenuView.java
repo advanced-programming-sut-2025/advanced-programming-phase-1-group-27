@@ -50,7 +50,7 @@ public class PreGameMenuView extends AppMenu {
         currentMapSelector = App.getLoggedInUser();
 
         menuTitle = new Label("Pre Game Menu", skin);
-        user0Label = new Label("# " + App.getLoggedInUser().getUsername() , skin);
+        user0Label = new Label("" , skin);
         user1Label = new Label("" , skin);
         user2Label = new Label("" , skin);
         user3Label = new Label("" , skin);

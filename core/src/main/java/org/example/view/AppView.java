@@ -20,6 +20,7 @@ public class AppView {
     public void runViaGraphics() {
 
         if (App.getSavedUser() != null) {
+            App.setLoggedInUser(App.getSavedUser());
             Main.getMain().setScreen(new MainMenuView());
             return;
         }
