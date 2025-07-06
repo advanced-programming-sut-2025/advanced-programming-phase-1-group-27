@@ -237,16 +237,6 @@ public class RegisterMenuView extends AppMenu {
     public void render(float delta) {
 
         errorLabel.update(delta);
-//        if ( !errorLabel.getText().isEmpty() && !reRegister){
-//
-//            errorTimer -= delta;
-//
-//            if ( errorTimer <= 0 ){
-//                errorLabel.setText("");
-//                errorTimer = 5;
-//            }
-//
-//        }
 
         if ( fadeInCoEfficient < 1f ){
             fadeInCoEfficient += delta;
@@ -292,18 +282,6 @@ public class RegisterMenuView extends AppMenu {
 
     }
 
-    public void setErrorLabel(String message) {
-        this.errorLabel.getMessage().setText(message);
-    }
-
-    public float getErrorTimer() {
-        return errorTimer;
-    }
-
-    public void setErrorTimer(float errorTimer) {
-        this.errorTimer = errorTimer;
-    }
-
     public TextField getUsernameField() {
         return usernameField;
     }
@@ -322,26 +300,6 @@ public class RegisterMenuView extends AppMenu {
 
     public SelectBox<String> getGenderBox() {
         return genderBox;
-    }
-
-    public TextButton getBackButton() {
-        return backButton;
-    }
-
-    public TextButton getRegisterButton() {
-        return registerButton;
-    }
-
-    public TextButton getAcceptSuggestedUsernameButton() {
-        return acceptSuggestedUsernameButton;
-    }
-
-    public TextButton getDeclineSuggestedUsernameButton() {
-        return declineSuggestedUsernameButton;
-    }
-
-    public boolean isReRegister() {
-        return reRegister;
     }
 
     public void setReRegister(boolean reRegister) {

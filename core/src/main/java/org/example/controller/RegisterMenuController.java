@@ -24,29 +24,20 @@ public class RegisterMenuController extends MenuController {
 
     public GraphicalResult registerViaGraphics(){
 
-        Result registerAttempt = checkAllFieldsAreFilled();
+        GraphicalResult registerAttempt = checkAllFieldsAreFilled();
 
-        if (!registerAttempt.success()) {
-            return new GraphicalResult(
-                    registerAttempt.message(),
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-
-            );
-        }
+        if (registerAttempt.hasError())
+            return registerAttempt;
 
         String username = view.getUsernameField().getText();
         String password = view.getPasswordField().getText();
         String email = view.getEmailField().getText();
         String nickname = view.getNicknameField().getText();
 
-        Result registerAttemptResult = checkRegistrationAttempt(username, password, email, nickname);
+        GraphicalResult registerAttemptResult = checkRegistrationAttempt(username, password, email, nickname);
 
-        if (!registerAttemptResult.success()) {
-            return new GraphicalResult(
-                    registerAttemptResult.message(),
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
-        }
+        if (registerAttemptResult.hasError())
+            return registerAttemptResult;
 
         App.setCurrentMenu(Menu.ForgetPasswordMenu);
         Main.getMain().getScreen().dispose();
@@ -54,46 +45,57 @@ public class RegisterMenuController extends MenuController {
         return new GraphicalResult("Successful registration!", Color.GREEN);
     }
 
-    private Result checkAllFieldsAreFilled(){
+    private GraphicalResult checkAllFieldsAreFilled() {
 
         if ( view.getUsernameField().getText().isEmpty() ||
         view.getPasswordField().getText().isEmpty() ||
         view.getEmailField().getText().isEmpty() ||
         view.getNicknameField().getText().isEmpty() ){
 
-            return new Result(false, "Please fill all the required fields");
-
+            return new GraphicalResult(
+                    "Please fill all the required fields",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
         }
 
-        return new Result(true, "");
-
+        return new GraphicalResult("", GameAssetManager.getGameAssetManager().getAcceptColor(), false);
     }
 
-    public Result checkRegistrationAttempt(String username, String password, String email, String nickname){
+    public GraphicalResult checkRegistrationAttempt(String username, String password, String email, String nickname){
 
         if (!User.isValidUsername(username))
-            return new Result(false, "Username format is invalid!");
+            return new GraphicalResult(
+                    "Username format is invalid!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
 
         if ( App.getUserByUsername(username) != null ){
 
             suggestedUsername = App.generateUsername(username);
             view.setReRegister(true);
-            return new Result(false, "Username already exists! Suggested username: " + suggestedUsername);
-
-
+            GraphicalResult result =  new GraphicalResult(
+                    "Username already exists! Suggested username: " + suggestedUsername,
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+            result.setDisplayTime(Float.MAX_VALUE);
+            return result;
         }
 
         if (!User.isValidEmail(email))
-            return new Result(false, "Email format is invalid!");
+            return new GraphicalResult(
+                    "Email format is invalid!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
 
         Result passwordCheck = User.checkPassword(password);
         if (!passwordCheck.success())
-            return passwordCheck;
+            return new GraphicalResult(passwordCheck.message(), GameAssetManager.getGameAssetManager().getErrorColor());
 
-
-
-        return new Result(true, "");
-
+        return new GraphicalResult(
+                "Successful registration!",
+                GameAssetManager.getGameAssetManager().getAcceptColor(),
+                false
+        );
     }
 
     public void setRandomPassword(){
@@ -108,7 +110,8 @@ public class RegisterMenuController extends MenuController {
         view.getUsernameField().setText(suggestedUsername);
         return new GraphicalResult(
                 "Suggested username accepted!",
-                GameAssetManager.getGameAssetManager().getAcceptColor()
+                GameAssetManager.getGameAssetManager().getAcceptColor(),
+                false
         );
 
     }
@@ -118,7 +121,8 @@ public class RegisterMenuController extends MenuController {
         view.getUsernameField().setText("");
         return new GraphicalResult(
                 "Suggested username declined!",
-                GameAssetManager.getGameAssetManager().getErrorColor()
+                GameAssetManager.getGameAssetManager().getErrorColor(),
+                false
         );
 
     }

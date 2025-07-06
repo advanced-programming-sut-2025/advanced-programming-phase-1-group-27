@@ -16,7 +16,7 @@ import java.util.Random;
 public class App {
 
     private static final String loggedInUserFilePath = "data/login_user.json";
-    private static User LoggedInUser = null;
+    private static User loggedInUser = null;
     private static Game currentGame = null;
     private static ArrayList<User> users = new ArrayList<>();
     private static Menu currentMenu = Menu.WelcomeMenu;
@@ -26,7 +26,7 @@ public class App {
     static {
         User savedUser = getSavedUser();
         if (savedUser != null) {
-            LoggedInUser = savedUser;
+            loggedInUser = savedUser;
             users.add(savedUser);
             currentMenu = Menu.MainMenu;
         }
@@ -40,11 +40,11 @@ public class App {
     }
 
     public static User getLoggedInUser() {
-        return LoggedInUser;
+        return loggedInUser;
     }
 
     public static void setLoggedInUser(User loggedInUser) {
-        LoggedInUser = loggedInUser;
+        App.loggedInUser = loggedInUser;
     }
 
     public static Game getCurrentGame() {

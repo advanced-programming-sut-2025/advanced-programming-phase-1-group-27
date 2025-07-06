@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class GraphicalResult {
     private Label message;
     private float displayTime;
+    private boolean isError = true;
 
     public GraphicalResult() {
         this.message = new Label("", GameAssetManager.getGameAssetManager().getSkin());
@@ -19,6 +20,12 @@ public class GraphicalResult {
         this.message.setVisible(true);
         this.message.setFontScale(1f);
         this.displayTime = 3f;
+        this.isError = true;
+    }
+
+    public GraphicalResult(String message, Color color, boolean isError) {
+        this(message, color);
+        this.isError = isError;
     }
 
     public void set(GraphicalResult graphicalResult) {
@@ -48,5 +55,17 @@ public class GraphicalResult {
 
     public void setColor(Color color) {
         message.setColor(color);
+    }
+
+    public void setError(boolean error) {
+        isError = error;
+    }
+
+    public boolean hasError() {
+        return isError;
+    }
+
+    public void setDisplayTime(float displayTime) {
+        this.displayTime = displayTime;
     }
 }
