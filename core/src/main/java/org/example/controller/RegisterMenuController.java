@@ -5,8 +5,8 @@ import org.example.Main;
 import org.example.models.*;
 import org.example.models.enums.Gender;
 import org.example.models.enums.Menu;
-import org.example.view.menu.SecurityQuestionMenuView;
 import org.example.view.menu.RegisterMenuView;
+import org.example.view.menu.SecurityQuestionMenuView;
 import org.example.view.menu.WelcomeMenuView;
 
 import java.util.Scanner;
@@ -22,7 +22,7 @@ public class RegisterMenuController extends MenuController {
     }
 
 
-    public GraphicalResult registerViaGraphics(){
+    public GraphicalResult registerViaGraphics() {
 
         GraphicalResult registerAttempt = checkAllFieldsAreFilled();
 
@@ -41,16 +41,16 @@ public class RegisterMenuController extends MenuController {
 
         App.setCurrentMenu(Menu.ForgetPasswordMenu);
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new SecurityQuestionMenuView(new User(username,User.hashPassword(password),nickname,email,Gender.values()[view.getGenderBox().getSelectedIndex()])));
+        Main.getMain().setScreen(new SecurityQuestionMenuView(new User(username, User.hashPassword(password), nickname, email, Gender.values()[view.getGenderBox().getSelectedIndex()])));
         return new GraphicalResult("Successful registration!", Color.GREEN);
     }
 
     private GraphicalResult checkAllFieldsAreFilled() {
 
-        if ( view.getUsernameField().getText().isEmpty() ||
-        view.getPasswordField().getText().isEmpty() ||
-        view.getEmailField().getText().isEmpty() ||
-        view.getNicknameField().getText().isEmpty() ){
+        if (view.getUsernameField().getText().isEmpty() ||
+                view.getPasswordField().getText().isEmpty() ||
+                view.getEmailField().getText().isEmpty() ||
+                view.getNicknameField().getText().isEmpty()) {
 
             return new GraphicalResult(
                     "Please fill all the required fields",
@@ -61,7 +61,7 @@ public class RegisterMenuController extends MenuController {
         return new GraphicalResult("", GameAssetManager.getGameAssetManager().getAcceptColor(), false);
     }
 
-    public GraphicalResult checkRegistrationAttempt(String username, String password, String email, String nickname){
+    public GraphicalResult checkRegistrationAttempt(String username, String password, String email, String nickname) {
 
         if (!User.isValidUsername(username))
             return new GraphicalResult(
@@ -69,11 +69,11 @@ public class RegisterMenuController extends MenuController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
 
-        if ( App.getUserByUsername(username) != null ){
+        if (App.getUserByUsername(username) != null) {
 
             suggestedUsername = App.generateUsername(username);
             view.setReRegister(true);
-            GraphicalResult result =  new GraphicalResult(
+            GraphicalResult result = new GraphicalResult(
                     "Username already exists! Suggested username: " + suggestedUsername,
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
@@ -98,13 +98,13 @@ public class RegisterMenuController extends MenuController {
         );
     }
 
-    public void setRandomPassword(){
+    public void setRandomPassword() {
 
         view.getPasswordField().setText(App.generatePassword());
 
     }
 
-    public GraphicalResult acceptSuggestedUsername(){
+    public GraphicalResult acceptSuggestedUsername() {
 
         view.setReRegister(false);
         view.getUsernameField().setText(suggestedUsername);
@@ -116,7 +116,7 @@ public class RegisterMenuController extends MenuController {
 
     }
 
-    public GraphicalResult declineSuggestedUsername(){
+    public GraphicalResult declineSuggestedUsername() {
         view.setReRegister(false);
         view.getUsernameField().setText("");
         return new GraphicalResult(

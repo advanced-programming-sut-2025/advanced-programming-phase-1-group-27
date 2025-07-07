@@ -3,7 +3,7 @@ package org.example.controller;
 import org.example.models.Result;
 import org.example.view.menu.PreGameMenuView;
 
-public class PreGameMenuController extends MenuController{
+public class PreGameMenuController extends MenuController {
 
     private final PreGameMenuView view;
 

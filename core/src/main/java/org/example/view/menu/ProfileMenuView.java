@@ -76,7 +76,8 @@ public class ProfileMenuView extends AppMenu {
 
     }
 
-    private void setListeners() {}
+    private void setListeners() {
+    }
 
     public void executeCommands(Scanner scanner) {
         String input = scanner.nextLine().trim();

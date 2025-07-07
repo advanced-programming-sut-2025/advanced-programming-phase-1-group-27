@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import org.example.models.App;
 import org.example.models.GameAssetManager;
@@ -18,9 +17,9 @@ public abstract class MenuController {
         return new Result(true, App.getCurrentMenu().toString());
     }
 
-    protected void playClickSound(){
+    protected void playClickSound() {
 
-        if ( true ){                    ///  TODO: age sfx on bood play beshe
+        if (true) {                    ///  TODO: age sfx on bood play beshe
             clickSound.play(1.0f);
         }
 

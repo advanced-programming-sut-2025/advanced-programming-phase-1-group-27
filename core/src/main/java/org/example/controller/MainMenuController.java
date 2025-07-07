@@ -46,7 +46,6 @@ public class MainMenuController extends MenuController {
     }
 
 
-
     public Result enterMenu(String menuName) {
         Menu newMenu = Menu.getMenu(menuName);
         if (newMenu == null)

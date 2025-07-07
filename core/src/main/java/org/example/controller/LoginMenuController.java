@@ -1,10 +1,7 @@
 package org.example.controller;
 
 import org.example.Main;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.SecurityQuestion;
-import org.example.models.User;
+import org.example.models.*;
 import org.example.models.enums.Menu;
 import org.example.view.menu.ForgetPasswordMenuView;
 import org.example.view.menu.LoginMenuView;
@@ -25,30 +22,27 @@ public class LoginMenuController extends MenuController {
         this.view = view;
     }
 
-    public void loginViaGraphics() {
+    public GraphicalResult loginViaGraphics() {
 
-        if ( hasEmptyField() ){
-            view.setErrorLabel("Please fill all the required fields");
-            view.setErrorTimer(5f);
-            return;
-        }
+        if (hasEmptyField())
+            return new GraphicalResult(
+                    "Please fill all the required fields",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
 
-        Result loginAttempt = login(view.getUsernameField().getText(),view.getPasswordField().getText(),view.getStayLoggedInCheckBox().isChecked());
+        GraphicalResult loginAttempt = login(view.getUsernameField().getText(), view.getPasswordField().getText(), view.getStayLoggedInCheckBox().isChecked());
 
-        if ( !loginAttempt.success() ){
-            view.setErrorLabel(loginAttempt.message());
-            view.setErrorTimer(5f);
-            return;
-        }
+        if (loginAttempt.hasError())
+            return loginAttempt;
 
         App.setCurrentMenu(Menu.MainMenu);
+        App.setLoggedInUser(App.getUserByUsername(view.getUsernameField().getText()));
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new MainMenuView());
-        App.setLoggedInUser(App.getUserByUsername(view.getUsernameField().getText()));
-
+        return loginAttempt;
     }
 
-    private boolean hasEmptyField(){
+    private boolean hasEmptyField() {
 
         return view.getUsernameField().getText().isEmpty() || view.getPasswordField().getText().isEmpty();
 
@@ -64,7 +58,7 @@ public class LoginMenuController extends MenuController {
             return new Result(false, "Can't enter this menu!");
     }
 
-    public void goToForgetPassword(){
+    public void goToForgetPassword() {
         App.setCurrentMenu(Menu.ForgetPasswordMenu);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new ForgetPasswordMenuView());
@@ -77,19 +71,28 @@ public class LoginMenuController extends MenuController {
         return new Result(true, "Redirecting to welcome menu ...");
     }
 
-    public Result login(String username, String password, boolean stayLoggedIn) {
+    public GraphicalResult login(String username, String password, boolean stayLoggedIn) {
         User user = App.getUserByUsername(username);
         if (user == null)
-            return new Result(false, "Username not found!");
+            return new GraphicalResult(
+                    "Username not found!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
         if (!user.passwordEquals(password))
-            return new Result(false, "Incorrect password!");
+            return new GraphicalResult(
+                    "Incorrect password!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
         if (stayLoggedIn)
             updateFile(user);
         else
             App.deleteLoginUserFile();
         App.setLoggedInUser(user);
         App.setCurrentMenu(Menu.MainMenu);
-        return new Result(true, "You have successfully logged in.");
+        return new GraphicalResult(
+                "You have successfully logged in.",
+                GameAssetManager.getGameAssetManager().getAcceptColor()
+        );
     }
 
     public Result forgetPassword(String username, Scanner scanner) {

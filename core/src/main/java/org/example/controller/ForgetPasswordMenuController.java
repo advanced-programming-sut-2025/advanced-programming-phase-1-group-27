@@ -1,75 +1,66 @@
 package org.example.controller;
 
 import org.example.Main;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.User;
+import org.example.models.*;
 import org.example.models.enums.Menu;
 import org.example.view.menu.ForgetPasswordMenuView;
 import org.example.view.menu.LoginMenuView;
-import org.example.view.menu.WelcomeMenuView;
 
-public class ForgetPasswordMenuController extends MenuController{
+public class ForgetPasswordMenuController extends MenuController {
 
 
     private ForgetPasswordMenuView view;
     private User attemptingUser;
 
-    public ForgetPasswordMenuController(ForgetPasswordMenuView view){
+    public ForgetPasswordMenuController(ForgetPasswordMenuView view) {
         this.view = view;
     }
 
-    public void submitUsername(){
-
+    public GraphicalResult submitUsername() {
         attemptingUser = App.getUserByUsername(view.getUsernameField().getText());
-        if ( attemptingUser == null ){
-            view.setErrorLabel("Username not found!");
-            view.setErrorTimer(5f);
-            return;
-        }
-
-        view.setErrorLabel("");
-        view.setErrorTimer(5f);
+        if (attemptingUser == null)
+            return new GraphicalResult(
+                    "Username not found!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
         view.setUsernameSubmitted(true);
-
+        return new GraphicalResult("", GameAssetManager.getGameAssetManager().getAcceptColor());
     }
 
-    public void attemptToChangePassword(){
+    public GraphicalResult attemptToChangePassword() {
 
         String answer = view.getAnswerField().getText();
         String newPassword = view.getNewPasswordField().getText();
 
-        if ( answer.isEmpty() || newPassword.isEmpty() ){
-            view.setErrorLabel("Please fill all the required fields");
-            view.setErrorTimer(5f);
-            return;
-        }
+        if (answer.isEmpty() || newPassword.isEmpty())
+            return new GraphicalResult(
+                    "Please fill all the required fields",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
 
-        if ( ! answer.equals(attemptingUser.getRecoveryQuestion().getAnswer()) ){
-            view.setErrorLabel("Wrong answer Try again");
+        if (!answer.equals(attemptingUser.getRecoveryQuestion().getAnswer())) {
             view.getAnswerField().setText("");
             view.getNewPasswordField().setText("");
-            view.setErrorTimer(5f);
-            return;
+            return new GraphicalResult(
+                    "Wrong answer Try again",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
         }
 
         Result passwordCheck = User.checkPassword(newPassword);
-        if (!passwordCheck.success()){
-            view.setErrorLabel(passwordCheck.message());
-            view.setErrorTimer(5f);
-            return;
-        }
+        if (!passwordCheck.success())
+            return new GraphicalResult(passwordCheck.message(), GameAssetManager.getGameAssetManager().getErrorColor());
 
         attemptingUser.setPassword(User.hashPassword(view.getNewPasswordField().getText()));
         exitMenu();
-
-
+        return new GraphicalResult(
+                "You successfully changed your password",
+                GameAssetManager.getGameAssetManager().getAcceptColor()
+        );
     }
 
-    public void setRandomPassword(){
-
+    public void setRandomPassword() {
         view.getNewPasswordField().setText(App.generatePassword());
-
     }
 
 
@@ -89,5 +80,4 @@ public class ForgetPasswordMenuController extends MenuController{
     public User getAttemptingUser() {
         return attemptingUser;
     }
-
 }

@@ -15,7 +15,7 @@ public enum Menu {
     RegisterMenu(new RegisterMenuView()),
     ForgetPasswordMenu(new SecurityQuestionMenuView(null)),
     MainMenu(new MainMenuView()),
-//    PregameMenu(new PreGameMenuView()),
+    //    PregameMenu(new PreGameMenuView()),
     GameMenu(new GameView()),
     ProfileMenu(new ProfileMenuView()),
     Home(new HomeView()),

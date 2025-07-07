@@ -3,7 +3,6 @@ package org.example.view.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,7 +11,6 @@ import org.example.Main;
 import org.example.controller.WelcomeMenuController;
 import org.example.models.GameAssetManager;
 import org.example.models.Result;
-import org.example.models.enums.Menu;
 import org.example.models.enums.commands.MainMenuCommands;
 import org.example.view.AppMenu;
 
@@ -23,11 +21,11 @@ public class WelcomeMenuView extends AppMenu {
 
     private final WelcomeMenuController controller;
     private final Table table;
-    private Stage stage;
-    private float textScale;
     private final TextButton registerButton;
     private final TextButton loginButton;
     private final TextButton exitButton;
+    private Stage stage;
+    private float textScale;
     private float buttonTransparency;
 
     public WelcomeMenuView() {
@@ -49,45 +47,44 @@ public class WelcomeMenuView extends AppMenu {
     private void placeStardewValleyText(float delta) {
 
 
-        if ( textScale < 1.6f ) {
+        if (textScale < 1.6f) {
 
             stardewValleyText.setScale(textScale);
             textScale += delta;
 
         }
 
-        stardewValleyText.setPosition((Gdx.graphics.getWidth() - stardewValleyText.getWidth()*textScale)/2,
-                (Gdx.graphics.getHeight() - stardewValleyText.getHeight()*textScale)/2 + Gdx.graphics.getHeight()/4f
+        stardewValleyText.setPosition((Gdx.graphics.getWidth() - stardewValleyText.getWidth() * textScale) / 2,
+                (Gdx.graphics.getHeight() - stardewValleyText.getHeight() * textScale) / 2 + Gdx.graphics.getHeight() / 4f
         );
 
         table.add(stardewValleyText);
 
     }
 
-    private void placeButtons(float delta){
+    private void placeButtons(float delta) {
 
-        if ( !(textScale < 1.6f) && buttonTransparency < 1.5f ) {
+        if (!(textScale < 1.6f) && buttonTransparency < 1.5f) {
 
             buttonTransparency += delta;
 
         }
 
 
-        registerButton.setSize(Gdx.graphics.getWidth()/5f, Gdx.graphics.getHeight()/10f);
-        registerButton.setPosition((Gdx.graphics.getWidth() - registerButton.getWidth())/2,
-                (Gdx.graphics.getHeight() - registerButton.getHeight())/2
+        registerButton.setSize(Gdx.graphics.getWidth() / 5f, Gdx.graphics.getHeight() / 10f);
+        registerButton.setPosition((Gdx.graphics.getWidth() - registerButton.getWidth()) / 2,
+                (Gdx.graphics.getHeight() - registerButton.getHeight()) / 2
         );
 
 
-
-        loginButton.setSize(Gdx.graphics.getWidth()/5f, Gdx.graphics.getHeight()/10f);
-        loginButton.setPosition((Gdx.graphics.getWidth() - loginButton.getWidth())/2,
-                (Gdx.graphics.getHeight() - loginButton.getHeight())/2 - Gdx.graphics.getHeight()/8f
+        loginButton.setSize(Gdx.graphics.getWidth() / 5f, Gdx.graphics.getHeight() / 10f);
+        loginButton.setPosition((Gdx.graphics.getWidth() - loginButton.getWidth()) / 2,
+                (Gdx.graphics.getHeight() - loginButton.getHeight()) / 2 - Gdx.graphics.getHeight() / 8f
         );
 
-        exitButton.setSize(Gdx.graphics.getWidth()/5f, Gdx.graphics.getHeight()/10f);
-        exitButton.setPosition((Gdx.graphics.getWidth() - exitButton.getWidth())/2,
-                (Gdx.graphics.getHeight() - exitButton.getHeight())/2 - 2 * Gdx.graphics.getHeight()/8f
+        exitButton.setSize(Gdx.graphics.getWidth() / 5f, Gdx.graphics.getHeight() / 10f);
+        exitButton.setPosition((Gdx.graphics.getWidth() - exitButton.getWidth()) / 2,
+                (Gdx.graphics.getHeight() - exitButton.getHeight()) / 2 - 2 * Gdx.graphics.getHeight() / 8f
         );
 
 //        registerButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
@@ -95,9 +92,9 @@ public class WelcomeMenuView extends AppMenu {
 //        exitButton.setColor(0.988f, 0.82f, 0.086f,Math.min(1.0f, buttonTransparency));
 
 
-        registerButton.setColor(registerButton.getColor().r, registerButton.getColor().g, registerButton.getColor().b,Math.min(1.0f, buttonTransparency));
-        loginButton.setColor(loginButton.getColor().r, loginButton.getColor().g, loginButton.getColor().b,Math.min(1.0f, buttonTransparency));
-        exitButton.setColor(exitButton.getColor().r, exitButton.getColor().g, exitButton.getColor().b,Math.min(1.0f, buttonTransparency));
+        registerButton.setColor(registerButton.getColor().r, registerButton.getColor().g, registerButton.getColor().b, Math.min(1.0f, buttonTransparency));
+        loginButton.setColor(loginButton.getColor().r, loginButton.getColor().g, loginButton.getColor().b, Math.min(1.0f, buttonTransparency));
+        exitButton.setColor(exitButton.getColor().r, exitButton.getColor().g, exitButton.getColor().b, Math.min(1.0f, buttonTransparency));
 
 
         stage.addActor(registerButton);
@@ -133,7 +130,6 @@ public class WelcomeMenuView extends AppMenu {
 
         placeStardewValleyText(delta);
         placeButtons(delta);
-
 
 
     }
@@ -179,7 +175,7 @@ public class WelcomeMenuView extends AppMenu {
         return buttonTransparency;
     }
 
-    private void setListeners(){
+    private void setListeners() {
 
         registerButton.addListener(new ClickListener() {
             @Override

@@ -10,45 +10,40 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.ForgetPasswordMenuController;
-import org.example.controller.SecurityQuestionMenuController;
+import org.example.models.GameAssetManager;
+import org.example.models.GraphicalResult;
 import org.example.view.AppMenu;
 
-import javax.swing.text.View;
 import java.util.Scanner;
 
 public class ForgetPasswordMenuView extends AppMenu {
 
     private final ForgetPasswordMenuController controller;
-    private Stage stage;
-
     private final Label menuTitleLabel;
     private final Label usernameLabel;
     private final Label answerLabel;
     private final Label newPasswordLabel;
-    private final Label errorLabel;
     private final Label securityQuestionLabel;
-
+    private final GraphicalResult errorLabel;
     private final TextButton backButton;
     private final TextButton submitButton;
     private final TextButton randomPasswordButton;
-
     private final TextField usernameField;
     private final TextField answerField;
     private final TextField newPasswordField;
-
+    private Stage stage;
     private float fadeInTimer = 0f;
     private float errorTimer = 5f;
 
     private boolean usernameSubmitted = false;
 
     public ForgetPasswordMenuView() {
-
         this.controller = new ForgetPasswordMenuController(this);
 
         menuTitleLabel = new Label("Recover Password Menu", skin);
         usernameLabel = new Label("Username:", skin);
         answerLabel = new Label("Answer:", skin);
-        errorLabel = new Label("", skin);
+        errorLabel = new GraphicalResult();
         newPasswordLabel = new Label("New Password:", skin);
         securityQuestionLabel = new Label("", skin);
 
@@ -69,34 +64,29 @@ public class ForgetPasswordMenuView extends AppMenu {
         newPasswordField.setVisible(false);
 
         setListeners();
-
     }
 
-    private void showMenuTitle(){
-
+    private void showMenuTitle() {
         menuTitleLabel.setFontScale(3f);
-        menuTitleLabel.setPosition(Gdx.graphics.getWidth()/8f, 5*Gdx.graphics.getHeight()/6f);
+        menuTitleLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
         stage.addActor(menuTitleLabel);
-
     }
 
-    private void showErrorMessage(){
-
-        errorLabel.setPosition(Gdx.graphics.getWidth()/8f, 6 * Gdx.graphics.getHeight()/7f - Gdx.graphics.getHeight()/9f + 20);
-        errorLabel.setColor(1,0.31f,0,errorTimer/5);
-        stage.addActor(errorLabel);
-
+    private void showErrorMessage() {
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 8f, 6 * Gdx.graphics.getHeight() / 7f - Gdx.graphics.getHeight() / 9f + 20);
+        errorLabel.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
+        stage.addActor(errorLabel.getMessage());
     }
 
-    private void showLabels(){
+    private void showLabels() {
 
         usernameLabel.setVisible(!usernameSubmitted);
         answerLabel.setVisible(usernameSubmitted);
         newPasswordLabel.setVisible(usernameSubmitted);
 
-        usernameLabel.setPosition( Gdx.graphics.getWidth()/4f * fadeInTimer,  4 * Gdx.graphics.getHeight()/6f );
-        answerLabel.setPosition( Gdx.graphics.getWidth()/4f * fadeInTimer,  3 * Gdx.graphics.getHeight()/6f );
-        newPasswordLabel.setPosition( Gdx.graphics.getWidth()/4f * fadeInTimer,  2 * Gdx.graphics.getHeight()/6f );
+        usernameLabel.setPosition(Gdx.graphics.getWidth() / 4f * fadeInTimer, 4 * Gdx.graphics.getHeight() / 6f);
+        answerLabel.setPosition(Gdx.graphics.getWidth() / 4f * fadeInTimer, 3 * Gdx.graphics.getHeight() / 6f);
+        newPasswordLabel.setPosition(Gdx.graphics.getWidth() / 4f * fadeInTimer, 2 * Gdx.graphics.getHeight() / 6f);
 
         stage.addActor(usernameLabel);
         stage.addActor(answerLabel);
@@ -104,9 +94,9 @@ public class ForgetPasswordMenuView extends AppMenu {
 
     }
 
-    private void showSecurityQuestion(){
+    private void showSecurityQuestion() {
 
-        if ( usernameSubmitted ){
+        if (usernameSubmitted) {
 
             securityQuestionLabel.setVisible(true);
             securityQuestionLabel.setText(controller.getAttemptingUser().getRecoveryQuestion().getQuestion());
@@ -114,7 +104,7 @@ public class ForgetPasswordMenuView extends AppMenu {
         }
 
         securityQuestionLabel.setFontScale(2f);
-        securityQuestionLabel.setPosition( Gdx.graphics.getWidth()/4f,  4 * Gdx.graphics.getHeight()/6f );
+        securityQuestionLabel.setPosition(Gdx.graphics.getWidth() / 4f, 4 * Gdx.graphics.getHeight() / 6f);
 
 
         stage.addActor(securityQuestionLabel);
@@ -122,20 +112,20 @@ public class ForgetPasswordMenuView extends AppMenu {
 
     }
 
-    private void showFields(){
+    private void showFields() {
 
         usernameField.setVisible(!usernameSubmitted);
         answerField.setVisible(usernameSubmitted);
         newPasswordField.setVisible(usernameSubmitted);
 
-        usernameField.setWidth(Gdx.graphics.getWidth()/4f * fadeInTimer);
-        answerField.setWidth(Gdx.graphics.getWidth()/4f * fadeInTimer);
-        newPasswordField.setWidth(Gdx.graphics.getWidth()/4f * fadeInTimer);
+        usernameField.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        answerField.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        newPasswordField.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
 
 
-        usernameField.setPosition( 3 * Gdx.graphics.getWidth()/8f,  4 * Gdx.graphics.getHeight()/6f - 20);
-        answerField.setPosition( 3 * Gdx.graphics.getWidth()/8f,  3 * Gdx.graphics.getHeight()/6f - 20);
-        newPasswordField.setPosition( 3 * Gdx.graphics.getWidth()/8f,  2 * Gdx.graphics.getHeight()/6f - 20);
+        usernameField.setPosition(3 * Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 6f - 20);
+        answerField.setPosition(3 * Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 6f - 20);
+        newPasswordField.setPosition(3 * Gdx.graphics.getWidth() / 8f, 2 * Gdx.graphics.getHeight() / 6f - 20);
 
 
         stage.addActor(usernameField);
@@ -144,33 +134,33 @@ public class ForgetPasswordMenuView extends AppMenu {
 
     }
 
-    private void showButtons(){
+    private void showButtons() {
 
-        submitButton.setWidth(3*Gdx.graphics.getWidth()/16f-20);
-        backButton.setWidth(3*Gdx.graphics.getWidth()/16f-20);
+        submitButton.setWidth(3 * Gdx.graphics.getWidth() / 16f - 20);
+        backButton.setWidth(3 * Gdx.graphics.getWidth() / 16f - 20);
         randomPasswordButton.setSize(120, newPasswordField.getHeight());
 
 
-        submitButton.setColor(submitButton.getColor().r,submitButton.getColor().g,submitButton.getColor().b,fadeInTimer);
-        backButton.setColor(backButton.getColor().r,backButton.getColor().g,backButton.getColor().b,fadeInTimer);
-        randomPasswordButton.setColor(randomPasswordButton.getColor().r,randomPasswordButton.getColor().g,randomPasswordButton.getColor().b,fadeInTimer);
+        submitButton.setColor(submitButton.getColor().r, submitButton.getColor().g, submitButton.getColor().b, fadeInTimer);
+        backButton.setColor(backButton.getColor().r, backButton.getColor().g, backButton.getColor().b, fadeInTimer);
+        randomPasswordButton.setColor(randomPasswordButton.getColor().r, randomPasswordButton.getColor().g, randomPasswordButton.getColor().b, fadeInTimer);
 
 
         backButton.setPosition(
 
-                Gdx.graphics.getWidth()/4f,
-                Gdx.graphics.getHeight()/6f - 20
+                Gdx.graphics.getWidth() / 4f,
+                Gdx.graphics.getHeight() / 6f - 20
 
         );
 
         submitButton.setPosition(
 
-                7 * Gdx.graphics.getWidth()/16f + 40,
-                Gdx.graphics.getHeight()/6f - 20
+                7 * Gdx.graphics.getWidth() / 16f + 40,
+                Gdx.graphics.getHeight() / 6f - 20
 
         );
 
-        randomPasswordButton.setPosition(Gdx.graphics.getWidth()/4f + 3 * Gdx.graphics.getWidth()/8f + 30,  2 * Gdx.graphics.getHeight()/6f - 20);
+        randomPasswordButton.setPosition(Gdx.graphics.getWidth() / 4f + 3 * Gdx.graphics.getWidth() / 8f + 30, 2 * Gdx.graphics.getHeight() / 6f - 20);
 
 
         stage.addActor(submitButton);
@@ -180,36 +170,23 @@ public class ForgetPasswordMenuView extends AppMenu {
     }
 
 
-
     @Override
     public void show() {
-
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(menuBackground);
 
-
+        showErrorMessage();
     }
 
     @Override
     public void render(float delta) {
+        errorLabel.update(delta);
 
-        if ( !errorLabel.getText().isEmpty()){
-
-            errorTimer -= delta;
-
-            if ( errorTimer <= 0 ){
-                errorLabel.setText("");
-                errorTimer = 5;
-            }
-
-        }
-
-        if ( fadeInTimer < 1f ){
+        if (fadeInTimer < 1f) {
             fadeInTimer += delta;
-        }
-        else{
+        } else {
             fadeInTimer = 1f;
         }
 
@@ -223,12 +200,8 @@ public class ForgetPasswordMenuView extends AppMenu {
         showMenuTitle();
         showLabels();
         showFields();
-        showErrorMessage();
         showButtons();
         showSecurityQuestion();
-
-
-
     }
 
     @Override
@@ -260,51 +233,31 @@ public class ForgetPasswordMenuView extends AppMenu {
     private void setListeners() {
 
         submitButton.addListener(new ClickListener() {
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
-
-                if ( !usernameSubmitted ){
-                    controller.submitUsername();
-                }
-                else{
-                    controller.attemptToChangePassword();
-                }
-
+                if (!usernameSubmitted)
+                    errorLabel.set(controller.submitUsername());
+                else
+                    errorLabel.set(controller.attemptToChangePassword());
             }
-
         });
 
         backButton.addListener(new ClickListener() {
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
                 controller.exitMenu();
-
             }
-
         });
 
         randomPasswordButton.addListener(new ClickListener() {
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
                 controller.setRandomPassword();
-
             }
-
         });
-
-    }
-
-    public void setErrorLabel(String message) {
-        this.errorLabel.setText(message);
     }
 
     public TextField getUsernameField() {
@@ -321,10 +274,6 @@ public class ForgetPasswordMenuView extends AppMenu {
 
     public void setUsernameSubmitted(boolean usernameSubmitted) {
         this.usernameSubmitted = usernameSubmitted;
-    }
-
-    public void setErrorTimer(float errorTimer) {
-        this.errorTimer = errorTimer;
     }
 
     @Override

@@ -32,8 +32,8 @@ public class App {
         }
 
         // TEST USERS
-        User userYusof = new User("Yusof",User.hashPassword("!Yusof@1384"),"joe","yusof@gmail.com",Gender.Male);
-        userYusof.setRecoveryQuestion(new SecurityQuestion("Are you gay?","yes"));
+        User userYusof = new User("Yusof", User.hashPassword("!Yusof@1384"), "joe", "yusof@gmail.com", Gender.Male);
+        userYusof.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
         users.add(userYusof);
 
 

@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.MainMenuController;
@@ -20,14 +19,11 @@ import java.util.regex.Matcher;
 public class MainMenuView extends AppMenu {
 
     private final MainMenuController controller;
-    private Stage stage;
-
     private final Label menuTitleLabel;
-
     private final TextButton pregameMenuButton;
     private final TextButton profileMenuButton;
     private final TextButton logoutButton;
-
+    private Stage stage;
     private float fadeInTimer = 0f;
 
     public MainMenuView() {
@@ -44,24 +40,24 @@ public class MainMenuView extends AppMenu {
 
     }
 
-    private void showMenuTitle(){
+    private void showMenuTitle() {
 
         menuTitleLabel.setFontScale(4f);
-        menuTitleLabel.setColor(0.878f, 0.627f, 0f,1f);
-        menuTitleLabel.setPosition(Gdx.graphics.getWidth()/9f, 6 * Gdx.graphics.getHeight()/7f);
+        menuTitleLabel.setColor(0.878f, 0.627f, 0f, 1f);
+        menuTitleLabel.setPosition(Gdx.graphics.getWidth() / 9f, 6 * Gdx.graphics.getHeight() / 7f);
         stage.addActor(menuTitleLabel);
 
     }
 
-    private void showGameLogo(){
+    private void showGameLogo() {
 
-        stardewValleyText.setScale(fadeInTimer*2);
+        stardewValleyText.setScale(fadeInTimer * 2);
 
-        stardewValleyText.setRotation(fadeInTimer*3*360);
-        stardewValleyText.setColor(stardewValleyText.getColor().r,stardewValleyText.getColor().g,stardewValleyText.getColor().b,fadeInTimer);
+        stardewValleyText.setRotation(fadeInTimer * 3 * 360);
+        stardewValleyText.setColor(stardewValleyText.getColor().r, stardewValleyText.getColor().g, stardewValleyText.getColor().b, fadeInTimer);
 
-        stardewValleyText.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f - stardewValleyText.getWidth() * fadeInTimer *2)/2,
-                (Gdx.graphics.getHeight() - stardewValleyText.getHeight()* fadeInTimer * 2)/2
+        stardewValleyText.setPosition(Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - stardewValleyText.getWidth() * fadeInTimer * 2) / 2,
+                (Gdx.graphics.getHeight() - stardewValleyText.getHeight() * fadeInTimer * 2) / 2
         );
 
         stage.addActor(stardewValleyText);
@@ -69,15 +65,15 @@ public class MainMenuView extends AppMenu {
 
     }
 
-    private void showButtons(){
+    private void showButtons() {
 
-        pregameMenuButton.setWidth(Gdx.graphics.getWidth()/4f*fadeInTimer);
-        profileMenuButton.setWidth(Gdx.graphics.getWidth()/4f*fadeInTimer);
-        logoutButton.setWidth(Gdx.graphics.getWidth()/4f*fadeInTimer);
+        pregameMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        profileMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        logoutButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
 
-        pregameMenuButton.setPosition(Gdx.graphics.getWidth()/8f, 4 * Gdx.graphics.getHeight()/7f);
-        profileMenuButton.setPosition(Gdx.graphics.getWidth()/8f, 3 * Gdx.graphics.getHeight()/7f);
-        logoutButton.setPosition(Gdx.graphics.getWidth()/8f, 2 * Gdx.graphics.getHeight()/7f);
+        pregameMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 7f);
+        profileMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 7f);
+        logoutButton.setPosition(Gdx.graphics.getWidth() / 8f, 2 * Gdx.graphics.getHeight() / 7f);
 
         stage.addActor(pregameMenuButton);
         stage.addActor(profileMenuButton);
@@ -100,10 +96,9 @@ public class MainMenuView extends AppMenu {
     public void render(float delta) {
 
 
-        if ( fadeInTimer < 1f){
+        if (fadeInTimer < 1f) {
             fadeInTimer += delta;
-        }
-        else{
+        } else {
             fadeInTimer = 1f;
         }
 
@@ -145,7 +140,7 @@ public class MainMenuView extends AppMenu {
 
     }
 
-    private void setListeners(){
+    private void setListeners() {
 
         pregameMenuButton.addListener(new ClickListener() {
             @Override

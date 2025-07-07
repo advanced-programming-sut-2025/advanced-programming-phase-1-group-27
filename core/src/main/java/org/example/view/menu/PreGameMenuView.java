@@ -21,8 +21,6 @@ public class PreGameMenuView extends AppMenu {
 
 
     private final PreGameMenuController controller;
-    private Stage stage;
-
     private final Label menuTitle;
     private final Label user0Label;
     private final Label user1Label;
@@ -30,17 +28,14 @@ public class PreGameMenuView extends AppMenu {
     private final Label user3Label;
     private final Label mapSelectionLabel;
     private final Label usernameLabel;
-
     private final TextButton addUserButton;
     private final TextButton backButton;
-
     private final ImageButton map1Button;
     private final ImageButton map2Button;
     private final ImageButton map3Button;
     private final ImageButton map4Button;
-
     private final GraphicalResult error;
-
+    private Stage stage;
     private User currentMapSelector;
 
     public PreGameMenuView() {
@@ -50,10 +45,10 @@ public class PreGameMenuView extends AppMenu {
         currentMapSelector = App.getLoggedInUser();
 
         menuTitle = new Label("Pre Game Menu", skin);
-        user0Label = new Label("" , skin);
-        user1Label = new Label("" , skin);
-        user2Label = new Label("" , skin);
-        user3Label = new Label("" , skin);
+        user0Label = new Label("", skin);
+        user1Label = new Label("", skin);
+        user2Label = new Label("", skin);
+        user3Label = new Label("", skin);
         mapSelectionLabel = new Label("Dear " + currentMapSelector.getUsername() + " please choose your map ^-^", skin);
         usernameLabel = new Label("Player Username:", skin);
 
@@ -68,7 +63,6 @@ public class PreGameMenuView extends AppMenu {
         error = new GraphicalResult();
 
 
-
         setListeners();
 
     }
@@ -81,7 +75,7 @@ public class PreGameMenuView extends AppMenu {
 
         stage.addActor(menuBackground);
 
-        stage.addActor(new Label( "pregame" , skin));
+        stage.addActor(new Label("pregame", skin));
 
         stage.addActor(map1Button);
 

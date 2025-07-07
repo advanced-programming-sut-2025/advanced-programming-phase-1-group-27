@@ -3,37 +3,32 @@ package org.example.view.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.SecurityQuestionMenuController;
-import org.example.models.App;
 import org.example.models.User;
 import org.example.models.enums.Questions;
 import org.example.view.AppMenu;
-import org.w3c.dom.Text;
 
 import java.util.Scanner;
 
 public class SecurityQuestionMenuView extends AppMenu {
 
     private final SecurityQuestionMenuController controller;
-    private Stage stage;
-
     private final User user;
-
     private final TextButton submitButton;
     private final TextButton cancelButton;
-
     private final Label descriptionLabel;
     private final Label errorLabel;
-
     private final TextField answerTextField;
-
     private final SelectBox<String> securityQuestionsBox;
-
+    private Stage stage;
     private float fadeInTimer = 0f;
     private float errorTimer = 5;
 
@@ -65,29 +60,27 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     }
 
-    private void showMenuDescription(){
+    private void showMenuDescription() {
 
         descriptionLabel.setFontScale(2f);
-        descriptionLabel.setPosition(Gdx.graphics.getWidth()/8f * fadeInTimer, 5*Gdx.graphics.getHeight()/6f);
+        descriptionLabel.setPosition(Gdx.graphics.getWidth() / 8f * fadeInTimer, 5 * Gdx.graphics.getHeight() / 6f);
         stage.addActor(descriptionLabel);
 
     }
 
-    private void showSecurityQuestionsBox(){
+    private void showSecurityQuestionsBox() {
 
-        securityQuestionsBox.setWidth(3 * Gdx.graphics.getWidth()/8f * fadeInTimer);
-        answerTextField.setWidth(3 * Gdx.graphics.getWidth()/8f * fadeInTimer);
+        securityQuestionsBox.setWidth(3 * Gdx.graphics.getWidth() / 8f * fadeInTimer);
+        answerTextField.setWidth(3 * Gdx.graphics.getWidth() / 8f * fadeInTimer);
 
         securityQuestionsBox.setPosition(
-                ( Gdx.graphics.getWidth() - securityQuestionsBox.getWidth() ) / 2,
-                2 * Gdx.graphics.getHeight()/3f - 100
+                (Gdx.graphics.getWidth() - securityQuestionsBox.getWidth()) / 2,
+                2 * Gdx.graphics.getHeight() / 3f - 100
         );
         answerTextField.setPosition(
-                ( Gdx.graphics.getWidth() - answerTextField.getWidth() ) / 2,
-                2 * Gdx.graphics.getHeight()/3f - securityQuestionsBox.getHeight() - 50 - 100
+                (Gdx.graphics.getWidth() - answerTextField.getWidth()) / 2,
+                2 * Gdx.graphics.getHeight() / 3f - securityQuestionsBox.getHeight() - 50 - 100
         );
-
-
 
 
         stage.addActor(securityQuestionsBox);
@@ -95,21 +88,21 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     }
 
-    private void showButtons(){
+    private void showButtons() {
 
-        submitButton.setWidth(Gdx.graphics.getWidth()/8f);
-        cancelButton.setWidth(Gdx.graphics.getWidth()/8f);
+        submitButton.setWidth(Gdx.graphics.getWidth() / 8f);
+        cancelButton.setWidth(Gdx.graphics.getWidth() / 8f);
 
-        submitButton.setColor(submitButton.getColor().r,submitButton.getColor().g,submitButton.getColor().b,fadeInTimer);
-        cancelButton.setColor(cancelButton.getColor().r,cancelButton.getColor().g,cancelButton.getColor().b,fadeInTimer);
+        submitButton.setColor(submitButton.getColor().r, submitButton.getColor().g, submitButton.getColor().b, fadeInTimer);
+        cancelButton.setColor(cancelButton.getColor().r, cancelButton.getColor().g, cancelButton.getColor().b, fadeInTimer);
 
 
         submitButton.setPosition(
-                5 * Gdx.graphics.getWidth()/16f,
+                5 * Gdx.graphics.getWidth() / 16f,
                 answerTextField.getY() - submitButton.getHeight() - 50
         );
         cancelButton.setPosition(
-                5 * Gdx.graphics.getWidth()/16f + Gdx.graphics.getWidth()/4f,
+                5 * Gdx.graphics.getWidth() / 16f + Gdx.graphics.getWidth() / 4f,
                 answerTextField.getY() - submitButton.getHeight() - 50
         );
         stage.addActor(submitButton);
@@ -117,15 +110,15 @@ public class SecurityQuestionMenuView extends AppMenu {
 
     }
 
-    private void showError(){
+    private void showError() {
 
         errorLabel.setPosition(
 
-                (Gdx.graphics.getWidth()-errorLabel.getWidth())/2f,
-                2 * Gdx.graphics.getHeight()/3f
+                (Gdx.graphics.getWidth() - errorLabel.getWidth()) / 2f,
+                2 * Gdx.graphics.getHeight() / 3f
 
         );
-        errorLabel.setColor(1,0.31f,0,Math.min(errorTimer/5,errorPhase?1:0));
+        errorLabel.setColor(1, 0.31f, 0, Math.min(errorTimer / 5, errorPhase ? 1 : 0));
         stage.addActor(errorLabel);
 
     }
@@ -144,21 +137,20 @@ public class SecurityQuestionMenuView extends AppMenu {
     @Override
     public void render(float delta) {
 
-        if ( errorPhase ){
+        if (errorPhase) {
 
             errorTimer -= delta;
 
-            if ( errorTimer <= 0 ){
+            if (errorTimer <= 0) {
                 errorPhase = false;
                 errorTimer = 5;
             }
 
         }
 
-        if ( fadeInTimer < 1f ){
+        if (fadeInTimer < 1f) {
             fadeInTimer += delta;
-        }
-        else{
+        } else {
             fadeInTimer = 1f;
         }
 

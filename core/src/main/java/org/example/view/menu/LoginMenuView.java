@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.LoginMenuController;
+import org.example.models.GameAssetManager;
+import org.example.models.GraphicalResult;
 import org.example.models.Result;
 import org.example.models.enums.commands.LoginMenuCommands;
 import org.example.models.enums.commands.MainMenuCommands;
@@ -22,22 +24,17 @@ import java.util.regex.Matcher;
 public class LoginMenuView extends AppMenu {
 
     private final LoginMenuController controller;
-    private Stage stage;
-
     private final Label menuTitle;
     private final Label usernameLabel;
     private final Label passwordLabel;
-    private final Label errorLabel;
-
+    private final GraphicalResult errorLabel;
     private final TextField usernameField;
     private final TextField passwordField;
-
     private final TextButton loginButton;
     private final TextButton backButton;
     private final TextButton forgetPasswordButton;
-
     private final CheckBox stayLoggedInCheckBox;
-
+    private Stage stage;
     private float fadeInTimer = 0f;
     private float errorTimer = 5f;
 
@@ -48,7 +45,7 @@ public class LoginMenuView extends AppMenu {
         menuTitle = new Label("Login Menu", skin);
         usernameLabel = new Label("Username:", skin);
         passwordLabel = new Label("Password:", skin);
-        errorLabel = new Label("", skin);
+        errorLabel = new GraphicalResult();
 
         usernameField = new TextField("", skin);
         passwordField = new TextField("", skin);
@@ -63,40 +60,40 @@ public class LoginMenuView extends AppMenu {
 
     }
 
-    private void showMenuTitle(){
+    private void showMenuTitle() {
 
         menuTitle.setFontScale(3f);
-        menuTitle.setPosition(Gdx.graphics.getWidth()/8f, 5*Gdx.graphics.getHeight()/6f);
+        menuTitle.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
         stage.addActor(menuTitle);
 
     }
 
-    private void showLabels(){
+    private void showLabels() {
 
-        usernameLabel.setPosition( Gdx.graphics.getWidth()/4f * fadeInTimer,  4 * Gdx.graphics.getHeight()/6f );
-        passwordLabel.setPosition( Gdx.graphics.getWidth()/4f * fadeInTimer,  3 * Gdx.graphics.getHeight()/6f );
+        usernameLabel.setPosition(Gdx.graphics.getWidth() / 4f * fadeInTimer, 4 * Gdx.graphics.getHeight() / 6f);
+        passwordLabel.setPosition(Gdx.graphics.getWidth() / 4f * fadeInTimer, 3 * Gdx.graphics.getHeight() / 6f);
 
         stage.addActor(usernameLabel);
         stage.addActor(passwordLabel);
 
     }
 
-    private void showFields(){
+    private void showFields() {
 
-        usernameField.setWidth(Gdx.graphics.getWidth()/4f * fadeInTimer);
-        passwordField.setWidth(Gdx.graphics.getWidth()/4f * fadeInTimer);
-        stayLoggedInCheckBox.setWidth(Gdx.graphics.getWidth()/4f);
+        usernameField.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        passwordField.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        stayLoggedInCheckBox.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        stayLoggedInCheckBox.setColor(stayLoggedInCheckBox.getColor().r,stayLoggedInCheckBox.getColor().g,stayLoggedInCheckBox.getColor().b,fadeInTimer);
+        stayLoggedInCheckBox.setColor(stayLoggedInCheckBox.getColor().r, stayLoggedInCheckBox.getColor().g, stayLoggedInCheckBox.getColor().b, fadeInTimer);
 
 
-        usernameField.setPosition( 3 * Gdx.graphics.getWidth()/8f,  4 * Gdx.graphics.getHeight()/6f - 20);
-        passwordField.setPosition( 3 * Gdx.graphics.getWidth()/8f,  3 * Gdx.graphics.getHeight()/6f - 20);
+        usernameField.setPosition(3 * Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 6f - 20);
+        passwordField.setPosition(3 * Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 6f - 20);
 
         stayLoggedInCheckBox.setPosition(
 
-                2 * Gdx.graphics.getWidth()/8f,
-                2 * Gdx.graphics.getHeight()/6f
+                2 * Gdx.graphics.getWidth() / 8f,
+                2 * Gdx.graphics.getHeight() / 6f
 
         );
 
@@ -106,38 +103,37 @@ public class LoginMenuView extends AppMenu {
 
     }
 
-    private void showButtons(){
+    private void showButtons() {
 
-        loginButton.setWidth(Gdx.graphics.getWidth()/8f);
-        backButton.setWidth(Gdx.graphics.getWidth()/8f);
-        forgetPasswordButton.setWidth(Gdx.graphics.getWidth()/4f - 40);
+        loginButton.setWidth(Gdx.graphics.getWidth() / 8f);
+        backButton.setWidth(Gdx.graphics.getWidth() / 8f);
+        forgetPasswordButton.setWidth(Gdx.graphics.getWidth() / 4f - 40);
 
-        loginButton.setColor(loginButton.getColor().r,loginButton.getColor().g,loginButton.getColor().b,fadeInTimer);
-        backButton.setColor(backButton.getColor().r,backButton.getColor().g,backButton.getColor().b,fadeInTimer);
-        forgetPasswordButton.setColor(forgetPasswordButton.getColor().r,forgetPasswordButton.getColor().g,forgetPasswordButton.getColor().b,fadeInTimer);
+        loginButton.setColor(loginButton.getColor().r, loginButton.getColor().g, loginButton.getColor().b, fadeInTimer);
+        backButton.setColor(backButton.getColor().r, backButton.getColor().g, backButton.getColor().b, fadeInTimer);
+        forgetPasswordButton.setColor(forgetPasswordButton.getColor().r, forgetPasswordButton.getColor().g, forgetPasswordButton.getColor().b, fadeInTimer);
 
 
         loginButton.setPosition(
 
-                Gdx.graphics.getWidth()/2f,
-                2 * Gdx.graphics.getHeight()/6f - 30
+                Gdx.graphics.getWidth() / 2f,
+                2 * Gdx.graphics.getHeight() / 6f - 30
 
         );
 
         forgetPasswordButton.setPosition(
 
-                2 * Gdx.graphics.getWidth()/8f,
-                2 * Gdx.graphics.getHeight()/6f - 50 - forgetPasswordButton.getHeight()
+                2 * Gdx.graphics.getWidth() / 8f,
+                2 * Gdx.graphics.getHeight() / 6f - 50 - forgetPasswordButton.getHeight()
 
         );
 
         backButton.setPosition(
 
-                Gdx.graphics.getWidth()/2f,
-                2 * Gdx.graphics.getHeight()/6f - 50 - backButton.getHeight()
+                Gdx.graphics.getWidth() / 2f,
+                2 * Gdx.graphics.getHeight() / 6f - 50 - backButton.getHeight()
 
         );
-
 
 
         stage.addActor(loginButton);
@@ -146,11 +142,11 @@ public class LoginMenuView extends AppMenu {
 
     }
 
-    private void showErrorMessage(){
+    private void showErrorMessage() {
 
-        errorLabel.setPosition(Gdx.graphics.getWidth()/8f, 6 * Gdx.graphics.getHeight()/7f - Gdx.graphics.getHeight()/9f + 20);
-        errorLabel.setColor(1,0.31f,0,errorTimer/5);
-        stage.addActor(errorLabel);
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 8f, 6 * Gdx.graphics.getHeight() / 7f - Gdx.graphics.getHeight() / 9f + 20);
+        errorLabel.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
+        stage.addActor(errorLabel.getMessage());
 
     }
 
@@ -161,27 +157,17 @@ public class LoginMenuView extends AppMenu {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(menuBackground);
+        showErrorMessage();
 
     }
 
     @Override
     public void render(float delta) {
+        errorLabel.update(delta);
 
-        if ( !errorLabel.getText().isEmpty()){
-
-            errorTimer -= delta;
-
-            if ( errorTimer <= 0 ){
-                errorLabel.setText("");
-                errorTimer = 5;
-            }
-
-        }
-
-        if ( fadeInTimer < 1f ){
+        if (fadeInTimer < 1f) {
             fadeInTimer += delta;
-        }
-        else{
+        } else {
             fadeInTimer = 1f;
         }
 
@@ -195,7 +181,6 @@ public class LoginMenuView extends AppMenu {
         showLabels();
         showFields();
         showButtons();
-        showErrorMessage();
 
     }
 
@@ -224,7 +209,7 @@ public class LoginMenuView extends AppMenu {
 
     }
 
-    private void setListeners(){
+    private void setListeners() {
 
         loginButton.addListener(new ClickListener() {
 
@@ -232,7 +217,7 @@ public class LoginMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
 
                 playClickSound();
-                controller.loginViaGraphics();
+                errorLabel.set(controller.loginViaGraphics());
 
             }
 
@@ -263,23 +248,10 @@ public class LoginMenuView extends AppMenu {
         });
 
 
-
     }
 
     public CheckBox getStayLoggedInCheckBox() {
         return stayLoggedInCheckBox;
-    }
-
-    public float getErrorTimer() {
-        return errorTimer;
-    }
-
-    public void setErrorTimer(float errorTimer) {
-        this.errorTimer = errorTimer;
-    }
-
-    public void setErrorLabel(String message) {
-        this.errorLabel.setText(message);
     }
 
     public TextField getUsernameField() {
@@ -288,18 +260,6 @@ public class LoginMenuView extends AppMenu {
 
     public TextField getPasswordField() {
         return passwordField;
-    }
-
-    public TextButton getLoginButton() {
-        return loginButton;
-    }
-
-    public TextButton getBackButton() {
-        return backButton;
-    }
-
-    public TextButton getForgetPasswordButton() {
-        return forgetPasswordButton;
     }
 
     public void executeCommands(Scanner scanner) {
