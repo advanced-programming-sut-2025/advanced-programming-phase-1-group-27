@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import org.example.models.utils.MusicPlayer;
+import org.example.models.utils.Track;
+
 
 public class GameAssetManager {
 
@@ -17,6 +20,8 @@ public class GameAssetManager {
     private final Texture background = new Texture(Gdx.files.internal("Images/menu_background.png"));
     private final Texture StardewValleyText = new Texture(Gdx.files.internal("Images/stardew_valley_text.png"));
 
+    private final MusicPlayer musicPlayer = new MusicPlayer();
+
     private final Sound clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/click.wav"));
 
     private final Color errorColor = new Color(1, 0.31f, 0, 1);
@@ -27,6 +32,9 @@ public class GameAssetManager {
     private final Texture map3 = new Texture(Gdx.files.internal("MapImage/avatar3.png"));
     private final Texture map4 = new Texture(Gdx.files.internal("MapImage/avatar4.png"));
 
+    {
+        musicPlayer.setCurrentTrack(Track.THEME_1);
+    }
 
     public static GameAssetManager getGameAssetManager() {
 
