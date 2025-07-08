@@ -1,7 +1,11 @@
 package org.example.controller;
 
+import org.example.Main;
+import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.User;
+import org.example.models.enums.Menu;
+import org.example.view.menu.MainMenuView;
 import org.example.view.menu.PreGameMenuView;
 
 import java.util.Random;
@@ -14,6 +18,94 @@ public class PreGameMenuController extends MenuController {
     public PreGameMenuController(PreGameMenuView view) {
         this.view = view;
     }
+
+    public void addUser(){
+
+        if ( view.getUsernameField().getText().isEmpty() ){
+            /// TODO: error empty field bede
+            return;
+        }
+
+        User addedUser = App.getUserByUsername(view.getUsernameField().getText());
+
+        if ( addedUser == null ){
+            ///  TODO: error user not found bede
+            return;
+        }
+
+        if ( view.getUser1Label().getText().isEmpty() ){
+            view.getUser1Label().setText("#    " + addedUser.getUsername());
+        }
+        else if ( view.getUser2Label().getText().isEmpty() ){
+            view.getUser2Label().setText("#    " + addedUser.getUsername());
+        }
+        else if ( view.getUser3Label().getText().isEmpty() ){
+            view.getUser3Label().setText("#    " + addedUser.getUsername());
+            view.setGameFull(true);
+            /// TODO: payam bede game por shode dige
+        }
+
+        view.setCurrentMapSelector(addedUser);
+        view.getUsernameField().setText("");
+        view.updateUsersAndChosenMaps(addedUser,assignRandomMap());
+
+    }
+
+    public void chooseMap1(){
+
+        if ( alreadyChosen(1) ){
+            ///  TODO: error map already chosen
+            return;
+        }
+
+        view.updateUsersAndChosenMaps(view.getCurrentMapSelector(),1);
+
+    }
+
+    public void chooseMap2(){
+
+        if ( alreadyChosen(2) ){
+            ///  TODO: error map already chosen
+            return;
+        }
+
+        view.updateUsersAndChosenMaps(view.getCurrentMapSelector(),2);
+
+    }
+
+    public void chooseMap3(){
+
+        if ( alreadyChosen(3) ){
+            ///  TODO: error map already chosen
+            return;
+        }
+
+        view.updateUsersAndChosenMaps(view.getCurrentMapSelector(),3);
+
+    }
+
+    public void createGame(){
+
+    }
+
+    public boolean isNotCurrentSelectorsMap(int number){
+        if ( view.getUsersAndChosenMaps().get(view.getCurrentMapSelector()) == number ){
+            return false;
+        }
+        return true;
+    }
+
+    public void chooseMap4(){
+
+        if ( alreadyChosen(4) ){
+            ///  TODO: error map already chosen
+            return;
+        }
+
+        view.updateUsersAndChosenMaps(view.getCurrentMapSelector(),4);
+
+    }
+
 
 
     public int assignRandomMap(){
@@ -49,6 +141,9 @@ public class PreGameMenuController extends MenuController {
 
     @Override
     public Result exitMenu() {
-        return null;
+        App.setCurrentMenu(Menu.MainMenu);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new MainMenuView());
+        return new Result(true, "Redirecting to main menu ...");
     }
 }

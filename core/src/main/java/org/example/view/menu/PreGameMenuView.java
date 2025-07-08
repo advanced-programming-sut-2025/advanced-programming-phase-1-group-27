@@ -1,22 +1,22 @@
 package org.example.view.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.PreGameMenuController;
 import org.example.models.App;
 import org.example.models.GameAssetManager;
-import org.example.models.GraphicalResult;
 import org.example.models.User;
 import org.example.view.AppMenu;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -30,9 +30,14 @@ public class PreGameMenuView extends AppMenu {
     private final Label mapSelectionLabel;
     private final Label usernameLabel;
     private final Label playersLabel;
+    private final Label user0Label;
+    private final Label user1Label;
+    private final Label user2Label;
+    private final Label user3Label;
 
     private final TextButton addUserButton;
     private final TextButton backButton;
+    private final TextButton createGameButton;
 
     private final TextField usernameField;
 
@@ -43,6 +48,9 @@ public class PreGameMenuView extends AppMenu {
 
     private User currentMapSelector;
 
+    private float blinkerTimer = 0f;
+
+    private boolean gameFull = false;
 
     private HashMap<User,Integer> usersAndChosenMaps = new HashMap<>();
 
@@ -52,23 +60,23 @@ public class PreGameMenuView extends AppMenu {
 
         currentMapSelector = App.getLoggedInUser();
 
-
-        for ( User user: App.getUsers() ){
-
-            usersAndChosenMaps.put(user, controller.assignRandomMap());
-
-        }
+        usersAndChosenMaps.put(currentMapSelector, controller.assignRandomMap());
 
 
         menuTitle = new Label("Pre Game Menu", skin);
         mapSelectionLabel = new Label("Dear " + currentMapSelector.getUsername() + " please choose your map ^-^", skin);
         usernameLabel = new Label("Player Username:", skin);
         playersLabel = new Label("Players:", skin);
+        user0Label = new Label("#    " + currentMapSelector.getUsername(), skin);
+        user1Label = new Label("", skin);
+        user2Label = new Label("", skin);
+        user3Label = new Label("", skin);
 
         usernameField = new TextField("", skin);
 
         addUserButton = new TextButton("Add User", skin);
         backButton = new TextButton("Back", skin);
+        createGameButton = new TextButton("Create Game", skin);
 
         map1Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap1()));
         map2Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap2()));
@@ -92,18 +100,18 @@ public class PreGameMenuView extends AppMenu {
 
         playersLabel.setPosition(Gdx.graphics.getWidth() / 10f, 8 * Gdx.graphics.getHeight() / 12f);
         usernameLabel.setPosition(Gdx.graphics.getWidth() / 10f, 2 * Gdx.graphics.getHeight() / 12f);
-
         mapSelectionLabel.setPosition(Gdx.graphics.getWidth() / 2f, 8 * Gdx.graphics.getHeight() / 12f);
+        user0Label.setPosition(Gdx.graphics.getWidth() / 8f, 7 * Gdx.graphics.getHeight() / 12f);
+        user1Label.setPosition(Gdx.graphics.getWidth() / 8f, 6 * Gdx.graphics.getHeight() / 12f);
+        user2Label.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 12f);
+        user3Label.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 12f);
 
-        int userIndex = 0;
-        for (User user : usersAndChosenMaps.keySet()) {
-            Label addedPlayerLabel = new Label("#    " + user.getUsername(), skin);
-            addedPlayerLabel.setPosition(Gdx.graphics.getWidth() / 8f, (7-userIndex) * Gdx.graphics.getHeight() / 12f);
-            stage.addActor(addedPlayerLabel);
-            userIndex ++;
-        }
+        usernameLabel.setVisible(!gameFull);
 
-
+        stage.addActor(user0Label);
+        stage.addActor(user1Label);
+        stage.addActor(user2Label);
+        stage.addActor(user3Label);
         stage.addActor(playersLabel);
         stage.addActor(usernameLabel);
         stage.addActor(mapSelectionLabel);
@@ -116,6 +124,8 @@ public class PreGameMenuView extends AppMenu {
 
         usernameField.setPosition(Gdx.graphics.getWidth() / 10f + usernameLabel.getWidth() + 50, 2 * Gdx.graphics.getHeight() / 12f - 20);
 
+        usernameField.setVisible(!gameFull);
+
         stage.addActor(usernameField);
 
     }
@@ -124,12 +134,18 @@ public class PreGameMenuView extends AppMenu {
 
         addUserButton.setHeight(usernameField.getHeight());
         backButton.setHeight(usernameField.getHeight());
+        createGameButton.setHeight(usernameField.getHeight());
 
         addUserButton.setPosition( usernameField.getX() + usernameField.getWidth() + 50 , usernameField.getY() );
         backButton.setPosition( usernameField.getX() + usernameField.getWidth()  + addUserButton.getWidth() + 350 , usernameField.getY() );
+        createGameButton.setPosition((Gdx.graphics.getWidth()/2f-createGameButton.getWidth())/2f , usernameField.getY());
+
+        addUserButton.setVisible(!gameFull);
+        createGameButton.setVisible(gameFull);
 
         stage.addActor(addUserButton);
         stage.addActor(backButton);
+        stage.addActor(createGameButton);
 
     }
 
@@ -140,11 +156,74 @@ public class PreGameMenuView extends AppMenu {
         map3Button.setPosition(Gdx.graphics.getWidth() / 2f + 11 * Gdx.graphics.getWidth() / 90f , 6 * Gdx.graphics.getHeight() / 12f - 11 * Gdx.graphics.getWidth() / 90f);
         map4Button.setPosition(Gdx.graphics.getWidth() / 2f + 22 * Gdx.graphics.getWidth() / 90f + Gdx.graphics.getWidth() / 15f, 6 * Gdx.graphics.getHeight() / 12f - 11 * Gdx.graphics.getWidth() / 90f);
 
+        for ( User user : usersAndChosenMaps.keySet() ) {
+
+            if ( !user.equals(currentMapSelector) ) {
+                int mapNumber = usersAndChosenMaps.get(user);
+                Label mapOwnerLabel = new Label(user.getUsername(), skin);
+                mapOwnerLabel.setPosition(
+                        map1Button.getX() + ((mapNumber+1)%2) * (11 * Gdx.graphics.getWidth() / 90f + Gdx.graphics.getWidth() / 15f) + (map1Button.getWidth()-mapOwnerLabel.getWidth())/2,
+                        6 * Gdx.graphics.getHeight() / 12f - ((int)((mapNumber-1)/2)) * (11 * Gdx.graphics.getWidth() / 90f) + (map1Button.getHeight()-mapOwnerLabel.getHeight())/2
+                );
+
+                stage.addActor(mapOwnerLabel);
+            }
+
+        }
 
         stage.addActor(map1Button);
         stage.addActor(map2Button);
         stage.addActor(map3Button);
         stage.addActor(map4Button);
+
+    }
+
+    private void makeCurrentMapBlinking(){
+
+        int mapNumber = usersAndChosenMaps.get(currentMapSelector);
+
+        int alpha = (((blinkerTimer-(int)blinkerTimer) < 0.5f)? 1:0);
+
+        map1Button.setColor(map1Button.getColor().r,map1Button.getColor().g,map1Button.getColor().b,1);
+        map2Button.setColor(map2Button.getColor().r,map2Button.getColor().g,map2Button.getColor().b,1);
+        map3Button.setColor(map3Button.getColor().r,map3Button.getColor().g,map3Button.getColor().b,1);
+        map4Button.setColor(map4Button.getColor().r,map4Button.getColor().g,map4Button.getColor().b,1);
+
+
+        if ( mapNumber == 1 ){
+            map1Button.setColor(map1Button.getColor().r,map1Button.getColor().g,map1Button.getColor().b,alpha);
+        }
+        else if ( mapNumber == 2 ){
+            map2Button.setColor(map2Button.getColor().r,map2Button.getColor().g,map2Button.getColor().b,alpha);
+        }
+        else if ( mapNumber == 3 ){
+            map3Button.setColor(map3Button.getColor().r,map3Button.getColor().g,map3Button.getColor().b,alpha);
+        }
+        else if ( mapNumber == 4 ){
+            map4Button.setColor(map4Button.getColor().r,map4Button.getColor().g,map4Button.getColor().b,alpha);
+        }
+
+    }
+
+    private void makeChosenMapsHalfTransparent(){
+
+        if ( usersAndChosenMaps.containsValue(1) && controller.isNotCurrentSelectorsMap(1)){
+            map1Button.setColor(map1Button.getColor().r,map1Button.getColor().g,map1Button.getColor().b,0.5f);
+        }
+
+        if ( usersAndChosenMaps.containsValue(2) && controller.isNotCurrentSelectorsMap(2)){
+            map2Button.setColor(map2Button.getColor().r,map2Button.getColor().g,map2Button.getColor().b,0.5f);
+        }
+
+
+        if ( usersAndChosenMaps.containsValue(3) && controller.isNotCurrentSelectorsMap(3)){
+            map3Button.setColor(map3Button.getColor().r,map3Button.getColor().g,map3Button.getColor().b,0.5f);
+        }
+
+
+        if ( usersAndChosenMaps.containsValue(4) && controller.isNotCurrentSelectorsMap(4)){
+            map4Button.setColor(map4Button.getColor().r,map4Button.getColor().g,map4Button.getColor().b,0.5f);
+        }
 
     }
 
@@ -160,7 +239,10 @@ public class PreGameMenuView extends AppMenu {
     }
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
+
+        blinkerTimer += delta;
+        mapSelectionLabel.setText("Dear " + currentMapSelector.getUsername() + " please choose your map ^-^");
 
         Main.getBatch().begin();
         Main.getBatch().end();
@@ -173,6 +255,8 @@ public class PreGameMenuView extends AppMenu {
         showFields();
         showButtons();
         showMapButtons();
+        makeCurrentMapBlinking();
+        makeChosenMapsHalfTransparent();
 
     }
 
@@ -203,14 +287,129 @@ public class PreGameMenuView extends AppMenu {
 
     private void setListeners() {
 
+        backButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.exitMenu();
+
+            }
+
+        });
+
+        addUserButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.addUser();
+
+            }
+
+        });
+
+        map1Button.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.chooseMap1();
+
+            }
+
+        });
+
+        map2Button.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.chooseMap2();
+
+            }
+
+        });
+
+        map3Button.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.chooseMap3();
+
+            }
+
+        });
+
+        map4Button.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.chooseMap4();
+
+            }
+
+        });
+
+        createGameButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                controller.createGame();
+
+            }
+
+        });
+
+
+
+
+    }
+
+    public void setCurrentMapSelector(User currentMapSelector) {
+        this.currentMapSelector = currentMapSelector;
+    }
+
+    public void updateUsersAndChosenMaps(User addedUser, Integer chosenMap) {
+        this.usersAndChosenMaps.put(addedUser, chosenMap);
     }
 
     public TextField getUsernameField() {
         return usernameField;
     }
 
+    public Label getUser1Label() {
+        return user1Label;
+    }
+
+    public Label getUser2Label() {
+        return user2Label;
+    }
+
+    public Label getUser3Label() {
+        return user3Label;
+    }
+
     public HashMap<User, Integer> getUsersAndChosenMaps() {
         return usersAndChosenMaps;
+    }
+
+    public User getCurrentMapSelector() {
+        return currentMapSelector;
+    }
+
+    public void setGameFull(boolean gameFull) {
+        this.gameFull = gameFull;
     }
 
     @Override
