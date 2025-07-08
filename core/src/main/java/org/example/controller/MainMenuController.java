@@ -18,16 +18,17 @@ public class MainMenuController extends MenuController {
         this.view = view;
     }
 
-    public void goToPregameMenu() {
+    public GraphicalResult goToPregameMenu() {
 
-        if ( App.getLoggedInUser().getCurrentGame() != null ){
-            ///  TODO: error player is already in a geme
-            return;
-        }
+        if (App.getLoggedInUser().getCurrentGame() != null)
+            return new GraphicalResult(
+                    "You are already in a game",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
 
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new PreGameMenuView());
-
+        return new GraphicalResult("", GameAssetManager.getGameAssetManager().getAcceptColor(), false);
     }
 
     public void goToProfileMenu() {

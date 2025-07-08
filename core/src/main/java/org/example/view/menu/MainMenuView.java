@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.Main;
 import org.example.controller.MainMenuController;
+import org.example.models.GraphicalResult;
 import org.example.models.Result;
 import org.example.models.enums.commands.MainMenuCommands;
 import org.example.view.AppMenu;
@@ -20,6 +21,7 @@ public class MainMenuView extends AppMenu {
 
     private final MainMenuController controller;
     private final Label menuTitleLabel;
+    private final GraphicalResult errorLabel;
     private final TextButton pregameMenuButton;
     private final TextButton profileMenuButton;
     private final TextButton logoutButton;
@@ -31,6 +33,8 @@ public class MainMenuView extends AppMenu {
         controller = new MainMenuController(this);
 
         menuTitleLabel = new Label("Main Menu", skin);
+
+        errorLabel = new GraphicalResult();
 
         pregameMenuButton = new TextButton("Pregame Menu", skin);
         profileMenuButton = new TextButton("Profile Menu", skin);
@@ -90,11 +94,13 @@ public class MainMenuView extends AppMenu {
 
         stage.addActor(menuBackground);
 
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 7f);
+        stage.addActor(errorLabel.getMessage());
     }
 
     @Override
     public void render(float delta) {
-
+        errorLabel.update(delta);
 
         if (fadeInTimer < 1f) {
             fadeInTimer += delta;
@@ -111,8 +117,6 @@ public class MainMenuView extends AppMenu {
         showMenuTitle();
         showGameLogo();
         showButtons();
-
-
     }
 
     @Override
@@ -141,12 +145,11 @@ public class MainMenuView extends AppMenu {
     }
 
     private void setListeners() {
-
         pregameMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.goToPregameMenu();
+                errorLabel.set(controller.goToPregameMenu());
             }
         });
 

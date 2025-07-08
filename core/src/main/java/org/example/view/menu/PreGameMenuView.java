@@ -14,6 +14,7 @@ import org.example.Main;
 import org.example.controller.PreGameMenuController;
 import org.example.models.App;
 import org.example.models.GameAssetManager;
+import org.example.models.GraphicalResult;
 import org.example.models.User;
 import org.example.view.AppMenu;
 
@@ -34,6 +35,8 @@ public class PreGameMenuView extends AppMenu {
     private final Label user1Label;
     private final Label user2Label;
     private final Label user3Label;
+
+    private final GraphicalResult errorLabel;
 
     private final TextButton addUserButton;
     private final TextButton backButton;
@@ -71,6 +74,8 @@ public class PreGameMenuView extends AppMenu {
         user1Label = new Label("", skin);
         user2Label = new Label("", skin);
         user3Label = new Label("", skin);
+
+        errorLabel = new GraphicalResult();
 
         usernameField = new TextField("", skin);
 
@@ -136,12 +141,17 @@ public class PreGameMenuView extends AppMenu {
         backButton.setHeight(usernameField.getHeight());
         createGameButton.setHeight(usernameField.getHeight());
 
-        addUserButton.setPosition( usernameField.getX() + usernameField.getWidth() + 50 , usernameField.getY() );
-        backButton.setPosition( usernameField.getX() + usernameField.getWidth()  + addUserButton.getWidth() + 350 , usernameField.getY() );
-        createGameButton.setPosition((Gdx.graphics.getWidth()/2f-createGameButton.getWidth())/2f , usernameField.getY());
+        addUserButton.setPosition(usernameField.getX() + usernameField.getWidth() + 50, usernameField.getY());
+        backButton.setPosition(
+                usernameField.getX() + usernameField.getWidth()  + addUserButton.getWidth() + 350,
+                usernameField.getY()
+        );
+        createGameButton.setPosition(
+                (Gdx.graphics.getWidth() - createGameButton.getWidth()) / 2f,
+                usernameField.getY() - usernameField.getHeight() * 1.5f
+        );
 
         addUserButton.setVisible(!gameFull);
-        createGameButton.setVisible(gameFull);
 
         stage.addActor(addUserButton);
         stage.addActor(backButton);
@@ -232,23 +242,20 @@ public class PreGameMenuView extends AppMenu {
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
         stage.addActor(menuBackground);
-
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 10f, 9 * Gdx.graphics.getHeight() / 12f);
+        stage.addActor(errorLabel.getMessage());
 
     }
 
     @Override
     public void render(float delta) {
-
+        errorLabel.update(delta);
         blinkerTimer += delta;
         mapSelectionLabel.setText("Dear " + currentMapSelector.getUsername() + " please choose your map ^-^");
 
         Main.getBatch().begin();
         Main.getBatch().end();
-
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
 
         showMenuTitle();
         showLabels();
@@ -258,6 +265,8 @@ public class PreGameMenuView extends AppMenu {
         makeCurrentMapBlinking();
         makeChosenMapsHalfTransparent();
 
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
     }
 
     @Override
@@ -291,10 +300,8 @@ public class PreGameMenuView extends AppMenu {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
                 controller.exitMenu();
-
             }
 
         });
@@ -305,7 +312,7 @@ public class PreGameMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
 
                 playClickSound();
-                controller.addUser();
+                errorLabel.set(controller.addUser());
 
             }
 
@@ -315,10 +322,8 @@ public class PreGameMenuView extends AppMenu {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
-                controller.chooseMap1();
-
+                errorLabel.set(controller.chooseMap(1));
             }
 
         });
@@ -327,10 +332,8 @@ public class PreGameMenuView extends AppMenu {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
-                controller.chooseMap2();
-
+                errorLabel.set(controller.chooseMap(2));
             }
 
         });
@@ -339,10 +342,8 @@ public class PreGameMenuView extends AppMenu {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
-                controller.chooseMap3();
-
+                errorLabel.set(controller.chooseMap(3));
             }
 
         });
@@ -351,10 +352,8 @@ public class PreGameMenuView extends AppMenu {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
-                controller.chooseMap4();
-
+                errorLabel.set(controller.chooseMap(4));
             }
 
         });
@@ -365,7 +364,7 @@ public class PreGameMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
 
                 playClickSound();
-                controller.createGame();
+                errorLabel.set(controller.createGame());
 
             }
 
@@ -410,6 +409,10 @@ public class PreGameMenuView extends AppMenu {
 
     public void setGameFull(boolean gameFull) {
         this.gameFull = gameFull;
+    }
+
+    public boolean isGameFull() {
+        return gameFull;
     }
 
     @Override

@@ -91,7 +91,8 @@ public class LoginMenuController extends MenuController {
         App.setCurrentMenu(Menu.MainMenu);
         return new GraphicalResult(
                 "You have successfully logged in.",
-                GameAssetManager.getGameAssetManager().getAcceptColor(), false
+                GameAssetManager.getGameAssetManager().getAcceptColor(),
+                false
         );
     }
 
