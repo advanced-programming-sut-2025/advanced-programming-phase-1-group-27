@@ -27,10 +27,10 @@ public class GameAssetManager {
     private final Color errorColor = new Color(1, 0.31f, 0, 1);
     private final Color acceptColor = new Color(0.216f, 0.831f, 0.255f, 1);
 
-    private final Texture map1 = new Texture(Gdx.files.internal("MapImage/avatar1.png"));
-    private final Texture map2 = new Texture(Gdx.files.internal("MapImage/avatar2.png"));
-    private final Texture map3 = new Texture(Gdx.files.internal("MapImage/avatar3.png"));
-    private final Texture map4 = new Texture(Gdx.files.internal("MapImage/avatar4.png"));
+    private final Texture map1 = new Texture(Gdx.files.internal("MapImage/avatar7.png"));
+    private final Texture map2 = new Texture(Gdx.files.internal("MapImage/avatar10.png"));
+    private final Texture map3 = new Texture(Gdx.files.internal("MapImage/avatar11.png"));
+    private final Texture map4 = new Texture(Gdx.files.internal("MapImage/avatar15.png"));
 
     {
         musicPlayer.setCurrentTrack(Track.THEME_1);
