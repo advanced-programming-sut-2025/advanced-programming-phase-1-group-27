@@ -16,21 +16,17 @@ import org.example.models.GraphicalResult;
 import org.example.models.User;
 import org.example.view.AppMenu;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class PreGameMenuView extends AppMenu {
 
-    // dx mapa = 11/90    width imagebutton = 1/15
-    // dy mapa = dx mapa
 
     private final PreGameMenuController controller;
     private Stage stage;
 
     private final Label menuTitle;
-    private final Label user0Label;
-    private final Label user1Label;
-    private final Label user2Label;
-    private final Label user3Label;
     private final Label mapSelectionLabel;
     private final Label usernameLabel;
     private final Label playersLabel;
@@ -45,23 +41,26 @@ public class PreGameMenuView extends AppMenu {
     private final ImageButton map3Button;
     private final ImageButton map4Button;
 
-    private final GraphicalResult error;
-
     private User currentMapSelector;
 
-    private Integer chosenMapByUser = null;
+
+    private HashMap<User,Integer> usersAndChosenMaps = new HashMap<>();
 
     public PreGameMenuView() {
 
-        this.controller = new PreGameMenuController(this);
+        controller = new PreGameMenuController(this);
 
         currentMapSelector = App.getLoggedInUser();
 
+
+        for ( User user: App.getUsers() ){
+
+            usersAndChosenMaps.put(user, controller.assignRandomMap());
+
+        }
+
+
         menuTitle = new Label("Pre Game Menu", skin);
-        user0Label = new Label("#    " + App.getLoggedInUser().getUsername() , skin);
-        user1Label = new Label("" , skin);
-        user2Label = new Label("" , skin);
-        user3Label = new Label("#    " + "yusoffff" , skin);
         mapSelectionLabel = new Label("Dear " + currentMapSelector.getUsername() + " please choose your map ^-^", skin);
         usernameLabel = new Label("Player Username:", skin);
         playersLabel = new Label("Players:", skin);
@@ -75,10 +74,6 @@ public class PreGameMenuView extends AppMenu {
         map2Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap2()));
         map3Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap3()));
         map4Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap4()));
-
-        error = new GraphicalResult();
-
-
 
         setListeners();
 
@@ -96,22 +91,20 @@ public class PreGameMenuView extends AppMenu {
 
 
         playersLabel.setPosition(Gdx.graphics.getWidth() / 10f, 8 * Gdx.graphics.getHeight() / 12f);
-        user0Label.setPosition(Gdx.graphics.getWidth() / 8f, 7 * Gdx.graphics.getHeight() / 12f);
-        user1Label.setPosition(Gdx.graphics.getWidth() / 8f, 6 * Gdx.graphics.getHeight() / 12f);
-        user2Label.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 12f);
-        user3Label.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 12f);
         usernameLabel.setPosition(Gdx.graphics.getWidth() / 10f, 2 * Gdx.graphics.getHeight() / 12f);
 
         mapSelectionLabel.setPosition(Gdx.graphics.getWidth() / 2f, 8 * Gdx.graphics.getHeight() / 12f);
 
-
+        int userIndex = 0;
+        for (User user : usersAndChosenMaps.keySet()) {
+            Label addedPlayerLabel = new Label("#    " + user.getUsername(), skin);
+            addedPlayerLabel.setPosition(Gdx.graphics.getWidth() / 8f, (7-userIndex) * Gdx.graphics.getHeight() / 12f);
+            stage.addActor(addedPlayerLabel);
+            userIndex ++;
+        }
 
 
         stage.addActor(playersLabel);
-        stage.addActor(user0Label);
-        stage.addActor(user1Label);
-        stage.addActor(user2Label);
-        stage.addActor(user3Label);
         stage.addActor(usernameLabel);
         stage.addActor(mapSelectionLabel);
 
@@ -210,6 +203,14 @@ public class PreGameMenuView extends AppMenu {
 
     private void setListeners() {
 
+    }
+
+    public TextField getUsernameField() {
+        return usernameField;
+    }
+
+    public HashMap<User, Integer> getUsersAndChosenMaps() {
+        return usersAndChosenMaps;
     }
 
     @Override
