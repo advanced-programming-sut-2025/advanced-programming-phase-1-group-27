@@ -1,13 +1,13 @@
 package org.example.controller;
 
 import org.example.Main;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.User;
+import org.example.models.*;
 import org.example.models.enums.Menu;
+import org.example.view.HomeView;
 import org.example.view.menu.MainMenuView;
 import org.example.view.menu.PreGameMenuView;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PreGameMenuController extends MenuController {
@@ -30,6 +30,16 @@ public class PreGameMenuController extends MenuController {
 
         if ( addedUser == null ){
             ///  TODO: error user not found bede
+            return;
+        }
+
+        if ( view.getUsersAndChosenMaps().containsKey(addedUser) ){
+            ///  TODO: error already in current game
+            return;
+        }
+
+        if ( addedUser.getCurrentGame() != null ){
+            ///  TODO: error only in one game
             return;
         }
 
@@ -85,6 +95,34 @@ public class PreGameMenuController extends MenuController {
     }
 
     public void createGame(){
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        for (User user : view.getUsersAndChosenMaps().keySet()) {
+            players.add(new Player(user));
+        }
+
+        Game game;
+        App.setCurrentGame(game = new Game(players));
+        game.init();
+        for (User user : view.getUsersAndChosenMaps().keySet()) {
+            user.setCurrentGame(game);
+        }
+
+        for ( Player player : players ){
+
+            int mapId = view.getUsersAndChosenMaps().get(App.getUserByUsername(player.getUsername())) - 1;
+            //   -1 kardam chon map haton zero base boodan vali man 1 base zadam
+
+            player.setFarmMap(game.getFarmMap(mapId));
+            player.setCurrentCell(game.getFarmMap(mapId).getCell(8, 70));
+            game.getFarmMap(mapId).getHut().setOwner(player);
+
+        }
+
+        App.setCurrentMenu(Menu.Home);
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new HomeView());
 
     }
 

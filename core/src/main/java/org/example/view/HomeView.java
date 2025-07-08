@@ -1,5 +1,10 @@
 package org.example.view;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.Main;
 import org.example.controller.HomeController;
 import org.example.models.App;
 import org.example.models.Result;
@@ -13,19 +18,38 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class HomeView extends AppMenu {
+
     private final HomeController controller;
+    private Stage stage;
+
 
     public HomeView() {
+
         controller = new HomeController(this);
+
+
+        setListeners();
+
     }
 
     @Override
     public void show() {
 
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        stage.addActor(menuBackground);
+        stage.addActor(new Label("Home!",skin));
+
     }
 
     @Override
     public void render(float v) {
+
+        Main.getBatch().begin();
+        Main.getBatch().end();
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
 
     }
 
@@ -51,6 +75,12 @@ public class HomeView extends AppMenu {
 
     @Override
     public void dispose() {
+
+    }
+
+    private void setListeners(){
+
+
 
     }
 

@@ -20,7 +20,11 @@ public class MainMenuController extends MenuController {
 
     public void goToPregameMenu() {
 
-//        App.setCurrentMenu(Menu.PregameMenu);
+        if ( App.getLoggedInUser().getCurrentGame() != null ){
+            ///  TODO: error player is already in a geme
+            return;
+        }
+
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new PreGameMenuView());
 
