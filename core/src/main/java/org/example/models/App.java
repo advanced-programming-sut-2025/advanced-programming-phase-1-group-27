@@ -36,13 +36,13 @@ public class App {
         userYusof.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
 
         User userRassa = new User("Rassa", User.hashPassword("!Rassa@1384"), "joe", "yusof@gmail.com", Gender.Male);
-        userYusof.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        userRassa.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
 
         User userParsa = new User("Parsa", User.hashPassword("!Parsa@1384"), "joe", "yusof@gmail.com", Gender.Male);
-        userYusof.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        userParsa.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
 
         User userSobhan = new User("Sobhan", User.hashPassword("!Sobhan@1385"), "joe", "yusof@gmail.com", Gender.Male);
-        userYusof.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        userSobhan.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
 
         users.add(userYusof);
         users.add(userRassa);
