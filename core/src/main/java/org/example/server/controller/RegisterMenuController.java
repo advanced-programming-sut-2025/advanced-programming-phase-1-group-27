@@ -2,9 +2,9 @@ package org.example.server.controller;
 
 import com.badlogic.gdx.graphics.Color;
 import org.example.client.Main;
-import org.example.models.*;
-import org.example.models.enums.Gender;
-import org.example.models.enums.Menu;
+import org.example.server.models.*;
+import org.example.server.models.enums.Gender;
+import org.example.server.models.enums.Menu;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.SecurityQuestionMenuView;
 import org.example.client.view.menu.WelcomeMenuView;

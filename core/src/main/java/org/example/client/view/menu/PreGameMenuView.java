@@ -12,10 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.PreGameMenuController;
-import org.example.models.App;
-import org.example.models.GameAssetManager;
-import org.example.models.GraphicalResult;
-import org.example.models.User;
+import org.example.server.models.App;
+import org.example.server.models.GameAssetManager;
+import org.example.server.models.GraphicalResult;
+import org.example.server.models.User;
 import org.example.client.view.AppMenu;
 
 import java.util.HashMap;

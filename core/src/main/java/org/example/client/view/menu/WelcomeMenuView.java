@@ -9,9 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.WelcomeMenuController;
-import org.example.models.GameAssetManager;
-import org.example.models.Result;
-import org.example.models.enums.commands.MainMenuCommands;
+import org.example.server.models.GameAssetManager;
+import org.example.server.models.Result;
+import org.example.server.models.enums.commands.MainMenuCommands;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;

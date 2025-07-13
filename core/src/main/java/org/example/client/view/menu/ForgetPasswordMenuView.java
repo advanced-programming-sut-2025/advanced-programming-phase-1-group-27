@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.ForgetPasswordMenuController;
-import org.example.models.GameAssetManager;
-import org.example.models.GraphicalResult;
+import org.example.server.models.GameAssetManager;
+import org.example.server.models.GraphicalResult;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;

@@ -2,12 +2,12 @@ package org.example.server.controller.shopcontroller;
 
 import org.example.server.controller.MenuController;
 import org.example.server.controller.ToolController;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.Stock;
-import org.example.models.enums.Menu;
-import org.example.models.enums.StackLevel;
-import org.example.models.enums.items.ToolType;
+import org.example.server.models.App;
+import org.example.server.models.Result;
+import org.example.server.models.Stock;
+import org.example.server.models.enums.Menu;
+import org.example.server.models.enums.StackLevel;
+import org.example.server.models.enums.items.ToolType;
 import org.example.client.view.shopview.BlackSmithShop;
 
 import java.util.Map;

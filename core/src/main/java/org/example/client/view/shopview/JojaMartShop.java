@@ -2,13 +2,13 @@ package org.example.client.view.shopview;
 
 import org.example.server.controller.GameMenuController;
 import org.example.server.controller.shopcontroller.JojaMartShopController;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.enums.Menu;
-import org.example.models.enums.commands.CheatCommands;
-import org.example.models.enums.commands.GameMenuCommands;
-import org.example.models.enums.commands.MainMenuCommands;
-import org.example.models.enums.commands.ShopCommands;
+import org.example.server.models.App;
+import org.example.server.models.Result;
+import org.example.server.models.enums.Menu;
+import org.example.server.models.enums.commands.CheatCommands;
+import org.example.server.models.enums.commands.GameMenuCommands;
+import org.example.server.models.enums.commands.MainMenuCommands;
+import org.example.server.models.enums.commands.ShopCommands;
 import org.example.client.view.AppMenu;
 import org.example.client.view.GameView;
 

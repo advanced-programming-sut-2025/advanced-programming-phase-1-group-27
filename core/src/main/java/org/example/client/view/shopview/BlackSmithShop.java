@@ -1,14 +1,14 @@
 package org.example.client.view.shopview;
 
-import org.example.models.enums.commands.*;
 import org.example.server.controller.GameMenuController;
 import org.example.server.controller.ToolController;
 import org.example.server.controller.shopcontroller.BlackSmithShopController;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.enums.Menu;
+import org.example.server.models.App;
+import org.example.server.models.Result;
+import org.example.server.models.enums.Menu;
 import org.example.client.view.AppMenu;
 import org.example.client.view.GameView;
+import org.example.server.models.enums.commands.*;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

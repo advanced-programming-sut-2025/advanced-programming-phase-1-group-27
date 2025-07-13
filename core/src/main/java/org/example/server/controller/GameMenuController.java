@@ -1,18 +1,18 @@
 package org.example.server.controller;
 
-import org.example.models.AnimalProperty.Animal;
-import org.example.models.*;
-import org.example.models.Map.*;
-import org.example.models.Shops.Shop;
-import org.example.models.enums.*;
-import org.example.models.enums.Plants.*;
-import org.example.models.enums.Seasons.Season;
-import org.example.models.enums.Weathers.Weather;
-import org.example.models.enums.items.*;
-import org.example.models.enums.items.products.AnimalProduct;
-import org.example.models.enums.items.products.CookingProduct;
-import org.example.models.enums.items.products.CraftingProduct;
-import org.example.models.enums.items.products.ProcessedProductType;
+import org.example.server.models.*;
+import org.example.server.models.AnimalProperty.Animal;
+import org.example.server.models.Map.*;
+import org.example.server.models.Shops.Shop;
+import org.example.server.models.enums.*;
+import org.example.server.models.enums.Plants.*;
+import org.example.server.models.enums.Seasons.Season;
+import org.example.server.models.enums.Weathers.Weather;
+import org.example.server.models.enums.items.*;
+import org.example.server.models.enums.items.products.AnimalProduct;
+import org.example.server.models.enums.items.products.CookingProduct;
+import org.example.server.models.enums.items.products.CraftingProduct;
+import org.example.server.models.enums.items.products.ProcessedProductType;
 import org.example.client.view.GameView;
 
 import java.util.ArrayList;

@@ -12,8 +12,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.SecurityQuestionMenuController;
-import org.example.models.User;
-import org.example.models.enums.Questions;
+import org.example.server.models.User;
+import org.example.server.models.enums.Questions;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;

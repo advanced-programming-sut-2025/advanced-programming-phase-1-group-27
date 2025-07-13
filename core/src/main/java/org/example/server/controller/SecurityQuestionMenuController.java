@@ -1,11 +1,11 @@
 package org.example.server.controller;
 
 import org.example.client.Main;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.SecurityQuestion;
-import org.example.models.enums.Menu;
-import org.example.models.enums.Questions;
+import org.example.server.models.App;
+import org.example.server.models.Result;
+import org.example.server.models.SecurityQuestion;
+import org.example.server.models.enums.Menu;
+import org.example.server.models.enums.Questions;
 import org.example.client.view.menu.LoginMenuView;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.SecurityQuestionMenuView;

@@ -1,18 +1,18 @@
 package org.example.server.controller.shopcontroller;
 
 import org.example.server.controller.MenuController;
-import org.example.models.AnimalProperty.Animal;
-import org.example.models.AnimalProperty.Barn;
-import org.example.models.AnimalProperty.Coop;
-import org.example.models.App;
-import org.example.models.Player;
-import org.example.models.Result;
-import org.example.models.Shops.Shop;
-import org.example.models.Stock;
-import org.example.models.enums.Menu;
-import org.example.models.enums.items.AnimalType;
-import org.example.models.enums.items.ShopItems;
-import org.example.models.enums.items.ToolType;
+import org.example.server.models.AnimalProperty.Animal;
+import org.example.server.models.AnimalProperty.Barn;
+import org.example.server.models.AnimalProperty.Coop;
+import org.example.server.models.App;
+import org.example.server.models.Player;
+import org.example.server.models.Result;
+import org.example.server.models.Shops.Shop;
+import org.example.server.models.Stock;
+import org.example.server.models.enums.Menu;
+import org.example.server.models.enums.items.AnimalType;
+import org.example.server.models.enums.items.ShopItems;
+import org.example.server.models.enums.items.ToolType;
 import org.example.client.view.shopview.MarnieRanch;
 
 public class MarnieRanchShopController extends MenuController {

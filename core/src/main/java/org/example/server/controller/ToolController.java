@@ -1,10 +1,10 @@
 package org.example.server.controller;
 
-import org.example.models.*;
-import org.example.models.enums.StackLevel;
-import org.example.models.enums.items.ToolType;
-import org.example.models.enums.items.products.ProcessedProductType;
-import org.example.models.tools.*;
+import org.example.server.models.*;
+import org.example.server.models.enums.StackLevel;
+import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.enums.items.products.ProcessedProductType;
+import org.example.server.models.tools.*;
 
 public class ToolController {
 

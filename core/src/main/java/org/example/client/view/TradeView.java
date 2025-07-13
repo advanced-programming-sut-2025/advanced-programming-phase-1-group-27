@@ -1,13 +1,13 @@
 package org.example.client.view;
 
 import org.example.server.controller.InteractionsWithOthers.TradeController;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.enums.Menu;
-import org.example.models.enums.commands.CheatCommands;
-import org.example.models.enums.commands.GameMenuCommands;
-import org.example.models.enums.commands.InteractionsWithUserCommands;
-import org.example.models.enums.commands.MainMenuCommands;
+import org.example.server.models.App;
+import org.example.server.models.Result;
+import org.example.server.models.enums.Menu;
+import org.example.server.models.enums.commands.CheatCommands;
+import org.example.server.models.enums.commands.GameMenuCommands;
+import org.example.server.models.enums.commands.InteractionsWithUserCommands;
+import org.example.server.models.enums.commands.MainMenuCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

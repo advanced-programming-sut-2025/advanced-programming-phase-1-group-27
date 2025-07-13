@@ -1,16 +1,16 @@
 package org.example.server.controller.shopcontroller;
 
 import org.example.server.controller.MenuController;
-import org.example.models.AnimalProperty.Barn;
-import org.example.models.AnimalProperty.Coop;
-import org.example.models.*;
-import org.example.models.Map.FarmMap;
-import org.example.models.Shops.Shop;
-import org.example.models.enums.Menu;
-import org.example.models.enums.StackLevel;
-import org.example.models.enums.items.BuildingType;
-import org.example.models.enums.items.MineralType;
-import org.example.models.enums.items.Recipe;
+import org.example.server.models.*;
+import org.example.server.models.AnimalProperty.Barn;
+import org.example.server.models.AnimalProperty.Coop;
+import org.example.server.models.Map.FarmMap;
+import org.example.server.models.Shops.Shop;
+import org.example.server.models.enums.Menu;
+import org.example.server.models.enums.StackLevel;
+import org.example.server.models.enums.items.BuildingType;
+import org.example.server.models.enums.items.MineralType;
+import org.example.server.models.enums.items.Recipe;
 import org.example.client.view.shopview.CarpenterShop;
 
 public class CarpenterShopController extends MenuController {

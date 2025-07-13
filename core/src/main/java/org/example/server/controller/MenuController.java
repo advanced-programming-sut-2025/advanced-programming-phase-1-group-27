@@ -1,9 +1,9 @@
 package org.example.server.controller;
 
 import com.badlogic.gdx.audio.Sound;
-import org.example.models.App;
-import org.example.models.GameAssetManager;
-import org.example.models.Result;
+import org.example.server.models.App;
+import org.example.server.models.GameAssetManager;
+import org.example.server.models.Result;
 
 public abstract class MenuController {
 

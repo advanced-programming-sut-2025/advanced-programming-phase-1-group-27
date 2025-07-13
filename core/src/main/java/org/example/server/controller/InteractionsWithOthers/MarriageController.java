@@ -1,15 +1,15 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.models.App;
-import org.example.models.Player;
-import org.example.models.Relations.Dialogue;
-import org.example.models.Relations.Relation;
-import org.example.models.Result;
-import org.example.models.enums.DialogueType;
-import org.example.models.enums.Gender;
-import org.example.models.enums.StackLevel;
-import org.example.models.enums.items.ShopItems;
-import org.example.models.tools.Backpack;
+import org.example.server.models.App;
+import org.example.server.models.Player;
+import org.example.server.models.Relations.Dialogue;
+import org.example.server.models.Relations.Relation;
+import org.example.server.models.Result;
+import org.example.server.models.enums.DialogueType;
+import org.example.server.models.enums.Gender;
+import org.example.server.models.enums.StackLevel;
+import org.example.server.models.enums.items.ShopItems;
+import org.example.server.models.tools.Backpack;
 
 public class MarriageController {
 

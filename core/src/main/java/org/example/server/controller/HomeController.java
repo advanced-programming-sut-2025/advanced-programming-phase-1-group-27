@@ -1,15 +1,15 @@
 package org.example.server.controller;
 
-import org.example.models.*;
-import org.example.models.Map.Hut;
-import org.example.models.enums.Menu;
-import org.example.models.enums.Plants.FruitType;
-import org.example.models.enums.StackLevel;
-import org.example.models.enums.items.Recipe;
-import org.example.models.enums.items.products.AnimalProduct;
-import org.example.models.enums.items.products.CookingProduct;
-import org.example.models.enums.items.products.CraftingProduct;
-import org.example.models.tools.Backpack;
+import org.example.server.models.*;
+import org.example.server.models.Map.Hut;
+import org.example.server.models.enums.Menu;
+import org.example.server.models.enums.Plants.FruitType;
+import org.example.server.models.enums.StackLevel;
+import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.enums.items.products.AnimalProduct;
+import org.example.server.models.enums.items.products.CookingProduct;
+import org.example.server.models.enums.items.products.CraftingProduct;
+import org.example.server.models.tools.Backpack;
 import org.example.client.view.HomeView;
 
 public class HomeController extends MenuController {

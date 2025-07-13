@@ -1,19 +1,19 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.models.*;
-import org.example.models.NPCs.NPC;
-import org.example.models.NPCs.Quest;
-import org.example.models.Relations.Relation;
-import org.example.models.enums.ArtisanTypes;
-import org.example.models.enums.Features;
-import org.example.models.enums.Plants.CropType;
-import org.example.models.enums.Seasons.Season;
-import org.example.models.enums.StackLevel;
-import org.example.models.enums.Weathers.Weather;
-import org.example.models.enums.items.Recipe;
-import org.example.models.enums.items.ShopItems;
-import org.example.models.enums.items.ToolType;
-import org.example.models.tools.Backpack;
+import org.example.server.models.*;
+import org.example.server.models.NPCs.NPC;
+import org.example.server.models.NPCs.Quest;
+import org.example.server.models.Relations.Relation;
+import org.example.server.models.enums.ArtisanTypes;
+import org.example.server.models.enums.Features;
+import org.example.server.models.enums.Plants.CropType;
+import org.example.server.models.enums.Seasons.Season;
+import org.example.server.models.enums.StackLevel;
+import org.example.server.models.enums.Weathers.Weather;
+import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.enums.items.ShopItems;
+import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
 

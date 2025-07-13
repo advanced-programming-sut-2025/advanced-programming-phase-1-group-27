@@ -6,11 +6,11 @@ import org.example.client.view.menu.ProfileMenuView;
 import org.example.server.controller.LoginMenuController;
 import org.example.server.controller.MainMenuController;
 import org.example.server.controller.ProfileMenuController;
-import org.example.models.App;
-import org.example.models.Result;
-import org.example.models.User;
-import org.example.models.enums.Gender;
-import org.example.models.enums.Menu;
+import org.example.server.models.App;
+import org.example.server.models.Result;
+import org.example.server.models.User;
+import org.example.server.models.enums.Gender;
+import org.example.server.models.enums.Menu;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,8 @@
 package org.example.server.controller;
 
 import org.example.client.Main;
-import org.example.models.*;
-import org.example.models.enums.Menu;
+import org.example.server.models.*;
+import org.example.server.models.enums.Menu;
 import org.example.client.view.HomeView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.PreGameMenuView;

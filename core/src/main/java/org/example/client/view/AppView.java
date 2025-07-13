@@ -1,8 +1,8 @@
 package org.example.client.view;
 
 import org.example.client.Main;
-import org.example.models.App;
-import org.example.models.enums.Menu;
+import org.example.server.models.App;
+import org.example.server.models.enums.Menu;
 import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.WelcomeMenuView;
 

@@ -1,11 +1,11 @@
 package org.example.server.controller.shopcontroller;
 
 import org.example.server.controller.MenuController;
-import org.example.models.App;
-import org.example.models.Player;
-import org.example.models.Result;
-import org.example.models.Stock;
-import org.example.models.enums.Menu;
+import org.example.server.models.App;
+import org.example.server.models.Player;
+import org.example.server.models.Result;
+import org.example.server.models.Stock;
+import org.example.server.models.enums.Menu;
 import org.example.client.view.shopview.JojaMartShop;
 
 public class JojaMartShopController extends MenuController {

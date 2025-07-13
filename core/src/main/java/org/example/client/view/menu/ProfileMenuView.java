@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.ProfileMenuController;
-import org.example.models.Result;
-import org.example.models.enums.commands.MainMenuCommands;
-import org.example.models.enums.commands.ProfileMenuCommands;
+import org.example.server.models.Result;
+import org.example.server.models.enums.commands.MainMenuCommands;
+import org.example.server.models.enums.commands.ProfileMenuCommands;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;
