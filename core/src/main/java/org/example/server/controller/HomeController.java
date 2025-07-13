@@ -1,10 +1,13 @@
 package org.example.server.controller;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.*;
 import org.example.server.models.Map.Hut;
 import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.Plants.FruitType;
+import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.StackLevel;
+import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
@@ -17,6 +20,78 @@ public class HomeController extends MenuController {
 
     public HomeController(HomeView view) {
         this.view = view;
+    }
+
+    private Texture getClockByGameState(){
+
+        Game currentGame = App.getCurrentGame();
+
+        if ( currentGame.getTime().getSeason().equals(Season.Spring) ){
+
+            if ( currentGame.getCurrentWeather().equals(Weather.Rainy) ){
+                return GameAssetManager.getGameAssetManager().getRainySpring();
+            }
+            else if ( currentGame.getCurrentWeather().equals(Weather.Sunny) ){
+                return GameAssetManager.getGameAssetManager().getSunnySpring();
+            }
+            else if ( currentGame.getCurrentWeather().equals(Weather.Stormy) ){
+                return GameAssetManager.getGameAssetManager().getStormySpring();
+            }
+            else{
+                return GameAssetManager.getGameAssetManager().getSnowySpring();
+            }
+
+        }
+        else if ( App.getCurrentGame().getTime().getSeason().equals(Season.Summer) ){
+
+            if ( currentGame.getCurrentWeather().equals(Weather.Rainy) ){
+                return GameAssetManager.getGameAssetManager().getRainySummer();
+            }
+            else if ( currentGame.getCurrentWeather().equals(Weather.Sunny) ){
+                return GameAssetManager.getGameAssetManager().getSunnySummer();
+            }
+            else if ( currentGame.getCurrentWeather().equals(Weather.Stormy) ){
+                return GameAssetManager.getGameAssetManager().getStormySummer();
+            }
+            else{
+                return GameAssetManager.getGameAssetManager().getSnowySummer();
+            }
+
+        }
+        else if ( App.getCurrentGame().getTime().getSeason().equals(Season.Fall) ){
+
+            if ( currentGame.getCurrentWeather().equals(Weather.Rainy) ){
+                return GameAssetManager.getGameAssetManager().getRainyFall();
+            }
+            else if ( currentGame.getCurrentWeather().equals(Weather.Sunny) ){
+                return GameAssetManager.getGameAssetManager().getSunnyFall();
+            }
+            else if ( currentGame.getCurrentWeather().equals(Weather.Stormy) ){
+                return GameAssetManager.getGameAssetManager().getStormyFall();
+            }
+            else{
+                return GameAssetManager.getGameAssetManager().getSnowyFall();
+            }
+
+        }
+
+        if ( currentGame.getCurrentWeather().equals(Weather.Rainy) ){
+            return GameAssetManager.getGameAssetManager().getRainyWinter();
+        }
+        else if ( currentGame.getCurrentWeather().equals(Weather.Sunny) ){
+            return GameAssetManager.getGameAssetManager().getSunnyWinter();
+        }
+        else if ( currentGame.getCurrentWeather().equals(Weather.Stormy) ){
+            return GameAssetManager.getGameAssetManager().getStormyWinter();
+        }
+        else{
+            return GameAssetManager.getGameAssetManager().getSnowyWinter();
+        }
+
+    }
+
+    public void updateClockTexture(){
+        view.setClockTexture(getClockByGameState());
     }
 
     public Result enterMenu(String menuName) {

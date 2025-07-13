@@ -1,8 +1,13 @@
 package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.HomeController;
@@ -21,16 +26,31 @@ public class HomeView extends AppMenu {
 
     private final HomeController controller;
     private Stage stage;
+    private Texture clockTexture;
+    private final TextButton advanceTimeButton;
 
 
     public HomeView() {
 
         controller = new HomeController(this);
-
+        advanceTimeButton = new TextButton("advance",skin);
 
         setListeners();
 
     }
+
+
+    private void displayClock(){
+
+        controller.updateClockTexture();
+        Image clockImage = new Image(clockTexture);
+
+        clockImage.setPosition(Gdx.graphics.getWidth()-clockImage.getWidth(),Gdx.graphics.getHeight()-clockImage.getHeight());
+
+        stage.addActor(clockImage);
+
+    }
+
 
     @Override
     public void show() {
@@ -38,7 +58,8 @@ public class HomeView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         stage.addActor(menuBackground);
-        stage.addActor(new Label("Home!",skin));
+
+        stage.addActor(advanceTimeButton);
 
     }
 
@@ -50,6 +71,10 @@ public class HomeView extends AppMenu {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+
+
+        displayClock();
 
     }
 
@@ -78,10 +103,22 @@ public class HomeView extends AppMenu {
 
     }
 
+
+
     private void setListeners(){
 
+        advanceTimeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                App.getCurrentGame().getTime().cheatAdvanceTime(750);
+            }
+        });
 
+    }
 
+    public void setClockTexture(Texture clockTexture) {
+        this.clockTexture = clockTexture;
     }
 
     public void executeCommands(Scanner scanner) {

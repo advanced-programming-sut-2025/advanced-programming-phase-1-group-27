@@ -32,6 +32,24 @@ public class GameAssetManager {
     private final Texture map3 = new Texture(Gdx.files.internal("MapImage/avatar11.png"));
     private final Texture map4 = new Texture(Gdx.files.internal("MapImage/avatar15.png"));
 
+    private final Texture rainyFall = new Texture(Gdx.files.internal("Clock/RainyFall.png"));
+    private final Texture stormyFall = new Texture(Gdx.files.internal("Clock/StormyFall.png"));
+    private final Texture sunnyFall = new Texture(Gdx.files.internal("Clock/SunnyFall.png"));
+    private final Texture snowyFall = new Texture(Gdx.files.internal("Clock/SnowyFall.png"));
+    private final Texture rainyWinter = new Texture(Gdx.files.internal("Clock/RainyWinter.png"));
+    private final Texture stormyWinter = new Texture(Gdx.files.internal("Clock/StormyWinter.png"));
+    private final Texture sunnyWinter = new Texture(Gdx.files.internal("Clock/SunnyWinter.png"));
+    private final Texture snowyWinter = new Texture(Gdx.files.internal("Clock/SnowyWinter.png"));
+    private final Texture rainySpring = new Texture(Gdx.files.internal("Clock/RainySpring.png"));
+    private final Texture stormySpring = new Texture(Gdx.files.internal("Clock/StormySpring.png"));
+    private final Texture sunnySpring = new Texture(Gdx.files.internal("Clock/SunnySpring.png"));
+    private final Texture snowySpring = new Texture(Gdx.files.internal("Clock/SnowySpring.png"));
+    private final Texture rainySummer = new Texture(Gdx.files.internal("Clock/RainySummer.png"));
+    private final Texture stormySummer = new Texture(Gdx.files.internal("Clock/StormySummer.png"));
+    private final Texture sunnySummer = new Texture(Gdx.files.internal("Clock/SunnySummer.png"));
+    private final Texture snowySummer = new Texture(Gdx.files.internal("Clock/SnowySummer.png"));
+
+
     {
         musicPlayer.setCurrentTrack(Track.THEME_1);
     }
@@ -43,6 +61,70 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Texture getRainyFall() {
+        return rainyFall;
+    }
+
+    public Texture getStormyFall() {
+        return stormyFall;
+    }
+
+    public Texture getSunnyFall() {
+        return sunnyFall;
+    }
+
+    public Texture getSnowyFall() {
+        return snowyFall;
+    }
+
+    public Texture getRainyWinter() {
+        return rainyWinter;
+    }
+
+    public Texture getStormyWinter() {
+        return stormyWinter;
+    }
+
+    public Texture getSunnyWinter() {
+        return sunnyWinter;
+    }
+
+    public Texture getSnowyWinter() {
+        return snowyWinter;
+    }
+
+    public Texture getRainySpring() {
+        return rainySpring;
+    }
+
+    public Texture getStormySpring() {
+        return stormySpring;
+    }
+
+    public Texture getSunnySpring() {
+        return sunnySpring;
+    }
+
+    public Texture getSnowySpring() {
+        return snowySpring;
+    }
+
+    public Texture getRainySummer() {
+        return rainySummer;
+    }
+
+    public Texture getStormySummer() {
+        return stormySummer;
+    }
+
+    public Texture getSunnySummer() {
+        return sunnySummer;
+    }
+
+    public Texture getSnowySummer() {
+        return snowySummer;
     }
 
     public Texture getMap1() {
