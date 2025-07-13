@@ -28,6 +28,22 @@ public class User {
         this.gender = gender;
     }
 
+    public User(String username, String password, String nickname, String email, String gender ,
+                String question, String answer , int maxMoneyEarned, int numberOfGamesPlayed) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        if(gender.equals("male")){
+            this.gender =  Gender.Male;
+        }else {
+            this.gender =  Gender.Female;
+        }
+        this.recoveryQuestion = new SecurityQuestion(question, answer);
+        this.maxMoneyEarned = maxMoneyEarned;
+        this.numberOfGamesPlayed = numberOfGamesPlayed;
+    }
+
     public User() {
 
     }

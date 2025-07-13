@@ -47,4 +47,8 @@ public class ServerApp {
             return;
         connections.add(clientConnectionThread);
     }
+
+    public static void setUsers(ArrayList<User> users) {
+        ServerApp.users = users;
+    }
 }
