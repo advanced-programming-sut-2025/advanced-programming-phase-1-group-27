@@ -49,6 +49,7 @@ public class GameAssetManager {
     private final Texture sunnySummer = new Texture(Gdx.files.internal("Clock/SunnySummer.png"));
     private final Texture snowySummer = new Texture(Gdx.files.internal("Clock/SnowySummer.png"));
 
+    private final Texture arrowTexture = new  Texture(Gdx.files.internal("Clock/Arrow.png"));
 
     {
         musicPlayer.setCurrentTrack(Track.THEME_1);
@@ -125,6 +126,10 @@ public class GameAssetManager {
 
     public Texture getSnowySummer() {
         return snowySummer;
+    }
+
+    public Texture getArrowTexture() {
+        return arrowTexture;
     }
 
     public Texture getMap1() {

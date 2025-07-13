@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.HomeController;
 import org.example.server.models.App;
+import org.example.server.models.GameAssetManager;
 import org.example.server.models.Result;
 import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.commands.CheatCommands;
@@ -26,30 +27,54 @@ public class HomeView extends AppMenu {
 
     private final HomeController controller;
     private Stage stage;
-    private Texture clockTexture;
+    private Image clockImage;
     private final TextButton advanceTimeButton;
+    private final Image clockArrowImage;
 
 
     public HomeView() {
 
         controller = new HomeController(this);
         advanceTimeButton = new TextButton("advance",skin);
+        clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
 
         setListeners();
 
     }
 
 
+
+
     private void displayClock(){
 
-        controller.updateClockTexture();
-        Image clockImage = new Image(clockTexture);
+        controller.updateClockImage();
 
         clockImage.setPosition(Gdx.graphics.getWidth()-clockImage.getWidth(),Gdx.graphics.getHeight()-clockImage.getHeight());
 
+
+        clockArrowImage.setPosition(
+                clockImage.getX() + (0.255f * clockImage.getWidth()),
+                clockImage.getY() + (0.37f * clockImage.getHeight())
+        );
+        clockArrowImage.setOrigin(
+                clockArrowImage.getWidth() / 2,
+                clockArrowImage.getHeight()
+        );
+        clockArrowImage.setRotation(controller.getClockArrowDegree());
+
+
+
         stage.addActor(clockImage);
+        stage.addActor(clockArrowImage);
+        clockArrowImage.toFront();
+
+
 
     }
+
+
+
+
 
 
     @Override
@@ -60,6 +85,7 @@ public class HomeView extends AppMenu {
         stage.addActor(menuBackground);
 
         stage.addActor(advanceTimeButton);
+
 
     }
 
@@ -72,9 +98,8 @@ public class HomeView extends AppMenu {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-
-
         displayClock();
+
 
     }
 
@@ -111,14 +136,14 @@ public class HomeView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                App.getCurrentGame().getTime().cheatAdvanceTime(750);
+                App.getCurrentGame().getTime().cheatAdvanceTime(1);
             }
         });
 
     }
 
-    public void setClockTexture(Texture clockTexture) {
-        this.clockTexture = clockTexture;
+    public void setClockImage(Image clockImage) {
+        this.clockImage = clockImage;
     }
 
     public void executeCommands(Scanner scanner) {

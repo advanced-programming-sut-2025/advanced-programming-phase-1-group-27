@@ -1,11 +1,13 @@
 package org.example.client.view;
 
 import org.example.client.Main;
-import org.example.server.models.App;
+import org.example.server.models.*;
+import org.example.server.models.enums.Gender;
 import org.example.server.models.enums.Menu;
 import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.WelcomeMenuView;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AppView {
@@ -27,6 +29,7 @@ public class AppView {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new HomeView());
     }
+
 
 
 }

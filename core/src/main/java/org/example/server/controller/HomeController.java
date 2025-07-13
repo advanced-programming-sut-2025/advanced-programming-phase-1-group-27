@@ -1,6 +1,7 @@
 package org.example.server.controller;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import org.example.server.models.*;
 import org.example.server.models.Map.Hut;
 import org.example.server.models.enums.Menu;
@@ -90,8 +91,15 @@ public class HomeController extends MenuController {
 
     }
 
-    public void updateClockTexture(){
-        view.setClockTexture(getClockByGameState());
+    public float getClockArrowDegree() {
+
+        float hour = (float) App.getCurrentGame().getTime().getHour();
+        return - 180 * (hour - 9f) / (22f - 9f);
+
+    }
+
+    public void updateClockImage(){
+        view.setClockImage(new Image(getClockByGameState()));
     }
 
     public Result enterMenu(String menuName) {
