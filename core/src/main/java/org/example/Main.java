@@ -9,6 +9,8 @@ import org.example.view.AppView;
  */
 public class Main extends Game {
 
+    // TEST COMMIT
+
     private static SpriteBatch batch;
     private static Main main;
 
