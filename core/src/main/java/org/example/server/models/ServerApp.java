@@ -2,7 +2,6 @@ package org.example.server.models;
 
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.connections.ListenerThread;
-import org.example.server.models.lobbyproperties.Lobby;
 
 import java.util.ArrayList;
 

@@ -10,12 +10,17 @@ import org.example.client.Main;
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
-        createApplication();
+        if (args.length < 2) {
+            System.err.println("Usage: java peer.PeerMain <self-address:port> <tracker-address:ip>");
+            return;
+        }
+        new Lwjgl3Application(new Main(args), getDefaultConfiguration());
+//        createApplication();
     }
 
-    private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new Main(), getDefaultConfiguration());
-    }
+//    private static Lwjgl3Application createApplication() {
+//        return new Lwjgl3Application(new Main(), getDefaultConfiguration());
+//    }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
         Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();

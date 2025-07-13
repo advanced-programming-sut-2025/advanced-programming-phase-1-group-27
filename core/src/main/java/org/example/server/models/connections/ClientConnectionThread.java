@@ -24,7 +24,7 @@ public class ClientConnectionThread extends ConnectionThread {
     @Override
     protected boolean handleMessage(Message message) {
         // TODO: true if message was handled
-        return false;
+        return true;
     }
 
     @Override

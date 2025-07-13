@@ -1,7 +1,4 @@
-package org.example.server.models.lobbyproperties;
-
-import org.example.server.models.Game;
-import org.example.server.models.User;
+package org.example.server.models;
 
 import java.util.ArrayList;
 

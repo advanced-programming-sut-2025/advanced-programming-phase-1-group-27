@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.example.client.model.ClientApp;
 import org.example.client.view.AppView;
 import org.example.client.view.HomeView;
 
@@ -15,6 +16,19 @@ public class Main extends Game {
 
     private static SpriteBatch batch;
     private static Main main;
+
+    public Main(String[] args) {
+        if (args.length < 2) {
+            System.err.println("Usage: java peer.PeerMain <self-address:port> <tracker-address:ip>");
+            System.exit(0);
+        }
+        try {
+            ClientApp.initFromArgs(args);
+            ClientApp.connectToServer();
+        } catch (Exception e) {
+            System.err.println("Error initializing peer: " + e.getMessage());
+        }
+    }
 
     public static Main getMain() {
         return main;
@@ -39,8 +53,6 @@ public class Main extends Game {
         batch = new SpriteBatch();
 
         //  TODO: Yeki az ina comment bayad beshe. Terminal baraye test phase 1
-
-
 //        (new AppView()).runViaTerminal();
         (new AppView()).runViaGraphics();
 
