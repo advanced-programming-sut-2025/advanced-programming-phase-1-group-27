@@ -75,7 +75,7 @@ public class PreGameMenuController extends MenuController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
 
-        view.updateUsersAndChosenMaps(view.getCurrentMapSelector(),mapId);
+        view.updateUsersAndChosenMaps(view.getCurrentMapSelector(), mapId);
         return new GraphicalResult(
                 "Map selected successfully",
                 GameAssetManager.getGameAssetManager().getAcceptColor(),

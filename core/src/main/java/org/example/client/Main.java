@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.example.client.view.AppView;
+import org.example.client.view.HomeView;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
@@ -41,6 +42,7 @@ public class Main extends Game {
 
 //        (new AppView()).runViaTerminal();
         (new AppView()).runViaGraphics();
+
     }
 
     @Override

@@ -1,5 +1,7 @@
 package org.example.server.models;
 
+import org.example.client.Main;
+import org.example.client.view.HomeView;
 import org.example.server.models.enums.Gender;
 import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.Questions;
@@ -48,6 +50,43 @@ public class App {
         users.add(userParsa);
         users.add(userSobhan);
 
+        // creating game
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player Yusof = new Player(userYusof);
+        Player Rassa = new Player(userRassa);
+        Player Parsa = new Player(userParsa);
+        Player Sobhan = new Player(userSobhan);
+
+        players.add(Yusof);
+        players.add(Rassa);
+        players.add(Parsa);
+        players.add(Sobhan);
+
+        Game game;
+        App.setCurrentGame(game = new Game(players));
+        game.init();
+
+        userYusof.setCurrentGame(game);
+        userRassa.setCurrentGame(game);
+        userParsa.setCurrentGame(game);
+        userSobhan.setCurrentGame(game);
+
+        Yusof.setFarmMap(game.getFarmMap(0));
+        Yusof.setCurrentCell(game.getFarmMap(0).getCell(8, 70));
+        game.getFarmMap(0).getHut().setOwner(Yusof);
+
+        Rassa.setFarmMap(game.getFarmMap(1));
+        Rassa.setCurrentCell(game.getFarmMap(1).getCell(8, 70));
+        game.getFarmMap(1).getHut().setOwner(Rassa);
+
+        Parsa.setFarmMap(game.getFarmMap(2));
+        Parsa.setCurrentCell(game.getFarmMap(2).getCell(8, 70));
+        game.getFarmMap(2).getHut().setOwner(Parsa);
+
+        Sobhan.setFarmMap(game.getFarmMap(3));
+        Sobhan.setCurrentCell(game.getFarmMap(3).getCell(8, 70));
+        game.getFarmMap(3).getHut().setOwner(Sobhan);
 
     }
 
