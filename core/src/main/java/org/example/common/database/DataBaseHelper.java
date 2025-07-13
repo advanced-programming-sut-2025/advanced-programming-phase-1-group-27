@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class DataBaseHelper {
     public class DatabaseHelper {
-        private static final String DB_URL = "jdbc:sqlite:game.db";
+        private static final String DB_URL = "jdbc:sqlite:users.db";
 
         public static void createDatabase() {
             try (Connection conn = DriverManager.getConnection(DB_URL)) {

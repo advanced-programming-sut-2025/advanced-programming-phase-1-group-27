@@ -1,5 +1,6 @@
 package org.example.server;
 
+import org.example.common.database.DataBaseHelper;
 import org.example.server.models.ServerApp;
 import org.example.server.models.connections.ListenerThread;
 
@@ -12,6 +13,9 @@ public class Main {
 
         try {
             int port = Integer.parseInt(args[0]);
+
+            DataBaseHelper.DatabaseHelper.createDatabase();
+
             ServerApp.setListenerThread(new ListenerThread(port));
             ServerApp.startListening();
         } catch (Exception e) {
