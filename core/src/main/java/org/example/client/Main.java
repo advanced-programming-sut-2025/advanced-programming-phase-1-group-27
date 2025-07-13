@@ -11,6 +11,7 @@ import org.example.client.view.AppView;
  */
 public class Main extends Game {
 
+
     private static SpriteBatch batch;
     private static Main main;
 
