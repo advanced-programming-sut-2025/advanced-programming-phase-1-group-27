@@ -1,7 +1,9 @@
 package org.example.view.menu;
 
-import org.example.controller.LoginMenuController;
-import org.example.controller.ProfileMenuController;
+import org.example.client.view.menu.LoginMenuView;
+import org.example.client.view.menu.ProfileMenuView;
+import org.example.server.controller.LoginMenuController;
+import org.example.server.controller.ProfileMenuController;
 import org.example.models.App;
 import org.example.models.Result;
 import org.example.models.User;

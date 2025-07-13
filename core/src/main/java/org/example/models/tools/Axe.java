@@ -1,4 +1,4 @@
-package models.tools;
+package org.example.models.tools;
 
 import org.example.models.App;
 import org.example.models.Cell;
@@ -10,7 +10,6 @@ import org.example.models.enums.Plants.Tree;
 import org.example.models.enums.StackLevel;
 import org.example.models.enums.items.MineralType;
 import org.example.models.enums.items.ToolType;
-import org.example.models.tools.Tool;
 
 import java.util.Random;
 

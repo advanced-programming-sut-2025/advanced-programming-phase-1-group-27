@@ -1,11 +1,11 @@
 package org.example.models.enums;
 
-import org.example.view.AppMenu;
-import org.example.view.GameView;
-import org.example.view.HomeView;
-import org.example.view.TradeView;
-import org.example.view.menu.*;
-import org.example.view.shopview.*;
+import org.example.client.view.AppMenu;
+import org.example.client.view.GameView;
+import org.example.client.view.HomeView;
+import org.example.client.view.TradeView;
+import org.example.client.view.menu.*;
+import org.example.client.view.shopview.*;
 
 import java.util.Scanner;
 
