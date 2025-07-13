@@ -1,12 +1,16 @@
 package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
@@ -27,9 +31,15 @@ public class HomeView extends AppMenu {
 
     private final HomeController controller;
     private Stage stage;
+
     private Image clockImage;
-    private final TextButton advanceTimeButton;
     private final Image clockArrowImage;
+
+    private final TextButton advanceTimeButton;
+
+    private final TextField textInputField;
+
+    private boolean isInputFieldVisible;
 
 
     public HomeView() {
@@ -37,8 +47,8 @@ public class HomeView extends AppMenu {
         controller = new HomeController(this);
         advanceTimeButton = new TextButton("advance",skin);
         clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
-
-        setListeners();
+        textInputField = new TextField("",skin);
+        isInputFieldVisible = false;
 
     }
 
@@ -72,7 +82,21 @@ public class HomeView extends AppMenu {
 
     }
 
+    private void displayInputField(){
 
+        textInputField.setVisible(isInputFieldVisible);
+
+        TextField.TextFieldStyle style = new TextField.TextFieldStyle(textInputField.getStyle());
+        style.fontColor = Color.WHITE;
+        textInputField.setStyle(style);
+
+        textInputField.setColor(0,0,0,0.4f);
+
+        textInputField.setWidth(Gdx.graphics.getWidth());
+
+        stage.addActor(textInputField);
+
+    }
 
 
 
@@ -85,6 +109,8 @@ public class HomeView extends AppMenu {
         stage.addActor(menuBackground);
 
         stage.addActor(advanceTimeButton);
+
+        setListeners();
 
 
     }
@@ -99,6 +125,7 @@ public class HomeView extends AppMenu {
         stage.draw();
 
         displayClock();
+        displayInputField();
 
 
     }
@@ -137,6 +164,18 @@ public class HomeView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 App.getCurrentGame().getTime().cheatAdvanceTime(1);
+            }
+        });
+
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == Input.Keys.T) {
+                    playClickSound();
+                    isInputFieldVisible = true;
+                    return true;
+                }
+                return false;
             }
         });
 
