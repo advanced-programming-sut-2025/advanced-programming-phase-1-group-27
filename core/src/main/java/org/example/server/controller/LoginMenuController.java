@@ -31,6 +31,7 @@ public class LoginMenuController extends MenuController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
 
+
         GraphicalResult loginAttempt = login(view.getUsernameField().getText(), view.getPasswordField().getText(), view.getStayLoggedInCheckBox().isChecked());
 
         if (loginAttempt.hasError())

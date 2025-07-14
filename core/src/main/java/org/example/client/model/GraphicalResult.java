@@ -69,4 +69,8 @@ public class GraphicalResult {
     public void setDisplayTime(float displayTime) {
         this.displayTime = displayTime;
     }
+
+    public float getDisplayTime() {
+        return displayTime;
+    }
 }

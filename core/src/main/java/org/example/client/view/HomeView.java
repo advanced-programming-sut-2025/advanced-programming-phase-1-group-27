@@ -7,13 +7,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.model.GraphicalResult;
 import org.example.server.controller.HomeController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
@@ -42,6 +40,9 @@ public class HomeView extends AppMenu {
     private boolean isInputFieldVisible;
     private boolean tJustPressed;
 
+    private final GraphicalResult errorLabel;
+
+
 
     public HomeView() {
 
@@ -51,10 +52,10 @@ public class HomeView extends AppMenu {
         textInputField = new TextField("",skin);
         isInputFieldVisible = false;
         tJustPressed = false;
+        errorLabel = new GraphicalResult();
+
 
     }
-
-
 
 
     private void displayClock(){
@@ -105,8 +106,13 @@ public class HomeView extends AppMenu {
 
     }
 
+    private void showErrorMessage() {
 
 
+        errorLabel.setPosition(Gdx.graphics.getWidth()/2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight()-40);
+        stage.addActor(errorLabel.getMessage());
+
+    }
 
     @Override
     public void show() {
@@ -119,11 +125,13 @@ public class HomeView extends AppMenu {
 
         setListeners();
 
-
     }
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
+
+        errorLabel.update(delta);
+
 
         Main.getBatch().begin();
         Main.getBatch().end();
@@ -133,6 +141,7 @@ public class HomeView extends AppMenu {
 
         displayClock();
         displayInputField();
+        showErrorMessage();
 
 
     }
@@ -195,7 +204,7 @@ public class HomeView extends AppMenu {
 
                     if ( keycode == Input.Keys.ENTER ) {
                         playClickSound();
-                        controller.handleTextInput();
+                        errorLabel.set(controller.handleTextInput());
                         return true;
                     }
                     else if ( keycode == Input.Keys.ESCAPE ) {

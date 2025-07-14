@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import org.example.client.model.GraphicalResult;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.models.*;
@@ -109,65 +110,71 @@ public class HomeController extends MenuController {
         view.setClockImage(new Image(getClockByGameState()));
     }
 
-    public void handleTextInput(){
+    public GraphicalResult handleTextInput(){
 
         String inputText = view.getTextInputField().getText();
 
-        handleCheat(inputText);
+        GraphicalResult graphicalResult = handleCheat(inputText);
 
         closeTextInputField();
 
+        return graphicalResult;
+
     }
 
-    private void handleCheat(String input){
+    private GraphicalResult handleCheat(String input){
 
         Matcher matcher;
         CheatController controller = new CheatController();
+        Result result = new Result(false,"Invalid Command");
 
         if ((matcher = CheatCommands.CheatSetWeather.getMatcher(input)) != null) {
-            controller.cheatSetWeather(matcher.group("weatherName").trim());
+            result = controller.cheatSetWeather(matcher.group("weatherName").trim());
         }
         else if ((matcher = CheatCommands.CheatThor.getMatcher(input)) != null) {
-            controller.cheatThor(matcher.group("i"), matcher.group("j"));
+            result = controller.cheatThor(matcher.group("i"), matcher.group("j"));
         }
         else if ((matcher = CheatCommands.CheatSetEnergy.getMatcher(input)) != null) {
-            controller.cheatSetEnergy(matcher.group("value"));
+            result = controller.cheatSetEnergy(matcher.group("value"));
         }
         else if (CheatCommands.CheatEnergyUnlimited.getMatcher(input) != null) {
-            controller.cheatEnergyUnlimited();
+            result = controller.cheatEnergyUnlimited();
         }
         else if ((matcher = CheatCommands.CheatAdvanceTime.getMatcher(input)) != null) {
-            controller.cheatAdvanceTime(matcher.group("timeString"));
+            result = controller.cheatAdvanceTime(matcher.group("timeString"));
         }
         else if ((matcher = CheatCommands.CheatAdvanceDate.getMatcher(input)) != null) {
-            controller.cheatAdvanceDate(matcher.group("dayString"));
+            result = controller.cheatAdvanceDate(matcher.group("dayString"));
         }
         else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
-            controller.cheatAddItem(
+            result = controller.cheatAddItem(
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("count")));
         }
         else if ((matcher = CheatCommands.CheatSetFriendShip.getMatcher(input)) != null) {
-            controller.cheatSetFriendship(matcher.group("name"), matcher.group("amount"));
+            result = controller.cheatSetFriendship(matcher.group("name"), matcher.group("amount"));
         }
         else if ((matcher = CheatCommands.CheatAddMoney.getMatcher(input)) != null) {
-            controller.cheatAddMoney(matcher.group("amount"));
+            result = controller.cheatAddMoney(matcher.group("amount"));
         }
         else if ((matcher = CheatCommands.CheatSetAbility.getMatcher(input)) != null) {
-            controller.cheatSetAbility(
+            result = controller.cheatSetAbility(
                     matcher.group("abilityName").trim(),
                     Integer.parseInt(matcher.group("level").trim()));
         }
         else if ((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
-            controller.cheatAddLevel(
+            result = controller.cheatAddLevel(
                 matcher.group("name").trim(),
                 matcher.group("level").trim());
         }
         else if ((matcher = CheatCommands.CheatAddLevelPlayer.getMatcher(input)) != null) {
-            controller.cheatAddPlayerLevel(
+            result = controller.cheatAddPlayerLevel(
                     matcher.group("name").trim(),
                     matcher.group("level").trim());
         }
+
+        return new GraphicalResult(result.message(),result.success()? GameAssetManager.getGameAssetManager().getAcceptColor() : GameAssetManager.getGameAssetManager().getErrorColor(), result.success() );
+
 
     }
 
