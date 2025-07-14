@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.HomeController;
+import org.example.server.controller.HomePlayerController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
 import org.example.server.models.Result;
@@ -30,6 +31,7 @@ import java.util.regex.Matcher;
 public class HomeView extends AppMenu {
 
     private final HomeController controller;
+    private final HomePlayerController playerController;
     private Stage stage;
 
     private Image clockImage;
@@ -46,6 +48,7 @@ public class HomeView extends AppMenu {
     public HomeView() {
 
         controller = new HomeController(this);
+        playerController = new HomePlayerController(this);
         advanceTimeButton = new TextButton("advance",skin);
         clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
         textInputField = new TextField("",skin);
@@ -125,11 +128,14 @@ public class HomeView extends AppMenu {
     @Override
     public void render(float v) {
 
-        Main.getBatch().begin();
-        Main.getBatch().end();
+
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+        Main.getBatch().begin();
+        playerController.update();
+        Main.getBatch().end();
 
         displayClock();
         displayInputField();

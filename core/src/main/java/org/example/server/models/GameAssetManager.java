@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.example.server.models.utils.MusicPlayer;
@@ -48,6 +51,37 @@ public class GameAssetManager {
     private final Texture stormySummer = new Texture(Gdx.files.internal("Clock/StormySummer.png"));
     private final Texture sunnySummer = new Texture(Gdx.files.internal("Clock/SunnySummer.png"));
     private final Texture snowySummer = new Texture(Gdx.files.internal("Clock/SnowySummer.png"));
+
+    private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
+
+    private final Animation<Sprite> walkDown = new Animation<>(
+            0.1f,
+            characterAtlas.createSprite("down_1"),
+            characterAtlas.createSprite("down_2"),
+            characterAtlas.createSprite("down_3"),
+            characterAtlas.createSprite("down_4")
+    );
+    private final Animation<Sprite> walkRight = new Animation<>(
+            0.1f,
+            characterAtlas.createSprite("right_1"),
+            characterAtlas.createSprite("right_2"),
+            characterAtlas.createSprite("right_3"),
+            characterAtlas.createSprite("right_4")
+    );
+    private final Animation<Sprite> walkUp = new Animation<>(
+            0.1f,
+            characterAtlas.createSprite("up_1"),
+            characterAtlas.createSprite("up_2"),
+            characterAtlas.createSprite("up_3"),
+            characterAtlas.createSprite("up_4")
+    );
+    private final Animation<Sprite> walkLeft = new Animation<>(
+            0.1f,
+            characterAtlas.createSprite("left_1"),
+            characterAtlas.createSprite("left_2"),
+            characterAtlas.createSprite("left_3"),
+            characterAtlas.createSprite("left_4")
+    );
 
     private final Texture arrowTexture = new  Texture(Gdx.files.internal("Clock/Arrow.png"));
 
@@ -170,5 +204,25 @@ public class GameAssetManager {
 
     public Color getAcceptColor() {
         return acceptColor;
+    }
+
+    public TextureAtlas getCharacterAtlas() {
+        return characterAtlas;
+    }
+
+    public Animation<Sprite> getWalkDown() {
+        return walkDown;
+    }
+
+    public Animation<Sprite> getWalkRight() {
+        return walkRight;
+    }
+
+    public Animation<Sprite> getWalkUp() {
+        return walkUp;
+    }
+
+    public Animation<Sprite> getWalkLeft() {
+        return walkLeft;
     }
 }
