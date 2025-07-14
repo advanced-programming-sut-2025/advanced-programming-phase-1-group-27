@@ -1,3 +1,5 @@
+Character/Vincent.png
+Character/character.atlas
 Clock/Arrow.png
 Clock/RainyFall.png
 Clock/RainySpring.png
