@@ -14,6 +14,8 @@ public class ListenerThread extends Thread {
     }
 
     private void createConnection(Socket socket) {
+        if (socket == null)
+            return;
         try {
             new ClientConnectionThread(socket).start();
         } catch (IOException e) {
@@ -26,7 +28,7 @@ public class ListenerThread extends Thread {
 
     @Override
     public void run() {
-        while (ServerApp.hasEnded()) {
+        while (!ServerApp.hasEnded()) {
             try {
                 Socket socket = serverSocket.accept();
                 createConnection(socket);

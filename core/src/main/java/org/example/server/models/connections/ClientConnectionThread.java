@@ -6,6 +6,9 @@ import org.example.server.models.ServerApp;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
+
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class ClientConnectionThread extends ConnectionThread {
     // TODO: nemidoonam
@@ -16,9 +19,24 @@ public class ClientConnectionThread extends ConnectionThread {
 
     @Override
     public boolean initialHandshake() {
+        try {
+            getClientAddress();
+        } catch (Exception e) {
+            return false;
+        }
         ServerApp.addConnection(this);
-        // TODO: maybeee
         return true;
+    }
+
+    private void getClientAddress() {
+        Message message = new Message(new HashMap<>() {{
+            put("command", "get_client_address");
+        }}, Message.Type.command);
+        Message response = sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response)
+            return;
+        setOtherSideIP(response.getFromBody("ip"));
+        setOtherSidePort(response.<Number>getFromBody("port").intValue());
     }
 
     @Override

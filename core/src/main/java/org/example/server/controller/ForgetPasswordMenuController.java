@@ -1,6 +1,7 @@
 package org.example.server.controller;
 
 import org.example.client.Main;
+import org.example.client.model.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.Menu;
 import org.example.client.view.menu.ForgetPasswordMenuView;

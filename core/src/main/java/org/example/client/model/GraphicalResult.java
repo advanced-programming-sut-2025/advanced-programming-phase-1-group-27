@@ -1,7 +1,8 @@
-package org.example.server.models;
+package org.example.client.model;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import org.example.server.models.GameAssetManager;
 
 public class GraphicalResult {
     private Label message;
