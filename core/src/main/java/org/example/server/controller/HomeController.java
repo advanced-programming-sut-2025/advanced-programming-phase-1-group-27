@@ -9,12 +9,17 @@ import org.example.server.models.enums.Plants.FruitType;
 import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
+import org.example.server.models.enums.commands.CheatCommands;
+import org.example.server.models.enums.commands.InGameCommandLineCommands;
+import org.example.server.models.enums.commands.InteractionsWithUserCommands;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.tools.Backpack;
 import org.example.client.view.HomeView;
+
+import java.util.regex.Matcher;
 
 public class HomeController extends MenuController {
     private final HomeView view;
@@ -100,6 +105,77 @@ public class HomeController extends MenuController {
 
     public void updateClockImage(){
         view.setClockImage(new Image(getClockByGameState()));
+    }
+
+    public void handleTextInput(){
+
+        String inputText = view.getTextInputField().getText();
+        Matcher matcher = InGameCommandLineCommands.Cheat.getMatcher(inputText);
+
+        if ( matcher != null ){
+            handleCheat(matcher.group("cheat"));
+        }
+
+        closeTextInputField();
+
+    }
+
+    private void handleCheat(String input){
+
+        Matcher matcher;
+
+        if ((matcher = CheatCommands.CheatSetWeather.getMatcher(input)) != null) {
+            controller.cheatSetWeather(matcher.group("weatherName").trim());
+        }
+        else if ((matcher = CheatCommands.CheatThor.getMatcher(input)) != null) {
+            controller.cheatThor(matcher.group("i"), matcher.group("j"));
+        }
+        else if ((matcher = CheatCommands.CheatSetEnergy.getMatcher(input)) != null) {
+            controller.cheatSetEnergy(matcher.group("value"));
+        }
+        else if (CheatCommands.CheatEnergyUnlimited.getMatcher(input) != null) {
+            controller.cheatEnergyUnlimited();
+        }
+        else if ((matcher = CheatCommands.CheatAdvanceTime.getMatcher(input)) != null) {
+            controller.cheatAdvanceTime(matcher.group("timeString"));
+        }
+        else if ((matcher = CheatCommands.CheatAdvanceDate.getMatcher(input)) != null) {
+            controller.cheatAdvanceDate(matcher.group("dayString"));
+        }
+        else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
+            controller.cheatAddItem(
+                    matcher.group("itemName").trim(),
+                    Integer.parseInt(matcher.group("count")));
+        }
+        else if ((matcher = CheatCommands.CheatSetFriendShip.getMatcher(input)) != null) {
+            controller.cheatSetFriendship(matcher.group("name"), matcher.group("amount"));
+        }
+        else if ((matcher = CheatCommands.CheatAddMoney.getMatcher(input)) != null) {
+            controller.cheatAddMoney(matcher.group("amount"));
+        }
+        else if ((matcher = CheatCommands.CheatSetAbility.getMatcher(input)) != null) {
+            controller.cheatSetAbility(
+                    matcher.group("abilityName").trim(),
+                    Integer.parseInt(matcher.group("level").trim()));
+        }
+        else if ((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
+            interactionsWithNPCController.cheatAddLevel(
+                matcher.group("name").trim(),
+                matcher.group("level").trim());
+        }
+        else if ((matcher = CheatCommands.CheatAddLevelPlayer.getMatcher(input)) != null) {
+            interactionsWithUserController.cheatAddPlayerLevel(
+                    matcher.group("name").trim(),
+                    matcher.group("level").trim());
+        }
+
+    }
+
+    public void closeTextInputField(){
+
+        view.setInputFieldVisible(false);
+        view.getTextInputField().setText("");
+
     }
 
     public Result enterMenu(String menuName) {

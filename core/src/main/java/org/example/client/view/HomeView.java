@@ -59,7 +59,7 @@ public class HomeView extends AppMenu {
 
         controller.updateClockImage();
 
-        clockImage.setPosition(Gdx.graphics.getWidth()-clockImage.getWidth(),Gdx.graphics.getHeight()-clockImage.getHeight());
+        clockImage.setPosition(1920-clockImage.getWidth(),1080-clockImage.getHeight());
 
 
         clockArrowImage.setPosition(
@@ -87,10 +87,10 @@ public class HomeView extends AppMenu {
         textInputField.setVisible(isInputFieldVisible);
 
         TextField.TextFieldStyle style = new TextField.TextFieldStyle(textInputField.getStyle());
-        style.fontColor = Color.WHITE;
+        style.fontColor = new Color(1,1,1,1);
         textInputField.setStyle(style);
 
-        textInputField.setColor(0,0,0,0.4f);
+        textInputField.setColor(0,0,0,0.5f);
 
         textInputField.setWidth(Gdx.graphics.getWidth());
 
@@ -170,19 +170,49 @@ public class HomeView extends AppMenu {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.T) {
-                    playClickSound();
-                    isInputFieldVisible = true;
-                    return true;
+
+                if ( !isInputFieldVisible ){
+
+                    if ( keycode == Input.Keys.T ) {
+                        playClickSound();
+                        isInputFieldVisible = true;
+                        return true;
+                    }
+
+                }
+
+                else {
+
+                    if ( keycode == Input.Keys.ENTER ) {
+                        playClickSound();
+                        controller.handleTextInput();
+                        return true;
+                    }
+                    else if ( keycode == Input.Keys.ESCAPE ) {
+                        playClickSound();
+                        controller.closeTextInputField();
+                        return true;
+                    }
+
                 }
                 return false;
             }
         });
 
+
+
     }
 
     public void setClockImage(Image clockImage) {
         this.clockImage = clockImage;
+    }
+
+    public TextField getTextInputField() {
+        return textInputField;
+    }
+
+    public void setInputFieldVisible(boolean inputFieldVisible) {
+        isInputFieldVisible = inputFieldVisible;
     }
 
     public void executeCommands(Scanner scanner) {
