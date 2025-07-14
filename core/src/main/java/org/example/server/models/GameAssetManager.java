@@ -52,6 +52,8 @@ public class GameAssetManager {
     private final Texture sunnySummer = new Texture(Gdx.files.internal("Clock/SunnySummer.png"));
     private final Texture snowySummer = new Texture(Gdx.files.internal("Clock/SnowySummer.png"));
 
+    private final Texture homeTexture = new Texture("assets/Images/home_cropped.png");
+
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
 
     private final Animation<Sprite> walkDown = new Animation<>(
@@ -224,5 +226,9 @@ public class GameAssetManager {
 
     public Animation<Sprite> getWalkLeft() {
         return walkLeft;
+    }
+
+    public Texture getHomeTexture() {
+        return homeTexture;
     }
 }

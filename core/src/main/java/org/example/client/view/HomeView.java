@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -44,7 +45,7 @@ public class HomeView extends AppMenu {
 
     private final GraphicalResult errorLabel;
 
-
+    private final Sprite homeSprite = new Sprite(GameAssetManager.getGameAssetManager().getHomeTexture());
 
     public HomeView() {
 
@@ -122,11 +123,13 @@ public class HomeView extends AppMenu {
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        stage.addActor(menuBackground);
 
         stage.addActor(advanceTimeButton);
 
         setListeners();
+
+        homeSprite.setCenter(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f);
+        homeSprite.setScale(0.2f);
 
     }
 
@@ -136,11 +139,12 @@ public class HomeView extends AppMenu {
         errorLabel.update(delta);
 
 
-
+        stage.draw();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
         Main.getBatch().begin();
+        homeSprite.draw(Main.getBatch());
         playerController.update();
         Main.getBatch().end();
 
@@ -148,7 +152,7 @@ public class HomeView extends AppMenu {
         displayInputField();
         showErrorMessage();
 
-        stage.draw();
+
     }
 
     @Override

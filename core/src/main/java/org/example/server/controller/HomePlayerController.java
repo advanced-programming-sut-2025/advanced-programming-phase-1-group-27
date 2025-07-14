@@ -11,6 +11,9 @@ import org.example.client.view.GameView;
 import org.example.client.view.HomeView;
 import org.example.server.models.GameAssetManager;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class HomePlayerController {
     private final HomeView homeView;
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f;
@@ -59,6 +62,12 @@ public class HomePlayerController {
             y -= speed;
             updateAnimation(GameAssetManager.getGameAssetManager().getWalkDown());
         }
+
+        x = min(x, Gdx.graphics.getWidth() / 2f + 95);
+        x = max(x, Gdx.graphics.getWidth() / 2f - 95);
+        y = min(y, Gdx.graphics.getHeight() / 2f + 50);
+        y = max(y, Gdx.graphics.getHeight() / 2f - 70);
+
 
         characterSprite.setCenter(x, y);
 
