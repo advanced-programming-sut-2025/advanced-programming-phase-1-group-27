@@ -6,7 +6,7 @@ import org.example.server.models.connections.ListenerThread;
 import java.util.ArrayList;
 
 public class ServerApp {
-    private static final int TIMEOUT_MILLIS = 500;
+    public static final int TIMEOUT_MILLIS = 500;
     private static final ArrayList<ClientConnectionThread> connections = new ArrayList<>();
     private static ListenerThread listenerThread;
     private static boolean hasEnded = false;

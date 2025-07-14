@@ -31,8 +31,6 @@ public class Message {
 
     public enum Type {
         command,
-        response,
-        file_request,
-        download_request
+        response
     }
 }

@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import com.badlogic.gdx.graphics.Color;
 import org.example.client.Main;
+import org.example.client.model.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.Gender;
 import org.example.server.models.enums.Menu;

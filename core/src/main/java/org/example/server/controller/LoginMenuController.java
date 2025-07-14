@@ -1,6 +1,7 @@
 package org.example.server.controller;
 
 import org.example.client.Main;
+import org.example.client.model.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.Menu;
 import org.example.client.view.menu.ForgetPasswordMenuView;
@@ -29,6 +30,7 @@ public class LoginMenuController extends MenuController {
                     "Please fill all the required fields",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
+
 
         GraphicalResult loginAttempt = login(view.getUsernameField().getText(), view.getPasswordField().getText(), view.getStayLoggedInCheckBox().isChecked());
 
