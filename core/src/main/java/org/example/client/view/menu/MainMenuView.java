@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.MainMenuController;
-import org.example.client.model.GraphicalResult;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Result;
 import org.example.server.models.enums.commands.MainMenuCommands;
 import org.example.client.view.AppMenu;

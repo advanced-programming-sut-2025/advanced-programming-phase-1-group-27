@@ -1,5 +1,6 @@
 package org.example.server.models.connections;
 
+import org.example.server.controller.RegisterMenuController;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.models.ServerApp;
@@ -41,8 +42,11 @@ public class ClientConnectionThread extends ConnectionThread {
 
     @Override
     protected boolean handleMessage(Message message) {
-        // TODO: true if message was handled
-        return true;
+        if (message.getType() == Message.Type.register_request) {
+            sendMessage(RegisterMenuController.register(message));
+            return true;
+        }
+        return false;
     }
 
     @Override

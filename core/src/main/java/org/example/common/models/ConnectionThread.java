@@ -49,7 +49,6 @@ abstract public class ConnectionThread extends Thread {
 
     public synchronized void sendMessage(Message message) {
         String JSONString = JSONUtils.toJson(message);
-
         try {
             dataOutputStream.writeUTF(JSONString);
         } catch (IOException e) {

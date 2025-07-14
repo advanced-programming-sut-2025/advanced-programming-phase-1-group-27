@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.LoginMenuController;
 import org.example.server.models.GameAssetManager;
-import org.example.client.model.GraphicalResult;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Result;
 import org.example.server.models.enums.commands.LoginMenuCommands;
 import org.example.server.models.enums.commands.MainMenuCommands;

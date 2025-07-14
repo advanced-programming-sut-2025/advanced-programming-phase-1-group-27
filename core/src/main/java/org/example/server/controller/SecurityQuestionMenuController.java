@@ -49,7 +49,7 @@ public class SecurityQuestionMenuController extends MenuController {
         App.setCurrentMenu(Menu.RegisterMenu);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new RegisterMenuView());
-        return new Result(true, "Redirecting to register menu ...");
+        return new Result(true, "Redirecting to registerViaGraphics menu ...");
 
     }
 

@@ -11,7 +11,6 @@ import java.net.Socket;
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class ServerConnectionThread extends ConnectionThread {
-    private final ServerConnectionController controller = new ServerConnectionController();
 
     protected ServerConnectionThread(Socket socket) throws IOException {
         super(socket);
@@ -23,10 +22,11 @@ public class ServerConnectionThread extends ConnectionThread {
             socket.setSoTimeout(TIMEOUT_MILLIS);
 
             dataInputStream.readUTF();
-            sendMessage(controller.getAddress());
+            sendMessage(ServerConnectionController.getAddress());
 
             socket.setSoTimeout(0);
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -34,6 +34,6 @@ public class ServerConnectionThread extends ConnectionThread {
 
     @Override
     protected boolean handleMessage(Message message) {
-        return true;
+        return false;
     }
 }

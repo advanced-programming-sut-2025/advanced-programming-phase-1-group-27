@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum RegisterMenuCommands implements MenuCommands {
-    Register("register\\s+-u\\s+(?<username>.+)\\s+" +
+    Register("registerViaGraphics\\s+-u\\s+(?<username>.+)\\s+" +
             "-p\\s+(?<password>\\S+)\\s+(?<reEnteredPassword>\\S+)\\s+" +
             "-n\\s+(?<nickname>.+)\\s+" +
             "-e\\s+(?<email>.+)\\s+" +

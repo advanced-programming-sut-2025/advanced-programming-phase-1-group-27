@@ -1,8 +1,11 @@
-package org.example.client.model;
+package org.example.common.models;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.GameAssetManager;
+
+import java.util.HashMap;
 
 public class GraphicalResult {
     private Label message;
@@ -15,18 +18,37 @@ public class GraphicalResult {
         this.message.setFontScale(1f);
     }
 
-    public GraphicalResult(String message, Color color) {
+    public GraphicalResult(String message) {
         this.message = new Label(message, GameAssetManager.getGameAssetManager().getSkin());
-        this.message.setColor(color);
         this.message.setVisible(true);
         this.message.setFontScale(1f);
         this.displayTime = 3f;
         this.isError = true;
     }
 
+    public GraphicalResult(String message, boolean isError) {
+        this(message);
+        this.isError = isError;
+    }
+
+    public GraphicalResult(String message, Color color) {
+        this(message);
+        this.message.setColor(color);
+    }
+
     public GraphicalResult(String message, Color color, boolean isError) {
         this(message, color);
         this.isError = isError;
+    }
+
+    // builds GraphicalResult from the map which was sent by server/client
+    public GraphicalResult(LinkedTreeMap<String, Object> data) {
+        isError = (boolean) data.get("isError");
+        message = new Label((String) data.get("message text"), GameAssetManager.getGameAssetManager().getSkin());
+        message.setColor(isError? GameAssetManager.getGameAssetManager().getErrorColor() : GameAssetManager.getGameAssetManager().getAcceptColor());
+        message.setFontScale(1f);
+        message.setVisible((boolean) data.get("visibility"));
+        displayTime = ((Number) data.get("displayTime")).floatValue();
     }
 
     public void set(GraphicalResult graphicalResult) {
@@ -72,5 +94,27 @@ public class GraphicalResult {
 
     public float getDisplayTime() {
         return displayTime;
+    }
+
+    // in order to send object's data via network
+    public static HashMap<String, Object> getInfo(String message) {
+        return new HashMap<>() {{
+            put("message text", message);
+            put("displayTime", 3f);
+            put("isError", true);
+            put("visibility", true); // this function can be overloaded in order to have optional visibility
+        }};
+    }
+
+    public static HashMap<String, Object> getInfo(String message, boolean isError) {
+        HashMap<String, Object> info = getInfo(message);
+        info.put("isError", isError);
+        return info;
+    }
+
+    public static HashMap<String, Object> getInfo(String message, float displayTime) {
+        HashMap<String, Object> info = getInfo(message);
+        info.put("displayTime", displayTime);
+        return info;
     }
 }

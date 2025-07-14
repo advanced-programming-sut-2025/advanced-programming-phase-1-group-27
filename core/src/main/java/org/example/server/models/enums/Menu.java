@@ -65,7 +65,7 @@ public enum Menu {
     public String toString() {
         return switch (this) {
             case WelcomeMenu -> "welcome menu";
-            case RegisterMenu -> "register menu";
+            case RegisterMenu -> "registerViaGraphics menu";
             case LoginMenu -> "login menu";
             case ForgetPasswordMenu -> "forget password menu";
             case MainMenu -> "main menu";

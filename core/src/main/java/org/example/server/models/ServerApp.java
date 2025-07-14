@@ -6,7 +6,7 @@ import org.example.server.models.connections.ListenerThread;
 import java.util.ArrayList;
 
 public class ServerApp {
-    public static final int TIMEOUT_MILLIS = 500;
+    public static final int TIMEOUT_MILLIS = 5000;
     private static final ArrayList<ClientConnectionThread> connections = new ArrayList<>();
     private static ListenerThread listenerThread;
     private static boolean hasEnded = false;
@@ -50,5 +50,23 @@ public class ServerApp {
 
     public static void setUsers(ArrayList<User> users) {
         ServerApp.users = users;
+    }
+
+    public static User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username))
+                return user;
+        }
+        return null;
+    }
+
+    public static String generateUsername(String username) {
+        String result;
+        for (int i = 1; i <= 20; i++) {
+            result = username + i;
+            if (getUserByUsername(result) == null)
+                return result;
+        }
+        return null;
     }
 }

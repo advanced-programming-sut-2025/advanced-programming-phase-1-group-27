@@ -4,6 +4,9 @@ import org.example.server.models.User;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class ClientApp {
     private static String ip;
@@ -33,5 +36,36 @@ public class ClientApp {
 
     public static int getPort() {
         return port;
+    }
+
+    public static ServerConnectionThread getServerConnectionThread() {
+        return serverConnectionThread;
+    }
+
+    public static String generatePassword() {
+        Random random = new Random();
+        int passwordLen = 8 + random.nextInt(5);
+        String lowercase = "abcdefghijklmnopqrstuvwxyz";
+        String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String numbers = "0123456789";
+        String specialCharacters = "?><,\"';:\\/|][}{+=)(*&~%$#!";
+        ArrayList<Character> passwordCharacters = new ArrayList<>();
+        passwordCharacters.add(lowercase.charAt(random.nextInt(lowercase.length())));
+        passwordCharacters.add(uppercase.charAt(random.nextInt(uppercase.length())));
+        passwordCharacters.add(numbers.charAt(random.nextInt(numbers.length())));
+        passwordCharacters.add(specialCharacters.charAt(random.nextInt(specialCharacters.length())));
+
+        String allCharacters = lowercase + uppercase + numbers + specialCharacters;
+        for (int i = 4; i < passwordLen; i++)
+            passwordCharacters.add(allCharacters.charAt(random.nextInt(allCharacters.length())));
+
+        // shuffling selected characters (the first four characters are not random)
+        Collections.shuffle(passwordCharacters, random);
+
+        StringBuilder password = new StringBuilder();
+        for (Character c : passwordCharacters) {
+            password.append(c);
+        }
+        return password.toString();
     }
 }

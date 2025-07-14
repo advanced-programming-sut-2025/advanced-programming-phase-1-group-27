@@ -31,6 +31,7 @@ public class Message {
 
     public enum Type {
         command,
-        response
+        response,
+        register_request,
     }
 }
