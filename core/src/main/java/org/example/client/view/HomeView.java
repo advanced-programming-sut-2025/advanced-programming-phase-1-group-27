@@ -205,6 +205,7 @@ public class HomeView extends AppMenu {
                     if ( keycode == Input.Keys.ENTER ) {
                         playClickSound();
                         errorLabel.set(controller.handleTextInput());
+                        errorLabel.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-40);
                         return true;
                     }
                     else if ( keycode == Input.Keys.ESCAPE ) {
