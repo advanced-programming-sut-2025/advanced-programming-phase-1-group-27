@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public enum InGameCommandLineCommands {
 
-    Cheat("\\s*cheat\\s+(?<cheat>.+)\\s*");
+    Cheat("\\s*terminal\\s+(?<cheat>.+)\\s*");
 
     private final String pattern;
 

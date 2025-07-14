@@ -285,6 +285,15 @@ public class InteractionsWithNPCController {
         return null;
     }
 
+    public static NPC getNPCByName(String npcName) {
+        for (NPC npc : App.getCurrentGame().getNPCs()) {
+            if (npc.getName().equalsIgnoreCase(npcName)) {
+                return npc;
+            }
+        }
+        return null;
+    }
+
     private boolean firstTimeMet(NPC npc, Player player) {
         if (player.getNpcMetToday().get(npc) == null || player.getNpcMetToday().get(npc) == Boolean.FALSE) {
             player.getNpcMetToday().put(npc, Boolean.TRUE);

@@ -288,6 +288,15 @@ public class InteractionsWithUserController {
         return null;
     }
 
+    public static Player getPlayerByUsername(String username) {
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            if (player.getUsername().equals(username)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     public Result cheatAddPlayerLevel(String playerName, String quantityString) {
         int quantity = Integer.parseInt(quantityString);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();

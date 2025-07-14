@@ -2,6 +2,8 @@ package org.example.server.controller;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
+import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.models.*;
 import org.example.server.models.Map.Hut;
 import org.example.server.models.enums.Menu;
@@ -110,11 +112,8 @@ public class HomeController extends MenuController {
     public void handleTextInput(){
 
         String inputText = view.getTextInputField().getText();
-        Matcher matcher = InGameCommandLineCommands.Cheat.getMatcher(inputText);
 
-        if ( matcher != null ){
-            handleCheat(matcher.group("cheat"));
-        }
+        handleCheat(inputText);
 
         closeTextInputField();
 
@@ -123,6 +122,7 @@ public class HomeController extends MenuController {
     private void handleCheat(String input){
 
         Matcher matcher;
+        CheatController controller = new CheatController();
 
         if ((matcher = CheatCommands.CheatSetWeather.getMatcher(input)) != null) {
             controller.cheatSetWeather(matcher.group("weatherName").trim());
@@ -159,12 +159,12 @@ public class HomeController extends MenuController {
                     Integer.parseInt(matcher.group("level").trim()));
         }
         else if ((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
-            interactionsWithNPCController.cheatAddLevel(
+            controller.cheatAddLevel(
                 matcher.group("name").trim(),
                 matcher.group("level").trim());
         }
         else if ((matcher = CheatCommands.CheatAddLevelPlayer.getMatcher(input)) != null) {
-            interactionsWithUserController.cheatAddPlayerLevel(
+            controller.cheatAddPlayerLevel(
                     matcher.group("name").trim(),
                     matcher.group("level").trim());
         }

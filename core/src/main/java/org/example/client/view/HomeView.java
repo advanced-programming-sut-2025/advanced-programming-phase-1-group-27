@@ -40,6 +40,7 @@ public class HomeView extends AppMenu {
     private final TextField textInputField;
 
     private boolean isInputFieldVisible;
+    private boolean tJustPressed;
 
 
     public HomeView() {
@@ -49,6 +50,7 @@ public class HomeView extends AppMenu {
         clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
         textInputField = new TextField("",skin);
         isInputFieldVisible = false;
+        tJustPressed = false;
 
     }
 
@@ -83,6 +85,11 @@ public class HomeView extends AppMenu {
     }
 
     private void displayInputField(){
+
+        if ( tJustPressed ){
+            tJustPressed = false;
+            textInputField.setText("");
+        }
 
         textInputField.setVisible(isInputFieldVisible);
 
@@ -168,6 +175,7 @@ public class HomeView extends AppMenu {
         });
 
         stage.addListener(new InputListener() {
+
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
 
@@ -176,6 +184,8 @@ public class HomeView extends AppMenu {
                     if ( keycode == Input.Keys.T ) {
                         playClickSound();
                         isInputFieldVisible = true;
+                        textInputField.setText("");
+                        tJustPressed = true;
                         return true;
                     }
 
