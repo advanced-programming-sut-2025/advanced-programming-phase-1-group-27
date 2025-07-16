@@ -489,7 +489,7 @@ public enum Recipe implements Item {
             new Ingredient(FishType.Sardine, 2),
             new Ingredient(CookingProduct.HashBrowns, 1)
     ))),
-    SeaformPuddingRecipe(0, CookingProduct.SeaformPudding, new ArrayList<>(List.of(
+    SeaformPuddingRecipe(0, CookingProduct.SeafoamPudding, new ArrayList<>(List.of(
             new Ingredient(FishType.Flounder, 1),
             new Ingredient(FishType.MidnightCarp, 1)
     ))),

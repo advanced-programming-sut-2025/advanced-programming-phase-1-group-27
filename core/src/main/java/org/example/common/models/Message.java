@@ -33,5 +33,6 @@ public class Message {
         command,
         response,
         register_request,
+        login_request
     }
 }

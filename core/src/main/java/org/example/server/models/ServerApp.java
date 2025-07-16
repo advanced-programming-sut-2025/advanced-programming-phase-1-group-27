@@ -1,5 +1,6 @@
 package org.example.server.models;
 
+import org.example.common.database.DataBaseHelper;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.connections.ListenerThread;
 
@@ -10,6 +11,7 @@ public class ServerApp {
     private static final ArrayList<ClientConnectionThread> connections = new ArrayList<>();
     private static ListenerThread listenerThread;
     private static boolean hasEnded = false;
+    private static ArrayList<User> onlineUsers = new ArrayList<>();
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Lobby> lobbies = new ArrayList<>();
 
@@ -53,11 +55,12 @@ public class ServerApp {
     }
 
     public static User getUserByUsername(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username))
-                return user;
-        }
-        return null;
+//        for (User user : users) {
+//            if (user.getUsername().equals(username))
+//                return user;
+//        }
+//        return null;
+        return DataBaseHelper.DatabaseHelper.getUserByUsername(username);
     }
 
     public static String generateUsername(String username) {
@@ -68,5 +71,9 @@ public class ServerApp {
                 return result;
         }
         return null;
+    }
+
+    public static void addOnline(User user) {
+        onlineUsers.add(user);
     }
 }

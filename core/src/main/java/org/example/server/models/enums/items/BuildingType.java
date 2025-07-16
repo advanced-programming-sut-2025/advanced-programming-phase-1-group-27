@@ -3,27 +3,29 @@ package org.example.server.models.enums.items;
 import org.example.server.models.Item;
 
 public enum BuildingType implements Item {
-    Barn(6000, 7, 4, 4),
-    BigBarn(12000, 7, 4, 8),
-    DeluxeBarn(25000, 7, 4, 12),
-    Coop(4000, 6, 3, 4),
-    BigCoop(10000, 6, 3, 8),
-    DeluxeCoop(20000, 6, 3, 12),
-    Well(1000, 3, 3, null),
-    ShippingBin(250, 1, 1, null);
+    Barn(6000, 7, 4, 4 , "Items/Buildings/Barn.png"),
+    BigBarn(12000, 7, 4, 8 , "Items/Buildings/Big_Barn.png"),
+    DeluxeBarn(25000, 7, 4, 12 , "Items/Buildings/Deluxe_Barn.png"),
+    Coop(4000, 6, 3, 4 ,  "Items/Buildings/Coop.png"),
+    BigCoop(10000, 6, 3, 8 , "Items/Buildings/Big_Coop.png"),
+    DeluxeCoop(20000, 6, 3, 12 , "Items/Buildings/Deluxe_Coop.png"),
+    Well(1000, 3, 3, null , "Items/Buildings/Well.png"),
+    ShippingBin(250, 1, 1, null , "Items/Buildings/Shipping_Bin.png"),;
 
     private final int price;
     private final int width;
     private final int height;
     private final Integer capacity;
     private Recipe recipe;
+    private final String address;
 
-    BuildingType(int price, int width, int height, Integer capacity) {
+    BuildingType(int price, int width, int height, Integer capacity , String address) {
         this.price = price;
         this.width = width;
         this.height = height;
         this.capacity = capacity;
         this.recipe = null;
+        this.address = address;
     }
 
     public static BuildingType getItem(String itemName) {

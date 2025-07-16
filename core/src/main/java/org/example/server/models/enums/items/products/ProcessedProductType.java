@@ -5,47 +5,53 @@ import org.example.server.models.enums.items.MineralType;
 import org.example.server.models.enums.items.Recipe;
 
 public enum ProcessedProductType implements Item {
-    Honey(75, 350, 4 * 14),
-    Cheese(100, 230, 3),
-    LargeCheese(100, 345, 3),
-    GoatCheese(100, 400, 3),
-    LargeGoatCheese(100, 600, 3),
-    Beer(50, 200, 14),
-    Vinegar(13, 100, 10),
-    Coffee(75, 150, 2),
-    Juice(null, null, 4 * 14),
-    Mead(100, 300, 10),
-    PaleAle(50, 300, 3 * 14),
-    Wine(null, null, 7 * 14),
-    DriedMushroom(null, null, null),
-    DriedFruit(null, null, null),
-    Raisins(125, 600, null),
-    Coal(0, 50, 1),
-    Cloth(0, 470, 4),
-    Mayonnaise(50, 190, 3),
-    LargeMayonnaise(50, 237, 3),
-    DuckMayonnaise(75, 37, 3),
-    DinosaurMayonnaise(125, 800, 3),
-    TruffleOil(38, 1065, 6),
-    Oil(13, 100, 6),
-    Pickle(null, null, 6),
-    Jelly(null, null, 3 * 14),
-    SmokedFish(null, null, 1),
-    CopperMetalBar(0, getPriceWithMultiplier(MineralType.CopperOre, 10), 4),
-    IronMetalBar(0, getPriceWithMultiplier(MineralType.IronOre, 10), 4),
-    GoldMetalBar(0, getPriceWithMultiplier(MineralType.GoldOre, 10), 4),
-    IridiumMetalBar(0, getPriceWithMultiplier(MineralType.IridiumOre, 10), 4);
+    Honey(75, 350, 4 * 14 , "Items/Processed_products/Honey.png"),
+    Cheese(100, 230, 3 , "Items/Processed_products/Cheese.png"),
+    LargeCheese(100, 345, 3 , "Items/Processed_products/Cheese.png"),
+    GoatCheese(100, 400, 3 , "Items/Processed_products/Goat_Cheese.png"),
+    LargeGoatCheese(100, 600, 3 , "Items/Processed_products/Goat_Cheese.png"),
+    Beer(50, 200, 14 , "Items/Processed_products/Beer.png"),
+    Vinegar(13, 100, 10 , "Items/Processed_products/Vinegar.png"),
+    Coffee(75, 150, 2 , "Items/Processed_products/Coffee.png"),
+    Juice(null, null, 4 * 14 , "Items/Processed_products/Juice.png"),
+    Mead(100, 300, 10 , "Items/Processed_products/Mead.png"),
+    PaleAle(50, 300, 3 * 14 , "Items/Processed_products/Pale_Ale.png"),
+    Wine(null, null, 7 * 14 , "Items/Processed_products/Wine.png"),
+    DriedMushroom(null, null, null , "Items/Processed_products/Dried_Mushrooms.png"),
+    DriedFruit(null, null, null , "Items/Processed_products/Dried_Fruit.png"),
+    Raisins(125, 600, null , "Items/Processed_products/Raisins.png"),
+    Coal(0, 50, 1 , "Items/Processed_products/Coal.png"),
+    Cloth(0, 470, 4 , "Items/Processed_products/Cloth.png"),
+    Mayonnaise(50, 190, 3 , "Items/Processed_products/Mayonnaise.png"),
+    LargeMayonnaise(50, 237, 3 , "Items/Processed_products/Mayonnaise.png"),
+    DuckMayonnaise(75, 37, 3 , "Items/Processed_products/Duck_Mayonnaise.png"),
+    DinosaurMayonnaise(125, 800, 3 , "Items/Processed_products/Dinosaur_Mayonnaise.png"),
+    TruffleOil(38, 1065, 6 , "Items/Processed_products/Truffle_Oil.png"),
+    Oil(13, 100, 6 , "Items/Processed_products/Oil.png"),
+    Pickle(null, null, 6 , "Items/Processed_products/Pickles.png"),
+    Jelly(null, null, 3 * 14 , "Items/Processed_products/Jelly.png"),
+    SmokedFish(null, null, 1 , "Items/Processed_products/Smoked_fish.png"),
+    CopperMetalBar(0, getPriceWithMultiplier(MineralType.CopperOre, 10), 4 ,
+            "Items/Processed_products/Copper_Bar.png"),
+    IronMetalBar(0, getPriceWithMultiplier(MineralType.IronOre, 10), 4 ,
+            "Items/Processed_products/Iron_Bar.png"),
+    GoldMetalBar(0, getPriceWithMultiplier(MineralType.GoldOre, 10), 4 ,
+            "Items/Processed_products/Gold_Bar.png"),
+    IridiumMetalBar(0, getPriceWithMultiplier(MineralType.IridiumOre, 10), 4 ,
+            "Items/Processed_products/Iridium_Bar.png");
 
     private final Integer energy;
     private final Integer price;
     private final Integer processingTime;
     private Recipe recipe;
+    private final String address;
 
-    ProcessedProductType(Integer energy, Integer price, Integer processingTime) {
+    ProcessedProductType(Integer energy, Integer price, Integer processingTime , String address) {
         this.recipe = null;
         this.energy = energy;
         this.price = price;
         this.processingTime = processingTime;
+        this.address = address;
     }
 
     private static int getPriceWithMultiplier(Item item, double multiplier) {

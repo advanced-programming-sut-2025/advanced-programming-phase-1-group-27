@@ -4,35 +4,38 @@ import org.example.server.models.Item;
 import org.example.server.models.enums.items.Recipe;
 
 public enum CraftingProduct implements Item {
-    CherryBomb(50),
-    Bomb(50),
-    MegaBomb(50),
-    Sprinkler(0),
-    QualitySprinkler(0),
-    IridiumSprinkler(0),
-    CharcoalKlin(0),
-    Furnace(0),
-    Scarecrow(0),
-    DeluxeScarecrow(0),
-    BeeHouse(0),
-    CheesePress(0),
-    Keg(0),
-    Loom(0),
-    MayonnaiseMachine(0),
-    OilMaker(0),
-    PreservesJar(0),
-    GrassStarter(0),
-    Dehydrator(0),
-    FishSmoker(0),
-    MysticTreeSeed(100);
+    //Some of them have extra for On/Off
+    CherryBomb(50 , "Items/Crafting_products/Cherry_Bomb.png"),
+    Bomb(50 , "Items/Crafting_products/Bomb.png"),
+    MegaBomb(50 , "Items/Crafting_products/Mega_Bomb.png"),
+    Sprinkler(0 , "Items/Crafting_products/Sprinkler.png"),
+    QualitySprinkler(0 , "Items/Crafting_products/Quality_Sprinkler.png"),
+    IridiumSprinkler(0 , "Items/Crafting_products/Iridium_Sprinkler.png"),
+    CharcoalKlin(0 , "Items/Crafting_products/Charcoal_Klin.png"),
+    Furnace(0 , "Items/Crafting_products/Furnace.png"),
+    Scarecrow(0 , "Items/Crafting_products/Scarecrow.png"),
+    DeluxeScarecrow(0 , "Items/Crafting_products/Deluxe_Scarecrow.png"),
+    BeeHouse(0 , "Items/Crafting_products/Bee_house.png"),
+    CheesePress(0 , "Items/Crafting_products/Cheese_Press.png"),
+    Keg(0 , "Items/Crafting_products/Keg.png"),
+    Loom(0 , "Items/Crafting_products/Loom.png"),
+    MayonnaiseMachine(0 , "Items/Crafting_products/Mayonnaise_Machine.png"),
+    OilMaker(0 , "Items/Crafting_products/Oil_Maker.png"),
+    PreservesJar(0 , "Items/Crafting_products/Preserves_Jar.png"),
+    GrassStarter(0 , "Items/Crafting_products/Grass_Starter.png"),
+    Dehydrator(0 , "Items/Crafting_products/Dehydrator.png"),
+    FishSmoker(0 , "Items/Crafting_products/Fish_Smoker.png"),
+    MysticTreeSeed(100 , "Items/Crafting_products/Mystic_Tree_Seed.png");
 
 
     private final int price;
     private Recipe recipe;
+    private final String address;
 
-    CraftingProduct(int price) {
+    CraftingProduct(int price ,  String address) {
         this.recipe = null;
         this.price = price;
+        this.address = address;
     }
 
     public static CraftingProduct getItem(String itemName) {

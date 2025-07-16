@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import org.example.client.Main;
 import org.example.common.models.GraphicalResult;
+import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.enums.Menu;
 import org.example.client.view.menu.ForgetPasswordMenuView;
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -136,5 +138,31 @@ public class LoginMenuController extends MenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static Message login(Message loginMessage) {
+        String username = loginMessage.getFromBody("username");
+        String password = loginMessage.getFromBody("password");
+        boolean stayLoggedIn = loginMessage.getFromBody("stayLoggedIn");
+
+        User user = ServerApp.getUserByUsername(username);
+        if (user == null){
+            return new Message(new HashMap<>() {{
+                put("GraphicalResult", GraphicalResult.getInfo("Username not found!"));
+            }} , Message.Type.response);
+        }
+
+        if(!user.passwordEquals(password)){
+            return new Message(new HashMap<>() {{
+                put("GraphicalResult", GraphicalResult.getInfo("Passwords do not match!"));
+            }} , Message.Type.response);
+        }
+        //TODO : LoggedIn?????
+        ServerApp.addOnline(user);
+        return new Message(new HashMap<>() {{
+            put("GraphicalResult", GraphicalResult.getInfo("You have successfully logged in."
+                    , false));
+        }} , Message.Type.response);
     }
 }

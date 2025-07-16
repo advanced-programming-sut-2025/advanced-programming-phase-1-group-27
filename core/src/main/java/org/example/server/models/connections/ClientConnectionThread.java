@@ -1,5 +1,6 @@
 package org.example.server.models.connections;
 
+import org.example.server.controller.LoginMenuController;
 import org.example.server.controller.RegisterMenuController;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
@@ -44,6 +45,9 @@ public class ClientConnectionThread extends ConnectionThread {
     protected boolean handleMessage(Message message) {
         if (message.getType() == Message.Type.register_request) {
             sendMessage(RegisterMenuController.register(message));
+            return true;
+        }else if(message.getType() == Message.Type.login_request) {
+            sendMessage(LoginMenuController.login(message));
             return true;
         }
         return false;
