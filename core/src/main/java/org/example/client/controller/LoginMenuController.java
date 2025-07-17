@@ -39,9 +39,11 @@ public class LoginMenuController extends MenuController {
 
         if (view.getStayLoggedInCheckBox().isChecked())
             updateFile(ServerApp.getUserByUsername(view.getUsernameField().getText()));
+        ClientApp.setLoggedInUser(ClientApp.getUserByUsername(view.getUsernameField().getText()));
 
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new MainMenuView());
+
         return new GraphicalResult(String.valueOf(loginAttempt.getMessage()), Color.GREEN);
     }
 
@@ -49,7 +51,7 @@ public class LoginMenuController extends MenuController {
         return view.getUsernameField().getText().isEmpty() || view.getPasswordField().getText().isEmpty();
     }
 
-    public GraphicalResult login(String username, String password) {
+    private GraphicalResult login(String username, String password) {
         Message message = new Message(new HashMap<>() {{
             put("username", username);
             put("password", password);

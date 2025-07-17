@@ -9,8 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.controller.ProfileMenuController;
 import org.example.common.models.GraphicalResult;
-import org.example.server.controller.ProfileMenuController;
+import org.example.server.models.GameAssetManager;
 import org.example.server.models.Result;
 import org.example.server.models.enums.commands.MainMenuCommands;
 import org.example.server.models.enums.commands.ProfileMenuCommands;
@@ -41,6 +42,8 @@ public class ProfileMenuView extends AppMenu {
     private final TextButton backButton;
 
     private final GraphicalResult errorLabel;
+
+    private float fadeInTimer = 0f;
 
     public ProfileMenuView() {
 
@@ -138,7 +141,13 @@ public class ProfileMenuView extends AppMenu {
 
     }
 
+    private void showErrorMessage() {
 
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 8f, 6 * Gdx.graphics.getHeight() / 7f - Gdx.graphics.getHeight() / 9f + 20);
+        errorLabel.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
+        stage.addActor(errorLabel.getMessage());
+
+    }
 
     @Override
     public void show() {
@@ -147,6 +156,7 @@ public class ProfileMenuView extends AppMenu {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(menuBackground);
+        showErrorMessage();
 
         stage.addActor(new Label("PROFILE", skin));
 
@@ -154,7 +164,14 @@ public class ProfileMenuView extends AppMenu {
 
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
+        errorLabel.update(delta);
+
+        if (fadeInTimer < 1f) {
+            fadeInTimer += delta;
+        } else {
+            fadeInTimer = 1f;
+        }
 
         Main.getBatch().begin();
         Main.getBatch().end();
@@ -200,7 +217,7 @@ public class ProfileMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                ///  TODO
+                errorLabel.set(controller.changeViaGraphics());
             }
         });
 
@@ -208,42 +225,31 @@ public class ProfileMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                ///  TODO
+                controller.exitMenu();
             }
         });
 
     }
 
-    public void executeCommands(Scanner scanner) {
-        String input = scanner.nextLine().trim();
-        Matcher matcher;
-        if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
-            System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
-            System.out.println(controller.exitMenu());
-        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
-            System.out.println(controller.showCurrentMenu());
-        } else if ((matcher = ProfileMenuCommands.ChangeUsername.getMatcher(input)) != null) {
-            System.out.println(controller.changeUsername(
-                    matcher.group("username").trim()
-            ));
-        } else if ((matcher = ProfileMenuCommands.ChangeNickname.getMatcher(input)) != null) {
-            System.out.println(controller.changeNickname(
-                    matcher.group("nickname").trim()
-            ));
-        } else if ((matcher = ProfileMenuCommands.ChangeEmail.getMatcher(input)) != null) {
-            System.out.println(controller.changeEmail(
-                    matcher.group("email").trim()
-            ));
-        } else if ((matcher = ProfileMenuCommands.ChangePassword.getMatcher(input)) != null) {
-            System.out.println(controller.changePassword(
-                    matcher.group("newPassword").trim(),
-                    matcher.group("oldPassword").trim()
-            ));
-        } else if (ProfileMenuCommands.UserInfo.getMatcher(input) != null) {
-            System.out.println(controller.showInfo());
-        } else {
-            System.out.println(new Result(false, "invalid command!"));
-        }
+    public TextField getNewUsernameTextField() {
+        return newUsernameTextField;
     }
+
+    public TextField getNewPasswordTextField() {
+        return newPasswordTextField;
+    }
+
+    public TextField getNewEmailTextField() {
+        return newEmailTextField;
+    }
+
+    public TextField getNewNicknameTextField() {
+        return newNicknameTextField;
+    }
+
+    public TextField getPasswordTextField() {
+        return passwordTextField;
+    }
+
+    public void executeCommands(Scanner scanner) {}
 }
