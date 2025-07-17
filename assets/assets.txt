@@ -24,6 +24,9 @@ Fonts/lantern_white.png
 Fonts/stardew-font.fnt
 Fonts/stardew-font.png
 Fonts/stardew-valley.ttf
+Images/home2.png
+Images/home2_expanded_left_1920x1080.png
+Images/home3.png
 Images/home_cropped.png
 Images/menu_background.png
 Images/stardew_valley_text.png

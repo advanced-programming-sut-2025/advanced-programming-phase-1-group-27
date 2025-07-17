@@ -34,7 +34,7 @@ public class HomeView extends AppMenu {
     private final HomeController controller;
     private final HomePlayerController playerController;
 
-    private final Stage stage ;
+    private final Stage stage;
 
     private final TextButton advanceTimeButton;
 
