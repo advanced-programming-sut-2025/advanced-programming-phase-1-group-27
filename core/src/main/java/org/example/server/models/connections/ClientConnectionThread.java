@@ -46,9 +46,13 @@ public class ClientConnectionThread extends ConnectionThread {
         if (message.getType() == Message.Type.register_request) {
             sendMessage(RegisterMenuController.register(message));
             return true;
-        }else if(message.getType() == Message.Type.login_request) {
+        }
+        else if(message.getType() == Message.Type.login_request) {
             sendMessage(LoginMenuController.login(message));
             return true;
+        }
+        else if (message.getType() == Message.Type.add_user) {
+            RegisterMenuController.addUser(message);
         }
         return false;
     }

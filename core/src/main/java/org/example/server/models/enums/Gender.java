@@ -6,8 +6,8 @@ public enum Gender {
 
     public static Gender getGender(String gender) {
         return switch (gender) {
-            case "male" -> Male;
-            case "female" -> Female;
+            case "Male" -> Male;
+            case "Female" -> Female;
             default -> null;
         };
     }

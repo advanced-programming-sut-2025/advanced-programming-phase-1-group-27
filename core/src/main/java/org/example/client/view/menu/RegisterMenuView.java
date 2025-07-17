@@ -313,7 +313,6 @@ public class RegisterMenuView extends AppMenu {
                 playClickSound();
                 errorLabel.set(controller.register());
 
-
             }
         });
 

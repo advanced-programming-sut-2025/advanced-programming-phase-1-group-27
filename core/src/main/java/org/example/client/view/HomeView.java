@@ -29,99 +29,33 @@ import java.util.regex.Matcher;
 
 public class HomeView extends AppMenu {
 
+    private final HUDView hudView;
+
     private final HomeController controller;
     private final HomePlayerController playerController;
-    private Stage stage;
 
-    private Image clockImage;
-    private final Image clockArrowImage;
+    private final Stage stage;
 
     private final TextButton advanceTimeButton;
 
-    private final TextField textInputField;
-
-    private boolean isInputFieldVisible;
-    private boolean tJustPressed;
-
-    private final GraphicalResult errorLabel;
 
     private final Sprite homeSprite = new Sprite(GameAssetManager.getGameAssetManager().getHomeTexture());
 
     public HomeView() {
 
+        stage = new Stage(new ScreenViewport());
+        hudView = new HUDView(stage);
         controller = new HomeController(this);
         playerController = new HomePlayerController(this);
         advanceTimeButton = new TextButton("advance",skin);
-        clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
-        textInputField = new TextField("",skin);
-        isInputFieldVisible = false;
-        tJustPressed = false;
-        errorLabel = new GraphicalResult();
-
 
     }
 
 
-    private void displayClock(){
-
-        controller.updateClockImage();
-
-        clockImage.setPosition(1920-clockImage.getWidth(),1080-clockImage.getHeight());
-
-
-        clockArrowImage.setPosition(
-                clockImage.getX() + (0.255f * clockImage.getWidth()),
-                clockImage.getY() + (0.37f * clockImage.getHeight())
-        );
-        clockArrowImage.setOrigin(
-                clockArrowImage.getWidth() / 2,
-                clockArrowImage.getHeight()
-        );
-        clockArrowImage.setRotation(controller.getClockArrowDegree());
-
-
-
-        stage.addActor(clockImage);
-        stage.addActor(clockArrowImage);
-        clockArrowImage.toFront();
-
-
-
-    }
-
-    private void displayInputField(){
-
-        if ( tJustPressed ){
-            tJustPressed = false;
-            textInputField.setText("");
-        }
-
-        textInputField.setVisible(isInputFieldVisible);
-
-        TextField.TextFieldStyle style = new TextField.TextFieldStyle(textInputField.getStyle());
-        style.fontColor = new Color(1,1,1,1);
-        textInputField.setStyle(style);
-
-        textInputField.setColor(0,0,0,0.5f);
-
-        textInputField.setWidth(Gdx.graphics.getWidth());
-
-        stage.addActor(textInputField);
-
-    }
-
-    private void showErrorMessage() {
-
-
-        errorLabel.setPosition(Gdx.graphics.getWidth()/2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight()-40);
-        stage.addActor(errorLabel.getMessage());
-
-    }
 
     @Override
     public void show() {
 
-        stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(advanceTimeButton);
@@ -138,11 +72,6 @@ public class HomeView extends AppMenu {
 
         ScreenUtils.clear(0, 0, 0, 1);
 
-
-        errorLabel.update(delta);
-
-
-
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
         Main.getBatch().begin();
@@ -150,9 +79,9 @@ public class HomeView extends AppMenu {
         playerController.update();
         Main.getBatch().end();
 
-        displayClock();
-        displayInputField();
-        showErrorMessage();
+
+        hudView.render(delta);
+
 
         stage.draw();
 
@@ -196,56 +125,8 @@ public class HomeView extends AppMenu {
             }
         });
 
-        stage.addListener(new InputListener() {
-
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-
-                if ( !isInputFieldVisible ){
-
-                    if ( keycode == Input.Keys.T ) {
-                        playClickSound();
-                        isInputFieldVisible = true;
-                        textInputField.setText("");
-                        tJustPressed = true;
-                        return true;
-                    }
-
-                }
-
-                else {
-
-                    if ( keycode == Input.Keys.ENTER ) {
-                        playClickSound();
-                        errorLabel.set(controller.handleTextInput());
-                        return true;
-                    }
-                    else if ( keycode == Input.Keys.ESCAPE ) {
-                        playClickSound();
-                        controller.closeTextInputField();
-                        return true;
-                    }
-
-                }
-                return false;
-            }
-        });
-
-
-
     }
 
-    public void setClockImage(Image clockImage) {
-        this.clockImage = clockImage;
-    }
-
-    public TextField getTextInputField() {
-        return textInputField;
-    }
-
-    public void setInputFieldVisible(boolean inputFieldVisible) {
-        isInputFieldVisible = inputFieldVisible;
-    }
 
     public void executeCommands(Scanner scanner) {
         if (controller.playerPassedOut()) {

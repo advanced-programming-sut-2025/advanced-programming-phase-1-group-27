@@ -1,5 +1,6 @@
 package org.example.server.controller;
 
+import org.example.client.controller.MenuController;
 import org.example.server.models.App;
 import org.example.server.models.Result;
 import org.example.server.models.User;

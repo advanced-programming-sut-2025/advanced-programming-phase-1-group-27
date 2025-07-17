@@ -3,6 +3,8 @@ package org.example.server.controller;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
+import org.example.server.models.enums.Gender;
+import org.example.server.models.enums.Questions;
 
 import java.util.HashMap;
 
@@ -57,5 +59,18 @@ public class RegisterMenuController {
             put("reRegister", false);
             put("suggestedUsername", null);
         }}, Message.Type.response);
+    }
+
+    public static void addUser(Message message) {
+        String username = message.getFromBody("username");
+        String password = message.getFromBody("password");
+        String email = message.getFromBody("email");
+        String nickname = message.getFromBody("nickname");
+        Gender gender = Gender.getGender(message.getFromBody("gender"));
+        int questionId = message.<Number>getFromBody("questionId").intValue();
+        String answer = message.getFromBody("answer");
+        User user = new User(username, password, nickname, email, gender);
+        user.setRecoveryQuestion(new SecurityQuestion(Questions.values()[questionId].getQuestion(), answer));
+        ServerApp.addUser(user);
     }
 }

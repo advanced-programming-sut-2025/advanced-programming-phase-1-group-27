@@ -28,6 +28,9 @@ Images/Floorings/Free.png
 Images/Floorings/Quarry.png
 Images/greenhouse.png
 Images/home_cropped.png
+Images/home2.png
+Images/home2_expanded_left_1920x1080.png
+Images/home3.png
 Images/home_cropped.png
 Images/menu_background.png
 Images/stardew_valley_text.png

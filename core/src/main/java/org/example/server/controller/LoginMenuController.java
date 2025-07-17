@@ -1,6 +1,7 @@
 package org.example.server.controller;
 
 import org.example.client.Main;
+import org.example.client.controller.MenuController;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
