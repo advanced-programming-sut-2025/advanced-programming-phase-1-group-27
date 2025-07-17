@@ -1,5 +1,6 @@
 package org.example.server.controller;
 
+import org.example.client.controller.MenuController;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;

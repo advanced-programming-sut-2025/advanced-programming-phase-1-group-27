@@ -42,12 +42,14 @@ public class ServerApp {
         if (clientConnectionThread == null)
             return;
         connections.remove(clientConnectionThread);
+        System.out.println("Number of connectionsss: " + connections.size());
     }
 
     public static void addConnection(ClientConnectionThread clientConnectionThread) {
         if (clientConnectionThread == null || connections.contains(clientConnectionThread))
             return;
         connections.add(clientConnectionThread);
+        System.out.println("Number of connections: " + connections.size());
     }
 
     public static void setUsers(ArrayList<User> users) {
@@ -71,6 +73,10 @@ public class ServerApp {
                 return result;
         }
         return null;
+    }
+
+    public static void addUser(User user) {
+        users.add(user);
     }
 
     public static void addOnline(User user) {

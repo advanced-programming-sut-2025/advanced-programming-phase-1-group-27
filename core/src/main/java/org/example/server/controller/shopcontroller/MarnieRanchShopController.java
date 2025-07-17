@@ -1,6 +1,6 @@
 package org.example.server.controller.shopcontroller;
 
-import org.example.server.controller.MenuController;
+import org.example.client.controller.MenuController;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;

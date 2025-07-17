@@ -1,6 +1,6 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.server.controller.MenuController;
+import org.example.client.controller.MenuController;
 import org.example.server.models.App;
 import org.example.server.models.Item;
 import org.example.server.models.Player;
