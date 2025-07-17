@@ -1,5 +1,6 @@
 package org.example.server.models.connections;
 
+import org.example.server.controller.ForgetPasswordMenuController;
 import org.example.server.controller.LoginMenuController;
 import org.example.server.controller.RegisterMenuController;
 import org.example.common.models.ConnectionThread;
@@ -54,6 +55,19 @@ public class ClientConnectionThread extends ConnectionThread {
         }
         else if (message.getType() == Message.Type.add_user) {
             RegisterMenuController.addUser(message);
+            return true;
+        }
+        else if (message.getType() == Message.Type.set_online_user) {
+            this.setUser(new User(message.getFromBody("userInfo")));
+            return true;
+        }
+        else if (message.getType() == Message.Type.get_user) {
+            sendMessage(ServerApp.getUserByUsername(message));
+            return true;
+        }
+        else if (message.getType() == Message.Type.set_password) {
+            ForgetPasswordMenuController.setPassword(message);
+            return true;
         }
         return false;
     }

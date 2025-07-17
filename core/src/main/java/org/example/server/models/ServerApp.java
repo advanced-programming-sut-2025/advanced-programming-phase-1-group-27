@@ -1,10 +1,12 @@
 package org.example.server.models;
 
 import org.example.common.database.DataBaseHelper;
+import org.example.common.models.Message;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.connections.ListenerThread;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ServerApp {
     public static final int TIMEOUT_MILLIS = 5000;
@@ -52,6 +54,19 @@ public class ServerApp {
 
     public static User getUserByUsername(String username) {
         return DataBaseHelper.getUserByUsername(username);
+    }
+
+    public static Message getUserByUsername(Message message) {
+        String username = message.getFromBody("username");
+        User user = getUserByUsername(username);
+        if (user == null)
+            return new Message(new HashMap<>() {{
+                put("found", false);
+            }}, Message.Type.response);
+        return new Message(new HashMap<>() {{
+            put("found", true);
+            put("userInfo", user.getInfo());
+        }}, Message.Type.response);
     }
 
     public static String generateUsername(String username) {

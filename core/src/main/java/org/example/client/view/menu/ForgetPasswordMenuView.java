@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.server.controller.ForgetPasswordMenuController;
+import org.example.client.controller.ForgetPasswordMenuController;
 import org.example.server.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.view.AppMenu;
@@ -231,7 +231,6 @@ public class ForgetPasswordMenuView extends AppMenu {
 
 
     private void setListeners() {
-
         submitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

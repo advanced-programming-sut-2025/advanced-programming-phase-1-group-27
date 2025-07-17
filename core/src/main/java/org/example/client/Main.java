@@ -28,6 +28,7 @@ public class Main extends Game {
         } catch (Exception e) {
             System.err.println("Error initializing peer: " + e.getMessage());
         }
+
     }
 
     public static Main getMain() {
@@ -48,15 +49,9 @@ public class Main extends Game {
 
     @Override
     public void create() {
-
         main = this;
         batch = new SpriteBatch();
-
-        //  TODO: Yeki az ina comment bayad beshe. Terminal baraye test phase 1
-//        (new AppView()).runViaTerminal();
         (new AppView()).runViaGraphics();
-
-
     }
 
     @Override
