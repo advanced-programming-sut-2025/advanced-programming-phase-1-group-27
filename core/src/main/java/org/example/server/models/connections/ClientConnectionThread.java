@@ -5,6 +5,7 @@ import org.example.server.controller.RegisterMenuController;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.models.ServerApp;
+import org.example.server.models.User;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -14,9 +15,18 @@ import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class ClientConnectionThread extends ConnectionThread {
     // TODO: nemidoonam
+    private User user;
 
     public ClientConnectionThread(Socket socket) throws IOException {
         super(socket);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override
@@ -48,7 +58,7 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         }
         else if(message.getType() == Message.Type.login_request) {
-            sendMessage(LoginMenuController.login(message));
+            sendMessage(LoginMenuController.login(message , this));
             return true;
         }
         else if (message.getType() == Message.Type.add_user) {

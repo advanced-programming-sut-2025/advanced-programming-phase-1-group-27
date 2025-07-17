@@ -5,6 +5,7 @@ import org.example.client.controller.MenuController;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
+import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.enums.Menu;
 import org.example.client.view.menu.ForgetPasswordMenuView;
 import org.example.client.view.menu.LoginMenuView;
@@ -21,12 +22,13 @@ import java.util.regex.Matcher;
 
 public class LoginMenuController {
 
-    public static Message login(Message loginMessage) {
+    public static Message login(Message loginMessage , ClientConnectionThread clientConnectionThread) {
         String username = loginMessage.getFromBody("username");
         String password = loginMessage.getFromBody("password");
+        boolean stayLoggedIn = loginMessage.getFromBody("stayLoggedIn");
 
         User user = ServerApp.getUserByUsername(username);
-        if (user == null) {
+        if (user == null){
             return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("Username not found!"));
             }} , Message.Type.response);
@@ -37,7 +39,8 @@ public class LoginMenuController {
                 put("GraphicalResult", GraphicalResult.getInfo("Passwords do not match!"));
             }} , Message.Type.response);
         }
-        ServerApp.addOnline(user);
+        clientConnectionThread.setUser(user);
+
         return new Message(new HashMap<>() {{
             put("GraphicalResult", GraphicalResult.getInfo("You have successfully logged in."
                     , false));

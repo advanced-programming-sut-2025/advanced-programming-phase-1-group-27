@@ -11,8 +11,6 @@ public class ServerApp {
     private static final ArrayList<ClientConnectionThread> connections = new ArrayList<>();
     private static ListenerThread listenerThread;
     private static boolean hasEnded = false;
-    private static ArrayList<User> onlineUsers = new ArrayList<>();
-    private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Lobby> lobbies = new ArrayList<>();
 
     public static void setListenerThread(ListenerThread listenerThread) {
@@ -52,17 +50,8 @@ public class ServerApp {
         System.out.println("Number of connections: " + connections.size());
     }
 
-    public static void setUsers(ArrayList<User> users) {
-        ServerApp.users = users;
-    }
-
     public static User getUserByUsername(String username) {
-//        for (User user : users) {
-//            if (user.getUsername().equals(username))
-//                return user;
-//        }
-//        return null;
-        return DataBaseHelper.DatabaseHelper.getUserByUsername(username);
+        return DataBaseHelper.getUserByUsername(username);
     }
 
     public static String generateUsername(String username) {
@@ -76,10 +65,10 @@ public class ServerApp {
     }
 
     public static void addUser(User user) {
-        users.add(user);
+        DataBaseHelper.registerUser(user);
     }
 
-    public static void addOnline(User user) {
-        onlineUsers.add(user);
+    public static ArrayList<User> getUsers() {
+        return DataBaseHelper.getAllUsers();
     }
 }
