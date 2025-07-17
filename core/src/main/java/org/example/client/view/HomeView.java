@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.common.models.GraphicalResult;
@@ -135,10 +136,12 @@ public class HomeView extends AppMenu {
     @Override
     public void render(float delta) {
 
+        ScreenUtils.clear(0, 0, 0, 1);
+
+
         errorLabel.update(delta);
 
 
-        stage.draw();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
@@ -150,6 +153,8 @@ public class HomeView extends AppMenu {
         displayClock();
         displayInputField();
         showErrorMessage();
+
+        stage.draw();
 
 
     }
