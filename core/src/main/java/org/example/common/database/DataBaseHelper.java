@@ -14,7 +14,6 @@ public class DataBaseHelper {
 
     public static void createDatabase() {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            // Check if the users table exists. If not, create it.
             DatabaseMetaData meta = conn.getMetaData();
             try (ResultSet tables = meta.getTables(null, null, "users", null)) {
                 if (!tables.next()) {
@@ -23,13 +22,10 @@ public class DataBaseHelper {
             }
         } catch (SQLException e) {
             System.err.println("Error initializing database: " + e.getMessage());
-            // It's good practice to log or handle exceptions properly
         }
     }
 
     public static void createUserTable() {
-        // Corrected SQL statement: removed the trailing comma and added the closing parenthesis.
-        // Also, ensured 'numberOfGamesPlayed' matches the retrieval methods.
         String sql = "CREATE TABLE IF NOT EXISTS users (" +
                 "username TEXT PRIMARY KEY," +
                 "password TEXT NOT NULL," +
@@ -39,7 +35,7 @@ public class DataBaseHelper {
                 "securityQuestion TEXT," +
                 "answer TEXT," +
                 "maxMoney INTEGER DEFAULT 0," +
-                "numberOfGamesPlayed INTEGER DEFAULT 0" + // Corrected: removed trailing comma and added ')'
+                "numberOfGamesPlayed INTEGER DEFAULT 0" +
                 ")";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -48,7 +44,6 @@ public class DataBaseHelper {
             System.out.println("Users table created or already exists.");
         } catch (SQLException e) {
             System.err.println("Error creating users table: " + e.getMessage());
-            // Added error logging for better debugging
         }
     }
 
@@ -102,7 +97,7 @@ public class DataBaseHelper {
             System.out.println("User '" + user.getUsername() + "' registered successfully.");
         } catch (SQLException e) {
             System.err.println("Error registering user '" + user.getUsername() + "': " + e.getMessage());
-            e.printStackTrace(); // Keep for detailed stack trace during development
+            e.printStackTrace();
         }
     }
 

@@ -15,7 +15,7 @@ public class Main {
             int port = Integer.parseInt(args[0]);
 
             DataBaseHelper.createDatabase();
-            System.out.println("MOZ");
+
             ServerApp.setListenerThread(new ListenerThread(port));
             ServerApp.startListening();
         } catch (Exception e) {
