@@ -47,7 +47,6 @@ public class MainMenuView extends AppMenu {
     private void showMenuTitle() {
 
         menuTitleLabel.setFontScale(4f);
-        menuTitleLabel.setColor(0.878f, 0.627f, 0f, 1f);
         menuTitleLabel.setPosition(Gdx.graphics.getWidth() / 9f, 6 * Gdx.graphics.getHeight() / 7f);
         stage.addActor(menuTitleLabel);
 

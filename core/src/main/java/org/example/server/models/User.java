@@ -1,17 +1,17 @@
 package org.example.server.models;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.enums.Gender;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class User {
-    private String ip; //
-    private int port; //
     private String username, password, nickname, email;
     private Gender gender;
     // security question to recover forgotten password
@@ -44,8 +44,31 @@ public class User {
         this.numberOfGamesPlayed = numberOfGamesPlayed;
     }
 
-    public User() {
+    public User(LinkedTreeMap<String, Object> data) {
+        username = (String) data.get("username");
+        password = (String) data.get("password");
+        nickname = (String) data.get("nickname");
+        email = (String) data.get("email");
+        gender = Gender.getGender((String) data.get("gender"));
+        recoveryQuestion = new SecurityQuestion((String) data.get("questionId"), (String) data.get("answer"));
+        maxMoneyEarned = ((Number) data.get("maxMoneyEarned")).intValue();
+        numberOfGamesPlayed = ((Number) data.get("numberOfGamesPlayed")).intValue();
+    }
 
+    public User() {}
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("username", username);
+        info.put("password", password);
+        info.put("nickname", nickname);
+        info.put("email", email);
+        info.put("gender", gender);
+        info.put("questionId", recoveryQuestion.getQuestion());
+        info.put("answer", recoveryQuestion.getAnswer());
+        info.put("maxMoneyEarned", maxMoneyEarned);
+        info.put("numberOfGamesPlayed", numberOfGamesPlayed);
+        return info;
     }
 
     public static boolean isValidUsername(String username) {

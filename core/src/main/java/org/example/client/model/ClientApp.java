@@ -1,18 +1,51 @@
 package org.example.client.model;
 
+import org.example.client.Main;
+import org.example.common.models.Message;
+import org.example.server.models.SecurityQuestion;
 import org.example.server.models.User;
+import org.example.server.models.enums.Gender;
+import org.example.server.models.enums.Menu;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
+
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class ClientApp {
     private static String ip;
     private static int port;
+    private static final String loggedInUserFilePath = "data/login_user.json";
     private static ServerConnectionThread serverConnectionThread;
-    private static User loggedInUser;
+    private static User loggedInUser = null;
+
+    public static boolean loadSavedUser() {
+        User savedUser = getSavedUser();
+        if (savedUser != null) {
+            loggedInUser = savedUser;
+            serverConnectionThread.sendMessage(new Message(new HashMap<>() {{
+                put("userInfo", loggedInUser.getInfo());
+            }}, Message.Type.set_online_user));
+            return true;
+        }
+        return false;
+    }
+
+    public static void setLoggedInUser(User user) {
+        loggedInUser = user;
+    }
+
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
 
     public static void initFromArgs(String[] args) throws IOException {
         ip = args[0].split(":")[0];
@@ -40,6 +73,40 @@ public class ClientApp {
 
     public static ServerConnectionThread getServerConnectionThread() {
         return serverConnectionThread;
+    }
+
+    public static User getUserByUsername(String username) {
+        Message response = serverConnectionThread.sendAndWaitForResponse(new Message(new HashMap<>() {{
+            put("username", username);
+        }}, Message.Type.get_user), TIMEOUT_MILLIS);
+        if (response.getFromBody("found"))
+            return new User(response.getFromBody("userInfo"));
+        return null;
+    }
+
+    public static User getSavedUser() {
+        File file = new File(loggedInUserFilePath);
+        if (!file.exists() || file.length() == 0)
+            return null;
+
+        try (FileReader reader = new FileReader(file)) {
+            JSONObject json = new JSONObject(new JSONTokener(reader));
+            User result = new User();
+            result.setUsername(json.optString("username"));
+            result.setPassword(json.optString("password"));
+            result.setNickname(json.optString("nickname"));
+            result.setEmail(json.optString("email"));
+            result.setRecoveryQuestion(new SecurityQuestion(
+                    json.optString("recoveryQuestion"),
+                    json.optString("recoveryAnswer")
+            ));
+            result.setGender(Gender.getGender(json.optString("gender")));
+            result.setMaxMoneyEarned(json.optInt("maxMoneyEarned"));
+            result.setNumberOfGamesPlayed(json.optInt("numberOfGamesPlayed"));
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static String generatePassword() {

@@ -27,13 +27,7 @@ public class SecurityQuestionMenuController extends MenuController {
             view.getUser().setRecoveryQuestion(new SecurityQuestion(Questions.values()[view.getSecurityQuestionsBox().getSelectedIndex()].getQuestion(),
                     view.getAnswerTextField().getText()));
             ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
-                put("username", view.getUser().getUsername());
-                put("password", view.getUser().getPassword());
-                put("email", view.getUser().getEmail());
-                put("nickname", view.getUser().getNickname());
-                put("gender", view.getUser().getGender().name());
-                put("questionId", view.getSecurityQuestionsBox().getSelectedIndex());
-                put("answer", view.getAnswerTextField().getText());
+                put("userInfo", view.getUser().getInfo());
             }}, Message.Type.add_user));
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(new LoginMenuView());

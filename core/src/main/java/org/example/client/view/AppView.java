@@ -1,6 +1,7 @@
 package org.example.client.view;
 
 import org.example.client.Main;
+import org.example.client.model.ClientApp;
 import org.example.server.models.*;
 import org.example.server.models.enums.Gender;
 import org.example.server.models.enums.Menu;
@@ -21,15 +22,16 @@ public class AppView {
 
     public void runViaGraphics() {
 
-        if (App.getSavedUser() != null) {
+        if (ClientApp.loadSavedUser()) {
             Main.getMain().setScreen(new MainMenuView());
             return;
         }
         Main.getMain().setScreen(new WelcomeMenuView());
-        Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new HomeView());
+//        Main.getMain().getScreen().dispose();
+//        Main.getMain().setScreen(new HomeView());
 
     }
+
 
 
 }

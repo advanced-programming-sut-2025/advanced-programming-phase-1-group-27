@@ -1,73 +1,126 @@
 package org.example.server.controller;
 
+import com.badlogic.gdx.utils.Null;
 import org.example.client.controller.MenuController;
+import org.example.client.model.ClientApp;
+import org.example.common.database.DataBaseHelper;
+import org.example.common.models.GraphicalResult;
+import org.example.common.models.Message;
 import org.example.server.models.App;
 import org.example.server.models.Result;
+import org.example.server.models.ServerApp;
 import org.example.server.models.User;
+import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.enums.Menu;
 import org.example.client.view.menu.ProfileMenuView;
 
-public class ProfileMenuController extends MenuController {
-    private final ProfileMenuView view;
+import java.util.HashMap;
+import java.util.Objects;
 
-    public ProfileMenuController(ProfileMenuView view) {
-        this.view = view;
+public class ProfileMenuController{
+
+    public static Message change(Message message , ClientConnectionThread clientConnectionThread){
+        String username = message.getFromBody("username");
+        String password = message.getFromBody("password");
+        String nickname = message.getFromBody("nickname");
+        String email = message.getFromBody("email");
+        User currentUser = clientConnectionThread.getUser();
+        if(!Objects.equals(username, "")){
+            Result result = changeUsername(username ,currentUser);
+            if(!result.success()){
+                return new Message(new HashMap<>() {{
+                    put("GraphicalResult" , GraphicalResult.getInfo(result.message()));
+                }}, Message.Type.response);
+            }
+        }
+        if(!Objects.equals(password, "")){
+            Result result = changePassword(password , currentUser);
+            if(!result.success()){
+                return new Message(new HashMap<>() {{
+                    put("GraphicalResult" , GraphicalResult.getInfo(result.message()));
+                }}, Message.Type.response);
+            }
+        }
+        if(!Objects.equals(nickname, "")){
+            Result result = changeNickname(nickname, currentUser);
+            if(!result.success()){
+                return new Message(new HashMap<>() {{
+                    put("GraphicalResult" , GraphicalResult.getInfo(result.message()));
+                }}, Message.Type.response);
+            }
+        }
+        if(!Objects.equals(email, "")){
+            Result result = changeEmail(email , currentUser);
+            if(!result.success()){
+                return new Message(new HashMap<>() {{
+                    put("GraphicalResult" , GraphicalResult.getInfo(result.message()));
+                }}, Message.Type.response);
+            }
+        }
+        System.out.println("MOZ");
+
+        StringBuilder res = new StringBuilder();
+        if(!Objects.equals(username, "")){
+            DataBaseHelper.changeUsername(currentUser.getUsername() , username);
+            currentUser.setUsername(username);
+            res.append("username changed successfully!\n");
+        }
+        if(!Objects.equals(password, "")){
+            DataBaseHelper.changePassword(currentUser.getUsername() , User.hashPassword(password));
+            currentUser.setPassword(User.hashPassword(password));
+            res.append("password changed successfully!\n");
+        }
+        if(!Objects.equals(nickname, "")){
+            DataBaseHelper.changeNickname(currentUser.getNickname() , nickname);
+            currentUser.setNickname(nickname);
+            res.append("nickname changed successfully!\n");
+        }
+        if(!Objects.equals(email, "")){
+            DataBaseHelper.changeEmail(currentUser.getEmail() , email);
+            currentUser.setEmail(email);
+            res.append("email changed successfully!\n");
+        }
+
+        return new Message(new HashMap<>() {{
+            put("GraphicalResult" , GraphicalResult.getInfo(res.toString(),
+                    false));
+        }} , Message.Type.response);
     }
 
-    public Result enterMenu(String menuName) {
-        Menu newMenu = Menu.getMenu(menuName);
-        if (newMenu == null)
-            return new Result(false, "menu doesn't exist!");
-        if (newMenu != Menu.MainMenu)
-            return new Result(false, "can't enter this menu!");
-        App.setCurrentMenu(Menu.MainMenu);
-        return new Result(true, "Redirecting to main menu ...");
-    }
-
-    public Result exitMenu() {
-        App.setCurrentMenu(Menu.MainMenu);
-        return new Result(true, "Redirecting to main menu ...");
-    }
-
-    public Result changeUsername(String newUsername) {
+    private static Result changeUsername(String newUsername , User currentUser) {
         if (!User.isValidUsername(newUsername))
             return new Result(false, "Username format is invalid!");
-        if (App.getLoggedInUser().getUsername().equals(newUsername))
+        if (currentUser.getUsername().equals(newUsername))
             return new Result(false, "New username should be different from current username!");
-        if (App.getUserByUsername(newUsername) != null)
+        if (ServerApp.getUserByUsername(newUsername) != null)
             return new Result(false, "Username already exists!");
-        App.getLoggedInUser().setUsername(newUsername);
         return new Result(true, "Username successfully changed!");
     }
 
-    public Result changeNickname(String nickname) {
-        if (App.getLoggedInUser().getNickname().equals(nickname))
+    private static Result changeNickname(String nickname , User currentUser) {
+        if (currentUser.getNickname().equals(nickname))
             return new Result(false, "New nickname should be different from current nickname!");
-        App.getLoggedInUser().setNickname(nickname);
         return new Result(true, "Nickname changed successfully!");
     }
 
-    public Result changeEmail(String email) {
-        if (App.getLoggedInUser().getEmail().equals(email))
+    private static Result changeEmail(String email , User currentUser) {
+        if (currentUser.getEmail().equals(email))
             return new Result(false, "New email should be different from current email!");
         if (!User.isValidEmail(email))
             return new Result(false, "Email format is invalid!");
-        App.getLoggedInUser().setEmail(email);
         return new Result(true, "Email changed successfully!");
     }
 
-    public Result changePassword(String oldPassword, String newPassword) {
-        if (!App.getLoggedInUser().passwordEquals(oldPassword))
-            return new Result(false, "Old password is incorrect!");
-        if (oldPassword.equals(newPassword))
+    private static Result changePassword(String newPassword , User currentUSer) {
+        if (currentUSer.passwordEquals(newPassword))
             return new Result(false, "New password must be different of old password!");
         Result result = User.checkPassword(newPassword);
         if (!result.success())
             return result;
-        App.getLoggedInUser().setPassword(User.hashPassword(newPassword));
         return new Result(true, "Password changed successfully!");
     }
 
+    // TODO : nemikhaim?
     public Result showInfo() {
         User user = App.getLoggedInUser();
         String result = "User info:\n" + "username: " + user.getUsername() + "\n" +

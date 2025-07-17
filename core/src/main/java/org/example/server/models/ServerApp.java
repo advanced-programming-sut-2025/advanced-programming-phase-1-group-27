@@ -1,18 +1,18 @@
 package org.example.server.models;
 
 import org.example.common.database.DataBaseHelper;
+import org.example.common.models.Message;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.connections.ListenerThread;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ServerApp {
     public static final int TIMEOUT_MILLIS = 5000;
     private static final ArrayList<ClientConnectionThread> connections = new ArrayList<>();
     private static ListenerThread listenerThread;
     private static boolean hasEnded = false;
-    private static ArrayList<User> onlineUsers = new ArrayList<>();
-    private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Lobby> lobbies = new ArrayList<>();
 
     public static void setListenerThread(ListenerThread listenerThread) {
@@ -52,17 +52,21 @@ public class ServerApp {
         System.out.println("Number of connections: " + connections.size());
     }
 
-    public static void setUsers(ArrayList<User> users) {
-        ServerApp.users = users;
+    public static User getUserByUsername(String username) {
+        return DataBaseHelper.getUserByUsername(username);
     }
 
-    public static User getUserByUsername(String username) {
-//        for (User user : users) {
-//            if (user.getUsername().equals(username))
-//                return user;
-//        }
-//        return null;
-        return DataBaseHelper.DatabaseHelper.getUserByUsername(username);
+    public static Message getUserByUsername(Message message) {
+        String username = message.getFromBody("username");
+        User user = getUserByUsername(username);
+        if (user == null)
+            return new Message(new HashMap<>() {{
+                put("found", false);
+            }}, Message.Type.response);
+        return new Message(new HashMap<>() {{
+            put("found", true);
+            put("userInfo", user.getInfo());
+        }}, Message.Type.response);
     }
 
     public static String generateUsername(String username) {
@@ -76,10 +80,10 @@ public class ServerApp {
     }
 
     public static void addUser(User user) {
-        users.add(user);
+        DataBaseHelper.registerUser(user);
     }
 
-    public static void addOnline(User user) {
-        onlineUsers.add(user);
+    public static ArrayList<User> getUsers() {
+        return DataBaseHelper.getAllUsers();
     }
 }

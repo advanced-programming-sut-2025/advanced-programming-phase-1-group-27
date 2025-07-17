@@ -34,6 +34,10 @@ public class Message {
         response,
         register_request,
         login_request,
-        add_user
+        get_user,
+        add_user,
+        set_password,
+        set_online_user,
+        change_request,
     }
 }

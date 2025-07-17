@@ -1,10 +1,13 @@
 package org.example.server.models.connections;
 
+import org.example.server.controller.ForgetPasswordMenuController;
 import org.example.server.controller.LoginMenuController;
+import org.example.server.controller.ProfileMenuController;
 import org.example.server.controller.RegisterMenuController;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.models.ServerApp;
+import org.example.server.models.User;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -13,7 +16,7 @@ import java.util.HashMap;
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class ClientConnectionThread extends ConnectionThread {
-    // TODO: nemidoonam
+    private User user = null;
 
     public ClientConnectionThread(Socket socket) throws IOException {
         super(socket);
@@ -48,11 +51,28 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         }
         else if(message.getType() == Message.Type.login_request) {
-            sendMessage(LoginMenuController.login(message));
+            sendMessage(LoginMenuController.login(message, this));
             return true;
         }
         else if (message.getType() == Message.Type.add_user) {
             RegisterMenuController.addUser(message);
+            return true;
+        }
+        else if (message.getType() == Message.Type.set_online_user) {
+            this.setUser(new User(message.getFromBody("userInfo")));
+            return true;
+        }
+        else if (message.getType() == Message.Type.get_user) {
+            sendMessage(ServerApp.getUserByUsername(message));
+            return true;
+        }
+        else if (message.getType() == Message.Type.set_password) {
+            ForgetPasswordMenuController.setPassword(message);
+            return true;
+        }
+        else if(message.getType() == Message.Type.change_request){
+            sendMessage(ProfileMenuController.change(message,this));
+            return true;
         }
         return false;
     }
@@ -63,5 +83,13 @@ public class ClientConnectionThread extends ConnectionThread {
         ServerApp.removeConnection(this);
         // TODO: hazf kon bebin chi mishe
         this.end();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
