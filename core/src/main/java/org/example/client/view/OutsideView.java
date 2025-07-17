@@ -8,6 +8,8 @@ import org.example.server.models.Cell;
 import org.example.server.models.GameAssetManager;
 import org.example.server.models.Map.GreenHouse;
 import org.example.server.models.enums.CellType;
+import org.example.server.models.enums.Plants.Crop;
+import org.example.server.models.enums.Plants.CropType;
 
 import java.util.Scanner;
 
@@ -35,7 +37,6 @@ public class OutsideView extends AppMenu {
                 if (map[i][j].getType() == CellType.Building &&
                         i < map.length && map[i + 1][j].getType() != CellType.Building &&
                         j < map[i].length && map[i][j + 1].getType() != CellType.Building) {
-                    System.out.println("lklk");
                     if (map[i][j].getBuilding() instanceof GreenHouse) {
                         Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
                         x - 240, y, 280, 320);
@@ -43,6 +44,12 @@ public class OutsideView extends AppMenu {
                 }
                 if (texture == null) continue;
                 Main.getBatch().draw(texture, x, y, 40, 40);
+
+                if (map[i][j].getObject() instanceof Crop crop) {
+                    texture = ((CropType) crop.getType()).getTexture();
+                    if (texture != null)
+                        Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                }
             }
             j = 0;
         }

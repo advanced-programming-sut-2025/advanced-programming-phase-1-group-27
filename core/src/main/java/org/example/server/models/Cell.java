@@ -1,5 +1,6 @@
 package org.example.server.models;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;
@@ -151,6 +152,15 @@ public class Cell {
 
     public Map getMap() {
         return map;
+    }
+
+    public Texture getTexture() {
+        if (cellType == CellType.Free) {
+            return GameAssetManager.getGameAssetManager().getFreeCellTexture();
+        } else if (cellType == CellType.Quarry) {
+            return GameAssetManager.getGameAssetManager().getQuarryCellTexture();
+        }
+        return null;
     }
 
     @Override
