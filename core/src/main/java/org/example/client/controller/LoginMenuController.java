@@ -9,7 +9,11 @@ import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.enums.Menu;
+import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
@@ -22,58 +26,69 @@ public class LoginMenuController extends MenuController {
     }
 
     public GraphicalResult loginViaGraphics() {
-        GraphicalResult loginAttempt1 = checkAllFieldsAreFilled();
-        if (loginAttempt1.hasError()) {
-            return loginAttempt1;
-        }
-
-        GraphicalResult loginAttempt2 = login(view.getUsernameField().getText(), view.getPasswordField().getText(),
-                view.getStayLoggedInCheckBox().isChecked());
-
-        if (loginAttempt2.hasError()) {
-            return loginAttempt2;
-        }
-
-//        App.setCurrentMenu(Menu.MainMenu);
-        Main.getMain().getScreen().dispose();
-//        App.setLoggedInUser(App.getUserByUsername(view.getUsernameField().getText()));
-        Main.getMain().setScreen(new MainMenuView());
-        return new GraphicalResult(String.valueOf(loginAttempt2.getMessage()), Color.GREEN);
-    }
-
-    private GraphicalResult checkAllFieldsAreFilled() {
-        if (view.getUsernameField().getText().isEmpty() ||
-                view.getPasswordField().getText().isEmpty()) {
+        if (hasEmptyField())
             return new GraphicalResult(
                     "Please fill all the required fields",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
-        }
-        return new GraphicalResult("", GameAssetManager.getGameAssetManager().getAcceptColor(), false);
+
+        GraphicalResult loginAttempt = login(view.getUsernameField().getText(), view.getPasswordField().getText());
+
+        if (loginAttempt.hasError())
+            return loginAttempt;
+
+        if (view.getStayLoggedInCheckBox().isChecked())
+            updateFile(ServerApp.getUserByUsername(view.getUsernameField().getText()));
+
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new MainMenuView());
+        return new GraphicalResult(String.valueOf(loginAttempt.getMessage()), Color.GREEN);
     }
 
-    public GraphicalResult login(String username, String password, boolean stayLoggedIn) {
+    private boolean hasEmptyField() {
+        return view.getUsernameField().getText().isEmpty() || view.getPasswordField().getText().isEmpty();
+    }
+
+    public GraphicalResult login(String username, String password) {
         Message message = new Message(new HashMap<>() {{
             put("username", username);
             put("password", password);
-            put("stayLoggedIn", stayLoggedIn);
         }}, Message.Type.login_request);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
-            System.out.println("Response: " + response);
             return new GraphicalResult(
                     "Failed to login",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
-
         return new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
     }
 
     public void goToForgetPassword() {
-        App.setCurrentMenu(Menu.ForgetPasswordMenu);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new ForgetPasswordMenuView());
+    }
+
+    private void updateFile(User user) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", user.getUsername());
+        jsonObject.put("password", user.getPassword());
+        jsonObject.put("email", user.getEmail());
+        jsonObject.put("nickname", user.getNickname());
+        jsonObject.put("gender", user.getGender());
+        jsonObject.put("recoveryQuestion", user.getRecoveryQuestion().getQuestion());
+        jsonObject.put("recoveryAnswer", user.getRecoveryQuestion().getAnswer());
+        jsonObject.put("maxMoneyEarned", user.getMaxMoneyEarned());
+        jsonObject.put("numberOfGamesPlayed", user.getNumberOfGamesPlayed());
+
+        File file = new File("data/login_user.json");
+        file.getParentFile().mkdirs();
+
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(jsonObject.toString(4));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -65,7 +65,6 @@ public class RegisterMenuController extends MenuController {
         }}, Message.Type.register_request);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
-            System.out.println("Response: " + response);
             return new GraphicalResult(
                     "Failed to register",
                     GameAssetManager.getGameAssetManager().getErrorColor()

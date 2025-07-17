@@ -92,7 +92,7 @@ public class GameAssetManager {
     private final Texture arrowTexture = new  Texture(Gdx.files.internal("Clock/Arrow.png"));
 
     {
-        musicPlayer.setCurrentTrack(Track.THEME_1);
+//        musicPlayer.setCurrentTrack(Track.THEME_1);
     }
 
     public static GameAssetManager getGameAssetManager() {
