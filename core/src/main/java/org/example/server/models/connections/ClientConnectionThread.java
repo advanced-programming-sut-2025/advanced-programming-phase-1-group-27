@@ -14,19 +14,10 @@ import java.util.HashMap;
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class ClientConnectionThread extends ConnectionThread {
-    // TODO: nemidoonam
-    private User user;
+    private User user = null;
 
     public ClientConnectionThread(Socket socket) throws IOException {
         super(socket);
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     @Override
@@ -58,7 +49,7 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         }
         else if(message.getType() == Message.Type.login_request) {
-            sendMessage(LoginMenuController.login(message , this));
+            sendMessage(LoginMenuController.login(message, this));
             return true;
         }
         else if (message.getType() == Message.Type.add_user) {
@@ -73,5 +64,13 @@ public class ClientConnectionThread extends ConnectionThread {
         ServerApp.removeConnection(this);
         // TODO: hazf kon bebin chi mishe
         this.end();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
