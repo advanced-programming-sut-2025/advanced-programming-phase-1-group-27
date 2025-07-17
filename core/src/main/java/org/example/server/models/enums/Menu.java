@@ -1,9 +1,6 @@
 package org.example.server.models.enums;
 
-import org.example.client.view.AppMenu;
-import org.example.client.view.GameView;
-import org.example.client.view.HomeView;
-import org.example.client.view.TradeView;
+import org.example.client.view.*;
 import org.example.client.view.menu.*;
 import org.example.client.view.shopview.*;
 
@@ -19,6 +16,7 @@ public enum Menu {
     GameMenu(new GameView()),
     ProfileMenu(new ProfileMenuView()),
     Home(new HomeView()),
+    Outside(new OutsideView()),
     BlackSmithShop(new BlackSmithShop()),
     CarpenterShop(new CarpenterShop()),
     FishShop(new FishShop()),
@@ -73,6 +71,7 @@ public enum Menu {
             case ProfileMenu -> "profile menu";
             case GameMenu -> "game menu";
             case Home -> "home";
+            case Outside -> "outside";
             case BlackSmithShop -> "blacksmith";
             case CarpenterShop -> "carpenter shop";
             case FishShop -> "fish shop";

@@ -9,7 +9,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import org.example.client.Main;
 import org.example.client.view.GameView;
 import org.example.client.view.HomeView;
+import org.example.client.view.OutsideView;
+import org.example.client.view.menu.WelcomeMenuView;
+import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
+import org.example.server.models.enums.Menu;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -67,6 +71,12 @@ public class HomePlayerController {
         x = max(x, Gdx.graphics.getWidth() / 2f - 95);
         y = min(y, Gdx.graphics.getHeight() / 2f + 50);
         y = max(y, Gdx.graphics.getHeight() / 2f - 70);
+
+        if (y == Gdx.graphics.getHeight() / 2f - 70) {
+            App.setCurrentMenu(Menu.Outside);
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new OutsideView());
+        }
 
 
         characterSprite.setCenter(x, y);
