@@ -1,20 +1,16 @@
 package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.common.models.GraphicalResult;
 import org.example.server.controller.HomeController;
-import org.example.server.controller.HomePlayerController;
+import org.example.server.controller.PlayerController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
 import org.example.server.models.Result;
@@ -32,7 +28,7 @@ public class HomeView extends AppMenu {
     private final HUDView hudView;
 
     private final HomeController controller;
-    private final HomePlayerController playerController;
+    private final PlayerController playerController;
 
     private final Stage stage;
 
@@ -46,7 +42,7 @@ public class HomeView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         hudView = new HUDView(stage);
         controller = new HomeController(this);
-        playerController = new HomePlayerController(this);
+        playerController = new PlayerController();
         advanceTimeButton = new TextButton("advance",skin);
 
     }

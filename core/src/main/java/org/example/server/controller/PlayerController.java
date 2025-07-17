@@ -2,15 +2,11 @@ package org.example.server.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import org.example.client.Main;
-import org.example.client.view.GameView;
 import org.example.client.view.HomeView;
 import org.example.client.view.OutsideView;
-import org.example.client.view.menu.WelcomeMenuView;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
 import org.example.server.models.enums.Menu;
@@ -18,16 +14,14 @@ import org.example.server.models.enums.Menu;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class HomePlayerController {
-    private final HomeView homeView;
+public class PlayerController {
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f;
     private final float speed = 3f;
     private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getCharacterAtlas()
             .createSprite("standing_1");
     private float time = 0f;
 
-    public HomePlayerController(HomeView homeView) {
-        this.homeView = homeView;
+    public PlayerController() {
         characterSprite.setScale(2f);
     }
 
@@ -72,7 +66,8 @@ public class HomePlayerController {
         y = min(y, Gdx.graphics.getHeight() / 2f + 50);
         y = max(y, Gdx.graphics.getHeight() / 2f - 70);
 
-        if (y == Gdx.graphics.getHeight() / 2f - 70) {
+        if (y == Gdx.graphics.getHeight() / 2f - 70 &&
+        App.getCurrentMenu() != Menu.Outside) {
             App.setCurrentMenu(Menu.Outside);
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(new OutsideView());
