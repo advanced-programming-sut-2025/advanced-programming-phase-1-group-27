@@ -24,11 +24,13 @@ public class AppView {
 
         if (ClientApp.loadSavedUser()) {
             Main.getMain().setScreen(new MainMenuView());
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new HomeView());
             return;
         }
         Main.getMain().setScreen(new WelcomeMenuView());
-//        Main.getMain().getScreen().dispose();
-//        Main.getMain().setScreen(new HomeView());
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new HomeView());
 
     }
 

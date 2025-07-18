@@ -38,7 +38,7 @@ public class OutsideView extends AppMenu {
 //        int x = App.getCurrentGame().getCurrentPlayer().getPosition().getX(),
 //                y = App.getCurrentGame().getCurrentPlayer().getPosition().getY();
         int x = 40, y = 40;
-        camera.position.set(40 * x + 20, 40 * y + 20, 0);
+        camera.position.set(40 * x + 20, 40 * y + 30, 0);
 
         playerController.setCamera(camera);
 
@@ -86,9 +86,9 @@ public class OutsideView extends AppMenu {
 
 
         playerController.update();
+        camera.update();
         Main.getBatch().end();
 
-        camera.update();
 
     }
 

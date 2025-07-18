@@ -147,8 +147,6 @@ Items/Minerals/Ruby.png
 Items/Minerals/Stone.png
 Items/Minerals/Topaz.png
 Items/Minerals/Wood.png
-Items/Plants/Crops/Grass.png
-Items/Plants/Crops/desktop.ini
 Items/Processed_products/Beer.png
 Items/Processed_products/Cheese.png
 Items/Processed_products/Cloth.png
