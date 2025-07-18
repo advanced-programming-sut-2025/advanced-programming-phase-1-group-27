@@ -49,6 +49,8 @@ public class Player extends User {
     private Player spouse = null; // in case the player gets married
     private Buff currentBuff = null;
 
+    private Integer currentInventorySlotIndex = 0;
+
     {
         backpack.addItems(ToolType.BasicAxe, ToolType.BasicAxe.getLevel(), 1);
         backpack.addItems(ToolType.BasicHoe, ToolType.BasicHoe.getLevel(), 1);
@@ -665,4 +667,13 @@ public class Player extends User {
         }
         return result.toString();
     }
+
+    public Integer getCurrentInventorySlotIndex() {
+        return currentInventorySlotIndex;
+    }
+
+    public void setCurrentInventorySlotIndex(Integer currentInventorySlotIndex) {
+        this.currentInventorySlotIndex = currentInventorySlotIndex;
+    }
+
 }
