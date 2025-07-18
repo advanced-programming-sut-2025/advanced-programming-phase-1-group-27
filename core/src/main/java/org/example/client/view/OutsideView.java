@@ -5,7 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.GameMenuController;
 import org.example.server.controller.OutsidePlayerController;
@@ -22,8 +24,18 @@ import java.util.Scanner;
 
 public class OutsideView extends AppMenu {
 
+    private final HUDView hudView;
+    private final Stage stage;
+
     private final OutsidePlayerController playerController = new OutsidePlayerController();
     private Camera camera;
+
+    public OutsideView() {
+
+        stage = new Stage(new ScreenViewport());
+        hudView = new HUDView(stage);
+
+    }
 
     @Override
     public void executeCommands(Scanner scanner) {
@@ -88,6 +100,8 @@ public class OutsideView extends AppMenu {
         playerController.update();
         camera.update();
         Main.getBatch().end();
+
+        hudView.render(delta);
 
 
     }

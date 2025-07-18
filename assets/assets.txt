@@ -58,6 +58,9 @@ Images/home3.png
 Images/home_cropped.png
 Images/menu_background.png
 Images/stardew_valley_text.png
+Inventory/InventoryHotbar.png
+Inventory/Inventory_Parts.png
+Inventory/SelectedSlot.png
 Items/Animal_products/Dinosaur_Egg.png
 Items/Animal_products/Duck_Egg.png
 Items/Animal_products/Duck_Feather.png

@@ -23,6 +23,8 @@ public class HUDView extends AppMenu{
 
     private Image clockImage;
     private final Image clockArrowImage;
+    private final Image inventoryHotBarImage;
+    private final Image inventorySelectSlotImage;
 
     private final TextField textInputField;
 
@@ -36,6 +38,8 @@ public class HUDView extends AppMenu{
 
         controller = new HUDController(this);
         clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
+        inventoryHotBarImage = new Image(GameAssetManager.getGameAssetManager().getInventoryHotBar());
+        inventorySelectSlotImage = new Image(GameAssetManager.getGameAssetManager().getInventorySelectSlot());
         textInputField = new TextField("",skin);
         isInputFieldVisible = false;
         tJustPressed = false;
@@ -50,12 +54,12 @@ public class HUDView extends AppMenu{
 
         controller.updateClockImage();
 
-        clockImage.setPosition(1920-clockImage.getWidth(),1080-clockImage.getHeight());
+        clockImage.setPosition(1920-clockImage.getWidth()-10,1080-clockImage.getHeight()-10);
 
 
         clockArrowImage.setPosition(
-                clockImage.getX() + (0.255f * clockImage.getWidth()),
-                clockImage.getY() + (0.37f * clockImage.getHeight())
+                clockImage.getX() + (0.255f * clockImage.getWidth()) - 10 ,
+                clockImage.getY() + (0.37f * clockImage.getHeight()) - 10
         );
         clockArrowImage.setOrigin(
                 clockArrowImage.getWidth() / 2,
@@ -72,6 +76,15 @@ public class HUDView extends AppMenu{
 
 
     }
+
+    public void displayInventoryHotBar(){
+
+        inventoryHotBarImage.setPosition( (Gdx.graphics.getWidth()-inventoryHotBarImage.getWidth())/2,10 );
+
+        stage.addActor(inventoryHotBarImage);
+
+    }
+
     public void displayInputField(){
 
         if ( tJustPressed ){
@@ -119,6 +132,7 @@ public class HUDView extends AppMenu{
         Main.getBatch().end();
 
         displayClock();
+        displayInventoryHotBar();
         displayInputField();
         showErrorMessage();
 
@@ -192,6 +206,10 @@ public class HUDView extends AppMenu{
 
 
 
+    }
+
+    public boolean isInputFieldVisible() {
+        return isInputFieldVisible;
     }
 
     public void setClockImage(Image clockImage) {

@@ -60,6 +60,10 @@ public class GameAssetManager {
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
 
+    private final Texture inventoryHotBar = new Texture(Gdx.files.internal("Inventory/InventoryHotbar.png"));
+
+    private final Texture inventorySelectSlot = new Texture(Gdx.files.internal("Inventory/SelectedSlot.png"));
+
     private final Animation<Sprite> walkDown = new Animation<>(
             0.1f,
             characterAtlas.createSprite("down_1"),
@@ -246,5 +250,13 @@ public class GameAssetManager {
 
     public Texture getQuarryCellTexture() {
         return quarryCellTexture;
+    }
+
+    public Texture getInventoryHotBar() {
+        return inventoryHotBar;
+    }
+
+    public Texture getInventorySelectSlot() {
+        return inventorySelectSlot;
     }
 }
