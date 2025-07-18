@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import org.example.client.Main;
 import org.example.common.models.GraphicalResult;
 import org.example.server.controller.HUDController;
+import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
+import org.example.server.models.Player;
 
 import java.util.Scanner;
 
@@ -33,6 +35,8 @@ public class HUDView extends AppMenu{
 
     private final GraphicalResult errorLabel;
 
+    private final Player player;
+
 
     public HUDView(Stage stage) {
 
@@ -44,6 +48,7 @@ public class HUDView extends AppMenu{
         isInputFieldVisible = false;
         tJustPressed = false;
         errorLabel = new GraphicalResult();
+        player = App.getCurrentGame().getCurrentPlayer();
         this.stage = stage;
         setListeners();
 
@@ -54,12 +59,12 @@ public class HUDView extends AppMenu{
 
         controller.updateClockImage();
 
-        clockImage.setPosition(1920-clockImage.getWidth()-10,1080-clockImage.getHeight()-10);
+        clockImage.setPosition(1920-clockImage.getWidth()-10,1080-clockImage.getHeight());
 
 
         clockArrowImage.setPosition(
-                clockImage.getX() + (0.255f * clockImage.getWidth()) - 10 ,
-                clockImage.getY() + (0.37f * clockImage.getHeight()) - 10
+                clockImage.getX() + (0.255f * clockImage.getWidth()),
+                clockImage.getY() + (0.37f * clockImage.getHeight())
         );
         clockArrowImage.setOrigin(
                 clockArrowImage.getWidth() / 2,
@@ -79,9 +84,14 @@ public class HUDView extends AppMenu{
 
     public void displayInventoryHotBar(){
 
+        Integer slotIndex = App.getCurrentGame().getCurrentPlayer().getCurrentInventorySlotIndex();
+
         inventoryHotBarImage.setPosition( (Gdx.graphics.getWidth()-inventoryHotBarImage.getWidth())/2,10 );
 
+        inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + slotIndex*inventorySelectSlotImage.getWidth(),26);
+
         stage.addActor(inventoryHotBarImage);
+        stage.addActor(inventorySelectSlotImage);
 
     }
 
@@ -182,6 +192,18 @@ public class HUDView extends AppMenu{
                         textInputField.setText("");
                         tJustPressed = true;
                         return true;
+                    }
+
+                    else if ( keycode == Input.Keys.UP ){
+
+                        player.setCurrentInventorySlotIndex(player.getCurrentInventorySlotIndex() + 1);
+
+                    }
+
+                    else if ( keycode == Input.Keys.DOWN ){
+
+                        player.setCurrentInventorySlotIndex(player.getCurrentInventorySlotIndex() - 1);
+
                     }
 
                 }
