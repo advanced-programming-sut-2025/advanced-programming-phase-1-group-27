@@ -5,10 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import org.example.client.controller.MenuController;
 import org.example.client.view.HUDView;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.App;
-import org.example.server.models.Game;
-import org.example.server.models.GameAssetManager;
-import org.example.server.models.Result;
+import org.example.server.models.*;
 import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.commands.CheatCommands;
@@ -21,6 +18,49 @@ public class HUDController extends MenuController {
 
     public HUDController(HUDView view) {
         this.view = view;
+    }
+
+    public float getSlotPosition(){
+
+        Integer slotIndex = App.getCurrentGame().getCurrentPlayer().getCurrentInventorySlotIndex();
+
+        float imageSize = GameAssetManager.getGameAssetManager().getInventorySelectSlot().getWidth();
+
+        if ( slotIndex == 0 || slotIndex == 1 || slotIndex == 2 ){
+
+            return imageSize * slotIndex;
+
+        }
+
+        else {
+
+            return ( imageSize * slotIndex + slotIndex);
+
+        }
+
+
+    }
+
+    public void updateSlotIndex(Integer slotChange){
+
+        Player player = App.getCurrentGame().getCurrentPlayer();
+
+        Integer currentSlot = player.getCurrentInventorySlotIndex();
+
+        if ( currentSlot+slotChange > 11 ){
+            player.setCurrentInventorySlotIndex(0);
+        }
+        else if ( currentSlot+slotChange < 0 ){
+            player.setCurrentInventorySlotIndex(11);
+        }
+        else{
+            player.setCurrentInventorySlotIndex(currentSlot+slotChange);
+        }
+
+    }
+
+    public void quickSetHotBarIndex(int index){
+        App.getCurrentGame().getCurrentPlayer().setCurrentInventorySlotIndex(index);
     }
 
     private Texture getClockByGameState(){

@@ -35,9 +35,6 @@ public class HUDView extends AppMenu{
 
     private final GraphicalResult errorLabel;
 
-    private final Player player;
-
-
     public HUDView(Stage stage) {
 
         controller = new HUDController(this);
@@ -48,7 +45,6 @@ public class HUDView extends AppMenu{
         isInputFieldVisible = false;
         tJustPressed = false;
         errorLabel = new GraphicalResult();
-        player = App.getCurrentGame().getCurrentPlayer();
         this.stage = stage;
         setListeners();
 
@@ -84,11 +80,10 @@ public class HUDView extends AppMenu{
 
     public void displayInventoryHotBar(){
 
-        Integer slotIndex = App.getCurrentGame().getCurrentPlayer().getCurrentInventorySlotIndex();
 
         inventoryHotBarImage.setPosition( (Gdx.graphics.getWidth()-inventoryHotBarImage.getWidth())/2,10 );
 
-        inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + slotIndex*inventorySelectSlotImage.getWidth(),26);
+        inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(),26);
 
         stage.addActor(inventoryHotBarImage);
         stage.addActor(inventorySelectSlotImage);
@@ -196,15 +191,90 @@ public class HUDView extends AppMenu{
 
                     else if ( keycode == Input.Keys.UP ){
 
-                        player.setCurrentInventorySlotIndex(player.getCurrentInventorySlotIndex() + 1);
+                        controller.updateSlotIndex(1);
 
                     }
 
                     else if ( keycode == Input.Keys.DOWN ){
 
-                        player.setCurrentInventorySlotIndex(player.getCurrentInventorySlotIndex() - 1);
+                        controller.updateSlotIndex(-1);
 
                     }
+
+                    else if ( keycode == Input.Keys.NUM_1 ){
+
+                        controller.quickSetHotBarIndex(0);
+
+                    }
+
+                    else if ( keycode == Input.Keys.NUM_2 ){
+
+                        controller.quickSetHotBarIndex(1);
+
+                    }
+
+
+                    else if ( keycode == Input.Keys.NUM_3 ){
+
+                        controller.quickSetHotBarIndex(2);
+
+                    }
+
+                    else if ( keycode == Input.Keys.NUM_4 ){
+
+                        controller.quickSetHotBarIndex(3);
+
+                    }
+
+                    else if ( keycode == Input.Keys.NUM_5 ){
+
+                        controller.quickSetHotBarIndex(4);
+
+                    }
+
+                    else if ( keycode == Input.Keys.NUM_6 ){
+
+                        controller.quickSetHotBarIndex(5);
+
+                    }
+
+                    else if ( keycode == Input.Keys.NUM_7 ){
+
+                        controller.quickSetHotBarIndex(6);
+
+                    }
+
+                    else if ( keycode == Input.Keys.NUM_8 ){
+
+                        controller.quickSetHotBarIndex(7);
+
+                    }
+
+                    else if ( keycode == Input.Keys.NUM_9 ){
+
+                        controller.quickSetHotBarIndex(8);
+
+                    }
+
+                    else if ( keycode == Input.Keys.NUM_0 ){
+
+                        controller.quickSetHotBarIndex(9);
+
+                    }
+
+                    else if ( keycode == Input.Keys.MINUS ){
+
+                        controller.quickSetHotBarIndex(10);
+
+                    }
+
+                    else if ( keycode == Input.Keys.EQUALS ){
+
+                        controller.quickSetHotBarIndex(11);
+
+                    }
+
+
 
                 }
 
