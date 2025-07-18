@@ -14,15 +14,17 @@ import org.example.server.models.enums.Menu;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class PlayerController {
+public class HomePlayerController {
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f;
     private final float speed = 3f;
     private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getCharacterAtlas()
             .createSprite("standing_1");
     private float time = 0f;
+    private final HomeView view;
 
-    public PlayerController() {
+    public HomePlayerController(HomeView view) {
         characterSprite.setScale(2f);
+        this.view = view;
     }
 
     private void updateAnimation(Animation<Sprite> animation) {
@@ -44,21 +46,24 @@ public class PlayerController {
         characterSprite = GameAssetManager.getGameAssetManager().getCharacterAtlas().createSprite("standing_1");
         characterSprite.setScale(2f);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            x -= speed;
-            updateAnimation(GameAssetManager.getGameAssetManager().getWalkLeft());
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            x += speed;
-            updateAnimation(GameAssetManager.getGameAssetManager().getWalkRight());
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            y += speed;
-            updateAnimation(GameAssetManager.getGameAssetManager().getWalkUp());
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            y -= speed;
-            updateAnimation(GameAssetManager.getGameAssetManager().getWalkDown());
+
+        if (!view.getHudView().isInputFieldVisible()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                x -= speed;
+                updateAnimation(GameAssetManager.getGameAssetManager().getWalkLeft());
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                x += speed;
+                updateAnimation(GameAssetManager.getGameAssetManager().getWalkRight());
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                y += speed;
+                updateAnimation(GameAssetManager.getGameAssetManager().getWalkUp());
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                y -= speed;
+                updateAnimation(GameAssetManager.getGameAssetManager().getWalkDown());
+            }
         }
 
         x = min(x, Gdx.graphics.getWidth() / 2f + 95);

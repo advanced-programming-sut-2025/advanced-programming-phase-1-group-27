@@ -27,7 +27,7 @@ public class OutsideView extends AppMenu {
     private final HUDView hudView;
     private final Stage stage;
 
-    private final OutsidePlayerController playerController = new OutsidePlayerController();
+    private final OutsidePlayerController playerController = new OutsidePlayerController(this);
     private Camera camera;
 
     public OutsideView() {
@@ -45,6 +45,9 @@ public class OutsideView extends AppMenu {
     @Override
     public void show() {
 
+        Gdx.input.setInputProcessor(stage);
+
+
         camera = new OrthographicCamera(1920, 1080);
 
 //        int x = App.getCurrentGame().getCurrentPlayer().getPosition().getX(),
@@ -60,8 +63,9 @@ public class OutsideView extends AppMenu {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
 
-        Main.getBatch().begin();
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
+        Main.getBatch().begin();
         Main.getBatch().setProjectionMatrix(camera.combined);
 
 
@@ -103,7 +107,7 @@ public class OutsideView extends AppMenu {
 
         hudView.render(delta);
 
-
+        stage.draw();
     }
 
     @Override
@@ -129,5 +133,9 @@ public class OutsideView extends AppMenu {
     @Override
     public void dispose() {
 
+    }
+
+    public HUDView getHudView() {
+        return hudView;
     }
 }

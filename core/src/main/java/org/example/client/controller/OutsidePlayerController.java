@@ -27,9 +27,11 @@ public class OutsidePlayerController {
 
     private boolean walking = false;
     private int direction = 0;
+    private final OutsideView view;
 
-    public OutsidePlayerController() {
+    public OutsidePlayerController(OutsideView view) {
         characterSprite.setScale(2f);
+        this.view = view;
     }
 
     public Camera getCamera() {
@@ -56,13 +58,12 @@ public class OutsidePlayerController {
     }
 
     public void update() {
-        time += Gdx.graphics.getDeltaTime();
         animationTime += Gdx.graphics.getDeltaTime();
 
         characterSprite = GameAssetManager.getGameAssetManager().getCharacterAtlas().createSprite("standing_1");
         characterSprite.setScale(2f);
 
-        if (!walking) {
+        if (!walking && !view.getHudView().isInputFieldVisible()) {
             lastX = x;
             lastY = y;
             time = 0;
@@ -91,6 +92,9 @@ public class OutsidePlayerController {
                 currentAnimation = GameAssetManager.getGameAssetManager().getWalkDown();
             }
         }
+
+        time += Gdx.graphics.getDeltaTime();
+
 
         if (walking) {
             //System.out.println("WALKING");

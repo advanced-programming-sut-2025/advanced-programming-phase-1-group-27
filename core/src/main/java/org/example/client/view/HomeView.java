@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.server.controller.HomeController;
-import org.example.server.controller.PlayerController;
+import org.example.server.controller.HomePlayerController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
 import org.example.server.models.Result;
@@ -28,7 +28,7 @@ public class HomeView extends AppMenu {
     private final HUDView hudView;
 
     private final HomeController controller;
-    private final PlayerController playerController;
+    private final HomePlayerController playerController;
 
     private final Stage stage;
 
@@ -42,7 +42,7 @@ public class HomeView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         hudView = new HUDView(stage);
         controller = new HomeController(this);
-        playerController = new PlayerController();
+        playerController = new HomePlayerController(this);
         advanceTimeButton = new TextButton("advance",skin);
 
     }
@@ -109,7 +109,9 @@ public class HomeView extends AppMenu {
 
     }
 
-
+    public HUDView getHudView() {
+        return hudView;
+    }
 
     private void setListeners(){
 
