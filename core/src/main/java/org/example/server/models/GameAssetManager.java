@@ -55,10 +55,14 @@ public class GameAssetManager {
     private final Texture homeTexture = new Texture("assets/Images/home_cropped.png");
     private final Texture greenHouseTexture = new Texture("assets/Images/greenhouse.png");
 
-    private final Texture freeCellTexture = new Texture("assets/Images/Floorings/Free.png");
+    private final Texture freeCellTexture = new Texture("assets/Images/Floorings/Free4.png");
     private final Texture quarryCellTexture = new Texture("assets/Images/Floorings/Quarry.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
+
+    private final Texture inventoryHotBar = new Texture(Gdx.files.internal("Inventory/InventoryHotbar.png"));
+
+    private final Texture inventorySelectSlot = new Texture(Gdx.files.internal("Inventory/SelectedSlot.png"));
 
     private final Animation<Sprite> walkDown = new Animation<>(
             0.1f,
@@ -246,5 +250,13 @@ public class GameAssetManager {
 
     public Texture getQuarryCellTexture() {
         return quarryCellTexture;
+    }
+
+    public Texture getInventoryHotBar() {
+        return inventoryHotBar;
+    }
+
+    public Texture getInventorySelectSlot() {
+        return inventorySelectSlot;
     }
 }

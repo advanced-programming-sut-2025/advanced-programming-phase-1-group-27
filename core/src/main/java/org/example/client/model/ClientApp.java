@@ -39,6 +39,14 @@ public class ClientApp {
         return false;
     }
 
+    public static void setLoggedInUser(User user) {
+        loggedInUser = user;
+    }
+
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
+
     public static void initFromArgs(String[] args) throws IOException {
         ip = args[0].split(":")[0];
         port = Integer.parseInt(args[0].split(":")[1]);

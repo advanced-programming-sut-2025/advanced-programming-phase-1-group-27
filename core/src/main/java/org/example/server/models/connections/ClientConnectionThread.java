@@ -2,6 +2,7 @@ package org.example.server.models.connections;
 
 import org.example.server.controller.ForgetPasswordMenuController;
 import org.example.server.controller.LoginMenuController;
+import org.example.server.controller.ProfileMenuController;
 import org.example.server.controller.RegisterMenuController;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
@@ -67,6 +68,10 @@ public class ClientConnectionThread extends ConnectionThread {
         }
         else if (message.getType() == Message.Type.set_password) {
             ForgetPasswordMenuController.setPassword(message);
+            return true;
+        }
+        else if(message.getType() == Message.Type.change_request){
+            sendMessage(ProfileMenuController.change(message,this));
             return true;
         }
         return false;

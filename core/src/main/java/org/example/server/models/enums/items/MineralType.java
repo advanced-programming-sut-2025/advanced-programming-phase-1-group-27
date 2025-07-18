@@ -1,5 +1,6 @@
 package org.example.server.models.enums.items;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 import org.example.server.models.enums.StackLevel;
 
@@ -73,6 +74,10 @@ public enum MineralType implements Item {
 
     public static ArrayList<MineralType> getNoneMinerals() {
         return noneMinerals;
+    }
+
+    public Texture getTexture() {
+        return new Texture(address);
     }
 
     public static MineralType getItem(String itemName) {

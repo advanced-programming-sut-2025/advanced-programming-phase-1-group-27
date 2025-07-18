@@ -1,10 +1,6 @@
 package org.example.common.database;
 
-import org.example.server.models.Game;
-import org.example.server.models.SecurityQuestion;
-import org.example.server.models.ServerApp;
 import org.example.server.models.User;
-import org.example.server.models.enums.Gender;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -120,22 +116,60 @@ public class DataBaseHelper {
         }
     }
 
-    public static void changeUsername(String currentUsername, String newUsername) {
+    public static void changeUsername(String username, String newUsername) {
         String sql = "UPDATE users SET username = ? WHERE username = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, newUsername);
-            pstmt.setString(2, currentUsername);
+            pstmt.setString(2, username);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Username changed from '" + currentUsername + "' to '" + newUsername + "' successfully.");
+                System.out.println("Username changed from '" + username + "' to '" + newUsername + "' successfully.");
             } else {
-                System.out.println("User '" + currentUsername + "' not found, username not changed.");
+                System.out.println("User '" + username + "' not found, username not changed.");
             }
         } catch (SQLException e) {
-            System.err.println("Error changing username from '" + currentUsername + "' to '" + newUsername + "': " + e.getMessage());
+            System.err.println("Error changing username from '" + username + "' to '" + newUsername + "': " + e.getMessage());
+        }
+    }
+
+    public static void changeNickname(String username, String newNickname) {
+        String sql = "UPDATE users SET nickname = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newNickname);
+            pstmt.setString(2, username);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Nickname for user '" + username + "' changed to '" + newNickname + "' successfully.");
+            } else {
+                System.out.println("User '" + username + "' not found, nickname not changed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error changing nickname for user '" + username + "': " + e.getMessage());
+        }
+    }
+
+    public static void  changeEmail(String username, String newEmail) {
+        String sql = "UPDATE users SET email = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newEmail);
+            pstmt.setString(2, username);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Email for user '" + username + "' changed to '" + newEmail + "' successfully.");
+            } else {
+                System.out.println("User '" + username + "' not found, email not changed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error changing email for user '" + username + "': " + e.getMessage());
         }
     }
 

@@ -41,6 +41,8 @@ Images/Crops/Spice_Berry.png
 Images/Crops/Sweet_Pea.png
 Images/Crops/Yam.png
 Images/Floorings/Free.png
+Images/Floorings/Free2.png
+Images/Floorings/Free4.png
 Images/Floorings/Quarry.png
 Images/Fruits/Eggplant.png
 Images/Fruits/Grape.png
@@ -56,6 +58,9 @@ Images/home3.png
 Images/home_cropped.png
 Images/menu_background.png
 Images/stardew_valley_text.png
+Inventory/InventoryHotbar.png
+Inventory/Inventory_Parts.png
+Inventory/SelectedSlot.png
 Items/Animal_products/Dinosaur_Egg.png
 Items/Animal_products/Duck_Egg.png
 Items/Animal_products/Duck_Feather.png

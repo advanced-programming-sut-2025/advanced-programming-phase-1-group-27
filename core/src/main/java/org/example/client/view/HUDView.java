@@ -3,23 +3,17 @@ package org.example.client.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.common.models.GraphicalResult;
 import org.example.server.controller.HUDController;
-import org.example.server.controller.HomeController;
-import org.example.server.controller.HomePlayerController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
+import org.example.server.models.Player;
 
 import java.util.Scanner;
 
@@ -31,6 +25,8 @@ public class HUDView extends AppMenu{
 
     private Image clockImage;
     private final Image clockArrowImage;
+    private final Image inventoryHotBarImage;
+    private final Image inventorySelectSlotImage;
 
     private final TextField textInputField;
 
@@ -39,15 +35,20 @@ public class HUDView extends AppMenu{
 
     private final GraphicalResult errorLabel;
 
+    private final Player player;
+
 
     public HUDView(Stage stage) {
 
         controller = new HUDController(this);
         clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
+        inventoryHotBarImage = new Image(GameAssetManager.getGameAssetManager().getInventoryHotBar());
+        inventorySelectSlotImage = new Image(GameAssetManager.getGameAssetManager().getInventorySelectSlot());
         textInputField = new TextField("",skin);
         isInputFieldVisible = false;
         tJustPressed = false;
         errorLabel = new GraphicalResult();
+        player = App.getCurrentGame().getCurrentPlayer();
         this.stage = stage;
         setListeners();
 
@@ -58,7 +59,7 @@ public class HUDView extends AppMenu{
 
         controller.updateClockImage();
 
-        clockImage.setPosition(1920-clockImage.getWidth(),1080-clockImage.getHeight());
+        clockImage.setPosition(1920-clockImage.getWidth()-10,1080-clockImage.getHeight());
 
 
         clockArrowImage.setPosition(
@@ -80,6 +81,20 @@ public class HUDView extends AppMenu{
 
 
     }
+
+    public void displayInventoryHotBar(){
+
+        Integer slotIndex = App.getCurrentGame().getCurrentPlayer().getCurrentInventorySlotIndex();
+
+        inventoryHotBarImage.setPosition( (Gdx.graphics.getWidth()-inventoryHotBarImage.getWidth())/2,10 );
+
+        inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + slotIndex*inventorySelectSlotImage.getWidth(),26);
+
+        stage.addActor(inventoryHotBarImage);
+        stage.addActor(inventorySelectSlotImage);
+
+    }
+
     public void displayInputField(){
 
         if ( tJustPressed ){
@@ -127,6 +142,7 @@ public class HUDView extends AppMenu{
         Main.getBatch().end();
 
         displayClock();
+        displayInventoryHotBar();
         displayInputField();
         showErrorMessage();
 
@@ -178,6 +194,18 @@ public class HUDView extends AppMenu{
                         return true;
                     }
 
+                    else if ( keycode == Input.Keys.UP ){
+
+                        player.setCurrentInventorySlotIndex(player.getCurrentInventorySlotIndex() + 1);
+
+                    }
+
+                    else if ( keycode == Input.Keys.DOWN ){
+
+                        player.setCurrentInventorySlotIndex(player.getCurrentInventorySlotIndex() - 1);
+
+                    }
+
                 }
 
                 else {
@@ -200,6 +228,10 @@ public class HUDView extends AppMenu{
 
 
 
+    }
+
+    public boolean isInputFieldVisible() {
+        return isInputFieldVisible;
     }
 
     public void setClockImage(Image clockImage) {
