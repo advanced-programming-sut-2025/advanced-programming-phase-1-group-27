@@ -46,8 +46,11 @@ public class Cell {
 //            if (player.getCurrentCell() == this && player != App.getCurrentGame().getCurrentPlayer())
 //                return false;
 //        }
+
+        if (object instanceof Plant || object instanceof Animal || object instanceof MineralType)
+            return false;
         return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View ||
-                cellType == CellType.Door || cellType == CellType.MapLink;
+                cellType == CellType.Door || cellType == CellType.MapLink || cellType == CellType.Quarry;
     }
 
     public ArrayList<Cell> getAdjacentCells() {
@@ -155,7 +158,7 @@ public class Cell {
     }
 
     public Texture getTexture() {
-        if (cellType == CellType.Free) {
+        if (cellType == CellType.Free || cellType == CellType.Building) {
             return GameAssetManager.getGameAssetManager().getFreeCellTexture();
         } else if (cellType == CellType.Quarry) {
             return GameAssetManager.getGameAssetManager().getQuarryCellTexture();

@@ -14,7 +14,9 @@ import org.example.server.controller.OutsidePlayerController;
 import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.GameAssetManager;
+import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.GreenHouse;
+import org.example.server.models.Position;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.CropType;
@@ -30,11 +32,33 @@ public class OutsideView extends AppMenu {
     private final OutsidePlayerController playerController = new OutsidePlayerController(this);
     private Camera camera;
 
+    private final int tileSize = 40;
+
     public OutsideView() {
 
         stage = new Stage(new ScreenViewport());
         hudView = new HUDView(stage);
 
+    }
+
+    /// ---> Gives the Player Position <---
+    public static Position getGraphicalPosition(Position pos) {
+        return getGraphicalPosition(pos.getX(), pos.getY());
+    }
+
+    /// ---> Gives the Player Position <---
+    public static Position getGraphicalPosition(int i, int j) { // GIVES THE LOW_LEFT CORNER
+        return new Position(j * 40 + 20, (54 - i) * 40 + 30);
+    }
+
+//    /// ---> Gets the Player Position and gives his cell <---
+//    public static Position getIndices(Position pos) {
+//        return getIndices(pos.getX(), pos.getY());
+//    }
+
+    /// ---> Gets the Player Position and gives his cell <---
+    public static Position getIndices(float x, float y) {
+        return new Position(54 - (int) (y / 40), (int) (x / 40));
     }
 
     @Override
@@ -50,10 +74,8 @@ public class OutsideView extends AppMenu {
 
         camera = new OrthographicCamera(1920, 1080);
 
-//        int x = App.getCurrentGame().getCurrentPlayer().getPosition().getX(),
-//                y = App.getCurrentGame().getCurrentPlayer().getPosition().getY();
-        int x = 40, y = 40;
-        camera.position.set(40 * x + 20, 40 * y + 30, 0);
+        camera.position.set(getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getX(),
+                getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getY(), 0);
 
         playerController.setCamera(camera);
 
@@ -69,23 +91,16 @@ public class OutsideView extends AppMenu {
         Main.getBatch().setProjectionMatrix(camera.combined);
 
 
-        Cell[][] map = App.getCurrentGame().getCurrentPlayer().getFarmMap().getCells();
+        Cell[][] map = App.getCurrentGame().getCurrentPlayer().getCurrentMap().getCells();
 
-        for (int i = 54; i >= 0; i--) {
-            for (int j = 0; j < 75; j++) {
-                int y = (54 - i) * 40;
-                int x = j * 40;
+        for (int i = map.length - 1; i >= 0; i--) {
+            for (int j = 0; j < map[i].length; j++) {
+                int y = (map.length - 1 - i) * tileSize;
+                int x = j * tileSize;
                 Texture texture = map[i][j].getTexture();
-                if (map[i][j].getType() == CellType.Building &&
-                        i < map.length && map[i + 1][j].getType() != CellType.Building &&
-                        j < map[i].length && map[i][j + 1].getType() != CellType.Building) {
-                    if (map[i][j].getBuilding() instanceof GreenHouse) {
-                        Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
-                                x - 240, y, 280, 320);
-                    }
-                }
+
                 if (texture == null) continue;
-                Main.getBatch().draw(texture, x, y, 40, 40);
+                Main.getBatch().draw(texture, x, y, tileSize, tileSize);
 
                 if (map[i][j].getObject() instanceof Crop crop) {
                     texture = ((CropType) crop.getType()).getTexture();
@@ -98,6 +113,13 @@ public class OutsideView extends AppMenu {
                         Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
                 }
             }
+        }
+        if (App.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof FarmMap farmMap) {
+            Position position = farmMap.getGreenHouse().getTopLeftCell().getPosition();
+            int x = OutsideView.getGraphicalPosition(position).getX() - 20,
+                    y = OutsideView.getGraphicalPosition(position).getY() - 30;
+            Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
+                    x, y - 240, 320, 280);
         }
 
 

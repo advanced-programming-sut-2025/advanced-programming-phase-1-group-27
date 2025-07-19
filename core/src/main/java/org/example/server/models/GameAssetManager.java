@@ -53,7 +53,7 @@ public class GameAssetManager {
     private final Texture snowySummer = new Texture(Gdx.files.internal("Clock/SnowySummer.png"));
 
     private final Texture homeTexture = new Texture("assets/Images/home_cropped.png");
-    private final Texture greenHouseTexture = new Texture("assets/Images/greenhouse.png");
+    private final Texture greenHouseTexture = new Texture("assets/Images/greenhouse2.1.png");
 
     private final Texture freeCellTexture = new Texture("assets/Images/Floorings/Free4.png");
     private final Texture quarryCellTexture = new Texture("assets/Images/Floorings/Quarry.png");

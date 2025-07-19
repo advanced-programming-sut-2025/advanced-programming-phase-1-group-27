@@ -74,7 +74,7 @@ public class Lobby {
 
     public String toString() {
         // Add a lock icon for private lobbies
-        String privateIndicator = isPrivate ? " 🔒" : "";
+        String privateIndicator = isPublic ? " 🔒" : "";
 
         // Format: "Lobby Name 🔒 (Players: X/Y)"
         return name + privateIndicator + " (Players: " + users.size() + "/" + 4 + ")";

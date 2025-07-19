@@ -13,6 +13,7 @@ import org.example.server.controller.HomeController;
 import org.example.server.controller.HomePlayerController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
+import org.example.server.models.Player;
 import org.example.server.models.Result;
 import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.commands.CheatCommands;
@@ -47,10 +48,16 @@ public class HomeView extends AppMenu {
 
     }
 
-
+    private void preProcess() {
+        Player player = App.getCurrentGame().getCurrentPlayer();
+        player.setCurrentMap(player.getFarmMap());
+        player.setCurrentCell(player.getFarmMap().getCell(50, 50));
+    }
 
     @Override
     public void show() {
+        //TODO Movaghati ast in
+        preProcess();
 
         Gdx.input.setInputProcessor(stage);
 

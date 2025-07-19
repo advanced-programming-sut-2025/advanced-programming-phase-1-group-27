@@ -7,10 +7,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.example.client.Main;
+import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
+import org.example.server.models.Result;
 import org.example.server.models.enums.Menu;
+
+import java.io.File;
+import java.util.Scanner;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -68,28 +73,48 @@ public class OutsidePlayerController {
             lastY = y;
             time = 0;
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                walking = true;
-                destX = x - 40;
-                destY = y;
-                currentAnimation = GameAssetManager.getGameAssetManager().getWalkLeft();
+                Result result = new GameMenuController(new GameView()).walk(
+                        OutsideView.getIndices(x - 40, y).getX() + "",
+                        OutsideView.getIndices(x - 40, y).getY() + "");
+                if (result.success()) {
+                    walking = true;
+                    destX = x - 40;
+                    destY = y;
+                    currentAnimation = GameAssetManager.getGameAssetManager().getWalkLeft();
+                }
             }
             else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                walking = true;
-                destX = x + 40;
-                destY = y;
-                currentAnimation = GameAssetManager.getGameAssetManager().getWalkRight();
+                Result result = new GameMenuController(new GameView()).walk(
+                        OutsideView.getIndices(x + 40, y).getX() + "",
+                        OutsideView.getIndices(x + 40, y).getY() + "");
+                if (result.success()) {
+                    walking = true;
+                    destX = x + 40;
+                    destY = y;
+                    currentAnimation = GameAssetManager.getGameAssetManager().getWalkRight();
+                }
             }
             else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                walking = true;
-                destX = x;
-                destY = y + 40;
-                currentAnimation = GameAssetManager.getGameAssetManager().getWalkUp();
+                Result result = new GameMenuController(new GameView()).walk(
+                        OutsideView.getIndices(x, y + 40).getX() + "",
+                        OutsideView.getIndices(x, y + 40).getY() + "");
+                if (result.success()) {
+                    walking = true;
+                    destX = x;
+                    destY = y + 40;
+                    currentAnimation = GameAssetManager.getGameAssetManager().getWalkUp();
+                }
             }
             else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                walking = true;
-                destX = x;
-                destY = y - 40;
-                currentAnimation = GameAssetManager.getGameAssetManager().getWalkDown();
+                Result result = new GameMenuController(new GameView()).walk(
+                        OutsideView.getIndices(x, y - 40).getX() + "",
+                        OutsideView.getIndices(x, y - 40).getY() + "");
+                if (result.success()) {
+                    walking = true;
+                    destX = x;
+                    destY = y - 40;
+                    currentAnimation = GameAssetManager.getGameAssetManager().getWalkDown();
+                }
             }
         }
 

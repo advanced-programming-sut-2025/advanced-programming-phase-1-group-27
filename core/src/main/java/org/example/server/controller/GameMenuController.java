@@ -125,9 +125,16 @@ public class GameMenuController extends MenuController {
         return new Result(true, "The current season is: " + App.getCurrentGame().getTime().getSeason());
     }
 
+    public Result walk(String s, String t) {
+        return walk(s, t, new Scanner(""));
+    }
+
     public Result walk(String s, String t, Scanner scanner) {
 
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
+
+
+        System.out.println("Walking to " + i + " and " + j);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Map currentMap = currentPlayer.getCurrentMap();
         Cell destination = currentMap.getCell(i, j);
@@ -137,12 +144,12 @@ public class GameMenuController extends MenuController {
             return new Result(false, "There Is No Path Between These Cells");
         } else {
             int energy = currentMap.getPathEnergy(currentPlayer.getCurrentCell(), destination);
-            System.out.println("The Energy Needed for This Walk is " +
-                    energy + " And You Have " + currentPlayer.getEnergy() +
-                    ", Would You Like To Walk? (Y/N)");
-            String answer = scanner.nextLine();
+//            System.out.println("The Energy Needed for This Walk is " +
+//                    energy + " And You Have " + currentPlayer.getEnergy() +
+//                    ", Would You Like To Walk? (Y/N)");
+            //String answer = scanner.nextLine();
             while (true) {
-                if (answer.trim().equals("Y")) {
+                //if (answer.trim().equals("Y")) {
                     if (currentPlayer.getEnergy() > energy) {
                         currentPlayer.consumeEnergy(energy);
                         currentPlayer.setCurrentCell(destination);
@@ -227,11 +234,11 @@ public class GameMenuController extends MenuController {
                                 trueDestination.getPosition().getX() + ", " +
                                 trueDestination.getPosition().getY() + ") !");
                     }
-                } else if (answer.trim().equals("N")) {
-                    return new Result(false, "Alright.");
-                }
-                System.out.println("Invalid Response, Please Answer By (Y/N)");
-                answer = scanner.nextLine();
+//                } else if (answer.trim().equals("N")) {
+//                    return new Result(false, "Alright.");
+//                }
+                //System.out.println("Invalid Response, Please Answer By (Y/N)");
+                //answer = scanner.nextLine();
             }
         }
     }
