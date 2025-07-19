@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
@@ -38,7 +39,7 @@ public class LoginMenuController extends MenuController {
             return loginAttempt;
 
         if (view.getStayLoggedInCheckBox().isChecked())
-            updateFile(ServerApp.getUserByUsername(view.getUsernameField().getText()));
+            ClientApp.setSavedUser(ServerApp.getUserByUsername(view.getUsernameField().getText()));
         ClientApp.setLoggedInUser(ClientApp.getUserByUsername(view.getUsernameField().getText()));
 
         Main.getMain().getScreen().dispose();
@@ -71,28 +72,6 @@ public class LoginMenuController extends MenuController {
         Main.getMain().setScreen(new ForgetPasswordMenuView());
     }
 
-    private void updateFile(User user) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", user.getUsername());
-        jsonObject.put("password", user.getPassword());
-        jsonObject.put("email", user.getEmail());
-        jsonObject.put("nickname", user.getNickname());
-        jsonObject.put("gender", user.getGender());
-        jsonObject.put("recoveryQuestion", user.getRecoveryQuestion().getQuestion());
-        jsonObject.put("recoveryAnswer", user.getRecoveryQuestion().getAnswer());
-        jsonObject.put("maxMoneyEarned", user.getMaxMoneyEarned());
-        jsonObject.put("numberOfGamesPlayed", user.getNumberOfGamesPlayed());
-
-        File file = new File("data/login_user.json");
-        file.getParentFile().mkdirs();
-
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.write(jsonObject.toString(4));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public Result enterMenu(String menuName) {
         return null;
@@ -105,4 +84,12 @@ public class LoginMenuController extends MenuController {
         Main.getMain().setScreen(new WelcomeMenuView());
         return new Result(true, "Redirecting to welcome menu ...");
     }
+//    // getLobbiesList
+//    ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
+//        for (LinkedTreeMap<String, Object> info : list) {
+//        Lobby lobby = new Lobby(info);
+//        lobby.toString();
+//    }
+//    // createLobby
+//    Lobby lobby = new Lobby(response.getFromBody("lobbyInfo"));
 }

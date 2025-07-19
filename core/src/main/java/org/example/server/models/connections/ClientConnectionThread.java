@@ -1,9 +1,6 @@
 package org.example.server.models.connections;
 
-import org.example.server.controller.ForgetPasswordMenuController;
-import org.example.server.controller.LoginMenuController;
-import org.example.server.controller.ProfileMenuController;
-import org.example.server.controller.RegisterMenuController;
+import org.example.server.controller.*;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.models.ServerApp;
@@ -70,8 +67,20 @@ public class ClientConnectionThread extends ConnectionThread {
             ForgetPasswordMenuController.setPassword(message);
             return true;
         }
-        else if(message.getType() == Message.Type.change_request){
+        else if (message.getType() == Message.Type.change_profile) {
             sendMessage(ProfileMenuController.change(message,this));
+            return true;
+        }
+        else if (message.getType() == Message.Type.create_lobby) {
+            sendMessage(LobbyController.createLobby(message));
+            return true;
+        }
+        else if (message.getType() == Message.Type.join_lobby) {
+            sendMessage(LobbyController.joinLobby(message));
+            return true;
+        }
+        else if (message.getType() == Message.Type.get_lobbies_list) {
+            sendMessage(LobbyController.getLobbiesList(message));
             return true;
         }
         return false;

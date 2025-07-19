@@ -54,6 +54,7 @@ public class ProfileMenuController extends MenuController {
             newUser = ClientApp.getUserByUsername(ClientApp.getLoggedInUser().getUsername());
         }
         ClientApp.setLoggedInUser(newUser);
+        ClientApp.updateFile(newUser);
 
         return new GraphicalResult(String.valueOf(changeAttempt.getMessage()), Color.GREEN);
     }
@@ -81,7 +82,7 @@ public class ProfileMenuController extends MenuController {
             put("password", finalPassword);
             put("nickname" , finalNickname);
             put("email" , finalEmail);
-        }}, Message.Type.change_request);
+        }}, Message.Type.change_profile);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
 
         if (response == null || response.getType() != Message.Type.response) {

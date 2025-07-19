@@ -38,6 +38,9 @@ public class Message {
         add_user,
         set_password,
         set_online_user,
-        change_request,
+        change_profile,
+        get_lobbies_list,
+        create_lobby,
+        join_lobby,
     }
 }

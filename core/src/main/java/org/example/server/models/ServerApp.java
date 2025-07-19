@@ -86,4 +86,20 @@ public class ServerApp {
     public static ArrayList<User> getUsers() {
         return DataBaseHelper.getAllUsers();
     }
+
+    public static void addLobby(Lobby lobby) {
+        lobbies.add(lobby);
+    }
+
+    public static ArrayList<Lobby> getLobbies() {
+        return lobbies;
+    }
+
+    public static Lobby getLobbyById(int id) {
+        for (Lobby lobby : lobbies) {
+            if (lobby.getId() == id)
+                return lobby;
+        }
+        return null;
+    }
 }

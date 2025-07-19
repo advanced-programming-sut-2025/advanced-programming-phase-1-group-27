@@ -11,6 +11,7 @@ import org.json.JSONTokener;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -82,6 +83,35 @@ public class ClientApp {
         if (response.getFromBody("found"))
             return new User(response.getFromBody("userInfo"));
         return null;
+    }
+
+    public static void updateFile(User user) {
+        File file = new File(loggedInUserFilePath);
+        if (!file.exists() || file.length() == 0)
+            return;
+        setSavedUser(user);
+    }
+
+    public static void setSavedUser(User user) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", user.getUsername());
+        jsonObject.put("password", user.getPassword());
+        jsonObject.put("email", user.getEmail());
+        jsonObject.put("nickname", user.getNickname());
+        jsonObject.put("gender", user.getGender());
+        jsonObject.put("recoveryQuestion", user.getRecoveryQuestion().getQuestion());
+        jsonObject.put("recoveryAnswer", user.getRecoveryQuestion().getAnswer());
+        jsonObject.put("maxMoneyEarned", user.getMaxMoneyEarned());
+        jsonObject.put("numberOfGamesPlayed", user.getNumberOfGamesPlayed());
+
+        File file = new File(loggedInUserFilePath);
+        file.getParentFile().mkdirs();
+
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(jsonObject.toString(4));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static User getSavedUser() {
