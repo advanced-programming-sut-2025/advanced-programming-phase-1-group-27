@@ -71,4 +71,12 @@ public class Lobby {
         info.put("usersInfo", usersInfo);
         return info;
     }
+
+    public String toString() {
+        // Add a lock icon for private lobbies
+        String privateIndicator = isPrivate ? " 🔒" : "";
+
+        // Format: "Lobby Name 🔒 (Players: X/Y)"
+        return name + privateIndicator + " (Players: " + users.size() + "/" + 4 + ")";
+    }
 }
