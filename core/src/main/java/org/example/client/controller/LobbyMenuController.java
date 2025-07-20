@@ -48,6 +48,8 @@ public class LobbyMenuController extends MenuController {
         }} , Message.Type.find_lobby);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         Lobby lobby = new Lobby(response.getFromBody("lobbyInfo"));
+        //TODO
+        return  new GraphicalResult();
     }
 
 

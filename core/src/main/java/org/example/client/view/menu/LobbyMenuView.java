@@ -179,18 +179,18 @@ public class LobbyMenuView extends AppMenu {
             }
         });
 
-        lobbyListUI.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                selectedLobby = lobbyListUI.getSelected();
-                if (selectedLobby != null) {
-                    System.out.println("Selected Lobby: " + selectedLobby.toString());
-                    joinButton.setDisabled(false);
-                } else {
-                    joinButton.setDisabled(true);
-                }
-            }
-        });
+//        lobbyListUI.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                selectedLobby = lobbyListUI.getSelected();
+//                if (selectedLobby != null) {
+//                    System.out.println("Selected Lobby: " + selectedLobby.toString());
+//                    joinButton.setDisabled(false);
+//                } else {
+//                    joinButton.setDisabled(true);
+//                }
+//            }
+//        });
 
         refreshButton.addListener(new ClickListener() {
             public void  clicked(InputEvent event, float x, float y) {
@@ -210,42 +210,42 @@ public class LobbyMenuView extends AppMenu {
             return;
         }
 
-        for (final Lobby lobby : lobbies) {
-            Table lobbyEntry = new Table(skin);
-            lobbyEntry.setBackground("default-rect");
-            lobbyEntry.pad(10);
-            lobbyEntry.left().top();
-
-            // Lobby Name Label
-            Label nameLabel = new Label(lobby.getName(), skin);
-            lobbyEntry.add(nameLabel).expandX().fillX().left().padRight(10);
-
-            // Private/Lock Icon (if private)
-            if (lobby.isPrivate()) {
-                Label lockIcon = new Label("🔒", skin);
-                lobbyEntry.add(lockIcon).padRight(10);
-            } else {
-                lobbyEntry.add().padRight(10);
-            }
-
-            // Player Count Label
-            Label playerCountLabel = new Label(lobby.getPlayerCount() + "/" + 4, skin);
-            lobbyEntry.add(playerCountLabel).right();
-
-            lobbyEntry.row();
-
-            // Add a click listener to the entire lobby entry row
-            lobbyEntry.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    playClickSound();
-                    selectLobbyEntry(lobby);
-                }
-            });
-
-
-            lobbyEntriesTable.add(lobbyEntry).growX().padBottom(5).row();
-        }
+//        for (final Lobby lobby : lobbies) {
+//            Table lobbyEntry = new Table(skin);
+//            lobbyEntry.setBackground("default-rect");
+//            lobbyEntry.pad(10);
+//            lobbyEntry.left().top();
+//
+//            // Lobby Name Label
+//            Label nameLabel = new Label(lobby.getName(), skin);
+//            lobbyEntry.add(nameLabel).expandX().fillX().left().padRight(10);
+//
+//            // Private/Lock Icon (if private)
+//            if (lobby.isPrivate()) {
+//                Label lockIcon = new Label("🔒", skin);
+//                lobbyEntry.add(lockIcon).padRight(10);
+//            } else {
+//                lobbyEntry.add().padRight(10);
+//            }
+//
+//            // Player Count Label
+//            Label playerCountLabel = new Label(lobby.getPlayerCount() + "/" + 4, skin);
+//            lobbyEntry.add(playerCountLabel).right();
+//
+//            lobbyEntry.row();
+//
+//            // Add a click listener to the entire lobby entry row
+//            lobbyEntry.addListener(new ClickListener() {
+//                @Override
+//                public void clicked(InputEvent event, float x, float y) {
+//                    playClickSound();
+//                    selectLobbyEntry(lobby);
+//                }
+//            });
+//
+//
+//            lobbyEntriesTable.add(lobbyEntry).growX().padBottom(5).row();
+//        }
         // Ensure the scroll pane's internal table updates its layout
         lobbyEntriesTable.invalidateHierarchy();
         scrollPane.invalidateHierarchy();
