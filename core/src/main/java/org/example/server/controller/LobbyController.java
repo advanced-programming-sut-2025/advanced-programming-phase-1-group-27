@@ -54,6 +54,28 @@ public class LobbyController {
         }}, Message.Type.response);
     }
 
+    public static Message findLobbyById(Message message) {
+        int lobbyId = message.getFromBody("id");
+        ArrayList<Lobby> lobbies = ServerApp.getLobbies();
+        Lobby selectedLobby = null;
+        for(Lobby lobby : lobbies){
+            if(lobby.getId() == lobbyId){
+                selectedLobby = lobby;
+            }
+        }
+        if(selectedLobby != null){
+            Lobby finalSelectedLobby = selectedLobby;
+            return new Message(new HashMap<>() {{
+                put("found?" , true);
+                put("lobbyInfo" , finalSelectedLobby.getInfo());
+            }} , Message.Type.response);
+        }else {
+            return new Message(new HashMap<>() {{
+                put("found?" , false);
+            }} , Message.Type.response);
+        }
+    }
+
     private static int generateLobbyId() {
         Random random = new Random();
         while (true) {

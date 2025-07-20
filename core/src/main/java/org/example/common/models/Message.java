@@ -42,5 +42,6 @@ public class Message {
         get_lobbies_list,
         create_lobby,
         join_lobby,
+        find_lobby,
     }
 }

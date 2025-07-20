@@ -4,11 +4,7 @@ package org.example.client.view.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List; // Correct List import
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane; // ScrollPane import
-import com.badlogic.gdx.scenes.scene2d.ui.Table; // Table import for layout
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array; // Correct Array import
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -24,14 +20,17 @@ public class LobbyMenuView extends AppMenu {
     private final LobbyMenuController controller;
 
     private final Label menuTitleLabel;
+    private final Label idLabel;
     private final TextButton hostButton;
     private final TextButton joinButton;
     private final TextButton backButton;
     private final TextButton refreshButton;
+    private final TextButton findButton;
+    private final TextField idTextField;
 
     private final GraphicalResult errorLabel;
 
-    private List<Lobby> lobbyListUI;
+    private Table lobbyEntriesTable;
     private ScrollPane scrollPane;
     private Lobby selectedLobby = null;
     private float fadeInTimer = 0f;
@@ -43,14 +42,21 @@ public class LobbyMenuView extends AppMenu {
         this.controller = new LobbyMenuController(this);
 
         errorLabel = new GraphicalResult();
+        idLabel = new Label("ID:", skin);
         menuTitleLabel = new Label("Lobby Menu", skin);
         hostButton = new TextButton("Host" , skin);
         joinButton = new TextButton("Join" , skin);
         backButton = new TextButton("Back" , skin);
         refreshButton = new TextButton("Refresh", skin);
+        findButton = new TextButton("Find", skin);
+        idTextField = new TextField("", skin);
+        lobbyEntriesTable = new Table(skin);
+        lobbyEntriesTable.top().left();
 
-        lobbyListUI = new List<>(skin);
-        scrollPane = new ScrollPane(lobbyListUI, skin);
+        // Wrap the lobbyEntriesTable in a ScrollPane
+        scrollPane = new ScrollPane(lobbyEntriesTable, skin);
+        scrollPane.setFadeScrollBars(false); // Keep scrollbars visible for debugging
+        scrollPane.setScrollbarsOnTop(true);
 
 
         joinButton.setDisabled(true);
@@ -96,7 +102,6 @@ public class LobbyMenuView extends AppMenu {
         stage.addActor(menuBackground);
 
         setupUI();
-
     }
 
     @Override
@@ -196,11 +201,54 @@ public class LobbyMenuView extends AppMenu {
     }
 
     public void updateLobbyList(Array<Lobby> lobbies) {
-        lobbyListUI.setItems(lobbies);
+        lobbyEntriesTable.clearChildren(); // Clear existing entries
 
         if (lobbies.size == 0) {
+            lobbyEntriesTable.add(new Label("No lobbies available.", skin)).center().pad(20);
             joinButton.setDisabled(true);
             selectedLobby = null;
+            return;
         }
+
+        for (final Lobby lobby : lobbies) {
+            Table lobbyEntry = new Table(skin);
+            lobbyEntry.setBackground("default-rect");
+            lobbyEntry.pad(10);
+            lobbyEntry.left().top();
+
+            // Lobby Name Label
+            Label nameLabel = new Label(lobby.getName(), skin);
+            lobbyEntry.add(nameLabel).expandX().fillX().left().padRight(10);
+
+            // Private/Lock Icon (if private)
+            if (lobby.isPrivate()) {
+                Label lockIcon = new Label("🔒", skin);
+                lobbyEntry.add(lockIcon).padRight(10);
+            } else {
+                lobbyEntry.add().padRight(10);
+            }
+
+            // Player Count Label
+            Label playerCountLabel = new Label(lobby.getPlayerCount() + "/" + 4, skin);
+            lobbyEntry.add(playerCountLabel).right();
+
+            lobbyEntry.row();
+
+            // Add a click listener to the entire lobby entry row
+            lobbyEntry.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    playClickSound();
+                    selectLobbyEntry(lobby);
+                }
+            });
+
+
+            lobbyEntriesTable.add(lobbyEntry).growX().padBottom(5).row();
+        }
+        // Ensure the scroll pane's internal table updates its layout
+        lobbyEntriesTable.invalidateHierarchy();
+        scrollPane.invalidateHierarchy();
+        joinButton.setDisabled(selectedLobby == null);
     }
 }
