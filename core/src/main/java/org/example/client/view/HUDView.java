@@ -189,12 +189,6 @@ public class HUDView extends AppMenu{
                         return true;
                     }
 
-                    else if ( keycode == Input.Keys.UP ){
-
-                        controller.updateSlotIndex(1);
-
-                    }
-
                     else if ( keycode == Input.Keys.DOWN ){
 
                         controller.updateSlotIndex(-1);
@@ -294,6 +288,23 @@ public class HUDView extends AppMenu{
                 }
                 return false;
             }
+
+            @Override
+            public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
+
+                if (!isInputFieldVisible) {
+
+                    if (amountY > 0) {
+                        controller.updateSlotIndex(-1);
+                    } else if (amountY < 0) {
+                        controller.updateSlotIndex(1);
+                    }
+                    return true;
+                }
+                return false;
+
+            }
+
         });
 
 

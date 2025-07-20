@@ -16,6 +16,7 @@ import org.example.server.models.Cell;
 import org.example.server.models.GameAssetManager;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.GreenHouse;
+import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Position;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.Crop;
@@ -47,8 +48,9 @@ public class OutsideView extends AppMenu {
     }
 
     /// ---> Gives the Player Position <---
-    public static Position getGraphicalPosition(int i, int j) { // GIVES THE LOW_LEFT CORNER
-        return new Position(j * 40 + 20, (54 - i) * 40 + 30);
+    public static Position getGraphicalPosition(int i, int j) {
+        int k = App.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
+        return new Position(j * 40 + 20, (k - i) * 40 + 30);
     }
 
 //    /// ---> Gets the Player Position and gives his cell <---
@@ -58,7 +60,8 @@ public class OutsideView extends AppMenu {
 
     /// ---> Gets the Player Position and gives his cell <---
     public static Position getIndices(float x, float y) {
-        return new Position(54 - (int) (y / 40), (int) (x / 40));
+        int k = App.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
+        return new Position(k - (int) (y / 40), (int) (x / 40));
     }
 
     @Override

@@ -162,7 +162,8 @@ public class Cell {
             return GameAssetManager.getGameAssetManager().getFreeCellTexture();
         } else if (cellType == CellType.Quarry) {
             return GameAssetManager.getGameAssetManager().getQuarryCellTexture();
-        }
+        } else if (cellType == CellType.View)
+            return GameAssetManager.getGameAssetManager().getNpcMapCellTexture();
         return null;
     }
 

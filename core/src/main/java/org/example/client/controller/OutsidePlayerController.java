@@ -69,8 +69,11 @@ public class OutsidePlayerController {
         characterSprite.setScale(2f);
 
         if (!walking && !view.getHudView().isInputFieldVisible()) {
+            x = OutsideView.getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getX();
+            y = OutsideView.getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getY();
             lastX = x;
             lastY = y;
+
             time = 0;
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 Result result = new GameMenuController(new GameView()).walk(
