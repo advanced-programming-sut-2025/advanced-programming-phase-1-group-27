@@ -2,13 +2,10 @@ package org.example.server.controller;
 
 import org.example.client.Main;
 import org.example.client.controller.MenuController;
+import org.example.client.view.menu.*;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.Menu;
-import org.example.client.view.menu.MainMenuView;
-import org.example.client.view.menu.PreGameMenuView;
-import org.example.client.view.menu.ProfileMenuView;
-import org.example.client.view.menu.WelcomeMenuView;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -33,11 +30,11 @@ public class MainMenuController extends MenuController {
         return new GraphicalResult("", GameAssetManager.getGameAssetManager().getAcceptColor(), false);
     }
 
-    public void goToProfileMenu() {
+    public void goToLobbyMenu() {
 
-        App.setCurrentMenu(Menu.ProfileMenu);
+//        App.setCurrentMenu(Menu.ProfileMenu);
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new ProfileMenuView());
+        Main.getMain().setScreen(new LobbyMenuView());
 
     }
 

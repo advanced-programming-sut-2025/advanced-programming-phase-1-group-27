@@ -43,6 +43,7 @@ Images/Crops/Yam.png
 Images/Floorings/Free.png
 Images/Floorings/Free2.png
 Images/Floorings/Free4.png
+Images/Floorings/NPCValley.png
 Images/Floorings/Quarry.png
 Images/Fruits/Eggplant.png
 Images/Fruits/Grape.png
@@ -52,6 +53,7 @@ Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
 Images/greenhouse.png
+Images/greenhouse2.1.png
 Images/home2.png
 Images/home2_expanded_left_1920x1080.png
 Images/home3.png
