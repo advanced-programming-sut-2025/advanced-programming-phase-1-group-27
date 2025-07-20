@@ -27,6 +27,7 @@ public class ClientApp {
     private static final String loggedInUserFilePath = "data/login_user.json";
     private static ServerConnectionThread serverConnectionThread;
     private static User loggedInUser = null;
+    private static ClientGame currentGame = null;
 
     public static boolean loadSavedUser() {
         User savedUser = getSavedUser();
@@ -83,6 +84,10 @@ public class ClientApp {
         if (response.getFromBody("found"))
             return new User(response.getFromBody("userInfo"));
         return null;
+    }
+
+    public static ClientGame getCurrentGame() {
+        return currentGame;
     }
 
     public static void updateFile(User user) {

@@ -26,11 +26,11 @@ import static java.lang.Math.min;
 
 public class Game {
     private final FarmMap[] farmMaps = new FarmMap[4];
-    private Player admin;
+    private Player admin; // User
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players;
     private NPCMap npcMap;
-    private Weather currentWeather = Weather.Sunny, tomorrowWeather = null;
+    private Weather currentWeather = Weather.Sunny, tomorrowWeather = null; //
     private Time time = new Time();
     private ArrayList<NPC> npcs = new ArrayList<>();
     // all dialogues between players
