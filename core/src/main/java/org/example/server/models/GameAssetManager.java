@@ -57,6 +57,7 @@ public class GameAssetManager {
 
     private final Texture freeCellTexture = new Texture("assets/Images/Floorings/Free4.png");
     private final Texture quarryCellTexture = new Texture("assets/Images/Floorings/Quarry.png");
+    private final Texture NpcMapCellTexture = new Texture("assets/Images/Floorings/NPCValley.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
 
@@ -250,6 +251,10 @@ public class GameAssetManager {
 
     public Texture getQuarryCellTexture() {
         return quarryCellTexture;
+    }
+
+    public Texture getNpcMapCellTexture() {
+        return NpcMapCellTexture;
     }
 
     public Texture getInventoryHotBar() {
