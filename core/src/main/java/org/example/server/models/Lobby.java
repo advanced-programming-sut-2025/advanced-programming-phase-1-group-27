@@ -15,6 +15,7 @@ public class Lobby {
     // TODO : Rassa
     private HashMap<User,Integer> usersAndChosenMaps = new HashMap<>();
     private Game game = null;
+    private boolean active;
 
     public Lobby(User admin, boolean isPublic, String password, boolean isVisible, int id, String name) {
         this.admin = admin;
@@ -27,7 +28,7 @@ public class Lobby {
     }
 
     public Lobby(LinkedTreeMap<String, Object> info) {
-        this.id = (int) info.get("id");
+        this.id = ((Number) info.get("id")).intValue();
         this.name = (String) info.get("name");
         this.isPublic = (boolean) info.get("isPublic");
         this.isVisible = (boolean) info.get("isVisible");
@@ -74,14 +75,6 @@ public class Lobby {
         return info;
     }
 
-    public String toString() {
-        // Add a lock icon for private lobbies
-        String privateIndicator = isPublic ? " 🔒" : "";
-
-        // Format: "Lobby Name 🔒 (Players: X/Y)"
-        return name + privateIndicator + " (Players: " + users.size() + "/" + 4 + ")";
-    }
-
     public String getName() {
         return name;
     }
@@ -96,5 +89,17 @@ public class Lobby {
 
     public User getAdmin() {
         return admin;
+    }
+
+    public void setActive(boolean condition){
+        if(condition){
+            active = true;
+        }else {
+            active = false;
+        }
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

@@ -28,7 +28,6 @@ public class LobbyMenuController extends MenuController {
         if (response == null || response.getType() != Message.Type.response) {
             return new ArrayList<>();
         }
-        // TODO : RASSA ridi!
         ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
         ArrayList<Lobby> lobbies = new ArrayList<>();
         for (LinkedTreeMap<String, Object> info : list) {

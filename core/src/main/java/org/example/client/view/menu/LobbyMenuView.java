@@ -66,11 +66,7 @@ public class LobbyMenuView extends AppMenu {
 
         gameIdTextField = new TextField("", skin);
 
-        lobbies = new ArrayList<>();
-//        Lobby test = new Lobby(new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male)
-//                , true , "" , true , 1111 , "test");
-//        lobbies.add(test);
-//        lobbies = controller.getLobbies();
+        lobbies = controller.getLobbies();
         setListeners();
     }
 
@@ -92,8 +88,6 @@ public class LobbyMenuView extends AppMenu {
 
         noActiveLobbyLabel.setVisible(lobbies.isEmpty());
 
-//        stage.addActor(publicGameLabel);
-//        stage.addActor(privateGameLabel);
         stage.addActor(idLabel);
         stage.addActor(noActiveLobbyLabel);
 
@@ -153,7 +147,7 @@ public class LobbyMenuView extends AppMenu {
             }
         }
 
-//        publicGamesSelectBox.setItems(lobbyInfos);
+        publicGamesSelectBox.setItems(lobbyInfos);
 
         publicGamesSelectBox.setWidth(Gdx.graphics.getWidth() / 5f);
 

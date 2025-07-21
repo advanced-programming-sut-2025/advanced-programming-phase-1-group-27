@@ -93,8 +93,9 @@ public class ServerApp {
     }
 
     public static ArrayList<Lobby> getLobbies() {
-        Lobby test = new Lobby(new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male)
-                , true , "" , true , 1111 , "test");
+        User admin = new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male);
+        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        Lobby test = new Lobby(admin, false , "rassa" , true , 1111 , "test");
         if(!lobbies.contains(test)){
             lobbies.add(test);
         }
