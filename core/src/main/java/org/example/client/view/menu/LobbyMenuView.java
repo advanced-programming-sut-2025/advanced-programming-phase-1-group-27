@@ -21,9 +21,9 @@ public class LobbyMenuView extends AppMenu {
 
     private final Label menuTitleLabel;
     private final Label idLabel;
-    private final Label passwordLabel;
     private final Label publicGameLabel;
     private final Label privateGameLabel;
+    private final Label noActiveLobbyLabel;
 
     private final SelectBox<String> publicGamesSelectBox;
 
@@ -31,10 +31,9 @@ public class LobbyMenuView extends AppMenu {
     private final TextButton joinPublicGameButton;
     private final TextButton backButton;
     private final TextButton refreshButton;
-    private final TextButton joinPrivateGameButton;
+    private final TextButton findGameButton;
 
     private final TextField gameIdTextField;
-    private final TextField passwordTextField;
 
     private final GraphicalResult errorLabel;
 
@@ -50,21 +49,19 @@ public class LobbyMenuView extends AppMenu {
         errorLabel = new GraphicalResult();
         menuTitleLabel = new Label("Lobby Menu", skin);
         idLabel = new Label("Game ID:", skin);
-        passwordLabel = new Label("Password:", skin);
         publicGameLabel = new Label("Public Games:", skin);
         privateGameLabel = new Label("Private Games:", skin);
+        noActiveLobbyLabel = new Label("No Active Lobby ):", skin);
 
         publicGamesSelectBox = new SelectBox<>(skin);
 
         hostButton = new TextButton("Host", skin);
-        joinPublicGameButton = new TextButton("Join Public Game", skin);
+        joinPublicGameButton = new TextButton("Join Game", skin);
         backButton = new TextButton("Back", skin);
         refreshButton = new TextButton("Refresh", skin);
-        joinPrivateGameButton = new TextButton("Join Private Game", skin);
+        findGameButton = new TextButton("Find Game", skin);
 
         gameIdTextField = new TextField("", skin);
-        passwordTextField = new TextField("", skin);
-
 
         lobbies = controller.getLobbies();
         setListeners();
@@ -82,40 +79,39 @@ public class LobbyMenuView extends AppMenu {
 
         publicGameLabel.setPosition(Gdx.graphics.getWidth() / 20f, 9 * Gdx.graphics.getHeight() / 12f);
         privateGameLabel.setPosition(Gdx.graphics.getWidth() / 2f, 9 * Gdx.graphics.getHeight() / 12f);
+        noActiveLobbyLabel.setPosition((Gdx.graphics.getWidth() / 2f - noActiveLobbyLabel.getWidth()) / 2f, 8 * Gdx.graphics.getHeight() / 12f);
 
         idLabel.setPosition(Gdx.graphics.getWidth() / 2f + Gdx.graphics.getWidth() / 20f, 7 * Gdx.graphics.getHeight() / 12f);
-        passwordLabel.setPosition(Gdx.graphics.getWidth() / 2f + Gdx.graphics.getWidth() / 20f, 6 * Gdx.graphics.getHeight() / 12f);
+
+        noActiveLobbyLabel.setVisible(lobbies.isEmpty());
 
         stage.addActor(publicGameLabel);
         stage.addActor(privateGameLabel);
         stage.addActor(idLabel);
-        stage.addActor(passwordLabel);
+        stage.addActor(noActiveLobbyLabel);
 
     }
 
     private void showInputFields() {
 
         gameIdTextField.setWidth(Gdx.graphics.getWidth() / 5f);
-        passwordTextField.setWidth(Gdx.graphics.getWidth() / 5f);
 
         gameIdTextField.setPosition(Gdx.graphics.getWidth() / 2f + 3 * Gdx.graphics.getWidth() / 20f, 7 * Gdx.graphics.getHeight() / 12f - 20);
-        passwordTextField.setPosition(Gdx.graphics.getWidth() / 2f + 3 * Gdx.graphics.getWidth() / 20f, 6 * Gdx.graphics.getHeight() / 12f - 20);
 
         stage.addActor(gameIdTextField);
-        stage.addActor(passwordTextField);
 
     }
 
     private void showButtons() {
 
-        joinPrivateGameButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        findGameButton.setWidth(Gdx.graphics.getWidth() / 4f);
         joinPublicGameButton.setWidth(Gdx.graphics.getWidth() / 4f);
         refreshButton.setWidth(Gdx.graphics.getWidth() / 4f);
         backButton.setWidth(Gdx.graphics.getWidth() / 4f);
         hostButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
 
-        joinPrivateGameButton.setPosition(Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - joinPrivateGameButton.getWidth()) / 2,
+        findGameButton.setPosition(Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - findGameButton.getWidth()) / 2,
                 4 * Gdx.graphics.getHeight() / 12f);
         joinPublicGameButton.setPosition((Gdx.graphics.getWidth() / 2f - joinPublicGameButton.getWidth()) / 2,
                 4 * Gdx.graphics.getHeight() / 12f);
@@ -126,7 +122,7 @@ public class LobbyMenuView extends AppMenu {
         hostButton.setPosition(13 * Gdx.graphics.getWidth() / 24f,
                 2 * Gdx.graphics.getHeight() / 12f);
 
-        stage.addActor(joinPrivateGameButton);
+        stage.addActor(findGameButton);
         stage.addActor(joinPublicGameButton);
         stage.addActor(refreshButton);
         stage.addActor(backButton);
@@ -154,7 +150,10 @@ public class LobbyMenuView extends AppMenu {
 
         publicGamesSelectBox.setPosition((Gdx.graphics.getWidth() / 2f - publicGamesSelectBox.getWidth()) / 2f, 8 * Gdx.graphics.getHeight() / 12f);
 
+        publicGamesSelectBox.setVisible(!lobbies.isEmpty());
+
         stage.addActor(publicGamesSelectBox);
+
     }
 
     @Override
@@ -225,7 +224,7 @@ public class LobbyMenuView extends AppMenu {
         refreshButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                playClickSound(); // Assuming this method exists
+                playClickSound();
                 lobbies = controller.getLobbies();
                 showSelectBox();
             }
@@ -247,7 +246,7 @@ public class LobbyMenuView extends AppMenu {
             }
         });
 
-        joinPrivateGameButton.addListener(new ClickListener() {
+        findGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();

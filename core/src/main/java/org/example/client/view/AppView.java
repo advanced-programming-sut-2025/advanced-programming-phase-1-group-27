@@ -27,7 +27,7 @@ public class AppView {
             Main.getMain().setScreen(new HomeView());
             return;
         }
-        Main.getMain().setScreen(new HostMenuView());
+        Main.getMain().setScreen(new WelcomeMenuView());
 //        Main.getMain().getScreen().dispose();
 //        Main.getMain().setScreen(new HomeView());
 
