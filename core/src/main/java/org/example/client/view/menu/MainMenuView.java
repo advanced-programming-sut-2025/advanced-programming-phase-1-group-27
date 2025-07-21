@@ -8,22 +8,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.server.controller.MainMenuController;
-import org.example.common.models.GraphicalResult;
-import org.example.server.models.Result;
-import org.example.server.models.enums.commands.MainMenuCommands;
+import org.example.client.controller.MainMenuController;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class MainMenuView extends AppMenu {
 
     private final MainMenuController controller;
     private final Label menuTitleLabel;
-    private final GraphicalResult errorLabel;
-    private final TextButton pregameMenuButton;
     private final TextButton lobbyMenuButton;
+    private final TextButton profileMenuButton;
     private final TextButton logoutButton;
     private Stage stage;
     private float fadeInTimer = 0f;
@@ -34,14 +29,11 @@ public class MainMenuView extends AppMenu {
 
         menuTitleLabel = new Label("Main Menu", skin);
 
-        errorLabel = new GraphicalResult();
-
-        pregameMenuButton = new TextButton("Pregame Menu", skin);
         lobbyMenuButton = new TextButton("Lobby Menu", skin);
+        profileMenuButton = new TextButton("Profile Menu", skin);
         logoutButton = new TextButton("Logout", skin);
 
         setListeners();
-
     }
 
     private void showMenuTitle() {
@@ -62,26 +54,22 @@ public class MainMenuView extends AppMenu {
         stardewValleyText.setPosition(Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - stardewValleyText.getWidth() * fadeInTimer * 2) / 2,
                 (Gdx.graphics.getHeight() - stardewValleyText.getHeight() * fadeInTimer * 2) / 2
         );
-
         stage.addActor(stardewValleyText);
-
-
     }
 
     private void showButtons() {
 
-        pregameMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
         lobbyMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        profileMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
         logoutButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
 
-        pregameMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 7f);
-        lobbyMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 7f);
+        lobbyMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 7f);
+        profileMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 7f);
         logoutButton.setPosition(Gdx.graphics.getWidth() / 8f, 2 * Gdx.graphics.getHeight() / 7f);
 
-        stage.addActor(pregameMenuButton);
         stage.addActor(lobbyMenuButton);
+        stage.addActor(profileMenuButton);
         stage.addActor(logoutButton);
-
     }
 
 
@@ -92,15 +80,10 @@ public class MainMenuView extends AppMenu {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(menuBackground);
-
-        errorLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 7f);
-        stage.addActor(errorLabel.getMessage());
     }
 
     @Override
     public void render(float delta) {
-        errorLabel.update(delta);
-
         if (fadeInTimer < 1f) {
             fadeInTimer += delta;
         } else {
@@ -144,19 +127,19 @@ public class MainMenuView extends AppMenu {
     }
 
     private void setListeners() {
-        pregameMenuButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                playClickSound();
-                errorLabel.set(controller.goToPregameMenu());
-            }
-        });
-
         lobbyMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 controller.goToLobbyMenu();
+            }
+        });
+
+        profileMenuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.goToProfileMenu();
             }
         });
 
@@ -171,39 +154,7 @@ public class MainMenuView extends AppMenu {
 
     }
 
-
     public void executeCommands(Scanner scanner) {
-        String input = scanner.nextLine().trim();
-        Matcher matcher;
-        if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
-            System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        } else if ((matcher = MainMenuCommands.NewGame.getMatcher(input)) != null) {
-            System.out.println(controller.createNewGame(
-                    matcher.group("username1"),
-                    matcher.group("username2"),
-                    matcher.group("username3"),
-                    matcher.group("overflow"),
-                    scanner
-            ));
-        } else if (MainMenuCommands.LoadGame.getMatcher(input) != null) {
-            System.out.println(controller.loadGame());
-        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
-            System.out.println(controller.exitMenu());
-        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
-            System.out.println(controller.showCurrentMenu());
-        } else if (MainMenuCommands.Logout.getMatcher(input) != null) {
-            System.out.println(controller.logout());
-        } else {
-            System.out.println(new Result(false, "invalid command!"));
-        }
-    }
 
-    public Result inputMap(Scanner scanner) {
-        String input = scanner.nextLine().trim();
-        Matcher matcher;
-        if ((matcher = MainMenuCommands.SetMap.getMatcher(input)) != null) {
-            return new Result(true, matcher.group("mapNumber"));
-        }
-        return new Result(false, "invalid command!");
     }
 }
