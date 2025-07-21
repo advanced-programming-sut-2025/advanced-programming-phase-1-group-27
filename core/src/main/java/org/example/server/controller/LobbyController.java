@@ -18,11 +18,13 @@ public class LobbyController {
         assert admin != null;
         boolean isPublic = message.getFromBody("isPublic");
         boolean isVisible = message.getFromBody("isVisible");
+        String name = message.getFromBody("name");
         String password = message.getFromBody("password");
         int id = generateLobbyId();
-        Lobby lobby = new Lobby(admin, isPublic, password, isVisible, id, username);
+        Lobby lobby = new Lobby(admin, isPublic, password, isVisible, id, name);
         ServerApp.addLobby(lobby);
         return new Message(new HashMap<>() {{
+            put("GraphicalResult", GraphicalResult.getInfo("Lobby created successfully!"));
             put("lobbyInfo", lobby.getInfo());
         }}, Message.Type.response);
     }
@@ -55,7 +57,8 @@ public class LobbyController {
     }
 
     public static Message findLobbyById(Message message) {
-        int lobbyId = message.getFromBody("id");
+        String id = message.getFromBody("id");
+        int lobbyId = Integer.parseInt(id);
         ArrayList<Lobby> lobbies = ServerApp.getLobbies();
         Lobby selectedLobby = null;
         for(Lobby lobby : lobbies){
@@ -72,6 +75,7 @@ public class LobbyController {
         }else {
             return new Message(new HashMap<>() {{
                 put("found?" , false);
+                put("lobbyInfo" , null);
             }} , Message.Type.response);
         }
     }

@@ -12,6 +12,8 @@ public class Lobby {
     private boolean isVisible;
     private int id;
     private String name, password;
+    // TODO : Rassa
+    private HashMap<User,Integer> usersAndChosenMaps = new HashMap<>();
     private Game game = null;
 
     public Lobby(User admin, boolean isPublic, String password, boolean isVisible, int id, String name) {

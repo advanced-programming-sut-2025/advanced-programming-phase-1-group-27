@@ -153,10 +153,9 @@ public class HostMenuView extends AppMenu{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-//                errorLabel.set();
+                errorLabel.set(controller.createGraphicalResult());
             }
         });
-
 
         backButton.addListener(new ClickListener() {
             @Override

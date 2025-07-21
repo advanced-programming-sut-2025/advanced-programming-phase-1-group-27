@@ -4,6 +4,7 @@ import org.example.common.database.DataBaseHelper;
 import org.example.common.models.Message;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.connections.ListenerThread;
+import org.example.server.models.enums.Gender;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,6 +93,11 @@ public class ServerApp {
     }
 
     public static ArrayList<Lobby> getLobbies() {
+        Lobby test = new Lobby(new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male)
+                , true , "" , true , 1111 , "test");
+        if(!lobbies.contains(test)){
+            lobbies.add(test);
+        }
         return lobbies;
     }
 

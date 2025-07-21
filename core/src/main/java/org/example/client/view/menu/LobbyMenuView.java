@@ -13,6 +13,8 @@ import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.GameAssetManager;
 import org.example.server.models.Lobby;
+import org.example.server.models.User;
+import org.example.server.models.enums.Gender;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -64,7 +66,11 @@ public class LobbyMenuView extends AppMenu {
 
         gameIdTextField = new TextField("", skin);
 
-        lobbies = controller.getLobbies();
+        lobbies = new ArrayList<>();
+//        Lobby test = new Lobby(new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male)
+//                , true , "" , true , 1111 , "test");
+//        lobbies.add(test);
+//        lobbies = controller.getLobbies();
         setListeners();
     }
 
@@ -146,6 +152,8 @@ public class LobbyMenuView extends AppMenu {
                 lobbyInfos.add(s.toString());
             }
         }
+
+//        publicGamesSelectBox.setItems(lobbyInfos);
 
         publicGamesSelectBox.setWidth(Gdx.graphics.getWidth() / 5f);
 

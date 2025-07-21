@@ -22,11 +22,13 @@ public class LobbyMenuController extends MenuController {
     }
 
     public ArrayList<Lobby> getLobbies() {
-        Message message = new Message(new HashMap<>() , Message.Type.get_lobbies_list);
+        Message message = new Message(new HashMap<>()
+                , Message.Type.get_lobbies_list);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
-            return  new ArrayList<>();
+            return new ArrayList<>();
         }
+        // TODO : RASSA ridi!
         ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
         ArrayList<Lobby> lobbies = new ArrayList<>();
         for (LinkedTreeMap<String, Object> info : list) {
@@ -50,7 +52,7 @@ public class LobbyMenuController extends MenuController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
-        return find(id);
+        return find(view.getGameIdTextField().getText());
     }
 
     public GraphicalResult join() {
@@ -62,7 +64,7 @@ public class LobbyMenuController extends MenuController {
         }
         String selected = view.getPublicGamesSelectBox().getSelected();
         String gameId = selected.split(" ")[0];
-        return find(Integer.parseInt(gameId));
+        return find(gameId);
     }
 
     public void host(){
@@ -70,11 +72,17 @@ public class LobbyMenuController extends MenuController {
         Main.getMain().setScreen(new HostMenuView());
     }
 
-    private static GraphicalResult find(int id){
+    private static GraphicalResult find(String id){
         Message message = new Message(new HashMap<>(){{
             put("id", id);
         }} , Message.Type.find_lobby);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        if(response == null || response.getType() != Message.Type.response) {
+            return  new GraphicalResult(
+                    "Failed to find",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        }
         boolean found = response.getFromBody("found?");
         if(!found){
             return new GraphicalResult(
