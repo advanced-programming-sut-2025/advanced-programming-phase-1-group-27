@@ -80,10 +80,8 @@ public class HostMenuView extends AppMenu{
         isVisibleCheckBox.setPosition(Gdx.graphics.getWidth()/2f - 2 * Gdx.graphics.getWidth()/20f,8*Gdx.graphics.getHeight()/15f-20);
         isPublicCheckBox.setPosition(Gdx.graphics.getWidth()/2f - 2 * Gdx.graphics.getWidth()/20f,7*Gdx.graphics.getHeight()/15f-20);
 
-        checkBoxes.add(isPublicCheckBox);
-        checkBoxes.add(isVisibleCheckBox);
-
-        stage.addActor(checkBoxes);
+        stage.addActor(isVisibleCheckBox);
+        stage.addActor(isPublicCheckBox);
     }
 
     private void showButtons(){
