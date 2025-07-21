@@ -27,12 +27,10 @@ public class AppView {
             Main.getMain().setScreen(new HomeView());
             return;
         }
-        Lobby test = new Lobby(new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male)
-                , true , "" , true , 1111 , "test");
-//        Main.getMain().setScreen(new PasswordMenuView(test));
-        Main.getMain().setScreen(new MainMenuView());
+        Main.getMain().setScreen(new WelcomeMenuView());
 //        Main.getMain().getScreen().dispose();
 //        Main.getMain().setScreen(new HomeView());
+
 
     }
 

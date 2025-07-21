@@ -14,9 +14,13 @@ import org.example.server.models.GameAssetManager;
 import java.util.Scanner;
 
 public class HostMenuView extends AppMenu{
+
     private final HostMenuController controller;
     private Stage stage;
+
     private final Label menuTitleLabel;
+    private final Label lobbyNameLabel;
+    private final Label lobbyPasswordLabel;
 
     private final TextField nameTextField;
     private final TextField passwordField;
@@ -30,20 +34,21 @@ public class HostMenuView extends AppMenu{
     private final GraphicalResult errorLabel;
 
     public HostMenuView() {
+
         this.controller = new HostMenuController(this);
 
-        this.menuTitleLabel = new  Label("Host Menu View", skin);
+        this.menuTitleLabel = new  Label("Host Menu", skin);
+        this.lobbyNameLabel = new  Label("Lobby Name:", skin);
+        this.lobbyPasswordLabel = new  Label("Lobby Password:", skin);
         this.nameTextField = new  TextField("", skin);
-        nameTextField.setMessageText("Name");
         this.passwordField = new  TextField("", skin);
-        passwordField.setMessageText("Password");
         this.isPublicCheckBox = new CheckBox("Public", skin);
         this.isVisibleCheckBox = new CheckBox("Visible", skin);
         this.createButton = new TextButton("Create", skin);
         this.backButton = new TextButton("Back", skin);
 
         this.isVisibleCheckBox.setChecked(true);
-        this.isPublicCheckBox.setChecked(true);
+        this.isPublicCheckBox.setChecked(false);
 
         this.errorLabel = new GraphicalResult();
 
@@ -51,36 +56,53 @@ public class HostMenuView extends AppMenu{
     }
 
     private void showErrorMessage() {
-        errorLabel.setPosition(Gdx.graphics.getWidth() / 9f, 6 * Gdx.graphics.getHeight() / 7f - Gdx.graphics.getHeight() / 9f);
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 9f, 9 * Gdx.graphics.getHeight() / 12f);
         errorLabel.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
         stage.addActor(errorLabel.getMessage());
     }
 
     private void showMenuTitle() {
+
         menuTitleLabel.setFontScale(3f);
         menuTitleLabel.setPosition(Gdx.graphics.getWidth() / 10f, 5 * Gdx.graphics.getHeight() / 6f);
         stage.addActor(menuTitleLabel);
+
     }
 
     private void showInputFields(){
-        passwordField.setWidth(Gdx.graphics.getWidth()/2f);
-        passwordField.setPosition(Gdx.graphics.getWidth()/2f - 7 * Gdx.graphics.getWidth()/20f,7*Gdx.graphics.getHeight()/15f-20);
+
+        passwordField.setWidth(Gdx.graphics.getWidth()/4f);
+        nameTextField.setWidth(Gdx.graphics.getWidth()/4f);
+
+        nameTextField.setPosition(5 * Gdx.graphics.getWidth()/16f,7*Gdx.graphics.getHeight()/12f-20);
+        passwordField.setPosition(5 * Gdx.graphics.getWidth()/16f,6*Gdx.graphics.getHeight()/12f-20);
+
+        passwordField.setVisible(!isPublicCheckBox.isChecked());
+
+        stage.addActor(nameTextField);
         stage.addActor(passwordField);
 
-        nameTextField.setWidth(Gdx.graphics.getWidth()/2f);
-        nameTextField.setPosition(Gdx.graphics.getWidth()/2f - 7 * Gdx.graphics.getWidth()/20f,8*Gdx.graphics.getHeight()/15f-20);
-        stage.addActor(nameTextField);
     }
 
     private void showCheckBoxes(){
-        isVisibleCheckBox.setWidth(Gdx.graphics.getWidth()/2f);
-        isPublicCheckBox.setWidth(Gdx.graphics.getWidth()/2f);
 
-        isVisibleCheckBox.setPosition(Gdx.graphics.getWidth()/2f - 2 * Gdx.graphics.getWidth()/20f,8*Gdx.graphics.getHeight()/15f-20);
-        isPublicCheckBox.setPosition(Gdx.graphics.getWidth()/2f - 2 * Gdx.graphics.getWidth()/20f,7*Gdx.graphics.getHeight()/15f-20);
+        isVisibleCheckBox.setPosition(10 * Gdx.graphics.getWidth()/16f,7*Gdx.graphics.getHeight()/12f-10);
+        isPublicCheckBox.setPosition(10 * Gdx.graphics.getWidth()/16f,6*Gdx.graphics.getHeight()/12f-10);
 
         stage.addActor(isVisibleCheckBox);
         stage.addActor(isPublicCheckBox);
+    }
+
+    private void showLabels(){
+
+        lobbyNameLabel.setPosition(Gdx.graphics.getWidth()/8f, 7 * Gdx.graphics.getHeight()/12f);
+        lobbyPasswordLabel.setPosition(Gdx.graphics.getWidth()/8f, 6 * Gdx.graphics.getHeight()/12f);
+
+        lobbyPasswordLabel.setVisible(!isPublicCheckBox.isChecked());
+
+        stage.addActor(lobbyNameLabel);
+        stage.addActor(lobbyPasswordLabel);
+
     }
 
     private void showButtons(){
@@ -98,15 +120,17 @@ public class HostMenuView extends AppMenu{
 
     @Override
     public void show() {
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(menuBackground);
-        showErrorMessage();
+
     }
 
     @Override
     public void render(float delta) {
+
         errorLabel.update(delta);
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -116,6 +140,9 @@ public class HostMenuView extends AppMenu{
         showInputFields();
         showCheckBoxes();
         showButtons();
+        showLabels();
+        showErrorMessage();
+
     }
 
     @Override

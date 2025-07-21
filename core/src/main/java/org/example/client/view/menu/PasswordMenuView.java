@@ -17,26 +17,32 @@ import org.example.server.models.Lobby;
 import java.util.Scanner;
 
 public class PasswordMenuView  extends AppMenu {
+    
     private final PasswordMenuController controller;
     private final Lobby lobby;
 
+    private final Label menuDescriptionLabel;
+    
     private final TextField passwordField;
-    private final Label menuTitleLabel;
-    private final TextButton passwordButton;
+    
+    private final TextButton joinButton;
     private final TextButton backButton;
+    
     private final GraphicalResult errorLabel;
 
     private Stage stage;
 
     public PasswordMenuView(Lobby lobby) {
+        
         controller = new PasswordMenuController(this);
         this.lobby = lobby;
 
+        menuDescriptionLabel = new Label("Enter password for Lobby: " + lobby.getName(), skin);
+
         passwordField = new TextField("", skin);
-        passwordField.setMessageText("Password");
-        menuTitleLabel = new Label("Enter password for Lobby: " + lobby.getName(), skin);
-        passwordButton = new TextButton("Join", skin);
+        joinButton = new TextButton("Join", skin);
         backButton  = new  TextButton("Back", skin);
+
         errorLabel = new GraphicalResult();
 
         setListeners();
@@ -49,28 +55,28 @@ public class PasswordMenuView  extends AppMenu {
     }
 
     private void showMenuTitle() {
-        menuTitleLabel.setFontScale(3f);
-        menuTitleLabel.setPosition(Gdx.graphics.getWidth() / 10f, 5 * Gdx.graphics.getHeight() / 6f);
-        stage.addActor(menuTitleLabel);
+        menuDescriptionLabel.setFontScale(3f);
+        menuDescriptionLabel.setPosition(Gdx.graphics.getWidth() / 10f, 5 * Gdx.graphics.getHeight() / 6f);
+        stage.addActor(menuDescriptionLabel);
     }
 
     private void showInputFields(){
-        passwordField.setWidth(Gdx.graphics.getWidth()/2f);
-        passwordField.setPosition(Gdx.graphics.getWidth()/2f - 5 * Gdx.graphics.getWidth()/20f,7*Gdx.graphics.getHeight()/15f-20);
+        passwordField.setWidth(Gdx.graphics.getWidth()/4f);
+        passwordField.setPosition((Gdx.graphics.getWidth() - passwordField.getWidth())/2f,7*Gdx.graphics.getHeight()/15f-20);
         stage.addActor(passwordField);
     }
 
     private void showButtons(){
         backButton.setWidth(Gdx.graphics.getWidth()/4f);
-        passwordButton.setWidth(Gdx.graphics.getWidth()/4f);
+        joinButton.setWidth(Gdx.graphics.getWidth()/4f);
 
         backButton.setPosition(5 * Gdx.graphics.getWidth()/24f,
                 2*Gdx.graphics.getHeight()/12f);
-        passwordButton.setPosition(13 * Gdx.graphics.getWidth()/24f,
+        joinButton.setPosition(13 * Gdx.graphics.getWidth()/24f,
                 2*Gdx.graphics.getHeight()/12f);
 
         stage.addActor(backButton);
-        stage.addActor(passwordButton);
+        stage.addActor(joinButton);
     }
 
     @Override
@@ -125,7 +131,7 @@ public class PasswordMenuView  extends AppMenu {
     }
 
     private void setListeners() {
-        passwordButton.addListener(new ClickListener() {
+        joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
