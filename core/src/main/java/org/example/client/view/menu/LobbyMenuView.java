@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.LobbyMenuController;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
+import org.example.server.models.GameAssetManager;
 import org.example.server.models.Lobby;
 
 import java.util.ArrayList;
@@ -85,8 +86,8 @@ public class LobbyMenuView extends AppMenu {
 
         noActiveLobbyLabel.setVisible(lobbies.isEmpty());
 
-        stage.addActor(publicGameLabel);
-        stage.addActor(privateGameLabel);
+//        stage.addActor(publicGameLabel);
+//        stage.addActor(privateGameLabel);
         stage.addActor(idLabel);
         stage.addActor(noActiveLobbyLabel);
 
@@ -156,6 +157,14 @@ public class LobbyMenuView extends AppMenu {
 
     }
 
+    private void showErrorMessage() {
+
+        errorLabel.setPosition(Gdx.graphics.getWidth()/8f, 9 * Gdx.graphics.getHeight() / 12f);
+        errorLabel.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
+        stage.addActor(errorLabel.getMessage());
+
+    }
+
     @Override
     public void show() {
 
@@ -179,6 +188,8 @@ public class LobbyMenuView extends AppMenu {
         showInputFields();
         showButtons();
         showSelectBox();
+        showErrorMessage();
+
     }
 
     @Override
