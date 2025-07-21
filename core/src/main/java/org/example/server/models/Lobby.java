@@ -79,4 +79,20 @@ public class Lobby {
         // Format: "Lobby Name 🔒 (Players: X/Y)"
         return name + privateIndicator + " (Players: " + users.size() + "/" + 4 + ")";
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
 }

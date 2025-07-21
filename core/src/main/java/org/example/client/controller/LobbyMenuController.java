@@ -1,9 +1,9 @@
 package org.example.client.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.menu.ForgetPasswordMenuView;
-import org.example.client.view.menu.LobbyMenuView;
+import org.example.client.view.menu.*;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.GameAssetManager;
@@ -36,20 +36,92 @@ public class LobbyMenuController extends MenuController {
         return lobbies;
     }
 
-    public GraphicalResult find(int id) {
+    public GraphicalResult findViaGraphicalResult() {
+        if(view.getGameIdTextField().getText().isEmpty()){
+            return new GraphicalResult(
+                    "No id has been entered!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        }
+        int id =  Integer.parseInt(view.getGameIdTextField().getText());
         if(id < 0 || id > 9999){
             return new GraphicalResult(
                     "Id has 4 digits",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
+        return find(id);
+    }
+
+    public GraphicalResult join() {
+        if(view.getPublicGamesSelectBox().getSelected().isEmpty()){
+            return new GraphicalResult(
+                    "No game has been selected!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        }
+        String selected = view.getPublicGamesSelectBox().getSelected();
+        String gameId = selected.split(" ")[0];
+        return find(Integer.parseInt(gameId));
+    }
+
+    public void host(){
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new HostMenuView());
+    }
+
+    private static GraphicalResult find(int id){
         Message message = new Message(new HashMap<>(){{
             put("id", id);
         }} , Message.Type.find_lobby);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        boolean found = response.getFromBody("found?");
+        if(!found){
+            return new GraphicalResult(
+                    "Lobby not found!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        }
         Lobby lobby = new Lobby(response.getFromBody("lobbyInfo"));
-        //TODO
-        return  new GraphicalResult();
+
+        if(lobby.getPassword() != null){
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new PasswordMenuView(lobby));
+            return new GraphicalResult(
+                    "Lobby has password!",
+                    GameAssetManager.getGameAssetManager().getAcceptColor(),
+                    false
+            );
+        }
+
+        Message joinMessage = new Message(new HashMap<>() {{
+            put("username", ClientApp.getLoggedInUser().getUsername());
+            put("id", lobby.getId());
+        }}, Message.Type.join_lobby);
+        Message responseForJoin = ClientApp.getServerConnectionThread().sendAndWaitForResponse(joinMessage, TIMEOUT_MILLIS);
+        if(responseForJoin == null || responseForJoin.getType() != Message.Type.response) {
+            return new GraphicalResult(
+                    "Failed to join",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        }
+        GraphicalResult result = responseForJoin.getFromBody("GraphicalResult");
+        if(result.hasError()){
+            return new GraphicalResult(
+                    result.getMessage().toString(),
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        }
+        lobby.addUser(ClientApp.getLoggedInUser());
+        // TODO : Lobby nabayad pass bedim???
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new PreGameMenuView());
+
+        return new GraphicalResult(
+                result.getMessage().toString(),
+                GameAssetManager.getGameAssetManager().getAcceptColor(),
+                false
+        );
     }
 
 
@@ -60,7 +132,9 @@ public class LobbyMenuController extends MenuController {
 
     @Override
     public Result exitMenu() {
-        return null;
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new MainMenuView());
+        return new Result(true, "Redirecting to Main Menu ...");
     }
 
     //    // getLobbiesList
