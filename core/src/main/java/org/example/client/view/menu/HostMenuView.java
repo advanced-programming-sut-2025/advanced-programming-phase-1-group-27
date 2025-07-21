@@ -42,6 +42,9 @@ public class HostMenuView extends AppMenu{
         this.createButton = new TextButton("Create", skin);
         this.backButton = new TextButton("Back", skin);
 
+        this.isVisibleCheckBox.setChecked(true);
+        this.isPublicCheckBox.setChecked(true);
+
         this.errorLabel = new GraphicalResult();
 
         setListeners();
@@ -70,10 +73,6 @@ public class HostMenuView extends AppMenu{
     }
 
     private void showCheckBoxes(){
-        Table checkBoxes = new Table();
-        isVisibleCheckBox.setChecked(true);
-        isPublicCheckBox.setChecked(true);
-
         isVisibleCheckBox.setWidth(Gdx.graphics.getWidth()/2f);
         isPublicCheckBox.setWidth(Gdx.graphics.getWidth()/2f);
 
