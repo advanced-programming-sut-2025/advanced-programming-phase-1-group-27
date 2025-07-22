@@ -4,8 +4,10 @@ package org.example.server.controller;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.Lobby;
+import org.example.server.models.SecurityQuestion;
 import org.example.server.models.ServerApp;
 import org.example.server.models.User;
+import org.example.server.models.enums.Gender;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +53,9 @@ public class LobbyController {
         for (Lobby lobby : lobbies) {
             lobbiesInfo.add(lobby.getInfo());
         }
+        User admin = new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male);
+        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        lobbiesInfo.add(new Lobby(admin, true , "" , true , 1111 , "test").getInfo());
         return new Message(new HashMap<>() {{
             put("lobbiesInfo", lobbiesInfo);
         }}, Message.Type.response);
@@ -59,20 +64,16 @@ public class LobbyController {
     public static Message findLobbyById(Message message) {
         String id = message.getFromBody("id");
         int lobbyId = Integer.parseInt(id);
-        ArrayList<Lobby> lobbies = ServerApp.getLobbies();
-        Lobby selectedLobby = null;
-        for(Lobby lobby : lobbies){
-            if(lobby.getId() == lobbyId){
-                selectedLobby = lobby;
-            }
-        }
+        Lobby selectedLobby = ServerApp.getLobbyById(lobbyId);
+
         if(selectedLobby != null){
             Lobby finalSelectedLobby = selectedLobby;
             return new Message(new HashMap<>() {{
                 put("found?" , true);
                 put("lobbyInfo" , finalSelectedLobby.getInfo());
             }} , Message.Type.response);
-        }else {
+        }
+        else {
             return new Message(new HashMap<>() {{
                 put("found?" , false);
                 put("lobbyInfo" , null);

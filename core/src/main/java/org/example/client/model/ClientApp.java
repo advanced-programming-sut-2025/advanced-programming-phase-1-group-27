@@ -1,11 +1,10 @@
 package org.example.client.model;
 
-import org.example.client.Main;
+import org.example.client.view.AppMenu;
 import org.example.common.models.Message;
 import org.example.server.models.SecurityQuestion;
 import org.example.server.models.User;
 import org.example.server.models.enums.Gender;
-import org.example.server.models.enums.Menu;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -28,6 +27,7 @@ public class ClientApp {
     private static ServerConnectionThread serverConnectionThread;
     private static User loggedInUser = null;
     private static ClientGame currentGame = null;
+    private static AppMenu currentMenu = null;
 
     public static boolean loadSavedUser() {
         User savedUser = getSavedUser();
@@ -90,11 +90,26 @@ public class ClientApp {
         return currentGame;
     }
 
+    public static void setCurrentMenu(AppMenu currentMenu) {
+        ClientApp.currentMenu = currentMenu;
+    }
+
+    public static AppMenu getCurrentMenu() {
+        return currentMenu;
+    }
+
     public static void updateFile(User user) {
         File file = new File(loggedInUserFilePath);
         if (!file.exists() || file.length() == 0)
             return;
         setSavedUser(user);
+    }
+
+    public static void deleteLoginUserFile() {
+        File file = new File(loggedInUserFilePath);
+        if (!file.exists() || file.length() == 0)
+            return;
+        file.delete();
     }
 
     public static void setSavedUser(User user) {

@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import org.example.client.Main;
 import org.example.client.controller.MenuController;
+import org.example.client.model.ClientApp;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.Menu;
@@ -120,6 +121,26 @@ public class PreGameMenuController extends MenuController {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new HomeView());
 
+        return new GraphicalResult(
+                "Game created successfully",
+                GameAssetManager.getGameAssetManager().getAcceptColor(),
+                false
+        );
+    }
+
+    public GraphicalResult createGame2() {
+        if (view.getUsersAndChosenMaps().size() < 2)
+            return new GraphicalResult(
+                    "There should be at least two players to start the game",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+
+        // TODO: Game samt server sakhte shavad
+
+
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new HomeView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new GraphicalResult(
                 "Game created successfully",
                 GameAssetManager.getGameAssetManager().getAcceptColor(),

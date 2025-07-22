@@ -16,6 +16,7 @@ public class MainMenuController extends MenuController {
 
     public void logout(){
         ClientApp.setLoggedInUser(null);
+        ClientApp.deleteLoginUserFile();
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new WelcomeMenuView());
     }

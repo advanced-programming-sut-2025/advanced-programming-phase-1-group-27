@@ -50,7 +50,7 @@ public class User {
         nickname = (String) data.get("nickname");
         email = (String) data.get("email");
         gender = Gender.getGender((String) data.get("gender"));
-        recoveryQuestion = new SecurityQuestion((String) data.get("questionId"), (String) data.get("answer"));
+        recoveryQuestion = new SecurityQuestion((String) data.get("question"), (String) data.get("answer"));
         maxMoneyEarned = ((Number) data.get("maxMoneyEarned")).intValue();
         numberOfGamesPlayed = ((Number) data.get("numberOfGamesPlayed")).intValue();
     }
@@ -64,7 +64,7 @@ public class User {
         info.put("nickname", nickname);
         info.put("email", email);
         info.put("gender", gender);
-        info.put("questionId", recoveryQuestion.getQuestion());
+        info.put("question", recoveryQuestion.getQuestion());
         info.put("answer", recoveryQuestion.getAnswer());
         info.put("maxMoneyEarned", maxMoneyEarned);
         info.put("numberOfGamesPlayed", numberOfGamesPlayed);

@@ -31,7 +31,8 @@ public class AppView {
 //        Main.getMain().getScreen().dispose();
 //        Main.getMain().setScreen(new HomeView());
 
-
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new LobbyMenuView());
     }
 
 

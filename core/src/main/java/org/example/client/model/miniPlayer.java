@@ -1,4 +1,12 @@
 package org.example.client.model;
 
-public class miniPlayer {
+import org.example.server.models.Position;
+import org.example.server.models.User;
+
+public class miniPlayer extends User {
+    Position position;
+
+    public miniPlayer(User user) {
+
+    }
 }

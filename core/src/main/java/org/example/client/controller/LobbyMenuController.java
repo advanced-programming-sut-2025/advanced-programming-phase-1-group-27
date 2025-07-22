@@ -122,7 +122,8 @@ public class LobbyMenuController extends MenuController {
         lobby.addUser(ClientApp.getLoggedInUser());
         // TODO : Lobby nabayad pass bedim???
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new PreGameMenuView());
+        ClientApp.setCurrentMenu(new PreGameMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
 
         return new GraphicalResult(
                 result.getMessage().toString(),

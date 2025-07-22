@@ -190,13 +190,6 @@ public class App {
         }
     }
 
-    public static void deleteLoginUserFile() {
-        File file = new File(loggedInUserFilePath);
-        if (!file.exists() || file.length() == 0)
-            return;
-        file.delete();
-    }
-
     public static String generatePassword() {
         Random random = new Random();
         int passwordLen = 8 + random.nextInt(5);
