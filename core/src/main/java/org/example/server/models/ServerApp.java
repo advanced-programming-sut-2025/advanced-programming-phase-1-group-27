@@ -16,6 +16,15 @@ public class ServerApp {
     private static boolean hasEnded = false;
     private static ArrayList<Lobby> lobbies = new ArrayList<>();
 
+    static {
+        User admin = new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male);
+        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        Lobby test = new Lobby(admin, false , "pass" , true , 1111 , "test");
+        Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
+        lobbies.add(lobby);
+        lobbies.add(test);
+    }
+
     public static void setListenerThread(ListenerThread listenerThread) {
         ServerApp.listenerThread = listenerThread;
     }
@@ -90,13 +99,16 @@ public class ServerApp {
         lobbies.add(lobby);
     }
 
-    public static ArrayList<Lobby> getLobbies() {
-        User admin = new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male);
-        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
-        Lobby test = new Lobby(admin, false , "rassa" , true , 1111 , "test");
-        if(!lobbies.contains(test)){
-            lobbies.add(test);
+    public static ArrayList<User> getOnlineUsers() {
+        ArrayList<User> onlineUsers = new ArrayList<>();
+        for (ClientConnectionThread connection : connections) {
+            if (connection.getUser() != null)
+                onlineUsers.add(connection.getUser());
         }
+        return onlineUsers;
+    }
+
+    public static ArrayList<Lobby> getLobbies() {
         return lobbies;
     }
 
@@ -108,12 +120,4 @@ public class ServerApp {
         return null;
     }
 
-    public static ArrayList<User> getOnlineUsers() {
-        ArrayList<User> onlineUsers = new ArrayList<>();
-        for (ClientConnectionThread connection : connections) {
-            if (connection.getUser() != null)
-                onlineUsers.add(connection.getUser());
-        }
-        return onlineUsers;
-    }
 }

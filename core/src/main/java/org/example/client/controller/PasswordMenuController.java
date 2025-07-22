@@ -57,9 +57,11 @@ public class PasswordMenuController extends MenuController{
         }
 
         lobby.addUser(ClientApp.getLoggedInUser());
-        // TODO : Lobby nabayad pass bedim???
+
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new PregameMenuView());
+        ClientApp.setCurrentMenu(new PregameMenuView(lobby));
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+
 
         return new GraphicalResult(
                 result.getMessage().toString(),

@@ -91,6 +91,10 @@ public class ClientConnectionThread extends ConnectionThread {
 
             return true;
         }
+        else if (message.getType() == Message.Type.get_online_users){
+            sendMessage(LobbyController.getOnlineUsersUsernames(message));
+            return true;
+        }
         return false;
     }
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.controller.LobbyMenuController;
 import org.example.client.controller.PregameMenuController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
@@ -56,16 +57,19 @@ public class PregameMenuView extends AppMenu {
 
     private boolean gameFull = false;
 
+    private final Lobby lobby;
+
     private HashMap<String, Integer> usernameToMap = new HashMap<>();
 
-    public PregameMenuView() {
+    public PregameMenuView(Lobby lobby) {
 
-        controller = new PreGameMenuController(this);
+        controller = new PregameMenuController(this);
 
         currentMapSelector = App.getLoggedInUser();
 
-        usernameToMap.put(currentMapSelector.getUsername(), controller.assignRandomMap());
+        this.lobby = lobby;
 
+        usernameToMap.put(currentMapSelector.getUsername(), controller.assignRandomMap());
 
         menuTitle = new Label("Pre Game Menu", skin);
         mapSelectionLabel = new Label("Dear " + currentMapSelector.getUsername() + " please choose your map ^-^", skin);

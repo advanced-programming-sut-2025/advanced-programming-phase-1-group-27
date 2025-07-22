@@ -21,20 +21,19 @@ public class AppView {
 
     public void runViaGraphics() {
 
-        if (ClientApp.loadSavedUser()) {
-            Main.getMain().setScreen(new MainMenuView());
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new HomeView());
-            return;
-        }
+//        if (ClientApp.loadSavedUser()) {
+//            Main.getMain().setScreen(new MainMenuView());
+//            Main.getMain().getScreen().dispose();
+//            Main.getMain().setScreen(new HomeView());
+//            return;
+//        }
+
         Main.getMain().setScreen(new WelcomeMenuView());
 //        Main.getMain().getScreen().dispose();
 //        Main.getMain().setScreen(new HomeView());
 
-        Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new LobbyMenuView());
+//        Main.getMain().getScreen().dispose();
+//        Main.getMain().setScreen(new LobbyMenuView());
     }
-
-
 
 }

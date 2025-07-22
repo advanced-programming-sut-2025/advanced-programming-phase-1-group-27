@@ -35,6 +35,7 @@ public class LobbyMenuView extends AppMenu {
     private final TextButton backButton;
     private final TextButton refreshButton;
     private final TextButton findGameButton;
+    private final TextButton playersButton;
 
     private final TextField gameIdTextField;
 
@@ -63,6 +64,8 @@ public class LobbyMenuView extends AppMenu {
         backButton = new TextButton("Back", skin);
         refreshButton = new TextButton("Refresh", skin);
         findGameButton = new TextButton("Find Game", skin);
+        playersButton = new TextButton("Players", skin);
+
 
         gameIdTextField = new TextField("", skin);
 
@@ -104,13 +107,12 @@ public class LobbyMenuView extends AppMenu {
     }
 
     private void showButtons() {
-
         findGameButton.setWidth(Gdx.graphics.getWidth() / 4f);
         joinPublicGameButton.setWidth(Gdx.graphics.getWidth() / 4f);
         refreshButton.setWidth(Gdx.graphics.getWidth() / 4f);
         backButton.setWidth(Gdx.graphics.getWidth() / 4f);
         hostButton.setWidth(Gdx.graphics.getWidth() / 4f);
-
+        playersButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
         findGameButton.setPosition(Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - findGameButton.getWidth()) / 2,
                 4 * Gdx.graphics.getHeight() / 12f);
@@ -118,9 +120,11 @@ public class LobbyMenuView extends AppMenu {
                 4 * Gdx.graphics.getHeight() / 12f);
         refreshButton.setPosition((Gdx.graphics.getWidth() / 2f - refreshButton.getWidth()) / 2,
                 6 * Gdx.graphics.getHeight() / 12f);
-        backButton.setPosition(5 * Gdx.graphics.getWidth() / 24f,
+        backButton.setPosition(2 * Gdx.graphics.getWidth() / 24f,
                 2 * Gdx.graphics.getHeight() / 12f);
-        hostButton.setPosition(13 * Gdx.graphics.getWidth() / 24f,
+        hostButton.setPosition(9 * Gdx.graphics.getWidth() / 24f,
+                2 * Gdx.graphics.getHeight() / 12f);
+        playersButton.setPosition(16 * Gdx.graphics.getWidth() / 24f,
                 2 * Gdx.graphics.getHeight() / 12f);
 
         stage.addActor(findGameButton);
@@ -128,7 +132,7 @@ public class LobbyMenuView extends AppMenu {
         stage.addActor(refreshButton);
         stage.addActor(backButton);
         stage.addActor(hostButton);
-
+        stage.addActor(playersButton);
     }
 
     private void showSelectBox() {
@@ -264,6 +268,14 @@ public class LobbyMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 errorLabel.set(controller.findViaGraphicalResult());
+            }
+        });
+
+        playersButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.goToPlayersMenu();
             }
         });
     }

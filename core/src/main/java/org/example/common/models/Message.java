@@ -44,5 +44,6 @@ public class Message {
         join_lobby,
         find_lobby,
         create_game,
+        get_online_users,
     }
 }

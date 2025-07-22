@@ -53,12 +53,20 @@ public class LobbyController {
         for (Lobby lobby : lobbies) {
             lobbiesInfo.add(lobby.getInfo());
         }
-        User admin = new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male);
-        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
-        lobbiesInfo.add(new Lobby(admin, true , "" , true , 1111 , "test").getInfo());
         return new Message(new HashMap<>() {{
             put("lobbiesInfo", lobbiesInfo);
         }}, Message.Type.response);
+    }
+
+    public static Message getOnlineUsersUsernames(Message message) {
+        ArrayList<User> users = ServerApp.getOnlineUsers();
+        ArrayList<String> usernames = new ArrayList<>();
+        for (User user : users) {
+            usernames.add(user.getUsername());
+        }
+        return new Message(new HashMap<>() {{
+            put("usernames" , usernames);
+        }} ,  Message.Type.response);
     }
 
     public static Message findLobbyById(Message message) {

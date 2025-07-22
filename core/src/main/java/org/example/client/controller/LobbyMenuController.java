@@ -71,6 +71,11 @@ public class LobbyMenuController extends MenuController {
         Main.getMain().setScreen(new HostMenuView());
     }
 
+    public void goToPlayersMenu(){
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new OnlinePlayersMenuView());
+    }
+
     private static GraphicalResult find(String id){
         Message message = new Message(new HashMap<>(){{
             put("id", id);
@@ -91,7 +96,7 @@ public class LobbyMenuController extends MenuController {
         }
         Lobby lobby = new Lobby(response.getFromBody("lobbyInfo"));
 
-        if(lobby.getPassword() != null){
+        if(!lobby.isPublic()){
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(new PasswordMenuView(lobby));
             return new GraphicalResult(
@@ -120,9 +125,9 @@ public class LobbyMenuController extends MenuController {
             );
         }
         lobby.addUser(ClientApp.getLoggedInUser());
-        // TODO : Lobby nabayad pass bedim???
+
         Main.getMain().getScreen().dispose();
-        ClientApp.setCurrentMenu(new PregameMenuView());
+        ClientApp.setCurrentMenu(new PregameMenuView(lobby));
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
 
         return new GraphicalResult(
@@ -144,13 +149,4 @@ public class LobbyMenuController extends MenuController {
         Main.getMain().setScreen(new MainMenuView());
         return new Result(true, "Redirecting to Main Menu ...");
     }
-
-    //    // getLobbiesList
-//    ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
-//        for (LinkedTreeMap<String, Object> info : list) {
-//        Lobby lobby = new Lobby(info);
-//        lobby.toString();
-//    }
-//    // createLobby
-//    Lobby lobby = new Lobby(response.getFromBody("lobbyInfo"));
 }
