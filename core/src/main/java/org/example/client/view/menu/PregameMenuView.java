@@ -425,6 +425,10 @@ public class PregameMenuView extends AppMenu {
         return null;
     }
 
+    public PregameMenuController getController() {
+        return controller;
+    }
+
     @Override
     public void executeCommands(Scanner scanner) {
 

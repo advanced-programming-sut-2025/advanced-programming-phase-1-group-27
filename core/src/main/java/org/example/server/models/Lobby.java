@@ -110,4 +110,8 @@ public class Lobby {
     public boolean isActive() {
         return active;
     }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }

@@ -1,6 +1,7 @@
 package org.example.client.model;
 
 import org.example.client.controller.ServerConnectionController;
+import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 
@@ -34,6 +35,13 @@ public class ServerConnectionThread extends ConnectionThread {
 
     @Override
     protected boolean handleMessage(Message message) {
+        if (message.getType() == Message.Type.start_game) {
+            if (ClientApp.getCurrentMenu() instanceof PregameMenuView pregameMenuView) {
+                pregameMenuView.getController().startGame();
+                return true;
+            }
+            return false;
+        }
         return false;
     }
 }

@@ -88,7 +88,7 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         }
         else if (message.getType() == Message.Type.create_game) {
-
+            PregameMenuController.createGame(message);
             return true;
         }
         else if (message.getType() == Message.Type.get_online_users){

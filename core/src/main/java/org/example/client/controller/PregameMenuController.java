@@ -46,11 +46,11 @@ public class PregameMenuController extends MenuController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
 
-        if (addedUser.getCurrentGame() != null)
-            return new GraphicalResult(
-                    "This user is already in a game",
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
+//        if (addedUser.getCurrentGame() != null)
+//            return new GraphicalResult(
+//                    "This user is already in a game",
+//                    GameAssetManager.getGameAssetManager().getErrorColor()
+//            );
 
         if ( view.getUser1Label().getText().isEmpty() ){
             view.getUser1Label().setText("#    " + addedUser.getUsername());
@@ -89,6 +89,8 @@ public class PregameMenuController extends MenuController {
     }
 
     public GraphicalResult createGame() {
+        if (!ClientApp.getLoggedInUser().getUsername().equals(view.getLobby().getAdmin().getUsername()))
+            return new GraphicalResult("Only the host can start the game");
         if (view.getUsernameToMap().size() < 2)
             return new GraphicalResult(
                     "There should be at least two players to start the game",
@@ -100,6 +102,14 @@ public class PregameMenuController extends MenuController {
             put("usernameToMap", view.getUsernameToMap());
         }}, Message.Type.create_game));
 
+        return new GraphicalResult(
+                "Game created successfully",
+                GameAssetManager.getGameAssetManager().getAcceptColor(),
+                false
+        );
+    }
+
+    public void startGame() {
         ArrayList<MiniPlayer> miniPlayers = new ArrayList<>();
         for (User user : view.getLobby().getUsers()) {
             miniPlayers.add(new MiniPlayer(user));
@@ -117,11 +127,6 @@ public class PregameMenuController extends MenuController {
         Main.getMain().getScreen().dispose();
         ClientApp.setCurrentMenu(new HomeView());
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        return new GraphicalResult(
-                "Game created successfully",
-                GameAssetManager.getGameAssetManager().getAcceptColor(),
-                false
-        );
     }
 
     public boolean isNotCurrentSelectorsMap(int number){

@@ -64,13 +64,13 @@ public class App {
         players.add(Sobhan);
 
         Game game;
-        App.setCurrentGame(game = new Game(players));
+        App.setCurrentGame(game = new Game(Yusof, players));
         game.init();
 
-        userYusof.setCurrentGame(game);
-        userRassa.setCurrentGame(game);
-        userParsa.setCurrentGame(game);
-        userSobhan.setCurrentGame(game);
+//        userYusof.setCurrentGame(game);
+//        userRassa.setCurrentGame(game);
+//        userParsa.setCurrentGame(game);
+//        userSobhan.setCurrentGame(game);
 
         Yusof.setFarmMap(game.getFarmMap(0));
         Yusof.setCurrentCell(game.getFarmMap(0).getCell(8, 70));

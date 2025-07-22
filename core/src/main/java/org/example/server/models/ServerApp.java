@@ -120,4 +120,11 @@ public class ServerApp {
         return null;
     }
 
+    public static ClientConnectionThread getClientConnectionThreadByUsername(String username) {
+        for (ClientConnectionThread connection : connections) {
+            if (connection.getUser() != null && connection.getUser().getUsername().equals(username))
+                return connection;
+        }
+        return null;
+    }
 }

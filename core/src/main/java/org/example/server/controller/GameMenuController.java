@@ -987,12 +987,10 @@ public class GameMenuController extends MenuController {
     private void eraseGame() {
         Game game = App.getCurrentGame();
         for (Player player : game.getPlayers()) {
-            player.setCurrentGame(null);
             User user = App.getUserByUsername(player.getUsername());
             assert user != null;
             user.setMaxMoneyEarned(max(player.getMoney(), user.getMaxMoneyEarned()));
             user.addNumberOfGamesPlayed();
-            user.setCurrentGame(null);
         }
         App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);

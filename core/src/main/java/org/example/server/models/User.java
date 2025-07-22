@@ -1,6 +1,8 @@
 package org.example.server.models;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.model.ClientApp;
+import org.example.client.model.ClientGame;
 import org.example.server.models.enums.Gender;
 
 import java.nio.charset.StandardCharsets;
@@ -16,7 +18,6 @@ public class User {
     private Gender gender;
     // security question to recover forgotten password
     private SecurityQuestion recoveryQuestion;
-    private Game currentGame = null; //
     private int maxMoneyEarned = 0;
     private int numberOfGamesPlayed = 0;
 
@@ -169,14 +170,6 @@ public class User {
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    public Game getCurrentGame() {
-        return currentGame;
-    }
-
-    public void setCurrentGame(Game currentGame) {
-        this.currentGame = currentGame;
     }
 
     public String getEmail() {

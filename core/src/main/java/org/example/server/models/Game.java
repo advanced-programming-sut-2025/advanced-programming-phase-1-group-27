@@ -26,7 +26,7 @@ import static java.lang.Math.min;
 
 public class Game {
     private final FarmMap[] farmMaps = new FarmMap[4];
-    private Player admin; // User
+    private User admin;
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players;
     private NPCMap npcMap;
@@ -39,8 +39,8 @@ public class Game {
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
 
-    public Game(ArrayList<Player> players) {
-        this.admin = players.getFirst();
+    public Game(User admin, ArrayList<Player> players) {
+        this.admin = admin;
         this.players = players;
         for (Player player : players) {
             for (Player otherPlayer : players) {
@@ -166,7 +166,7 @@ public class Game {
 
     }
 
-    public Player getAdmin() {
+    public User getAdmin() {
         return admin;
     }
 
