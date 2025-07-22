@@ -3,9 +3,8 @@ package org.example.client.controller;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.LobbyMenuView;
-import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.PasswordMenuView;
-import org.example.client.view.menu.PreGameMenuView;
+import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.GameAssetManager;
@@ -60,7 +59,7 @@ public class PasswordMenuController extends MenuController{
         lobby.addUser(ClientApp.getLoggedInUser());
         // TODO : Lobby nabayad pass bedim???
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new PreGameMenuView());
+        Main.getMain().setScreen(new PregameMenuView());
 
         return new GraphicalResult(
                 result.getMessage().toString(),

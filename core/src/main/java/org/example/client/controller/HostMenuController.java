@@ -57,7 +57,7 @@ public class HostMenuController extends MenuController{
         Lobby lobby = new Lobby(response.getFromBody("lobbyInfo"));
         //TODO : nabayad lobby ro pass dad?
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new PreGameMenuView());
+        Main.getMain().setScreen(new PregameMenuView());
 
         return new GraphicalResult(response.getFromBody("GraphicalResult").toString(),
                 GameAssetManager.getGameAssetManager().getAcceptColor(),

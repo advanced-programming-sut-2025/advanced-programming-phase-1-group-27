@@ -4,7 +4,7 @@ import org.example.server.models.App;
 
 public class FarmMapDirector {
 
-    public void BuildMap(FarmMapBuilder builder, int index) {
+    public void buildMap(FarmMapBuilder builder, int index) {
         builder.setDimensions(55, 75);
         builder.createHut();
         builder.createGreenHouse();

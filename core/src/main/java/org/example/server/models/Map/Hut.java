@@ -3,8 +3,12 @@ package org.example.server.models.Map;
 import org.example.server.models.Building;
 import org.example.server.models.Cell;
 import org.example.server.models.Player;
+import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.tools.Backpack;
 
 public class Hut extends Building {
+    // items which are place in the fridge
+    private final Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
     private Cell door;
     private Player owner;
 
@@ -13,11 +17,15 @@ public class Hut extends Building {
         this.door = door;
     }
 
+    public Backpack getRefrigerator() {
+        return refrigerator;
+    }
+
     public Player getOwner() {
         return owner;
     }
 
-    public void setOwner(Player owner) {
+    public void setOwner(Player owner) { // obsolete
         this.owner = owner;
     }
 

@@ -90,6 +90,10 @@ public class ClientApp {
         return currentGame;
     }
 
+    public static void setCurrentGame(ClientGame currentGame) {
+        ClientApp.currentGame = currentGame;
+    }
+
     public static void setCurrentMenu(AppMenu currentMenu) {
         ClientApp.currentMenu = currentMenu;
     }

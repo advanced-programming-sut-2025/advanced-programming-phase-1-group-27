@@ -11,20 +11,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.server.controller.PreGameMenuController;
+import org.example.client.controller.PregameMenuController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
+import org.example.server.models.Lobby;
 import org.example.server.models.User;
 import org.example.client.view.AppMenu;
 
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class PreGameMenuView extends AppMenu {
+public class PregameMenuView extends AppMenu {
 
 
-    private final PreGameMenuController controller;
+    private final PregameMenuController controller;
     private Stage stage;
 
     private final Label menuTitle;
@@ -55,15 +56,15 @@ public class PreGameMenuView extends AppMenu {
 
     private boolean gameFull = false;
 
-    private HashMap<User,Integer> usersAndChosenMaps = new HashMap<>();
+    private HashMap<String, Integer> usernameToMap = new HashMap<>();
 
-    public PreGameMenuView() {
+    public PregameMenuView() {
 
         controller = new PreGameMenuController(this);
 
         currentMapSelector = App.getLoggedInUser();
 
-        usersAndChosenMaps.put(currentMapSelector, controller.assignRandomMap());
+        usernameToMap.put(currentMapSelector.getUsername(), controller.assignRandomMap());
 
 
         menuTitle = new Label("Pre Game Menu", skin);
@@ -166,11 +167,11 @@ public class PreGameMenuView extends AppMenu {
         map3Button.setPosition(Gdx.graphics.getWidth() / 2f + 11 * Gdx.graphics.getWidth() / 90f , 6 * Gdx.graphics.getHeight() / 12f - 11 * Gdx.graphics.getWidth() / 90f);
         map4Button.setPosition(Gdx.graphics.getWidth() / 2f + 22 * Gdx.graphics.getWidth() / 90f + Gdx.graphics.getWidth() / 15f, 6 * Gdx.graphics.getHeight() / 12f - 11 * Gdx.graphics.getWidth() / 90f);
 
-        for ( User user : usersAndChosenMaps.keySet() ) {
+        for (String username : usernameToMap.keySet() ) {
 
-            if ( !user.equals(currentMapSelector) ) {
-                int mapNumber = usersAndChosenMaps.get(user);
-                Label mapOwnerLabel = new Label(user.getUsername(), skin);
+            if ( !username.equals(currentMapSelector.getUsername()) ) {
+                int mapNumber = usernameToMap.get(username);
+                Label mapOwnerLabel = new Label(username, skin);
                 mapOwnerLabel.setPosition(
                         map1Button.getX() + ((mapNumber+1)%2) * (11 * Gdx.graphics.getWidth() / 90f + Gdx.graphics.getWidth() / 15f) + (map1Button.getWidth()-mapOwnerLabel.getWidth())/2,
                         6 * Gdx.graphics.getHeight() / 12f - ((int)((mapNumber-1)/2)) * (11 * Gdx.graphics.getWidth() / 90f) + (map1Button.getHeight()-mapOwnerLabel.getHeight())/2
@@ -190,7 +191,7 @@ public class PreGameMenuView extends AppMenu {
 
     private void makeCurrentMapBlinking(){
 
-        int mapNumber = usersAndChosenMaps.get(currentMapSelector);
+        int mapNumber = usernameToMap.get(currentMapSelector);
 
         int alpha = (((blinkerTimer-(int)blinkerTimer) < 0.5f)? 1:0);
 
@@ -217,21 +218,21 @@ public class PreGameMenuView extends AppMenu {
 
     private void makeChosenMapsHalfTransparent(){
 
-        if ( usersAndChosenMaps.containsValue(1) && controller.isNotCurrentSelectorsMap(1)){
+        if ( usernameToMap.containsValue(1) && controller.isNotCurrentSelectorsMap(1)){
             map1Button.setColor(map1Button.getColor().r,map1Button.getColor().g,map1Button.getColor().b,0.5f);
         }
 
-        if ( usersAndChosenMaps.containsValue(2) && controller.isNotCurrentSelectorsMap(2)){
+        if ( usernameToMap.containsValue(2) && controller.isNotCurrentSelectorsMap(2)){
             map2Button.setColor(map2Button.getColor().r,map2Button.getColor().g,map2Button.getColor().b,0.5f);
         }
 
 
-        if ( usersAndChosenMaps.containsValue(3) && controller.isNotCurrentSelectorsMap(3)){
+        if ( usernameToMap.containsValue(3) && controller.isNotCurrentSelectorsMap(3)){
             map3Button.setColor(map3Button.getColor().r,map3Button.getColor().g,map3Button.getColor().b,0.5f);
         }
 
 
-        if ( usersAndChosenMaps.containsValue(4) && controller.isNotCurrentSelectorsMap(4)){
+        if ( usernameToMap.containsValue(4) && controller.isNotCurrentSelectorsMap(4)){
             map4Button.setColor(map4Button.getColor().r,map4Button.getColor().g,map4Button.getColor().b,0.5f);
         }
 
@@ -380,7 +381,7 @@ public class PreGameMenuView extends AppMenu {
     }
 
     public void updateUsersAndChosenMaps(User addedUser, Integer chosenMap) {
-        this.usersAndChosenMaps.put(addedUser, chosenMap);
+        this.usernameToMap.put(addedUser.getUsername(), chosenMap);
     }
 
     public TextField getUsernameField() {
@@ -399,8 +400,8 @@ public class PreGameMenuView extends AppMenu {
         return user3Label;
     }
 
-    public HashMap<User, Integer> getUsersAndChosenMaps() {
-        return usersAndChosenMaps;
+    public HashMap<String, Integer> getUsernameToMap() {
+        return usernameToMap;
     }
 
     public User getCurrentMapSelector() {
@@ -413,6 +414,11 @@ public class PreGameMenuView extends AppMenu {
 
     public boolean isGameFull() {
         return gameFull;
+    }
+
+    public Lobby getLobby() {
+        // TODO: parsa, residegi kon
+        return null;
     }
 
     @Override

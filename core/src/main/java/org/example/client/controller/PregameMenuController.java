@@ -1,24 +1,26 @@
-package org.example.server.controller;
+package org.example.client.controller;
 
 import org.example.client.Main;
-import org.example.client.controller.MenuController;
 import org.example.client.model.ClientApp;
-import org.example.common.models.GraphicalResult;
-import org.example.server.models.*;
-import org.example.server.models.enums.Menu;
+import org.example.client.model.ClientGame;
+import org.example.client.model.MiniPlayer;
 import org.example.client.view.HomeView;
 import org.example.client.view.menu.MainMenuView;
-import org.example.client.view.menu.PreGameMenuView;
+import org.example.client.view.menu.PregameMenuView;
+import org.example.common.models.GraphicalResult;
+import org.example.common.models.Message;
+import org.example.server.models.*;
+import org.example.server.models.enums.Menu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
-public class PreGameMenuController extends MenuController {
+public class PregameMenuController extends MenuController {
+    private final PregameMenuView view;
 
-    private final PreGameMenuView view;
 
-
-    public PreGameMenuController(PreGameMenuView view) {
+    public PregameMenuController(PregameMenuView view) {
         this.view = view;
     }
 
@@ -38,7 +40,7 @@ public class PreGameMenuController extends MenuController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
 
-        if (view.getUsersAndChosenMaps().containsKey(addedUser))
+        if (view.getUsernameToMap().containsKey(addedUser))
             return new GraphicalResult(
                     "This is user has already been added",
                     GameAssetManager.getGameAssetManager().getErrorColor()
@@ -86,57 +88,31 @@ public class PreGameMenuController extends MenuController {
         );
     }
 
-    public GraphicalResult createGame(){
-        ArrayList<Player> players = new ArrayList<>();
-
-        for (User user : view.getUsersAndChosenMaps().keySet()) {
-            players.add(new Player(user));
-        }
-
-        if (players.size() < 2)
+    public GraphicalResult createGame() {
+        if (view.getUsernameToMap().size() < 2)
             return new GraphicalResult(
                     "There should be at least two players to start the game",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
 
-        Game game;
-        App.setCurrentGame(game = new Game(players));
-        game.init();
-        for (User user : view.getUsersAndChosenMaps().keySet()) {
-            user.setCurrentGame(game);
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("lobbyInfo", view.getLobby().getInfo());
+            put("usernameToMap", view.getUsernameToMap());
+        }}, Message.Type.create_game));
+
+        ArrayList<MiniPlayer> miniPlayers = new ArrayList<>();
+        for (User user : view.getLobby().getUsers()) {
+            miniPlayers.add(new MiniPlayer(user));
         }
-
-        for ( Player player : players ){
-
-            int mapId = view.getUsersAndChosenMaps().get(App.getUserByUsername(player.getUsername())) - 1;
-            //   -1 kardam chon map haton zero base boodan vali man 1 base zadam
-
-            player.setFarmMap(game.getFarmMap(mapId));
-            player.setCurrentCell(game.getFarmMap(mapId).getCell(8, 70));
-            game.getFarmMap(mapId).getHut().setOwner(player);
-
-        }
-
-        App.setCurrentMenu(Menu.Home);
-        Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new HomeView());
-
-        return new GraphicalResult(
-                "Game created successfully",
-                GameAssetManager.getGameAssetManager().getAcceptColor(),
-                false
-        );
-    }
-
-    public GraphicalResult createGame2() {
-        if (view.getUsersAndChosenMaps().size() < 2)
-            return new GraphicalResult(
-                    "There should be at least two players to start the game",
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
-
-        // TODO: Game samt server sakhte shavad
-
+        ClientGame clientGame;
+        Player currentPlayer = new Player(ClientApp.getLoggedInUser());
+        ClientApp.setCurrentGame(clientGame = new ClientGame(
+                view.getLobby(),
+                currentPlayer,
+                miniPlayers
+        ));
+        clientGame.init();
+        currentPlayer.setFarmMap(clientGame.getFarmMap(view.getUsernameToMap().get(currentPlayer.getUsername())));
 
         Main.getMain().getScreen().dispose();
         ClientApp.setCurrentMenu(new HomeView());
@@ -149,7 +125,7 @@ public class PreGameMenuController extends MenuController {
     }
 
     public boolean isNotCurrentSelectorsMap(int number){
-        if ( view.getUsersAndChosenMaps().get(view.getCurrentMapSelector()) == number ){
+        if ( view.getUsernameToMap().get(view.getCurrentMapSelector()) == number ){
             return false;
         }
         return true;
@@ -170,9 +146,9 @@ public class PreGameMenuController extends MenuController {
 
     private boolean alreadyChosen(int number){
 
-        for ( User user: view.getUsersAndChosenMaps().keySet() ){
+        for ( String username : view.getUsernameToMap().keySet() ){
 
-            if ( view.getUsersAndChosenMaps().get(user).equals(number) ){
+            if ( view.getUsernameToMap().get(username).equals(number) ){
                 return true;
             }
 

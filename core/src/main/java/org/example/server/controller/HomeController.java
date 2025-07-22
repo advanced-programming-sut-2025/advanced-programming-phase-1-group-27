@@ -79,7 +79,7 @@ public class HomeController extends MenuController {
     public Result putOrPickFromRefrigerator(String itemName, String func) {
         Player player = App.getCurrentGame().getCurrentPlayer();
         Hut hut = player.getFarmMap().getHut();
-        Backpack refrigerator = hut.getOwner().getRefrigerator();
+        Backpack refrigerator = hut.getRefrigerator();
         if (func.equals("put")) {
             Stacks slot = player.getBackpack().getSlotByItemName(itemName);
             if (slot == null)

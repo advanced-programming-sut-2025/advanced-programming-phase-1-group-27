@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player extends User {
-    // items which are place in the fridge
-    private final Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
     private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>();
     private ArrayList<Recipe> availableCookingRecipes = new ArrayList<>();
     // player's inventory
@@ -183,10 +181,6 @@ public class Player extends User {
             backpack1.addItems(stack.getItem(), stack.getStackLevel(), stack.getQuantity());
         }
         this.backpack = backpack1;
-    }
-
-    public Backpack getRefrigerator() {
-        return refrigerator;
     }
 
     public Map getCurrentMap() {

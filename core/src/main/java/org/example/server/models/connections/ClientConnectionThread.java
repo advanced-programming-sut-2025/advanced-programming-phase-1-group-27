@@ -83,8 +83,12 @@ public class ClientConnectionThread extends ConnectionThread {
             sendMessage(LobbyController.getLobbiesList(message));
             return true;
         }
-        else if (message.getType() == Message.Type.find_lobby){
+        else if (message.getType() == Message.Type.find_lobby) {
             sendMessage(LobbyController.findLobbyById(message));
+            return true;
+        }
+        else if (message.getType() == Message.Type.create_game) {
+
             return true;
         }
         return false;

@@ -159,8 +159,9 @@ public class Game {
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
-            director.BuildMap(builder, i);
+            director.buildMap(builder, i);
             farmMaps[i] = builder.getFinalProduct();
+            // TODO: update farm map from server
         }
 
     }

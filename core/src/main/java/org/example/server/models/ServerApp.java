@@ -107,4 +107,13 @@ public class ServerApp {
         }
         return null;
     }
+
+    public static ArrayList<User> getOnlineUsers() {
+        ArrayList<User> onlineUsers = new ArrayList<>();
+        for (ClientConnectionThread connection : connections) {
+            if (connection.getUser() != null)
+                onlineUsers.add(connection.getUser());
+        }
+        return onlineUsers;
+    }
 }
