@@ -40,6 +40,7 @@ public class LoginMenuController extends MenuController {
 
         if (view.getStayLoggedInCheckBox().isChecked())
             ClientApp.setSavedUser(ServerApp.getUserByUsername(view.getUsernameField().getText()));
+
         ClientApp.setLoggedInUser(ClientApp.getUserByUsername(view.getUsernameField().getText()));
 
         Main.getMain().getScreen().dispose();

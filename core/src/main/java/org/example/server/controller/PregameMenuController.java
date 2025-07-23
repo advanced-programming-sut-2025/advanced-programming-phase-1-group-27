@@ -1,6 +1,7 @@
 package org.example.server.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 
@@ -31,6 +32,36 @@ public class PregameMenuController {
             ServerApp.getClientConnectionThreadByUsername(player.getUsername()).sendMessage(
                     new Message(null, Message.Type.start_game)
             );
+        }
+    }
+
+    public static Message chooseMap(Message message) {
+        int mapId = message.getFromBody("mapId");
+        String username = message.getFromBody("username");
+        int lobbyId = message.getFromBody("lobbyId");
+        Lobby lobby = ServerApp.getLobbyById(lobbyId);
+        if (lobby == null) {
+            return new Message(new HashMap<>()
+                    , Message.Type.error);
+        }
+        HashMap<Integer, String> usersAndChosenMaps = lobby.getUsersAndChosenMaps();
+        if (usersAndChosenMaps.containsValue(username)){
+            return new Message(new HashMap<>(){{
+                put("successful?", false);
+                put("GraphicalResult", GraphicalResult.getInfo("You can't choose a new map!"));
+            }}, Message.Type.response);
+        }
+        if (usersAndChosenMaps.get(lobbyId).equals("")) {
+            lobby.setMaps(mapId, username);
+            return new Message(new HashMap<>() {{
+                put("successful?", true);
+                put("GraphicalResult", GraphicalResult.getInfo("Map selected successfully!"));
+            }}, Message.Type.response);
+        } else {
+            return new Message(new HashMap<>() {{
+                put("successful?", false);
+                put("GraphicalResult", GraphicalResult.getInfo("This map is selected already!"));
+            }}, Message.Type.response);
         }
     }
 }

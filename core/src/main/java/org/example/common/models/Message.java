@@ -46,5 +46,7 @@ public class Message {
         get_online_users,
         create_game,
         start_game,
+        choose_map,
+        error,
     }
 }

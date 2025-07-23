@@ -91,16 +91,13 @@ public class LoginMenuView extends AppMenu {
         passwordField.setPosition(3 * Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 6f - 20);
 
         stayLoggedInCheckBox.setPosition(
-
                 2 * Gdx.graphics.getWidth() / 8f,
                 2 * Gdx.graphics.getHeight() / 6f
-
         );
 
         stage.addActor(usernameField);
         stage.addActor(passwordField);
         stage.addActor(stayLoggedInCheckBox);
-
     }
 
     private void showButtons() {
