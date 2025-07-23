@@ -99,6 +99,9 @@ public class ClientConnectionThread extends ConnectionThread {
             sendMessage(PregameMenuController.chooseMap(message));
             return true;
         }
+        else if(message.getType() == Message.Type.leave_lobby){
+            PregameMenuController.leaveLobby(message);
+        }
         return false;
     }
 

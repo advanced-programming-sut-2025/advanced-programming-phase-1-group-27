@@ -216,7 +216,8 @@ public class PregameMenuView extends AppMenu {
     }
 
     private void updateLobby(){
-        this.lobby = controller.getLobby(String.valueOf(lobby.getId()));
+        int id = lobby.getId();
+        this.lobby = controller.getLobby(String.valueOf(id));
         User user0 , user1 , user2 , user3;
         int size = lobby.getUsers().size();
         if(size > 3){
@@ -402,7 +403,7 @@ public class PregameMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.exitMenu();
+                controller.leave();
             }
 
         });

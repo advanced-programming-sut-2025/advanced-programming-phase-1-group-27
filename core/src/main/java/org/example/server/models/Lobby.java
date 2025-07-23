@@ -42,14 +42,12 @@ public class Lobby {
         for (LinkedTreeMap<String, Object> userInfo : usersInfo) {
             users.add(new User(userInfo));
         }
-        Object mapsRaw = info.get("maps");
-        if (mapsRaw instanceof Map<?, ?>) {
-            Map<?, ?> rawMap = (Map<?, ?>) mapsRaw;
-            for (Map.Entry<?, ?> entry : rawMap.entrySet()) {
-                int key = Integer.parseInt(entry.getKey().toString());
-                String value = entry.getValue().toString();
-                this.usersAndChosenMaps.put(key, value);
-            }
+        LinkedTreeMap<String, Object> users = (LinkedTreeMap<String, Object>) info.get("maps");
+        this.usersAndChosenMaps = new HashMap<>();
+        for (Map.Entry<String, Object> entry : users.entrySet()) {
+            int key = Integer.parseInt(entry.getKey());
+            String value = entry.getValue() != null ? entry.getValue().toString() : "";
+            this.usersAndChosenMaps.put(key, value);
         }
     }
 
@@ -141,6 +139,10 @@ public class Lobby {
         }else {
             active = false;
         }
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
     }
 
     public boolean isActive() {

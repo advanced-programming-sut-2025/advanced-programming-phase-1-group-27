@@ -47,6 +47,7 @@ public class Message {
         create_game,
         start_game,
         choose_map,
+        leave_lobby,
         error,
     }
 }

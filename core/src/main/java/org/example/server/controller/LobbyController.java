@@ -79,12 +79,14 @@ public class LobbyController {
             return new Message(new HashMap<>() {{
                 put("found?" , true);
                 put("lobbyInfo" , finalSelectedLobby.getInfo());
+                put("GraphicalResult", GraphicalResult.getInfo("Lobby found successfully!"));
             }} , Message.Type.response);
         }
         else {
             return new Message(new HashMap<>() {{
                 put("found?" , false);
                 put("lobbyInfo" , null);
+                put("GraphicalResult" , GraphicalResult.getInfo("Lobby not found!"));
             }} , Message.Type.response);
         }
     }

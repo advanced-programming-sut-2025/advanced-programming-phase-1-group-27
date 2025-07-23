@@ -99,45 +99,44 @@ public class PregameMenuController extends MenuController {
     }
 
     public GraphicalResult createGame() {
-//        if (!ClientApp.getLoggedInUser().getUsername().equals(view.getLobby().getAdmin().getUsername()))
-//            return new GraphicalResult("Only the host can start the game");
-//        if (view.getUsernameToMap().size() < 2)
-//            return new GraphicalResult(
-//                    "There should be at least two players to start the game",
-//                    GameAssetManager.getGameAssetManager().getErrorColor()
-//            );
-//
+        if (!ClientApp.getLoggedInUser().getUsername().equals(view.getLobby().getAdmin().getUsername()))
+            return new GraphicalResult("Only the host can start the game");
+        if (view.getLobby().getUsers().size() < 2)
+            return new GraphicalResult(
+                    "There should be at least two players to start the game",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        // TODO : Rassa!
 //        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
 //            put("lobbyInfo", view.getLobby().getInfo());
 //            put("usernameToMap", view.getUsernameToMap());
 //        }}, Message.Type.create_game));
-//
-//        return new GraphicalResult(
-//                "Game created successfully",
-//                GameAssetManager.getGameAssetManager().getAcceptColor(),
-//                false
-//        );
-        return null;
+
+        return new GraphicalResult(
+                "Game created successfully",
+                GameAssetManager.getGameAssetManager().getAcceptColor(),
+                false
+        );
     }
 
     public void startGame() {
-//        ArrayList<MiniPlayer> miniPlayers = new ArrayList<>();
-//        for (User user : view.getLobby().getUsers()) {
-//            miniPlayers.add(new MiniPlayer(user));
-//        }
-//        ClientGame clientGame;
-//        Player currentPlayer = new Player(ClientApp.getLoggedInUser());
-//        ClientApp.setCurrentGame(clientGame = new ClientGame(
-//                view.getLobby(),
-//                currentPlayer,
-//                miniPlayers
-//        ));
-//        clientGame.init();
+        ArrayList<MiniPlayer> miniPlayers = new ArrayList<>();
+        for (User user : view.getLobby().getUsers()) {
+            miniPlayers.add(new MiniPlayer(user));
+        }
+        ClientGame clientGame;
+        Player currentPlayer = new Player(ClientApp.getLoggedInUser());
+        ClientApp.setCurrentGame(clientGame = new ClientGame(
+                view.getLobby(),
+                currentPlayer,
+                miniPlayers
+        ));
+        clientGame.init();
 //        currentPlayer.setFarmMap(clientGame.getFarmMap(view.getUsernameToMap().get(currentPlayer.getUsername())));
-//
-//        Main.getMain().getScreen().dispose();
-//        ClientApp.setCurrentMenu(new HomeView());
-//        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new HomeView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
 
@@ -170,6 +169,16 @@ public class PregameMenuController extends MenuController {
         return new Lobby(response.getFromBody("lobbyInfo"));
     }
 
+    public void leave(){
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("username" , ClientApp.getLoggedInUser().getUsername());
+            put("lobbyId" , view.getLobby().getId());
+        }} , Message.Type.leave_lobby));
+        ClientApp.setCurrentMenu(new MainMenuView());
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+    }
+
     @Override
     public Result enterMenu(String menuName) {
         return null;
@@ -177,9 +186,6 @@ public class PregameMenuController extends MenuController {
 
     @Override
     public Result exitMenu() {
-        App.setCurrentMenu(Menu.MainMenu);
-        Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new MainMenuView());
-        return new Result(true, "Redirecting to main menu ...");
+        return null;
     }
 }

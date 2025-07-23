@@ -1,6 +1,7 @@
 package org.example.server.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.model.ClientApp;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
@@ -62,6 +63,40 @@ public class PregameMenuController {
                 put("successful?", false);
                 put("GraphicalResult", GraphicalResult.getInfo("This map is selected already!"));
             }}, Message.Type.response);
+        }
+    }
+
+    public static void leaveLobby(Message message) {
+        String username = message.getFromBody("username");
+        int lobbyId = message.getFromBody("lobbyId");
+        Lobby lobby = ServerApp.getLobbyById(lobbyId);
+        if (lobby == null) {
+            return;
+        }
+        HashMap<Integer, String> usersAndChosenMaps = lobby.getUsersAndChosenMaps();
+        for(Integer index : usersAndChosenMaps.keySet()) {
+            if(usersAndChosenMaps.get(index).equals(username)) {
+                usersAndChosenMaps.put(index, "");
+            }
+        }
+        User selectedUser = null;
+        for(User user : lobby.getUsers()) {
+            if(user.getUsername().equals(username)) {
+                selectedUser = user;
+            }
+        }
+
+        if(selectedUser != null) {
+            lobby.getUsers().remove(selectedUser);
+
+            if (lobby.getUsers().isEmpty()) {
+                ServerApp.getLobbies().remove(lobby);
+                return;
+            }
+
+            if (lobby.getAdmin().getUsername().equals(username)) {
+                lobby.setAdmin(lobby.getUsers().get(0));
+            }
         }
     }
 }
