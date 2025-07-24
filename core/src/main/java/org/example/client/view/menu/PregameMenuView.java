@@ -141,6 +141,10 @@ public class PregameMenuView extends AppMenu {
         stage.addActor(user1Label);
         stage.addActor(user2Label);
         stage.addActor(user3Label);
+        stage.addActor(userMap0Label);
+        stage.addActor(userMap1Label);
+        stage.addActor(userMap2Label);
+        stage.addActor(userMap3Label);
         stage.addActor(playersLabel);
 //        stage.addActor(usernameLabel);
         stage.addActor(mapSelectionLabel);
@@ -242,7 +246,7 @@ public class PregameMenuView extends AppMenu {
         }
         if (user0 != null) {
             user0Label.setText(user0.getUsername());
-            int index = lobby.getUsers().indexOf(user0);
+            int index = lobby.getIndexMap(user0);
             if(index != -1){
                 userMap0Label.setText(index);
             }else {
@@ -254,7 +258,7 @@ public class PregameMenuView extends AppMenu {
         }
         if(user1 != null) {
             user1Label.setText(user1.getUsername());
-            int index = lobby.getUsers().indexOf(user1);
+            int index = lobby.getIndexMap(user1);
             if(index != -1){
                 userMap1Label.setText(index);
             }else {
@@ -266,7 +270,7 @@ public class PregameMenuView extends AppMenu {
         }
         if(user2 != null) {
             user2Label.setText(user2.getUsername());
-            int index = lobby.getUsers().indexOf(user2);
+            int index = lobby.getIndexMap(user2);
             if(index != -1){
                 userMap2Label.setText(index);
             }else {
@@ -278,7 +282,7 @@ public class PregameMenuView extends AppMenu {
         }
         if(user3 != null) {
             user3Label.setText(user3.getUsername());
-            int index = lobby.getUsers().indexOf(user3);
+            int index = lobby.getIndexMap(user3);
             if(index != -1){
                 userMap3Label.setText(index);
             }else {

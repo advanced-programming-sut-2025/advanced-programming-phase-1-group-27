@@ -17,6 +17,7 @@ import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class LobbyMenuController extends MenuController {
     LobbyMenuView view;
+
     public LobbyMenuController(LobbyMenuView view) {
         this.view = view;
     }
@@ -38,14 +39,14 @@ public class LobbyMenuController extends MenuController {
     }
 
     public GraphicalResult findViaGraphicalResult() {
-        if(view.getGameIdTextField().getText().isEmpty()){
+        if (view.getGameIdTextField().getText().isEmpty()) {
             return new GraphicalResult(
                     "No id has been entered!",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
-        int id =  Integer.parseInt(view.getGameIdTextField().getText());
-        if(id < 0 || id > 9999){
+        int id = Integer.parseInt(view.getGameIdTextField().getText());
+        if (id < 0 || id > 9999) {
             return new GraphicalResult(
                     "Id has 4 digits",
                     GameAssetManager.getGameAssetManager().getErrorColor()
@@ -55,7 +56,7 @@ public class LobbyMenuController extends MenuController {
     }
 
     public GraphicalResult join() {
-        if(view.getPublicGamesSelectBox().getSelected().isEmpty()){
+        if (view.getPublicGamesSelectBox().getSelected().isEmpty()) {
             return new GraphicalResult(
                     "No game has been selected!",
                     GameAssetManager.getGameAssetManager().getErrorColor()
@@ -66,29 +67,29 @@ public class LobbyMenuController extends MenuController {
         return find(gameId);
     }
 
-    public void host(){
+    public void host() {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new HostMenuView());
     }
 
-    public void goToPlayersMenu(){
+    public void goToPlayersMenu() {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new OnlinePlayersMenuView());
     }
 
-    private static GraphicalResult find(String id){
-        Message message = new Message(new HashMap<>(){{
+    private static GraphicalResult find(String id) {
+        Message message = new Message(new HashMap<>() {{
             put("id", id);
-        }} , Message.Type.find_lobby);
+        }}, Message.Type.find_lobby);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
-        if(response == null || response.getType() != Message.Type.response) {
-            return  new GraphicalResult(
+        if (response == null || response.getType() != Message.Type.response) {
+            return new GraphicalResult(
                     "Failed to find",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
         boolean found = response.getFromBody("found?");
-        if(!found){
+        if (!found) {
             return new GraphicalResult(
                     "Lobby not found!",
                     GameAssetManager.getGameAssetManager().getErrorColor()
@@ -96,7 +97,7 @@ public class LobbyMenuController extends MenuController {
         }
         Lobby lobby = new Lobby(response.getFromBody("lobbyInfo"));
 
-        if(!lobby.isPublic()){
+        if (!lobby.isPublic()) {
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(new PasswordMenuView(lobby));
             return new GraphicalResult(
@@ -111,14 +112,14 @@ public class LobbyMenuController extends MenuController {
             put("id", lobby.getId());
         }}, Message.Type.join_lobby);
         Message responseForJoin = ClientApp.getServerConnectionThread().sendAndWaitForResponse(joinMessage, TIMEOUT_MILLIS);
-        if(responseForJoin == null || responseForJoin.getType() != Message.Type.response) {
+        if (responseForJoin == null || responseForJoin.getType() != Message.Type.response) {
             return new GraphicalResult(
                     "Failed to join",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
-        GraphicalResult result = responseForJoin.getFromBody("GraphicalResult");
-        if(result.hasError()){
+        GraphicalResult result = new GraphicalResult(responseForJoin.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
+        if (result.hasError()) {
             return new GraphicalResult(
                     result.getMessage().toString(),
                     GameAssetManager.getGameAssetManager().getErrorColor()
