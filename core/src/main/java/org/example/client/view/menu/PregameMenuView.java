@@ -6,22 +6,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.LobbyMenuController;
 import org.example.client.controller.PregameMenuController;
 import org.example.client.model.ClientApp;
-import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.Lobby;
 import org.example.server.models.User;
 import org.example.client.view.AppMenu;
 
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class PregameMenuView extends AppMenu {
@@ -245,7 +241,7 @@ public class PregameMenuView extends AppMenu {
         }
         if (user0 != null) {
             user0Label.setText(user0.getUsername());
-            int index = lobby.getIndexMap(user0);
+            int index = lobby.getMapIndex(user0);
             if(index != -1){
                 userMap0Label.setText(index);
             }else {
@@ -257,7 +253,7 @@ public class PregameMenuView extends AppMenu {
         }
         if(user1 != null) {
             user1Label.setText(user1.getUsername());
-            int index = lobby.getIndexMap(user1);
+            int index = lobby.getMapIndex(user1);
             if(index != -1){
                 userMap1Label.setText(index);
             }else {
@@ -269,7 +265,7 @@ public class PregameMenuView extends AppMenu {
         }
         if(user2 != null) {
             user2Label.setText(user2.getUsername());
-            int index = lobby.getIndexMap(user2);
+            int index = lobby.getMapIndex(user2);
             if(index != -1){
                 userMap2Label.setText(index);
             }else {
@@ -281,7 +277,7 @@ public class PregameMenuView extends AppMenu {
         }
         if(user3 != null) {
             user3Label.setText(user3.getUsername());
-            int index = lobby.getIndexMap(user3);
+            int index = lobby.getMapIndex(user3);
             if(index != -1){
                 userMap3Label.setText(index);
             }else {

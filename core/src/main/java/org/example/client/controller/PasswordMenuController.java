@@ -31,7 +31,7 @@ public class PasswordMenuController extends MenuController{
             );
         }
         String password = view.getPasswordField().getText();
-        if(!lobby.getPassword().equals(password)){
+        if (!lobby.getPassword().equals(password)) {
             return new GraphicalResult(
                     "Wrong password",
                     GameAssetManager.getGameAssetManager().getErrorColor()

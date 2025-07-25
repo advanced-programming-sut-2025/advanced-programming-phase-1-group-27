@@ -1,7 +1,6 @@
 package org.example.server.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
-import org.example.client.model.ClientApp;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
@@ -44,14 +43,15 @@ public class PregameMenuController {
         if (lobby == null) {
             return new Message(new HashMap<>(), Message.Type.error);
         }
-        HashMap<Integer, String> usersAndChosenMaps = lobby.getUsersAndChosenMaps();
+        HashMap<String, Integer> usersAndChosenMaps = lobby.getUsernameToMap();
+        // TODO: parsa, reedi
         if (usersAndChosenMaps.containsValue(username)){
             return new Message(new HashMap<>(){{
                 put("GraphicalResult", GraphicalResult.getInfo("You can't choose a new map!"));
             }}, Message.Type.response);
         }
         if (usersAndChosenMaps.get(mapId).equals("")) {
-            lobby.setMaps(mapId, username);
+            lobby.setMap(username, mapId);
             return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("Map selected successfully!", false));
             }}, Message.Type.response);
@@ -69,12 +69,13 @@ public class PregameMenuController {
         if (lobby == null) {
             return;
         }
-        HashMap<Integer, String> usersAndChosenMaps = lobby.getUsersAndChosenMaps();
-        for(Integer index : usersAndChosenMaps.keySet()) {
-            if(usersAndChosenMaps.get(index).equals(username)) {
-                usersAndChosenMaps.put(index, "");
-            }
-        }
+        HashMap<String, Integer> usersAndChosenMaps = lobby.getUsernameToMap();
+        // TODO: parsa, reedi
+//        for(Integer index : usersAndChosenMaps.keySet()) {
+//            if(usersAndChosenMaps.get(index).equals(username)) {
+//                usersAndChosenMaps.put(index, "");
+//            }
+//        }
         User selectedUser = null;
         for(User user : lobby.getUsers()) {
             if(user.getUsername().equals(username)) {
