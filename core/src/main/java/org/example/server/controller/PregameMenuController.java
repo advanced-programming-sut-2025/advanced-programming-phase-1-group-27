@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class PregameMenuController {
     public static void createGame(Message message) {
         Lobby lobby = ServerApp.getLobbyById(new Lobby(message.getFromBody("lobbyInfo")).getId());
-        LinkedTreeMap<String, Integer> usernameToMapId = message.getFromBody("usernameToMap");
+        assert lobby != null;
         ArrayList<Player> players = new ArrayList<>();
         for (User user : lobby.getUsers()) {
             players.add(new Player(user));
@@ -20,17 +20,19 @@ public class PregameMenuController {
         lobby.setGame(game = new Game(lobby.getAdmin(), players));
         game.init();
         for (Player player : players) {
-            int mapIndex = usernameToMapId.get(player.getUsername()) - 1;
+            int mapIndex = lobby.getUsernameToMap().get(player.getUsername());
             player.setFarmMap(game.getFarmMap(mapIndex));
             player.setCurrentCell(game.getFarmMap(mapIndex).getCell(8, 70));
         }
-        notifyPlayers(players);
+        notifyPlayers(players, game);
     }
 
-    private static void notifyPlayers(ArrayList<Player> players) {
+    private static void notifyPlayers(ArrayList<Player> players, Game game) {
         for (Player player : players) {
             ServerApp.getClientConnectionThreadByUsername(player.getUsername()).sendMessage(
-                    new Message(null, Message.Type.start_game)
+                    new Message(new HashMap<>() {{
+                        put("farmInfo", game.getFarmInfo());
+                    }}, Message.Type.start_game)
             );
         }
     }

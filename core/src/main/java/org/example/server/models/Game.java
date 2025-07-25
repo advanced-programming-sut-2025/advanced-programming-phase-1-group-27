@@ -20,6 +20,7 @@ import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.min;
@@ -159,7 +160,7 @@ public class Game {
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
-            director.buildMap(builder, i);
+            director.buildMapAshghal(builder, i);
             farmMaps[i] = builder.getFinalProduct();
             // TODO: update farm map from server
         }
@@ -595,5 +596,13 @@ public class Game {
             }
         }
         return result.toString();
+    }
+
+    public ArrayList[] getFarmInfo() {
+        ArrayList[] info = new ArrayList[4];
+        for (int farmId = 0; farmId < 4; farmId++) {
+            info[farmId] = farmMaps[farmId].getForagingInfo();
+        }
+        return info;
     }
 }

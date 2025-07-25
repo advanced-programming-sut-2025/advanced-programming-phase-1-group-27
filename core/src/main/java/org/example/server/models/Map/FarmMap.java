@@ -1,5 +1,6 @@
 package org.example.server.models.Map;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.AnimalEnclosure;
 import org.example.server.models.AnimalProperty.Barn;
@@ -7,9 +8,11 @@ import org.example.server.models.AnimalProperty.Coop;
 import org.example.server.models.Cell;
 import org.example.server.models.ShippingBin;
 import org.example.server.models.enums.CellType;
-import org.example.server.models.enums.Plants.Plant;
+import org.example.server.models.enums.Plants.*;
 
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class FarmMap extends Map {
@@ -118,6 +121,45 @@ public class FarmMap extends Map {
 
     public ArrayList<ShippingBin> getShippingBins() {
         return shippingBins;
+    }
+
+    public ArrayList<HashMap<String, Object>> getForagingInfo() {
+        ArrayList<HashMap<String, Object>> info = new ArrayList<>();
+        for (int i = 1; i < height - 1; i++)
+            for (int j = 1; j < width - 1; j++)
+                if (cells[i][j].getObject() instanceof Plant plant) {
+                    int finalI = i;
+                    int finalJ = j;
+                    info.add(new HashMap<String, Object>() {{
+                        put("type", plant.getType().toString());
+                        put("x", finalI);
+                        put("y", finalJ);
+                    }});
+                }
+        return info;
+    }
+
+    public void addForaging(ArrayList<LinkedTreeMap<String, Object>> info) {
+        for (LinkedTreeMap<String, Object> foraging : info) {
+            int x = ((Number) foraging.get("x")).intValue();
+            int y = ((Number) foraging.get("y")).intValue();
+            Cell cell = cells[x][y];
+            String typeName = (String) foraging.get("type");
+            CropType cropType = CropType.getItem(typeName);
+            if (cropType != null) {
+                Crop crop = new Crop(cropType);
+                crop.setTillNextHarvest(0);
+                crop.setForaging(true);
+                cell.plant(crop);
+            }
+            TreeType treeType = TreeType.getItem(typeName);
+            if (treeType != null) {
+                Tree tree = new Tree(treeType);
+                tree.setTillNextHarvest(0);
+                tree.setForaging(true);
+                cell.plant(tree);
+            }
+        }
     }
 
     public void generateForaging() {
