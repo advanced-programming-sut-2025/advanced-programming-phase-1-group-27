@@ -51,13 +51,15 @@ public class HomeView extends AppMenu {
     private void preProcess() {
         Player player = App.getCurrentGame().getCurrentPlayer();
         player.setCurrentMap(player.getFarmMap());
-        player.setCurrentCell(player.getFarmMap().getCell(50, 50));
+        player.setCurrentCell(player.getFarmMap().getCell(8, 71));
     }
 
     @Override
     public void show() {
         //TODO Movaghati ast in
         preProcess();
+
+        System.out.println("SALAM");
 
         Gdx.input.setInputProcessor(stage);
 

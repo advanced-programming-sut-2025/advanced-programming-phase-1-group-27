@@ -7,6 +7,7 @@ import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.HomeView;
 import org.example.client.view.menu.LobbyMenuView;
+
 import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;

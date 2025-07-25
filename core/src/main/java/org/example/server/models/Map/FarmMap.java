@@ -1,16 +1,19 @@
 package org.example.server.models.Map;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.Main;
+import org.example.client.view.OutsideView;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.AnimalEnclosure;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;
 import org.example.server.models.Cell;
+import org.example.server.models.GameAssetManager;
+import org.example.server.models.Position;
 import org.example.server.models.ShippingBin;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.*;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -195,6 +198,21 @@ public class FarmMap extends Map {
                 }
             }
         }
+    }
+
+    public void print(float tileSize) {
+        super.print(tileSize);
+        Position position = greenHouse.getTopLeftCell().getPosition();
+        int x = OutsideView.getGraphicalPosition(position).getX() - 20,
+                y = OutsideView.getGraphicalPosition(position).getY() - 30;
+        Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
+                x, y - 240, 320, 280);
+
+        position = hut.getTopLeftCell().getPosition();
+        x = OutsideView.getGraphicalPosition(position).getX() - 20;
+        y = OutsideView.getGraphicalPosition(position).getY() - 30;
+        Main.getBatch().draw(GameAssetManager.getGameAssetManager().getHutTexture(),
+                x, y - 125, 160, 160);
     }
 
 }

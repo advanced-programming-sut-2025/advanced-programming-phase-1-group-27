@@ -1,6 +1,8 @@
 package org.example.server.controller;
 
+import org.example.client.Main;
 import org.example.client.controller.MenuController;
+import org.example.client.view.HomeView;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
@@ -218,6 +220,8 @@ public class GameMenuController extends MenuController {
                                 currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
                                 currentPlayer.setCurrentMenu(Menu.Home);
                                 App.setCurrentMenu(Menu.Home);
+                                Main.getMain().getScreen().dispose();
+                                Main.getMain().setScreen(new HomeView());
                                 return new Result(true, "You Entered Your Home :)");
                             }
                         }

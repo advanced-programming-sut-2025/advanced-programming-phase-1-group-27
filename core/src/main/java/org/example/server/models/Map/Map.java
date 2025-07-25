@@ -1,8 +1,14 @@
 package org.example.server.models.Map;
 
+import com.badlogic.gdx.graphics.Texture;
+import org.example.client.Main;
+import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Position;
 import org.example.server.models.enums.CellType;
+import org.example.server.models.enums.Plants.Crop;
+import org.example.server.models.enums.Plants.CropType;
+import org.example.server.models.enums.items.MineralType;
 
 import java.util.*;
 
@@ -65,9 +71,9 @@ public class Map {
         }
     }
 
-    public Cell getCell(int x, int y) {
-        if (x >= 0 && x < height && y >= 0 && y < width)
-            return cells[x][y];
+    public Cell getCell(int i, int j) {
+        if (i >= 0 && i < height && j >= 0 && j < width)
+            return cells[i][j];
         else
             return null;
     }
@@ -169,6 +175,30 @@ public class Map {
 
     public int getWidth() {
         return width;
+    }
+
+    public void print(float tileSize) {
+        for (int i = cells.length - 1; i >= 0; i--) {
+            for (int j = 0; j < cells[i].length; j++) {
+                float y = (cells.length - 1 - i) * tileSize;
+                float x = j * tileSize;
+                Texture texture = cells[i][j].getTexture();
+
+                if (texture == null) continue;
+                Main.getBatch().draw(texture, x, y, tileSize, tileSize);
+
+                if (cells[i][j].getObject() instanceof Crop crop) {
+                    texture = ((CropType) crop.getType()).getTexture();
+                    if (texture != null)
+                        Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                }
+                if (cells[i][j].getObject() instanceof MineralType mineral) {
+                    texture = mineral.getTexture();
+                    if (texture != null)
+                        Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                }
+            }
+        }
     }
 
 
