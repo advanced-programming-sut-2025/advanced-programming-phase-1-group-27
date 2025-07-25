@@ -70,8 +70,7 @@ public class LobbyController {
     }
 
     public static Message findLobbyById(Message message) {
-        String id = message.getFromBody("id");
-        int lobbyId = Integer.parseInt(id);
+        int lobbyId = message.getIntFromBody("id");
         Lobby selectedLobby = ServerApp.getLobbyById(lobbyId);
 
         if(selectedLobby != null){

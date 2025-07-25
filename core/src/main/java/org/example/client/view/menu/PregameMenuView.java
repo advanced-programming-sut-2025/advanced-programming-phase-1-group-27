@@ -220,8 +220,7 @@ public class PregameMenuView extends AppMenu {
     }
 
     private void updateLobby(){
-        int id = lobby.getId();
-        this.lobby = controller.getLobby(String.valueOf(id));
+        this.lobby = controller.getLobby(lobby.getId());
         User user0 , user1 , user2 , user3;
         int size = lobby.getUsers().size();
         if(size > 3){

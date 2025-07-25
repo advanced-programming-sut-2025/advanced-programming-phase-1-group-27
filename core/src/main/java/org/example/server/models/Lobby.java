@@ -13,7 +13,7 @@ public class Lobby {
     private boolean isVisible;
     private int id;
     private String name, password;
-    private HashMap<Integer,String> usersAndChosenMaps = new HashMap<>();
+    private HashMap<Integer, String> usersAndChosenMaps = new HashMap<>();
     private Game game = null;
     private boolean active;
 
@@ -62,13 +62,17 @@ public class Lobby {
     public int getIndexMap(User user){
         if(usersAndChosenMaps.get(0).equals(user.getUsername())){
             return 0;
-        }else if(usersAndChosenMaps.get(1).equals(user.getUsername())){
+        }
+        else if(usersAndChosenMaps.get(1).equals(user.getUsername())){
             return 1;
-        }else  if(usersAndChosenMaps.get(2).equals(user.getUsername())){
+        }
+        else  if(usersAndChosenMaps.get(2).equals(user.getUsername())){
             return 2;
-        }else  if(usersAndChosenMaps.get(3).equals(user.getUsername())){
+        }
+        else  if(usersAndChosenMaps.get(3).equals(user.getUsername())){
             return 3;
-        }else {
+        }
+        else {
             return -1;
         }
     }
@@ -104,7 +108,7 @@ public class Lobby {
         for (User user : users) {
             usersInfo.add(user.getInfo());
         }
-        info.put("maps" ,  usersAndChosenMaps);
+        info.put("maps", usersAndChosenMaps);
         info.put("usersInfo", usersInfo);
         return info;
     }

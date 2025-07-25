@@ -1,10 +1,12 @@
 package org.example.client.controller;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.HomeView;
+import org.example.client.view.menu.LobbyMenuView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.PasswordMenuView;
 import org.example.client.view.menu.PregameMenuView;
@@ -15,6 +17,7 @@ import org.example.server.models.enums.Menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
@@ -78,7 +81,7 @@ public class PregameMenuController extends MenuController {
 
     public GraphicalResult chooseMap(int mapId) {
         Message message = new Message(new HashMap<>(){{
-            put("id", mapId);
+            put("mapId", mapId);
             put("username" , ClientApp.getLoggedInUser().getUsername());
             put("lobbyId" , view.getLobby().getId());
         }} , Message.Type.choose_map);
@@ -89,13 +92,7 @@ public class PregameMenuController extends MenuController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
-        if(!(boolean) response.getFromBody("successful?")) {
-            return new GraphicalResult(response.getFromBody("GraphicalResult").toString(),
-                    GameAssetManager.getGameAssetManager().getErrorColor());
-        }else {
-            return new GraphicalResult(response.getFromBody("GraphicalResult").toString(),
-                    false);
-        }
+        return new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
     }
 
     public GraphicalResult createGame() {
@@ -109,7 +106,6 @@ public class PregameMenuController extends MenuController {
         // TODO : Rassa!
 //        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
 //            put("lobbyInfo", view.getLobby().getInfo());
-//            put("usernameToMap", view.getUsernameToMap());
 //        }}, Message.Type.create_game));
 
         return new GraphicalResult(
@@ -154,7 +150,7 @@ public class PregameMenuController extends MenuController {
 //    }
 
 
-    public Lobby getLobby(String id){
+    public Lobby getLobby(int id){
         Message message = new Message(new HashMap<>(){{
             put("id", id);
         }} , Message.Type.find_lobby);
@@ -169,12 +165,12 @@ public class PregameMenuController extends MenuController {
         return new Lobby(response.getFromBody("lobbyInfo"));
     }
 
-    public void leave(){
+    public void leave() {
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("username" , ClientApp.getLoggedInUser().getUsername());
             put("lobbyId" , view.getLobby().getId());
         }} , Message.Type.leave_lobby));
-        ClientApp.setCurrentMenu(new MainMenuView());
+        ClientApp.setCurrentMenu(new LobbyMenuView());
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }

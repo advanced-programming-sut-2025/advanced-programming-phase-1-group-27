@@ -37,30 +37,26 @@ public class PregameMenuController {
     }
 
     public static Message chooseMap(Message message) {
-        int mapId = message.getFromBody("mapId");
+        int mapId = message.getIntFromBody("mapId");
         String username = message.getFromBody("username");
-        int lobbyId = message.getFromBody("lobbyId");
+        int lobbyId = message.getIntFromBody("lobbyId");
         Lobby lobby = ServerApp.getLobbyById(lobbyId);
         if (lobby == null) {
-            return new Message(new HashMap<>()
-                    , Message.Type.error);
+            return new Message(new HashMap<>(), Message.Type.error);
         }
         HashMap<Integer, String> usersAndChosenMaps = lobby.getUsersAndChosenMaps();
         if (usersAndChosenMaps.containsValue(username)){
             return new Message(new HashMap<>(){{
-                put("successful?", false);
                 put("GraphicalResult", GraphicalResult.getInfo("You can't choose a new map!"));
             }}, Message.Type.response);
         }
-        if (usersAndChosenMaps.get(lobbyId).equals("")) {
+        if (usersAndChosenMaps.get(mapId).equals("")) {
             lobby.setMaps(mapId, username);
             return new Message(new HashMap<>() {{
-                put("successful?", true);
-                put("GraphicalResult", GraphicalResult.getInfo("Map selected successfully!"));
+                put("GraphicalResult", GraphicalResult.getInfo("Map selected successfully!", false));
             }}, Message.Type.response);
         } else {
             return new Message(new HashMap<>() {{
-                put("successful?", false);
                 put("GraphicalResult", GraphicalResult.getInfo("This map is selected already!"));
             }}, Message.Type.response);
         }
@@ -68,7 +64,7 @@ public class PregameMenuController {
 
     public static void leaveLobby(Message message) {
         String username = message.getFromBody("username");
-        int lobbyId = message.getFromBody("lobbyId");
+        int lobbyId = message.getIntFromBody("lobbyId");
         Lobby lobby = ServerApp.getLobbyById(lobbyId);
         if (lobby == null) {
             return;

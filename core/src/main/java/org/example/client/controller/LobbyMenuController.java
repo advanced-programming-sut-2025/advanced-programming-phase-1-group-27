@@ -27,6 +27,7 @@ public class LobbyMenuController extends MenuController {
                 , Message.Type.get_lobbies_list);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
+            System.out.println("INJAM");
             return new ArrayList<>();
         }
         ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
@@ -45,14 +46,17 @@ public class LobbyMenuController extends MenuController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
-        int id = Integer.parseInt(view.getGameIdTextField().getText());
-        if (id < 0 || id > 9999) {
-            return new GraphicalResult(
-                    "Id has 4 digits",
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
+        int id;
+        try {
+            id = Integer.parseInt(view.getGameIdTextField().getText());
         }
-        return find(view.getGameIdTextField().getText());
+        catch (Exception e) {
+            return new GraphicalResult("ID must be a 4 digit number");
+        }
+        if (id < 0 || id > 9999)
+            return new GraphicalResult("ID must be a 4 digit number");
+
+        return find(id);
     }
 
     public GraphicalResult join() {
@@ -64,7 +68,7 @@ public class LobbyMenuController extends MenuController {
         }
         String selected = view.getPublicGamesSelectBox().getSelected();
         String gameId = selected.split(" ")[0];
-        return find(gameId);
+        return find(Integer.parseInt(gameId));
     }
 
     public void host() {
@@ -77,7 +81,7 @@ public class LobbyMenuController extends MenuController {
         Main.getMain().setScreen(new OnlinePlayersMenuView());
     }
 
-    private static GraphicalResult find(String id) {
+    private static GraphicalResult find(int id) {
         Message message = new Message(new HashMap<>() {{
             put("id", id);
         }}, Message.Type.find_lobby);

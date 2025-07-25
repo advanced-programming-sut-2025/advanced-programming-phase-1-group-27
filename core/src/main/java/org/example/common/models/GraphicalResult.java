@@ -22,6 +22,7 @@ public class GraphicalResult {
         this.message = new Label(message, GameAssetManager.getGameAssetManager().getSkin());
         this.message.setVisible(true);
         this.message.setFontScale(1f);
+        this.message.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
         this.displayTime = 3f;
         this.isError = true;
     }
@@ -29,6 +30,8 @@ public class GraphicalResult {
     public GraphicalResult(String message, boolean isError) {
         this(message);
         this.isError = isError;
+        if (!isError)
+            this.message.setColor(GameAssetManager.getGameAssetManager().getAcceptColor());
     }
 
     public GraphicalResult(String message, Color color) {

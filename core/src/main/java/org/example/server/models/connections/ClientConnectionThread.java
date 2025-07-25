@@ -95,12 +95,13 @@ public class ClientConnectionThread extends ConnectionThread {
             sendMessage(LobbyController.getOnlineUsersUsernames(message));
             return true;
         }
-        else if(message.getType() == Message.Type.choose_map){
+        else if(message.getType() == Message.Type.choose_map) {
             sendMessage(PregameMenuController.chooseMap(message));
             return true;
         }
-        else if(message.getType() == Message.Type.leave_lobby){
+        else if(message.getType() == Message.Type.leave_lobby) {
             PregameMenuController.leaveLobby(message);
+            return true;
         }
         return false;
     }
