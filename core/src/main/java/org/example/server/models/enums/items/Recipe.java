@@ -289,7 +289,7 @@ public enum Recipe implements Item {
             new Ingredient(ProcessedProductType.GoldMetalBar, 1),
             new Ingredient(ProcessedProductType.IridiumMetalBar, 1)
     ))),
-    CharcoalKlinRecipe(0, CraftingProduct.CharcoalKlin, new ArrayList<>(List.of(
+    CharcoalKlinRecipe(0, CraftingProduct.CharcoalKiln, new ArrayList<>(List.of(
             new Ingredient(MineralType.Wood, 20),
             new Ingredient(ProcessedProductType.CopperMetalBar, 2)
     ))),

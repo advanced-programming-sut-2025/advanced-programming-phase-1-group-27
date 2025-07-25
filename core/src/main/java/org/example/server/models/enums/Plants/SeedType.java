@@ -1,5 +1,7 @@
 package org.example.server.models.enums.Plants;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 import org.example.server.models.enums.Seasons.Season;
 
@@ -70,17 +72,14 @@ public enum SeedType implements PlantSourceType, Item {
         put(Season.Winter, new ArrayList<>(List.of(AncientSeed, MixedSeed, PowderMelonSeed)));
     }};
     private final PlantType plant;
-    private final String address;
+    private final Texture texture;
 
     SeedType(PlantType plant, String address) {
         this.plant = plant;
-        this.address = address;
+        this.texture = new Texture(Gdx.files.internal(address));
     }
 
-//    @Override
-//    public String getAddress() {
-//        return this.address;
-//    }
+
 
     public static HashMap<Season, ArrayList<SeedType>> getForagingSeedsBySeason() {
         return foragingSeedsBySeason;
@@ -97,6 +96,11 @@ public enum SeedType implements PlantSourceType, Item {
 
     public PlantType getPlant() {
         return plant;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return texture;
     }
 
     @Override

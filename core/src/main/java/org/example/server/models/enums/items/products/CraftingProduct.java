@@ -1,5 +1,7 @@
 package org.example.server.models.enums.items.products;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 import org.example.server.models.enums.items.Recipe;
 
@@ -11,7 +13,7 @@ public enum CraftingProduct implements Item {
     Sprinkler(0 , "Items/Crafting_products/Sprinkler.png"),
     QualitySprinkler(0 , "Items/Crafting_products/Quality_Sprinkler.png"),
     IridiumSprinkler(0 , "Items/Crafting_products/Iridium_Sprinkler.png"),
-    CharcoalKlin(0 , "Items/Crafting_products/Charcoal_Klin.png"),
+    CharcoalKiln(0 , "Items/Crafting_products/Charcoal_Kiln.png"),
     Furnace(0 , "Items/Crafting_products/Furnace.png"),
     Scarecrow(0 , "Items/Crafting_products/Scarecrow.png"),
     DeluxeScarecrow(0 , "Items/Crafting_products/Deluxe_Scarecrow.png"),
@@ -30,12 +32,12 @@ public enum CraftingProduct implements Item {
 
     private final int price;
     private Recipe recipe;
-    private final String address;
+    private final Texture texture;
 
     CraftingProduct(int price ,  String address) {
         this.recipe = null;
         this.price = price;
-        this.address = address;
+        this.texture = new Texture(Gdx.files.internal(address));
     }
 
     public static CraftingProduct getItem(String itemName) {
@@ -52,6 +54,11 @@ public enum CraftingProduct implements Item {
         return price;
     }
 
+    @Override
+    public Texture getTexture() {
+        return texture;
+    }
+
     public Recipe getRecipe() {
         if (recipe == null) {
             for (Recipe recipe : Recipe.values()) {
@@ -63,10 +70,6 @@ public enum CraftingProduct implements Item {
         return recipe;
     }
 //
-//    @Override
-//    public String getAddress() {
-//        return this.address;
-//    }
 
 }
 

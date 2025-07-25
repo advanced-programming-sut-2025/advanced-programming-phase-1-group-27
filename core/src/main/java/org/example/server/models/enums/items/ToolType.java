@@ -1,7 +1,10 @@
 package org.example.server.models.enums.items;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 import org.example.server.models.enums.StackLevel;
+import org.w3c.dom.Text;
 
 public enum ToolType implements Item {
     BasicHoe("Basic Hoe", StackLevel.Basic , "Items/Tools/Hoe/Hoe.png"),
@@ -34,8 +37,8 @@ public enum ToolType implements Item {
     FiberglassRod("Fiberglass Rod", StackLevel.Fiberglass , "Items/Tools/Fishing_Rod/Fiberglass_Rod.png"),
     IridiumRod("Iridium Rod", StackLevel.Iridium , "Items/Tools/Fishing_Rod/Iridium_Rod.png"),
     Scythe("Scythe", StackLevel.Basic , "Items/Tools/Scythe/Scythe.png"),
-    MilkPail("Milk pail", StackLevel.Basic , "Items/Tools/Milk_Pail/Milk_Pail.png"),
-    Shear("Shear", StackLevel.Basic , "Items/Tools/Shear/Shear.png"),
+    MilkPail("Milk pail", StackLevel.Basic , "Items/Tools/Milk_Pail.png"),
+    Shear("Shear", StackLevel.Basic , "Items/Tools/Shear.png"),
     BasicBackpack("Basic Backpack", StackLevel.Basic , "Items/Tools/Backpack/Backpack.png"),
     LargeBackpack("Large Backpack", StackLevel.Large , "Items/Tools/Backpack/Backpack.png"),
     DeluxeBackpack("Deluxe Backpack", StackLevel.Deluxe , "Items/Tools/Backpack/Deluxe_Backpack.png"),
@@ -48,12 +51,12 @@ public enum ToolType implements Item {
 
     private final String name;
     private final StackLevel level;
-    private final String address;
+    private final Texture texture;
 
     ToolType(String name, StackLevel level , String address) {
         this.name = name;
         this.level = level;
-        this.address = address;
+        this.texture = new Texture(address);
     }
 
     public static ToolType getItem(String itemName) {
@@ -116,6 +119,10 @@ public enum ToolType implements Item {
 //    public String getAddress() {
 //        return this.address;
 //    }
+
+    public Texture getTexture() {
+        return texture;
+    }
 
     @Override
     public Integer getPrice() {

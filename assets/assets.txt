@@ -45,6 +45,7 @@ Images/Floorings/Free2.png
 Images/Floorings/Free4.png
 Images/Floorings/NPCValley.png
 Images/Floorings/Quarry.png
+Images/Floorings/Water.png
 Images/Fruits/Eggplant.png
 Images/Fruits/Grape.png
 Images/Fruits/Hazelnut.png
@@ -58,6 +59,7 @@ Images/home2.png
 Images/home2_expanded_left_1920x1080.png
 Images/home3.png
 Images/home_cropped.png
+Images/hut.png
 Images/menu_background.png
 Images/stardew_valley_text.png
 Inventory/InventoryHotbar.png
@@ -308,11 +310,11 @@ Items/SeedType/Grass_Starter.png
 Items/SeedType/Hops_Starter.png
 Items/SeedType/Jazz_Seeds.png
 Items/SeedType/Kale_Seeds.png
-Items/SeedType/Mahogany_Seed.png
-Items/SeedType/Maple_Seed.png
+Items/SeedType/Mahogany_Seeds.png
+Items/SeedType/Maple_Seeds.png
 Items/SeedType/Melon_Seeds.png
 Items/SeedType/Mixed_Seeds.png
-Items/SeedType/Mystic_Tree_Seed.png
+Items/SeedType/Mystic_Tree_Seeds.png
 Items/SeedType/Parsnip_Seeds.png
 Items/SeedType/Pepper_Seeds.png
 Items/SeedType/Poppy_Seeds.png
@@ -320,7 +322,7 @@ Items/SeedType/Potato_Seeds.png
 Items/SeedType/Powdermelon_Seeds.png
 Items/SeedType/Pumpkin_Seeds.png
 Items/SeedType/Radish_Seeds.png
-Items/SeedType/Rare_Seed.png
+Items/SeedType/Rare_Seeds.png
 Items/SeedType/Red_Cabbage_Seeds.png
 Items/SeedType/Rhubarb_Seeds.png
 Items/SeedType/Rice_Shoot.png
@@ -341,7 +343,7 @@ Items/Shop_Items/Hay.png
 Items/Shop_Items/Joja_Cola.png
 Items/Shop_Items/Quality_Retaining_Soil.png
 Items/Shop_Items/Rice.png
-Items/Shop_Items/Speed-Gro.png
+Items/Shop_Items/Speed_Gro.png
 Items/Shop_Items/Sugar.png
 Items/Shop_Items/Trout_Soup.png
 Items/Shop_Items/Wedding_Ring.png

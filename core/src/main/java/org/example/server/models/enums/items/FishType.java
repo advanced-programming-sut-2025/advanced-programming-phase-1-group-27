@@ -1,7 +1,10 @@
 package org.example.server.models.enums.items;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 import org.example.server.models.enums.Seasons.Season;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,20 +41,17 @@ public enum FishType implements Item {
     private final int energy;
     private final Season season;
     private final boolean isLegendary;
-    private final String address;
+    private final Texture texture;
 
     FishType(int price, Season season, boolean isLegendary, int energy, String address) {
         this.price = price;
         this.season = season;
         this.isLegendary = isLegendary;
         this.energy = energy;
-        this.address = address;
+        this.texture = new Texture(Gdx.files.internal(address));
     }
 
-//    @Override
-//    public String getAddress() {
-//        return this.address;
-//    }
+
 
     public static HashMap<Season, FishType> getCheapestOfSeason() {
         return cheapestOfSeason;
@@ -82,6 +82,11 @@ public enum FishType implements Item {
                 result.add(fish);
         }
         return result;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return texture;
     }
 
     @Override
