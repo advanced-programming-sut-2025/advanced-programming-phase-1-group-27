@@ -60,6 +60,8 @@ public enum MineralType implements Item {
         this.address = address;
     }
 
+
+
     public static ArrayList<MineralType> getForagingMinerals() {
         return foragingMinerals;
     }
@@ -78,6 +80,11 @@ public enum MineralType implements Item {
 
     public Texture getTexture() {
         return new Texture(address);
+    }
+
+    @Override
+    public String getAddress() {
+        return this.address;
     }
 
     public static MineralType getItem(String itemName) {

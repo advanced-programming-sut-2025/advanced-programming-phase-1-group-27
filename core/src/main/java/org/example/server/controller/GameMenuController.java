@@ -136,7 +136,7 @@ public class GameMenuController extends MenuController {
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
 
 
-        System.out.println("Walking to " + i + " and " + j);
+//        System.out.println("Walking to " + i + " and " + j);
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
         Map currentMap = currentPlayer.getCurrentMap();
         Cell destination = currentMap.getCell(i, j);

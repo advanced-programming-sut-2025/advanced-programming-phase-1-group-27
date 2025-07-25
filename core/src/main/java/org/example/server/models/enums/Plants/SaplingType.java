@@ -22,6 +22,11 @@ public enum SaplingType implements Item, PlantSourceType {
         this.address = address;
     }
 
+    @Override
+    public String getAddress() {
+        return this.address;
+    }
+
     public static SaplingType getItem(String itemName) {
         for (SaplingType saplingtype : values()) {
             if (saplingtype.getName().equalsIgnoreCase(itemName.replace(" ", ""))) {

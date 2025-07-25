@@ -120,6 +120,11 @@ public enum FruitType implements Item {
         return price;
     }
 
+    @Override
+    public String getAddress() {
+        return this.address;
+    }
+
     public String getName() {
         return this.toString();
     }

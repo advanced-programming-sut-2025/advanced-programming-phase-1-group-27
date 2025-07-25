@@ -38,6 +38,11 @@ public enum AnimalProduct implements Item {
         return price;
     }
 
+    @Override
+    public String getAddress() {
+        return this.address;
+    }
+
     public boolean isFood() {
         return this != DuckFeather && this != Wool;
     }

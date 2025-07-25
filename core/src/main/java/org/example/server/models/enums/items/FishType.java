@@ -48,8 +48,9 @@ public enum FishType implements Item {
         this.address = address;
     }
 
+    @Override
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public static HashMap<Season, FishType> getCheapestOfSeason() {

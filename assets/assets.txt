@@ -353,6 +353,11 @@ Items/Tools/Axe/Iridium_Axe.png
 Items/Tools/Axe/Steel_Axe.png
 Items/Tools/Backpack/Backpack.png
 Items/Tools/Backpack/Deluxe_Backpack.png
+Items/Tools/Fishing_Rod/Advanced_Iridium_Rod.png
+Items/Tools/Fishing_Rod/Bamboo_Pole.png
+Items/Tools/Fishing_Rod/Fiberglass_Rod.png
+Items/Tools/Fishing_Rod/Iridium_Rod.png
+Items/Tools/Fishing_Rod/Training_Rod.png
 Items/Tools/Hoe/Copper_Hoe.png
 Items/Tools/Hoe/Gold_Hoe.png
 Items/Tools/Hoe/Hoe.png
@@ -364,11 +369,6 @@ Items/Tools/Pickaxe/Gold_Pickaxe.png
 Items/Tools/Pickaxe/Iridium_Pickaxe.png
 Items/Tools/Pickaxe/Pickaxe.png
 Items/Tools/Pickaxe/Steel_Pickaxe.png
-Items/Tools/Rod/Advanced_Iridium_Rod.png
-Items/Tools/Rod/Bamboo_Pole.png
-Items/Tools/Rod/Fiberglass_Rod.png
-Items/Tools/Rod/Iridium_Rod.png
-Items/Tools/Rod/Training_Rod.png
 Items/Tools/Scythe/Golden_Scythe.png
 Items/Tools/Scythe/Iridium_Scythe.png
 Items/Tools/Scythe/Scythe.png
