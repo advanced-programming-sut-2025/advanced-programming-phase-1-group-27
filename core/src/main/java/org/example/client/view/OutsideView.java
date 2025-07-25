@@ -88,11 +88,9 @@ public class OutsideView extends AppMenu {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
-
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-
-        Main.getBatch().begin();
         Main.getBatch().setProjectionMatrix(camera.combined);
+        Main.getBatch().begin();
+
 
         App.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
 
@@ -100,9 +98,15 @@ public class OutsideView extends AppMenu {
         camera.update();
         Main.getBatch().end();
 
-        hudView.render(delta);
-
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+        Main.getBatch().begin();
+        hudView.sobhanAllah(delta);
+        Main.getBatch().end();
+
+
+
     }
 
     @Override

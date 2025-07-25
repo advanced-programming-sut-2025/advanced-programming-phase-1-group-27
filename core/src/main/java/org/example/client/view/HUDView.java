@@ -153,22 +153,27 @@ public class HUDView extends AppMenu{
 
     @Override
     public void render(float delta) {
+    }
+
+    public void sobhanAllah(float delta) {
 
 
         errorLabel.update(delta);
 
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        //stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
-        Main.getBatch().begin();
-        Main.getBatch().end();
+        //Main.getBatch().begin();
+//        stage.draw();
+
+        showInventoryItem();
+        //Main.getBatch().end();
 
         displayClock();
         displayInventoryHotBar();
         displayInputField();
         showErrorMessage();
-        showInventoryItem();
 
-        stage.draw();   // TODO:pak beshe???
+
 
     }
 
