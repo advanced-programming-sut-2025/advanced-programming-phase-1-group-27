@@ -41,6 +41,25 @@ public class HUDController extends MenuController {
 
     }
 
+    public float getItemPosition(Integer slotIndex){
+
+        float imageSize = GameAssetManager.getGameAssetManager().getInventorySelectSlot().getWidth();
+
+        if ( slotIndex == 0 || slotIndex == 1 || slotIndex == 2 ){
+
+            return imageSize * slotIndex;
+
+        }
+
+        else {
+
+            return ( imageSize * slotIndex + slotIndex);
+
+        }
+
+
+    }
+
     public void updateSlotIndex(Integer slotChange){
 
         Player player = App.getCurrentGame().getCurrentPlayer();

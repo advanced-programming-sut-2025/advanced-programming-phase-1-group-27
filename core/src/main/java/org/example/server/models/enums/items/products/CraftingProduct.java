@@ -62,4 +62,11 @@ public enum CraftingProduct implements Item {
         }
         return recipe;
     }
+
+    @Override
+    public String getAddress() {
+        return this.address;
+    }
+
 }
+

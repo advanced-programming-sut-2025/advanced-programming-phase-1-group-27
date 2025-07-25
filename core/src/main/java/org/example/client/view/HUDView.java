@@ -3,6 +3,7 @@ package org.example.client.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,8 +14,10 @@ import org.example.common.models.GraphicalResult;
 import org.example.server.controller.HUDController;
 import org.example.server.models.App;
 import org.example.server.models.GameAssetManager;
-import org.example.server.models.Player;
+import org.example.server.models.Stacks;
+import org.example.server.models.tools.Backpack;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class HUDView extends AppMenu{
@@ -51,7 +54,7 @@ public class HUDView extends AppMenu{
     }
 
 
-    public void displayClock(){
+    private void displayClock(){
 
         controller.updateClockImage();
 
@@ -78,7 +81,7 @@ public class HUDView extends AppMenu{
 
     }
 
-    public void displayInventoryHotBar(){
+    private void displayInventoryHotBar(){
 
 
         inventoryHotBarImage.setPosition( (Gdx.graphics.getWidth()-inventoryHotBarImage.getWidth())/2,10 );
@@ -90,7 +93,7 @@ public class HUDView extends AppMenu{
 
     }
 
-    public void displayInputField(){
+    private void displayInputField(){
 
         if ( tJustPressed ){
             tJustPressed = false;
@@ -111,10 +114,26 @@ public class HUDView extends AppMenu{
 
     }
 
-    public void showErrorMessage() {
+    private void showErrorMessage() {
 
         errorLabel.setPosition(Gdx.graphics.getWidth()/2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight()-40);
         stage.addActor(errorLabel.getMessage());
+
+    }
+
+    private void showInventoryItem(){
+
+        List<Stacks> items = App.getCurrentGame().getCurrentPlayer().getBackpack().getItems();
+
+        for ( int i = 0 ; i < items.size() ; i++ ){
+
+            Texture texture = new Texture(Gdx.files.internal(items.get(i).getItem().getAddress()));
+            Image image = new Image(texture);
+            image.setSize(48,48);
+            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
+            stage.addActor(image);
+
+        }
 
     }
 
@@ -140,6 +159,7 @@ public class HUDView extends AppMenu{
         displayInventoryHotBar();
         displayInputField();
         showErrorMessage();
+        showInventoryItem();
 
         stage.draw();
 

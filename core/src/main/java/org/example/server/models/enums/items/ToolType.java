@@ -113,6 +113,11 @@ public enum ToolType implements Item {
     }
 
     @Override
+    public String getAddress() {
+        return this.address;
+    }
+
+    @Override
     public Integer getPrice() {
         return 0;
     }
