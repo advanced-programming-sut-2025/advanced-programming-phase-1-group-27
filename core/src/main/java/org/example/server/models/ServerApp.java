@@ -17,7 +17,7 @@ public class ServerApp {
     private static ArrayList<Lobby> lobbies = new ArrayList<>();
 
     static {
-        User admin = new User("test" , "pass" , "test" , "test@gmail.com" , Gender.Male);
+        User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
         admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
         Lobby test = new Lobby(admin, false , "pass" , true , 1111 , "test");
         Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
@@ -105,6 +105,9 @@ public class ServerApp {
             if (connection.getUser() != null)
                 onlineUsers.add(connection.getUser());
         }
+        User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
+        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        onlineUsers.add(admin);
         return onlineUsers;
     }
 
