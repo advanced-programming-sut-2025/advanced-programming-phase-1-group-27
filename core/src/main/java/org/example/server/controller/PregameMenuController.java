@@ -44,22 +44,26 @@ public class PregameMenuController {
             return new Message(new HashMap<>(), Message.Type.error);
         }
         HashMap<String, Integer> usersAndChosenMaps = lobby.getUsernameToMap();
-        // TODO: parsa, reedi
-        if (usersAndChosenMaps.containsValue(username)){
+        if(!usersAndChosenMaps.containsKey(username)){
+            usersAndChosenMaps.put(username, -1);
+        }
+        int pastId = usersAndChosenMaps.get(username);
+        if(pastId == mapId){
             return new Message(new HashMap<>(){{
-                put("GraphicalResult", GraphicalResult.getInfo("You can't choose a new map!"));
+                put("GraphicalResult", GraphicalResult.getInfo("You have already chosen this map!"));
             }}, Message.Type.response);
         }
-        if (usersAndChosenMaps.get(mapId).equals("")) {
-            lobby.setMap(username, mapId);
-            return new Message(new HashMap<>() {{
-                put("GraphicalResult", GraphicalResult.getInfo("Map selected successfully!", false));
-            }}, Message.Type.response);
-        } else {
-            return new Message(new HashMap<>() {{
-                put("GraphicalResult", GraphicalResult.getInfo("This map is selected already!"));
-            }}, Message.Type.response);
+        for(String key : usersAndChosenMaps.keySet()){
+            if(usersAndChosenMaps.get(key) == mapId){
+                return new Message(new HashMap<>(){{
+                    put("GraphicalResult", GraphicalResult.getInfo("This map is selected already!"));
+                }}, Message.Type.response);
+            }
         }
+        lobby.setMap(username , mapId);
+        return new Message(new HashMap<>() {{
+            put("GraphicalResult", GraphicalResult.getInfo("Map selected successfully!", false));
+        }}, Message.Type.response);
     }
 
     public static void leaveLobby(Message message) {
@@ -69,13 +73,7 @@ public class PregameMenuController {
         if (lobby == null) {
             return;
         }
-        HashMap<String, Integer> usersAndChosenMaps = lobby.getUsernameToMap();
-        // TODO: parsa, reedi
-//        for(Integer index : usersAndChosenMaps.keySet()) {
-//            if(usersAndChosenMaps.get(index).equals(username)) {
-//                usersAndChosenMaps.put(index, "");
-//            }
-//        }
+        lobby.removeUsernameMap(username);
         User selectedUser = null;
         for(User user : lobby.getUsers()) {
             if(user.getUsername().equals(username)) {

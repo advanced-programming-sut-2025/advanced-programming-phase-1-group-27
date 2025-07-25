@@ -50,6 +50,10 @@ public class Lobby {
         return usernameToMap;
     }
 
+    public void removeUsernameMap(String username) {
+        usernameToMap.remove(username);
+    }
+
     public void setMap(String username, int mapIndex) {
         usernameToMap.put(username, mapIndex);
     }

@@ -7,18 +7,13 @@ import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.HomeView;
 import org.example.client.view.menu.LobbyMenuView;
-import org.example.client.view.menu.MainMenuView;
-import org.example.client.view.menu.PasswordMenuView;
 import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
-import org.example.server.models.enums.Menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Random;
 
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
@@ -29,55 +24,6 @@ public class PregameMenuController extends MenuController {
     public PregameMenuController(PregameMenuView view) {
         this.view = view;
     }
-
-//    public GraphicalResult addUser(){
-//
-//        if (view.getUsernameField().getText().isEmpty())
-//            return new GraphicalResult(
-//                    "Please fill in the field",
-//                    GameAssetManager.getGameAssetManager().getErrorColor()
-//            );
-//
-//        User addedUser = App.getUserByUsername(view.getUsernameField().getText());
-//
-//        if (addedUser == null)
-//            return new GraphicalResult(
-//                    "User not found",
-//                    GameAssetManager.getGameAssetManager().getErrorColor()
-//            );
-//
-//        if (view.getUsernameToMap().containsKey(addedUser))
-//            return new GraphicalResult(
-//                    "This is user has already been added",
-//                    GameAssetManager.getGameAssetManager().getErrorColor()
-//            );
-//
-////        if (addedUser.getCurrentGame() != null)
-////            return new GraphicalResult(
-////                    "This user is already in a game",
-////                    GameAssetManager.getGameAssetManager().getErrorColor()
-////            );
-//
-//        if ( view.getUser1Label().getText().isEmpty() ){
-//            view.getUser1Label().setText("#    " + addedUser.getUsername());
-//        }
-//        else if ( view.getUser2Label().getText().isEmpty() ){
-//            view.getUser2Label().setText("#    " + addedUser.getUsername());
-//        }
-//        else if ( view.getUser3Label().getText().isEmpty() ){
-//            view.getUser3Label().setText("#    " + addedUser.getUsername());
-//            view.setGameFull(true);
-//        }
-//        view.setCurrentMapSelector(addedUser);
-//        view.getUsernameField().setText("");
-//        view.updateUsersAndChosenMaps(addedUser, assignRandomMap());
-//
-//        return new GraphicalResult(
-//                "User added successfully" + (view.isGameFull()? " . Capacity is full" : ""),
-//                GameAssetManager.getGameAssetManager().getAcceptColor(),
-//                false
-//        );
-//    }
 
     public GraphicalResult chooseMap(int mapId) {
         Message message = new Message(new HashMap<>(){{
@@ -103,10 +49,9 @@ public class PregameMenuController extends MenuController {
                     "There should be at least two players to start the game",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
-        // TODO : Rassa!
-//        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
-//            put("lobbyInfo", view.getLobby().getInfo());
-//        }}, Message.Type.create_game));
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("lobbyInfo", view.getLobby().getInfo());
+        }}, Message.Type.create_game));
 
         return new GraphicalResult(
                 "Game created successfully",
@@ -128,27 +73,12 @@ public class PregameMenuController extends MenuController {
                 miniPlayers
         ));
         clientGame.init();
-//        currentPlayer.setFarmMap(clientGame.getFarmMap(view.getUsernameToMap().get(currentPlayer.getUsername())));
+        currentPlayer.setFarmMap(clientGame.getFarmMap(view.getLobby().getUsernameToMap().get(currentPlayer.getUsername())));
 
         Main.getMain().getScreen().dispose();
         ClientApp.setCurrentMenu(new HomeView());
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
-
-
-//    public int assignRandomMap(){
-//
-//        int randomMap;
-//
-//        do{
-//            randomMap = (new Random().nextInt(1,5));
-//        }while( alreadyChosen(randomMap) );
-//
-//
-//        return randomMap;
-//
-//    }
-
 
     public Lobby getLobby(int id){
         Message message = new Message(new HashMap<>(){{
