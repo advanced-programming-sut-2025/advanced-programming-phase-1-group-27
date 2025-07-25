@@ -123,17 +123,17 @@ public class HUDView extends AppMenu{
 
     private void showInventoryItem(){
 
-        List<Stacks> items = App.getCurrentGame().getCurrentPlayer().getBackpack().getItems();
-
-        for ( int i = 0 ; i < items.size() ; i++ ){
-
-            Texture texture = new Texture(Gdx.files.internal(items.get(i).getItem().getAddress()));
-            Image image = new Image(texture);
-            image.setSize(48,48);
-            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
-            stage.addActor(image);
-
-        }
+//        List<Stacks> items = App.getCurrentGame().getCurrentPlayer().getBackpack().getItems();
+//
+//        for ( int i = 0 ; i < items.size() ; i++ ){
+//
+//            Texture texture = new Texture(Gdx.files.internal(items.get(i).getItem().getAddress()));
+//            Image image = new Image(texture);
+//            image.setSize(48,48);
+//            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
+//            stage.addActor(image);
+//
+//        }
 
     }
 

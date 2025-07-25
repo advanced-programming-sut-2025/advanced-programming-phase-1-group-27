@@ -27,10 +27,10 @@ public enum ShopItems implements Item {
         this.address = address;
     }
 
-    @Override
-    public String getAddress() {
-        return this.address;
-    }
+//    @Override
+//    public String getAddress() {
+//        return this.address;
+//    }
 
     public static ShopItems getItem(String itemName) {
         for (ShopItems shopItems : ShopItems.values()) {

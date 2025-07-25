@@ -48,10 +48,10 @@ public enum FishType implements Item {
         this.address = address;
     }
 
-    @Override
-    public String getAddress() {
-        return this.address;
-    }
+//    @Override
+//    public String getAddress() {
+//        return this.address;
+//    }
 
     public static HashMap<Season, FishType> getCheapestOfSeason() {
         return cheapestOfSeason;

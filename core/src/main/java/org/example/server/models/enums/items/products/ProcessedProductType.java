@@ -53,11 +53,11 @@ public enum ProcessedProductType implements Item {
         this.processingTime = processingTime;
         this.address = address;
     }
-
-    @Override
-    public String getAddress() {
-        return this.address;
-    }
+//
+//    @Override
+//    public String getAddress() {
+//        return this.address;
+//    }
 
     private static int getPriceWithMultiplier(Item item, double multiplier) {
         return (int) (item.getPrice() * multiplier);

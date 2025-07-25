@@ -86,9 +86,9 @@ public enum CookingProduct implements Item {
         return energy;
     }
 
-    @Override
-    public String getAddress() {
-        return this.address;
-    }
+//    @Override
+//    public String getAddress() {
+//        return this.address;
+//    }
 
 }

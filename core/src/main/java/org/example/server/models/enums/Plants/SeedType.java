@@ -77,10 +77,10 @@ public enum SeedType implements PlantSourceType, Item {
         this.address = address;
     }
 
-    @Override
-    public String getAddress() {
-        return this.address;
-    }
+//    @Override
+//    public String getAddress() {
+//        return this.address;
+//    }
 
     public static HashMap<Season, ArrayList<SeedType>> getForagingSeedsBySeason() {
         return foragingSeedsBySeason;
