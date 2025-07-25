@@ -1,5 +1,6 @@
 package org.example.client.controller;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.LobbyMenuView;
@@ -48,7 +49,7 @@ public class PasswordMenuController extends MenuController{
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
-        GraphicalResult result = response.getFromBody("GraphicalResult");
+        GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
         if(result.hasError()){
             return new GraphicalResult(
                     result.getMessage().toString(),
