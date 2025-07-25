@@ -27,7 +27,6 @@ public class LobbyMenuController extends MenuController {
                 , Message.Type.get_lobbies_list);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
-            System.out.println("INJAM");
             return new ArrayList<>();
         }
         ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
@@ -40,12 +39,9 @@ public class LobbyMenuController extends MenuController {
     }
 
     public GraphicalResult findViaGraphicalResult() {
-        if (view.getGameIdTextField().getText().isEmpty()) {
-            return new GraphicalResult(
-                    "No id has been entered!",
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
-        }
+        if (view.getGameIdTextField().getText().isEmpty())
+            return new GraphicalResult("No id has been entered!");
+
         int id;
         try {
             id = Integer.parseInt(view.getGameIdTextField().getText());

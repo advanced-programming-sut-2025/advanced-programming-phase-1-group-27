@@ -164,6 +164,8 @@ public class Cell {
             return GameAssetManager.getGameAssetManager().getQuarryCellTexture();
         } else if (cellType == CellType.View)
             return GameAssetManager.getGameAssetManager().getNpcMapCellTexture();
+        else if (cellType == CellType.Water)
+            return GameAssetManager.getGameAssetManager().getWaterCellTexture();
         return null;
     }
 

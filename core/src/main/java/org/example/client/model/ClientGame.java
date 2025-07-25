@@ -1,5 +1,6 @@
 package org.example.client.model;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.Lobby;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.FarmMapBuilder;
@@ -38,7 +39,7 @@ public class ClientGame {
         this.players = players;
     }
 
-    public void init() {
+    public void init(ArrayList<LinkedTreeMap<String, Object>>[] info) {
         blackSmith = new BlackSmith(ShopType.Blacksmith);
         jojaMart = new Shop(ShopType.JojaMart);
         pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
@@ -77,8 +78,8 @@ public class ClientGame {
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
-            director.buildMap(builder, i);
-            farmMaps[i] = builder.getFinalProduct();
+            director.buildMapWithoutForaging(builder, i);
+            farmMaps[i].addForaging(info[i]);
         }
     }
 
@@ -88,5 +89,9 @@ public class ClientGame {
 
     public FarmMap getFarmMap(int mapIndex) {
         return farmMaps[mapIndex];
+    }
+
+    public NPCMap getNpcMap() {
+        return npcMap;
     }
 }

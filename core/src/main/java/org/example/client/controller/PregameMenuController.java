@@ -7,6 +7,7 @@ import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.HomeView;
 import org.example.client.view.menu.LobbyMenuView;
+
 import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
@@ -45,10 +46,12 @@ public class PregameMenuController extends MenuController {
         if (!ClientApp.getLoggedInUser().getUsername().equals(view.getLobby().getAdmin().getUsername()))
             return new GraphicalResult("Only the host can start the game");
         if (view.getLobby().getUsers().size() < 2)
-            return new GraphicalResult(
-                    "There should be at least two players to start the game",
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
+            return new GraphicalResult("There should be at least two players to start the game");
+        for (User user : view.getLobby().getUsers()) {
+            if (!view.getLobby().getUsernameToMap().containsKey(user.getUsername()))
+                return new GraphicalResult("All players should choose their map to start the game!");
+        }
+
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("lobbyInfo", view.getLobby().getInfo());
         }}, Message.Type.create_game));
@@ -60,7 +63,7 @@ public class PregameMenuController extends MenuController {
         );
     }
 
-    public void startGame() {
+    public void startGame(Message message) {
         ArrayList<MiniPlayer> miniPlayers = new ArrayList<>();
         for (User user : view.getLobby().getUsers()) {
             miniPlayers.add(new MiniPlayer(user));
@@ -72,8 +75,10 @@ public class PregameMenuController extends MenuController {
                 currentPlayer,
                 miniPlayers
         ));
-        clientGame.init();
-        currentPlayer.setFarmMap(clientGame.getFarmMap(view.getLobby().getUsernameToMap().get(currentPlayer.getUsername())));
+        clientGame.init(message.getFromBody("farmInfo"));
+        currentPlayer.setFarmMap(clientGame.getFarmMap(
+                view.getLobby().getUsernameToMap().get(currentPlayer.getUsername())
+        ));
 
         Main.getMain().getScreen().dispose();
         ClientApp.setCurrentMenu(new HomeView());

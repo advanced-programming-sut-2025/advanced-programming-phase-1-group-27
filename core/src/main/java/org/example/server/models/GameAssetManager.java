@@ -54,10 +54,12 @@ public class GameAssetManager {
 
     private final Texture homeTexture = new Texture("assets/Images/home_cropped.png");
     private final Texture greenHouseTexture = new Texture("assets/Images/greenhouse2.1.png");
+    private final Texture hutTexture = new Texture("assets/Images/hut.png");
 
     private final Texture freeCellTexture = new Texture("assets/Images/Floorings/Free4.png");
     private final Texture quarryCellTexture = new Texture("assets/Images/Floorings/Quarry.png");
     private final Texture NpcMapCellTexture = new Texture("assets/Images/Floorings/NPCValley.png");
+    private final Texture WaterCellTexture = new Texture("assets/Images/Floorings/Water.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
 
@@ -255,6 +257,14 @@ public class GameAssetManager {
 
     public Texture getNpcMapCellTexture() {
         return NpcMapCellTexture;
+    }
+
+    public Texture getWaterCellTexture() {
+        return WaterCellTexture;
+    }
+
+    public Texture getHutTexture() {
+        return hutTexture;
     }
 
     public Texture getInventoryHotBar() {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.model.ClientApp;
 import org.example.server.controller.GameMenuController;
 import org.example.server.controller.OutsidePlayerController;
 import org.example.server.models.App;
@@ -93,38 +94,7 @@ public class OutsideView extends AppMenu {
         Main.getBatch().begin();
         Main.getBatch().setProjectionMatrix(camera.combined);
 
-
-        Cell[][] map = App.getCurrentGame().getCurrentPlayer().getCurrentMap().getCells();
-
-        for (int i = map.length - 1; i >= 0; i--) {
-            for (int j = 0; j < map[i].length; j++) {
-                int y = (map.length - 1 - i) * tileSize;
-                int x = j * tileSize;
-                Texture texture = map[i][j].getTexture();
-
-                if (texture == null) continue;
-                Main.getBatch().draw(texture, x, y, tileSize, tileSize);
-
-                if (map[i][j].getObject() instanceof Crop crop) {
-                    texture = ((CropType) crop.getType()).getTexture();
-                    if (texture != null)
-                        Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
-                }
-                if (map[i][j].getObject() instanceof MineralType mineral) {
-                    texture = mineral.getTexture();
-                    if (texture != null)
-                        Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
-                }
-            }
-        }
-        if (App.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof FarmMap farmMap) {
-            Position position = farmMap.getGreenHouse().getTopLeftCell().getPosition();
-            int x = OutsideView.getGraphicalPosition(position).getX() - 20,
-                    y = OutsideView.getGraphicalPosition(position).getY() - 30;
-            Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
-                    x, y - 240, 320, 280);
-        }
-
+        App.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
 
         playerController.update();
         camera.update();
