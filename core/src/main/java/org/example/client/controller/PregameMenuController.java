@@ -48,7 +48,8 @@ public class PregameMenuController extends MenuController {
         if (view.getLobby().getUsers().size() < 2)
             return new GraphicalResult("There should be at least two players to start the game");
         for (User user : view.getLobby().getUsers()) {
-            if (!view.getLobby().getUsernameToMap().containsKey(user.getUsername()))
+            if (!view.getLobby().getUsernameToMap().containsKey(user.getUsername()) ||
+                    view.getLobby().getUsernameToMap().get(user.getUsername()) == -1)
                 return new GraphicalResult("All players should choose their map to start the game!");
         }
 

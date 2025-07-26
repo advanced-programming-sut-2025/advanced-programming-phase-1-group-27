@@ -335,5 +335,4 @@ public enum CropType implements PlantType {
     public String toString() {
         return this.name();
     }
-
 }

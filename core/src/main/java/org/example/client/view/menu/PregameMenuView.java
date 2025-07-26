@@ -398,10 +398,6 @@ public class PregameMenuView extends AppMenu {
 
     }
 
-    public void startGame(){
-        controller.createGame();
-    }
-
     public Lobby getLobby() {
         return lobby;
     }

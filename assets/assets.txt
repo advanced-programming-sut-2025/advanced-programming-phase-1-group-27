@@ -45,6 +45,7 @@ Images/Floorings/Free2.png
 Images/Floorings/Free4.png
 Images/Floorings/NPCValley.png
 Images/Floorings/Quarry.png
+Images/Floorings/Water.png
 Images/Fruits/Eggplant.png
 Images/Fruits/Grape.png
 Images/Fruits/Hazelnut.png
@@ -58,6 +59,7 @@ Images/home2.png
 Images/home2_expanded_left_1920x1080.png
 Images/home3.png
 Images/home_cropped.png
+Images/hut.png
 Images/menu_background.png
 Images/stardew_valley_text.png
 Inventory/InventoryHotbar.png

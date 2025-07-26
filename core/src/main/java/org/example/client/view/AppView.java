@@ -3,11 +3,13 @@ package org.example.client.view;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.*;
+import org.example.common.models.Message;
+import org.example.server.controller.PregameMenuController;
 import org.example.server.models.*;
 import org.example.server.models.enums.Gender;
 import org.example.server.models.enums.Menu;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class AppView {
@@ -19,8 +21,22 @@ public class AppView {
         } while (App.getCurrentMenu() != Menu.ExitMenu);
     }
 
-    public void runViaGraphics() {
+    private void cheat(){
+        User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
+        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        ClientApp.setLoggedInUser(admin);
+        Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
+        lobby.getUsernameToMap().put(admin.getUsername() , 0);
 
+        ClientApp.setCurrentMenu(new PregameMenuView(lobby));
+
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("lobbyInfo", lobby.getInfo());
+        }}, Message.Type.create_game));
+    }
+
+
+    public void runViaGraphics() {
 //        if (ClientApp.loadSavedUser()) {
 //            Main.getMain().setScreen(new MainMenuView());
 //            Main.getMain().getScreen().dispose();
@@ -28,6 +44,10 @@ public class AppView {
 //            return;
 //        }
 
+        // For Graphics team
+//        cheat();
+
+        // For GigaChads
         Main.getMain().setScreen(new WelcomeMenuView());
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new HomeView());
