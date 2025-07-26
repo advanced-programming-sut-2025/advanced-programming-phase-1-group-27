@@ -39,7 +39,7 @@ public class ClientGame {
         this.players = players;
     }
 
-    public void init(ArrayList<LinkedTreeMap<String, Object>>[] info) {
+    public void init(ArrayList<ArrayList<LinkedTreeMap<String, Object>>> info) {
         blackSmith = new BlackSmith(ShopType.Blacksmith);
         jojaMart = new Shop(ShopType.JojaMart);
         pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
@@ -79,7 +79,8 @@ public class ClientGame {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
             director.buildMapWithoutForaging(builder, i);
-            farmMaps[i].addForaging(info[i]);
+            farmMaps[i] = builder.getFinalProduct();
+            farmMaps[i].addForaging(info.get(i));
         }
     }
 

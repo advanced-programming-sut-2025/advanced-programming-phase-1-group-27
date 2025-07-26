@@ -24,7 +24,6 @@ public class PregameMenuController {
             player.setFarmMap(game.getFarmMap(mapIndex));
             player.setCurrentCell(game.getFarmMap(mapIndex).getCell(8, 70));
         }
-        System.out.println("GHABLESH");
         notifyPlayers(players, game);
     }
 

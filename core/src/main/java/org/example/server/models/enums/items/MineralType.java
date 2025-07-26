@@ -78,7 +78,6 @@ public enum MineralType implements Item {
         return noneMinerals;
     }
 
-    @Override
     public String getAddress() {
         return this.address;
     }

@@ -162,7 +162,6 @@ public class Game {
             FarmMapDirector director = new FarmMapDirector();
             director.buildMapAshghal(builder, i);
             farmMaps[i] = builder.getFinalProduct();
-            // TODO: update farm map from server
         }
 
     }
@@ -598,10 +597,10 @@ public class Game {
         return result.toString();
     }
 
-    public ArrayList[] getFarmInfo() {
-        ArrayList[] info = new ArrayList[4];
+    public ArrayList getFarmInfo() {
+        ArrayList info = new ArrayList();
         for (int farmId = 0; farmId < 4; farmId++) {
-            info[farmId] = farmMaps[farmId].getForagingInfo();
+            info.add(farmMaps[farmId].getForagingInfo());
         }
         return info;
     }

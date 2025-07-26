@@ -136,23 +136,23 @@ public enum CropType implements PlantType {
     Daffodil(FruitType.Daffodil, new int[]{}, 30, 0
             , null, 0, false, false, false
             , new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter},
-            new Texture("assets/Images/Crops/Daffodil.png")),
+            "assets/Images/Crops/Daffodil.png"),
     Dandelion(FruitType.Dandelion, new int[]{}, 40, 0
             , null, 25, false, true, false
             , new Season[]{Season.Spring},
-            new Texture("assets/Images/Crops/Dandelion.png")),
+            "assets/Images/Crops/Dandelion.png"),
     Leek(FruitType.Leek, new int[]{}, 60, 0
             , null, 40, false, true, false
             , new Season[]{Season.Spring},
-            new Texture("assets/Images/Crops/Leek.png")),
+            "assets/Images/Crops/Leek.png"),
     Morel(FruitType.Morel, new int[]{}, 150, 0
             , null, 20, false, true, false
             , new Season[]{Season.Spring},
-            new Texture("assets/Images/Crops/Morel.png")),
+            "assets/Images/Crops/Morel.png"),
     SalmonBerry(FruitType.SalmonBerry, new int[]{}, 5, 0
             , null, 25, false, true, false
             , new Season[]{Season.Spring},
-            new Texture("assets/Images/Crops/Salmonberry.png")),
+            "assets/Images/Crops/Salmonberry.png"),
     SpringOnion(FruitType.SpringOnion, new int[]{}, 8, 0
             , null, 13, false, true, false
             , new Season[]{Season.Spring}),
@@ -168,7 +168,7 @@ public enum CropType implements PlantType {
     SpiceBerry(FruitType.SpiceBerry, new int[]{}, 80, 0
             , null, 25, false, true, false
             , new Season[]{Season.Summer},
-            new Texture("assets/Images/Crops/Spice_Berry.png")),
+            "assets/Images/Crops/Spice_Berry.png"),
     SweetPea(FruitType.SweetPea, new int[]{}, 50, 0
             , null, 0, false, false, false
             , new Season[]{Season.Summer}),
@@ -178,7 +178,7 @@ public enum CropType implements PlantType {
     Chanterelle(FruitType.Chanterelle, new int[]{}, 160, 0
             , null, 75, false, true, false
             , new Season[]{Season.Fall},
-            new Texture("assets/Images/Crops/Chanterelle.png")),
+            "assets/Images/Crops/Chanterelle.png"),
     Hazelnut(FruitType.Hazelnut, new int[]{}, 40, 0
             , null, 38, false, true, false
             , new Season[]{Season.Fall}),
@@ -191,14 +191,14 @@ public enum CropType implements PlantType {
     Crocus(FruitType.Crocus, new int[]{}, 60, 0
             , null, 0, false, false, false
             , new Season[]{Season.Winter},
-            new Texture("assets/Images/Crops/Crocus.png")),
+            "assets/Images/Crops/Crocus.png"),
     CrystalFruit(FruitType.CrystalFruit, new int[]{}, 150, 0
             , null, 63, false, true, false
             , new Season[]{Season.Winter}),
     Holly(FruitType.Holly, new int[]{}, 80, 0
             , null, -37, false, true, false
             , new Season[]{Season.Winter},
-            new Texture("assets/Images/Crops/Holly.png")),
+            "assets/Images/Crops/Holly.png"),
     SnowYum(FruitType.SnowYam, new int[]{}, 100, 0
             , null, 30, false, true, false
             , new Season[]{Season.Winter}),
@@ -228,17 +228,17 @@ public enum CropType implements PlantType {
     private final Integer regrowthTime;
     private final boolean oneTime, isEdible, canBecomeGiant;
     private final ArrayList<Season> seasons;
-    private final Texture texture;
+    private final String address;
     private SeedType source;
 
     CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons) {
-        this(fruit, stages, price, totalHarvestTime, regrowthTime, energy, oneTime, isEdible, canBecomeGiant, seasons, null);
+        this(fruit, stages, price, totalHarvestTime, regrowthTime, energy, oneTime, isEdible, canBecomeGiant, seasons, "Clock/Arrow.png");
     }
 
     CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons,
-             Texture texture) {
+             String address) {
         this.fruit = fruit;
         this.stages = stages;
         this.price = price;
@@ -250,7 +250,7 @@ public enum CropType implements PlantType {
         this.isEdible = isEdible;
         this.canBecomeGiant = canBecomeGiant;
         this.seasons = new ArrayList<>(List.of(seasons));
-        this.texture = texture;
+        this.address = address;
     }
 
     public static HashMap<Season, ArrayList<CropType>> getForagingCropsBySeason() {
@@ -323,12 +323,12 @@ public enum CropType implements PlantType {
         return seasons;
     }
 
-    public Integer getPrice() {
-        return price;
+    public String getAddress() {
+        return address;
     }
 
-    public Texture getTexture() {
-        return texture;
+    public Integer getPrice() {
+        return price;
     }
 
     @Override

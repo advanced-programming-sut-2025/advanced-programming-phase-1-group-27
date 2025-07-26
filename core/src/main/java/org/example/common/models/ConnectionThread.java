@@ -56,6 +56,16 @@ abstract public class ConnectionThread extends Thread {
         }
     }
 
+    public synchronized void sendMessageAndPrint(Message message) {
+        String JSONString = JSONUtils.toJson(message);
+        System.out.println("Json: " + JSONString);
+        try {
+            dataOutputStream.writeUTF(JSONString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         initialized = false;

@@ -14,12 +14,12 @@ import java.util.Scanner;
 
 public class AppView {
 
-    public void runViaTerminal() {
-        Scanner scanner = new Scanner(System.in);
-        do {
-            App.getCurrentMenu().executeCommands(scanner);
-        } while (App.getCurrentMenu() != Menu.ExitMenu);
-    }
+//    public void runViaTerminal() {
+//        Scanner scanner = new Scanner(System.in);
+//        do {
+//            App.getCurrentMenu().executeCommands(scanner);
+//        } while (App.getCurrentMenu() != Menu.ExitMenu);
+//    }
 
     private void cheat(){
         User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
@@ -46,7 +46,7 @@ public class AppView {
 
         Main.getMain().setScreen(new WelcomeMenuView());
         // For Graphics team
-        cheat();
+//        cheat();
 
         // For GigaChads
 //        Main.getMain().getScreen().dispose();

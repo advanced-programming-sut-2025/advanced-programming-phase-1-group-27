@@ -10,7 +10,7 @@ import org.example.server.Main;
 public class ServerLauncher {
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
-        new Lwjgl3Application(new Main(args), getDefaultConfiguration());
+//        new Lwjgl3Application(new Main(args), getDefaultConfiguration());
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {

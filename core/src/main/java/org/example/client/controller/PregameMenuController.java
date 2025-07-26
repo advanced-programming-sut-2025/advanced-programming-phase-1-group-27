@@ -1,5 +1,6 @@
 package org.example.client.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
@@ -82,9 +83,11 @@ public class PregameMenuController extends MenuController {
                 view.getLobby().getUsernameToMap().get(currentPlayer.getUsername())
         ));
 
-        Main.getMain().getScreen().dispose();
-        ClientApp.setCurrentMenu(new HomeView());
-        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        Gdx.app.postRunnable(() -> {
+            Main.getMain().getScreen().dispose();
+            ClientApp.setCurrentMenu(new HomeView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        });
     }
 
     public Lobby getLobby(int id){

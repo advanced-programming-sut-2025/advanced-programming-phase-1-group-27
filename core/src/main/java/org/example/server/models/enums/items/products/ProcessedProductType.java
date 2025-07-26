@@ -1,7 +1,5 @@
 package org.example.server.models.enums.items.products;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 import org.example.server.models.enums.items.MineralType;
 import org.example.server.models.enums.items.Recipe;

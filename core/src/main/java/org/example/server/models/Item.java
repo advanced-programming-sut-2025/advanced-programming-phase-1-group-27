@@ -1,16 +1,13 @@
 package org.example.server.models;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.example.common.models.GameAssetManager;
 
 public interface Item {
     public abstract Integer getPrice();
-//    public String getAddress();
 
-//    default String getAddress() {
-//        return null;
-//    }
     default Texture getTexture() {
-        return null;
+        return GameAssetManager.getGameAssetManager().getItemTexture(this);
     }
 
     default String getName() {

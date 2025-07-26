@@ -7,31 +7,25 @@ import org.example.client.view.shopview.*;
 import java.util.Scanner;
 
 public enum Menu {
-    WelcomeMenu(new WelcomeMenuView()),
-    LoginMenu(new LoginMenuView()),
-    RegisterMenu(new RegisterMenuView()),
-    ForgetPasswordMenu(new SecurityQuestionMenuView(null)),
-    MainMenu(new MainMenuView()),
-    PregameMenu(null),
-    GameMenu(new GameView()),
-    ProfileMenu(new ProfileMenuView()),
-    Home(null),
-    Outside(null),
-    BlackSmithShop(new BlackSmithShop()),
-    CarpenterShop(new CarpenterShop()),
-    FishShop(new FishShop()),
-    JojaMartShop(new JojaMartShop()),
-    MarnieRanch(new MarnieRanch()),
-    PierreGeneralShop(new PierreGeneralShop()),
-    StardropSaloonShop(new StardropSaloonShop()),
-    Trade(new TradeView()),
-    ExitMenu(new ExitMenuView());
-
-    private final AppMenu menu;
-
-    Menu(AppMenu menu) {
-        this.menu = menu;
-    }
+    WelcomeMenu,
+    LoginMenu,
+    RegisterMenu,
+    ForgetPasswordMenu,
+    MainMenu,
+    PregameMenu,
+    GameMenu,
+    ProfileMenu,
+    Home,
+    Outside,
+    BlackSmithShop,
+    CarpenterShop,
+    FishShop,
+    JojaMartShop,
+    MarnieRanch,
+    PierreGeneralShop,
+    StardropSaloonShop,
+    Trade,
+    ExitMenu;
 
     public static Menu getMenu(String menuName) {
         for (Menu menu : Menu.values()) {
@@ -41,12 +35,8 @@ public enum Menu {
         return null;
     }
 
-    public void executeCommands(Scanner scanner) {
-        menu.executeCommands(scanner);
-    }
-
     public AppMenu getMenu() {
-        return menu;
+        return null;
     }
 
     public boolean isShop() {

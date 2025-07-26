@@ -1,5 +1,7 @@
 package org.example.server.models.enums.Plants;
 
+import com.badlogic.gdx.graphics.Texture;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.enums.Seasons.Season;
 
 import java.util.ArrayList;
@@ -20,6 +22,10 @@ public interface PlantType {
     public ArrayList<Season> getSeasons();
 
     public String toString();
+
+    default Texture getTexture() {
+        return GameAssetManager.getGameAssetManager().getPlantTexture(this);
+    }
 
     default String getName() {
         return this.toString().replaceAll("([A-Z])", " $1").trim();

@@ -10,9 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.example.server.models.Item;
-import org.example.server.models.enums.Plants.FruitType;
-import org.example.server.models.enums.Plants.SaplingType;
-import org.example.server.models.enums.Plants.SeedType;
+import org.example.server.models.enums.Plants.*;
 import org.example.server.models.enums.items.FishType;
 import org.example.server.models.enums.items.MineralType;
 import org.example.server.models.enums.items.ShopItems;
@@ -83,49 +81,8 @@ public class GameAssetManager {
     private final Texture coinTexture = new Texture(Gdx.files.internal("Items/Shop_Items/Coin.png"));
 
     private final HashMap<Item, Texture> itemTextureMap = new HashMap<>() {{
-        // ToolType
-        put(ToolType.BasicHoe, new Texture("Items/Tools/Hoe/Hoe.png"));
-        put(ToolType.CopperHoe, new Texture("Items/Tools/Hoe/Copper_Hoe.png"));
-        put(ToolType.IronHoe, new Texture("Items/Tools/Hoe/Steel_Hoe.png"));
-        put(ToolType.GoldHoe, new Texture("Items/Tools/Hoe/Gold_Hoe.png"));
-        put(ToolType.IridiumHoe, new Texture("Items/Tools/Hoe/Iridium_Hoe.png"));
-
-        put(ToolType.BasicPickaxe, new Texture("Items/Tools/Pickaxe/Pickaxe.png"));
-        put(ToolType.CopperPickaxe, new Texture("Items/Tools/Pickaxe/Copper_Pickaxe.png"));
-        put(ToolType.IronPickaxe, new Texture("Items/Tools/Pickaxe/Steel_Pickaxe.png"));
-        put(ToolType.GoldPickaxe, new Texture("Items/Tools/Pickaxe/Gold_Pickaxe.png"));
-        put(ToolType.IridiumPickaxe, new Texture("Items/Tools/Pickaxe/Iridium_Pickaxe.png"));
-
-        put(ToolType.BasicAxe, new Texture("Items/Tools/Axe/Axe.png"));
-        put(ToolType.CopperAxe, new Texture("Items/Tools/Axe/Copper_Axe.png"));
-        put(ToolType.IronAxe, new Texture("Items/Tools/Axe/Steel_Axe.png"));
-        put(ToolType.GoldAxe, new Texture("Items/Tools/Axe/Gold_Axe.png"));
-        put(ToolType.IridiumAxe, new Texture("Items/Tools/Axe/Iridium_Axe.png"));
-
-        put(ToolType.BasicWateringCan, new Texture("Items/Tools/Watering_Can/Watering_Can.png"));
-        put(ToolType.CopperWateringCan, new Texture("Items/Tools/Watering_Can/Copper_Watering_Can.png"));
-        put(ToolType.IronWateringCan, new Texture("Items/Tools/Watering_Can/Steel_Watering_Can.png"));
-        put(ToolType.GoldWateringCan, new Texture("Items/Tools/Watering_Can/Gold_Watering_Can.png"));
-        put(ToolType.IridiumWateringCan, new Texture("Items/Tools/Watering_Can/Iridium_Watering_Can.png"));
-
-        put(ToolType.TrainingRod, new Texture("Items/Tools/Fishing_Rod/Training_Rod.png"));
-        put(ToolType.BambooPole, new Texture("Items/Tools/Fishing_Rod/Bamboo_Pole.png"));
-        put(ToolType.FiberglassRod, new Texture("Items/Tools/Fishing_Rod/Fiberglass_Rod.png"));
-        put(ToolType.IridiumRod, new Texture("Items/Tools/Fishing_Rod/Iridium_Rod.png"));
-
-        put(ToolType.Scythe, new Texture("Items/Tools/Scythe/Scythe.png"));
-        put(ToolType.MilkPail, new Texture("Items/Tools/Milk_Pail.png"));
-        put(ToolType.Shear, new Texture("Items/Tools/Shear.png"));
-
-        put(ToolType.BasicBackpack, new Texture("Items/Tools/Backpack/Backpack.png"));
-        put(ToolType.LargeBackpack, new Texture("Items/Tools/Backpack/Backpack.png"));  // Note: Same as Basic?
-        put(ToolType.DeluxeBackpack, new Texture("Items/Tools/Backpack/Deluxe_Backpack.png"));
-
-        put(ToolType.BasicTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Copper.png"));
-        put(ToolType.CopperTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Copper.png"));
-        put(ToolType.IronTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Steel.png"));
-        put(ToolType.GoldTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Gold.png"));
-        put(ToolType.IridiumTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Iridium.png"));
+        for (ToolType toolType : ToolType.values())
+            put(toolType, new Texture(Gdx.files.internal(toolType.getAddress())));
 
         for (SeedType seedType : SeedType.values())
             put(seedType, new Texture(Gdx.files.internal(seedType.getAddress())));
@@ -153,6 +110,12 @@ public class GameAssetManager {
 
         for (FishType fishType : FishType.values())
             put(fishType, new Texture(Gdx.files.internal(fishType.getAddress())));
+    }};
+
+    private final HashMap<PlantType, Texture> plantTextureMap = new HashMap<>() {{
+        for (CropType cropType : CropType.values()) {
+            put(cropType, new Texture(Gdx.files.internal(cropType.getAddress())));
+        }
     }};
 
     private final Animation<Sprite> walkDown = new Animation<>(
@@ -373,5 +336,9 @@ public class GameAssetManager {
 
     public Texture getItemTexture(Item item) {
         return itemTextureMap.get(item);
+    }
+
+    public Texture getPlantTexture(PlantType plantType) {
+        return plantTextureMap.get(plantType);
     }
 }
