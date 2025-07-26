@@ -44,13 +44,13 @@ public class AppView {
 //            return;
 //        }
 
+        Main.getMain().setScreen(new WelcomeMenuView());
         // For Graphics team
-//        cheat();
+        cheat();
 
         // For GigaChads
-        Main.getMain().setScreen(new WelcomeMenuView());
-        Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new HomeView());
+//        Main.getMain().getScreen().dispose();
+//        Main.getMain().setScreen(new HomeView());
 
 //        Main.getMain().getScreen().dispose();
 //        Main.getMain().setScreen(new LobbyMenuView());

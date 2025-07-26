@@ -8,7 +8,7 @@ import org.example.client.Main;
 import org.example.client.view.HomeView;
 import org.example.client.view.OutsideView;
 import org.example.server.models.App;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.enums.Menu;
 
 import static java.lang.Math.max;

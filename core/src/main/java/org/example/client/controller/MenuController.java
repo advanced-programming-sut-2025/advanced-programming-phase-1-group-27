@@ -2,7 +2,7 @@ package org.example.client.controller;
 
 import com.badlogic.gdx.audio.Sound;
 import org.example.server.models.App;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.Result;
 
 public abstract class MenuController {

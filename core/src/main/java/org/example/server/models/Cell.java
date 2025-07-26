@@ -1,6 +1,7 @@
 package org.example.server.models;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;

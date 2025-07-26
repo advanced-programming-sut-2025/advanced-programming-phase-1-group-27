@@ -5,21 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.client.controller.shopControllers.BlackSmithShopController;
-import org.example.client.model.ClientApp;
-import org.example.server.controller.GameMenuController;
-import org.example.server.controller.ToolController;
-import org.example.server.models.App;
-import org.example.server.models.GameAssetManager;
-import org.example.server.models.Result;
-import org.example.server.models.enums.Menu;
+import org.example.common.models.GameAssetManager;
 import org.example.client.view.AppMenu;
-import org.example.client.view.GameView;
 import org.example.server.models.enums.NPCType;
-import org.example.server.models.enums.commands.*;
 
-import java.awt.*;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class BlackSmithShop extends AppMenu {
     private final BlackSmithShopController controller;

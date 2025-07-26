@@ -1,4 +1,4 @@
-package org.example.server.models;
+package org.example.common.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -9,8 +9,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import org.example.server.models.Item;
+import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.utils.MusicPlayer;
-import org.example.server.models.utils.Track;
+
+import java.util.HashMap;
 
 
 public class GameAssetManager {
@@ -69,6 +72,52 @@ public class GameAssetManager {
     private final Texture inventorySelectSlot = new Texture(Gdx.files.internal("Inventory/SelectedSlot.png"));
 
     private final Texture coinTexture = new Texture(Gdx.files.internal("Items/Shop_Items/Coin.png"));
+
+    private final HashMap<Item, Texture> itemTextureMap = new HashMap<>() {{
+        // ToolType
+        put(ToolType.BasicHoe, new Texture("Items/Tools/Hoe/Hoe.png"));
+        put(ToolType.CopperHoe, new Texture("Items/Tools/Hoe/Copper_Hoe.png"));
+        put(ToolType.IronHoe, new Texture("Items/Tools/Hoe/Steel_Hoe.png"));
+        put(ToolType.GoldHoe, new Texture("Items/Tools/Hoe/Gold_Hoe.png"));
+        put(ToolType.IridiumHoe, new Texture("Items/Tools/Hoe/Iridium_Hoe.png"));
+
+        put(ToolType.BasicPickaxe, new Texture("Items/Tools/Pickaxe/Pickaxe.png"));
+        put(ToolType.CopperPickaxe, new Texture("Items/Tools/Pickaxe/Copper_Pickaxe.png"));
+        put(ToolType.IronPickaxe, new Texture("Items/Tools/Pickaxe/Steel_Pickaxe.png"));
+        put(ToolType.GoldPickaxe, new Texture("Items/Tools/Pickaxe/Gold_Pickaxe.png"));
+        put(ToolType.IridiumPickaxe, new Texture("Items/Tools/Pickaxe/Iridium_Pickaxe.png"));
+
+        put(ToolType.BasicAxe, new Texture("Items/Tools/Axe/Axe.png"));
+        put(ToolType.CopperAxe, new Texture("Items/Tools/Axe/Copper_Axe.png"));
+        put(ToolType.IronAxe, new Texture("Items/Tools/Axe/Steel_Axe.png"));
+        put(ToolType.GoldAxe, new Texture("Items/Tools/Axe/Gold_Axe.png"));
+        put(ToolType.IridiumAxe, new Texture("Items/Tools/Axe/Iridium_Axe.png"));
+
+        put(ToolType.BasicWateringCan, new Texture("Items/Tools/Watering_Can/Watering_Can.png"));
+        put(ToolType.CopperWateringCan, new Texture("Items/Tools/Watering_Can/Copper_Watering_Can.png"));
+        put(ToolType.IronWateringCan, new Texture("Items/Tools/Watering_Can/Steel_Watering_Can.png"));
+        put(ToolType.GoldWateringCan, new Texture("Items/Tools/Watering_Can/Gold_Watering_Can.png"));
+        put(ToolType.IridiumWateringCan, new Texture("Items/Tools/Watering_Can/Iridium_Watering_Can.png"));
+
+        put(ToolType.TrainingRod, new Texture("Items/Tools/Fishing_Rod/Training_Rod.png"));
+        put(ToolType.BambooPole, new Texture("Items/Tools/Fishing_Rod/Bamboo_Pole.png"));
+        put(ToolType.FiberglassRod, new Texture("Items/Tools/Fishing_Rod/Fiberglass_Rod.png"));
+        put(ToolType.IridiumRod, new Texture("Items/Tools/Fishing_Rod/Iridium_Rod.png"));
+
+        put(ToolType.Scythe, new Texture("Items/Tools/Scythe/Scythe.png"));
+        put(ToolType.MilkPail, new Texture("Items/Tools/Milk_Pail.png"));
+        put(ToolType.Shear, new Texture("Items/Tools/Shear.png"));
+
+        put(ToolType.BasicBackpack, new Texture("Items/Tools/Backpack/Backpack.png"));
+        put(ToolType.LargeBackpack, new Texture("Items/Tools/Backpack/Backpack.png"));  // Note: Same as Basic?
+        put(ToolType.DeluxeBackpack, new Texture("Items/Tools/Backpack/Deluxe_Backpack.png"));
+
+        put(ToolType.BasicTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Copper.png"));
+        put(ToolType.CopperTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Copper.png"));
+        put(ToolType.IronTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Steel.png"));
+        put(ToolType.GoldTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Gold.png"));
+        put(ToolType.IridiumTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Iridium.png"));
+    }};
 
     private final Animation<Sprite> walkDown = new Animation<>(
             0.1f,
@@ -284,5 +333,9 @@ public class GameAssetManager {
 
     public Texture getCoinTexture() {
         return coinTexture;
+    }
+
+    public Texture getItemTexture(Item item) {
+        return itemTextureMap.get(item);
     }
 }

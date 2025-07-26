@@ -8,7 +8,7 @@ import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.ProfileMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.Result;
 import org.example.server.models.User;
 

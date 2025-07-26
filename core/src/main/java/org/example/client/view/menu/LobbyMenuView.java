@@ -11,10 +11,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.LobbyMenuController;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.Lobby;
-import org.example.server.models.User;
-import org.example.server.models.enums.Gender;
 
 import java.util.ArrayList;
 import java.util.Scanner;

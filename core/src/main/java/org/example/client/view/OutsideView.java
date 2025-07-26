@@ -1,28 +1,16 @@
 package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.model.ClientApp;
-import org.example.server.controller.GameMenuController;
 import org.example.server.controller.OutsidePlayerController;
 import org.example.server.models.App;
-import org.example.server.models.Cell;
-import org.example.server.models.GameAssetManager;
-import org.example.server.models.Map.FarmMap;
-import org.example.server.models.Map.GreenHouse;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Position;
-import org.example.server.models.enums.CellType;
-import org.example.server.models.enums.Plants.Crop;
-import org.example.server.models.enums.Plants.CropType;
-import org.example.server.models.enums.items.MineralType;
 
 import java.util.Scanner;
 

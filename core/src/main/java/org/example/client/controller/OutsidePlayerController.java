@@ -3,19 +3,14 @@ package org.example.server.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.example.client.Main;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.server.models.App;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.Result;
-import org.example.server.models.enums.Menu;
-
-import java.io.File;
-import java.util.Scanner;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;

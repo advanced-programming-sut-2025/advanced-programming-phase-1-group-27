@@ -14,13 +14,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.RegisterMenuController;
 //import org.example.server.controller.RegisterMenuController;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.view.AppMenu;
-import org.example.server.models.enums.commands.RegisterMenuCommands;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class RegisterMenuView extends AppMenu {
 

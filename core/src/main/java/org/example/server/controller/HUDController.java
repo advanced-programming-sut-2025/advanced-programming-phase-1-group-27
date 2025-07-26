@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import org.example.client.controller.MenuController;
 import org.example.client.view.HUDView;
+import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.Seasons.Season;

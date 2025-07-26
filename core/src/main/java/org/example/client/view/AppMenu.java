@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 
 import java.util.Scanner;
 

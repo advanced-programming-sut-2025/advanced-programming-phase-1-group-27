@@ -2,7 +2,7 @@ package org.example.server.models.enums;
 
 
 import com.badlogic.gdx.graphics.Texture;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 
 
 public enum ClockType {

@@ -12,7 +12,7 @@ import org.example.client.Main;
 import org.example.server.controller.HomeController;
 import org.example.server.controller.HomePlayerController;
 import org.example.server.models.App;
-import org.example.server.models.GameAssetManager;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.Player;
 import org.example.server.models.Result;
 import org.example.server.models.enums.Menu;

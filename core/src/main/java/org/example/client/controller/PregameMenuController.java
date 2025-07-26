@@ -9,6 +9,7 @@ import org.example.client.view.HomeView;
 import org.example.client.view.menu.LobbyMenuView;
 
 import org.example.client.view.menu.PregameMenuView;
+import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
