@@ -68,6 +68,8 @@ public class GameAssetManager {
 
     private final Texture inventorySelectSlot = new Texture(Gdx.files.internal("Inventory/SelectedSlot.png"));
 
+    private final Texture coinTexture = new Texture(Gdx.files.internal("Items/Shop_Items/Coin.png"));
+
     private final Animation<Sprite> walkDown = new Animation<>(
             0.1f,
             characterAtlas.createSprite("down_1"),
@@ -278,5 +280,9 @@ public class GameAssetManager {
 
     public Texture getInventorySelectSlot() {
         return inventorySelectSlot;
+    }
+
+    public Texture getCoinTexture() {
+        return coinTexture;
     }
 }

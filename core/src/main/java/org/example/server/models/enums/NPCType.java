@@ -4,6 +4,7 @@ import org.example.server.models.Cell;
 import org.example.server.models.Item;
 import org.example.server.models.NPCs.Quest;
 import org.example.server.models.enums.Plants.FruitType;
+import org.example.server.models.enums.items.FishType;
 import org.example.server.models.enums.items.MineralType;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
@@ -12,18 +13,31 @@ import org.example.server.models.enums.items.products.ProcessedProductType;
 import java.util.ArrayList;
 
 public enum NPCType {
-    Sebastian("Sebastian", null, SebastianQuests(), Features.Angry, SebastianFavouriteItems()),
-    Abigail("Abigail", null, AbigailQuests(), Features.Sad, AbigailFavouriteItems()),
-    Harvey("Harvey", null, HarveyQuests(), Features.Happy, HarveyFavouriteItems()),
-    Lia("Lia", null, LiaQuests(), Features.Lazy, LiaFavouriteItems()),
-    Robbin("Robbin", null, RobbinQuests(), Features.Scared, RobbinFavouriteItems()),
-    Clint("Clint", ShopType.Blacksmith, null, Features.Anxious, ClinicFavouriteItems()),
-    Pierre("Pierre", ShopType.PierreGeneralStore, null, Features.Angry, PierreFavouriteItems()),
-    Robin("Robin", ShopType.CarpenterShop, null, Features.Happy, RobinFavouriteItems()),
-    Willy("Willy", ShopType.PierreGeneralStore, null, Features.Sad, WillyFavouriteItems()),
-    Marnie("Marnie", ShopType.MarnieRanch, null, Features.Lazy, MarnieFavouriteItems()),
-    Morris("Morris", ShopType.JojaMart, null, Features.Sad, MorrisFavouriteItems()),
-    Gus("Gus", ShopType.StardropSaloon, null, Features.Happy, GusFavouriteItems());
+    Sebastian("Sebastian", null, SebastianQuests(), Features.Angry, SebastianFavouriteItems(),
+            "NPCs/Other/Sebastian.png"),
+    Abigail("Abigail", null, AbigailQuests(), Features.Sad, AbigailFavouriteItems(),
+            "NPCs/Other/Abigail.png"),
+    Harvey("Harvey", null, HarveyQuests(), Features.Happy, HarveyFavouriteItems(),
+            "NPCs/Other/Harvey.png"),
+    Lia("Lia", null, LiaQuests(), Features.Lazy, LiaFavouriteItems(),
+            "NPCs/Other/Lia.png"),
+    Robbin("Robbin", null, RobbinQuests(), Features.Scared, RobbinFavouriteItems(),
+            "NPCs/Other/Robbin.png"),
+    Clint("Clint", ShopType.Blacksmith, null, Features.Anxious, ClinicFavouriteItems(),
+            "NPCs/Shop/Clint.png"),
+    Pierre("Pierre", ShopType.PierreGeneralStore, null, Features.Angry, PierreFavouriteItems(),
+            "NPCs/Shop/Pierre.png"),
+    Robin("Robin", ShopType.CarpenterShop, null, Features.Happy, RobinFavouriteItems(),
+            "NPCs/Shop/Robin.png"),
+    Willy("Willy", ShopType.FishShop, null, Features.Sad, WillyFavouriteItems(),
+            "NPCs/Shop/Willy.png"),
+    Marnie("Marnie", ShopType.MarnieRanch, null, Features.Lazy, MarnieFavouriteItems(),
+            "NPCs/Shop/Marnie.png"),
+    Morris("Morris", ShopType.JojaMart, null, Features.Sad, MorrisFavouriteItems(),
+            "NPCs/Shop/Morris.png"),
+    Gus("Gus", ShopType.StardropSaloon, null, Features.Happy, GusFavouriteItems(),
+            "NPCs/Shop/Gus.png"),
+    ;
 
     private final String name;
     private final ShopType job;
@@ -31,13 +45,15 @@ public enum NPCType {
     private final Features features;
     private final ArrayList<Item> favorite;
     private Cell StandingCell;
+    private String address;
 
-    NPCType(String name, ShopType job, Quest[] quests, Features features, ArrayList<Item> favorite) {
+    NPCType(String name, ShopType job, Quest[] quests, Features features, ArrayList<Item> favorite, String address) {
         this.name = name;
         this.job = job;
         this.Quests = quests;
         this.features = features;
         this.favorite = favorite;
+        this.address = address;
     }
 
     private static Quest[] AbigailQuests() {
@@ -219,5 +235,7 @@ public enum NPCType {
         StandingCell = standingCell;
     }
 
-
+    public String getAddress(){
+        return address;
+    }
 }
