@@ -109,8 +109,8 @@ Items/Cooking_products/Survival_Burger.png
 Items/Cooking_products/Tortilla.png
 Items/Cooking_products/Triple_Shot_Espresso.png
 Items/Cooking_products/Vegetable_Medley.png
-Items/Crafting_products/Bee_House.png
 Items/Crafting_products/Bee_House_Full.png
+Items/Crafting_products/Bee_house.png
 Items/Crafting_products/Bomb.png
 Items/Crafting_products/Charcoal_Kiln.png
 Items/Crafting_products/Cheese_Press.png
@@ -274,7 +274,7 @@ Items/Processed_products/Oil.png
 Items/Processed_products/Pale_Ale.png
 Items/Processed_products/Pickles.png
 Items/Processed_products/Raisins.png
-Items/Processed_products/Smoked_Fish.png
+Items/Processed_products/Smoked_fish.png
 Items/Processed_products/Truffle_Oil.png
 Items/Processed_products/Vinegar.png
 Items/Processed_products/Wine.png
@@ -319,7 +319,7 @@ Items/SeedType/Parsnip_Seeds.png
 Items/SeedType/Pepper_Seeds.png
 Items/SeedType/Poppy_Seeds.png
 Items/SeedType/Potato_Seeds.png
-Items/SeedType/Powdermelon_Seeds.png
+Items/SeedType/PowderMelon_Seeds.png
 Items/SeedType/Pumpkin_Seeds.png
 Items/SeedType/Radish_Seeds.png
 Items/SeedType/Rare_Seeds.png

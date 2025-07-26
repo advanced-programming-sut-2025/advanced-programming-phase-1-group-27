@@ -31,7 +31,7 @@ public class StardropSaloonShop extends AppMenu {
     private final Image npcImage;
     private final Image coinImage;
 
-    private final Label moneyLabel;
+    private final Label moneyLabel = null;
 
     private Stage stage;
 
@@ -41,12 +41,12 @@ public class StardropSaloonShop extends AppMenu {
         npcImage = new Image(new Texture(npc.getAddress()));
         coinImage = new Image(GameAssetManager.getGameAssetManager().getCoinTexture());
 
-        moneyLabel = new Label(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()), skin);
+//        moneyLabel = new Label(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()), skin);
 
     }
 
     private void displayMoney(){
-        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
+//        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
 
     }
 

@@ -7,7 +7,7 @@ import org.example.client.Main;
 /**
  * Launches the desktop (LWJGL3) application.
  */
-public class Lwjgl3Launcher {
+public class ClientLauncher {
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
         new Lwjgl3Application(new Main(args), getDefaultConfiguration());
