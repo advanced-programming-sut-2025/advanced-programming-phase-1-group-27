@@ -17,11 +17,11 @@ public enum SaplingType implements Item, PlantSourceType {
     PineCone(TreeType.PineTree,"Items/SaplingProduct/Pine_Cone.png"),;
 
     private final TreeType tree;
-    private final Texture texture;
+    private final String address;
 
     SaplingType(TreeType plantType, String address) {
         this.tree = plantType;
-        this.texture = new Texture(Gdx.files.internal(address));
+        this.address = address;
     }
 
 
@@ -39,9 +39,9 @@ public enum SaplingType implements Item, PlantSourceType {
         return tree;
     }
 
-    @Override
-    public Texture getTexture() {
-        return texture;
+
+    public String getAddress() {
+        return address;
     }
 
     @Override

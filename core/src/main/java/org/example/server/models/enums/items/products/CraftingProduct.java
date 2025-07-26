@@ -32,12 +32,12 @@ public enum CraftingProduct implements Item {
 
     private final int price;
     private Recipe recipe;
-    private final Texture texture;
+    private final String address;
 
     CraftingProduct(int price ,  String address) {
         this.recipe = null;
         this.price = price;
-        this.texture = new Texture(Gdx.files.internal(address));
+        this.address = address;
     }
 
     public static CraftingProduct getItem(String itemName) {
@@ -54,9 +54,8 @@ public enum CraftingProduct implements Item {
         return price;
     }
 
-    @Override
-    public Texture getTexture() {
-        return texture;
+    public String getAddress() {
+        return address;
     }
 
     public Recipe getRecipe() {

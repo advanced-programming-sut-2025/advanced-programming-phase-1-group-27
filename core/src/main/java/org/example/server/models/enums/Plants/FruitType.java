@@ -90,14 +90,14 @@ public enum FruitType implements Item {
     private final int price;
     private final boolean isFruitEdible;
     private final int energy;
-    private final Texture texture;
+    private final String address;
 
 
     FruitType(int price, boolean isFruitEdible, int energy, String address) {
         this.price = price;
         this.isFruitEdible = isFruitEdible;
         this.energy = energy;
-        this.texture = new Texture(address);
+        this.address = address;
     }
 
     public static FruitType getItem(String itemName) {
@@ -107,6 +107,10 @@ public enum FruitType implements Item {
             }
         }
         return null;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public boolean isFruitEdible() {

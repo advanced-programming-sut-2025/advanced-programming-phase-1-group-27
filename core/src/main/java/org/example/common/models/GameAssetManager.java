@@ -10,7 +10,16 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.example.server.models.Item;
+import org.example.server.models.enums.Plants.FruitType;
+import org.example.server.models.enums.Plants.SaplingType;
+import org.example.server.models.enums.Plants.SeedType;
+import org.example.server.models.enums.items.FishType;
+import org.example.server.models.enums.items.MineralType;
+import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.enums.items.products.AnimalProduct;
+import org.example.server.models.enums.items.products.CookingProduct;
+import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.utils.MusicPlayer;
 
 import java.util.HashMap;
@@ -117,6 +126,33 @@ public class GameAssetManager {
         put(ToolType.IronTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Steel.png"));
         put(ToolType.GoldTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Gold.png"));
         put(ToolType.IridiumTrashCan, new Texture("Items/Tools/Trash_Can/Trash_Can_Iridium.png"));
+
+        for (SeedType seedType : SeedType.values())
+            put(seedType, new Texture(Gdx.files.internal(seedType.getAddress())));
+
+        for (SaplingType saplingType : SaplingType.values())
+            put(saplingType, new Texture(Gdx.files.internal(saplingType.getAddress())));
+
+        for (FruitType fruitType : FruitType.values())
+            put(fruitType, new Texture(Gdx.files.internal(fruitType.getAddress())));
+
+        for (MineralType mineralType : MineralType.values())
+            put(mineralType, new Texture(Gdx.files.internal(mineralType.getAddress())));
+
+        for (ShopItems shopItems : ShopItems.values())
+            put(shopItems, new Texture(Gdx.files.internal(shopItems.getAddress())));
+
+        for (AnimalProduct animalProduct : AnimalProduct.values())
+            put(animalProduct, new Texture(Gdx.files.internal(animalProduct.getAddress())));
+
+        for (CookingProduct cookingProduct : CookingProduct.values())
+            put(cookingProduct, new Texture(Gdx.files.internal(cookingProduct.getAddress())));
+
+        for (CraftingProduct craftingProduct : CraftingProduct.values())
+            put(craftingProduct, new Texture(Gdx.files.internal(craftingProduct.getAddress())));
+
+        for (FishType fishType : FishType.values())
+            put(fishType, new Texture(Gdx.files.internal(fishType.getAddress())));
     }};
 
     private final Animation<Sprite> walkDown = new Animation<>(

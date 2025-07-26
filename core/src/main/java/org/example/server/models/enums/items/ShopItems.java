@@ -21,12 +21,12 @@ public enum ShopItems implements Item {
 
     private final int price;
     private final Recipe recipe;
-    private final Texture texture;
+    private final String address;
 
     ShopItems(int price, Recipe recipe , String address) {
         this.price = price;
         this.recipe = recipe;
-        this.texture = new Texture(Gdx.files.internal(address));
+        this.address = address;
     }
 
 
@@ -40,9 +40,9 @@ public enum ShopItems implements Item {
         return null;
     }
 
-    @Override
-    public Texture getTexture() {
-        return texture;
+
+    public String getAddress() {
+        return this.address;
     }
 
     @Override

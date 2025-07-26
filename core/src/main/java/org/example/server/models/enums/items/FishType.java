@@ -41,14 +41,14 @@ public enum FishType implements Item {
     private final int energy;
     private final Season season;
     private final boolean isLegendary;
-    private final Texture texture;
+    private final String address;
 
     FishType(int price, Season season, boolean isLegendary, int energy, String address) {
         this.price = price;
         this.season = season;
         this.isLegendary = isLegendary;
         this.energy = energy;
-        this.texture = new Texture(Gdx.files.internal(address));
+        this.address = address;
     }
 
 
@@ -84,9 +84,8 @@ public enum FishType implements Item {
         return result;
     }
 
-    @Override
-    public Texture getTexture() {
-        return texture;
+    public String getAddress() {
+        return this.address;
     }
 
     @Override

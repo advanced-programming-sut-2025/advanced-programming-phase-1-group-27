@@ -47,17 +47,17 @@ public enum MineralType implements Item {
     ));
     private int price;
     private StackLevel level = null;
-    private final Texture texture;
+    private String address;
 
     MineralType(int price , String address) {
         this.price = price;
-        this.texture = new Texture(address);
+        this.address = address;
     }
 
-    MineralType(int price, StackLevel level ,  String address) {
+    MineralType(int price, StackLevel level , String address) {
         this.price = price;
         this.level = level;
-        this.texture = new Texture(address);
+        this.address = address;
     }
 
 
@@ -78,14 +78,10 @@ public enum MineralType implements Item {
         return noneMinerals;
     }
 
-    public Texture getTexture() {
-        return texture;
+    @Override
+    public String getAddress() {
+        return this.address;
     }
-
-//    @Override
-//    public String getAddress() {
-//        return this.address;
-//    }
 
     public static MineralType getItem(String itemName) {
         for (MineralType mineralType : MineralType.values()) {

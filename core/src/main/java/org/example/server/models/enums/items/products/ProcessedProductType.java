@@ -46,14 +46,14 @@ public enum ProcessedProductType implements Item {
     private final Integer price;
     private final Integer processingTime;
     private Recipe recipe;
-    private final Texture texture;
+    private final String address;
 
     ProcessedProductType(Integer energy, Integer price, Integer processingTime , String address) {
         this.recipe = null;
         this.energy = energy;
         this.price = price;
         this.processingTime = processingTime;
-        this.texture = new Texture(Gdx.files.internal(address));
+        this.address = address;
     }
 
 
@@ -89,9 +89,8 @@ public enum ProcessedProductType implements Item {
         return energy;
     }
 
-    @Override
-    public Texture getTexture() {
-        return texture;
+    public String getAddress() {
+        return address;
     }
 
     public Integer getProcessingTime() {

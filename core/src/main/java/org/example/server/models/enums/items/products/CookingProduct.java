@@ -46,14 +46,14 @@ public enum CookingProduct implements Item {
     private final Buff buff;
     private final int energy;
     private Recipe recipe;
-    private final Texture texture;
+    private String address;
 
     CookingProduct(int price, Buff buff, int energy , String address) {
         this.price = price;
         this.recipe = null;
         this.buff = buff;
         this.energy = energy;
-        this.texture = new Texture(Gdx.files.internal(address));
+        this.address = address;
     }
 
     public static CookingProduct getItem(String itemName) {
@@ -65,9 +65,8 @@ public enum CookingProduct implements Item {
         return null;
     }
 
-    @Override
-    public Texture getTexture() {
-        return texture;
+    public String getAddress() {
+        return address;
     }
 
     @Override

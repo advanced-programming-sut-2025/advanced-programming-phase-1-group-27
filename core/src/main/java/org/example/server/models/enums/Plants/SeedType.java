@@ -72,11 +72,11 @@ public enum SeedType implements PlantSourceType, Item {
         put(Season.Winter, new ArrayList<>(List.of(AncientSeed, MixedSeed, PowderMelonSeed)));
     }};
     private final PlantType plant;
-    private final Texture texture;
+    private final String address;
 
     SeedType(PlantType plant, String address) {
         this.plant = plant;
-        this.texture = new Texture(Gdx.files.internal(address));
+        this.address = address;
     }
 
 
@@ -98,9 +98,9 @@ public enum SeedType implements PlantSourceType, Item {
         return plant;
     }
 
-    @Override
-    public Texture getTexture() {
-        return texture;
+
+    public String getAddress(){
+        return address;
     }
 
     @Override
