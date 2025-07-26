@@ -1,5 +1,8 @@
 package org.example.server.models.enums.items.products;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.msg.Telegram;
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Buff;
 import org.example.server.models.Item;
 import org.example.server.models.enums.AbilityType;
@@ -43,14 +46,14 @@ public enum CookingProduct implements Item {
     private final Buff buff;
     private final int energy;
     private Recipe recipe;
-    private final String address;
+    private final Texture texture;
 
     CookingProduct(int price, Buff buff, int energy , String address) {
         this.price = price;
         this.recipe = null;
         this.buff = buff;
         this.energy = energy;
-        this.address = address;
+        this.texture = new Texture(Gdx.files.internal(address));
     }
 
     public static CookingProduct getItem(String itemName) {
@@ -60,6 +63,11 @@ public enum CookingProduct implements Item {
             }
         }
         return null;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return texture;
     }
 
     @Override
@@ -86,9 +94,6 @@ public enum CookingProduct implements Item {
         return energy;
     }
 
-    @Override
-    public String getAddress() {
-        return this.address;
-    }
+
 
 }

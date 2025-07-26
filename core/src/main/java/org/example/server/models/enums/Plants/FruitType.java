@@ -1,5 +1,6 @@
 package org.example.server.models.enums.Plants;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 
 public enum FruitType implements Item {
@@ -16,7 +17,7 @@ public enum FruitType implements Item {
     Pomegranate(140, true, 38, "Items/Fruit/Pomegranate.png"),
     OakResin(150, false, 0, "Items/Fruit/Oak_Resin.png"),
     MapleSyrup(200, false, 0, "Items/Fruit/Maple_Syrup.png"),
-    PineTar(100, false, 0, "Items/Fruit/PineTar.png"),
+    PineTar(100, false, 0, "Items/Fruit/Pine_Tar.png"),
     Sap(2, true, -2, "Items/Fruit/Sap.png"),
     CommonMushroom(40, true, 38, "Items/Fruit/Common_Mushroom.png"),
     MysticSyrup(1000, true, 500, "Items/Fruit/Mystic_Syrup.png"),
@@ -27,7 +28,7 @@ public enum FruitType implements Item {
     Morel(150, true, 20, "Items/Fruit/Morel.png"),
     SalmonBerry(5, true, 25, "Items/Fruit/Salmonberry.png"),
     SpringOnion(8, true, 13, "Items/Fruit/Spring_Onion.png"),
-    WildHorseradish(50, true, 13, "Items/Fruit/Wild_Horserdish.png"),
+    WildHorseradish(50, true, 13, "Items/Fruit/Wild_Horseradish.png"),
     FiddleheadFern(90, true, 25, "Items/Fruit/Fiddlehead_Fern.png"),
     Grape(80, true, 38, "Items/Fruit/Grape.png"),
     RedMushroom(75, true, -50, "Items/Fruit/Red_Mushroom.png"),
@@ -60,7 +61,7 @@ public enum FruitType implements Item {
     Blueberry(50, true, 25, "Items/Fruit/Blueberry.png"),
     Corn(50, true, 25, "Items/Fruit/Corn.png"),
     Hops(25, true, 45, "Items/Fruit/Hops.png"),
-    HotPepper(40, true, 13, "Items/Fruit/HotPepper.png"),
+    HotPepper(40, true, 13, "Items/Fruit/Hot_Pepper.png"),
     Melon(250, true, 113, "Items/Fruit/Melon.png"),
     Poppy(140, true, 45, "Items/Fruit/Poppy.png"),
     Radish(90, true, 45, "Items/Fruit/Radish.png"),
@@ -76,7 +77,7 @@ public enum FruitType implements Item {
     Beet(100, true, 30, "Items/Fruit/Beet.png"),
     BokChoy(80, true, 25, "Items/Fruit/Bok_Choy.png"),
     Broccoli(70, true, 63,  "Items/Fruit/Broccoli.png"),
-    Cranberry(75, true, 38, "Items/Fruit/Cranberry.png"),
+    Cranberry(75, true, 38, "Items/Fruit/Cranberries.png"),
     Eggplant(60, true, 20, "Items/Fruit/Eggplant.png"),
     FairyRose(290, true, 45,"Items/Fruit/Fairy_Rose.png"),
     //Grape(80, true, 38),
@@ -89,14 +90,14 @@ public enum FruitType implements Item {
     private final int price;
     private final boolean isFruitEdible;
     private final int energy;
-    private final String address;
+    private final Texture texture;
 
 
     FruitType(int price, boolean isFruitEdible, int energy, String address) {
         this.price = price;
         this.isFruitEdible = isFruitEdible;
         this.energy = energy;
-        this.address = address;
+        this.texture = new Texture(address);
     }
 
     public static FruitType getItem(String itemName) {
@@ -118,11 +119,6 @@ public enum FruitType implements Item {
 
     public Integer getPrice() {
         return price;
-    }
-
-    @Override
-    public String getAddress() {
-        return this.address;
     }
 
     public String getName() {

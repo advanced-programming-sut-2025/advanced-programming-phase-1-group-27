@@ -127,11 +127,18 @@ public class HUDView extends AppMenu{
 
         for ( int i = 0 ; i < items.size() ; i++ ){
 
-            Texture texture = new Texture(Gdx.files.internal(items.get(i).getItem().getAddress()));
-            Image image = new Image(texture);
-            image.setSize(48,48);
-            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
-            stage.addActor(image);
+//            Image image = new Image(items.get(i).getItem().getTexture());
+//            image.setSize(48,48);
+//            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
+//            stage.addActor(image);
+
+            Main.getBatch().draw(
+                    items.get(i).getItem().getTexture(),
+                    inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,31,
+                    48,48
+
+
+            );
 
         }
 
@@ -146,22 +153,27 @@ public class HUDView extends AppMenu{
 
     @Override
     public void render(float delta) {
+    }
+
+    public void sobhanAllah(float delta) {
 
 
         errorLabel.update(delta);
 
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        //stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
-        Main.getBatch().begin();
-        Main.getBatch().end();
+        //Main.getBatch().begin();
+//        stage.draw();
+
+        showInventoryItem();
+        //Main.getBatch().end();
 
         displayClock();
         displayInventoryHotBar();
         displayInputField();
         showErrorMessage();
-        showInventoryItem();
 
-        stage.draw();
+
 
     }
 

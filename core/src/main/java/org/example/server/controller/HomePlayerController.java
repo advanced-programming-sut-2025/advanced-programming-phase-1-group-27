@@ -17,8 +17,7 @@ import static java.lang.Math.min;
 public class HomePlayerController {
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f;
     private final float speed = 3f;
-    private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getCharacterAtlas()
-            .createSprite("standing_1");
+    private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
     private float time = 0f;
     private final HomeView view;
 
@@ -43,7 +42,7 @@ public class HomePlayerController {
     public void update() {
         time += Gdx.graphics.getDeltaTime();
 
-        characterSprite = GameAssetManager.getGameAssetManager().getCharacterAtlas().createSprite("standing_1");
+        characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
         characterSprite.setScale(2f);
 
 

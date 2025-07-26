@@ -62,6 +62,7 @@ public class GameAssetManager {
     private final Texture WaterCellTexture = new Texture("assets/Images/Floorings/Water.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
+    private final Sprite standingSprite = characterAtlas.createSprite("standing_1");
 
     private final Texture inventoryHotBar = new Texture(Gdx.files.internal("Inventory/InventoryHotbar.png"));
 
@@ -269,6 +270,10 @@ public class GameAssetManager {
 
     public Texture getInventoryHotBar() {
         return inventoryHotBar;
+    }
+
+    public Sprite getStandingSprite() {
+        return standingSprite;
     }
 
     public Texture getInventorySelectSlot() {

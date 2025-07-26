@@ -25,8 +25,7 @@ public class OutsidePlayerController {
     lastX, lastY, destX, destY;
     private Animation<Sprite> currentAnimation;
     private final float speed = 160f;
-    private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getCharacterAtlas()
-            .createSprite("standing_1");
+    private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
     private float time = 0f, animationTime = 0f;
     private Camera camera;
 
@@ -65,7 +64,7 @@ public class OutsidePlayerController {
     public void update() {
         animationTime += Gdx.graphics.getDeltaTime();
 
-        characterSprite = GameAssetManager.getGameAssetManager().getCharacterAtlas().createSprite("standing_1");
+        characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
         characterSprite.setScale(2f);
 
         if (!walking && !view.getHudView().isInputFieldVisible()) {

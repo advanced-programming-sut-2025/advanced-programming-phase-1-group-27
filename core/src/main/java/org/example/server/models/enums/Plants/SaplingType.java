@@ -1,5 +1,7 @@
 package org.example.server.models.enums.Plants;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 
 public enum SaplingType implements Item, PlantSourceType {
@@ -15,17 +17,14 @@ public enum SaplingType implements Item, PlantSourceType {
     PineCone(TreeType.PineTree,"Items/SaplingProduct/Pine_Cone.png"),;
 
     private final TreeType tree;
-    private final String address;
+    private final Texture texture;
 
     SaplingType(TreeType plantType, String address) {
         this.tree = plantType;
-        this.address = address;
+        this.texture = new Texture(Gdx.files.internal(address));
     }
 
-    @Override
-    public String getAddress() {
-        return this.address;
-    }
+
 
     public static SaplingType getItem(String itemName) {
         for (SaplingType saplingtype : values()) {
@@ -38,6 +37,11 @@ public enum SaplingType implements Item, PlantSourceType {
 
     public TreeType getPlant() {
         return tree;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return texture;
     }
 
     @Override

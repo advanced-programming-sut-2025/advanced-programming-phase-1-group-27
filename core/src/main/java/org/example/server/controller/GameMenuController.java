@@ -222,6 +222,7 @@ public class GameMenuController extends MenuController {
                                 App.setCurrentMenu(Menu.Home);
                                 Main.getMain().getScreen().dispose();
                                 Main.getMain().setScreen(new HomeView());
+                                Main.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, 1920, 1080);
                                 return new Result(true, "You Entered Your Home :)");
                             }
                         }

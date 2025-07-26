@@ -1,5 +1,7 @@
 package org.example.server.models.enums.items.products;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 import org.example.server.models.enums.items.MineralType;
 import org.example.server.models.enums.items.Recipe;
@@ -44,20 +46,16 @@ public enum ProcessedProductType implements Item {
     private final Integer price;
     private final Integer processingTime;
     private Recipe recipe;
-    private final String address;
+    private final Texture texture;
 
     ProcessedProductType(Integer energy, Integer price, Integer processingTime , String address) {
         this.recipe = null;
         this.energy = energy;
         this.price = price;
         this.processingTime = processingTime;
-        this.address = address;
+        this.texture = new Texture(Gdx.files.internal(address));
     }
 
-    @Override
-    public String getAddress() {
-        return this.address;
-    }
 
     private static int getPriceWithMultiplier(Item item, double multiplier) {
         return (int) (item.getPrice() * multiplier);
@@ -89,6 +87,11 @@ public enum ProcessedProductType implements Item {
 
     public int getEnergy() {
         return energy;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return texture;
     }
 
     public Integer getProcessingTime() {

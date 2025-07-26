@@ -1,5 +1,7 @@
 package org.example.server.models.enums.items.products;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Item;
 
 public enum AnimalProduct implements Item {
@@ -17,11 +19,11 @@ public enum AnimalProduct implements Item {
     Truffle(625 , "Items/Animal_products/Truffle.png"); // haram
 
     private final int price;
-    private final String address;
+    private final Texture texture;
 
     AnimalProduct(int price , String address) {
         this.price = price;
-        this.address = address;
+        this.texture = new Texture(Gdx.files.internal(address));
     }
 
     public static AnimalProduct getItem(String itemName) {
@@ -39,8 +41,8 @@ public enum AnimalProduct implements Item {
     }
 
     @Override
-    public String getAddress() {
-        return this.address;
+    public Texture getTexture() {
+        return texture;
     }
 
     public boolean isFood() {
