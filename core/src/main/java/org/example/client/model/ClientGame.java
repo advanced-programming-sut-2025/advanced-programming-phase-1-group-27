@@ -96,31 +96,21 @@ public class ClientGame {
         return npcMap;
     }
 
-    public Shop getJojaMart() {
-        return jojaMart;
-    }
-
-    public Shop getPierreGeneralStore() {
-        return pierreGeneralStore;
-    }
-
-    public Shop getStardropSaloon() {
-        return stardropSaloon;
-    }
-
-    public Shop getCarpenterShop() {
-        return carpenterShop;
-    }
-
-    public Shop getFishShop() {
-        return fishShop;
-    }
-
-    public Shop getMarnieRanch() {
-        return marnieRanch;
-    }
-
-    public BlackSmith getBlackSmith() {
-        return blackSmith;
+    public Shop getShop(String shopName) {
+        if (shopName.equalsIgnoreCase(ShopType.Blacksmith.name()))
+            return blackSmith;
+        if (shopName.equalsIgnoreCase(ShopType.JojaMart.name()))
+            return jojaMart;
+        if (shopName.equalsIgnoreCase(ShopType.PierreGeneralStore.name()))
+            return pierreGeneralStore;
+        if (shopName.equalsIgnoreCase(ShopType.CarpenterShop.name()))
+            return carpenterShop;
+        if (shopName.equalsIgnoreCase(ShopType.FishShop.name()))
+            return fishShop;
+        if (shopName.equalsIgnoreCase(ShopType.MarnieRanch.name()))
+            return marnieRanch;
+        if (shopName.equalsIgnoreCase(ShopType.StardropSaloon.name()))
+            return stardropSaloon;
+        return null;
     }
 }

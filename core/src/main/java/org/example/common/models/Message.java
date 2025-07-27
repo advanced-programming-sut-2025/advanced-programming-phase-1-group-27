@@ -48,6 +48,7 @@ public class Message {
         start_game,
         choose_map,
         leave_lobby,
-        error,
+        purchase_from_shop, // clients use this to buy from shop
+        update_shop,
     }
 }

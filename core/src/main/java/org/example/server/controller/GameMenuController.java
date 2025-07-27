@@ -3,6 +3,7 @@ package org.example.server.controller;
 import org.example.client.Main;
 import org.example.client.controller.MenuController;
 import org.example.client.view.HomeView;
+import org.example.common.models.ItemManager;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
@@ -766,7 +767,7 @@ public class GameMenuController extends MenuController {
 
     public Result cheatAddItem(String itemName, int count) {
         Player player = App.getCurrentGame().getCurrentPlayer();
-        Item item = Game.getItemByName(itemName);
+        Item item = ItemManager.getItemByName(itemName);
         if (item == null)
             return new Result(false, "Item not found!");
         if (count < 0)

@@ -1,5 +1,6 @@
 package org.example.server.controller;
 
+import org.example.common.models.ItemManager;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.models.*;
@@ -16,7 +17,7 @@ public class CheatController {
 
     public Result cheatAddItem(String itemName, int count) {
         Player player = App.getCurrentGame().getCurrentPlayer();
-        Item item = Game.getItemByName(itemName);
+        Item item = ItemManager.getItemByName(itemName);
         if (item == null)
             return new Result(false, "Item not found!");
         if (count < 0)

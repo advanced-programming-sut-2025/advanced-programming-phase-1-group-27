@@ -550,6 +550,14 @@ public enum Recipe implements Item {
         return null;
     }
 
+    public static Recipe getItem(String itemName) {
+        for (Recipe recipe : Recipe.values()) {
+            if (recipe.getName().equalsIgnoreCase(itemName))
+                return recipe;
+        }
+        return null;
+    }
+
     @Override
     public Integer getPrice() {
         return price;
