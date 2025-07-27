@@ -40,8 +40,6 @@ public class StardropSaloonShop extends AppMenu {
     private ScrollPane scrollPane;
     private CheckBox showOnlyAvailableCheckBox;
 
-    Shop stardropSaloon = new Shop(ShopType.StardropSaloon);
-
     private Stage stage;
 
     public StardropSaloonShop() {
@@ -66,8 +64,7 @@ public class StardropSaloonShop extends AppMenu {
 
         backgroundImage = new Image(GameAssetManager.getGameAssetManager().getStarDropTexture());
 
-//        stockItems = ClientApp.getCurrentGame().getStardropSaloon().getStock();
-        stockItems = stardropSaloon.getStock();
+        stockItems = ClientApp.getCurrentGame().getShop("stardropSaloon").getStock();
 
         stockTable = new Table();
         scrollPane = new ScrollPane(stockTable, skin);
@@ -76,12 +73,11 @@ public class StardropSaloonShop extends AppMenu {
 
         showOnlyAvailableCheckBox = new CheckBox("Filter", skin);
         showOnlyAvailableCheckBox.setChecked(true);
-        //
-        moneyLabel = new Label("1000", skin);
+        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
     }
 
     private void displayItems() {
-        stockItems = stardropSaloon.getStock();
+        stockItems = ClientApp.getCurrentGame().getShop("stardropSaloon").getStock();
         stockTable.clear();
 
         float redAreaX = 100f;
@@ -154,8 +150,7 @@ public class StardropSaloonShop extends AppMenu {
     }
 
     private void displayMoney(){
-//        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
-        moneyLabel = new Label("10000" , skin);
+        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
         moneyLabel.setFontScale(1.5f);
         moneyLabel.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 100);
         coinImage.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 50);
