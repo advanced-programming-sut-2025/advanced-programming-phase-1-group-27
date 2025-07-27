@@ -7,6 +7,7 @@ import org.example.server.models.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PregameMenuController {
     public static void createGame(Message message) {
@@ -19,6 +20,14 @@ public class PregameMenuController {
         Game game;
         lobby.setGame(game = new Game(lobby.getAdmin(), players));
         game.init();
+        System.out.println("Players: ");
+        for (Player player : players) {
+            System.out.println(player.getUsername());
+        }
+        System.out.println("Map: ");
+        for (Map.Entry<String, Integer> entry : lobby.getUsernameToMap().entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
         for (Player player : players) {
             int mapIndex = lobby.getUsernameToMap().get(player.getUsername());
             player.setFarmMap(game.getFarmMap(mapIndex));
@@ -34,7 +43,6 @@ public class PregameMenuController {
                         put("farmInfo", game.getFarmInfo());
                     }}, Message.Type.start_game)
             );
-            System.out.println("GOFTAM");
         }
     }
 

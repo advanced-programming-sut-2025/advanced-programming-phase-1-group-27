@@ -21,6 +21,7 @@ public class ServerApp {
         admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
         Lobby test = new Lobby(admin, false , "pass" , true , 1111 , "test");
         Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
+        lobby.setMap(admin.getUsername(), 0);
         lobbies.add(lobby);
         lobbies.add(test);
     }

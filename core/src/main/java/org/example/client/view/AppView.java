@@ -10,6 +10,7 @@ import org.example.server.models.enums.Gender;
 import org.example.server.models.enums.Menu;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AppView {
@@ -26,9 +27,13 @@ public class AppView {
         admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
         ClientApp.setLoggedInUser(admin);
         Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
-        lobby.getUsernameToMap().put(admin.getUsername() , 0);
+        lobby.setMap(admin.getUsername(), 0);
 
         ClientApp.setCurrentMenu(new PregameMenuView(lobby));
+
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("userInfo", ClientApp.getLoggedInUser().getInfo());
+        }}, Message.Type.set_online_user));
 
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("lobbyInfo", lobby.getInfo());
@@ -46,7 +51,7 @@ public class AppView {
 
         Main.getMain().setScreen(new WelcomeMenuView());
         // For Graphics team
-//        cheat();
+        cheat();
 
         // For GigaChads
 //        Main.getMain().getScreen().dispose();

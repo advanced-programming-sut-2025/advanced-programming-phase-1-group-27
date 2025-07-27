@@ -16,8 +16,8 @@ public class ServerLauncher {
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
         Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
 
-        configuration.setWindowedMode(1, 1);  // Smallest possible window
-        configuration.setDecorated(false);    // No title bar
+        configuration.setWindowedMode(1, 1);
+        configuration.setDecorated(false);
         configuration.setInitialVisible(false);
 
         return configuration;
