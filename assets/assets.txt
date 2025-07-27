@@ -53,6 +53,9 @@ Images/Fruits/Hot_Pepper.png
 Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
+Images/Shops/JojaMart.png
+Images/Shops/Pierres General Store.png
+Images/Shops/The Stardrop Saloon.png
 Images/greenhouse.png
 Images/greenhouse2.1.png
 Images/home2.png

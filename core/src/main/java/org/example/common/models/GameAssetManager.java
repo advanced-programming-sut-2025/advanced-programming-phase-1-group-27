@@ -80,6 +80,10 @@ public class GameAssetManager {
 
     private final Texture coinTexture = new Texture(Gdx.files.internal("Items/Shop_Items/Coin.png"));
 
+    private final Texture jojaMartTexture = new Texture(Gdx.files.internal("Images/Shops/JojaMart.png"));
+    private final Texture pierresGeneralTexture = new Texture(Gdx.files.internal("Images/Shops/Pierres General Store.png"));
+    private final Texture starDropTexture = new Texture(Gdx.files.internal("Images/Shops/The Stardrop Saloon.png"));
+
     private final HashMap<Item, Texture> itemTextureMap = new HashMap<>() {{
         for (ToolType toolType : ToolType.values())
             put(toolType, new Texture(Gdx.files.internal(toolType.getAddress())));
@@ -340,5 +344,17 @@ public class GameAssetManager {
 
     public Texture getPlantTexture(PlantType plantType) {
         return plantTextureMap.get(plantType);
+    }
+
+    public Texture getPierresGeneralTexture() {
+        return pierresGeneralTexture;
+    }
+
+    public Texture getJojaMartTexture() {
+        return jojaMartTexture;
+    }
+
+    public Texture getStarDropTexture() {
+        return starDropTexture;
     }
 }

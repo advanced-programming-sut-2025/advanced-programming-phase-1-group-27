@@ -95,4 +95,32 @@ public class ClientGame {
     public NPCMap getNpcMap() {
         return npcMap;
     }
+
+    public Shop getJojaMart() {
+        return jojaMart;
+    }
+
+    public Shop getPierreGeneralStore() {
+        return pierreGeneralStore;
+    }
+
+    public Shop getStardropSaloon() {
+        return stardropSaloon;
+    }
+
+    public Shop getCarpenterShop() {
+        return carpenterShop;
+    }
+
+    public Shop getFishShop() {
+        return fishShop;
+    }
+
+    public Shop getMarnieRanch() {
+        return marnieRanch;
+    }
+
+    public BlackSmith getBlackSmith() {
+        return blackSmith;
+    }
 }

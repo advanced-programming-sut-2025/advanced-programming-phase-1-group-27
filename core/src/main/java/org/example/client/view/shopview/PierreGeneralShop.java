@@ -1,9 +1,11 @@
 package org.example.client.view.shopview;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.shopControllers.PierreGeneralShopController;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.enums.NPCType;
@@ -18,7 +20,7 @@ public class PierreGeneralShop extends AppMenu {
     private final Image npcImage;
     private final Image coinImage;
 
-    private final Label moneyLabel = null;
+    private Label moneyLabel = null;
 
     private Stage stage;
 
@@ -26,25 +28,36 @@ public class PierreGeneralShop extends AppMenu {
         controller = new PierreGeneralShopController(this);
         npc = NPCType.Pierre;
         npcImage = new Image(new Texture(npc.getAddress()));
+        npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
         coinImage = new Image(GameAssetManager.getGameAssetManager().getCoinTexture());
 
 //        moneyLabel = new Label(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()), skin);
-
+        moneyLabel = new Label("1000" , skin);
     }
 
     private void displayMoney(){
 //        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
+        moneyLabel = new Label("1000" , skin);
+        stage.addActor(moneyLabel);
+    }
 
+    private void displayNPC(){
+        npcImage.setPosition(Gdx.graphics.getWidth() - npcImage.getWidth() - 20, 0);
+
+        stage.addActor(npcImage);
     }
 
     @Override
     public void show() {
-
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float v) {
-
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+        displayNPC();
     }
 
     @Override
