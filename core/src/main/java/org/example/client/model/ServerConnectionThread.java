@@ -1,6 +1,7 @@
 package org.example.client.model;
 
 import org.example.client.controller.ServerConnectionController;
+import org.example.client.controller.ShopController;
 import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
@@ -39,6 +40,12 @@ public class ServerConnectionThread extends ConnectionThread {
             if (ClientApp.getCurrentMenu() instanceof PregameMenuView pregameMenuView) {
                 pregameMenuView.getController().startGame(message);
                 return true;
+            }
+            return false;
+        }
+        else if (message.getType() == Message.Type.update_shop) {
+            if (ClientApp.getCurrentGame() != null) {
+                ShopController.updateShopStock(message);
             }
             return false;
         }

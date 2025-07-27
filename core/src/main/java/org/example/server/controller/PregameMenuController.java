@@ -51,9 +51,7 @@ public class PregameMenuController {
         String username = message.getFromBody("username");
         int lobbyId = message.getIntFromBody("lobbyId");
         Lobby lobby = ServerApp.getLobbyById(lobbyId);
-        if (lobby == null) {
-            return new Message(new HashMap<>(), Message.Type.error);
-        }
+        assert lobby != null;
         HashMap<String, Integer> usersAndChosenMaps = lobby.getUsernameToMap();
         if(!usersAndChosenMaps.containsKey(username)){
             usersAndChosenMaps.put(username, -1);

@@ -112,6 +112,12 @@ public class GameAssetManager {
             put(fishType, new Texture(Gdx.files.internal(fishType.getAddress())));
     }};
 
+    private final HashMap<Item, Image> itemImageMap = new HashMap<>() {{
+        for (Entry<Item, Texture> entry : itemTextureMap.entrySet()) {
+            put(entry.getKey(), new Image(entry.getValue()));
+        }
+    }};
+
     private final HashMap<PlantType, Texture> plantTextureMap = new HashMap<>() {{
         for (CropType cropType : CropType.values()) {
             put(cropType, new Texture(Gdx.files.internal(cropType.getAddress())));
@@ -336,6 +342,10 @@ public class GameAssetManager {
 
     public Texture getItemTexture(Item item) {
         return itemTextureMap.get(item);
+    }
+
+    public Image getItemImage(Item item) {
+        return itemImageMap.get(item);
     }
 
     public Texture getPlantTexture(PlantType plantType) {

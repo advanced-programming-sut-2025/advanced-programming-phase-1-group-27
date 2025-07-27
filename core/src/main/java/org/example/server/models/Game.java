@@ -57,75 +57,6 @@ public class Game {
         }
     }
 
-    public static Item getItemByName(String itemName) {// for cheat commands
-        Item result = ToolType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        itemName = itemName.replace(" ", "");
-
-        result = AnimalProduct.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = CookingProduct.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = CraftingProduct.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = ProcessedProductType.getItem(itemName);
-        if (result != null) {
-            if (result.getPrice() == null)
-                return new ProcessedProduct((ProcessedProductType) result, 0, 0);
-            return new ProcessedProduct(
-                    (ProcessedProductType) result,
-                    result.getPrice(),
-                    ((ProcessedProductType) result).getEnergy()
-            );
-        }
-
-        result = AnimalType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = BuildingType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = FishType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = MineralType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = ShopItems.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = SeedType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = FishType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = SaplingType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        result = FruitType.getItem(itemName);
-        if (result != null)
-            return result;
-
-        return null;
-    }
-
     public void init() {
 
         initShops();
@@ -603,5 +534,23 @@ public class Game {
             info.add(farmMaps[farmId].getForagingInfo());
         }
         return info;
+    }
+
+    public Shop getShop(String shopName) {
+        if (shopName.equalsIgnoreCase(ShopType.Blacksmith.name()))
+            return blackSmith;
+        if (shopName.equalsIgnoreCase(ShopType.JojaMart.name()))
+            return jojaMart;
+        if (shopName.equalsIgnoreCase(ShopType.PierreGeneralStore.name()))
+            return pierreGeneralStore;
+        if (shopName.equalsIgnoreCase(ShopType.CarpenterShop.name()))
+            return carpenterShop;
+        if (shopName.equalsIgnoreCase(ShopType.FishShop.name()))
+            return fishShop;
+        if (shopName.equalsIgnoreCase(ShopType.MarnieRanch.name()))
+            return marnieRanch;
+        if (shopName.equalsIgnoreCase(ShopType.StardropSaloon.name()))
+            return stardropSaloon;
+        return null;
     }
 }

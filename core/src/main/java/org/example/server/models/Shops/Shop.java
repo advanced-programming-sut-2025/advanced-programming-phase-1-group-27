@@ -34,7 +34,7 @@ public class Shop {
 
     public void reduce(Item item, int amount) {
         for (Stock slot : stock) {
-            if (slot.getItem().getName().equals(item.getName())) {
+            if (slot.getItem().getName().equalsIgnoreCase(item.getName())) {
                 int lastAmount = slot.getQuantity();
                 if (lastAmount == -1) {
                     return;
@@ -44,6 +44,16 @@ public class Shop {
                 break;
             }
         }
+    }
+
+    public boolean hasEnough(Item item, int quantity) {
+        for (Stock slot : stock) {
+            if (slot.getItem().getName().equalsIgnoreCase(item.getName())) {
+                if (slot.getQuantity() >= quantity || slot.getQuantity() == -1)
+                    return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<Stock> getStock() {
