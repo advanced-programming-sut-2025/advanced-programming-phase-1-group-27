@@ -515,4 +515,8 @@ public class GameAssetManager {
     public Texture getStarDropTexture() {
         return starDropTexture;
     }
+
+    public Sprite getCabinSprite(int index) {
+        return cabinSprites[index];
+    }
 }
