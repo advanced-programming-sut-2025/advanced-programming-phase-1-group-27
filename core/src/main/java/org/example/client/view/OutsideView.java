@@ -90,7 +90,7 @@ public class OutsideView extends AppMenu {
         stage.draw();
 
         Main.getBatch().begin();
-        hudView.sobhanAllah(delta);
+        hudView.displayHUD(delta);
         Main.getBatch().end();
 
 

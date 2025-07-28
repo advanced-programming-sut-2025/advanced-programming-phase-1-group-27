@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import org.example.client.Main;
 import org.example.common.models.GraphicalResult;
 import org.example.server.controller.HUDController;
 import org.example.server.models.App;
@@ -23,6 +23,10 @@ public class HUDView extends AppMenu{
     private final HUDController controller;
 
     private Stage stage;
+
+    private final Label dayInfo;
+    private final Label moneyInfo;
+    private final Label timeInfo;
 
     private Image clockImage;
     private final Image clockArrowImage;
@@ -45,6 +49,12 @@ public class HUDView extends AppMenu{
         textInputField = new TextField("",skin);
         isInputFieldVisible = false;
         tJustPressed = false;
+        dayInfo = new Label("", skin);
+        controller.setDayInfo(dayInfo);
+        moneyInfo = new Label("", skin);
+        controller.setMoneyInfo(moneyInfo);
+        timeInfo = new Label("", skin);
+        controller.setTimeInfo(timeInfo);
         errorLabel = new GraphicalResult();
         this.stage = stage;
         setListeners();
@@ -56,7 +66,7 @@ public class HUDView extends AppMenu{
 
         controller.updateClockImage();
 
-        clockImage.setPosition(1920-clockImage.getWidth()-10,1080-clockImage.getHeight());
+        clockImage.setPosition(1800-clockImage.getWidth()-10,1080-clockImage.getHeight());
 
 
         clockArrowImage.setPosition(
@@ -76,6 +86,36 @@ public class HUDView extends AppMenu{
         clockArrowImage.toFront();
 
 
+
+    }
+
+    private void displayDayInfo(){
+
+        controller.setDayInfo(dayInfo);
+        dayInfo.setPosition(clockImage.getX() + clockImage.getWidth()/2, clockImage.getY()+clockImage.getHeight()-35);
+        dayInfo.setColor(new Color(0.86f,0.169f,0f,1f));
+        stage.addActor(dayInfo);
+        dayInfo.toFront();
+
+    }
+
+    private void displayMoneyInfo(){
+
+        controller.setMoneyInfo(moneyInfo);
+        moneyInfo.setPosition(clockImage.getX() + clockImage.getWidth()/2+25, clockImage.getY()+30);
+        moneyInfo.setColor(new Color(0.86f,0.169f,0f,1f));
+        stage.addActor(moneyInfo);
+        moneyInfo.toFront();
+
+    }
+
+    private void displayTimeInfo(){
+
+        controller.setTimeInfo(timeInfo);
+        timeInfo.setPosition(clockImage.getX() + clockImage.getWidth()/2, clockImage.getY()+clockImage.getHeight()/2f-5);
+        timeInfo.setColor(new Color(0.86f,0.169f,0f,1f));
+        stage.addActor(timeInfo);
+        timeInfo.toFront();
 
     }
 
@@ -125,18 +165,11 @@ public class HUDView extends AppMenu{
 
         for ( int i = 0 ; i < items.size() ; i++ ){
 
-//            Image image = new Image(items.get(i).getItem().getTexture());
-//            image.setSize(48,48);
-//            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
-//            stage.addActor(image);
+            Image image = items.get(i).getItem().getItemImage();
+            image.setSize(48,48);
+            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
+            stage.addActor(image);
 
-            Main.getBatch().draw(
-                    items.get(i).getItem().getTexture(),
-                    inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,31,
-                    48,48
-
-
-            );
 
         }
 
@@ -153,23 +186,20 @@ public class HUDView extends AppMenu{
     public void render(float delta) {
     }
 
-    public void sobhanAllah(float delta) {
+    public void displayHUD(float delta) {
 
 
         errorLabel.update(delta);
 
-        //stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-
-        //Main.getBatch().begin();
-//        stage.draw();
-
-        showInventoryItem();
-        //Main.getBatch().end();
 
         displayClock();
         displayInventoryHotBar();
         displayInputField();
         showErrorMessage();
+        showInventoryItem();
+        displayDayInfo();
+        displayMoneyInfo();
+        displayTimeInfo();
 
 
 

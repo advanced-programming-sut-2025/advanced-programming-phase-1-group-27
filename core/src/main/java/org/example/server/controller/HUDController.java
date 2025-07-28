@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.client.controller.MenuController;
 import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
@@ -13,12 +14,40 @@ import org.example.server.models.enums.commands.CheatCommands;
 
 import java.util.regex.Matcher;
 
+import static com.badlogic.gdx.Gdx.input;
+
 public class HUDController extends MenuController {
 
     private final HUDView view;
 
     public HUDController(HUDView view) {
         this.view = view;
+    }
+
+    public void setMoneyInfo(Label label){
+
+        String money = Integer.toString(App.getCurrentGame().getCurrentPlayer().getMoney());
+
+        String output = String.join(" ", money.split(""));
+
+        label.setText(output);
+
+    }
+
+    public void setTimeInfo(Label label){
+
+        int time = App.getCurrentGame().getTime().getHour();
+
+        String timeFormat = ( (time>12)? time-12:time ) + ((time>12)? "  pm":"  am");
+        label.setText(timeFormat);
+
+    }
+
+    public void setDayInfo(Label label){
+
+        String day = App.getCurrentGame().getTime().getDayOfWeek().substring(0,3) + ". " + App.getCurrentGame().getTime().getDate();
+        label.setText(day);
+
     }
 
     public float getSlotPosition(){
