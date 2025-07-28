@@ -1,5 +1,9 @@
 package org.example.server.models.Map;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import org.example.client.Main;
+import org.example.client.view.OutsideView;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.NPCs.NPC;
@@ -72,5 +76,19 @@ public class NPCMap extends Map {
         buildStore(new StoreBuilding(App.getCurrentGame().getStardropSaloon(), cells[0][30]), "Stardrop");
 
 
+    }
+
+    public void print(float tileSize) {
+        super.print(tileSize);
+        //NPC houses:
+        int i = 9, j = 2;
+        int x = OutsideView.getGraphicalPosition(9, 2).getX() - 20,
+                y = OutsideView.getGraphicalPosition(9, 2).getY() - 30;
+
+        Sprite cabin = new Sprite(GameAssetManager.getGameAssetManager().getCabinSprite(2));
+        cabin.setScale(2f);
+
+        cabin.setPosition(x + 40, y - 80);
+        cabin.draw(Main.getBatch());
     }
 }

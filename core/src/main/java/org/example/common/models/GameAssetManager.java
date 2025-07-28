@@ -84,6 +84,23 @@ public class GameAssetManager {
     private final Texture pierresGeneralTexture = new Texture(Gdx.files.internal("Images/Shops/Pierres General Store.png"));
     private final Texture starDropTexture = new Texture(Gdx.files.internal("Images/Shops/The Stardrop Saloon.png"));
 
+    private final TextureAtlas cabinsAtlas = new TextureAtlas("assets/Buildings/Buildings.atlas");
+
+    private final Sprite[] cabinSprites = new Sprite[]{
+            cabinsAtlas.createSprite("cabin_1"),
+            cabinsAtlas.createSprite("cabin_2"),
+            cabinsAtlas.createSprite("cabin_3"),
+            cabinsAtlas.createSprite("cabin_4"),
+            cabinsAtlas.createSprite("cabin_5"),
+            cabinsAtlas.createSprite("cabin_6"),
+            cabinsAtlas.createSprite("cabin_7"),
+            cabinsAtlas.createSprite("cabin_8"),
+            cabinsAtlas.createSprite("cabin_9"),
+            cabinsAtlas.createSprite("cabin_10"),
+            cabinsAtlas.createSprite("cabin_11"),
+            cabinsAtlas.createSprite("cabin_12")
+    };
+
     private final HashMap<Item, Texture> itemTextureMap = new HashMap<>() {{
         for (ToolType toolType : ToolType.values())
             put(toolType, new Texture(Gdx.files.internal(toolType.getAddress())));
@@ -366,5 +383,9 @@ public class GameAssetManager {
 
     public Texture getStarDropTexture() {
         return starDropTexture;
+    }
+
+    public Sprite getCabinSprite(int index) {
+        return cabinSprites[index];
     }
 }

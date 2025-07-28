@@ -1,0 +1,90 @@
+Cabins.png
+size: 240, 784
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+cabin_1
+    rotate: false
+    xy: 0, 0
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_2
+    rotate: false
+    xy: 80, 0
+    size: 80, 112
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+cabin_3
+    rotate: false
+    xy: 160, 0
+    size: 80, 112
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+cabin_4
+    rotate: false
+    xy: 0, 112
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_5
+    rotate: false
+    xy: 80, 112
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_6
+    rotate: false
+    xy: 160, 112
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_7
+    rotate: false
+    xy: 0, 224
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_8
+    rotate: false
+    xy: 80, 224
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_9
+    rotate: false
+    xy: 160, 224
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_10
+    rotate: false
+    xy: 0, 336
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_11
+    rotate: false
+    xy: 80, 336
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+cabin_12
+    rotate: false
+    xy: 160, 336
+    size: 80, 112
+    orig: 80, 112
+    offset: 0, 0
+    index: -1
+

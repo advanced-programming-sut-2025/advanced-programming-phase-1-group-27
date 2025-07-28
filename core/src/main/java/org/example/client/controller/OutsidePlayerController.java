@@ -80,7 +80,7 @@ public class OutsidePlayerController {
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkLeft();
                 }
             }
-            else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 Result result = new GameMenuController(new GameView()).walk(
                         OutsideView.getIndices(x + 40, y).getX() + "",
                         OutsideView.getIndices(x + 40, y).getY() + "");
@@ -91,7 +91,7 @@ public class OutsidePlayerController {
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkRight();
                 }
             }
-            else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 Result result = new GameMenuController(new GameView()).walk(
                         OutsideView.getIndices(x, y + 40).getX() + "",
                         OutsideView.getIndices(x, y + 40).getY() + "");
@@ -102,7 +102,7 @@ public class OutsidePlayerController {
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkUp();
                 }
             }
-            else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 Result result = new GameMenuController(new GameView()).walk(
                         OutsideView.getIndices(x, y - 40).getX() + "",
                         OutsideView.getIndices(x, y - 40).getY() + "");
