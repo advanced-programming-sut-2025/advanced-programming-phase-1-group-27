@@ -180,6 +180,35 @@ public class GameAssetManager {
 //        musicPlayer.setCurrentTrack(Track.THEME_1);
     }
 
+    private final Image craftingMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Crafting/CraftingMenuMan.png")));
+    private final Image inventoryMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Inventory/InventoryMenuMan.png")));
+    private final Image skillMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Skill/SkillsMenuMan.png")));
+    private final Image exitMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Exit/ExitMenuMan.png")));
+
+
+    private final Image craft_bomb = new Image(new Texture(Gdx.files.internal("Images/Crafting/Bomb.png")));
+    private final Image craft_charcoalKiln = new Image(new Texture(Gdx.files.internal("Images/Crafting/Charcoal_Kiln.png")));
+    private final Image craft_cherry_Bomb = new Image(new Texture(Gdx.files.internal("Images/Crafting/Cherry_Bomb.png")));
+    private final Image craft_furnace = new Image(new Texture(Gdx.files.internal("Images/Crafting/Furnace.png")));
+    private final Image craft_iridiumSprinkler = new Image(new Texture(Gdx.files.internal("Images/Crafting/Iridium_Sprinkler.png")));
+    private final Image craft_qualitySprinkler = new Image(new Texture(Gdx.files.internal("Images/Crafting/Quality_Sprinkler.png")));
+    private final Image craft_sprinkler = new Image(new Texture(Gdx.files.internal("Images/Crafting/Sprinkler.png")));
+    private final Image craft_megaBomb = new Image(new Texture(Gdx.files.internal("Images/Crafting/Mega_Bomb.png")));
+    private final Image craft_scarecrow = new Image(new Texture(Gdx.files.internal("Images/Crafting/Scarecrow.png")));
+    private final Image craft_deluxeScarecrow = new Image(new Texture(Gdx.files.internal("Images/Crafting/Deluxe_Scarecrow.png")));
+    private final Image craft_beeHouse = new Image(new Texture(Gdx.files.internal("Images/Crafting/Bee_House.png")));
+    private final Image craft_cheesePress = new Image(new Texture(Gdx.files.internal("Images/Crafting/Cheese_Press.png")));
+    private final Image craft_loom = new Image(new Texture(Gdx.files.internal("Images/Crafting/Loom.png")));
+    private final Image craft_keg = new Image(new Texture(Gdx.files.internal("Images/Crafting/Keg.png")));
+    private final Image craft_mayonnaiseMachine = new Image(new Texture(Gdx.files.internal("Images/Crafting/Mayonnaise_Machine.png")));
+    private final Image craft_preservesJar = new Image(new Texture(Gdx.files.internal("Images/Crafting/Preserves_Jar.png")));
+    private final Image craft_oilMaker = new Image(new Texture(Gdx.files.internal("Images/Crafting/Oil_Maker.png")));
+    private final Image craft_dehydrator = new Image(new Texture(Gdx.files.internal("Images/Crafting/Dehydrator.png")));
+    private final Image craft_grassStarter = new Image(new Texture(Gdx.files.internal("Images/Crafting/Grass_Starter.png")));
+    private final Image craft_fishSmoker = new Image(new Texture(Gdx.files.internal("Images/Crafting/Fish_Smoker.png")));
+    private final Image craft_mysticTreeSeed = new Image(new Texture(Gdx.files.internal("Images/Crafting/Mystic_Tree_Seed.png")));
+
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -187,6 +216,108 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getCraft_bomb() {
+        return craft_bomb;
+    }
+
+    public Image getCraft_charcoalKiln() {
+        return craft_charcoalKiln;
+    }
+
+    public Image getCraft_cherry_Bomb() {
+        return craft_cherry_Bomb;
+    }
+
+    public Image getCraft_furnace() {
+        return craft_furnace;
+    }
+
+    public Image getCraft_iridiumSprinkler() {
+        return craft_iridiumSprinkler;
+    }
+
+    public Image getCraft_qualitySprinkler() {
+        return craft_qualitySprinkler;
+    }
+
+    public Image getCraft_sprinkler() {
+        return craft_sprinkler;
+    }
+
+    public Image getCraft_megaBomb() {
+        return craft_megaBomb;
+    }
+
+    public Image getCraft_scarecrow() {
+        return craft_scarecrow;
+    }
+
+    public Image getCraft_deluxeScarecrow() {
+        return craft_deluxeScarecrow;
+    }
+
+    public Image getCraft_beeHouse() {
+        return craft_beeHouse;
+    }
+
+    public Image getCraft_cheesePress() {
+        return craft_cheesePress;
+    }
+
+    public Image getCraft_loom() {
+        return craft_loom;
+    }
+
+    public Image getCraft_keg() {
+        return craft_keg;
+    }
+
+    public Image getCraft_mayonnaiseMachine() {
+        return craft_mayonnaiseMachine;
+    }
+
+    public Image getCraft_preservesJar() {
+        return craft_preservesJar;
+    }
+
+    public Image getCraft_oilMaker() {
+        return craft_oilMaker;
+    }
+
+    public Image getCraft_dehydrator() {
+        return craft_dehydrator;
+    }
+
+    public Image getCraft_grassStarter() {
+        return craft_grassStarter;
+    }
+
+    public Image getCraft_fishSmoker() {
+        return craft_fishSmoker;
+    }
+
+    public Image getCraft_mysticTreeSeed() {
+        return craft_mysticTreeSeed;
+    }
+
+    public Image getCraftingMenuBackground(){
+
+        return craftingMenuBackground;
+
+    }
+
+    public Image getInventoryMenuBackground() {
+        return inventoryMenuBackground;
+    }
+
+    public Image getSkillMenuBackground() {
+        return skillMenuBackground;
+    }
+
+    public Image getExitMenuBackground() {
+        return exitMenuBackground;
     }
 
     public Texture getRainyFall() {
@@ -383,9 +514,5 @@ public class GameAssetManager {
 
     public Texture getStarDropTexture() {
         return starDropTexture;
-    }
-
-    public Sprite getCabinSprite(int index) {
-        return cabinSprites[index];
     }
 }

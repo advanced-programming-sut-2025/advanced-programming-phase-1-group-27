@@ -24,6 +24,29 @@ Fonts/lantern_white.png
 Fonts/stardew-font.fnt
 Fonts/stardew-font.png
 Fonts/stardew-valley.ttf
+Images/Crafting/Bee_House.png
+Images/Crafting/Bomb.png
+Images/Crafting/Charcoal_Kiln.png
+Images/Crafting/Cheese_Press.png
+Images/Crafting/Cherry_Bomb.png
+Images/Crafting/CraftingMenuMan.png
+Images/Crafting/CraftingMenuWoman.png
+Images/Crafting/Dehydrator.png
+Images/Crafting/Deluxe_Scarecrow.png
+Images/Crafting/Fish_Smoker.png
+Images/Crafting/Furnace.png
+Images/Crafting/Grass_Starter.png
+Images/Crafting/Iridium_Sprinkler.png
+Images/Crafting/Keg.png
+Images/Crafting/Loom.png
+Images/Crafting/Mayonnaise_Machine.png
+Images/Crafting/Mega_Bomb.png
+Images/Crafting/Mystic_Tree_Seed.png
+Images/Crafting/Oil_Maker.png
+Images/Crafting/Preserves_Jar.png
+Images/Crafting/Quality_Sprinkler.png
+Images/Crafting/Scarecrow.png
+Images/Crafting/Sprinkler.png
 Images/Crops/Chanterelle.png
 Images/Crops/Chowder.png
 Images/Crops/Crocus.png
@@ -40,6 +63,8 @@ Images/Crops/Snow_Yam.png
 Images/Crops/Spice_Berry.png
 Images/Crops/Sweet_Pea.png
 Images/Crops/Yam.png
+Images/Exit/ExitMenuMan.png
+Images/Exit/ExitMenuWoman.png
 Images/Floorings/Free.png
 Images/Floorings/Free2.png
 Images/Floorings/Free4.png
@@ -53,9 +78,13 @@ Images/Fruits/Hot_Pepper.png
 Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
+Images/Inventory/InventoryMenuMan.png
+Images/Inventory/InventoryMenuWoman.png
 Images/Shops/JojaMart.png
 Images/Shops/Pierres General Store.png
 Images/Shops/The Stardrop Saloon.png
+Images/Skill/SkillsMenuMan.png
+Images/Skill/SkillsMenuWoman.png
 Images/greenhouse.png
 Images/greenhouse2.1.png
 Images/home2.png
