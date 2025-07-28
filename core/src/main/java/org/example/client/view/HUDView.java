@@ -7,14 +7,21 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import org.example.common.models.GraphicalResult;
 import org.example.server.controller.HUDController;
 import org.example.server.models.App;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Stacks;
+import org.example.server.models.enums.InGameMenuType;
+import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.enums.items.products.CraftingProduct;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,21 +39,35 @@ public class HUDView extends AppMenu{
     private final Image clockArrowImage;
     private final Image inventoryHotBarImage;
     private final Image inventorySelectSlotImage;
+    private final Image craftingMenuBackground;
+    private final Image inventoryMenuBackground;
+    private final Image skillMenuBackground;
+    private final Image exitMenuBackground;
+
+    private final HashMap<Recipe, ImageButton> craftingProducts;
 
     private final TextField textInputField;
+
+    private final GraphicalResult errorLabel;
 
     private boolean isInputFieldVisible;
     private boolean tJustPressed;
 
-    private final GraphicalResult errorLabel;
+    private InGameMenuType currentMenu;
+
 
     public HUDView(Stage stage) {
 
         controller = new HUDController(this);
+        craftingMenuBackground = GameAssetManager.getGameAssetManager().getCraftingMenuBackground();
+        inventoryMenuBackground = GameAssetManager.getGameAssetManager().getInventoryMenuBackground();
+        skillMenuBackground = GameAssetManager.getGameAssetManager().getSkillMenuBackground();
+        exitMenuBackground = GameAssetManager.getGameAssetManager().getExitMenuBackground();
         clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
         inventoryHotBarImage = new Image(GameAssetManager.getGameAssetManager().getInventoryHotBar());
         inventorySelectSlotImage = new Image(GameAssetManager.getGameAssetManager().getInventorySelectSlot());
         textInputField = new TextField("",skin);
+        currentMenu = InGameMenuType.NONE;
         isInputFieldVisible = false;
         tJustPressed = false;
         dayInfo = new Label("", skin);
@@ -57,6 +78,22 @@ public class HUDView extends AppMenu{
         controller.setTimeInfo(timeInfo);
         errorLabel = new GraphicalResult();
         this.stage = stage;
+
+        craftingProducts = new HashMap<>();
+
+        int i = 0;
+        for ( Recipe recipe : Recipe.values() ) {
+
+//            Image itemImage = recipe.getFinalProduct().getItemImage();
+//            itemImage.setSize(48,48);
+//
+//            ImageButton productButton = new ImageButton((Drawable)itemImage );
+//            productButton.setPosition(100 + 60 * (i%7),500-(i/7f)*60);
+//            craftingProducts.put(recipe,productButton);
+//            i++;
+
+        }
+
         setListeners();
 
     }
@@ -175,6 +212,49 @@ public class HUDView extends AppMenu{
 
     }
 
+    private void displayInventoryMenu(){
+
+        inventoryMenuBackground.setPosition((Gdx.graphics.getWidth()-inventoryMenuBackground.getWidth())/2f, (Gdx.graphics.getHeight()-inventoryMenuBackground.getHeight())/2f);
+
+        inventoryMenuBackground.setVisible(currentMenu == InGameMenuType.INVENTORY);
+        stage.addActor(inventoryMenuBackground);
+
+    }
+
+    private void displaySkillMenu(){
+
+        skillMenuBackground.setPosition((Gdx.graphics.getWidth()-skillMenuBackground.getWidth())/2f, (Gdx.graphics.getHeight()-skillMenuBackground.getHeight())/2f);
+
+        skillMenuBackground.setVisible(currentMenu == InGameMenuType.SKILL);
+        stage.addActor(skillMenuBackground);
+
+    }
+
+    private void displayCraftingMenu(){
+
+
+        for ( Recipe recipe : craftingProducts.keySet() ){
+
+            stage.addActor(craftingProducts.get(recipe));
+
+        }
+
+        craftingMenuBackground.setPosition((Gdx.graphics.getWidth()-craftingMenuBackground.getWidth())/2f, (Gdx.graphics.getHeight()-craftingMenuBackground.getHeight())/2f);
+        craftingMenuBackground.setVisible(currentMenu == InGameMenuType.CRAFTING);
+        stage.addActor(craftingMenuBackground);
+
+
+    }
+
+    private void displayExitMenu(){
+
+        exitMenuBackground.setPosition((Gdx.graphics.getWidth()-exitMenuBackground.getWidth())/2f, (Gdx.graphics.getHeight()-exitMenuBackground.getHeight())/2f);
+
+        exitMenuBackground.setVisible(currentMenu == InGameMenuType.EXIT);
+        stage.addActor(exitMenuBackground);
+
+    }
+
     @Override
     public void show() {
 
@@ -200,7 +280,10 @@ public class HUDView extends AppMenu{
         displayDayInfo();
         displayMoneyInfo();
         displayTimeInfo();
-
+        displayInventoryMenu();
+        displaySkillMenu();
+        displayCraftingMenu();
+        displayExitMenu();
 
 
     }
@@ -247,6 +330,23 @@ public class HUDView extends AppMenu{
                         textInputField.setText("");
                         tJustPressed = true;
                         return true;
+                    }
+
+                    else if ( keycode == Input.Keys.ESCAPE || keycode == Input.Keys.E) {
+
+                        if ( currentMenu == InGameMenuType.NONE ) {
+                            currentMenu = InGameMenuType.INVENTORY;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.NONE;
+                        }
+
+                    }
+
+                    else if ( keycode == Input.Keys.B ){
+
+                        currentMenu = InGameMenuType.CRAFTING;
+
                     }
 
                     else if ( keycode == Input.Keys.DOWN ){
