@@ -46,6 +46,14 @@ public class ServerConnectionThread extends ConnectionThread {
         else if (message.getType() == Message.Type.update_shop) {
             if (ClientApp.getCurrentGame() != null) {
                 ShopController.updateShopStock(message);
+                return true;
+            }
+            return false;
+        }
+        else if (message.getType() == Message.Type.pass_an_hour) {
+            if (ClientApp.getCurrentGame() != null) {
+                ClientApp.getCurrentGame().getTime().passAnHour();
+                return true;
             }
             return false;
         }

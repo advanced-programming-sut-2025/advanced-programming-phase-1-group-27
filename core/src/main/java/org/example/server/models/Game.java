@@ -1,5 +1,8 @@
 package org.example.server.models;
 
+import org.example.common.models.Message;
+import org.example.common.models.Time;
+import org.example.common.models.TimeAble;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
 import org.example.server.models.NPCs.NPC;
@@ -16,23 +19,23 @@ import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.items.*;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
-import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.min;
 
-public class Game {
+public class Game implements TimeAble {
+    private final Lobby lobby;
     private final FarmMap[] farmMaps = new FarmMap[4];
     private User admin;
     private int currentPlayerIndex = 0;
     private ArrayList<Player> players;
     private NPCMap npcMap;
     private Weather currentWeather = Weather.Sunny, tomorrowWeather = null; //
-    private Time time = new Time();
+    private Time time;
+    Thread timeThread;
     private ArrayList<NPC> npcs = new ArrayList<>();
     // all dialogues between players
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
@@ -40,9 +43,12 @@ public class Game {
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
 
-    public Game(User admin, ArrayList<Player> players) {
-        this.admin = admin;
+    public Game(Lobby lobby, ArrayList<Player> players) {
+        this.lobby = lobby;
+        this.admin = lobby.getAdmin();
         this.players = players;
+        this.time = new Time(this);
+        this.timeThread = new Thread(new ServerTimeTracker(this.time));
         for (Player player : players) {
             for (Player otherPlayer : players) {
                 if (otherPlayer.getUsername().equals(player.getUsername())) {
@@ -95,6 +101,17 @@ public class Game {
             farmMaps[i] = builder.getFinalProduct();
         }
 
+        timeThread.start();
+    }
+
+    private void initShops() {
+        blackSmith = new BlackSmith(ShopType.Blacksmith, time.getSeason());
+        jojaMart = new Shop(ShopType.JojaMart, time.getSeason());
+        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore, time.getSeason());
+        carpenterShop = new Shop(ShopType.CarpenterShop, time.getSeason());
+        fishShop = new Shop(ShopType.FishShop, time.getSeason());
+        marnieRanch = new Shop(ShopType.MarnieRanch, time.getSeason());
+        stardropSaloon = new Shop(ShopType.StardropSaloon, time.getSeason());
     }
 
     public User getAdmin() {
@@ -136,6 +153,7 @@ public class Game {
     }
 
     public void passAnHour() {
+        lobby.notifyAll(new Message(null, Message.Type.pass_an_hour));
         updatePlayersBuff();
         updateArtisans();
         for (Player player : players) {
@@ -395,15 +413,6 @@ public class Game {
         dialogues.add(dialogue);
     }
 
-    private void initShops() {
-        blackSmith = new BlackSmith(ShopType.Blacksmith);
-        jojaMart = new Shop(ShopType.JojaMart);
-        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
-        carpenterShop = new Shop(ShopType.CarpenterShop);
-        fishShop = new Shop(ShopType.FishShop);
-        marnieRanch = new Shop(ShopType.MarnieRanch);
-        stardropSaloon = new Shop(ShopType.StardropSaloon);
-    }
 
     private void updatePlayersBuff() {
         for (Player player : players) {

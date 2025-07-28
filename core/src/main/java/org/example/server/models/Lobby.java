@@ -1,6 +1,7 @@
 package org.example.server.models;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.common.models.Message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,5 +133,11 @@ public class Lobby {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public void notifyAll(Message message) {
+        for (User user : users) {
+            ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
+        }
     }
 }

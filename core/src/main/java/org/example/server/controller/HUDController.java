@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.client.controller.MenuController;
+import org.example.client.model.ClientApp;
 import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
@@ -36,7 +37,7 @@ public class HUDController extends MenuController {
 
     public void setTimeInfo(Label label){
 
-        int time = App.getCurrentGame().getTime().getHour();
+        int time = ClientApp.getCurrentGame().getTime().getHour();
 
         String timeFormat = ( (time>12)? time-12:time ) + ((time>12)? "  pm":"  am");
         label.setText(timeFormat);
@@ -45,7 +46,7 @@ public class HUDController extends MenuController {
 
     public void setDayInfo(Label label){
 
-        String day = App.getCurrentGame().getTime().getDayOfWeek().substring(0,3) + ". " + App.getCurrentGame().getTime().getDate();
+        String day = ClientApp.getCurrentGame().getTime().getDayOfWeek().substring(0,3) + ". " + ClientApp.getCurrentGame().getTime().getDate();
         label.setText(day);
 
     }
@@ -132,7 +133,7 @@ public class HUDController extends MenuController {
             }
 
         }
-        else if ( App.getCurrentGame().getTime().getSeason().equals(Season.Summer) ){
+        else if ( ClientApp.getCurrentGame().getTime().getSeason().equals(Season.Summer) ){
 
             if ( currentGame.getCurrentWeather().equals(Weather.Rainy) ){
                 return GameAssetManager.getGameAssetManager().getRainySummer();
@@ -148,7 +149,7 @@ public class HUDController extends MenuController {
             }
 
         }
-        else if ( App.getCurrentGame().getTime().getSeason().equals(Season.Fall) ){
+        else if ( ClientApp.getCurrentGame().getTime().getSeason().equals(Season.Fall) ){
 
             if ( currentGame.getCurrentWeather().equals(Weather.Rainy) ){
                 return GameAssetManager.getGameAssetManager().getRainyFall();
@@ -182,7 +183,7 @@ public class HUDController extends MenuController {
 
     public float getClockArrowDegree() {
 
-        float hour = (float) App.getCurrentGame().getTime().getHour();
+        float hour = (float) ClientApp.getCurrentGame().getTime().getHour();
         return - 180 * (hour - 9f) / (22f - 9f);
 
     }
