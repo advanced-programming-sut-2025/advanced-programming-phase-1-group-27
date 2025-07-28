@@ -64,7 +64,7 @@ public class App {
         players.add(Sobhan);
 
         Game game;
-        App.setCurrentGame(game = new Game(Yusof, players));
+        App.setCurrentGame(game = new Game(new Lobby(Yusof, true, null, true, 0, null), players));
         game.init();
 
 //        userYusof.setCurrentGame(game);

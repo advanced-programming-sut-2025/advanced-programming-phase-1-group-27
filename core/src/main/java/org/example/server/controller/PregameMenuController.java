@@ -18,7 +18,7 @@ public class PregameMenuController {
             players.add(new Player(user));
         }
         Game game;
-        lobby.setGame(game = new Game(lobby.getAdmin(), players));
+        lobby.setGame(game = new Game(lobby, players));
         game.init();
         System.out.println("Players: ");
         for (Player player : players) {

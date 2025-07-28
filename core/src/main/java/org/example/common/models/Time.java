@@ -1,14 +1,19 @@
-package org.example.server.models;
+package org.example.common.models;
 
 import org.example.server.models.enums.Seasons.Season;
 
 public class Time {
+    private TimeAble timeAble;
     private final String[] daysOfWeek = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday"};
     //implement as instance
     private int daysPassed = 0;
     private int hour = 9, day = 1;
     private Season season = Season.Spring;
+
+    public Time(TimeAble timeAble) {
+        this.timeAble = timeAble;
+    }
 
     public int getHour() {
         return this.hour;
@@ -29,7 +34,7 @@ public class Time {
 
     public boolean passAnHour() {
         hour++;
-        App.getCurrentGame().passAnHour();
+        timeAble.passAnHour();
         if (hour == 23) {
             passADay();
             hour = 9;
@@ -45,7 +50,7 @@ public class Time {
             advanceSeason();
             day = 0;
         }
-        App.getCurrentGame().newDay();
+        timeAble.newDay();
     }
 
     private void advanceTime(int hour) {
@@ -55,7 +60,7 @@ public class Time {
 
     private void advanceSeason() {
         season = season.getNextSeason();
-        App.getCurrentGame().newSeason();
+        timeAble.newSeason();
     }
 
     public Season getSeason() {

@@ -50,5 +50,6 @@ public class Message {
         leave_lobby,
         purchase_from_shop, // clients use this to buy from shop
         update_shop,
+        pass_an_hour,
     }
 }

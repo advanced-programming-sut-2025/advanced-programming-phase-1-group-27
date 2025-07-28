@@ -12,9 +12,8 @@ public class Shop {
     private final ShopType shopType;
     private ArrayList<Stock> stock;
 
-    public Shop(ShopType shopType) {
+    public Shop(ShopType shopType, Season season) {
         this.shopType = shopType;
-        Season season = App.getCurrentGame().getTime().getSeason();
         this.stock = shopType.getStock(season);
     }
 

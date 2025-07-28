@@ -1,6 +1,7 @@
 package org.example.client.model;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.common.models.TimeAble;
 import org.example.server.models.Lobby;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.FarmMapBuilder;
@@ -10,7 +11,7 @@ import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Player;
 import org.example.server.models.Shops.BlackSmith;
 import org.example.server.models.Shops.Shop;
-import org.example.server.models.Time;
+import org.example.common.models.Time;
 import org.example.server.models.User;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.ShopType;
@@ -18,7 +19,7 @@ import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.ArrayList;
 
-public class ClientGame {
+public class ClientGame implements TimeAble {
     private final int lobbyId;
     private User admin;
     private Player player;
@@ -26,7 +27,7 @@ public class ClientGame {
     private ArrayList<MiniPlayer> players;
     private NPCMap npcMap;
     private Weather currentWeather = Weather.Sunny, tomorrowWeather = null;
-    private Time time = new Time();
+    private Time time;
     private ArrayList<NPC> npcs = new ArrayList<>();
     private Shop jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
     private BlackSmith blackSmith;
@@ -37,16 +38,17 @@ public class ClientGame {
         this.admin = lobby.getAdmin();
         this.player = player;
         this.players = players;
+        this.time = new Time(this);
     }
 
     public void init(ArrayList<ArrayList<LinkedTreeMap<String, Object>>> info) {
-        blackSmith = new BlackSmith(ShopType.Blacksmith);
-        jojaMart = new Shop(ShopType.JojaMart);
-        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore);
-        carpenterShop = new Shop(ShopType.CarpenterShop);
-        fishShop = new Shop(ShopType.FishShop);
-        marnieRanch = new Shop(ShopType.MarnieRanch);
-        stardropSaloon = new Shop(ShopType.StardropSaloon);
+        blackSmith = new BlackSmith(ShopType.Blacksmith, time.getSeason());
+        jojaMart = new Shop(ShopType.JojaMart, time.getSeason());
+        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore, time.getSeason());
+        carpenterShop = new Shop(ShopType.CarpenterShop, time.getSeason());
+        fishShop = new Shop(ShopType.FishShop, time.getSeason());
+        marnieRanch = new Shop(ShopType.MarnieRanch, time.getSeason());
+        stardropSaloon = new Shop(ShopType.StardropSaloon, time.getSeason());
 
         Sebastian = new NPC(NPCType.Sebastian, 10);
         Abigail = new NPC(NPCType.Abigail, 20);
@@ -96,6 +98,10 @@ public class ClientGame {
         return npcMap;
     }
 
+    public Time getTime() {
+        return time;
+    }
+
     public Shop getShop(String shopName) {
         if (shopName.equalsIgnoreCase(ShopType.Blacksmith.name()))
             return blackSmith;
@@ -112,5 +118,20 @@ public class ClientGame {
         if (shopName.equalsIgnoreCase(ShopType.StardropSaloon.name()))
             return stardropSaloon;
         return null;
+    }
+
+    @Override
+    public void passAnHour() {
+        // TODO: rassa
+    }
+
+    @Override
+    public void newDay() {
+        // TODO: rassa
+    }
+
+    @Override
+    public void newSeason() {
+        // TODO: rassa
     }
 }

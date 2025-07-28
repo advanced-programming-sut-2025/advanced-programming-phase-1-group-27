@@ -1,5 +1,6 @@
 package org.example.server.models.Shops;
 
+import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.ShopType;
 
 import java.util.HashMap;
@@ -9,8 +10,8 @@ public class BlackSmith extends Shop {
 
     Map<String, Integer> upgradeLimit = new HashMap<>();
 
-    public BlackSmith(ShopType shopType) {
-        super(shopType);
+    public BlackSmith(ShopType shopType, Season season) {
+        super(shopType, season);
         upgradeLimit.put("Copper Tool", 1);
         upgradeLimit.put("Iron Tool", 1);
         upgradeLimit.put("Gold Tool", 1);
