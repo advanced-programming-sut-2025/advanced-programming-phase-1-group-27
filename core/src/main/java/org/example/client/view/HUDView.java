@@ -20,6 +20,7 @@ import org.example.server.models.enums.InGameMenuType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.CraftingProduct;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -162,13 +163,32 @@ public class HUDView extends AppMenu{
 
 
         inventoryHotBarImage.setPosition( (Gdx.graphics.getWidth()-inventoryHotBarImage.getWidth())/2,10 );
-
         inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(),26);
 
+        inventoryHotBarImage.setVisible(currentMenu == InGameMenuType.NONE);
+        inventorySelectSlotImage.setVisible(currentMenu == InGameMenuType.NONE);
         stage.addActor(inventoryHotBarImage);
         stage.addActor(inventorySelectSlotImage);
 
     }
+
+    private void showHotBarItems(){
+
+        List<Stacks> items = App.getCurrentGame().getCurrentPlayer().getBackpack().getItems();
+
+        for ( int i = 0 ; i < items.size() ; i++ ){
+
+            Image image = items.get(i).getItem().getItemImage();
+            image.setSize(48,48);
+            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
+            image.setVisible(currentMenu == InGameMenuType.NONE);
+            stage.addActor(image);
+
+
+        }
+
+    }
+
 
     private void displayInputField(){
 
@@ -198,22 +218,6 @@ public class HUDView extends AppMenu{
 
     }
 
-    private void showHotBarItems(){
-
-        List<Stacks> items = App.getCurrentGame().getCurrentPlayer().getBackpack().getItems();
-
-        for ( int i = 0 ; i < items.size() ; i++ ){
-
-            Image image = items.get(i).getItem().getItemImage();
-            image.setSize(48,48);
-            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5,26+5);
-            stage.addActor(image);
-
-
-        }
-
-    }
-
     private void displayInventoryMenu(){
 
         inventoryMenuBackground.setPosition((Gdx.graphics.getWidth()-inventoryMenuBackground.getWidth())/2f, (Gdx.graphics.getHeight()-inventoryMenuBackground.getHeight())/2f);
@@ -239,11 +243,10 @@ public class HUDView extends AppMenu{
         craftingMenuBackground.setVisible(currentMenu == InGameMenuType.CRAFTING);
         stage.addActor(craftingMenuBackground);
 
-        //  ITEMS
+        //  CRAFTING ITEMS
         for ( Recipe recipe : craftingProducts.keySet() ){
 
             ImageButton craftingProduct = craftingProducts.get(recipe);
-
             craftingProduct.setColor(craftingProduct.getColor().r,craftingProduct.getColor().g,craftingProduct.getColor().b,
                     0.3f + ((App.getCurrentGame().getCurrentPlayer().hasEnoughIngredients(recipe))? 0.7f:0f) );
 
@@ -253,10 +256,25 @@ public class HUDView extends AppMenu{
             else{
                 craftingProduct.setVisible(false);
             }
-            stage.addActor(craftingProduct);
 
+            stage.addActor(craftingProduct);
         }
 
+        // INVENTORY ITEMS
+        List<Stacks> craftingMenuInventory = new ArrayList<>(App.getCurrentGame().getCurrentPlayer().getBackpack().getItems());
+
+        if ( currentMenu == InGameMenuType.CRAFTING ) {
+            for (int i = 0; i < craftingMenuInventory.size() && i < 36; i++) {
+
+                Image image = craftingMenuInventory.get(i).getItem().getItemImage();
+                image.setSize(48, 48);
+                image.setPosition(520 + controller.getItemPosition(i%12), 385);
+                image.setVisible(true);
+                stage.addActor(image);
+                image.toFront();
+
+            }
+        }
 
 
 
@@ -290,9 +308,9 @@ public class HUDView extends AppMenu{
 
         displayClock();
         displayInventoryHotBar();
-        displayInputField();
         showErrorMessage();
         showHotBarItems();
+        displayInputField();
         displayDayInfo();
         displayMoneyInfo();
         displayTimeInfo();
@@ -484,6 +502,27 @@ public class HUDView extends AppMenu{
                 }
                 return false;
 
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                if (!isInputFieldVisible) {
+
+                    if ( (525 < x && x < 580) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.INVENTORY;
+                        return true;
+                    }
+                    else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.CRAFTING;
+                        return true;
+                    }
+
+//                    System.out.println("X: " + x + " Y: " + y);
+
+                }
+
+                return false;
             }
 
         });
