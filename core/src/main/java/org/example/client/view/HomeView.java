@@ -81,16 +81,11 @@ public class HomeView extends AppMenu {
         Main.getBatch().begin();
         homeSprite.draw(Main.getBatch());
         playerController.update();
+        hudView.displayHUD(delta);
         Main.getBatch().end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
-        Main.getBatch().begin();
-        hudView.displayHUD(delta);
-        Main.getBatch().end();
-
-
 
 
     }

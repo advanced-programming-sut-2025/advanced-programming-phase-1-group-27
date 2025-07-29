@@ -59,4 +59,10 @@ public class ServerConnectionThread extends ConnectionThread {
         }
         return false;
     }
+
+    @Override
+    public void run() {
+        super.run();
+        ClientApp.end();
+    }
 }

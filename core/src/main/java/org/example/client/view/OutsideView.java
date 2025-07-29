@@ -90,16 +90,11 @@ public class OutsideView extends AppMenu {
 
         playerController.update();
         camera.update();
+        hudView.displayHUD(delta);
         Main.getBatch().end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
-        Main.getBatch().begin();
-        hudView.displayHUD(delta);
-        Main.getBatch().end();
-
-
 
     }
 

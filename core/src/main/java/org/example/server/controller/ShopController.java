@@ -32,14 +32,10 @@ public class ShopController {
 
     private static void updateShopStock(Lobby lobby, Item item, int quantity, Shop shop) {
         shop.reduce(item, quantity);
-        for (User user : lobby.getUsers()) {
-            ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(
-                    new Message(new HashMap<>() {{
-                        put("shopName", shop.getShopType().name());
-                        put("itemName", item.getName());
-                        put("quantity", quantity);
-                    }}, Message.Type.update_shop)
-            );
-        }
+        lobby.notifyAll(new Message(new HashMap<>() {{
+            put("shopName", shop.getShopType().name());
+            put("itemName", item.getName());
+            put("quantity", quantity);
+        }}, Message.Type.update_shop));
     }
 }

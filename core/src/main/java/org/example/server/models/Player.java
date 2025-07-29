@@ -6,6 +6,8 @@ import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.*;
+import org.example.server.models.enums.Plants.FruitType;
+import org.example.server.models.enums.items.MineralType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.enums.items.products.CookingProduct;
@@ -57,6 +59,10 @@ public class Player extends User {
         backpack.addItems(ToolType.BasicWateringCan, ToolType.BasicWateringCan.getLevel(), 1);
         backpack.addItems(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1);
         backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
+        backpack.addItems(MineralType.Wood, StackLevel.Basic, 50);
+        backpack.addItems(MineralType.Coal, StackLevel.Basic, 1);
+        backpack.addItems(FruitType.Fiber, StackLevel.Basic, 20);
+
     }
 
     public Player(String username, String password, String nickname, String email, Gender gender) {
@@ -131,7 +137,7 @@ public class Player extends User {
         // crafting recipes
         availableCraftingRecipes.add(Recipe.FurnaceRecipe);
         availableCraftingRecipes.add(Recipe.ScarecrowRecipe);
-        availableCraftingRecipes.add(Recipe.MayonnaiseRecipe);
+        availableCraftingRecipes.add(Recipe.MayonnaiseMachineRecipe);
         // cooking recipes
         availableCookingRecipes.add(Recipe.FriedEggRecipe);
         availableCookingRecipes.add(Recipe.BakedFishRecipe);

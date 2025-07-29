@@ -10,8 +10,11 @@ import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.Seasons.Season;
+import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.commands.CheatCommands;
+import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.enums.items.products.CraftingProduct;
 
 import java.util.regex.Matcher;
 
@@ -202,6 +205,21 @@ public class HUDController extends MenuController {
 
         return graphicalResult;
 
+    }
+
+    public GraphicalResult craft(CraftingProduct craftingProduct) {
+        Recipe recipe = craftingProduct.getRecipe();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        if (!player.getBackpack().canAdd(craftingProduct, StackLevel.Basic, 1))
+            return new GraphicalResult("Your backpack is full!");
+        player.useRecipe(recipe);
+        if (player.getEnergy() < 2) {
+            player.consumeEnergy(player.getEnergy());
+            player.getBackpack().reduceItems(recipe.getFinalProduct(), 1);
+            return new GraphicalResult("Crafting failed! You don't have enough energy!");
+        }
+        player.consumeEnergy(2);
+        return new GraphicalResult(craftingProduct.getName() + " crafted successfully", false);
     }
 
     private GraphicalResult handleCheat(String input){

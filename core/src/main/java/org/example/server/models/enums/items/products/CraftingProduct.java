@@ -68,7 +68,5 @@ public enum CraftingProduct implements Item {
         }
         return recipe;
     }
-//
-
 }
 

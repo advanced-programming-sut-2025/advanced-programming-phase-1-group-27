@@ -77,6 +77,10 @@ public class ClientApp {
         return serverConnectionThread;
     }
 
+    public static void end() {
+        serverConnectionThread.end();
+    }
+
     public static User getUserByUsername(String username) {
         Message response = serverConnectionThread.sendAndWaitForResponse(new Message(new HashMap<>() {{
             put("username", username);
