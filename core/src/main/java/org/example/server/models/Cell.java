@@ -159,7 +159,7 @@ public class Cell {
     }
 
     public Texture getTexture() {
-        if (cellType == CellType.Free || cellType == CellType.Building) {
+        if (cellType == CellType.Free) {
             return GameAssetManager.getGameAssetManager().getFreeCellTexture();
         } else if (cellType == CellType.Quarry) {
             return GameAssetManager.getGameAssetManager().getQuarryCellTexture();
@@ -167,6 +167,10 @@ public class Cell {
             return GameAssetManager.getGameAssetManager().getNpcMapCellTexture();
         else if (cellType == CellType.Water)
             return GameAssetManager.getGameAssetManager().getWaterCellTexture();
+        else if (cellType == CellType.Building && map instanceof NPCMap)
+            return GameAssetManager.getGameAssetManager().getNpcMapCellTexture();
+        else if (cellType == CellType.Building && map instanceof FarmMap)
+            return GameAssetManager.getGameAssetManager().getFreeCellTexture();
         return null;
     }
 

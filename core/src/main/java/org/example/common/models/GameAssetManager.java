@@ -20,6 +20,7 @@ import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.utils.MusicPlayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -132,6 +133,20 @@ public class GameAssetManager {
         for (FishType fishType : FishType.values())
             put(fishType, new Texture(Gdx.files.internal(fishType.getAddress())));
     }};
+
+    private final TextureAtlas treeAtlas = new TextureAtlas("assets/Images/Trees/Trees.atlas");
+
+    private final HashMap<TreeType, ArrayList<Texture>> treeTextureMap = new HashMap<>() {{
+        for (TreeType treeType : TreeType.values()) {
+            if (treeType.getAddresses() != null) {
+                put(treeType, new ArrayList<Texture>() {{
+                    for (String address : treeType.getAddresses()) {
+                        add(treeAtlas.createSprite(address).getTexture());
+                    }
+                }});
+            }
+        }
+    }} ;
 
     private final HashMap<Item, Image> itemImageMap = new HashMap<>() {{
         for (Entry<Item, Texture> entry : itemTextureMap.entrySet()) {
@@ -518,5 +533,9 @@ public class GameAssetManager {
 
     public Sprite getCabinSprite(int index) {
         return cabinSprites[index];
+    }
+
+    public HashMap<TreeType, ArrayList<Texture>> getTreeTextureMap() {
+        return treeTextureMap;
     }
 }

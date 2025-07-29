@@ -1,5 +1,7 @@
 package org.example.server.models.enums.Plants;
 
+import com.badlogic.gdx.graphics.Texture;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.enums.Seasons.Season;
 
 import java.util.ArrayList;
@@ -7,7 +9,8 @@ import java.util.List;
 
 public enum TreeType implements PlantType {
     ApricotTree(new int[]{7, 7, 7, 7}, 28,
-            FruitType.Apricot, new Season[]{Season.Spring}, 1),
+            FruitType.Apricot, new Season[]{Season.Spring}, 1,
+            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
     CherryTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Cherry, new Season[]{Season.Spring}, 1),
     BananaTree(new int[]{7, 7, 7, 7}, 28,
@@ -43,14 +46,27 @@ public enum TreeType implements PlantType {
     private final ArrayList<Season> seasons;
     private final int harvestCycle;
     private PlantSourceType source;
+    private final String[] addresses;
 
-    TreeType(int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle) {
+    TreeType(int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle
+            , String[] addresses) {
         this.source = source;
         this.stages = stages;
         this.harvestTime = harvestTime;
         this.fruit = fruit;
         this.seasons = new ArrayList<>(List.of(seasons));
         this.harvestCycle = harvestCycle;
+        this.addresses = addresses;
+    }
+
+    TreeType(int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle) {
+        this.source = source;
+        this.stages = stages;
+        this.fruit = fruit;
+        this.seasons = new ArrayList<>(List.of(seasons));
+        this.harvestCycle = harvestCycle;
+        this.addresses = null;
+        this.harvestTime = harvestTime;
     }
 
     public static TreeType getItem(String itemName) {
@@ -102,6 +118,14 @@ public enum TreeType implements PlantType {
 
     public boolean getOneTime() {
         return false;
+    }
+
+    public String[] getAddresses() {
+        return addresses;
+    }
+
+    public ArrayList<Texture> getTextures() {
+        return GameAssetManager.getGameAssetManager().getTreeTextureMap().get(this);
     }
 
     public String toString() {

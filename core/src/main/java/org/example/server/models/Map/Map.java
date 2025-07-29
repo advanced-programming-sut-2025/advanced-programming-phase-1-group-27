@@ -8,6 +8,8 @@ import org.example.server.models.Position;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.CropType;
+import org.example.server.models.enums.Plants.Tree;
+import org.example.server.models.enums.Plants.TreeType;
 import org.example.server.models.enums.items.MineralType;
 
 import java.util.*;
@@ -196,6 +198,11 @@ public class Map {
                     texture = mineral.getTexture();
                     if (texture != null)
                         Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                }
+                if (cells[i][j].getObject() instanceof Tree tree) {
+                    ArrayList<Texture>  textures = ((TreeType) tree.getType()).getTextures();
+                    if (textures != null)
+                        Main.getBatch().draw(textures.get(2), x, y, 36, 60);
                 }
             }
         }
