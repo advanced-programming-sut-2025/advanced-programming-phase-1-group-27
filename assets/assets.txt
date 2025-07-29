@@ -1,3 +1,5 @@
+Buildings/Buildings.atlas
+Buildings/Cabins.png
 Character/Vincent.png
 Character/character.atlas
 Clock/Arrow.png

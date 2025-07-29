@@ -63,7 +63,7 @@ public class HomeView extends AppMenu {
 
         Gdx.input.setInputProcessor(stage);
 
-        stage.addActor(advanceTimeButton);
+//        stage.addActor(advanceTimeButton);
 
         setListeners();
 

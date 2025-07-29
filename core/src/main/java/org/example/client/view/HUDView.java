@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.example.common.models.GraphicalResult;
 import org.example.server.controller.HUDController;
 import org.example.server.models.App;
@@ -20,7 +20,6 @@ import org.example.server.models.enums.InGameMenuType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.CraftingProduct;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -84,14 +83,17 @@ public class HUDView extends AppMenu{
         int i = 0;
         for ( Recipe recipe : Recipe.values() ) {
 
-//            Image itemImage = recipe.getFinalProduct().getItemImage();
-//            itemImage.setSize(48,48);
-//
-//            ImageButton productButton = new ImageButton((Drawable)itemImage );
-//            productButton.setPosition(100 + 60 * (i%7),500-(i/7f)*60);
-//            craftingProducts.put(recipe,productButton);
-//            i++;
+            if ( recipe.getFinalProduct() instanceof CraftingProduct ){
 
+                ImageButton productButton = new ImageButton(new TextureRegionDrawable(recipe.getFinalProduct().getTexture()));
+                productButton.setSize(96,96);
+                productButton.setPosition(520 + 110 * (i%7),(float)(680-(i/7)*100));
+                productButton.setColor(productButton.getColor().r,productButton.getColor().g,productButton.getColor().b,
+                        0.3f + ((App.getCurrentGame().getCurrentPlayer().hasEnoughIngredients(recipe))? 0.7f:0f) );
+                craftingProducts.put(recipe,productButton);
+                i++;
+
+            }
         }
 
         setListeners();
@@ -196,7 +198,7 @@ public class HUDView extends AppMenu{
 
     }
 
-    private void showInventoryItem(){
+    private void showHotBarItems(){
 
         List<Stacks> items = App.getCurrentGame().getCurrentPlayer().getBackpack().getItems();
 
@@ -232,16 +234,30 @@ public class HUDView extends AppMenu{
 
     private void displayCraftingMenu(){
 
-
-        for ( Recipe recipe : craftingProducts.keySet() ){
-
-            stage.addActor(craftingProducts.get(recipe));
-
-        }
-
+        //  BACKGROUND
         craftingMenuBackground.setPosition((Gdx.graphics.getWidth()-craftingMenuBackground.getWidth())/2f, (Gdx.graphics.getHeight()-craftingMenuBackground.getHeight())/2f);
         craftingMenuBackground.setVisible(currentMenu == InGameMenuType.CRAFTING);
         stage.addActor(craftingMenuBackground);
+
+        //  ITEMS
+        for ( Recipe recipe : craftingProducts.keySet() ){
+
+            ImageButton craftingProduct = craftingProducts.get(recipe);
+
+            craftingProduct.setColor(craftingProduct.getColor().r,craftingProduct.getColor().g,craftingProduct.getColor().b,
+                    0.3f + ((App.getCurrentGame().getCurrentPlayer().hasEnoughIngredients(recipe))? 0.7f:0f) );
+
+            if ( currentMenu == InGameMenuType.CRAFTING ){
+                craftingProduct.setVisible(App.getCurrentGame().getCurrentPlayer().getAvailableCraftingRecipes().contains(recipe));
+            }
+            else{
+                craftingProduct.setVisible(false);
+            }
+            stage.addActor(craftingProduct);
+
+        }
+
+
 
 
     }
@@ -276,7 +292,7 @@ public class HUDView extends AppMenu{
         displayInventoryHotBar();
         displayInputField();
         showErrorMessage();
-        showInventoryItem();
+        showHotBarItems();
         displayDayInfo();
         displayMoneyInfo();
         displayTimeInfo();
@@ -345,7 +361,12 @@ public class HUDView extends AppMenu{
 
                     else if ( keycode == Input.Keys.B ){
 
-                        currentMenu = InGameMenuType.CRAFTING;
+                        if ( currentMenu == InGameMenuType.CRAFTING ) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.CRAFTING;
+                        }
 
                     }
 
