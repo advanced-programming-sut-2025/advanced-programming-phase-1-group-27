@@ -23,10 +23,7 @@ import org.example.server.models.enums.InGameMenuType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.CraftingProduct;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class HUDView extends AppMenu {
 
@@ -205,6 +202,23 @@ public class HUDView extends AppMenu {
         inventoryMenuBackground.setVisible(currentMenu == InGameMenuType.INVENTORY);
         stage.addActor(inventoryMenuBackground);
 
+
+        // INVENTORY ITEMS
+        List<Stacks> craftingMenuInventory = new ArrayList<>(ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getItems());
+
+        if ( currentMenu == InGameMenuType.INVENTORY ) {
+            for (int i = 0; i < craftingMenuInventory.size() && i < 36; i++) {
+
+                Image image = craftingMenuInventory.get(i).getItem().getItemImage();
+                image.setSize(48, 48);
+                image.setPosition(520 + controller.getItemPosition(i%12), 705);
+                image.setVisible(true);
+                stage.addActor(image);
+                image.toFront();
+
+            }
+        }
+
     }
 
     private void displaySkillMenu() {
@@ -245,6 +259,23 @@ public class HUDView extends AppMenu {
             stage.addActor(imageButton);
 
         }
+
+        // INVENTORY ITEMS
+        List<Stacks> craftingMenuInventory = new ArrayList<>(ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getItems());
+
+        if ( currentMenu == InGameMenuType.CRAFTING ) {
+            for (int i = 0; i < craftingMenuInventory.size() && i < 36; i++) {
+
+                Image image = craftingMenuInventory.get(i).getItem().getItemImage();
+                image.setSize(48, 48);
+                image.setPosition(520 + controller.getItemPosition(i%12), 385);
+                image.setVisible(true);
+                stage.addActor(image);
+                image.toFront();
+
+            }
+        }
+
     }
 
     private void displayExitMenu() {
@@ -332,7 +363,7 @@ public class HUDView extends AppMenu {
                         return true;
                     } else if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.E) {
 
-                        if (currentMenu == InGameMenuType.NONE) {
+                        if (currentMenu != InGameMenuType.INVENTORY ) {
                             currentMenu = InGameMenuType.INVENTORY;
                         } else {
                             currentMenu = InGameMenuType.NONE;
@@ -342,7 +373,8 @@ public class HUDView extends AppMenu {
 
                         if (currentMenu == InGameMenuType.CRAFTING) {
                             currentMenu = InGameMenuType.NONE;
-                        } else {
+                        }
+                        else {
                             currentMenu = InGameMenuType.CRAFTING;
                         }
 
