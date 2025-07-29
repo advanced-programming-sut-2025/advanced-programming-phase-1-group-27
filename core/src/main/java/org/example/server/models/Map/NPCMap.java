@@ -11,6 +11,22 @@ import org.example.server.models.enums.CellType;
 
 public class NPCMap extends Map {
 
+    private BuildingSprite[] buildingSprites = new BuildingSprite[] {
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 2),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(5), 9, 8),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 15),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(5), 9, 22),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 28),
+
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 0),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 5),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(11), 0, 10),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 15),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 20),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 25),
+            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 30)
+    };
+
     public NPCMap() {
         super(16, 34);
         build();
@@ -78,17 +94,32 @@ public class NPCMap extends Map {
 
     }
 
+
     public void print(float tileSize) {
         super.print(tileSize);
         //NPC houses:
-        int i = 9, j = 2;
-        int x = OutsideView.getGraphicalPosition(9, 2).getX() - 20,
-                y = OutsideView.getGraphicalPosition(9, 2).getY() - 30;
+        for (BuildingSprite buildingSprite : buildingSprites) {
+            buildingSprite.render();
+        }
 
-        Sprite cabin = new Sprite(GameAssetManager.getGameAssetManager().getCabinSprite(2));
-        cabin.setScale(2f);
+    }
+}
 
-        cabin.setPosition(x + 40, y - 80);
-        cabin.draw(Main.getBatch());
+class BuildingSprite {
+    public Sprite sprite;
+    public int i, j;
+
+    public BuildingSprite(Sprite sprite, int i, int j) {
+        this.sprite = new Sprite(sprite);
+        this.i = i;
+        this.j = j;
+    }
+
+    public void render() {
+        int x = OutsideView.getGraphicalPosition(i, j).getX() - 20,
+                y = OutsideView.getGraphicalPosition(i, j).getY() - 30;
+        sprite.setScale(2.05f);
+        sprite.setPosition(x + 40, y - 80);
+        sprite.draw(Main.getBatch());
     }
 }
