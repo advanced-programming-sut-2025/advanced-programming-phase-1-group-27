@@ -33,6 +33,8 @@ public class PierreGeneralShop extends AppMenu {
 
     private Label moneyLabel;
 
+    private final TextButton exitButton;
+
     private ArrayList<Stock> stockItems;
     private Table stockTable;
     private ScrollPane scrollPane;
@@ -70,6 +72,10 @@ public class PierreGeneralShop extends AppMenu {
         showOnlyAvailableCheckBox = new CheckBox("Filter", skin);
         showOnlyAvailableCheckBox.setChecked(true);
         moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
+
+        exitButton = new TextButton("Exit", skin);
+
+        setListeners();
     }
 
     private void displayItems() {
@@ -159,6 +165,21 @@ public class PierreGeneralShop extends AppMenu {
         stage.addActor(showOnlyAvailableCheckBox);
     }
 
+    private void displayButtons(){
+        exitButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight()/2f - 40);
+        stage.addActor(exitButton);
+    }
+
+    private void setListeners(){
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.exitMenu();
+            }
+        });
+    }
+
     private void displayNPC(){
         npcImage.setPosition(Gdx.graphics.getWidth() - npcImage.getWidth() - 20, 0);
         stage.addActor(npcImage);
@@ -194,6 +215,7 @@ public class PierreGeneralShop extends AppMenu {
         displayMoney();
         displayItems();
         displayCheckBox();
+        displayButtons();
     }
 
     @Override

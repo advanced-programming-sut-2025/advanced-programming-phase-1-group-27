@@ -31,6 +31,9 @@ public class BlackSmithShop extends AppMenu {
 
     private Label moneyLabel;
 
+    private final TextButton upgradeButton;
+    private final TextButton exitButton;
+
     private ArrayList<Stock> stockItems;
     private Table stockTable;
     private ScrollPane scrollPane;
@@ -68,6 +71,12 @@ public class BlackSmithShop extends AppMenu {
         showOnlyAvailableCheckBox = new CheckBox("Filter", skin);
         showOnlyAvailableCheckBox.setChecked(true);
         moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
+
+        //TODO : Rassa!!!
+        upgradeButton = new TextButton("Upgrade", skin);
+        exitButton = new TextButton("Exit", skin);
+
+        setListeners();
     }
 
     private void displayItems() {
@@ -157,6 +166,32 @@ public class BlackSmithShop extends AppMenu {
         stage.addActor(showOnlyAvailableCheckBox);
     }
 
+    private void displayButtons(){
+        exitButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight()/2f - 40);
+        stage.addActor(exitButton);
+
+        upgradeButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight()/2f - 20);
+        stage.addActor(upgradeButton);
+    }
+
+    private void setListeners(){
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.exitMenu();
+            }
+        });
+
+        upgradeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+//                controller.goToUpgradeMenu();
+            }
+        });
+    }
+
     private void displayNPC(){
         npcImage.setPosition(Gdx.graphics.getWidth() - npcImage.getWidth() - 20, 0);
         stage.addActor(npcImage);
@@ -192,6 +227,7 @@ public class BlackSmithShop extends AppMenu {
         displayMoney();
         displayItems();
         displayCheckBox();
+        displayButtons();
     }
 
     @Override
