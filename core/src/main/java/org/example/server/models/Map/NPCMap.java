@@ -12,19 +12,19 @@ import org.example.server.models.enums.CellType;
 public class NPCMap extends Map {
 
     private BuildingSprite[] buildingSprites = new BuildingSprite[] {
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 2),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(5), 9, 8),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 15),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(5), 9, 22),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 28),
-
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 0),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 5),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(11), 0, 10),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 15),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 20),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 25),
-            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 30)
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 2),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(5), 9, 8),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 15),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(5), 9, 22),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 28),
+//
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 0),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 5),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(11), 0, 10),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 15),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 20),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 25),
+//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 30)
     };
 
     public NPCMap() {

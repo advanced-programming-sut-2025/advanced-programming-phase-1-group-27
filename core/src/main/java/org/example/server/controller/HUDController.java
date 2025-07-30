@@ -1,6 +1,7 @@
 package org.example.server.controller;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.client.controller.MenuController;
@@ -221,6 +222,7 @@ public class HUDController extends MenuController {
         player.consumeEnergy(2);
         return new GraphicalResult(craftingProduct.getName() + " crafted successfully", false);
     }
+
 
     private GraphicalResult handleCheat(String input){
 

@@ -239,7 +239,7 @@ public class Backpack extends Tool {
     private boolean areSameStacks(Stacks s1, Stacks s2) {
         if (s1 == null || s2 == null)
             return false;
-        return s1.getItem().equals(s2.getItem()) && s1.getStackLevel() == s2.getStackLevel();
+        return s1.getItem() == s2.getItem() && s1.getStackLevel() == s2.getStackLevel();
     }
 
     public void mergeItems() {
