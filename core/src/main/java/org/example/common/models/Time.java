@@ -3,16 +3,16 @@ package org.example.common.models;
 import org.example.server.models.enums.Seasons.Season;
 
 public class Time {
-    private TimeAble timeAble;
+    private Game game;
     private final String[] daysOfWeek = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday"};
-    //implement as instance
+    // implement as instance
     private int daysPassed = 0;
     private int hour = 9, day = 1;
     private Season season = Season.Spring;
 
-    public Time(TimeAble timeAble) {
-        this.timeAble = timeAble;
+    public Time(Game game) {
+        this.game = game;
     }
 
     public int getHour() {
@@ -34,7 +34,7 @@ public class Time {
 
     public boolean passAnHour() {
         hour++;
-        timeAble.passAnHour();
+        game.passAnHour();
         if (hour == 23) {
             passADay();
             hour = 9;
@@ -50,7 +50,7 @@ public class Time {
             advanceSeason();
             day = 0;
         }
-        timeAble.newDay();
+        game.newDay();
     }
 
     private void advanceTime(int hour) {
@@ -60,7 +60,7 @@ public class Time {
 
     private void advanceSeason() {
         season = season.getNextSeason();
-        timeAble.newSeason();
+        game.newSeason();
     }
 
     public Season getSeason() {

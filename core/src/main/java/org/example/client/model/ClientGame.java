@@ -1,7 +1,7 @@
 package org.example.client.model;
 
 import com.google.gson.internal.LinkedTreeMap;
-import org.example.common.models.TimeAble;
+import org.example.common.models.Game;
 import org.example.server.models.Lobby;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.FarmMapBuilder;
@@ -19,7 +19,7 @@ import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.ArrayList;
 
-public class ClientGame implements TimeAble {
+public class ClientGame implements Game {
     private final int lobbyId;
     private User admin;
     private Player player;
@@ -80,7 +80,7 @@ public class ClientGame implements TimeAble {
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
-            director.buildMapWithoutForaging(builder, i);
+            director.buildMapWithoutForaging(builder, i, this);
             farmMaps[i] = builder.getFinalProduct();
             farmMaps[i].addForaging(info.get(i));
         }
