@@ -297,8 +297,10 @@ public class HUDView extends AppMenu {
     }
 
     private void updateOnScreenItems(){
+
         int commonPrefix = Math.min(onScreenItems.size(), inventoryItems.size());
         ArrayList<Stacks> removableStacks = new ArrayList<>();
+        ArrayList<Stacks> addableStack = new ArrayList<>();
 
         for (int i = commonPrefix; i < onScreenItems.size(); i++) {
             removableStacks.add(onScreenItems.get(i));
@@ -306,18 +308,24 @@ public class HUDView extends AppMenu {
 
         for (int i = 0; i < commonPrefix; i++) {
             if (!Stacks.compare(onScreenItems.get(i), inventoryItems.get(i))) {
-                addToScreen(Stacks.copy(inventoryItems.get(i)));
                 removableStacks.add(onScreenItems.get(i));
+                addableStack.add(Stacks.copy(inventoryItems.get(i)));
             }
+        }
+
+        for (int i = commonPrefix; i < inventoryItems.size(); i++) {
+            addableStack.add(Stacks.copy(inventoryItems.get(i)));
         }
 
         for (Stacks removableStack : removableStacks) {
             removeFromScreen(removableStack);
         }
 
-        for (int i = commonPrefix; i < inventoryItems.size(); i++) {
-            addToScreen(Stacks.copy(inventoryItems.get(i)));
+        for ( Stacks stack : addableStack ) {
+            addToScreen(stack);
         }
+
+
     }
 
     @Override
@@ -470,6 +478,16 @@ public class HUDView extends AppMenu {
                         for ( Stacks item : inventoryItems ) {
                             System.out.println(item.getItem() + " " + item.getQuantity());
                         }
+                        System.out.println("---------------------");
+
+                    }
+                    else if ( keycode == Input.Keys.O ) {
+
+                        for ( Stacks item : onScreenItems ) {
+                            System.out.println(item.getItem() + " " + item.getQuantity());
+                        }
+                        System.out.println("---------------------");
+
 
                     }
 
