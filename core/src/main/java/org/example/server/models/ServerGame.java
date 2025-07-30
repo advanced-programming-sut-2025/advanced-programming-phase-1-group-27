@@ -314,7 +314,7 @@ public class ServerGame implements Game {
         }
         //refresh relations :
         for (Player player : players) {
-            player.refreshNPCThings();
+            player.refreshNPCThings(this);
             player.refreshPlayerThings();
         }
         // refresh shop stock

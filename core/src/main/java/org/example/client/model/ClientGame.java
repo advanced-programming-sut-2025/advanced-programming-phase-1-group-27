@@ -120,6 +120,10 @@ public class ClientGame implements Game {
         return null;
     }
 
+    public ArrayList<NPC> getNPCs() {
+        return npcs;
+    }
+
     @Override
     public void passAnHour() {
         // TODO: rassa
@@ -137,5 +141,81 @@ public class ClientGame implements Game {
 
     public Weather getCurrentWeather() {
         return currentWeather;
+    }
+
+    public NPC getGus() {
+        return Gus;
+    }
+
+    public NPC getMorris() {
+        return Morris;
+    }
+
+    public NPC getMarnie() {
+        return Marnie;
+    }
+
+    public NPC getWilly() {
+        return Willy;
+    }
+
+    public NPC getRobin() {
+        return Robin;
+    }
+
+    public NPC getPierre() {
+        return Pierre;
+    }
+
+    public NPC getClint() {
+        return Clint;
+    }
+
+    public NPC getRobbin() {
+        return Robbin;
+    }
+
+    public NPC getLia() {
+        return Lia;
+    }
+
+    public NPC getHarvey() {
+        return Harvey;
+    }
+
+    public NPC getAbigail() {
+        return Abigail;
+    }
+
+    public NPC getSebastian() {
+        return Sebastian;
+    }
+
+    public Shop getJojaMart() {
+        return jojaMart;
+    }
+
+    public Shop getPierreGeneralStore() {
+        return pierreGeneralStore;
+    }
+
+    public Shop getCarpenterShop() {
+        return carpenterShop;
+    }
+
+    public Shop getFishShop() {
+        return fishShop;
+    }
+
+    public Shop getMarnieRanch() {
+        return marnieRanch;
+    }
+
+    public Shop getStardropSaloon() {
+        return stardropSaloon;
+    }
+
+    public BlackSmith getBlacksmith() {
+        return blackSmith;
     }
 }
