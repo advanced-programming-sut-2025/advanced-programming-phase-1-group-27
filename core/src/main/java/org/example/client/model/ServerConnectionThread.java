@@ -57,6 +57,16 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.cheatAdvanceTime(message);
             return true;
         }
+        else if (message.getType() == Message.Type.set_weather) {
+            assert ClientApp.getCurrentGame() != null;
+            ServerUpdatesController.setWeather(message);
+            return true;
+        }
+        else if (message.getType() == Message.Type.crows_attack) {
+            assert ClientApp.getCurrentGame() != null;
+            ServerUpdatesController.crowsAttack(message);
+            return true;
+        }
         return false;
     }
 

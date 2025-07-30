@@ -2,6 +2,7 @@ package org.example.server.models;
 
 import org.example.common.models.Game;
 import org.example.common.models.Time;
+import org.example.server.controller.ClientUpdatesController;
 import org.example.server.controller.TimeController;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
@@ -22,6 +23,7 @@ import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.min;
@@ -177,50 +179,15 @@ public class ServerGame implements Game {
         TimeController.passAnHour(lobby);
         updatePlayersBuff();
         updateArtisans();
-        for (Player player : players) {
-            player.setNextTurnEnergy();
-        }
+        // player energies will be automatically updated
     }
 
     public void newDay() {
-        // Crows Attacking
-        for (Player player : players) {
-            ArrayList<Plant> allPlants = new ArrayList<>();
-            for (int i = 0; i < player.getFarmMap().getHeight(); i++)
-                for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
-                    Cell cell = player.getFarmMap().getCell(i, j);
-                    if (cell.getObject() != null && !(cell.getBuilding() instanceof GreenHouse)) {
-                        if (cell.getObject() instanceof Plant plant) {
-                            allPlants.add(plant);
-                        }
-                    }
-                }
-            int crowsCount = allPlants.size() / 16;
-            for (int i = 0; i < crowsCount; i++) {
-                if (new Random().nextInt(4) == 0) {
-                    Plant plant = allPlants.get(new Random().nextInt(allPlants.size()));
-                    if (plant.getCell().isProtected())
-                        continue;
-                    if (plant instanceof Crop crop) {
-                        crop.getCell().setObject(null);
-                    } else if (plant instanceof Tree tree) {
-                        tree.setTillNextHarvest(min(1, tree.getTillNextHarvest()));
-                    }
-                }
-            }
-        }
-        // Updating animals
-        for (Player player : players) {
-            for (Animal animal : player.getFarmMap().getAnimals()) {
-                animal.passADay();
-            }
-        }
-        // Emptying shipping bin
-        for (Player player : players) {
-            for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
-                player.addMoney(shippingBin.refresh());
-            }
-        }
+        crowsAttack();
+        updateAnimals(); // TODO: rassa, maybe automatic??
+        updateShippingBin();
+        setNewWeather();
+
         // Walking to their houses
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
@@ -270,22 +237,6 @@ public class ServerGame implements Game {
             }
         }
 
-        // Setting Energies :
-        for (Player player : players) {
-            if (player.hasPassedOut())
-                player.setDayEnergy(player.getMaxEnergy() * 3 / 4);
-
-            else
-                player.setDayEnergy(player.getMaxEnergy());
-            player.setNextTurnEnergy();
-
-        }
-        // Setting Weather :
-        if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
-        else {
-            currentWeather = tomorrowWeather;
-            tomorrowWeather = null;
-        }
         // Grow (and deleting) Plants :
         for (Player player : players) {
             player.getFarmMap().generateForaging();
@@ -312,21 +263,69 @@ public class ServerGame implements Game {
                 }
             }
         }
-        //refresh relations :
-        for (Player player : players) {
-            player.refreshNPCThings();
-            player.refreshPlayerThings();
-        }
+
         // refresh shop stock
         initShops();
 
-        //System.out.println(App.getCurrentGame().NPCGiftingLevel3());
         // Apply weather effect
         currentWeather.applyWeatherEffect();
     }
 
     public void newSeason() {
         initShops();
+    }
+
+    private void crowsAttack() {
+        // Crows Attacking
+        for (Player player : players) {
+            ArrayList<Plant> allPlants = player.getFarmMap().getAllPlants();
+            int crowsCount = allPlants.size() / 16;
+            ArrayList<Integer> attackedPlants = new ArrayList<>();
+            for (int i = 0; i < crowsCount; i++) {
+                if (new Random().nextInt(4) == 0) {
+                    int plantIndex = new Random().nextInt(allPlants.size());
+                    attackedPlants.add(plantIndex);
+                    Plant plant = allPlants.get(plantIndex);
+                    if (plant.getCell().isProtected())
+                        continue;
+                    if (plant instanceof Crop crop) {
+                        crop.getCell().setObject(null);
+                    } else if (plant instanceof Tree tree) {
+                        tree.setTillNextHarvest(min(1, tree.getTillNextHarvest()));
+                    }
+                }
+            }
+            lobby.notifyCrowsAttack(player, attackedPlants);
+        }
+    }
+
+    private void updateAnimals() {
+        // Updating animals
+        for (Player player : players) {
+            for (Animal animal : player.getFarmMap().getAnimals()) {
+                animal.passADay();
+            }
+        }
+    }
+
+    private void updateShippingBin() {
+        // Emptying shipping bin
+        for (Player player : players) {
+            for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
+                shippingBin.refresh();
+                // money will automatically be updated when player.addMoney() is called in client
+            }
+        }
+    }
+
+    private void setNewWeather() {
+        // Setting Weather :
+        if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
+        else {
+            currentWeather = tomorrowWeather;
+            tomorrowWeather = null;
+        }
+        lobby.updateWeather(currentWeather);
     }
 
     public Player getCurrentPlayer() {
