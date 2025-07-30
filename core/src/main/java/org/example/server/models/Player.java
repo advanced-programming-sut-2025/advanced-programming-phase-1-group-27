@@ -17,12 +17,13 @@ import org.example.server.models.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 public class Player extends User {
     private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>();
     private ArrayList<Recipe> availableCookingRecipes = new ArrayList<>();
     // player's inventory
-    private Backpack backpack = new Backpack(ToolType.BasicBackpack); // TODO: ba parsa check shavad
+    private Backpack backpack = new Backpack(ToolType.DeluxeBackpack); // TODO: ba parsa check shavad
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>();
     private int energy, dayEnergy, maxEnergy = 200, boostEnergy = 0;
@@ -59,9 +60,26 @@ public class Player extends User {
         backpack.addItems(ToolType.BasicWateringCan, ToolType.BasicWateringCan.getLevel(), 1);
         backpack.addItems(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1);
         backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
-        backpack.addItems(MineralType.Wood, StackLevel.Basic, 1005);
+        backpack.addItems(MineralType.Wood, StackLevel.Basic, 55);
         backpack.addItems(MineralType.Coal, StackLevel.Basic, 1);
-        backpack.addItems(FruitType.Fiber, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Fiber, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Cherry, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Mango, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Apple, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Peach, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Apricot, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Sap, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Leek, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Morel, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Grape, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.RedMushroom, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Carrot, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Garlic, StackLevel.Basic, 20);
+//        backpack.addItems(FruitType.Potato, StackLevel.Basic, 20);
+
+        for ( FruitType ft: FruitType.values() ){
+            backpack.addItems(ft, StackLevel.Basic, 50);
+        }
 
     }
 
