@@ -45,6 +45,8 @@ public class HUDView extends AppMenu {
     private Image clockImage;
     private boolean isInputFieldVisible;
     private boolean tJustPressed;
+    private final Player player;
+    private ArrayList<Stacks> inventoryItems;
 
     private InGameMenuType currentMenu;
 
@@ -71,7 +73,8 @@ public class HUDView extends AppMenu {
         controller.setTimeInfo(timeInfo);
         errorLabel = new GraphicalResult();
         this.stage = stage;
-
+        player = ClientApp.getCurrentGame().getCurrentPlayer();
+        inventoryItems = new ArrayList<>(player.getBackpack().getItems());
         craftingProducts = new HashMap<>();
 
         int i = 0;
@@ -138,19 +141,6 @@ public class HUDView extends AppMenu {
 
     }
 
-    private void displayInventoryHotBar() {
-
-
-        inventoryHotBarImage.setPosition((Gdx.graphics.getWidth() - inventoryHotBarImage.getWidth()) / 2, 10);
-        inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(), 26);
-
-        inventoryHotBarImage.setVisible(currentMenu == InGameMenuType.NONE);
-        inventorySelectSlotImage.setVisible(currentMenu == InGameMenuType.NONE);
-        stage.addActor(inventoryHotBarImage);
-        stage.addActor(inventorySelectSlotImage);
-
-    }
-
     private void displayInputField() {
 
         if (tJustPressed) {
@@ -179,18 +169,32 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayInventoryHotBar() {
+
+
+        inventoryHotBarImage.setPosition((Gdx.graphics.getWidth() - inventoryHotBarImage.getWidth()) / 2, 10);
+        inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(), 26);
+
+        inventoryHotBarImage.setVisible(currentMenu == InGameMenuType.NONE);
+        inventorySelectSlotImage.setVisible(currentMenu == InGameMenuType.NONE);
+        stage.addActor(inventoryHotBarImage);
+        stage.addActor(inventorySelectSlotImage);
+
+    }
+
     private void showHotBarItems() {
 
-        List<Stacks> items = ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getItems();
 
-        for (int i = 0; i < items.size(); i++) {
+        if ( currentMenu == InGameMenuType.NONE ) {
+            for (int i = 0; i < inventoryItems.size(); i++) {
 
-            Image image = items.get(i).getItem().getItemImage();
-            image.setSize(48, 48);
-            image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5, 26 + 5);
-            stage.addActor(image);
+                Image image = inventoryItems.get(i).getItem().getItemImage();
+                image.setSize(48, 48);
+                image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5, 26 + 5);
+                stage.addActor(image);
 
 
+            }
         }
 
     }
@@ -204,12 +208,11 @@ public class HUDView extends AppMenu {
 
 
         // INVENTORY ITEMS
-        List<Stacks> craftingMenuInventory = new ArrayList<>(ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getItems());
 
         if ( currentMenu == InGameMenuType.INVENTORY ) {
-            for (int i = 0; i < craftingMenuInventory.size() && i < 36; i++) {
+            for (int i = 0; i < inventoryItems.size() && i < 36; i++) {
 
-                Image image = craftingMenuInventory.get(i).getItem().getItemImage();
+                Image image = inventoryItems.get(i).getItem().getItemImage();
                 image.setSize(48, 48);
                 image.setPosition(520 + controller.getItemPosition(i%12), 705);
                 image.setVisible(true);
@@ -261,12 +264,11 @@ public class HUDView extends AppMenu {
         }
 
         // INVENTORY ITEMS
-        List<Stacks> craftingMenuInventory = new ArrayList<>(ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getItems());
 
         if ( currentMenu == InGameMenuType.CRAFTING ) {
-            for (int i = 0; i < craftingMenuInventory.size() && i < 36; i++) {
+            for (int i = 0; i < inventoryItems.size() && i < 36; i++) {
 
-                Image image = craftingMenuInventory.get(i).getItem().getItemImage();
+                Image image = inventoryItems.get(i).getItem().getItemImage();
                 image.setSize(48, 48);
                 image.setPosition(520 + controller.getItemPosition(i%12), 385);
                 image.setVisible(true);
@@ -302,7 +304,7 @@ public class HUDView extends AppMenu {
 
 
         errorLabel.update(delta);
-
+        inventoryItems = new ArrayList<>(player.getBackpack().getItems());
 
         displayClock();
         displayInventoryHotBar();
