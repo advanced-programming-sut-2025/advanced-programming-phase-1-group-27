@@ -54,11 +54,11 @@ public class PurchaseMenuView extends AppMenu {
 
     private Stage stage;
 
-    public PurchaseMenuView(Stock stock , NPCType npc) {
+    public PurchaseMenuView(Stock stock , NPCType npc , AppMenu shopMenu) {
         this.stock = stock;
         this.npc = npc;
 
-        controller = new PurchaseMenuController(this);
+        controller = new PurchaseMenuController(this , shopMenu);
 
         npcImage = new com.badlogic.gdx.scenes.scene2d.ui.Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
@@ -116,8 +116,7 @@ public class PurchaseMenuView extends AppMenu {
                 (int) npcImage.getHeight(),
                 30));
 
-//        moneyLabel = new Label(ClientApp.getCurrentGame().getCurrentPlayer().getMoney() + "" , skin);
-        moneyLabel = new Label("100" , skin);
+        moneyLabel = new Label(ClientApp.getCurrentGame().getCurrentPlayer().getMoney() + "" , skin);
 
         increaseItemButton = new TextButton("+", skin);
         decreaseItemButton = new TextButton("-", skin);
@@ -165,7 +164,7 @@ public class PurchaseMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 number++;
-                if(stock.getQuantity() <= number){
+                if(stock.getQuantity() <= number && stock.getQuantity() != -1){
                     number = stock.getQuantity();
                 }
             }
@@ -191,8 +190,7 @@ public class PurchaseMenuView extends AppMenu {
     }
 
     private void displayMoney(){
-//        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
-        moneyLabel.setText("100");
+        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
         moneyLabel.setFontScale(1.5f);
         moneyLabel.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 100);
         coinImage.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 50);
@@ -202,7 +200,7 @@ public class PurchaseMenuView extends AppMenu {
 
     private void displayItem(){
         quantityLabel.setText(stock.getQuantity() + "");
-        priceLabel.setText(stock.getPrice() + "");
+        priceLabel.setText(stock.getSalePrice() + "");
 
         float width1 = nameLabel.getWidth();
         float width2 = width1 + levelLabel.getWidth();

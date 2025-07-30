@@ -46,6 +46,5 @@ public class SecurityQuestionMenuController extends MenuController {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new RegisterMenuView());
         return new Result(true, "Redirecting to registerViaGraphics menu ...");
-
     }
 }

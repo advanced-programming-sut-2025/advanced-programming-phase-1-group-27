@@ -120,6 +120,10 @@ public class ClientGame implements TimeAble {
         return null;
     }
 
+    public int getLobbyId() {
+        return lobbyId;
+    }
+
     @Override
     public void passAnHour() {
         // TODO: rassa
@@ -138,4 +142,5 @@ public class ClientGame implements TimeAble {
     public Weather getCurrentWeather() {
         return currentWeather;
     }
+
 }

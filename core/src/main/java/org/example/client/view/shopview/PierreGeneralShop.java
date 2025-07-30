@@ -8,21 +8,19 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.example.client.controller.shopControllers.PierreGeneralShopController;
+import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.common.models.GameAssetManager;
-import org.example.server.models.Shops.Shop;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
 import org.example.client.view.AppMenu;
-import org.example.server.models.enums.ShopType;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PierreGeneralShop extends AppMenu {
-    private final PierreGeneralShopController controller;
+    private final ShopController controller;
     private final NPCType npc;
 
     private final Image npcImage;
@@ -43,8 +41,8 @@ public class PierreGeneralShop extends AppMenu {
     private Stage stage;
 
     public PierreGeneralShop() {
-        controller = new PierreGeneralShopController(this);
         npc = NPCType.Pierre;
+        controller = new ShopController(this , npc);
         npcImage = new Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
         coinImage = new Image(GameAssetManager.getGameAssetManager().getCoinTexture());
@@ -111,7 +109,7 @@ public class PierreGeneralShop extends AppMenu {
 
             Table row = new Table();
             Label nameLabel1 = new Label(stock.getItem().getName(), skin);
-            Label priceLabel1 = new Label(stock.getPrice() + " G", skin);
+            Label priceLabel1 = new Label(stock.getSalePrice() + " G", skin);
             Label countLabel1 = new Label("", skin);
 
             if(stock.getQuantity() == -1){

@@ -7,24 +7,20 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.example.client.controller.shopControllers.StardropSaloonShopController;
+import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.common.models.GameAssetManager;
-import org.example.server.models.Shops.Shop;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
 import org.example.client.view.AppMenu;
-import org.example.server.models.enums.ShopType;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StardropSaloonShop extends AppMenu {
-    private final StardropSaloonShopController controller;
+    private final ShopController controller;
     private final NPCType npc;
 
     private final Image npcImage;
@@ -45,9 +41,8 @@ public class StardropSaloonShop extends AppMenu {
     private Stage stage;
 
     public StardropSaloonShop() {
-        controller = new StardropSaloonShopController(this);
         npc = NPCType.Gus;
-
+        controller = new ShopController(this , npc);
         npcImage = new Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
 
@@ -115,7 +110,7 @@ public class StardropSaloonShop extends AppMenu {
 
             Table row = new Table();
             Label nameLabel1 = new Label(stock.getItem().getName(), skin);
-            Label priceLabel1 = new Label(stock.getPrice() + " G", skin);
+            Label priceLabel1 = new Label(stock.getSalePrice() + " G", skin);
             Label countLabel1 = new Label("", skin);
 
             if(stock.getQuantity() == -1){

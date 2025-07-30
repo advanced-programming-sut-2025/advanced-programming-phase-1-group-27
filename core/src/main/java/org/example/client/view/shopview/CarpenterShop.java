@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.example.client.controller.shopControllers.CarpenterShopController;
+import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.common.models.GameAssetManager;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CarpenterShop extends AppMenu {
-    private final CarpenterShopController controller;
+    private final ShopController controller;
     private final NPCType npc;
 
     private final Image npcImage;
@@ -41,8 +41,8 @@ public class CarpenterShop extends AppMenu {
     private Stage stage;
 
     public CarpenterShop() {
-        controller = new CarpenterShopController(this);
         npc = NPCType.Robin;
+        controller = new ShopController(this , npc);
         npcImage = new Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
         coinImage = new Image(GameAssetManager.getGameAssetManager().getCoinTexture());
@@ -108,7 +108,7 @@ public class CarpenterShop extends AppMenu {
 
             Table row = new Table();
             Label nameLabel1 = new Label(stock.getItem().getName(), skin);
-            Label priceLabel1 = new Label(stock.getPrice() + " G", skin);
+            Label priceLabel1 = new Label(stock.getSalePrice() + " G", skin);
             Label countLabel1 = new Label("", skin);
 
             if(stock.getQuantity() == -1){

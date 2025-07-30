@@ -54,9 +54,8 @@ public class AppView {
 //            return;
 //        }
 
-        Main.getMain().setScreen(new PurchaseMenuView(new Stock(FruitType.Carrot , StackLevel.Basic , 40 , 4) , NPCType.Gus));
         // For Graphics team
-//        cheat();
+        cheat();
 
         // For GigaChads
 //        Main.getMain().getScreen().dispose();
