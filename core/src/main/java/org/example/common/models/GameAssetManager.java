@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.example.server.models.Item;
@@ -88,19 +89,55 @@ public class GameAssetManager {
 
     private final TextureAtlas cabinsAtlas = new TextureAtlas("assets/Buildings/Buildings.atlas");
 
-    private final Sprite[] cabinSprites = new Sprite[]{
-            cabinsAtlas.createSprite("cabin_1"),
-            cabinsAtlas.createSprite("cabin_2"),
-            cabinsAtlas.createSprite("cabin_3"),
-            cabinsAtlas.createSprite("cabin_4"),
-            cabinsAtlas.createSprite("cabin_5"),
-            cabinsAtlas.createSprite("cabin_6"),
-            cabinsAtlas.createSprite("cabin_7"),
-            cabinsAtlas.createSprite("cabin_8"),
-            cabinsAtlas.createSprite("cabin_9"),
-            cabinsAtlas.createSprite("cabin_10"),
-            cabinsAtlas.createSprite("cabin_11"),
-            cabinsAtlas.createSprite("cabin_12")
+    private final TextureRegion[] cabinTextures= new TextureRegion[]{
+            new TextureRegion(cabinsAtlas.createSprite("cabin_1").getTexture(),
+                    cabinsAtlas.findRegion("cabin_1").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_1").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_2").getTexture(),
+                    cabinsAtlas.findRegion("cabin_2").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_2").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_3").getTexture(),
+                    cabinsAtlas.findRegion("cabin_3").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_3").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_4").getTexture(),
+                    cabinsAtlas.findRegion("cabin_4").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_4").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_5").getTexture(),
+                    cabinsAtlas.findRegion("cabin_5").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_5").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_6").getTexture(),
+                    cabinsAtlas.findRegion("cabin_6").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_6").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_7").getTexture(),
+                    cabinsAtlas.findRegion("cabin_7").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_7").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_8").getTexture(),
+                    cabinsAtlas.findRegion("cabin_8").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_8").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_9").getTexture(),
+                    cabinsAtlas.findRegion("cabin_9").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_9").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_10").getTexture(),
+                    cabinsAtlas.findRegion("cabin_10").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_10").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_11").getTexture(),
+                    cabinsAtlas.findRegion("cabin_11").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_11").getRegionY(),
+                    80, 112),
+            new TextureRegion(cabinsAtlas.createSprite("cabin_12").getTexture(),
+                    cabinsAtlas.findRegion("cabin_12").getRegionX(),
+                    cabinsAtlas.findRegion("cabin_12").getRegionY(),
+                    80, 112),
     };
 
     private final HashMap<Item, Texture> itemTextureMap = new HashMap<>() {{
@@ -532,8 +569,8 @@ public class GameAssetManager {
         return starDropTexture;
     }
 
-    public Sprite getCabinSprite(int index) {
-        return cabinSprites[index];
+    public TextureRegion getCabinTextureRegion(int index) {
+        return cabinTextures[index];
     }
 
     public HashMap<TreeType, ArrayList<Texture>> getTreeTextureMap() {
