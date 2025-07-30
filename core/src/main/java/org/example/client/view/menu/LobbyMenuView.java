@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array; // Correct Array import
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.example.client.controller.LobbyMenuController;
+import org.example.client.controller.menus.LobbyMenuController;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.GameAssetManager;

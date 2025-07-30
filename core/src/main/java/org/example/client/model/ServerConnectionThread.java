@@ -1,12 +1,11 @@
 package org.example.client.model;
 
 import org.example.client.controller.ServerConnectionController;
-import org.example.client.controller.ShopController;
+import org.example.client.controller.ServerUpdatesController;
 import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -44,18 +43,19 @@ public class ServerConnectionThread extends ConnectionThread {
             return false;
         }
         else if (message.getType() == Message.Type.update_shop) {
-            if (ClientApp.getCurrentGame() != null) {
-                ShopController.updateShopStock(message);
-                return true;
-            }
-            return false;
+            assert ClientApp.getCurrentGame() != null;
+            ServerUpdatesController.updateShopStock(message);
+            return true;
         }
         else if (message.getType() == Message.Type.pass_an_hour) {
-            if (ClientApp.getCurrentGame() != null) {
-                ClientApp.getCurrentGame().getTime().passAnHour();
-                return true;
-            }
-            return false;
+            assert ClientApp.getCurrentGame() != null;
+            ServerUpdatesController.passAnHour();
+            return true;
+        }
+        else if (message.getType() == Message.Type.advance_time) {
+            assert ClientApp.getCurrentGame() != null;
+            ServerUpdatesController.cheatAdvanceTime(message);
+            return true;
         }
         return false;
     }

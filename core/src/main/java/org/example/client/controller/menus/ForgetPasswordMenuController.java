@@ -1,4 +1,4 @@
-package org.example.client.controller;
+package org.example.client.controller.menus;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;

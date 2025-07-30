@@ -1,6 +1,6 @@
 package org.example.server.controller.shopcontroller;
 
-import org.example.client.controller.MenuController;
+import org.example.client.controller.menus.MenuController;
 import org.example.server.controller.ToolController;
 import org.example.server.models.App;
 import org.example.server.models.Result;

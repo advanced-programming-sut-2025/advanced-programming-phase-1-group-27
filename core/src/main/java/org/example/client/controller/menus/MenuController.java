@@ -1,4 +1,4 @@
-package org.example.client.controller;
+package org.example.client.controller.menus;
 
 import com.badlogic.gdx.audio.Sound;
 import org.example.server.models.App;

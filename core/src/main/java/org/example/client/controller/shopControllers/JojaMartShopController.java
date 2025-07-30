@@ -1,8 +1,7 @@
 package org.example.client.controller.shopControllers;
 
-import org.example.client.controller.MenuController;
+import org.example.client.controller.menus.MenuController;
 import org.example.client.view.shopview.JojaMartShop;
-import org.example.client.view.shopview.PierreGeneralShop;
 import org.example.server.models.Result;
 
 public class JojaMartShopController extends MenuController {

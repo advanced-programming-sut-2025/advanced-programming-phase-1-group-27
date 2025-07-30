@@ -1,25 +1,17 @@
 package org.example.server.controller;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import org.example.client.controller.MenuController;
-import org.example.common.models.GraphicalResult;
+import org.example.client.controller.menus.MenuController;
 import org.example.server.models.*;
 import org.example.server.models.Map.Hut;
 import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.Plants.FruitType;
-import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.Weathers.Weather;
-import org.example.server.models.enums.commands.CheatCommands;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.tools.Backpack;
 import org.example.client.view.HomeView;
-
-import java.util.regex.Matcher;
 
 public class HomeController extends MenuController {
     private final HomeView view;

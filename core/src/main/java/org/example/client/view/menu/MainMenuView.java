@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.MainMenuController;
+import org.example.client.controller.menus.MainMenuController;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;

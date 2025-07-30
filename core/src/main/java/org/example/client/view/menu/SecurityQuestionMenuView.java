@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.SecurityQuestionMenuController;
+import org.example.client.controller.menus.SecurityQuestionMenuController;
 import org.example.server.models.User;
 import org.example.server.models.enums.Questions;
 import org.example.client.view.AppMenu;

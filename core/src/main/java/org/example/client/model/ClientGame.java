@@ -26,7 +26,7 @@ public class ClientGame implements TimeAble {
     private final FarmMap[] farmMaps = new FarmMap[4];
     private ArrayList<MiniPlayer> players;
     private NPCMap npcMap;
-    private Weather currentWeather = Weather.Sunny, tomorrowWeather = null;
+    private Weather currentWeather = Weather.Sunny;
     private Time time;
     private ArrayList<NPC> npcs = new ArrayList<>();
     private Shop jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
@@ -133,5 +133,9 @@ public class ClientGame implements TimeAble {
     @Override
     public void newSeason() {
         // TODO: rassa
+    }
+
+    public Weather getCurrentWeather() {
+        return currentWeather;
     }
 }

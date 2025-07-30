@@ -1,7 +1,7 @@
 package org.example.server.controller;
 
 import org.example.client.Main;
-import org.example.client.controller.MenuController;
+import org.example.client.controller.menus.MenuController;
 import org.example.client.view.HomeView;
 import org.example.common.models.ItemManager;
 import org.example.server.models.*;

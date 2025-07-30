@@ -63,4 +63,13 @@ public enum Weather {
         if (this == Stormy || this == Rainy) applyRain();
 
     }
+
+    public static Weather getWeather(String weatherName) {
+        for (Weather weather : Weather.values()) {
+            if (weather.name().equalsIgnoreCase(weatherName)) {
+                return weather;
+            }
+        }
+        return null;
+    }
 }

@@ -3,6 +3,7 @@ package org.example.server.models;
 import org.example.common.models.Message;
 import org.example.common.models.Time;
 import org.example.common.models.TimeAble;
+import org.example.server.controller.TimeController;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
 import org.example.server.models.NPCs.NPC;
@@ -63,6 +64,26 @@ public class Game implements TimeAble {
         }
     }
 
+    // TODO: this constructor should be erased
+    public Game(User admin, ArrayList<Player> players) {
+        this.admin = admin;
+        this.players = players;
+        this.time = new Time(this);
+        this.lobby = null;
+        for (Player player : players) {
+            for (Player otherPlayer : players) {
+                if (otherPlayer.getUsername().equals(player.getUsername())) {
+                    continue;
+                }
+                player.getRelations().put(otherPlayer, new Relation());
+                player.getPlayerMetToday().put(otherPlayer, Boolean.FALSE);
+                player.getPlayerHuggedToday().put(otherPlayer, Boolean.FALSE);
+                player.getPlayerGiftToday().put(otherPlayer, Boolean.FALSE);
+                player.getPlayerTradeToday().put(otherPlayer, Boolean.FALSE);
+            }
+        }
+    }
+
     public void init() {
 
         initShops();
@@ -101,7 +122,8 @@ public class Game implements TimeAble {
             farmMaps[i] = builder.getFinalProduct();
         }
 
-        timeThread.start();
+        if (timeThread != null)
+            timeThread.start();
     }
 
     private void initShops() {
@@ -153,7 +175,7 @@ public class Game implements TimeAble {
     }
 
     public void passAnHour() {
-        lobby.notifyAll(new Message(null, Message.Type.pass_an_hour));
+        TimeController.passAnHour(lobby);
         updatePlayersBuff();
         updateArtisans();
         for (Player player : players) {
