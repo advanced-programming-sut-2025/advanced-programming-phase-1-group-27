@@ -17,6 +17,7 @@ import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.server.controller.HUDController;
 import org.example.server.models.App;
+import org.example.server.models.Item;
 import org.example.server.models.Player;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.InGameMenuType;
@@ -47,6 +48,7 @@ public class HUDView extends AppMenu {
     private boolean tJustPressed;
     private final Player player;
     private ArrayList<Stacks> inventoryItems;
+    private ArrayList<Stacks> onScreenItems;
 
     private InGameMenuType currentMenu;
 
@@ -74,7 +76,12 @@ public class HUDView extends AppMenu {
         errorLabel = new GraphicalResult();
         this.stage = stage;
         player = ClientApp.getCurrentGame().getCurrentPlayer();
-        inventoryItems = new ArrayList<>(player.getBackpack().getItems());
+        inventoryItems = (ArrayList<Stacks>) player.getBackpack().getItems();
+        onScreenItems = new ArrayList<>();
+        for ( Stacks stack : inventoryItems ) {
+            addToScreen( new Stacks(stack.getItem(),stack.getStackLevel(),stack.getQuantity()) );
+        }
+
         craftingProducts = new HashMap<>();
 
         int i = 0;
@@ -186,13 +193,13 @@ public class HUDView extends AppMenu {
 
 
         if ( currentMenu == InGameMenuType.NONE ) {
-            for (int i = 0; i < inventoryItems.size(); i++) {
 
-                Image image = inventoryItems.get(i).getItem().getItemImage();
-                image.setSize(48, 48);
-                image.setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5, 26 + 5);
-                stage.addActor(image);
+            int i = 0;
+            for (Stacks stack : onScreenItems) {
 
+                stack.getItem().getItemImage().setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5, 26 + 5);
+                stack.getItem().getItemImage().toFront();
+                i++;
 
             }
         }
@@ -210,14 +217,14 @@ public class HUDView extends AppMenu {
         // INVENTORY ITEMS
 
         if ( currentMenu == InGameMenuType.INVENTORY ) {
-            for (int i = 0; i < inventoryItems.size() && i < 36; i++) {
 
-                Image image = inventoryItems.get(i).getItem().getItemImage();
-                image.setSize(48, 48);
-                image.setPosition(520 + controller.getItemPosition(i%12), 705);
-                image.setVisible(true);
-                stage.addActor(image);
-                image.toFront();
+            int i = 0;
+            for (Stacks stack : onScreenItems) {
+
+                stack.getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705);
+                stack.getItem().getItemImage().setVisible(true);
+                stack.getItem().getItemImage().toFront();
+                i++;
 
             }
         }
@@ -266,14 +273,14 @@ public class HUDView extends AppMenu {
         // INVENTORY ITEMS
 
         if ( currentMenu == InGameMenuType.CRAFTING ) {
-            for (int i = 0; i < inventoryItems.size() && i < 36; i++) {
 
-                Image image = inventoryItems.get(i).getItem().getItemImage();
-                image.setSize(48, 48);
-                image.setPosition(520 + controller.getItemPosition(i%12), 385);
-                image.setVisible(true);
-                stage.addActor(image);
-                image.toFront();
+            int i = 0;
+            for (Stacks stack : onScreenItems) {
+
+                stack.getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 385);
+                stack.getItem().getItemImage().setVisible(true);
+                stack.getItem().getItemImage().toFront();
+                i++;
 
             }
         }
@@ -286,6 +293,13 @@ public class HUDView extends AppMenu {
 
         exitMenuBackground.setVisible(currentMenu == InGameMenuType.EXIT);
         stage.addActor(exitMenuBackground);
+
+    }
+
+    private void updateOnScreenItems(){
+
+
+
 
     }
 
@@ -304,7 +318,8 @@ public class HUDView extends AppMenu {
 
 
         errorLabel.update(delta);
-        inventoryItems = new ArrayList<>(player.getBackpack().getItems());
+        updateOnScreenItems();
+
 
         displayClock();
         displayInventoryHotBar();
@@ -433,6 +448,13 @@ public class HUDView extends AppMenu {
                         controller.quickSetHotBarIndex(11);
 
                     }
+                    else if ( keycode == Input.Keys.P ) {
+
+                        for ( Stacks item : inventoryItems ) {
+                            System.out.println(item.getItem() + " " + item.getQuantity());
+                        }
+
+                    }
 
 
                 } else {
@@ -496,10 +518,13 @@ public class HUDView extends AppMenu {
                @Override
                public void clicked(InputEvent event, float x, float y) {
                    playClickSound();
-                   if (imageButton.getColor().a > 0.3f)
+                   if (imageButton.getColor().a > 0.3f) {   // has ingredient
                        errorLabel.set(controller.craft(entry.getKey()));
-                   else
+                   }
+                   else {
                        errorLabel.set(new GraphicalResult("You don't have enough ingredient!"));
+
+                   }
                }
             });
         }
@@ -523,6 +548,23 @@ public class HUDView extends AppMenu {
 
     @Override
     public void executeCommands(Scanner scanner) {
+
+    }
+
+
+    private void removeFromScreen(Stacks stack) {
+
+        stack.getItem().getItemImage().remove();
+        onScreenItems.remove(stack);
+
+    }
+
+    private void addToScreen(Stacks stack) {
+
+        stack.getItem().getItemImage().setSize(48,48);
+        stage.addActor(stack.getItem().getItemImage());
+        onScreenItems.add(stack);
+
 
     }
 
