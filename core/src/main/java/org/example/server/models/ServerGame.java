@@ -1,8 +1,7 @@
 package org.example.server.models;
 
-import org.example.common.models.Message;
+import org.example.common.models.Game;
 import org.example.common.models.Time;
-import org.example.common.models.TimeAble;
 import org.example.server.controller.TimeController;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
@@ -27,7 +26,7 @@ import java.util.Random;
 
 import static java.lang.Math.min;
 
-public class Game implements TimeAble {
+public class ServerGame implements Game {
     private final Lobby lobby;
     private final FarmMap[] farmMaps = new FarmMap[4];
     private User admin;
@@ -44,7 +43,7 @@ public class Game implements TimeAble {
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
 
-    public Game(Lobby lobby, ArrayList<Player> players) {
+    public ServerGame(Lobby lobby, ArrayList<Player> players) {
         this.lobby = lobby;
         this.admin = lobby.getAdmin();
         this.players = players;
@@ -65,7 +64,7 @@ public class Game implements TimeAble {
     }
 
     // TODO: this constructor should be erased
-    public Game(User admin, ArrayList<Player> players) {
+    public ServerGame(User admin, ArrayList<Player> players) {
         this.admin = admin;
         this.players = players;
         this.time = new Time(this);

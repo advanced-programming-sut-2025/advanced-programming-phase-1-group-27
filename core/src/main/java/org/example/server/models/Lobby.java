@@ -16,7 +16,7 @@ public class Lobby {
     private final String name;
     private final String password;
     private HashMap<String, Integer> usernameToMap = new HashMap<>();
-    private Game game = null;
+    private ServerGame serverGame = null;
     private boolean active;
 
     public Lobby(User admin, boolean isPublic, String password, boolean isVisible, int id, String name) {
@@ -127,12 +127,12 @@ public class Lobby {
         active = condition;
     }
 
-    public Game getGame() {
-        return game;
+    public ServerGame getGame() {
+        return serverGame;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGame(ServerGame serverGame) {
+        this.serverGame = serverGame;
     }
 
     public void notifyAll(Message message) {

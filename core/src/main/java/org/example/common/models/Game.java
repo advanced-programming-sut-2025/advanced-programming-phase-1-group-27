@@ -1,7 +1,10 @@
 package org.example.common.models;
 
-public interface TimeAble {
+import org.example.server.models.Map.NPCMap;
+
+public interface Game {
     void passAnHour();
     void newDay();
     void newSeason();
+    NPCMap getNpcMap();
 }

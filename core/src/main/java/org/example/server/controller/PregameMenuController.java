@@ -1,13 +1,11 @@
 package org.example.server.controller;
 
-import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class PregameMenuController {
     public static void createGame(Message message) {
@@ -17,22 +15,22 @@ public class PregameMenuController {
         for (User user : lobby.getUsers()) {
             players.add(new Player(user));
         }
-        Game game;
-        lobby.setGame(game = new Game(lobby, players));
-        game.init();
+        ServerGame serverGame;
+        lobby.setGame(serverGame = new ServerGame(lobby, players));
+        serverGame.init();
         for (Player player : players) {
             int mapIndex = lobby.getUsernameToMap().get(player.getUsername());
-            player.setFarmMap(game.getFarmMap(mapIndex));
-            player.setCurrentCell(game.getFarmMap(mapIndex).getCell(8, 70));
+            player.setFarmMap(serverGame.getFarmMap(mapIndex));
+            player.setCurrentCell(serverGame.getFarmMap(mapIndex).getCell(8, 70));
         }
-        notifyPlayers(players, game);
+        notifyPlayers(players, serverGame);
     }
 
-    private static void notifyPlayers(ArrayList<Player> players, Game game) {
+    private static void notifyPlayers(ArrayList<Player> players, ServerGame serverGame) {
         for (Player player : players) {
             ServerApp.getClientConnectionThreadByUsername(player.getUsername()).sendMessage(
                     new Message(new HashMap<>() {{
-                        put("farmInfo", game.getFarmInfo());
+                        put("farmInfo", serverGame.getFarmInfo());
                     }}, Message.Type.start_game)
             );
         }

@@ -3,7 +3,7 @@ package org.example.server.controller;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
-import org.example.server.models.Game;
+import org.example.server.models.ServerGame;
 import org.example.server.models.Item;
 import org.example.server.models.Lobby;
 import org.example.server.models.ServerApp;
@@ -22,8 +22,8 @@ public class ClientUpdatesController {
     public static Message purchase(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
-        Game game = lobby.getGame();
-        Shop shop = game.getShop(message.getFromBody("shopName"));
+        ServerGame serverGame = lobby.getGame();
+        Shop shop = serverGame.getShop(message.getFromBody("shopName"));
         assert shop != null;
         Item item = ItemManager.getItemByName(message.getFromBody("itemName"));
         assert item != null;

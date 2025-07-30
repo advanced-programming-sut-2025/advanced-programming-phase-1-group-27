@@ -48,8 +48,8 @@ public class GameMenuController extends MenuController {
     }
 
     public Result exitMenu() {
-        Game game = App.getCurrentGame();
-        if (!game.getCurrentPlayer().getUsername().equals(game.getAdmin().getUsername()))
+        ServerGame serverGame = App.getCurrentGame();
+        if (!serverGame.getCurrentPlayer().getUsername().equals(serverGame.getAdmin().getUsername()))
             return new Result(false, "You cannot end this game!");
         App.setCurrentGame(null);
         App.setCurrentMenu(Menu.MainMenu);
@@ -97,10 +97,10 @@ public class GameMenuController extends MenuController {
     }
 
     public Result forecastWeather() {
-        Game game = App.getCurrentGame();
+        ServerGame serverGame = App.getCurrentGame();
         Weather weather;
-        if (game.getTomorrowWeather() != null) weather = game.getTomorrowWeather();
-        else game.setTomorrowWeather(weather = game.getTime().getSeason().pickARandomWeather());
+        if (serverGame.getTomorrowWeather() != null) weather = serverGame.getTomorrowWeather();
+        else serverGame.setTomorrowWeather(weather = serverGame.getTime().getSeason().pickARandomWeather());
         return new Result(true, "The Weather Forecasted For Tomorrow is " +
                 weather.toString() + " Weather!");
     }
@@ -789,8 +789,8 @@ public class GameMenuController extends MenuController {
         if (weather == null) {
             return new Result(false, "Please choose a valid weather type from " + Weather.values());
         }
-        Game game = App.getCurrentGame();
-        game.setTomorrowWeather(weather);
+        ServerGame serverGame = App.getCurrentGame();
+        serverGame.setTomorrowWeather(weather);
         return new Result(true, "Weather set to " + weather.toString() + " Weather!");
     }
 
@@ -991,8 +991,8 @@ public class GameMenuController extends MenuController {
     }
 
     private void eraseGame() {
-        Game game = App.getCurrentGame();
-        for (Player player : game.getPlayers()) {
+        ServerGame serverGame = App.getCurrentGame();
+        for (Player player : serverGame.getPlayers()) {
             User user = App.getUserByUsername(player.getUsername());
             assert user != null;
             user.setMaxMoneyEarned(max(player.getMoney(), user.getMaxMoneyEarned()));

@@ -1,11 +1,8 @@
 package org.example.server.models;
 
-import org.example.client.Main;
-import org.example.client.view.HomeView;
 import org.example.server.models.enums.Gender;
 import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.Questions;
-import org.example.server.models.enums.items.products.CraftingProduct;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -19,7 +16,7 @@ public class App {
 
     private static final String loggedInUserFilePath = "data/login_user.json";
     private static User loggedInUser = null;
-    private static Game currentGame = null;
+    private static ServerGame currentServerGame = null;
     private static ArrayList<User> users = new ArrayList<>();
     private static Menu currentMenu = Menu.WelcomeMenu;
 
@@ -63,31 +60,31 @@ public class App {
         players.add(Parsa);
         players.add(Sobhan);
 
-        Game game = null;
+        ServerGame serverGame = null;
 //        App.setCurrentGame(game);
-        App.setCurrentGame(game = new Game(Yusof, players));
-        game.init();
+        App.setCurrentGame(serverGame = new ServerGame(Yusof, players));
+        serverGame.init();
 
 //        userYusof.setCurrentGame(game);
 //        userRassa.setCurrentGame(game);
 //        userParsa.setCurrentGame(game);
 //        userSobhan.setCurrentGame(game);
 
-        Yusof.setFarmMap(game.getFarmMap(0));
-        Yusof.setCurrentCell(game.getFarmMap(0).getCell(8, 70));
-        game.getFarmMap(0).getHut().setOwner(Yusof);
+        Yusof.setFarmMap(serverGame.getFarmMap(0));
+        Yusof.setCurrentCell(serverGame.getFarmMap(0).getCell(8, 70));
+        serverGame.getFarmMap(0).getHut().setOwner(Yusof);
 
-        Rassa.setFarmMap(game.getFarmMap(1));
-        Rassa.setCurrentCell(game.getFarmMap(1).getCell(8, 70));
-        game.getFarmMap(1).getHut().setOwner(Rassa);
+        Rassa.setFarmMap(serverGame.getFarmMap(1));
+        Rassa.setCurrentCell(serverGame.getFarmMap(1).getCell(8, 70));
+        serverGame.getFarmMap(1).getHut().setOwner(Rassa);
 
-        Parsa.setFarmMap(game.getFarmMap(2));
-        Parsa.setCurrentCell(game.getFarmMap(2).getCell(8, 70));
-        game.getFarmMap(2).getHut().setOwner(Parsa);
+        Parsa.setFarmMap(serverGame.getFarmMap(2));
+        Parsa.setCurrentCell(serverGame.getFarmMap(2).getCell(8, 70));
+        serverGame.getFarmMap(2).getHut().setOwner(Parsa);
 
-        Sobhan.setFarmMap(game.getFarmMap(3));
-        Sobhan.setCurrentCell(game.getFarmMap(3).getCell(8, 70));
-        game.getFarmMap(3).getHut().setOwner(Sobhan);
+        Sobhan.setFarmMap(serverGame.getFarmMap(3));
+        Sobhan.setCurrentCell(serverGame.getFarmMap(3).getCell(8, 70));
+        serverGame.getFarmMap(3).getHut().setOwner(Sobhan);
 
     }
 
@@ -99,12 +96,12 @@ public class App {
         App.loggedInUser = loggedInUser;
     }
 
-    public static Game getCurrentGame() {
-        return currentGame;
+    public static ServerGame getCurrentGame() {
+        return currentServerGame;
     }
 
-    public static void setCurrentGame(Game currentGame) {
-        App.currentGame = currentGame;
+    public static void setCurrentGame(ServerGame currentServerGame) {
+        App.currentServerGame = currentServerGame;
     }
 
     public static ArrayList<User> getUsers() {
