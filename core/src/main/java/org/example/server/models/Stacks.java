@@ -58,4 +58,12 @@ public class Stacks {
     public int getTotalPrice() {
         return quantity * (int) ((double) item.getPrice() * this.stackLevel.getPriceModifier());
     }
+
+    public static boolean compare(Stacks s1, Stacks s2) {
+        return s1.item == s2.item && s1.stackLevel == s2.stackLevel && s1.quantity == s2.quantity;
+    }
+
+    public static Stacks copy(Stacks stack) {
+        return new Stacks(stack.item, stack.stackLevel, stack.quantity);
+    }
 }

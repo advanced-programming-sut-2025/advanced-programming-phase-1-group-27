@@ -79,7 +79,7 @@ public class HUDView extends AppMenu {
         inventoryItems = (ArrayList<Stacks>) player.getBackpack().getItems();
         onScreenItems = new ArrayList<>();
         for ( Stacks stack : inventoryItems ) {
-            addToScreen( new Stacks(stack.getItem(),stack.getStackLevel(),stack.getQuantity()) );
+            addToScreen(Stacks.copy(stack));
         }
 
         craftingProducts = new HashMap<>();
@@ -297,10 +297,27 @@ public class HUDView extends AppMenu {
     }
 
     private void updateOnScreenItems(){
+        int commonPrefix = Math.min(onScreenItems.size(), inventoryItems.size());
+        ArrayList<Stacks> removableStacks = new ArrayList<>();
 
+        for (int i = commonPrefix; i < onScreenItems.size(); i++) {
+            removableStacks.add(onScreenItems.get(i));
+        }
 
+        for (int i = 0; i < commonPrefix; i++) {
+            if (!Stacks.compare(onScreenItems.get(i), inventoryItems.get(i))) {
+                addToScreen(Stacks.copy(inventoryItems.get(i)));
+                removableStacks.add(onScreenItems.get(i));
+            }
+        }
 
+        for (Stacks removableStack : removableStacks) {
+            removeFromScreen(removableStack);
+        }
 
+        for (int i = commonPrefix; i < inventoryItems.size(); i++) {
+            addToScreen(Stacks.copy(inventoryItems.get(i)));
+        }
     }
 
     @Override
