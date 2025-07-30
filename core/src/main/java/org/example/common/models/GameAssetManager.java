@@ -87,19 +87,19 @@ public class GameAssetManager {
 
     private final TextureAtlas cabinsAtlas = new TextureAtlas("assets/Buildings/Buildings.atlas");
 
-    private final Sprite[] cabinSprites = new Sprite[]{
-            cabinsAtlas.createSprite("cabin_1"),
-            cabinsAtlas.createSprite("cabin_2"),
-            cabinsAtlas.createSprite("cabin_3"),
-            cabinsAtlas.createSprite("cabin_4"),
-            cabinsAtlas.createSprite("cabin_5"),
-            cabinsAtlas.createSprite("cabin_6"),
-            cabinsAtlas.createSprite("cabin_7"),
-            cabinsAtlas.createSprite("cabin_8"),
-            cabinsAtlas.createSprite("cabin_9"),
-            cabinsAtlas.createSprite("cabin_10"),
-            cabinsAtlas.createSprite("cabin_11"),
-            cabinsAtlas.createSprite("cabin_12")
+    private final Texture[] cabinTextures= new Texture[]{
+            cabinsAtlas.createSprite("cabin_1").getTexture(),
+            cabinsAtlas.createSprite("cabin_2").getTexture(),
+            cabinsAtlas.createSprite("cabin_3").getTexture(),
+            cabinsAtlas.createSprite("cabin_4").getTexture(),
+            cabinsAtlas.createSprite("cabin_5").getTexture(),
+            cabinsAtlas.createSprite("cabin_6").getTexture(),
+            cabinsAtlas.createSprite("cabin_7").getTexture(),
+            cabinsAtlas.createSprite("cabin_8").getTexture(),
+            cabinsAtlas.createSprite("cabin_9").getTexture(),
+            cabinsAtlas.createSprite("cabin_10").getTexture(),
+            cabinsAtlas.createSprite("cabin_11").getTexture(),
+            cabinsAtlas.createSprite("cabin_12").getTexture()
     };
 
     private final HashMap<Item, Texture> itemTextureMap = new HashMap<>() {{
@@ -531,8 +531,8 @@ public class GameAssetManager {
         return starDropTexture;
     }
 
-    public Sprite getCabinSprite(int index) {
-        return cabinSprites[index];
+    public Texture getCabinSprite(int index) {
+        return cabinTextures[index];
     }
 
     public HashMap<TreeType, ArrayList<Texture>> getTreeTextureMap() {
