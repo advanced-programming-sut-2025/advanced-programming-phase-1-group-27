@@ -87,6 +87,8 @@ Images/Shops/Pierres General Store.png
 Images/Shops/The Stardrop Saloon.png
 Images/Skill/SkillsMenuMan.png
 Images/Skill/SkillsMenuWoman.png
+Images/Trees/Trees.atlas
+Images/Trees/Trees.png
 Images/greenhouse.png
 Images/greenhouse2.1.png
 Images/home2.png
