@@ -1,6 +1,7 @@
 package org.example.server.models.Map;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
@@ -11,20 +12,20 @@ import org.example.server.models.enums.CellType;
 
 public class NPCMap extends Map {
 
-    private BuildingSprite[] buildingSprites = new BuildingSprite[] {
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 2),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(5), 9, 8),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 15),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(5), 9, 22),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(2), 9, 28),
-//
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 0),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 5),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(11), 0, 10),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 15),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 20),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(10), 0, 25),
-//            new BuildingSprite(GameAssetManager.getGameAssetManager().getCabinSprite(9), 0, 30)
+    private BuildingTexture[] buildingTextures = new BuildingTexture[] {
+            new BuildingTexture(2, 9, 2),
+            new BuildingTexture(5, 9, 8),
+            new BuildingTexture(2, 9, 15),
+            new BuildingTexture(5, 9, 22),
+            new BuildingTexture(2, 9, 28),
+
+            new BuildingTexture(9, 0, 0),
+            new BuildingTexture(10, 0, 5),
+            new BuildingTexture(11, 0, 10),
+            new BuildingTexture(10, 0, 15),
+            new BuildingTexture(9, 0, 20),
+            new BuildingTexture(10, 0, 25),
+            new BuildingTexture(9, 0, 30)
     };
 
     public NPCMap() {
@@ -93,33 +94,31 @@ public class NPCMap extends Map {
 
 
     }
+    
+    public void renderBuilding(int i, int j, int index) {
+        int x = OutsideView.getGraphicalPosition(i, j).getX() - 20,
+                y = OutsideView.getGraphicalPosition(i, j).getY() - 30;
+        TextureRegion textureRegion = GameAssetManager.getGameAssetManager().getCabinTextureRegion(index);
+        Main.getBatch().draw(textureRegion, x, y - 160, 164, 224);
+    }
 
 
     public void print(float tileSize) {
         super.print(tileSize);
         //NPC houses:
-        for (BuildingSprite buildingSprite : buildingSprites) {
-            buildingSprite.render();
+        for (BuildingTexture bt : buildingTextures) {
+            renderBuilding(bt.i, bt.j, bt.textureIndex);
         }
-
     }
 }
 
-class BuildingSprite {
-    public Sprite sprite;
+class BuildingTexture {
+    public int textureIndex;
     public int i, j;
 
-    public BuildingSprite(Sprite sprite, int i, int j) {
-        this.sprite = new Sprite(sprite);
+    public BuildingTexture(int textureIndex, int i, int j) {
+        this.textureIndex = textureIndex;
         this.i = i;
         this.j = j;
-    }
-
-    public void render() {
-        int x = OutsideView.getGraphicalPosition(i, j).getX() - 20,
-                y = OutsideView.getGraphicalPosition(i, j).getY() - 30;
-        sprite.setScale(2.05f);
-        sprite.setPosition(x + 40, y - 80);
-        sprite.draw(Main.getBatch());
     }
 }
