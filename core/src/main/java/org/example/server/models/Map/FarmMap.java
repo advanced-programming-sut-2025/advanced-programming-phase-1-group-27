@@ -215,4 +215,18 @@ public class FarmMap extends Map {
                 x, y - 125, 160, 160);
     }
 
+    public ArrayList<Plant> getAllPlants() {
+        ArrayList<Plant> plants = new ArrayList<>();
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width; j++) {
+                Cell cell = cells[i][j];
+                if (cell.getObject() != null && !(cell.getBuilding() instanceof GreenHouse)) {
+                    if (cell.getObject() instanceof Plant plant) {
+                        plants.add(plant);
+                    }
+                }
+            }
+        return plants;
+    }
+
 }

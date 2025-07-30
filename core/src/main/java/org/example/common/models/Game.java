@@ -11,4 +11,5 @@ public interface Game {
     void newDay();
     void newSeason();
     NPCMap getNpcMap();
+    ArrayList<NPC> getNPCs();
 }

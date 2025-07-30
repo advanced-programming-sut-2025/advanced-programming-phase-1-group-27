@@ -53,5 +53,6 @@ public class Message {
         pass_an_hour,
         advance_time,
         set_weather,
+        crows_attack
     }
 }

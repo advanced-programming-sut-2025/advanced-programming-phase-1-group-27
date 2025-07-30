@@ -2,7 +2,8 @@ package org.example.client.model;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Game;
-import org.example.server.models.Lobby;
+import org.example.server.models.*;
+import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.FarmMapBuilder;
 import org.example.server.models.Map.FarmMapDirector;
@@ -42,13 +43,6 @@ public class ClientGame implements Game {
     }
 
     public void init(ArrayList<ArrayList<LinkedTreeMap<String, Object>>> info) {
-        blackSmith = new BlackSmith(ShopType.Blacksmith, time.getSeason());
-        jojaMart = new Shop(ShopType.JojaMart, time.getSeason());
-        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore, time.getSeason());
-        carpenterShop = new Shop(ShopType.CarpenterShop, time.getSeason());
-        fishShop = new Shop(ShopType.FishShop, time.getSeason());
-        marnieRanch = new Shop(ShopType.MarnieRanch, time.getSeason());
-        stardropSaloon = new Shop(ShopType.StardropSaloon, time.getSeason());
 
         Sebastian = new NPC(NPCType.Sebastian, 10);
         Abigail = new NPC(NPCType.Abigail, 20);
@@ -98,6 +92,15 @@ public class ClientGame implements Game {
         return npcMap;
     }
 
+    @Override
+    public ArrayList<NPC> getNPCs() {
+        return npcs;
+    }
+
+    public void setWeather(Weather weather) {
+        currentWeather = weather;
+    }
+
     public Time getTime() {
         return time;
     }
@@ -120,27 +123,88 @@ public class ClientGame implements Game {
         return null;
     }
 
-    public ArrayList<NPC> getNPCs() {
-        return npcs;
-    }
-
     @Override
     public void passAnHour() {
-        // TODO: rassa
+        updateBuff();
+        updateArtisans();
+        player.setNextTurnEnergy();
     }
 
     @Override
     public void newDay() {
-        // TODO: rassa
+        updateAnimals();
+        updateShippingBin();
+        setPlayerEnergy();
+        initShops();
+        refreshRelations(); // refreshing relationships between players and between player and npcs
     }
 
     @Override
     public void newSeason() {
-        // TODO: rassa
+        initShops();
     }
 
     public Weather getCurrentWeather() {
         return currentWeather;
+    }
+
+    private void refreshRelations() {
+        player.refreshNPCThings(this);
+        player.refreshPlayerThings();
+    }
+
+    private void setPlayerEnergy() {
+        // Setting Energies :
+        if (player.hasPassedOut())
+            player.setDayEnergy(player.getMaxEnergy() * 3 / 4);
+
+        else
+            player.setDayEnergy(player.getMaxEnergy());
+        player.setNextTurnEnergy();
+    }
+
+    private void updateShippingBin() {
+        // Emptying shipping bin
+        for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
+            player.addMoney(shippingBin.refresh());
+        }
+    }
+
+    private void updateAnimals() {
+        for (Animal animal : player.getFarmMap().getAnimals()) {
+            animal.passADay();
+        }
+    }
+
+    private void updateBuff() {
+        if (player.getCurrentBuff() != null) {
+            player.getCurrentBuff().reduceRemainingTime();
+            if (player.getCurrentBuff().getRemainingTime() <= 0) {
+                player.removeBuff();
+            }
+        }
+    }
+
+    private void updateArtisans() {
+        for (FarmMap map : farmMaps) {
+            for (int i = 0; i < map.getHeight(); i++) {
+                for (int j = 0; j < map.getWidth(); j++) {
+                    Cell cell = map.getCell(i, j);
+                    if (cell.getObject() instanceof Artisan)
+                        ((Artisan) cell.getObject()).passHour();
+                }
+            }
+        }
+    }
+
+    private void initShops() {
+        blackSmith = new BlackSmith(ShopType.Blacksmith, time.getSeason());
+        jojaMart = new Shop(ShopType.JojaMart, time.getSeason());
+        pierreGeneralStore = new Shop(ShopType.PierreGeneralStore, time.getSeason());
+        carpenterShop = new Shop(ShopType.CarpenterShop, time.getSeason());
+        fishShop = new Shop(ShopType.FishShop, time.getSeason());
+        marnieRanch = new Shop(ShopType.MarnieRanch, time.getSeason());
+        stardropSaloon = new Shop(ShopType.StardropSaloon, time.getSeason());
     }
 
     public NPC getGus() {
