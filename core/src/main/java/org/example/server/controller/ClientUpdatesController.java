@@ -3,12 +3,22 @@ package org.example.server.controller;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
-import org.example.server.models.*;
+import org.example.server.models.Game;
+import org.example.server.models.Item;
+import org.example.server.models.Lobby;
+import org.example.server.models.ServerApp;
 import org.example.server.models.Shops.Shop;
+import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.HashMap;
 
-public class ShopController {
+public class ClientUpdatesController {
+    public static void setTomorrowWeather(Message message, Lobby lobby) {
+        Weather weather = Weather.getWeather(message.getFromBody("weather"));
+        assert weather != null;
+        lobby.getGame().setTomorrowWeather(weather);
+    }
+
     public static Message purchase(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;

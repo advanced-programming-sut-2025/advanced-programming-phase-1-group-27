@@ -1,8 +1,5 @@
 package org.example.server.controller;
 
-import com.badlogic.gdx.utils.Null;
-import org.example.client.controller.MenuController;
-import org.example.client.model.ClientApp;
 import org.example.common.database.DataBaseHelper;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
@@ -11,8 +8,6 @@ import org.example.server.models.Result;
 import org.example.server.models.ServerApp;
 import org.example.server.models.User;
 import org.example.server.models.connections.ClientConnectionThread;
-import org.example.server.models.enums.Menu;
-import org.example.client.view.menu.ProfileMenuView;
 
 import java.util.HashMap;
 import java.util.Objects;

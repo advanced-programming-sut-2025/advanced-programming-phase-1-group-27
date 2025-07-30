@@ -1,4 +1,4 @@
-package org.example.client.controller;
+package org.example.client.controller.menus;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;

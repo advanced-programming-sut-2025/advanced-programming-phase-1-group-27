@@ -15,13 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.example.client.model.ClientApp;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.server.controller.HUDController;
-import org.example.server.models.App;
-import org.example.server.models.Item;
+import org.example.client.controller.HUDController;
 import org.example.server.models.Player;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.InGameMenuType;
-import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.CraftingProduct;
 
 import java.util.*;
@@ -318,7 +315,7 @@ public class HUDView extends AppMenu {
 
     }
 
-    private void updateOnScreenItems(){
+    private void updateOnScreenItems() {
 
         int commonPrefix = Math.min(onScreenItems.size(), inventoryItems.size());
         ArrayList<Stacks> removableStacks = new ArrayList<>();

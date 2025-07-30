@@ -1,6 +1,8 @@
-package org.example.server.controller;
+package org.example.client.controller;
 
+import org.example.client.model.ClientApp;
 import org.example.common.models.ItemManager;
+import org.example.common.models.Message;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.models.*;
@@ -13,10 +15,14 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.items.ToolType;
 
+import java.util.HashMap;
+
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+
 public class CheatController {
 
     public Result cheatAddItem(String itemName, int count) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         Item item = ItemManager.getItemByName(itemName);
         if (item == null)
             return new Result(false, "Item not found!");
@@ -39,14 +45,15 @@ public class CheatController {
         if (weather == null) {
             return new Result(false, "Please choose a valid weather type from " + Weather.values());
         }
-        Game game = App.getCurrentGame();
-        game.setTomorrowWeather(weather);
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("weather", weatherString);
+        }}, Message.Type.set_weather));
         return new Result(true, "Weather set to " + weather.toString() + " Weather!");
     }
 
     public Result cheatThor(String s, String t) {
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
-        FarmMap map = App.getCurrentGame().getCurrentPlayer().getFarmMap();
+        FarmMap map = ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap();
         Cell cell = map.getCell(i, j);
         if (cell.getBuilding() != null) {
             return new Result(false, "There is A Building!!");
@@ -59,20 +66,20 @@ public class CheatController {
     public Result cheatSetEnergy(String energyString) {
         int energy = Integer.parseInt(energyString);
 
-        App.getCurrentGame().getCurrentPlayer().setEnergy(energy);
-        App.getCurrentGame().getCurrentPlayer().setDayEnergy(energy);
+        ClientApp.getCurrentGame().getCurrentPlayer().setEnergy(energy);
+        ClientApp.getCurrentGame().getCurrentPlayer().setDayEnergy(energy);
         return new Result(true, "Energy Set to " + energy);
     }
 
     public Result cheatEnergyUnlimited() {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         player.setCheater(true);
         return new Result(true, "Cheat Activated!!");
     }
 
     public Result cheatSetFriendship(String name, String amountString) {
         int val = Integer.parseInt(amountString);
-        for (Animal animal : App.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals()) {
+        for (Animal animal : ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals()) {
             if (animal.getName().equals(name)) {
                 animal.cheatSetFriendShip(val);
                 return new Result(true, "Cheat acitvated!");
@@ -83,29 +90,45 @@ public class CheatController {
 
     public Result cheatAddMoney(String amountString) {
         int val = Integer.parseInt(amountString);
-        App.getCurrentGame().getCurrentPlayer().addMoney(val);
+        ClientApp.getCurrentGame().getCurrentPlayer().addMoney(val);
         return new Result(true, "cheat Activated, You Now Have " +
-                App.getCurrentGame().getCurrentPlayer().getMoney() + "$");
+                ClientApp.getCurrentGame().getCurrentPlayer().getMoney() + "$");
     }
 
     public Result cheatAdvanceTime(String hourString) {
-        String oldTime = App.getCurrentGame().getTime().getDateTime();
+        String oldTime = ClientApp.getCurrentGame().getTime().getDateTime();
         int hour = Integer.parseInt(hourString);
-        App.getCurrentGame().getTime().cheatAdvanceTime(hour);
-        return new Result(true, "The old time was " + oldTime + "\n" +
-                "The new time is " + App.getCurrentGame().getTime().getDateTime());
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(
+                new Message(new HashMap<>() {{
+                    put("unit", "hour");
+                    put("value", hour);
+                }}, Message.Type.advance_time),
+                TIMEOUT_MILLIS
+        );
+        if (response == null)
+            return new Result(false, "Cheat failed!");
+        return new Result(true, "The old time was " + oldTime + ". " +
+                "The new time is " + ClientApp.getCurrentGame().getTime().getDateTime());
     }
 
     public Result cheatAdvanceDate(String dayString) {
-        String oldTime = App.getCurrentGame().getTime().getDateTime();
+        String oldTime = ClientApp.getCurrentGame().getTime().getDateTime();
         int day = Integer.parseInt(dayString);
-        App.getCurrentGame().getTime().cheatAdvanceDate(day);
-        return new Result(true, "The old time was " + oldTime + "\n" +
-                "The new time is " + App.getCurrentGame().getTime().getDateTime());
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(
+                new Message(new HashMap<>() {{
+                    put("unit", "day");
+                    put("value", day);
+                }}, Message.Type.advance_time),
+                TIMEOUT_MILLIS
+        );
+        if (response == null)
+            return new Result(false, "Cheat failed!");
+        return new Result(true, "The old time was " + oldTime + ". " +
+                "The new time is " + ClientApp.getCurrentGame().getTime().getDateTime());
     }
 
     public Result cheatSetAbility(String abilityName, int level) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         AbilityType type = AbilityType.getAbilityType(abilityName);
         if (type == null)
             return new Result(false, "Invalid ability type!");
@@ -127,7 +150,8 @@ public class CheatController {
 
     public Result cheatAddLevel(String NPCName, String amountString) {
         int amount = Integer.parseInt(amountString);
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        // TODO: rassa, hamahang ba server va parsa shavad
         NPC npc = InteractionsWithNPCController.getNPCByName(NPCName);
         if (npc == null) {
             return new Result(false, "NPC not found!");
@@ -146,7 +170,8 @@ public class CheatController {
 
     public Result cheatAddPlayerLevel(String playerName, String quantityString) {
         int quantity = Integer.parseInt(quantityString);
-        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
+        // TODO: rassa, hamahang ba server va parsa shavad
         Player player = InteractionsWithUserController.getPlayerByUsername(playerName);
         if (player == null) {
             return new Result(false, "Player not found");

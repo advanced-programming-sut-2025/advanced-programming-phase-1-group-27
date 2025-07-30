@@ -51,5 +51,7 @@ public class Message {
         purchase_from_shop, // clients use this to buy from shop
         update_shop,
         pass_an_hour,
+        advance_time,
+        set_weather,
     }
 }

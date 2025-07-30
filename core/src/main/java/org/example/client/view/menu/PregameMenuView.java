@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.PregameMenuController;
+import org.example.client.controller.menus.PregameMenuController;
 import org.example.client.model.ClientApp;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;

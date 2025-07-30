@@ -1,11 +1,11 @@
-package org.example.server.controller;
+package org.example.client.controller;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import org.example.client.controller.MenuController;
+import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.ClientGame;
 import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
@@ -19,8 +19,6 @@ import org.example.server.models.enums.items.products.CraftingProduct;
 
 import java.util.regex.Matcher;
 
-import static com.badlogic.gdx.Gdx.input;
-
 public class HUDController extends MenuController {
 
     private final HUDView view;
@@ -31,7 +29,7 @@ public class HUDController extends MenuController {
 
     public void setMoneyInfo(Label label){
 
-        String money = Integer.toString(App.getCurrentGame().getCurrentPlayer().getMoney());
+        String money = Integer.toString(ClientApp.getCurrentGame().getCurrentPlayer().getMoney());
 
         String output = String.join(" ", money.split(""));
 
@@ -57,7 +55,7 @@ public class HUDController extends MenuController {
 
     public float getSlotPosition(){
 
-        Integer slotIndex = App.getCurrentGame().getCurrentPlayer().getCurrentInventorySlotIndex();
+        Integer slotIndex = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentInventorySlotIndex();
 
         float imageSize = GameAssetManager.getGameAssetManager().getInventorySelectSlot().getWidth();
 
@@ -97,7 +95,7 @@ public class HUDController extends MenuController {
 
     public void updateSlotIndex(Integer slotChange){
 
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
 
         Integer currentSlot = player.getCurrentInventorySlotIndex();
 
@@ -114,12 +112,12 @@ public class HUDController extends MenuController {
     }
 
     public void quickSetHotBarIndex(int index){
-        App.getCurrentGame().getCurrentPlayer().setCurrentInventorySlotIndex(index);
+        ClientApp.getCurrentGame().getCurrentPlayer().setCurrentInventorySlotIndex(index);
     }
 
     private Texture getClockByGameState(){
 
-        Game currentGame = App.getCurrentGame();
+        ClientGame currentGame = ClientApp.getCurrentGame();
 
         if ( currentGame.getTime().getSeason().equals(Season.Spring) ){
 

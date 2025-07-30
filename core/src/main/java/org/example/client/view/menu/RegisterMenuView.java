@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.RegisterMenuController;
+import org.example.client.controller.menus.RegisterMenuController;
 //import org.example.server.controller.RegisterMenuController;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
