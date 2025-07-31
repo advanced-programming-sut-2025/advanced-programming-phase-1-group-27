@@ -174,12 +174,15 @@ public class GameAssetManager {
 
     private final TextureAtlas treeAtlas = new TextureAtlas("assets/Images/Trees/Trees.atlas");
 
-    private final HashMap<TreeType, ArrayList<Texture>> treeTextureMap = new HashMap<>() {{
+    private final HashMap<TreeType, ArrayList<TextureRegion>> treeTextureMap = new HashMap<>() {{
         for (TreeType treeType : TreeType.values()) {
             if (treeType.getAddresses() != null) {
-                put(treeType, new ArrayList<Texture>() {{
+                put(treeType, new ArrayList<TextureRegion>() {{
                     for (String address : treeType.getAddresses()) {
-                        add(treeAtlas.createSprite(address).getTexture());
+                        add(new TextureRegion(treeAtlas.createSprite(address).getTexture(),
+                                treeAtlas.createSprite(address).getRegionX(),
+                                treeAtlas.createSprite(address).getRegionY(),
+                                48, 80));
                     }
                 }});
             }
@@ -573,7 +576,7 @@ public class GameAssetManager {
         return cabinTextures[index];
     }
 
-    public HashMap<TreeType, ArrayList<Texture>> getTreeTextureMap() {
+    public HashMap<TreeType, ArrayList<TextureRegion>> getTreeTextureMap() {
         return treeTextureMap;
     }
 }

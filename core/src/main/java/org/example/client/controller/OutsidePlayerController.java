@@ -120,13 +120,13 @@ public class OutsidePlayerController {
 
         if (walking) {
             //System.out.println("WALKING");
-            float modif = min(1f, time * 4f);
+            float modif = min(1f, time * 8f);
             x = modif * (destX - lastX) + lastX;
             y = modif * (destY - lastY) + lastY;
             updateAnimation(currentAnimation);
         }
 
-        if (time >= 0.25f)
+        if (time >= 0.125f)
             walking = false;
 
         characterSprite.setCenter(x, y);

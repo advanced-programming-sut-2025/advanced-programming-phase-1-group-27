@@ -1,6 +1,7 @@
 package org.example.server.models.Map;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
 import org.example.server.models.App;
 import org.example.server.models.Cell;
@@ -188,6 +189,15 @@ public class Map {
 
                 if (texture == null) continue;
                 Main.getBatch().draw(texture, x, y, tileSize, tileSize);
+            }
+        }
+        for (int i = cells.length - 1; i >= 0; i--) {
+            for (int j = 0; j < cells[i].length; j++) {
+                float y = (cells.length - 1 - i) * tileSize;
+                float x = j * tileSize;
+                Texture texture = cells[i][j].getTexture();
+
+                if (texture == null) continue;
 
                 if (cells[i][j].getObject() instanceof Crop crop) {
                     texture = ((CropType) crop.getType()).getTexture();
@@ -200,9 +210,9 @@ public class Map {
                         Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
                 }
                 if (cells[i][j].getObject() instanceof Tree tree) {
-                    ArrayList<Texture>  textures = ((TreeType) tree.getType()).getTextures();
+                    ArrayList<TextureRegion>  textures = ((TreeType) tree.getType()).getTextures();
                     if (textures != null)
-                        Main.getBatch().draw(textures.get(3), x, y, 36, 60);
+                        Main.getBatch().draw(textures.get(4), x - 10, y, 60, 100);
                 }
             }
         }

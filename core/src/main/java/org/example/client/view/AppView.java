@@ -53,7 +53,7 @@ public class AppView {
 //            Main.getMain().setScreen(new HomeView());
 //            return;
 //        }
-
+        Main.getMain().setScreen(new WelcomeMenuView());
         Main.getMain().setScreen(new WelcomeMenuView());
         // For Graphics team
         cheat();

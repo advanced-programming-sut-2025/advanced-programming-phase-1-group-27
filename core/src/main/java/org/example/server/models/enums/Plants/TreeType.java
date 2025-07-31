@@ -1,6 +1,7 @@
 package org.example.server.models.enums.Plants;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.enums.Seasons.Season;
 
@@ -137,7 +138,7 @@ public enum TreeType implements PlantType {
         return addresses;
     }
 
-    public ArrayList<Texture> getTextures() {
+    public ArrayList<TextureRegion> getTextures() {
         return GameAssetManager.getGameAssetManager().getTreeTextureMap().get(this);
     }
 

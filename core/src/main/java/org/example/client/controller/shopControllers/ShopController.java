@@ -3,6 +3,7 @@ package org.example.client.controller.shopControllers;
 import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.view.AppMenu;
+import org.example.client.view.OutsideView;
 import org.example.client.view.shopview.PurchaseMenuView;
 import org.example.client.view.shopview.UpgradeMenuView;
 import org.example.server.models.Result;
@@ -47,7 +48,8 @@ public class ShopController extends MenuController {
 
     @Override
     public Result exitMenu() {
-        // TODO : Chikar bayad konam?
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new OutsideView());
         return null;
     }
 }

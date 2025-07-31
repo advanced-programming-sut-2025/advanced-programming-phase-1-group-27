@@ -3,6 +3,7 @@ package org.example.server.controller;
 import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.view.HomeView;
+import org.example.client.view.shopview.*;
 import org.example.common.models.ItemManager;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
@@ -184,36 +185,50 @@ public class GameMenuController extends MenuController {
                                     case ShopType.CarpenterShop -> {
                                         currentPlayer.setCurrentMenu(Menu.CarpenterShop);
                                         App.setCurrentMenu(Menu.CarpenterShop);
+                                        Main.getMain().getScreen().dispose();
+                                        Main.getMain().setScreen(new CarpenterShop());
                                         return new Result(true, "You Entered The Carpenter Shop!");
                                     }
                                     case ShopType.FishShop -> {
                                         currentPlayer.setCurrentMenu(Menu.FishShop);
                                         App.setCurrentMenu(Menu.FishShop);
+                                        Main.getMain().getScreen().dispose();
+                                        Main.getMain().setScreen(new FishShop());
                                         return new Result(true, "You Entered The Fish Shop!");
                                     }
                                     case ShopType.Blacksmith -> {
                                         currentPlayer.setCurrentMenu(Menu.BlackSmithShop);
                                         App.setCurrentMenu(Menu.BlackSmithShop);
+                                        Main.getMain().getScreen().dispose();
+                                        Main.getMain().setScreen(new BlackSmithShop());
                                         return new Result(true, "You Entered The Blacksmith Shop!");
                                     }
                                     case ShopType.JojaMart -> {
                                         currentPlayer.setCurrentMenu(Menu.JojaMartShop);
                                         App.setCurrentMenu(Menu.JojaMartShop);
+                                        Main.getMain().getScreen().dispose();
+                                        Main.getMain().setScreen(new JojaMartShop());
                                         return new Result(true, "You Entered The Joja Mart Shop!");
                                     }
                                     case ShopType.MarnieRanch -> {
                                         currentPlayer.setCurrentMenu(Menu.MarnieRanch);
                                         App.setCurrentMenu(Menu.MarnieRanch);
+                                        Main.getMain().getScreen().dispose();
+                                        Main.getMain().setScreen(new MarnieRanch());
                                         return new Result(true, "You Entered The Marnie Ranch!");
                                     }
                                     case ShopType.PierreGeneralStore -> {
                                         currentPlayer.setCurrentMenu(Menu.PierreGeneralShop);
                                         App.setCurrentMenu(Menu.PierreGeneralShop);
+                                        Main.getMain().getScreen().dispose();
+                                        Main.getMain().setScreen(new PierreGeneralShop());
                                         return new Result(true, "You Entered The Pierre General Shop!");
                                     }
                                     case ShopType.StardropSaloon -> {
                                         currentPlayer.setCurrentMenu(Menu.StardropSaloonShop);
                                         App.setCurrentMenu(Menu.StardropSaloonShop);
+                                        Main.getMain().getScreen().dispose();
+                                        Main.getMain().setScreen(new StardropSaloonShop());
                                         return new Result(true, "You Entered The Stardrop Saloon Shop!");
                                     }
                                 }
