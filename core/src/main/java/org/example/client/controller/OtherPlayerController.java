@@ -26,6 +26,7 @@ public class OtherPlayerController {
     private final String username;
 
     public OtherPlayerController(String username, int i, int j) {
+        this.username = username;
         characterSprite.setScale(2f);
         x = OutsideView.getGraphicalPosition(i, j).getX();
         y = OutsideView.getGraphicalPosition(i, j).getY();
