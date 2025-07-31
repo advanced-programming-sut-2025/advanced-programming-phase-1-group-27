@@ -1,8 +1,8 @@
 package org.example.server.models;
 
 import org.example.common.models.Game;
+import org.example.common.models.Message;
 import org.example.common.models.Time;
-import org.example.server.controller.ClientUpdatesController;
 import org.example.server.controller.TimeController;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
@@ -11,7 +11,6 @@ import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.Shops.BlackSmith;
 import org.example.server.models.Shops.Shop;
-import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.Plants.*;
 import org.example.server.models.enums.ShopType;
@@ -119,7 +118,7 @@ public class ServerGame implements Game {
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
-            director.buildMapAshghal(builder, i);
+            director.buildMap(builder, i, this);
             farmMaps[i] = builder.getFinalProduct();
         }
 
@@ -289,7 +288,7 @@ public class ServerGame implements Game {
     private void growPlants() {
         // Grow (and deleting) Plants :
         for (Player player : players) {
-            player.getFarmMap().generateForaging();
+            ArrayList info = player.getFarmMap().generateForaging(time.getSeason());
             Cell[][] cells = player.getFarmMap().getCells();
             for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
                 for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
@@ -312,6 +311,9 @@ public class ServerGame implements Game {
                     }
                 }
             }
+            lobby.notifyPlayer(player, new Message(new HashMap<>() {{
+                put("foragingInfo", info);
+            }}, Message.Type.foraging_updates));
         }
     }
 
@@ -335,7 +337,9 @@ public class ServerGame implements Game {
                     }
                 }
             }
-            lobby.notifyCrowsAttack(player, attackedPlants);
+            lobby.notifyPlayer(player, new Message(new HashMap<>() {{
+                put("attackedPlants", attackedPlants);
+            }}, Message.Type.crows_attack));
         }
     }
 
@@ -365,7 +369,9 @@ public class ServerGame implements Game {
             currentWeather = tomorrowWeather;
             tomorrowWeather = null;
         }
-        lobby.updateWeather(currentWeather);
+        lobby.notifyAll(new Message(new HashMap<>() {{
+            put("weather", currentWeather.name());
+        }}, Message.Type.set_weather));
     }
 
     public Player getCurrentPlayer() {
@@ -600,7 +606,7 @@ public class ServerGame implements Game {
     public ArrayList getFarmInfo() {
         ArrayList info = new ArrayList();
         for (int farmId = 0; farmId < 4; farmId++) {
-            info.add(farmMaps[farmId].getForagingInfo());
+            info.add(farmMaps[farmId].getInitialForagingInfo());
         }
         return info;
     }

@@ -2,6 +2,7 @@ package org.example.server.models.Map;
 
 import org.example.server.models.Cell;
 import org.example.server.models.enums.CellType;
+import org.example.server.models.enums.Seasons.Season;
 
 import java.util.Random;
 
@@ -83,14 +84,14 @@ public class FarmMapBuilder {
         finalProduct.setGreenHouse(greenHouse);
     }
 
-    public void generateForagingItems() {
+    public void generateForagingItems(Season season) {
         for (int i = 1; i < n - 1; i++) {
             for (int j = 1; j < m - 1; j++) {
                 Cell cell = finalProduct.getCell(i, j);
                 int randomInt = (new Random()).nextInt(500);
                 if (cell.getType() == CellType.Free && cell.getBuilding() == null) {
                     if (randomInt < 2) {
-                        cell.placeForagingCrop();
+                        cell.placeForagingCrop(season);
                     } else if (randomInt < 4) {
                         cell.placeForagingTree();
                     }

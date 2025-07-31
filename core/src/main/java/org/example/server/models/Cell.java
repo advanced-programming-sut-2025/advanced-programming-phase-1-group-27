@@ -83,44 +83,58 @@ public class Cell {
         this.string = string;
     }
 
-    public void placeForagingCrop() {
-        Season currentSeason = App.getCurrentGame().getTime().getSeason();
+    public void placeForagingCrop(Season currentSeason) {
         int randomInt = new Random().nextInt(
                 CropType.getForagingCropsBySeason().get(currentSeason).size());
-        Crop crop = new Crop(CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt));
+        CropType cropType = CropType.getForagingCropsBySeason().get(currentSeason).get(randomInt);
+        placeCrop(cropType);
+    }
+
+    public void placeCrop(CropType cropType) {
+        Crop crop = new Crop(cropType);
         crop.setTillNextHarvest(0);
         crop.setForaging(true);
         plant(crop);
     }
 
     public void placeForagingTree() {
-        Tree tree = new Tree(TreeType.getForagingTrees().get(new Random().nextInt(TreeType.getForagingTrees().size())));
+        TreeType treeType = TreeType.getForagingTrees().get(new Random().nextInt(TreeType.getForagingTrees().size()));
+        placeTree(treeType);
+    }
+
+    public void placeTree(TreeType treeType) {
+        Tree tree = new Tree(treeType);
         tree.setTillNextHarvest(0);
         tree.setForaging(true);
         plant(tree);
     }
 
-    public void placeForagingSeed() {
-        Season currentSeason = App.getCurrentGame().getTime().getSeason();
+    public void placeForagingSeed(Season currentSeason) {
         SeedType seedType = SeedType.getForagingSeedsBySeason().get(currentSeason).get(
                 new Random().nextInt(SeedType.getForagingSeedsBySeason().get(currentSeason).size()));
         if (seedType.getPlant() == null) {
             CropType cropType = CropType.getMixedSeedPossibilitiesBySeason().get(currentSeason).get(
                     new Random().nextInt(CropType.getMixedSeedPossibilitiesBySeason().get(currentSeason).size()));
-            Crop crop = new Crop(cropType);
-            crop.setForaging(true);
-            plant(crop);
+            placeSeed(cropType);
         } else {
-            Crop crop = new Crop(seedType.getPlant());
-            crop.setForaging(true);
-            plant(crop);
+            placeSeed(seedType.getPlant());
         }
+    }
+
+    public void placeSeed(PlantType plantType) {
+        Crop crop = new Crop(plantType);
+        crop.setForaging(true);
+        plant(crop);
     }
 
     public void placeForagingMineral() {
         ArrayList<MineralType> foragingMinerals = MineralType.getForagingMinerals();
         int randomInt = new Random().nextInt(foragingMinerals.size());
-        object = foragingMinerals.get(randomInt);
+        placeMineral(foragingMinerals.get(randomInt));
+    }
+
+    public void placeMineral(MineralType mineral) {
+        object = mineral;
     }
 
     public boolean isProtected() {

@@ -133,6 +133,7 @@ public class ClientGame implements Game {
         updateAnimals();
         updateShippingBin();
         setPlayerEnergy();
+        growPlants();
         initShops();
         refreshRelations(); // refreshing relationships between players and between player and npcs
     }
@@ -152,7 +153,6 @@ public class ClientGame implements Game {
     }
     private void growPlants() {
         // Grow (and deleting) Plants :
-        player.getFarmMap().generateForaging();
         Cell[][] cells = player.getFarmMap().getCells();
         for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
             for (int j = 0; j < player.getFarmMap().getWidth(); j++) {

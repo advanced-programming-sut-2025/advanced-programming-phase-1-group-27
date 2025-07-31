@@ -8,6 +8,7 @@ import org.example.server.models.Shops.Shop;
 import java.util.ArrayList;
 
 public interface Game {
+    Time getTime();
     void passAnHour();
     void newDay();
     void newSeason();

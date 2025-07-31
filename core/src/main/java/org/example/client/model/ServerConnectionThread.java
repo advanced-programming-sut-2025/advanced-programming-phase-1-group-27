@@ -67,6 +67,11 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.crowsAttack(message);
             return true;
         }
+        else if (message.getType() == Message.Type.foraging_updates) {
+            assert ClientApp.getCurrentGame() != null;
+            ServerUpdatesController.updateForaging(message);
+            return true;
+        }
         return false;
     }
 

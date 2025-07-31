@@ -142,17 +142,7 @@ public class Lobby {
         }
     }
 
-    public void notifyCrowsAttack(Player player, ArrayList<Integer> attackedPlants) {
-        ServerApp.getClientConnectionThreadByUsername(player.getUsername()).sendMessage(
-                new Message(new HashMap<>() {{
-                    put("attackedPlants", attackedPlants);
-                }}, Message.Type.crows_attack)
-        );
-    }
-
-    public void updateWeather(Weather weather) {
-        notifyAll(new Message(new HashMap<>() {{
-            put("weather", weather.name());
-        }}, Message.Type.set_weather));
+    public void notifyPlayer(Player player, Message message) {
+        ServerApp.getClientConnectionThreadByUsername(player.getUsername()).sendMessage(message);
     }
 }

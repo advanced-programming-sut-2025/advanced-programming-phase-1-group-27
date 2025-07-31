@@ -1,7 +1,6 @@
 package org.example.client.controller;
 
 import org.example.client.model.ClientApp;
-import org.example.client.model.ClientGame;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
 import org.example.server.models.Cell;
@@ -13,12 +12,9 @@ import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.Random;
 import org.example.server.models.enums.Plants.Crop;
-import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Plants.Tree;
-import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static java.lang.Math.min;
 
@@ -88,5 +84,10 @@ public class ServerUpdatesController { // handles updates sent by server
                 tree.setTillNextHarvest(min(1, tree.getTillNextHarvest()));
             }
         }
+    }
+
+    public static void updateForaging(Message message) {
+        FarmMap farmMap = ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap();
+        farmMap.addForaging(message.getFromBody(message.getFromBody("foragingInfo")));
     }
 }

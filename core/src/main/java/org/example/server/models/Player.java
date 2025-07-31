@@ -104,7 +104,7 @@ public class Player extends User {
     }
 
     public void refreshPlayerThings() {
-        java.util.Map<Player, Boolean> players = new HashMap<>();
+        HashMap<Player, Boolean> players = new HashMap<>();
         for (Player player : App.getCurrentGame().getPlayers()) {
             if (player.getUsername().equals(this.getUsername())) {
                 continue;
