@@ -115,7 +115,7 @@ public class ServerGame implements Game {
         npcs.add(Morris);
         npcs.add(Gus);
 
-        npcMap = new NPCMap();
+        npcMap = new NPCMap(this);
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
@@ -187,82 +187,56 @@ public class ServerGame implements Game {
         updateAnimals(); // TODO: rassa, maybe automatic??
         updateShippingBin();
         setNewWeather();
+        growPlants();
 
-        // Walking to their houses
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
-
-            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
-            Cell currentCell = player.getCurrentCell();
-            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
-            int energy = player.getDayEnergy();
-            if (energy <= 0)
-                continue;
-            if (player.getCurrentCell().getMap() instanceof NPCMap npcMap1) {
-                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
-                if (i < 2)
-                    passageToFarm = passageToFarm.getAdjacentCells().get(4);
-                else
-                    passageToFarm = passageToFarm.getAdjacentCells().get(0);
-                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
-                        passageToFarm,
-                        energy);
-                energy -= npcMap1.getPathEnergy(currentCell, newDest);
-                player.setCurrentCell(newDest);
-
-                if (energy <= 0) {
-                    System.out.println(player.getUsername() + " passed out in cell(" +
-                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
-                            ") in the NpcValley, on his way home");
-                    player.consumeEnergy(100000);
-
-                    continue;
-                }
-                player.setCurrentCell((Cell) passageToFarm.getObject());
-                player.setCurrentMap(player.getFarmMap());
-            }
-            currentCell = player.getCurrentCell();
-            FarmMap farmMap = player.getFarmMap();
-            Cell newDest = farmMap.getPlaceInPath(currentCell,
-                    destCell,
-                    energy);
-            player.setCurrentCell(newDest);
-            if (newDest != destCell) {
-                System.out.println(player.getUsername() + " passed out in cell(" +
-                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
-                        ") in his Farm, on his way home");
-                player.consumeEnergy(100000);
-            } else {
-                player.setCurrentMenu(Menu.Home);
-            }
-        }
-
-        // Grow (and deleting) Plants :
-        for (Player player : players) {
-            player.getFarmMap().generateForaging();
-            Cell[][] cells = player.getFarmMap().getCells();
-            for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
-                for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
-                    if (cells[i][j].getObject() instanceof Plant plant && !plant.isForaging()) {
-                        if (plant.isGiant() && ((cells[i][j].getAdjacentCells().get(6) != null &&
-                                cells[i][j].getAdjacentCells().get(6).getObject() == plant) ||
-                                (cells[i][j].getAdjacentCells().get(4) != null &&
-                                        cells[i][j].getAdjacentCells().get(4).getObject() == plant))) {
-                            continue;
-                        }
-                        if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
-                            cells[i][j].setObject(null);
-                        } else if (cells[i][j].getBuilding() instanceof GreenHouse) {
-                            plant.grow();
-                        } else if (!plant.getType().getSeasons().contains(App.getCurrentGame().getTime().getSeason())) {
-                            cells[i][j].setObject(null);
-                        } else {
-                            plant.grow();
-                        }
-                    }
-                }
-            }
-        }
+//        // Walking to their houses
+//        for (int i = 0; i < players.size(); i++) {
+//            Player player = players.get(i);
+//
+//            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
+//            Cell currentCell = player.getCurrentCell();
+//            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
+//            int energy = player.getDayEnergy();
+//            if (energy <= 0)
+//                continue;
+//            if (player.getCurrentCell().getMap() instanceof NPCMap npcMap1) {
+//                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
+//                if (i < 2)
+//                    passageToFarm = passageToFarm.getAdjacentCells().get(4);
+//                else
+//                    passageToFarm = passageToFarm.getAdjacentCells().get(0);
+//                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
+//                        passageToFarm,
+//                        energy);
+//                energy -= npcMap1.getPathEnergy(currentCell, newDest);
+//                player.setCurrentCell(newDest);
+//
+//                if (energy <= 0) {
+//                    System.out.println(player.getUsername() + " passed out in cell(" +
+//                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+//                            ") in the NpcValley, on his way home");
+//                    player.consumeEnergy(100000);
+//
+//                    continue;
+//                }
+//                player.setCurrentCell((Cell) passageToFarm.getObject());
+//                player.setCurrentMap(player.getFarmMap());
+//            }
+//            currentCell = player.getCurrentCell();
+//            FarmMap farmMap = player.getFarmMap();
+//            Cell newDest = farmMap.getPlaceInPath(currentCell,
+//                    destCell,
+//                    energy);
+//            player.setCurrentCell(newDest);
+//            if (newDest != destCell) {
+//                System.out.println(player.getUsername() + " passed out in cell(" +
+//                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+//                        ") in his Farm, on his way home");
+//                player.consumeEnergy(100000);
+//            } else {
+//                player.setCurrentMenu(Menu.Home);
+//            }
+//        }
 
         //refresh relations :
         for (Player player : players) {
@@ -274,6 +248,10 @@ public class ServerGame implements Game {
 
         // Apply weather effect
         applyWeatherEffect(currentWeather);
+    }
+
+    public void newSeason() {
+        initShops();
     }
 
     private void applyRain() {
@@ -308,8 +286,33 @@ public class ServerGame implements Game {
         if (weather == Weather.Stormy || weather == Weather.Rainy) applyRain();
     }
 
-    public void newSeason() {
-        initShops();
+    private void growPlants() {
+        // Grow (and deleting) Plants :
+        for (Player player : players) {
+            player.getFarmMap().generateForaging();
+            Cell[][] cells = player.getFarmMap().getCells();
+            for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
+                for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
+                    if (cells[i][j].getObject() instanceof Plant plant && !plant.isForaging()) {
+                        if (plant.isGiant() && ((cells[i][j].getAdjacentCells().get(6) != null &&
+                                cells[i][j].getAdjacentCells().get(6).getObject() == plant) ||
+                                (cells[i][j].getAdjacentCells().get(4) != null &&
+                                        cells[i][j].getAdjacentCells().get(4).getObject() == plant))) {
+                            continue;
+                        }
+                        if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
+                            cells[i][j].setObject(null);
+                        } else if (cells[i][j].getBuilding() instanceof GreenHouse) {
+                            plant.grow();
+                        } else if (!plant.getType().getSeasons().contains(currentWeather)) {
+                            cells[i][j].setObject(null);
+                        } else {
+                            plant.grow();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void crowsAttack() {

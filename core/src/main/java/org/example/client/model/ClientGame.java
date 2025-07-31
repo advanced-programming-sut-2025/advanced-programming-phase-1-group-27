@@ -4,10 +4,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Game;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
-import org.example.server.models.Map.FarmMap;
-import org.example.server.models.Map.FarmMapBuilder;
-import org.example.server.models.Map.FarmMapDirector;
-import org.example.server.models.Map.NPCMap;
+import org.example.server.models.Map.*;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Player;
 import org.example.server.models.Shops.BlackSmith;
@@ -15,6 +12,7 @@ import org.example.server.models.Shops.Shop;
 import org.example.common.models.Time;
 import org.example.server.models.User;
 import org.example.server.models.enums.NPCType;
+import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.ShopType;
 import org.example.server.models.enums.Weathers.Weather;
 
@@ -70,7 +68,7 @@ public class ClientGame implements Game {
         npcs.add(Morris);
         npcs.add(Gus);
 
-        npcMap = new NPCMap();
+        npcMap = new NPCMap(this);
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
@@ -151,6 +149,32 @@ public class ClientGame implements Game {
     private void refreshRelations() {
         player.refreshNPCThings(this);
         player.refreshPlayerThings();
+    }
+    private void growPlants() {
+        // Grow (and deleting) Plants :
+        player.getFarmMap().generateForaging();
+        Cell[][] cells = player.getFarmMap().getCells();
+        for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
+            for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
+                if (cells[i][j].getObject() instanceof Plant plant && !plant.isForaging()) {
+                    if (plant.isGiant() && ((cells[i][j].getAdjacentCells().get(6) != null &&
+                            cells[i][j].getAdjacentCells().get(6).getObject() == plant) ||
+                            (cells[i][j].getAdjacentCells().get(4) != null &&
+                                    cells[i][j].getAdjacentCells().get(4).getObject() == plant))) {
+                        continue;
+                    }
+                    if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
+                        cells[i][j].setObject(null);
+                    } else if (cells[i][j].getBuilding() instanceof GreenHouse) {
+                        plant.grow();
+                    } else if (!plant.getType().getSeasons().contains(currentWeather)) {
+                        cells[i][j].setObject(null);
+                    } else {
+                        plant.grow();
+                    }
+                }
+            }
+        }
     }
 
     private void setPlayerEnergy() {

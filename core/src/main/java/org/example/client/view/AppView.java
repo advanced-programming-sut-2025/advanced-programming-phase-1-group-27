@@ -49,7 +49,7 @@ public class AppView {
 //            return;
 //        }
 
-        //Main.getMain().setScreen(new WelcomeMenuView());
+        Main.getMain().setScreen(new WelcomeMenuView());
         // For Graphics team
         cheat();
 

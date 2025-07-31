@@ -13,7 +13,7 @@ import org.example.server.models.enums.Weathers.Weather;
 import java.util.HashMap;
 
 public class ClientUpdatesController {
-    public static void setTomorrowWeather(Message message, Lobby lobby) {
+    public static synchronized void setTomorrowWeather(Message message, Lobby lobby) {
         Weather weather = Weather.getWeather(message.getFromBody("weather"));
         assert weather != null;
         lobby.getGame().setTomorrowWeather(weather);
