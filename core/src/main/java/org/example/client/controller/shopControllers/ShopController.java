@@ -4,6 +4,7 @@ import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.view.AppMenu;
 import org.example.client.view.shopview.PurchaseMenuView;
+import org.example.client.view.shopview.UpgradeMenuView;
 import org.example.server.models.Result;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
@@ -34,7 +35,7 @@ public class ShopController extends MenuController {
 
     public void upgrade() {
         Main.getMain().getScreen().dispose();
-
+        Main.getMain().setScreen(new UpgradeMenuView(npc , shopMenu));
     }
 
     @Override

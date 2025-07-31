@@ -306,4 +306,8 @@ public class ClientGame implements Game {
     public BlackSmith getBlacksmith() {
         return blackSmith;
     }
+
+    public int getLobbyId() {
+        return lobbyId;
+    }
 }

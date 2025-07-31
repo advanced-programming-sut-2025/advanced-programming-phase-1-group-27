@@ -186,7 +186,7 @@ public class BlackSmithShop extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.;
+                controller.upgrade();
             }
         });
     }

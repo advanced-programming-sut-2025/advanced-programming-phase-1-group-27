@@ -22,7 +22,7 @@ public class Backpack extends Tool {
 
     }
 
-    public List<Stacks> getItems() {
+    public ArrayList<Stacks> getItems() {
         return items;
     }
 

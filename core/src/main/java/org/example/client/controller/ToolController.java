@@ -1,6 +1,7 @@
 package org.example.client.controller;
 
 import org.example.client.model.ClientApp;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.items.ToolType;
@@ -8,38 +9,32 @@ import org.example.server.models.enums.items.products.ProcessedProductType;
 import org.example.server.models.tools.Backpack;
 
 public class ToolController{
-    public Result upgradeTool(String toolName) {
+    public GraphicalResult upgradeTool(String toolName) {
         ToolType toolType = getTool(toolName);
         Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
         Backpack backpack = currentPlayer.getBackpack();
-        if (toolType == null) {
-            return new Result(false, "Tool is invalid!");
-        }
         Stacks stack = backpack.getStackToolWithName(toolName);
-        if (stack == null) {
-            return new Result(false, "Tool is unavailable!");
-        }
         if (toolType == ToolType.TrainingRod
                 || toolType == ToolType.BambooPole
                 || toolType == ToolType.FiberglassRod
                 || toolType == ToolType.IridiumRod) {
-            return new Result(false, "You can not upgrade your rod!");
+            return new GraphicalResult("You can not upgrade your rod!");
         }
         if (toolType == ToolType.BasicBackpack
                 || toolType == ToolType.LargeBackpack
                 || toolType == ToolType.DeluxeBackpack) {
-            return new Result(false, "You can not upgrade your backpack!");
+            return new GraphicalResult("You can not upgrade your backpack!");
         }
         if (toolType == ToolType.MilkPail
                 || toolType == ToolType.Shear
                 || toolType == ToolType.Scythe) {
-            return new Result(false, "You can not upgrade your milk pail or shear or scythe!");
+            return new GraphicalResult("You can not upgrade your milk pail or shear or scythe!");
         }
         int price;
         Item item;
         int ratio;
         if (toolType.getLevel() == StackLevel.Iridium) {
-            return new Result(false, "You can not upgrade your tool!");
+            return new GraphicalResult("You can not upgrade your tool!");
         } else if (toolType.getLevel() == StackLevel.Gold) {
             price = 12500;
             item = ProcessedProductType.IridiumMetalBar;
@@ -62,16 +57,16 @@ public class ToolController{
             ratio = 2;
         }
         if (!backpack.hasEnoughItem(item, 5)) {
-            return new Result(false, "You don't have enough item!");
+            return new GraphicalResult("You don't have enough items!");
         }
         if (currentPlayer.getMoney() < price * ratio) {
-            return new Result(false, "You don't have enough money!");
+            return new GraphicalResult("You don't have enough money!");
         }
         currentPlayer.spendMoney(price * ratio);
         backpack.reduceItems(item, 5);
         backpack.upgradeLevel(stack);
         ClientApp.getCurrentGame().getCurrentPlayer().setCurrentTool(null);
-        return new Result(true, "You upgraded item!");
+        return new GraphicalResult("You upgraded your tool successfully!");
     }
 
     private ToolType getTool(String toolName) {

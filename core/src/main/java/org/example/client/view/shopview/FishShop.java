@@ -138,7 +138,7 @@ public class FishShop extends AppMenu {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     playClickSound();
-                    // controller.handlePurchase(stock);
+                     controller.purchase(stock);
                 }
             });
         }
