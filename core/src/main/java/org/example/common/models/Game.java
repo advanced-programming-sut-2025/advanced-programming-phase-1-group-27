@@ -6,7 +6,6 @@ import org.example.server.models.NPCs.NPC;
 import java.util.ArrayList;
 
 public interface Game {
-    ArrayList<NPC> getNPCs();
     void passAnHour();
     void newDay();
     void newSeason();

@@ -172,19 +172,19 @@ public class GameAssetManager {
             put(fishType, new Texture(Gdx.files.internal(fishType.getAddress())));
     }};
 
-//    private final TextureAtlas treeAtlas = new TextureAtlas("assets/Images/Trees/Trees.atlas");
-//
-//    private final HashMap<TreeType, ArrayList<Texture>> treeTextureMap = new HashMap<>() {{
-//        for (TreeType treeType : TreeType.values()) {
-//            if (treeType.getAddresses() != null) {
-//                put(treeType, new ArrayList<Texture>() {{
-//                    for (String address : treeType.getAddresses()) {
-//                        add(treeAtlas.createSprite(address).getTexture());
-//                    }
-//                }});
-//            }
-//        }
-//    }} ;
+    private final TextureAtlas treeAtlas = new TextureAtlas("assets/Images/Trees/Trees.atlas");
+
+    private final HashMap<TreeType, ArrayList<Texture>> treeTextureMap = new HashMap<>() {{
+        for (TreeType treeType : TreeType.values()) {
+            if (treeType.getAddresses() != null) {
+                put(treeType, new ArrayList<Texture>() {{
+                    for (String address : treeType.getAddresses()) {
+                        add(treeAtlas.createSprite(address).getTexture());
+                    }
+                }});
+            }
+        }
+    }} ;
 
     private final HashMap<Item, Image> itemImageMap = new HashMap<>() {{
         for (Entry<Item, Texture> entry : itemTextureMap.entrySet()) {
