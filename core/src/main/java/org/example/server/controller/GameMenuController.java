@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
+import org.example.client.model.ClientApp;
 import org.example.client.view.HomeView;
 import org.example.client.view.shopview.*;
 import org.example.common.models.ItemManager;
@@ -175,7 +176,7 @@ public class GameMenuController extends MenuController {
                         } else if (destination.getType() == CellType.Door) {
                             if (destination.getBuilding() instanceof StoreBuilding storeBuilding) {
                                 currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
-                                int time = App.getCurrentGame().getTime().getHour();
+                                int time = ClientApp.getCurrentGame().getTime().getHour();
                                 if (storeBuilding.getStore().getShopType().getStartTime() > time ||
                                         storeBuilding.getStore().getShopType().getEndTime() < time) {
                                     return new Result(true,

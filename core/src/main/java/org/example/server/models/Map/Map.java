@@ -207,7 +207,7 @@ public class Map {
                 if (cells[i][j].getObject() instanceof MineralType mineral) {
                     texture = mineral.getTexture();
                     if (texture != null)
-                        Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                        Main.getBatch().draw(texture, x, y, 40, 40);
                 }
                 if (cells[i][j].getObject() instanceof Tree tree) {
                     ArrayList<TextureRegion>  textures = ((TreeType) tree.getType()).getTextures();

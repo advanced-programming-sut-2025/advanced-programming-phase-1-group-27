@@ -233,7 +233,7 @@ public enum CropType implements PlantType {
 
     CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons) {
-        this(fruit, stages, price, totalHarvestTime, regrowthTime, energy, oneTime, isEdible, canBecomeGiant, seasons, "Clock/Arrow.png");
+        this(fruit, stages, price, totalHarvestTime, regrowthTime, energy, oneTime, isEdible, canBecomeGiant, seasons, "assets/Images/Crops/Crocus.png");
     }
 
     CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,

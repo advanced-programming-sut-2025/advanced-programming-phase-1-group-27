@@ -12,12 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.controller.OtherPlayerController;
 import org.example.client.model.ClientApp;
-import org.example.server.controller.OutsidePlayerController;
+import org.example.client.controller.OutsidePlayerController;
 import org.example.server.models.App;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Position;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class OutsideView extends AppMenu {
@@ -26,6 +28,7 @@ public class OutsideView extends AppMenu {
     private final Stage stage;
 
     private final OutsidePlayerController playerController = new OutsidePlayerController(this);
+    private final ArrayList<OtherPlayerController> otherPlayerControllers = new ArrayList<>();
     private Camera camera;
 
     private final int tileSize = 40;
@@ -125,5 +128,26 @@ public class OutsideView extends AppMenu {
 
     public HUDView getHudView() {
         return hudView;
+    }
+
+    public void addOtherPlayer(String username, int i, int j) {
+        otherPlayerControllers.add(new OtherPlayerController(username, i, j));
+    }
+
+    public void removeOtherPlayer(String username) {
+        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
+            if (otherPlayerController.getUsername().equals(username)) {
+                otherPlayerControllers.remove(otherPlayerController);
+                break;
+            }
+        }
+    }
+
+    public void walkPlayer(String username, String direction) {
+        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
+            if (otherPlayerController.getUsername().equals(username)) {
+                otherPlayerController.walk(direction);
+            }
+        }
     }
 }

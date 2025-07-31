@@ -1,4 +1,4 @@
-package org.example.server.controller;
+package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.example.client.Main;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
+import org.example.common.models.GraphicalResult;
+import org.example.server.controller.GameMenuController;
 import org.example.server.models.App;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Result;
@@ -73,6 +75,7 @@ public class OutsidePlayerController {
                 Result result = new GameMenuController(new GameView()).walk(
                         OutsideView.getIndices(x - 40, y).getX() + "",
                         OutsideView.getIndices(x - 40, y).getY() + "");
+                System.out.println(result.message());
                 if (result.success()) {
                     walking = true;
                     destX = x - 40;
@@ -84,6 +87,7 @@ public class OutsidePlayerController {
                 Result result = new GameMenuController(new GameView()).walk(
                         OutsideView.getIndices(x + 40, y).getX() + "",
                         OutsideView.getIndices(x + 40, y).getY() + "");
+                System.out.println(result.message());
                 if (result.success()) {
                     walking = true;
                     destX = x + 40;
@@ -95,6 +99,7 @@ public class OutsidePlayerController {
                 Result result = new GameMenuController(new GameView()).walk(
                         OutsideView.getIndices(x, y + 40).getX() + "",
                         OutsideView.getIndices(x, y + 40).getY() + "");
+                System.out.println(result.message());
                 if (result.success()) {
                     walking = true;
                     destX = x;
@@ -106,6 +111,7 @@ public class OutsidePlayerController {
                 Result result = new GameMenuController(new GameView()).walk(
                         OutsideView.getIndices(x, y - 40).getX() + "",
                         OutsideView.getIndices(x, y - 40).getY() + "");
+                System.out.println(result.message());
                 if (result.success()) {
                     walking = true;
                     destX = x;

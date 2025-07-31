@@ -1,6 +1,7 @@
 package org.example.client.controller;
 
 import org.example.client.model.ClientApp;
+import org.example.client.view.OutsideView;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
 import org.example.server.models.Cell;
@@ -90,5 +91,30 @@ public class ServerUpdatesController { // handles updates sent by server
     public static void updateForaging(Message message) {
         FarmMap farmMap = ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap();
         farmMap.addForaging(message.getFromBody("foragingInfo"));
+    }
+
+    public static void otherPlayerEnteredNpcMap(Message message) {
+        String username = ""; //TODO rassa
+        int i = 0, j = 0; //TODO rassa
+
+        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+            outsideView.addOtherPlayer(username, i, j);
+        }
+    }
+
+    public static void otherPlayerLeftNpcMap(Message message) {
+        String username = ""; //TODO rassa
+
+        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+            outsideView.removeOtherPlayer(username);
+        }
+    }
+
+    public static void otherPlayerWalking(Message message) {
+        String username = "", direction = ""; //TODO rassa
+
+        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+            outsideView.walkPlayer(username, direction);
+        }
     }
 }
