@@ -49,16 +49,22 @@ public class AppView {
 //            return;
 //        }
 
-        Main.getMain().setScreen(new WelcomeMenuView());
+        //Main.getMain().setScreen(new WelcomeMenuView());
         // For Graphics team
         cheat();
 
-        // For GigaChads
-//        Main.getMain().getScreen().dispose();
-//        Main.getMain().setScreen(new HomeView());
 
-//        Main.getMain().getScreen().dispose();
-//        Main.getMain().setScreen(new LobbyMenuView());
+
+        // For GigaChads
+//        int clown = 0;
+//        int rassa = clown;
+//        if (rassa == clown) {
+//            Main.getMain().getScreen().dispose();
+//            Main.getMain().setScreen(new HomeView());
+//
+//            Main.getMain().getScreen().dispose();
+//            Main.getMain().setScreen(new LobbyMenuView());
+//        }
     }
 
 }

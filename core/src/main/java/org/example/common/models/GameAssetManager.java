@@ -574,9 +574,6 @@ public class GameAssetManager {
     }
 
     public HashMap<TreeType, ArrayList<Texture>> getTreeTextureMap() {
-        return new HashMap<>() {{
-            put(TreeType.AppleTree, new ArrayList<>(List.of(coinTexture)));
-        }};
-        //        return treeTextureMap;
+        return treeTextureMap;
     }
 }

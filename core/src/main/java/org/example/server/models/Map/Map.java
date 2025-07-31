@@ -202,7 +202,7 @@ public class Map {
                 if (cells[i][j].getObject() instanceof Tree tree) {
                     ArrayList<Texture>  textures = ((TreeType) tree.getType()).getTextures();
                     if (textures != null)
-                        Main.getBatch().draw(textures.get(2), x, y, 36, 60);
+                        Main.getBatch().draw(textures.get(3), x, y, 36, 60);
                 }
             }
         }
