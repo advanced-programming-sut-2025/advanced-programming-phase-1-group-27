@@ -204,6 +204,10 @@ public class FarmMap extends Map {
                     if (randomInt < 2)
                         cell.placeForagingTree();
                 }
+
+                if (cell.getObject() == null)
+                    continue;
+
                 int finalI = i;
                 int finalJ = j;
                 boolean finalIsSead = isSead;

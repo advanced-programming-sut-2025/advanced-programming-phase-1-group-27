@@ -179,6 +179,7 @@ public class Player extends User {
         this.money += money;
         if (spouse != null)
             spouse.addMoney(money);
+
         // TODO: rassa, hamahang ba server
     }
 
