@@ -23,32 +23,7 @@ public enum Weather {
         this.fishingModifier = fishingModifier;
     }
 
-    private static void applyRain() {
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            FarmMap map = player.getFarmMap();
-            Cell[][] cells = map.getCells();
-            for (int i = 0; i < cells.length; i++) {
-                for (int j = 0; j < cells[i].length; j++) {
-                    if (cells[i][j].getObject() instanceof Plant && cells[i][j].getBuilding() == null) {
-                        Plant plant = (Plant) cells[i][j].getObject();
-                        plant.water();
-                    }
-                }
-            }
-        }
-    }
 
-    private static void applyThor() {
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            FarmMap map = player.getFarmMap();
-            Cell[][] cells = map.getCells();
-            for (int i = 0; i < 3; i++) {
-                int x = (new Random()).nextInt(cells.length);
-                int y = (new Random()).nextInt(cells[0].length);
-                cells[x][y].thor();
-            }
-        }
-    }
 
     public double getToolEnergyModifier() {
         return toolEnergyModifier;
@@ -58,11 +33,7 @@ public enum Weather {
         return fishingModifier;
     }
 
-    public void applyWeatherEffect() {
-        if (this == Stormy) applyThor();
-        if (this == Stormy || this == Rainy) applyRain();
 
-    }
 
     public static Weather getWeather(String weatherName) {
         for (Weather weather : Weather.values()) {

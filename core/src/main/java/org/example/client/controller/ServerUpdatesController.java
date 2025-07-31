@@ -56,7 +56,8 @@ public class ServerUpdatesController { // handles updates sent by server
     }
 
     public static void applyWeatherAffect(Weather weather) {
-
+        if (weather == Weather.Stormy) applyThor();
+        if (weather == Weather.Stormy || weather == Weather.Rainy) applyRain();
     }
 
     public static void cheatAdvanceTime(Message message) {
@@ -70,6 +71,7 @@ public class ServerUpdatesController { // handles updates sent by server
         Weather weather = Weather.getWeather(message.getFromBody("weather"));
         assert weather != null;
         ClientApp.getCurrentGame().setWeather(weather);
+        applyWeatherAffect(weather);
     }
 
     public static void crowsAttack(Message message) {

@@ -273,7 +273,39 @@ public class ServerGame implements Game {
         initShops();
 
         // Apply weather effect
-        currentWeather.applyWeatherEffect();
+        applyWeatherEffect(currentWeather);
+    }
+
+    private void applyRain() {
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            FarmMap map = player.getFarmMap();
+            Cell[][] cells = map.getCells();
+            for (int i = 0; i < cells.length; i++) {
+                for (int j = 0; j < cells[i].length; j++) {
+                    if (cells[i][j].getObject() instanceof Plant && cells[i][j].getBuilding() == null) {
+                        Plant plant = (Plant) cells[i][j].getObject();
+                        plant.water();
+                    }
+                }
+            }
+        }
+    }
+
+    private void applyThor() {
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            FarmMap map = player.getFarmMap();
+            Cell[][] cells = map.getCells();
+            for (int i = 0; i < 3; i++) {
+                int x = (new Random()).nextInt(cells.length);
+                int y = (new Random()).nextInt(cells[0].length);
+                cells[x][y].thor();
+            }
+        }
+    }
+
+    public void applyWeatherEffect(Weather weather) {
+        if (weather == Weather.Stormy) applyThor();
+        if (weather == Weather.Stormy || weather == Weather.Rainy) applyRain();
     }
 
     public void newSeason() {
