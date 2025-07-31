@@ -72,9 +72,10 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void crowsAttack(Message message) {
         FarmMap farmMap = ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap();
-        ArrayList<Integer> attackedPlants = message.getFromBody("attackedPlants");
+        ArrayList<Double> attackedPlants = message.getFromBody("attackedPlants");
         ArrayList<Plant> allPlants = farmMap.getAllPlants();
-        for (Integer plantIndex : attackedPlants) {
+        for (Double plantDouble : attackedPlants) {
+            int plantIndex = plantDouble.intValue();
             Plant plant = allPlants.get(plantIndex);
             if (plant.getCell().isProtected())
                 continue;
@@ -88,6 +89,6 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void updateForaging(Message message) {
         FarmMap farmMap = ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap();
-        farmMap.addForaging(message.getFromBody(message.getFromBody("foragingInfo")));
+        farmMap.addForaging(message.getFromBody("foragingInfo"));
     }
 }
