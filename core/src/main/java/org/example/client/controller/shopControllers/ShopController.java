@@ -25,11 +25,13 @@ public class ShopController extends MenuController {
 
     public void buyAnimal(Stock stock) {
         Main.getMain().getScreen().dispose();
+        //TODO : Sobhan!
 //        Main.getMain().setScreen(new PurchaseMenuView(stock , npc , shopMenu));
     }
 
     public void build(Stock stock) {
         Main.getMain().getScreen().dispose();
+        //TODO : Sobhan!
 //        Main.getMain().setScreen(new PurchaseMenuView(stock , npc , shopMenu));
     }
 

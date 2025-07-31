@@ -41,7 +41,7 @@ public class ClientGame implements Game {
     }
 
     public void init(ArrayList<ArrayList<LinkedTreeMap<String, Object>>> info) {
-
+        initShops();
         Sebastian = new NPC(NPCType.Sebastian, 10);
         Abigail = new NPC(NPCType.Abigail, 20);
         Harvey = new NPC(NPCType.Harvey, 30);

@@ -70,6 +70,7 @@ public class StardropSaloonShop extends AppMenu {
 
         showOnlyAvailableCheckBox = new CheckBox("Filter", skin);
         showOnlyAvailableCheckBox.setChecked(true);
+        this.moneyLabel = new Label("", skin);
         moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
 
         exitButton = new TextButton("Exit", skin);

@@ -54,10 +54,9 @@ public class AppView {
 //            return;
 //        }
 
+        Main.getMain().setScreen(new WelcomeMenuView());
         // For Graphics team
         cheat();
-
-
 
         // For GigaChads
 //        int clown = 0;

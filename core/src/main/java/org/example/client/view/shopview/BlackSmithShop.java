@@ -70,6 +70,7 @@ public class BlackSmithShop extends AppMenu {
 
         showOnlyAvailableCheckBox = new CheckBox("Filter", skin);
         showOnlyAvailableCheckBox.setChecked(true);
+        this.moneyLabel = new Label("", skin);
         moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
 
         upgradeButton = new TextButton("Upgrade", skin);
@@ -79,7 +80,7 @@ public class BlackSmithShop extends AppMenu {
     }
 
     private void displayItems() {
-        stockItems = ClientApp.getCurrentGame().getShop("BlackSmith").getStock();
+        stockItems = ClientApp.getCurrentGame().getShop("Blacksmith").getStock();
         stockTable.clear();
 
         float redAreaX = 100f;
