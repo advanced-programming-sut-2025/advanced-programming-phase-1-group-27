@@ -32,15 +32,13 @@ public class Time {
                 getHour() + ":00\n");
     }
 
-    public boolean passAnHour() {
+    public void passAnHour() {
         hour++;
-        game.passAnHour();
         if (hour == 23) {
             passADay();
             hour = 9;
-            return true;
         }
-        return false;
+        game.passAnHour();
     }
 
     private void passADay() {

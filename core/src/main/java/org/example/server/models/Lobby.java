@@ -2,6 +2,7 @@ package org.example.server.models;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Message;
+import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,5 +140,9 @@ public class Lobby {
         for (User user : users) {
             ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
         }
+    }
+
+    public void notifyPlayer(Player player, Message message) {
+        ServerApp.getClientConnectionThreadByUsername(player.getUsername()).sendMessage(message);
     }
 }

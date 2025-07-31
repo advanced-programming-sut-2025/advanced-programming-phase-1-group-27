@@ -1,5 +1,6 @@
 package org.example.server.models;
 
+import org.example.common.models.Game;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.Map;
 import org.example.server.models.NPCs.NPC;
@@ -93,17 +94,17 @@ public class Player extends User {
         initFields();
     }
 
-    public void refreshNPCThings() {
+    public void refreshNPCThings(Game game) {
         npcMetToday.clear();
         npcGiftToday.clear();
-        for (NPC npc : App.getCurrentGame().getNPCs()) {
+        for (NPC npc : game.getNPCs()) {
             npcMetToday.put(npc, false);
             npcGiftToday.put(npc, false);
         }
     }
 
     public void refreshPlayerThings() {
-        java.util.Map<Player, Boolean> players = new HashMap<>();
+        HashMap<Player, Boolean> players = new HashMap<>();
         for (Player player : App.getCurrentGame().getPlayers()) {
             if (player.getUsername().equals(this.getUsername())) {
                 continue;
@@ -178,6 +179,7 @@ public class Player extends User {
         this.money += money;
         if (spouse != null)
             spouse.addMoney(money);
+        // TODO: rassa, hamahang ba server
     }
 
     public void spendMoney(int money) {

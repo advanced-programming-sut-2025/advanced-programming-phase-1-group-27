@@ -36,12 +36,7 @@ public class CheatController {
     }
 
     public Result cheatSetWeather(String weatherString) {
-        Weather weather = null;
-        for (Weather w : Weather.values()) {
-            if (w.toString().equalsIgnoreCase(weatherString)) {
-                weather = w;
-            }
-        }
+        Weather weather = Weather.getWeather(weatherString);
         if (weather == null) {
             return new Result(false, "Please choose a valid weather type from " + Weather.values());
         }

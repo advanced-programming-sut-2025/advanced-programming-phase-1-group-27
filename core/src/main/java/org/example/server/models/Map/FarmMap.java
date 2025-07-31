@@ -3,6 +3,7 @@ package org.example.server.models.Map;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.view.OutsideView;
+import org.example.common.models.ItemManager;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.AnimalEnclosure;
 import org.example.server.models.AnimalProperty.Barn;
@@ -13,6 +14,8 @@ import org.example.server.models.Position;
 import org.example.server.models.ShippingBin;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.*;
+import org.example.server.models.enums.Seasons.Season;
+import org.example.server.models.enums.items.MineralType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,7 +129,7 @@ public class FarmMap extends Map {
         return shippingBins;
     }
 
-    public ArrayList<HashMap<String, Object>> getForagingInfo() {
+    public ArrayList<HashMap<String, Object>> getInitialForagingInfo() {
         ArrayList<HashMap<String, Object>> info = new ArrayList<>();
         for (int i = 1; i < height - 1; i++)
             for (int j = 1; j < width - 1; j++)
@@ -137,6 +140,7 @@ public class FarmMap extends Map {
                         put("type", plant.getType().toString());
                         put("x", finalI);
                         put("y", finalJ);
+                        put("isSead", false);
                     }});
                 }
         return info;
@@ -148,24 +152,25 @@ public class FarmMap extends Map {
             int y = ((Number) foraging.get("y")).intValue();
             Cell cell = cells[x][y];
             String typeName = (String) foraging.get("type");
-            CropType cropType = CropType.getItem(typeName);
-            if (cropType != null) {
-                Crop crop = new Crop(cropType);
-                crop.setTillNextHarvest(0);
-                crop.setForaging(true);
-                cell.plant(crop);
+            Object foragingType = ItemManager.getForagingType(typeName);
+            assert foragingType != null;
+            if (foragingType instanceof CropType cropType) {
+                if ((boolean) foraging.get("isSead"))
+                    cell.placeSeed(cropType);
+                else
+                    cell.placeCrop(cropType);
             }
-            TreeType treeType = TreeType.getItem(typeName);
-            if (treeType != null) {
-                Tree tree = new Tree(treeType);
-                tree.setTillNextHarvest(0);
-                tree.setForaging(true);
-                cell.plant(tree);
+            else if (foragingType instanceof TreeType treeType) {
+                cell.placeTree(treeType);
+            }
+            else if (foragingType instanceof MineralType mineralType) {
+                cell.placeMineral(mineralType);
             }
         }
     }
 
-    public void generateForaging() {
+    public ArrayList<HashMap<String, Object>> generateForaging(Season season) {
+        ArrayList info = new ArrayList();
         int foragingCount = 0;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -175,7 +180,7 @@ public class FarmMap extends Map {
             }
         }
         if (foragingCount > 110)
-            return;
+            return info;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 int randomInt = new Random().nextInt(200);
@@ -184,20 +189,33 @@ public class FarmMap extends Map {
                 if (cell.getObject() != null)
                     continue;
 
+                boolean isSead = false;
                 if (cell.getType() == CellType.Quarry) {
                     if (randomInt < 2)
                         cell.placeForagingMineral();
                 } else if (cell.getBuilding() == null && cell.getType() == CellType.Plowed) {
-                    if (randomInt < 2)
-                        cell.placeForagingSeed();
+                    if (randomInt < 2) {
+                        cell.placeForagingSeed(season);
+                        isSead = true;
+                    }
                 } else if (cell.getBuilding() == null && cell.getType() == CellType.Free) {
                     if (randomInt < 1)
-                        cell.placeForagingCrop();
+                        cell.placeForagingCrop(season);
                     if (randomInt < 2)
                         cell.placeForagingTree();
                 }
+                int finalI = i;
+                int finalJ = j;
+                boolean finalIsSead = isSead;
+                info.add(new HashMap<String, Object>() {{
+                    put("type", cell.getObject().toString());
+                    put("x", finalI);
+                    put("y", finalJ);
+                    put("isSead", finalIsSead);
+                }});
             }
         }
+        return info;
     }
 
     public void print(float tileSize) {
@@ -213,6 +231,20 @@ public class FarmMap extends Map {
         y = OutsideView.getGraphicalPosition(position).getY() - 30;
         Main.getBatch().draw(GameAssetManager.getGameAssetManager().getHutTexture(),
                 x, y - 125, 160, 160);
+    }
+
+    public ArrayList<Plant> getAllPlants() {
+        ArrayList<Plant> plants = new ArrayList<>();
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width; j++) {
+                Cell cell = cells[i][j];
+                if (cell.getObject() != null && !(cell.getBuilding() instanceof GreenHouse)) {
+                    if (cell.getObject() instanceof Plant plant) {
+                        plants.add(plant);
+                    }
+                }
+            }
+        return plants;
     }
 
 }

@@ -2,9 +2,7 @@ package org.example.common.models;
 
 import org.example.server.models.Item;
 import org.example.server.models.ProcessedProduct;
-import org.example.server.models.enums.Plants.FruitType;
-import org.example.server.models.enums.Plants.SaplingType;
-import org.example.server.models.enums.Plants.SeedType;
+import org.example.server.models.enums.Plants.*;
 import org.example.server.models.enums.items.*;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
@@ -79,5 +77,18 @@ public class ItemManager {
             return result;
 
         return null;
+    }
+
+    public static Object getForagingType(String typeName) {
+        MineralType mineral = MineralType.getItem(typeName);
+        if (mineral != null)
+            return mineral;
+
+        CropType crop = CropType.getItem(typeName);
+        if (crop != null)
+            return crop;
+
+        TreeType tree = TreeType.getItem(typeName);
+        return tree;
     }
 }

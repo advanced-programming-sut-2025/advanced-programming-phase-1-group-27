@@ -57,12 +57,18 @@ public class AppView {
         // For Graphics team
         cheat();
 
-        // For GigaChads
-//        Main.getMain().getScreen().dispose();
-//        Main.getMain().setScreen(new HomeView());
 
-//        Main.getMain().getScreen().dispose();
-//        Main.getMain().setScreen(new LobbyMenuView());
+
+        // For GigaChads
+//        int clown = 0;
+//        int rassa = clown;
+//        if (rassa == clown) {
+//            Main.getMain().getScreen().dispose();
+//            Main.getMain().setScreen(new HomeView());
+//
+//            Main.getMain().getScreen().dispose();
+//            Main.getMain().setScreen(new LobbyMenuView());
+//        }
     }
 
 }

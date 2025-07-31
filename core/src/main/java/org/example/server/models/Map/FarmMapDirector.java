@@ -3,6 +3,7 @@ package org.example.server.models.Map;
 import org.example.client.model.ClientApp;
 import org.example.common.models.Game;
 import org.example.server.models.App;
+import org.example.server.models.enums.Seasons.Season;
 
 public class FarmMapDirector {
     public void buildMapWithoutForaging(FarmMapBuilder builder, int index, Game game) {
@@ -36,7 +37,7 @@ public class FarmMapDirector {
 
     public void buildMap(FarmMapBuilder builder, int index, Game game) {
         buildMapWithoutForaging(builder, index, game);
-        builder.generateForagingItems();
+        builder.generateForagingItems(game.getTime().getSeason());
     }
 
     // TODO: rassa, bayad pak koni in payini ro va az balayee estefade beshe
@@ -69,6 +70,6 @@ public class FarmMapDirector {
             builder.setPassageToNpcValley(0, 0, 15, 32, App.getCurrentGame().getNpcMap());
             App.getCurrentGame().getNpcMap().setPassageToFarmMap(15, 33, builder.getFinalProduct(), 0, 1);
         }
-        builder.generateForagingItems();
+        builder.generateForagingItems(Season.Spring);
     }
 }

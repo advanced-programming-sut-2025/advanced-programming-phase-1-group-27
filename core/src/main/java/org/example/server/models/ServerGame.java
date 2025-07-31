@@ -1,6 +1,7 @@
 package org.example.server.models;
 
 import org.example.common.models.Game;
+import org.example.common.models.Message;
 import org.example.common.models.Time;
 import org.example.server.controller.TimeController;
 import org.example.server.models.AnimalProperty.Animal;
@@ -10,7 +11,6 @@ import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.Shops.BlackSmith;
 import org.example.server.models.Shops.Shop;
-import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.Plants.*;
 import org.example.server.models.enums.ShopType;
@@ -22,6 +22,7 @@ import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.ProcessedProductType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.min;
@@ -113,11 +114,11 @@ public class ServerGame implements Game {
         npcs.add(Morris);
         npcs.add(Gus);
 
-        npcMap = new NPCMap();
+        npcMap = new NPCMap(this);
         for (int i = 0; i < 4; i++) {
             FarmMapBuilder builder = new FarmMapBuilder();
             FarmMapDirector director = new FarmMapDirector();
-            director.buildMapAshghal(builder, i);
+            director.buildMap(builder, i, this);
             farmMaps[i] = builder.getFinalProduct();
         }
 
@@ -177,118 +178,117 @@ public class ServerGame implements Game {
         TimeController.passAnHour(lobby);
         updatePlayersBuff();
         updateArtisans();
-        for (Player player : players) {
-            player.setNextTurnEnergy();
-        }
+        // player energies will be automatically updated
     }
 
     public void newDay() {
-        // Crows Attacking
+        crowsAttack();
+        updateAnimals(); // TODO: rassa, maybe automatic??
+        updateShippingBin();
+        setNewWeather();
+        growPlants();
+
+//        // Walking to their houses
+//        for (int i = 0; i < players.size(); i++) {
+//            Player player = players.get(i);
+//
+//            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
+//            Cell currentCell = player.getCurrentCell();
+//            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
+//            int energy = player.getDayEnergy();
+//            if (energy <= 0)
+//                continue;
+//            if (player.getCurrentCell().getMap() instanceof NPCMap npcMap1) {
+//                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
+//                if (i < 2)
+//                    passageToFarm = passageToFarm.getAdjacentCells().get(4);
+//                else
+//                    passageToFarm = passageToFarm.getAdjacentCells().get(0);
+//                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
+//                        passageToFarm,
+//                        energy);
+//                energy -= npcMap1.getPathEnergy(currentCell, newDest);
+//                player.setCurrentCell(newDest);
+//
+//                if (energy <= 0) {
+//                    System.out.println(player.getUsername() + " passed out in cell(" +
+//                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+//                            ") in the NpcValley, on his way home");
+//                    player.consumeEnergy(100000);
+//
+//                    continue;
+//                }
+//                player.setCurrentCell((Cell) passageToFarm.getObject());
+//                player.setCurrentMap(player.getFarmMap());
+//            }
+//            currentCell = player.getCurrentCell();
+//            FarmMap farmMap = player.getFarmMap();
+//            Cell newDest = farmMap.getPlaceInPath(currentCell,
+//                    destCell,
+//                    energy);
+//            player.setCurrentCell(newDest);
+//            if (newDest != destCell) {
+//                System.out.println(player.getUsername() + " passed out in cell(" +
+//                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
+//                        ") in his Farm, on his way home");
+//                player.consumeEnergy(100000);
+//            } else {
+//                player.setCurrentMenu(Menu.Home);
+//            }
+//        }
+
+        //refresh relations :
         for (Player player : players) {
-            ArrayList<Plant> allPlants = new ArrayList<>();
-            for (int i = 0; i < player.getFarmMap().getHeight(); i++)
-                for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
-                    Cell cell = player.getFarmMap().getCell(i, j);
-                    if (cell.getObject() != null && !(cell.getBuilding() instanceof GreenHouse)) {
-                        if (cell.getObject() instanceof Plant plant) {
-                            allPlants.add(plant);
-                        }
+            player.refreshNPCThings(this);
+            player.refreshPlayerThings();
+        }
+        // refresh shop stock
+        initShops();
+
+        // Apply weather effect
+        applyWeatherEffect(currentWeather);
+    }
+
+    public void newSeason() {
+        initShops();
+    }
+
+    private void applyRain() {
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            FarmMap map = player.getFarmMap();
+            Cell[][] cells = map.getCells();
+            for (int i = 0; i < cells.length; i++) {
+                for (int j = 0; j < cells[i].length; j++) {
+                    if (cells[i][j].getObject() instanceof Plant && cells[i][j].getBuilding() == null) {
+                        Plant plant = (Plant) cells[i][j].getObject();
+                        plant.water();
                     }
                 }
-            int crowsCount = allPlants.size() / 16;
-            for (int i = 0; i < crowsCount; i++) {
-                if (new Random().nextInt(4) == 0) {
-                    Plant plant = allPlants.get(new Random().nextInt(allPlants.size()));
-                    if (plant.getCell().isProtected())
-                        continue;
-                    if (plant instanceof Crop crop) {
-                        crop.getCell().setObject(null);
-                    } else if (plant instanceof Tree tree) {
-                        tree.setTillNextHarvest(min(1, tree.getTillNextHarvest()));
-                    }
-                }
             }
         }
-        // Updating animals
-        for (Player player : players) {
-            for (Animal animal : player.getFarmMap().getAnimals()) {
-                animal.passADay();
+    }
+
+    private void applyThor() {
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            FarmMap map = player.getFarmMap();
+            Cell[][] cells = map.getCells();
+            for (int i = 0; i < 3; i++) {
+                int x = (new Random()).nextInt(cells.length);
+                int y = (new Random()).nextInt(cells[0].length);
+                cells[x][y].thor();
             }
         }
-        // Emptying shipping bin
-        for (Player player : players) {
-            for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
-                player.addMoney(shippingBin.refresh());
-            }
-        }
-        // Walking to their houses
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
+    }
 
-            Position doorPosition = player.getFarmMap().getHut().getDoor().getPosition();
-            Cell currentCell = player.getCurrentCell();
-            Cell destCell = player.getFarmMap().getCell(doorPosition.getX() + 1, doorPosition.getY());
-            int energy = player.getDayEnergy();
-            if (energy <= 0)
-                continue;
-            if (player.getCurrentCell().getMap() instanceof NPCMap npcMap1) {
-                Cell passageToFarm = (Cell) player.getFarmMap().getPassage().getObject();
-                if (i < 2)
-                    passageToFarm = passageToFarm.getAdjacentCells().get(4);
-                else
-                    passageToFarm = passageToFarm.getAdjacentCells().get(0);
-                Cell newDest = npcMap1.getPlaceInPath(player.getCurrentCell(),
-                        passageToFarm,
-                        energy);
-                energy -= npcMap1.getPathEnergy(currentCell, newDest);
-                player.setCurrentCell(newDest);
+    public void applyWeatherEffect(Weather weather) {
+        if (weather == Weather.Stormy) applyThor();
+        if (weather == Weather.Stormy || weather == Weather.Rainy) applyRain();
+    }
 
-                if (energy <= 0) {
-                    System.out.println(player.getUsername() + " passed out in cell(" +
-                            newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
-                            ") in the NpcValley, on his way home");
-                    player.consumeEnergy(100000);
-
-                    continue;
-                }
-                player.setCurrentCell((Cell) passageToFarm.getObject());
-                player.setCurrentMap(player.getFarmMap());
-            }
-            currentCell = player.getCurrentCell();
-            FarmMap farmMap = player.getFarmMap();
-            Cell newDest = farmMap.getPlaceInPath(currentCell,
-                    destCell,
-                    energy);
-            player.setCurrentCell(newDest);
-            if (newDest != destCell) {
-                System.out.println(player.getUsername() + " passed out in cell(" +
-                        newDest.getPosition().getX() + ", " + newDest.getPosition().getY() +
-                        ") in his Farm, on his way home");
-                player.consumeEnergy(100000);
-            } else {
-                player.setCurrentMenu(Menu.Home);
-            }
-        }
-
-        // Setting Energies :
-        for (Player player : players) {
-            if (player.hasPassedOut())
-                player.setDayEnergy(player.getMaxEnergy() * 3 / 4);
-
-            else
-                player.setDayEnergy(player.getMaxEnergy());
-            player.setNextTurnEnergy();
-
-        }
-        // Setting Weather :
-        if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
-        else {
-            currentWeather = tomorrowWeather;
-            tomorrowWeather = null;
-        }
+    private void growPlants() {
         // Grow (and deleting) Plants :
         for (Player player : players) {
-            player.getFarmMap().generateForaging();
+            ArrayList info = player.getFarmMap().generateForaging(time.getSeason());
             Cell[][] cells = player.getFarmMap().getCells();
             for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
                 for (int j = 0; j < player.getFarmMap().getWidth(); j++) {
@@ -303,7 +303,7 @@ public class ServerGame implements Game {
                             cells[i][j].setObject(null);
                         } else if (cells[i][j].getBuilding() instanceof GreenHouse) {
                             plant.grow();
-                        } else if (!plant.getType().getSeasons().contains(App.getCurrentGame().getTime().getSeason())) {
+                        } else if (!plant.getType().getSeasons().contains(currentWeather)) {
                             cells[i][j].setObject(null);
                         } else {
                             plant.grow();
@@ -311,22 +311,67 @@ public class ServerGame implements Game {
                     }
                 }
             }
+            lobby.notifyPlayer(player, new Message(new HashMap<>() {{
+                put("foragingInfo", info);
+            }}, Message.Type.foraging_updates));
         }
-        //refresh relations :
-        for (Player player : players) {
-            player.refreshNPCThings();
-            player.refreshPlayerThings();
-        }
-        // refresh shop stock
-        initShops();
-
-        //System.out.println(App.getCurrentGame().NPCGiftingLevel3());
-        // Apply weather effect
-        currentWeather.applyWeatherEffect();
     }
 
-    public void newSeason() {
-        initShops();
+    private void crowsAttack() {
+        // Crows Attacking
+        for (Player player : players) {
+            ArrayList<Plant> allPlants = player.getFarmMap().getAllPlants();
+            int crowsCount = allPlants.size() / 16;
+            ArrayList<Integer> attackedPlants = new ArrayList<>();
+            for (int i = 0; i < crowsCount; i++) {
+                if (new Random().nextInt(4) == 0) {
+                    int plantIndex = new Random().nextInt(allPlants.size());
+                    attackedPlants.add(plantIndex);
+                    Plant plant = allPlants.get(plantIndex);
+                    if (plant.getCell().isProtected())
+                        continue;
+                    if (plant instanceof Crop crop) {
+                        crop.getCell().setObject(null);
+                    } else if (plant instanceof Tree tree) {
+                        tree.setTillNextHarvest(min(1, tree.getTillNextHarvest()));
+                    }
+                }
+            }
+            lobby.notifyPlayer(player, new Message(new HashMap<>() {{
+                put("attackedPlants", attackedPlants);
+            }}, Message.Type.crows_attack));
+        }
+    }
+
+    private void updateAnimals() {
+        // Updating animals
+        for (Player player : players) {
+            for (Animal animal : player.getFarmMap().getAnimals()) {
+                animal.passADay();
+            }
+        }
+    }
+
+    private void updateShippingBin() {
+        // Emptying shipping bin
+        for (Player player : players) {
+            for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
+                shippingBin.refresh();
+                // money will automatically be updated when player.addMoney() is called in client
+            }
+        }
+    }
+
+    private void setNewWeather() {
+        // Setting Weather :
+        if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
+        else {
+            currentWeather = tomorrowWeather;
+            tomorrowWeather = null;
+        }
+        lobby.notifyAll(new Message(new HashMap<>() {{
+            put("weather", currentWeather.name());
+        }}, Message.Type.set_weather));
     }
 
     public Player getCurrentPlayer() {
@@ -561,7 +606,7 @@ public class ServerGame implements Game {
     public ArrayList getFarmInfo() {
         ArrayList info = new ArrayList();
         for (int farmId = 0; farmId < 4; farmId++) {
-            info.add(farmMaps[farmId].getForagingInfo());
+            info.add(farmMaps[farmId].getInitialForagingInfo());
         }
         return info;
     }

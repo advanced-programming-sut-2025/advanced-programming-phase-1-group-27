@@ -3,7 +3,9 @@ package org.example.server.models.Map;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
+import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
+import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.App;
 import org.example.server.models.Cell;
@@ -28,9 +30,9 @@ public class NPCMap extends Map {
             new BuildingTexture(9, 0, 30)
     };
 
-    public NPCMap() {
+    public NPCMap(Game game) {
         super(16, 34);
-        build();
+        build(game);
     }
 
     private void buildStore(StoreBuilding storeBuilding, String storeName) {
@@ -77,20 +79,20 @@ public class NPCMap extends Map {
         cells[i][j].setObject(farmMap.getCell(x, y));
     }
 
-    private void build() {
-        buildNPCHouse(new NPCHouse(App.getCurrentGame().getAbigail(), cells[9][2]));
-        buildNPCHouse(new NPCHouse(App.getCurrentGame().getSebastian(), cells[9][8]));
-        buildNPCHouse(new NPCHouse(App.getCurrentGame().getHarvey(), cells[9][15]));
-        buildNPCHouse(new NPCHouse(App.getCurrentGame().getLia(), cells[9][22]));
-        buildNPCHouse(new NPCHouse(App.getCurrentGame().getRobbin(), cells[9][28]));
+    private void build(Game game) {
+        buildNPCHouse(new NPCHouse(game.getAbigail(), cells[9][2]));
+        buildNPCHouse(new NPCHouse(game.getSebastian(), cells[9][8]));
+        buildNPCHouse(new NPCHouse(game.getHarvey(), cells[9][15]));
+        buildNPCHouse(new NPCHouse(game.getLia(), cells[9][22]));
+        buildNPCHouse(new NPCHouse(game.getRobbin(), cells[9][28]));
 
-        buildStore(new StoreBuilding(App.getCurrentGame().getBlacksmith(), cells[0][0]), "BlckSmth");
-        buildStore(new StoreBuilding(App.getCurrentGame().getJojaMart(), cells[0][5]), "JojaMart");
-        buildStore(new StoreBuilding(App.getCurrentGame().getPierreGeneralStore(), cells[0][10]), "Pierre");
-        buildStore(new StoreBuilding(App.getCurrentGame().getCarpenterShop(), cells[0][15]), "Carpentr");
-        buildStore(new StoreBuilding(App.getCurrentGame().getFishShop(), cells[0][20]), "FishShop");
-        buildStore(new StoreBuilding(App.getCurrentGame().getMarnieRanch(), cells[0][25]), "Marnie");
-        buildStore(new StoreBuilding(App.getCurrentGame().getStardropSaloon(), cells[0][30]), "Stardrop");
+        buildStore(new StoreBuilding(game.getBlacksmith(), cells[0][0]), "BlckSmth");
+        buildStore(new StoreBuilding(game.getJojaMart(), cells[0][5]), "JojaMart");
+        buildStore(new StoreBuilding(game.getPierreGeneralStore(), cells[0][10]), "Pierre");
+        buildStore(new StoreBuilding(game.getCarpenterShop(), cells[0][15]), "Carpentr");
+        buildStore(new StoreBuilding(game.getFishShop(), cells[0][20]), "FishShop");
+        buildStore(new StoreBuilding(game.getMarnieRanch(), cells[0][25]), "Marnie");
+        buildStore(new StoreBuilding(game.getStardropSaloon(), cells[0][30]), "Stardrop");
 
 
     }
