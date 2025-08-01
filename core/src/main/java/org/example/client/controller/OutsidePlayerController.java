@@ -82,6 +82,7 @@ public class OutsidePlayerController {
                     destY = y;
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkLeft();
                 }
+                //TODO send walk(clientApp.getGame().getPlayer().getUsername, Left) rassa in 4 ta:
             }
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 Result result = new GameMenuController(new GameView()).walk(
@@ -94,6 +95,7 @@ public class OutsidePlayerController {
                     destY = y;
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkRight();
                 }
+                //TODO send walk(clientApp.getGame().getPlayer().getUsername, Right)
             }
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 Result result = new GameMenuController(new GameView()).walk(
@@ -106,6 +108,7 @@ public class OutsidePlayerController {
                     destY = y + 40;
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkUp();
                 }
+                //TODO send walk(clientApp.getGame().getPlayer().getUsername, Up)
             }
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 Result result = new GameMenuController(new GameView()).walk(
@@ -118,6 +121,7 @@ public class OutsidePlayerController {
                     destY = y - 40;
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkDown();
                 }
+                //TODO send walk(clientApp.getGame().getPlayer().getUsername, Down)
             }
         }
 

@@ -166,6 +166,16 @@ public class GameMenuController extends MenuController {
                                 Cell newDestination = (Cell) destination.getObject();
                                 currentPlayer.setCurrentCell(newDestination);
                                 currentPlayer.setCurrentMap(newDestination.getMap());
+                                if (((Cell) destination.getObject()).getMap() instanceof NPCMap) {
+                                    //TODO rassa send EnteredNPCMAP(username,
+                                    // i = ((Cell) destination.getObject()).getPosition.getX
+                                    // j = ((Cell) destination.getObject()).getPosition.getY
+                                }
+                                if (((Cell) destination.getObject()).getMap() instanceof FarmMap) {
+                                    //TODO rassa send LeftNPCMAP(username,
+                                    // i = ((Cell) destination.getObject()).getPosition.getX
+                                    // j = ((Cell) destination.getObject()).getPosition.getY
+                                }
                                 return new Result(true, "You Changed your Map And Now Are On Cell(" +
                                         newDestination.getPosition().getX() + "," +
                                         newDestination.getPosition().getY() + ") of " +
