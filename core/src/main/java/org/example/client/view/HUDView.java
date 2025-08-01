@@ -47,7 +47,7 @@ public class HUDView extends AppMenu {
     private ArrayList<Stacks> inventoryItems;
     private ArrayList<Stacks> onScreenItems;
     private int rowCoEfficient;
-
+    private Integer currentSlotInInventory;
     private InGameMenuType currentMenu;
 
 
@@ -55,6 +55,7 @@ public class HUDView extends AppMenu {
 
         controller = new HUDController(this);
         rowCoEfficient = 1;
+        currentSlotInInventory = null;
         craftingMenuBackground = GameAssetManager.getGameAssetManager().getCraftingMenuBackground();
         inventoryMenuBackground = GameAssetManager.getGameAssetManager().getInventoryMenuBackground();
         skillMenuBackground = GameAssetManager.getGameAssetManager().getSkillMenuBackground();
@@ -177,14 +178,19 @@ public class HUDView extends AppMenu {
 
     private void displayInventoryHotBar() {
 
+        if ( currentMenu == InGameMenuType.NONE ) {
+            inventoryHotBarImage.setPosition((Gdx.graphics.getWidth() - inventoryHotBarImage.getWidth()) / 2, 10);
+            inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(), 26);
 
-        inventoryHotBarImage.setPosition((Gdx.graphics.getWidth() - inventoryHotBarImage.getWidth()) / 2, 10);
-        inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(), 26);
-
-        inventoryHotBarImage.setVisible(currentMenu == InGameMenuType.NONE);
-        inventorySelectSlotImage.setVisible(currentMenu == InGameMenuType.NONE);
-        stage.addActor(inventoryHotBarImage);
-        stage.addActor(inventorySelectSlotImage);
+            inventoryHotBarImage.setVisible(true);
+            inventorySelectSlotImage.setVisible(true);
+            stage.addActor(inventoryHotBarImage);
+            stage.addActor(inventorySelectSlotImage);
+        }
+        else{
+            inventoryHotBarImage.setVisible(false);
+            inventorySelectSlotImage.setVisible(false);
+        }
 
     }
 
@@ -246,6 +252,34 @@ public class HUDView extends AppMenu {
 
 
         }
+
+        // DISPLAYING RED BOX
+
+        if ( currentMenu == InGameMenuType.INVENTORY) {
+
+            if (currentSlotInInventory != null) {
+                inventorySelectSlotImage.setVisible(true);
+                inventorySelectSlotImage.setSize(63,60);
+                if ( currentSlotInInventory/12 == 0 ){
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 700);
+                }
+                else if ( currentSlotInInventory/12 == 1 ){
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 620);
+                }
+                else if ( currentSlotInInventory/12 == 2 ){
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 550);
+                }
+                inventorySelectSlotImage.toFront();
+            }
+            else{
+                inventorySelectSlotImage.setVisible(false);
+            }
+
+
+        }
+
+
+
 
     }
 
@@ -527,7 +561,6 @@ public class HUDView extends AppMenu {
             }
 
 
-
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
@@ -543,7 +576,54 @@ public class HUDView extends AppMenu {
                         return true;
                     }
 
-                    System.out.println("X: " + x + " Y: " + y);
+                    for ( int i = 0; i < 12; i++ ){
+
+                        if ( (520 + i*63) < x && x < (520 + (i+1)*63) ){
+
+                            if ( 700 < y && y < 760 ){
+                                if ( currentSlotInInventory == null ){
+                                    currentSlotInInventory = i;
+                                }
+                                else{
+                                    if ( currentSlotInInventory != i ){
+                                        currentSlotInInventory = i;
+                                    }
+                                    else{
+                                        currentSlotInInventory = null;
+                                    }
+                                }
+                            }
+                            else if ( 620 < y && y < 680 ){
+                                if ( currentSlotInInventory == null ){
+                                    currentSlotInInventory = i+12;
+                                }
+                                else{
+                                    if ( currentSlotInInventory != (i+12) ){
+                                        currentSlotInInventory = i+12;
+                                    }
+                                    else{
+                                        currentSlotInInventory = null;
+                                    }
+                                }
+                            }
+                            else if ( 550 < y && y < 610 ){
+                                if ( currentSlotInInventory == null ){
+                                    currentSlotInInventory = i+24;
+                                }
+                                else{
+                                    if ( currentSlotInInventory != (i+24) ){
+                                        currentSlotInInventory = i+24;
+                                    }
+                                    else{
+                                        currentSlotInInventory = null;
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                    }
 
 
                 }
@@ -568,9 +648,26 @@ public class HUDView extends AppMenu {
                     if ( (495 < x && x < 1300) && (540 < y && y < 780) ){
                         if (amountY > 0 && (rowCoEfficient+2)*12 < onScreenItems.size()) {
                             rowCoEfficient += 1;
+                            if ( currentSlotInInventory != null ){
+                                if ( 12 <= currentSlotInInventory && currentSlotInInventory < 24 ){
+                                    currentSlotInInventory = null;
+                                }
+                                else if ( 24 <= currentSlotInInventory ){
+                                    currentSlotInInventory -= 12;
+                                }
+                            }
                         }
                         else if ( amountY < 0 ){
                             rowCoEfficient = Math.max(1, rowCoEfficient-1);
+                            if ( currentSlotInInventory != null){
+                                if ( 24 <= currentSlotInInventory ){
+                                    currentSlotInInventory = null;
+                                }
+                                else if (12 <= currentSlotInInventory){
+                                    currentSlotInInventory += 12;
+                                }
+                            }
+
                         }
                     }
                     return true;
