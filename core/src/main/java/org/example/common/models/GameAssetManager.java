@@ -187,7 +187,19 @@ public class GameAssetManager {
                 }});
             }
         }
-    }} ;
+    }};
+
+    private final TextureAtlas cropsAtlas = new TextureAtlas("assets/Images/Crops/atlas/Crops.atlas");
+
+    private final HashMap<CropType, ArrayList<TextureRegion>> cropTextureMap = new HashMap<>() {{
+        for (CropType cropType : CropType.values()) {
+            if (cropType.getAddress() == null) {
+                put(cropType, new ArrayList<>(){{
+
+                }});
+            }
+        }
+    }};
 
     private final HashMap<Item, Image> itemImageMap = new HashMap<>() {{
         for (Entry<Item, Texture> entry : itemTextureMap.entrySet()) {

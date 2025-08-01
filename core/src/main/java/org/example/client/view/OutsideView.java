@@ -92,6 +92,8 @@ public class OutsideView extends AppMenu {
         App.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
 
         playerController.update();
+        for (OtherPlayerController otherPlayerController : otherPlayerControllers)
+            otherPlayerController.update();
         camera.update();
         hudView.displayHUD(delta);
         Main.getBatch().end();
