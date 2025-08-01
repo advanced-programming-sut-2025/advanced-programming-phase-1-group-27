@@ -15,6 +15,7 @@ import org.example.client.Main;
 import org.example.client.controller.OtherPlayerController;
 import org.example.client.model.ClientApp;
 import org.example.client.controller.OutsidePlayerController;
+import org.example.common.models.Direction;
 import org.example.server.models.App;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Position;
@@ -145,7 +146,7 @@ public class OutsideView extends AppMenu {
         }
     }
 
-    public void walkPlayer(String username, String direction) {
+    public void walkPlayer(String username, Direction direction) {
         for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
             if (otherPlayerController.getUsername().equals(username)) {
                 otherPlayerController.walk(direction);

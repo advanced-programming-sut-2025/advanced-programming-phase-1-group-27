@@ -6,9 +6,11 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.HomeView;
 import org.example.client.view.shopview.*;
 import org.example.common.models.ItemManager;
+import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
+import org.example.server.models.Map.Map;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.enums.*;
 import org.example.server.models.enums.Plants.*;
@@ -21,10 +23,7 @@ import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.enums.items.products.ProcessedProductType;
 import org.example.client.view.GameView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -167,14 +166,18 @@ public class GameMenuController extends MenuController {
                                 currentPlayer.setCurrentCell(newDestination);
                                 currentPlayer.setCurrentMap(newDestination.getMap());
                                 if (((Cell) destination.getObject()).getMap() instanceof NPCMap) {
-                                    //TODO rassa send EnteredNPCMAP(username,
-                                    // i = ((Cell) destination.getObject()).getPosition.getX
-                                    // j = ((Cell) destination.getObject()).getPosition.getY
+                                    ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                                        put("username", currentPlayer.getUsername());
+                                        put("x", ((Cell) destination.getObject()).getPosition().getX());
+                                        put("y", ((Cell) destination.getObject()).getPosition().getY());
+                                    }}, Message.Type.enter_npc));
                                 }
                                 if (((Cell) destination.getObject()).getMap() instanceof FarmMap) {
-                                    //TODO rassa send LeftNPCMAP(username,
-                                    // i = ((Cell) destination.getObject()).getPosition.getX
-                                    // j = ((Cell) destination.getObject()).getPosition.getY
+                                    ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                                        put("username", currentPlayer.getUsername());
+                                        put("x", ((Cell) destination.getObject()).getPosition().getX());
+                                        put("y", ((Cell) destination.getObject()).getPosition().getY());
+                                    }}, Message.Type.leave_npc));
                                 }
                                 return new Result(true, "You Changed your Map And Now Are On Cell(" +
                                         newDestination.getPosition().getX() + "," +

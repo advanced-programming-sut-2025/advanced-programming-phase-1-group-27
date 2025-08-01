@@ -72,6 +72,18 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.updateForaging(message);
             return true;
         }
+        else if (message.getType() == Message.Type.enter_npc) {
+            ServerUpdatesController.otherPlayerEnteredNpcMap(message);
+            return true;
+        }
+        else if (message.getType() == Message.Type.leave_npc) {
+            ServerUpdatesController.otherPlayerLeftNpcMap(message);
+            return true;
+        }
+        else if (message.getType() == Message.Type.walk_update) {
+            ServerUpdatesController.otherPlayerWalking(message);
+            return true;
+        }
         return false;
     }
 

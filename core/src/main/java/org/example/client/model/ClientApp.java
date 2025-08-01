@@ -78,6 +78,7 @@ public class ClientApp {
     }
 
     public static void end() {
+        // TODO: parsa, save game
         serverConnectionThread.end();
     }
 

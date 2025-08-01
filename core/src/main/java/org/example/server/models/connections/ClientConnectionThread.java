@@ -1,5 +1,6 @@
 package org.example.server.models.connections;
 
+import org.example.client.model.ClientApp;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
@@ -96,6 +97,11 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         } else if (message.getType() == Message.Type.set_weather) {
             ClientUpdatesController.setTomorrowWeather(message, lobby);
+            return true;
+        } else if (message.getType() == Message.Type.enter_npc ||
+                   message.getType() == Message.Type.leave_npc ||
+                   message.getType() == Message.Type.walk_update) {
+            ClientUpdatesController.notifyExcept(message, lobby);
             return true;
         }
         return false;
