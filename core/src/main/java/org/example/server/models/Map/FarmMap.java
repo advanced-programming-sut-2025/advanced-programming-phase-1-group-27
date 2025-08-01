@@ -212,7 +212,7 @@ public class FarmMap extends Map {
                 int finalJ = j;
                 boolean finalIsSead = isSead;
                 info.add(new HashMap<String, Object>() {{
-                    put("type", cell.getObject().toString());
+                    put("type", cell.getForagingType().toString());
                     put("x", finalI);
                     put("y", finalJ);
                     put("isSead", finalIsSead);

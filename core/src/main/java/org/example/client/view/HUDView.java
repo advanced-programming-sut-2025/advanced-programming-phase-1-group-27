@@ -54,7 +54,7 @@ public class HUDView extends AppMenu {
     public HUDView(Stage stage) {
 
         controller = new HUDController(this);
-        rowCoEfficient = 0;
+        rowCoEfficient = 1;
         craftingMenuBackground = GameAssetManager.getGameAssetManager().getCraftingMenuBackground();
         inventoryMenuBackground = GameAssetManager.getGameAssetManager().getInventoryMenuBackground();
         skillMenuBackground = GameAssetManager.getGameAssetManager().getSkillMenuBackground();
@@ -224,28 +224,26 @@ public class HUDView extends AppMenu {
         if ( currentMenu == InGameMenuType.INVENTORY ) {
 
             for ( int i = 0; i < Math.min(onScreenItems.size(),12); i++ ){
-                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705 - (float)((80-((i/12)-1)*5) * (i/12)));
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705);
                 onScreenItems.get(i).getItem().getItemImage().setVisible(true);
                 onScreenItems.get(i).getItem().getItemImage().toFront();
             }
 
+            for ( int i = 12; i < onScreenItems.size(); i++ ){
 
-
-
-            for ( int i = 12; i < (12 + 12*rowCoEfficient) && i < onScreenItems.size(); i++ ){
                 onScreenItems.get(i).getItem().getItemImage().setVisible(false);
-            }
-            for ( int i = 12 + 12*(rowCoEfficient+2); i < onScreenItems.size(); i++  ){
-                onScreenItems.get(i).getItem().getItemImage().setVisible(false);
-            }
-
-            for ( int i = 12; i < Math.min(onScreenItems.size(),36) && (i + 12*rowCoEfficient) < onScreenItems.size() ; i++ ){
-
-                onScreenItems.get(i + 12*rowCoEfficient).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705 - (float)((80-((i/12)-1)*5) * (i/12)));
-                onScreenItems.get(i + 12*rowCoEfficient).getItem().getItemImage().setVisible(true);
-                onScreenItems.get(i + 12*rowCoEfficient).getItem().getItemImage().toFront();
 
             }
+
+            int k = 12;
+
+            for ( int i = 12 * rowCoEfficient; i < Math.min(12 * (rowCoEfficient+2),onScreenItems.size()); i++){
+                onScreenItems.get(i).getItem().getItemImage().setVisible(true);
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(k%12), 705 - (float)((80-((k/12)-1)*5) * (k/12)));
+                onScreenItems.get(i).getItem().getItemImage().toFront();
+                k++;
+            }
+
 
         }
 
@@ -437,6 +435,7 @@ public class HUDView extends AppMenu {
                         }
                         else {
                             currentMenu = InGameMenuType.CRAFTING;
+                            makeOnScreenItemsInvisible();
                         }
 
                     } else if (keycode == Input.Keys.DOWN) {
@@ -527,6 +526,31 @@ public class HUDView extends AppMenu {
                 return false;
             }
 
+
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                if (!isInputFieldVisible) {
+
+                    if ( (525 < x && x < 580) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.INVENTORY;
+                        return true;
+                    }
+                    else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.CRAFTING;
+                        makeOnScreenItemsInvisible();
+                        return true;
+                    }
+
+                    System.out.println("X: " + x + " Y: " + y);
+
+
+                }
+
+                return false;
+            }
+
             @Override
             public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
 
@@ -542,39 +566,17 @@ public class HUDView extends AppMenu {
                 }
                 else if ( currentMenu == InGameMenuType.INVENTORY ) {
                     if ( (495 < x && x < 1300) && (540 < y && y < 780) ){
-                        if (amountY > 0 && ((rowCoEfficient+3)*12) < onScreenItems.size()) {
+                        if (amountY > 0 && (rowCoEfficient+2)*12 < onScreenItems.size()) {
                             rowCoEfficient += 1;
                         }
                         else if ( amountY < 0 ){
-                            rowCoEfficient = Math.max(0, rowCoEfficient-1);
+                            rowCoEfficient = Math.max(1, rowCoEfficient-1);
                         }
                     }
                     return true;
                 }
                 return false;
 
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-                if (!isInputFieldVisible) {
-
-                    if ( (525 < x && x < 580) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.INVENTORY;
-                        return true;
-                    }
-                    else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.CRAFTING;
-                        return true;
-                    }
-
-                    System.out.println("X: " + x + " Y: " + y);
-
-
-                }
-
-                return false;
             }
 
         });
@@ -629,9 +631,18 @@ public class HUDView extends AppMenu {
     private void addToScreen(Stacks stack) {
 
         stack.getItem().getItemImage().setSize(48,48);
+        stack.getItem().getItemImage().setVisible(false);
         stage.addActor(stack.getItem().getItemImage());
         onScreenItems.add(stack);
 
+
+    }
+
+    private void makeOnScreenItemsInvisible(){
+
+        for ( int i = 0; i < onScreenItems.size(); i++ ) {
+            onScreenItems.get(i).getItem().getItemImage().setVisible(false);
+        }
 
     }
 

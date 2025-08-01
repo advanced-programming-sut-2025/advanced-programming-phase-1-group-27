@@ -3,20 +3,11 @@ package org.example.client.view;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.*;
-import org.example.client.view.shopview.PurchaseMenuView;
 import org.example.common.models.Message;
-import org.example.server.controller.PregameMenuController;
 import org.example.server.models.*;
 import org.example.server.models.enums.Gender;
-import org.example.server.models.enums.Menu;
-import org.example.server.models.enums.NPCType;
-import org.example.server.models.enums.Plants.CropType;
-import org.example.server.models.enums.Plants.FruitType;
-import org.example.server.models.enums.StackLevel;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 public class AppView {
 

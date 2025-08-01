@@ -1,5 +1,6 @@
 package org.example.server.models;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Game;
 import org.example.common.models.Message;
 import org.example.common.models.Time;
@@ -288,7 +289,7 @@ public class ServerGame implements Game {
     private void growPlants() {
         // Grow (and deleting) Plants :
         for (Player player : players) {
-            ArrayList info = player.getFarmMap().generateForaging(time.getSeason());
+            ArrayList<HashMap<String, Object>> info = player.getFarmMap().generateForaging(time.getSeason());
             Cell[][] cells = player.getFarmMap().getCells();
             for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
                 for (int j = 0; j < player.getFarmMap().getWidth(); j++) {

@@ -2,7 +2,9 @@ package org.example.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowAdapter;
 import org.example.client.Main;
+import org.example.client.model.ClientApp;
 
 /**
  * Launches the desktop (LWJGL3) application.
@@ -34,6 +36,14 @@ public class Lwjgl3Launcher {
         configuration.setWindowedMode(1800, 1080);
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
         //// They can also be loaded from the root of assets/ .
+
+        configuration.setWindowListener(new Lwjgl3WindowAdapter() {
+            @Override
+            public boolean closeRequested() {
+                ClientApp.end();
+                return true;
+            }
+        });
 
         configuration.setWindowIcon("logo.jpg");
 

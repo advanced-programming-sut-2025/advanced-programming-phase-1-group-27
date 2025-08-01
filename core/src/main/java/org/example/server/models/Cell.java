@@ -188,6 +188,16 @@ public class Cell {
         return null;
     }
 
+    public Object getForagingType() {
+        if (object instanceof Crop crop)
+            return crop.getType();
+        if (object instanceof Tree tree)
+            return tree.getType();
+        if (object instanceof MineralType mineral)
+            return mineral;
+        return null;
+    }
+
     @Override
     public String toString() {
         if (string != null)
