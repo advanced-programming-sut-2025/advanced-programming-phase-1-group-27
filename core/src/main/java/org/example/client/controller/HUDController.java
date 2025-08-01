@@ -221,6 +221,15 @@ public class HUDController extends MenuController {
         return new GraphicalResult(craftingProduct.getName() + " crafted successfully", false);
     }
 
+    public GraphicalResult removeFromInventory(Stacks stacks) {
+
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        player.getBackpack().reduceItems(stacks.getItem(),stacks.getQuantity());
+        return new GraphicalResult(stacks.getItem()+" ("+stacks.getQuantity()+")  removed successfully",false);
+
+
+    }
+
 
     private GraphicalResult handleCheat(String input){
 

@@ -454,7 +454,8 @@ public class HUDView extends AppMenu {
                         textInputField.setText("");
                         tJustPressed = true;
                         return true;
-                    } else if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.E) {
+                    }
+                    else if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.E) {
 
                         if (currentMenu != InGameMenuType.INVENTORY ) {
                             currentMenu = InGameMenuType.INVENTORY;
@@ -472,75 +473,78 @@ public class HUDView extends AppMenu {
                             makeOnScreenItemsInvisible();
                         }
 
-                    } else if (keycode == Input.Keys.DOWN) {
+                    }
 
-                        controller.updateSlotIndex(-1);
+                    if ( currentMenu == InGameMenuType.INVENTORY ) {
 
-                    } else if (keycode == Input.Keys.NUM_1) {
+                        if ( keycode == Input.Keys.D ) {
 
-                        controller.quickSetHotBarIndex(0);
+                            if ( currentSlotInInventory != null ) {
 
-                    } else if (keycode == Input.Keys.NUM_2) {
+                                int itemNumber = (currentSlotInInventory<12)? currentSlotInInventory:(currentSlotInInventory + (rowCoEfficient-1) * 12);
 
-                        controller.quickSetHotBarIndex(1);
+                                if ( itemNumber >= onScreenItems.size() ){
+                                    errorLabel.set(new GraphicalResult("Selected slot is empty!"));
+                                }
+                                else{
+                                    errorLabel.set(controller.removeFromInventory(onScreenItems.get(itemNumber)));
+                                }
+                            }
 
-                    } else if (keycode == Input.Keys.NUM_3) {
-
-                        controller.quickSetHotBarIndex(2);
-
-                    } else if (keycode == Input.Keys.NUM_4) {
-
-                        controller.quickSetHotBarIndex(3);
-
-                    } else if (keycode == Input.Keys.NUM_5) {
-
-                        controller.quickSetHotBarIndex(4);
-
-                    } else if (keycode == Input.Keys.NUM_6) {
-
-                        controller.quickSetHotBarIndex(5);
-
-                    } else if (keycode == Input.Keys.NUM_7) {
-
-                        controller.quickSetHotBarIndex(6);
-
-                    } else if (keycode == Input.Keys.NUM_8) {
-
-                        controller.quickSetHotBarIndex(7);
-
-                    } else if (keycode == Input.Keys.NUM_9) {
-
-                        controller.quickSetHotBarIndex(8);
-
-                    } else if (keycode == Input.Keys.NUM_0) {
-
-                        controller.quickSetHotBarIndex(9);
-
-                    } else if (keycode == Input.Keys.MINUS) {
-
-                        controller.quickSetHotBarIndex(10);
-
-                    } else if (keycode == Input.Keys.EQUALS) {
-
-                        controller.quickSetHotBarIndex(11);
+                        }
 
                     }
-                    else if ( keycode == Input.Keys.P ) {
 
-                        for ( Stacks item : inventoryItems ) {
-                            System.out.println(item.getItem() + " " + item.getQuantity());
+                    else if ( currentMenu == InGameMenuType.NONE ) {
+                        if (keycode == Input.Keys.NUM_1) {
+
+                            controller.quickSetHotBarIndex(0);
+
+                        } else if (keycode == Input.Keys.NUM_2) {
+
+                            controller.quickSetHotBarIndex(1);
+
+                        } else if (keycode == Input.Keys.NUM_3) {
+
+                            controller.quickSetHotBarIndex(2);
+
+                        } else if (keycode == Input.Keys.NUM_4) {
+
+                            controller.quickSetHotBarIndex(3);
+
+                        } else if (keycode == Input.Keys.NUM_5) {
+
+                            controller.quickSetHotBarIndex(4);
+
+                        } else if (keycode == Input.Keys.NUM_6) {
+
+                            controller.quickSetHotBarIndex(5);
+
+                        } else if (keycode == Input.Keys.NUM_7) {
+
+                            controller.quickSetHotBarIndex(6);
+
+                        } else if (keycode == Input.Keys.NUM_8) {
+
+                            controller.quickSetHotBarIndex(7);
+
+                        } else if (keycode == Input.Keys.NUM_9) {
+
+                            controller.quickSetHotBarIndex(8);
+
+                        } else if (keycode == Input.Keys.NUM_0) {
+
+                            controller.quickSetHotBarIndex(9);
+
+                        } else if (keycode == Input.Keys.MINUS) {
+
+                            controller.quickSetHotBarIndex(10);
+
+                        } else if (keycode == Input.Keys.EQUALS) {
+
+                            controller.quickSetHotBarIndex(11);
+
                         }
-                        System.out.println("---------------------");
-
-                    }
-                    else if ( keycode == Input.Keys.O ) {
-
-                        for ( Stacks item : onScreenItems ) {
-                            System.out.println(item.getItem() + " " + item.getQuantity());
-                        }
-                        System.out.println("---------------------");
-
-
                     }
 
 
@@ -745,5 +749,9 @@ public class HUDView extends AppMenu {
 
     public InGameMenuType getCurrentMenu() {
         return currentMenu;
+    }
+
+    public ArrayList<Stacks> getInventoryItems() {
+        return inventoryItems;
     }
 }
