@@ -16,7 +16,7 @@ public class ClientUpdatesController {
         lobby.getGame().setTomorrowWeather(weather);
     }
 
-    public static Message purchase(Message message) {
+    public static synchronized Message purchase(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
         ServerGame serverGame = lobby.getGame();
@@ -29,7 +29,7 @@ public class ClientUpdatesController {
             return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("Sorry! we are out of stock."));
             }}, Message.Type.response);
-        updateShopStock(lobby, item, quantity, shop);
+//        updateShopStock(lobby, item, quantity, shop);
         return new Message(new HashMap<>() {{
             put("GraphicalResult", GraphicalResult.getInfo(
                     "You have successfully purchased " + quantity + " of " + item.getName() + ".",

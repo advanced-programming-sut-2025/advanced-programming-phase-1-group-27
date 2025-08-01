@@ -76,7 +76,7 @@ public class HUDView extends AppMenu {
         errorLabel = new GraphicalResult();
         this.stage = stage;
         player = ClientApp.getCurrentGame().getCurrentPlayer();
-        inventoryItems = (ArrayList<Stacks>) player.getBackpack().getItems();
+        inventoryItems = player.getBackpack().getItems();
         onScreenItems = new ArrayList<>();
         for ( Stacks stack : inventoryItems ) {
             addToScreen(Stacks.copy(stack));
@@ -394,6 +394,8 @@ public class HUDView extends AppMenu {
 
 
         errorLabel.update(delta);
+        inventoryItems = player.getBackpack().getItems();
+
         updateOnScreenItems();
 
 

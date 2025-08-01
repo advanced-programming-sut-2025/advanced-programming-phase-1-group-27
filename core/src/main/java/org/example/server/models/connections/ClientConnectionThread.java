@@ -103,6 +103,9 @@ public class ClientConnectionThread extends ConnectionThread {
                    message.getType() == Message.Type.walk_update) {
             ClientUpdatesController.notifyExcept(message, lobby);
             return true;
+        } else if (message.getType() == Message.Type.purchase_from_shop) {
+            sendMessage(ClientUpdatesController.purchase(message));
+            return true;
         }
         return false;
     }

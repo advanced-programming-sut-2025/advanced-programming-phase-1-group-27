@@ -15,6 +15,8 @@ import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.enums.items.products.CookingProduct;
+import org.example.server.models.enums.items.products.CraftingProduct;
 
 import java.util.HashMap;
 
@@ -55,7 +57,7 @@ public class PurchaseMenuController extends MenuController {
                             GameAssetManager.getGameAssetManager().getErrorColor());
                 }
             }
-            if (!App.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(
+            if (!ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(
                     stock.getItem(),
                     stock.getStackLevel(),
                     num)) {
@@ -67,13 +69,15 @@ public class PurchaseMenuController extends MenuController {
         String itemName = stock.getItem().getName();
         int quantity = stock.getQuantity();
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
-        Message message = new Message(new HashMap<String, Object>() {{
-            put("lobbyId", lobbyId);
-            put("shopName", shopName);
-            put("itemName", itemName);
-            put("quantity", quantity);
-        }}, Message.Type.purchase_from_shop);
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(
+            new Message(new HashMap<String, Object>() {{
+                put("lobbyId", lobbyId);
+                put("shopName", shopName);
+                put("itemName", itemName);
+                put("quantity", quantity);
+            }}, Message.Type.purchase_from_shop),
+            TIMEOUT_MILLIS
+        );
         if (response == null || response.getType() != Message.Type.response) {
             return new GraphicalResult(
                     "Failed to purchase!",
@@ -81,29 +85,21 @@ public class PurchaseMenuController extends MenuController {
             );
         }
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
-        if(result.hasError()){
-            return new GraphicalResult(
-                    result.getMessage().toString(),
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
-        }
+        if(result.hasError())
+            return result;
         if(stock.getItem().equals(ToolType.DeluxeBackpack) || stock.getItem().equals(ToolType.LargeBackpack)){
             ToolType backpack = (ToolType) stock.getItem();
             currentPlayer.setBackpack(backpack);
-        }else if(stock.getItem() instanceof Recipe){
-            currentPlayer.getAvailableCookingRecipes().add((Recipe) stock.getItem());
+        }else if(stock.getItem() instanceof Recipe recipe) {
+            if (recipe.getFinalProduct() instanceof CraftingProduct)
+                currentPlayer.getAvailableCraftingRecipes().add(recipe);
+            else if (recipe.getFinalProduct() instanceof CookingProduct)
+                currentPlayer.getAvailableCookingRecipes().add(recipe);
         }else {
-            currentPlayer.getBackpack().addItems(
-                    stock.getItem(),
-                    stock.getStackLevel(),
-                    quantity);
+            currentPlayer.getBackpack().addItems(stock.getItem(), stock.getStackLevel(), num);
         }
         currentPlayer.spendMoney(sum);
-        return new GraphicalResult(
-                result.getMessage().toString(),
-                GameAssetManager.getGameAssetManager().getAcceptColor(),
-                false
-        );
+        return result;
     }
 
     public GraphicalResult purchaseAnimal() {

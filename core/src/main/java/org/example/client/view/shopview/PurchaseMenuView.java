@@ -31,11 +31,11 @@ public class PurchaseMenuView extends AppMenu {
     private final TextButton exitButton;
     private final TextButton purchaseButton;
 
-    private final com.badlogic.gdx.scenes.scene2d.ui.Label moneyLabel;
-    private final com.badlogic.gdx.scenes.scene2d.ui.Label priceLabel;
-    private final com.badlogic.gdx.scenes.scene2d.ui.Label quantityLabel;
-    private final com.badlogic.gdx.scenes.scene2d.ui.Label nameLabel;
-    private final com.badlogic.gdx.scenes.scene2d.ui.Label levelLabel;
+    private final Label moneyLabel;
+    private final Label priceLabel;
+    private final Label quantityLabel;
+    private final Label nameLabel;
+    private final Label levelLabel;
     private final Label price;
     private final Label quantity;
     private final Label name;
@@ -45,8 +45,8 @@ public class PurchaseMenuView extends AppMenu {
     private Label sumLabel;
     private int number;
 
-    private final com.badlogic.gdx.scenes.scene2d.ui.Image npcImage;
-    private final com.badlogic.gdx.scenes.scene2d.ui.Image itemImage;
+    private final Image npcImage;
+    private final Image itemImage;
     private final Image creamImage;
     private final Image brownImage;
     private final Image coinImage;
@@ -60,7 +60,7 @@ public class PurchaseMenuView extends AppMenu {
 
         controller = new PurchaseMenuController(this , shopMenu);
 
-        npcImage = new com.badlogic.gdx.scenes.scene2d.ui.Image(new Texture(npc.getAddress()));
+        npcImage = new Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
 
         itemImage = new Image(stock.getItem().getTexture());
@@ -191,7 +191,7 @@ public class PurchaseMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-              controller.purchase(stock , number , npc);
+                controller.purchase(stock , number , npc);
             }
         });
     }
@@ -206,7 +206,7 @@ public class PurchaseMenuView extends AppMenu {
     }
 
     private void displayItem(){
-        quantityLabel.setText(stock.getQuantity() + "");
+        quantityLabel.setText(stock.getQuantity() == -1? "unlimited" : String.valueOf(stock.getQuantity()));
         priceLabel.setText(stock.getSalePrice() + "");
 
         float width1 = nameLabel.getWidth();
@@ -222,7 +222,7 @@ public class PurchaseMenuView extends AppMenu {
         itemImage.setPosition(Gdx.graphics.getWidth() / 4f - 300 , Gdx.graphics.getHeight() - 250);
         nameLabel.setPosition(Gdx.graphics.getWidth() / 4f - 100 , Gdx.graphics.getHeight() - 250);
         levelLabel.setPosition(Gdx.graphics.getWidth()/4f + width1 , Gdx.graphics.getHeight() - 250);
-        quantityLabel.setPosition(Gdx.graphics.getWidth()/4f + width2 + 200 , Gdx.graphics.getHeight() - 250);
+        quantityLabel.setPosition(Gdx.graphics.getWidth()/4f + width2 + 200 , Gdx.graphics.getHeight() - 200);
         priceLabel.setPosition(Gdx.graphics.getWidth()/4f + width3 + 400, Gdx.graphics.getHeight() - 250);
 
         stage.addActor(itemImage);

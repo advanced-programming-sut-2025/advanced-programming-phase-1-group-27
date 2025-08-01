@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 public class TimeController {
     public static void passAnHour(Lobby lobby) {
-        System.out.println("Lobby: " + lobby.getUsers().getFirst().getUsername());
         lobby.notifyAll(new Message(null, Message.Type.pass_an_hour));
     }
 
