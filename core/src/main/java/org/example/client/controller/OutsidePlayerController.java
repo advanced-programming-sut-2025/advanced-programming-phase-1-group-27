@@ -13,6 +13,7 @@ import org.example.server.controller.GameMenuController;
 import org.example.server.models.App;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Result;
+import org.example.server.models.enums.InGameMenuType;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -64,7 +65,8 @@ public class OutsidePlayerController {
         characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
         characterSprite.setScale(2f);
 
-        if (!walking && !view.getHudView().isInputFieldVisible()) {
+        if (!walking && !view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
+        InGameMenuType.NONE) {
             x = OutsideView.getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getX();
             y = OutsideView.getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getY();
             lastX = x;

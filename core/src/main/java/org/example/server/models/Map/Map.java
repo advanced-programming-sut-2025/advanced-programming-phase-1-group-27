@@ -181,7 +181,7 @@ public class Map {
     }
 
     public void print(float tileSize) {
-        for (int i = cells.length - 1; i >= 0; i--) {
+        for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 float y = (cells.length - 1 - i) * tileSize;
                 float x = j * tileSize;
@@ -191,7 +191,7 @@ public class Map {
                 Main.getBatch().draw(texture, x, y, tileSize, tileSize);
             }
         }
-        for (int i = cells.length - 1; i >= 0; i--) {
+        for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 float y = (cells.length - 1 - i) * tileSize;
                 float x = j * tileSize;

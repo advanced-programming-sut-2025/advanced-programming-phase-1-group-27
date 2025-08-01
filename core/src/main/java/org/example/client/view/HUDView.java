@@ -740,4 +740,7 @@ public class HUDView extends AppMenu {
 
     }
 
+    public InGameMenuType getCurrentMenu() {
+        return currentMenu;
+    }
 }
