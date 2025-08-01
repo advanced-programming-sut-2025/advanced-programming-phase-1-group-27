@@ -16,6 +16,7 @@ import org.example.client.model.ClientApp;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.controller.HUDController;
+import org.example.common.utils.JSONUtils;
 import org.example.server.models.Player;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.InGameMenuType;
@@ -50,7 +51,7 @@ public class HUDView extends AppMenu {
     private int rowCoEfficient;
     private Integer currentSlotInInventory;
     private InGameMenuType currentMenu;
-
+    private boolean ctrlPressed;
 
     public HUDView(Stage stage) {
 
@@ -393,10 +394,9 @@ public class HUDView extends AppMenu {
 
     public void displayHUD(float delta) {
 
-
+//        ctrlPressed = false;
         errorLabel.update(delta);
         inventoryItems = player.getBackpack();
-
         updateOnScreenItems();
 
 
@@ -454,18 +454,14 @@ public class HUDView extends AppMenu {
 
         stage.addListener(new InputListener() {
 
-            boolean ctrlPressed = false;
 
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
 
                 if (!isInputFieldVisible) {
 
-                    if ( keycode == Input.Keys.CONTROL_LEFT ){
+                    if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
                         ctrlPressed = true;
-                    }
-                    else{
-                        ctrlPressed = false;
                     }
 
                     if (keycode == Input.Keys.T) {
@@ -584,6 +580,13 @@ public class HUDView extends AppMenu {
                 return false;
             }
 
+            @Override
+            public boolean keyUp(InputEvent event, int keycode) {
+                if (keycode == Input.Keys.CONTROL_LEFT || keycode == Input.Keys.CONTROL_RIGHT) {
+                    ctrlPressed = false;
+                }
+                return false;
+            }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -617,6 +620,7 @@ public class HUDView extends AppMenu {
                                             currentSlotInInventory = null;
                                         }
                                     }
+                                    return true;
                                 }
                                 else if ( 620 < y && y < 680 ){
                                     if ( currentSlotInInventory == null ){
@@ -630,6 +634,7 @@ public class HUDView extends AppMenu {
                                             currentSlotInInventory = null;
                                         }
                                     }
+                                    return true;
                                 }
                                 else if ( 550 < y && y < 610 ){
                                     if ( currentSlotInInventory == null ){
@@ -643,28 +648,33 @@ public class HUDView extends AppMenu {
                                             currentSlotInInventory = null;
                                         }
                                     }
+                                    return true;
                                 }
                             }
-                            else{       // SWITCH ITEM
+                            else{
 
-                                if ( 700 < y && y < 760 ){
-                                    if ( currentSlotInInventory != null) {
-                                        inventoryItems.switchItem(currentSlotInInventory, i);
+                                if ( currentSlotInInventory != null ){
+                                    int currentItemIndex = (currentSlotInInventory<12)? currentSlotInInventory:currentSlotInInventory+12*(rowCoEfficient-1);
+
+                                    if ( 700 < y && y < 760 ){
+                                        inventoryItems.switchItem(currentItemIndex, i);
+                                        currentSlotInInventory = null;
+                                        return true;
+                                    }
+                                    else if ( 620 < y && y < 680 ){
+                                        inventoryItems.switchItem(currentItemIndex, i+12*rowCoEfficient);
+                                        currentSlotInInventory = null;
+                                        return true;
+                                    }
+                                    else if ( 550 < y && y < 610 ){
+                                        inventoryItems.switchItem(currentItemIndex, i+12*(rowCoEfficient+1));
+                                        currentSlotInInventory = null;
+                                        return true;
                                     }
                                 }
-                                else if ( 620 < y && y < 680 ){
-                                    if ( currentSlotInInventory != null){
-                                        inventoryItems.switchItem(currentSlotInInventory, i + 12);
-                                    }
-                                }
-                                else if ( 550 < y && y < 610 ){
-                                    if ( currentSlotInInventory != null){
-                                        inventoryItems.switchItem(currentSlotInInventory, i + 24);
-                                    }
-                                }
+
 
                             }
-
 
                         }
 
