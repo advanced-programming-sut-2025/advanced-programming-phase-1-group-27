@@ -72,6 +72,7 @@ public class UpgradeMenuView extends AppMenu {
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
 
+        this.moneyLabel = new Label("", skin);
         moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
 
         exitButton = new TextButton("Exit", skin);

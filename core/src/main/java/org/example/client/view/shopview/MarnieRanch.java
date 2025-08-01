@@ -5,12 +5,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.client.Main;
 import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
+import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
@@ -24,14 +27,17 @@ public class MarnieRanch extends AppMenu {
     private final NPCType npc;
 
     private final Image npcImage;
-    private final Image coinImage;
     private final Image creamImage;
     private final Image brownImage;
     private final Image backgroundImage;
 
-    private Label moneyLabel;
 
     private final TextButton exitButton;
+
+    private final HUDView hudView;
+
+    private float timer = 0f;
+
 
     private ArrayList<Stock> stockItems;
     private Table stockTable;
@@ -45,8 +51,6 @@ public class MarnieRanch extends AppMenu {
         controller = new ShopController(this , npc);
         npcImage = new Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
-        coinImage = new Image(GameAssetManager.getGameAssetManager().getCoinTexture());
-        coinImage.setSize(coinImage.getWidth() * 3f, coinImage.getHeight() * 3f);
 
         creamImage = new Image(RoundedRectangleTexture.createCreamRoundedRect(
                 Gdx.graphics.getWidth(),
@@ -69,10 +73,10 @@ public class MarnieRanch extends AppMenu {
 
         showOnlyAvailableCheckBox = new CheckBox("Filter", skin);
         showOnlyAvailableCheckBox.setChecked(true);
-        this.moneyLabel = new Label("", skin);
-        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
 
         exitButton = new TextButton("Exit", skin);
+        stage = new Stage(new ScreenViewport());
+        hudView = new HUDView(stage);
 
         setListeners();
     }
@@ -132,31 +136,22 @@ public class MarnieRanch extends AppMenu {
 
             float itemHeight = 50f;
             row.setHeight(itemHeight);
+            row.setColor(Color.BLACK);
             stockTable.add(row).width(redAreaWidth).padBottom(5);
             stockTable.row();
+            row.setTouchable(Touchable.enabled);
 
             row.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     playClickSound();
-                     controller.purchase(stock);
+                    controller.purchase(stock);
                 }
             });
         }
 
         scrollPane.setSize(redAreaWidth, 600);
         scrollPane.setPosition(-120, Gdx.graphics.getHeight()/2f - 150);
-
-        stage.addActor(scrollPane);
-    }
-
-    private void displayMoney(){
-        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
-        moneyLabel.setFontScale(1.5f);
-        moneyLabel.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 100);
-        coinImage.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 50);
-        stage.addActor(moneyLabel);
-        stage.addActor(coinImage);
     }
 
     private void displayCheckBox(){
@@ -165,7 +160,7 @@ public class MarnieRanch extends AppMenu {
     }
 
     private void displayButtons(){
-        exitButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight()/2f - 40);
+        exitButton.setPosition(Gdx.graphics.getWidth() - 250, Gdx.graphics.getHeight()/2f - 160);
         stage.addActor(exitButton);
     }
 
@@ -175,6 +170,14 @@ public class MarnieRanch extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 controller.exitMenu();
+            }
+        });
+
+        showOnlyAvailableCheckBox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                displayItems();
             }
         });
     }
@@ -200,21 +203,28 @@ public class MarnieRanch extends AppMenu {
 
     @Override
     public void show() {
-        stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        displayBackground();
+        displayButtons();
+        displayNPC();
+        displayCheckBox();
+        stage.addActor(scrollPane);
+        displayItems();
     }
 
     @Override
     public void render(float v) {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
-        displayBackground();
-        displayNPC();
-        displayMoney();
-        displayItems();
-        displayCheckBox();
-        displayButtons();
+        if (timer > 2f) {
+            timer = 0f;
+            displayItems();
+        } else {
+            timer += v;
+        }
+        Main.getBatch().begin();
+        hudView.displayHUD(v);
+        Main.getBatch().end();
     }
 
     @Override
@@ -244,51 +254,5 @@ public class MarnieRanch extends AppMenu {
 
     @Override
     public void executeCommands(Scanner scanner) {
-//        if (controller.playerPassedOut()) {
-//            System.out.println(App.getCurrentGame().getCurrentPlayer().getUsername() + " has passed out!");
-//            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
-//            return;
-//        }
-//        String input = scanner.nextLine().trim();
-//        Matcher matcher;
-//        if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
-//            System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-//        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
-//            System.out.println(controller.showCurrentMenu());
-//        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
-//            System.out.println(controller.exitMenu());
-//        } else if (GameMenuCommands.TerminateGame.getMatcher(input) != null) {
-//            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().terminateGame(scanner));
-//        } else if (GameMenuCommands.NextTurn.getMatcher(input) != null) {
-//            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
-//        } else if ((matcher = ShopCommands.BuyAnimal.getMatcher(input)) != null) {
-//            System.out.println(controller.buyAnimal(matcher.group("animal"), matcher.group("name")));
-//        } else if ((matcher = ShopCommands.ShowAllProducts.getMatcher(input)) != null) {
-//            System.out.println(controller.showAllProducts());
-//        } else if ((matcher = ShopCommands.ShowAllAvailableProducts.getMatcher(input)) != null) {
-//            System.out.println(controller.showAllAvailableProducts());
-//        } else if ((matcher = ShopCommands.Purchase.getMatcher(input)) != null) {
-//            System.out.println(controller.purchase(
-//                    matcher.group("productName").trim(),
-//                    matcher.group("count").trim()
-//            ));
-//        } else if ((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
-//            GameMenuController gameMenuController = ((GameView) Menu.GameMenu.getMenu()).getController();
-//            System.out.println(gameMenuController.showMoney());
-//        } else if (GameMenuCommands.InventoryShow.getMatcher(input) != null) {
-//            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().inventoryShow());
-//        } else if ((matcher = GameMenuCommands.InventoryTrash.getMatcher(input)) != null) {
-//            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().inventoryTrash(
-//                    matcher.group("itemName").trim(),
-//                    Integer.parseInt(matcher.group("number").trim())
-//            ));
-//        } else if ((matcher = CheatCommands.CheatAddItem.getMatcher(input)) != null) {
-//            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().cheatAddItem(
-//                    matcher.group("itemName").trim(),
-//                    Integer.parseInt(matcher.group("count"))
-//            ));
-//        } else {
-//            System.out.println("Invalid Command.");
-//        }
     }
 }

@@ -63,7 +63,7 @@ public class PurchaseMenuView extends AppMenu {
         npcImage = new com.badlogic.gdx.scenes.scene2d.ui.Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
 
-        itemImage = stock.getItem().getItemImage();
+        itemImage = new Image(stock.getItem().getTexture());
         itemImage.setSize(itemImage.getWidth() * 2.5f, itemImage.getHeight() * 2.5f);
 
 
@@ -71,7 +71,14 @@ public class PurchaseMenuView extends AppMenu {
         coinImage.setSize(coinImage.getWidth() * 3f, coinImage.getHeight() * 3f);
 
         priceLabel = new Label(stock.getPrice() + "" , skin);
-        quantityLabel = new Label(stock.getQuantity() + "" , skin);
+        quantityLabel = new Label("" , skin);
+        if(stock.getQuantity() == -1){
+            quantityLabel.setText("unlimited");
+        }else if(stock.getQuantity() == 0){
+            quantityLabel.setText("not available");
+        }else {
+            quantityLabel.setText(String.valueOf(stock.getQuantity()));
+        }
         nameLabel = new Label(stock.getItem().getName() , skin);
         if(stock.getStackLevel() == null){
             levelLabel = new Label("Basic" , skin);
@@ -155,7 +162,7 @@ public class PurchaseMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-//                controller.exitMenu();
+                controller.exitMenu();
             }
         });
 
@@ -184,7 +191,7 @@ public class PurchaseMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-//              controller.purchase();
+              controller.purchase(stock , number , npc);
             }
         });
     }

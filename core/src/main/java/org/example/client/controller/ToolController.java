@@ -66,7 +66,8 @@ public class ToolController{
         backpack.reduceItems(item, 5);
         backpack.upgradeLevel(stack);
         ClientApp.getCurrentGame().getCurrentPlayer().setCurrentTool(null);
-        return new GraphicalResult("You upgraded your tool successfully!");
+        return new GraphicalResult("You upgraded your tool successfully!" ,
+                false);
     }
 
     private ToolType getTool(String toolName) {

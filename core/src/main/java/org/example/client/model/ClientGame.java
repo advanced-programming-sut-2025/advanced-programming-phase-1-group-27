@@ -221,7 +221,7 @@ public class ClientGame implements Game {
         }
     }
 
-    private void initShops() {
+    public void initShops() {
         blackSmith = new BlackSmith(ShopType.Blacksmith, time.getSeason());
         jojaMart = new Shop(ShopType.JojaMart, time.getSeason());
         pierreGeneralStore = new Shop(ShopType.PierreGeneralStore, time.getSeason());
