@@ -1,0 +1,198 @@
+Index: core/src/main/java/org/example/client/view/HUDView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.client.view;\n\nimport com.badlogic.gdx.Gdx;\nimport com.badlogic.gdx.Input;\nimport com.badlogic.gdx.graphics.Color;\nimport com.badlogic.gdx.scenes.scene2d.InputEvent;\nimport com.badlogic.gdx.scenes.scene2d.InputListener;\nimport com.badlogic.gdx.scenes.scene2d.Stage;\nimport com.badlogic.gdx.scenes.scene2d.ui.Image;\nimport com.badlogic.gdx.scenes.scene2d.ui.ImageButton;\nimport com.badlogic.gdx.scenes.scene2d.ui.Label;\nimport com.badlogic.gdx.scenes.scene2d.ui.TextField;\nimport com.badlogic.gdx.scenes.scene2d.utils.ClickListener;\nimport com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;\nimport org.example.client.model.ClientApp;\nimport org.example.common.models.GameAssetManager;\nimport org.example.common.models.GraphicalResult;\nimport org.example.client.controller.HUDController;\nimport org.example.server.models.Player;\nimport org.example.server.models.Stacks;\nimport org.example.server.models.enums.InGameMenuType;\nimport org.example.server.models.enums.items.products.CraftingProduct;\n\nimport java.util.*;\n\npublic class HUDView extends AppMenu {\n\n    private final HUDController controller;\n    private final Label dayInfo;\n    private final Label moneyInfo;\n    private final Label timeInfo;\n    private final Image clockArrowImage;\n    private final Image inventoryHotBarImage;\n    private final Image inventorySelectSlotImage;\n    private final Image craftingMenuBackground;\n    private final Image inventoryMenuBackground;\n    private final Image skillMenuBackground;\n    private final Image exitMenuBackground;\n    private final HashMap<CraftingProduct, ImageButton> craftingProducts;\n    private final TextField textInputField;\n    private final GraphicalResult errorLabel;\n    private final Stage stage;\n    private Image clockImage;\n    private boolean isInputFieldVisible;\n    private boolean tJustPressed;\n    private final Player player;\n    private ArrayList<Stacks> inventoryItems;\n    private ArrayList<Stacks> onScreenItems;\n    private int rowCoEfficient;\n    private Integer currentSlotInInventory;\n    private InGameMenuType currentMenu;\n\n\n    public HUDView(Stage stage) {\n\n        controller = new HUDController(this);\n        rowCoEfficient = 1;\n        currentSlotInInventory = null;\n        craftingMenuBackground = GameAssetManager.getGameAssetManager().getCraftingMenuBackground();\n        inventoryMenuBackground = GameAssetManager.getGameAssetManager().getInventoryMenuBackground();\n        skillMenuBackground = GameAssetManager.getGameAssetManager().getSkillMenuBackground();\n        exitMenuBackground = GameAssetManager.getGameAssetManager().getExitMenuBackground();\n        clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());\n        inventoryHotBarImage = new Image(GameAssetManager.getGameAssetManager().getInventoryHotBar());\n        inventorySelectSlotImage = new Image(GameAssetManager.getGameAssetManager().getInventorySelectSlot());\n        textInputField = new TextField(\"\", skin);\n        currentMenu = InGameMenuType.NONE;\n        isInputFieldVisible = false;\n        tJustPressed = false;\n        dayInfo = new Label(\"\", skin);\n        controller.setDayInfo(dayInfo);\n        moneyInfo = new Label(\"\", skin);\n        controller.setMoneyInfo(moneyInfo);\n        timeInfo = new Label(\"\", skin);\n        controller.setTimeInfo(timeInfo);\n        errorLabel = new GraphicalResult();\n        this.stage = stage;\n        player = ClientApp.getCurrentGame().getCurrentPlayer();\n        inventoryItems = player.getBackpack().getItems();\n        onScreenItems = new ArrayList<>();\n        for ( Stacks stack : inventoryItems ) {\n            addToScreen(Stacks.copy(stack));\n        }\n\n        craftingProducts = new HashMap<>();\n\n        int i = 0;\n        for (CraftingProduct craftingProduct : CraftingProduct.values()) {\n            ImageButton productButton = new ImageButton(new TextureRegionDrawable(craftingProduct.getTexture()));\n            productButton.setSize(96, 96);\n            productButton.setPosition(520 + 110 * (i % 7), (float) (680 - (i / 7) * 100));\n            productButton.setColor(productButton.getColor().r, productButton.getColor().g, productButton.getColor().b, 0.3f + ((ClientApp.getCurrentGame().getCurrentPlayer().hasEnoughIngredients(craftingProduct.getRecipe())) ? 0.7f : 0f));\n            craftingProducts.put(craftingProduct, productButton);\n            i++;\n        }\n\n        setListeners();\n\n    }\n\n\n    private void displayClock() {\n\n        controller.updateClockImage();\n\n        clockImage.setPosition(1800 - clockImage.getWidth() - 10, 1080 - clockImage.getHeight());\n\n\n        clockArrowImage.setPosition(clockImage.getX() + (0.255f * clockImage.getWidth()), clockImage.getY() + (0.37f * clockImage.getHeight()));\n        clockArrowImage.setOrigin(clockArrowImage.getWidth() / 2, clockArrowImage.getHeight());\n        clockArrowImage.setRotation(controller.getClockArrowDegree());\n\n\n        stage.addActor(clockImage);\n        stage.addActor(clockArrowImage);\n        clockArrowImage.toFront();\n\n\n    }\n\n    private void displayDayInfo() {\n\n        controller.setDayInfo(dayInfo);\n        dayInfo.setPosition(clockImage.getX() + clockImage.getWidth() / 2, clockImage.getY() + clockImage.getHeight() - 35);\n        dayInfo.setColor(new Color(0.86f, 0.169f, 0f, 1f));\n        stage.addActor(dayInfo);\n        dayInfo.toFront();\n\n    }\n\n    private void displayMoneyInfo() {\n\n        controller.setMoneyInfo(moneyInfo);\n        moneyInfo.setPosition(clockImage.getX() + clockImage.getWidth() / 2 + 25, clockImage.getY() + 30);\n        moneyInfo.setColor(new Color(0.86f, 0.169f, 0f, 1f));\n        stage.addActor(moneyInfo);\n        moneyInfo.toFront();\n\n    }\n\n    private void displayTimeInfo() {\n\n        controller.setTimeInfo(timeInfo);\n        timeInfo.setPosition(clockImage.getX() + clockImage.getWidth() / 2, clockImage.getY() + clockImage.getHeight() / 2f - 5);\n        timeInfo.setColor(new Color(0.86f, 0.169f, 0f, 1f));\n        stage.addActor(timeInfo);\n        timeInfo.toFront();\n\n    }\n\n    private void displayInputField() {\n\n        if (tJustPressed) {\n            tJustPressed = false;\n            textInputField.setText(\"\");\n        }\n\n        textInputField.setVisible(isInputFieldVisible);\n\n        TextField.TextFieldStyle style = new TextField.TextFieldStyle(textInputField.getStyle());\n        style.fontColor = new Color(1, 1, 1, 1);\n        textInputField.setStyle(style);\n\n        textInputField.setColor(0, 0, 0, 0.5f);\n\n        textInputField.setWidth(Gdx.graphics.getWidth());\n\n        stage.addActor(textInputField);\n\n    }\n\n    private void showErrorMessage() {\n\n        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight() - 40);\n        stage.addActor(errorLabel.getMessage());\n\n    }\n\n    private void displayInventoryHotBar() {\n\n        if ( currentMenu == InGameMenuType.NONE ) {\n            inventoryHotBarImage.setPosition((Gdx.graphics.getWidth() - inventoryHotBarImage.getWidth()) / 2, 10);\n            inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(), 26);\n\n            inventoryHotBarImage.setVisible(true);\n            inventorySelectSlotImage.setVisible(true);\n            stage.addActor(inventoryHotBarImage);\n            stage.addActor(inventorySelectSlotImage);\n        }\n        else{\n            inventoryHotBarImage.setVisible(false);\n            inventorySelectSlotImage.setVisible(false);\n        }\n\n    }\n\n    private void showHotBarItems() {\n\n\n        if ( currentMenu == InGameMenuType.NONE ) {\n\n\n\n            for ( int i = 0 ; i < Math.min(onScreenItems.size(),12); i++ ){\n                onScreenItems.get(i).getItem().getItemImage().setVisible(true);\n                onScreenItems.get(i).getItem().getItemImage().setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5, 26 + 5);\n                onScreenItems.get(i).getItem().getItemImage().toFront();\n            }\n\n            for( int i = 12; i < onScreenItems.size(); i++ ){\n                onScreenItems.get(i).getItem().getItemImage().setVisible(false);\n            }\n\n\n\n        }\n\n    }\n\n    private void displayInventoryMenu() {\n\n        inventoryMenuBackground.setPosition((Gdx.graphics.getWidth() - inventoryMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - inventoryMenuBackground.getHeight()) / 2f);\n\n        inventoryMenuBackground.setVisible(currentMenu == InGameMenuType.INVENTORY);\n        stage.addActor(inventoryMenuBackground);\n\n\n        // INVENTORY ITEMS\n\n        if ( currentMenu == InGameMenuType.INVENTORY ) {\n\n            for ( int i = 0; i < Math.min(onScreenItems.size(),12); i++ ){\n                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705);\n                onScreenItems.get(i).getItem().getItemImage().setVisible(true);\n                onScreenItems.get(i).getItem().getItemImage().toFront();\n            }\n\n            for ( int i = 12; i < onScreenItems.size(); i++ ){\n\n                onScreenItems.get(i).getItem().getItemImage().setVisible(false);\n\n            }\n\n            int k = 12;\n\n            for ( int i = 12 * rowCoEfficient; i < Math.min(12 * (rowCoEfficient+2),onScreenItems.size()); i++){\n                onScreenItems.get(i).getItem().getItemImage().setVisible(true);\n                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(k%12), 705 - (float)((80-((k/12)-1)*5) * (k/12)));\n                onScreenItems.get(i).getItem().getItemImage().toFront();\n                k++;\n            }\n\n\n        }\n\n        // DISPLAYING RED BOX\n\n        if ( currentMenu == InGameMenuType.INVENTORY) {\n\n            if (currentSlotInInventory != null) {\n                inventorySelectSlotImage.setVisible(true);\n                inventorySelectSlotImage.setSize(63,60);\n                if ( currentSlotInInventory/12 == 0 ){\n                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 700);\n                }\n                else if ( currentSlotInInventory/12 == 1 ){\n                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 620);\n                }\n                else if ( currentSlotInInventory/12 == 2 ){\n                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 550);\n                }\n                inventorySelectSlotImage.toFront();\n            }\n            else{\n                inventorySelectSlotImage.setVisible(false);\n            }\n\n\n        }\n\n\n\n\n    }\n\n    private void displaySkillMenu() {\n\n        skillMenuBackground.setPosition((Gdx.graphics.getWidth() - skillMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - skillMenuBackground.getHeight()) / 2f);\n\n        skillMenuBackground.setVisible(currentMenu == InGameMenuType.SKILL);\n        stage.addActor(skillMenuBackground);\n\n    }\n\n    private void displayCraftingMenu() {\n\n        //  BACKGROUND\n        craftingMenuBackground.setPosition((Gdx.graphics.getWidth() - craftingMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - craftingMenuBackground.getHeight()) / 2f);\n        craftingMenuBackground.setVisible(currentMenu == InGameMenuType.CRAFTING);\n        stage.addActor(craftingMenuBackground);\n\n        //  ITEMS\n        for (CraftingProduct craftingProduct : craftingProducts.keySet()) {\n\n            ImageButton imageButton = craftingProducts.get(craftingProduct);\n\n            imageButton.setColor(\n                    imageButton.getColor().r,\n                    imageButton.getColor().g,\n                    imageButton.getColor().b,\n                    0.3f + ((ClientApp.getCurrentGame().getCurrentPlayer().hasEnoughIngredients(craftingProduct.getRecipe())) ? 0.7f : 0f)\n            );\n\n            if (currentMenu == InGameMenuType.CRAFTING) {\n                imageButton.setVisible(\n                        ClientApp.getCurrentGame().getCurrentPlayer().getAvailableCraftingRecipes().contains(craftingProduct.getRecipe())\n                );\n            } else {\n                imageButton.setVisible(false);\n            }\n            stage.addActor(imageButton);\n\n        }\n\n        // INVENTORY ITEMS\n\n        if ( currentMenu == InGameMenuType.CRAFTING ) {\n\n            for ( int i = 0; i < Math.min(onScreenItems.size(),36); i++ ){\n\n                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 385 - (float)(70 * (i/12)) );\n                onScreenItems.get(i).getItem().getItemImage().setVisible(true);\n                onScreenItems.get(i).getItem().getItemImage().toFront();\n\n            }\n\n        }\n\n    }\n\n    private void displayExitMenu() {\n\n        exitMenuBackground.setPosition((Gdx.graphics.getWidth() - exitMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - exitMenuBackground.getHeight()) / 2f);\n\n        exitMenuBackground.setVisible(currentMenu == InGameMenuType.EXIT);\n        stage.addActor(exitMenuBackground);\n\n    }\n\n    private void updateOnScreenItems() {\n\n        int commonPrefix = Math.min(onScreenItems.size(), inventoryItems.size());\n        ArrayList<Stacks> removableStacks = new ArrayList<>();\n        ArrayList<Stacks> addableStack = new ArrayList<>();\n\n        for (int i = commonPrefix; i < onScreenItems.size(); i++) {\n            removableStacks.add(onScreenItems.get(i));\n        }\n\n        for (int i = 0; i < commonPrefix; i++) {\n            if (!Stacks.compare(onScreenItems.get(i), inventoryItems.get(i))) {\n                removableStacks.add(onScreenItems.get(i));\n                addableStack.add(Stacks.copy(inventoryItems.get(i)));\n            }\n        }\n\n        for (int i = commonPrefix; i < inventoryItems.size(); i++) {\n            addableStack.add(Stacks.copy(inventoryItems.get(i)));\n        }\n\n        for (Stacks removableStack : removableStacks) {\n            removeFromScreen(removableStack);\n        }\n\n        for ( Stacks stack : addableStack ) {\n            addToScreen(stack);\n        }\n\n\n    }\n\n    @Override\n    public void show() {\n\n        Gdx.input.setInputProcessor(stage);\n\n    }\n\n    @Override\n    public void render(float delta) {\n    }\n\n    public void displayHUD(float delta) {\n\n\n        errorLabel.update(delta);\n        inventoryItems = player.getBackpack().getItems();\n\n        updateOnScreenItems();\n\n\n        displayClock();\n        displayInventoryHotBar();\n        showErrorMessage();\n        showHotBarItems();\n        displayInputField();\n        displayDayInfo();\n        displayMoneyInfo();\n        displayTimeInfo();\n        displayInventoryMenu();\n        displaySkillMenu();\n        displayCraftingMenu();\n        displayExitMenu();\n\n\n    }\n\n    @Override\n    public void resize(int i, int i1) {\n\n    }\n\n    @Override\n    public void pause() {\n\n    }\n\n    @Override\n    public void resume() {\n\n    }\n\n    @Override\n    public void hide() {\n\n    }\n\n    @Override\n    public void dispose() {\n\n    }\n\n\n    private void setListeners() {\n\n        stage.addListener(new InputListener() {\n\n            @Override\n            public boolean keyDown(InputEvent event, int keycode) {\n\n                if (!isInputFieldVisible) {\n\n                    if (keycode == Input.Keys.T) {\n                        playClickSound();\n                        isInputFieldVisible = true;\n                        textInputField.setText(\"\");\n                        tJustPressed = true;\n                        return true;\n                    }\n                    else if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.E) {\n\n                        if (currentMenu != InGameMenuType.INVENTORY ) {\n                            currentMenu = InGameMenuType.INVENTORY;\n                        } else {\n                            currentMenu = InGameMenuType.NONE;\n                        }\n\n                    } else if (keycode == Input.Keys.B) {\n\n                        if (currentMenu == InGameMenuType.CRAFTING) {\n                            currentMenu = InGameMenuType.NONE;\n                        }\n                        else {\n                            currentMenu = InGameMenuType.CRAFTING;\n                            makeOnScreenItemsInvisible();\n                        }\n\n                    }\n\n                    if ( currentMenu == InGameMenuType.INVENTORY ) {\n\n                        if ( keycode == Input.Keys.D ) {\n\n                            if ( currentSlotInInventory != null ) {\n\n                                int itemNumber = (currentSlotInInventory<12)? currentSlotInInventory:(currentSlotInInventory + (rowCoEfficient-1) * 12);\n\n                                if ( itemNumber >= onScreenItems.size() ){\n                                    errorLabel.set(new GraphicalResult(\"Selected slot is empty!\"));\n                                }\n                                else{\n                                    errorLabel.set(controller.removeFromInventory(onScreenItems.get(itemNumber)));\n                                }\n                            }\n\n                        }\n\n                    }\n\n                    else if ( currentMenu == InGameMenuType.NONE ) {\n                        if (keycode == Input.Keys.NUM_1) {\n\n                            controller.quickSetHotBarIndex(0);\n\n                        } else if (keycode == Input.Keys.NUM_2) {\n\n                            controller.quickSetHotBarIndex(1);\n\n                        } else if (keycode == Input.Keys.NUM_3) {\n\n                            controller.quickSetHotBarIndex(2);\n\n                        } else if (keycode == Input.Keys.NUM_4) {\n\n                            controller.quickSetHotBarIndex(3);\n\n                        } else if (keycode == Input.Keys.NUM_5) {\n\n                            controller.quickSetHotBarIndex(4);\n\n                        } else if (keycode == Input.Keys.NUM_6) {\n\n                            controller.quickSetHotBarIndex(5);\n\n                        } else if (keycode == Input.Keys.NUM_7) {\n\n                            controller.quickSetHotBarIndex(6);\n\n                        } else if (keycode == Input.Keys.NUM_8) {\n\n                            controller.quickSetHotBarIndex(7);\n\n                        } else if (keycode == Input.Keys.NUM_9) {\n\n                            controller.quickSetHotBarIndex(8);\n\n                        } else if (keycode == Input.Keys.NUM_0) {\n\n                            controller.quickSetHotBarIndex(9);\n\n                        } else if (keycode == Input.Keys.MINUS) {\n\n                            controller.quickSetHotBarIndex(10);\n\n                        } else if (keycode == Input.Keys.EQUALS) {\n\n                            controller.quickSetHotBarIndex(11);\n\n                        }\n                    }\n\n\n                } else {\n\n                    if (keycode == Input.Keys.ENTER) {\n                        playClickSound();\n                        errorLabel.set(controller.handleTextInput());\n                        return true;\n                    } else if (keycode == Input.Keys.ESCAPE) {\n                        playClickSound();\n                        controller.closeTextInputField();\n                        return true;\n                    }\n\n                }\n                return false;\n            }\n\n\n            @Override\n            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {\n\n                if (!isInputFieldVisible) {\n\n                    if ( (525 < x && x < 580) && ( 800 < y && y < 860 )){\n                        currentMenu = InGameMenuType.INVENTORY;\n                        return true;\n                    }\n                    else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){\n                        currentMenu = InGameMenuType.CRAFTING;\n                        makeOnScreenItemsInvisible();\n                        return true;\n                    }\n\n                    for ( int i = 0; i < 12; i++ ){\n\n                        if ( (520 + i*63) < x && x < (520 + (i+1)*63) ){\n\n                            if ( 700 < y && y < 760 ){\n                                if ( currentSlotInInventory == null ){\n                                    currentSlotInInventory = i;\n                                }\n                                else{\n                                    if ( currentSlotInInventory != i ){\n                                        currentSlotInInventory = i;\n                                    }\n                                    else{\n                                        currentSlotInInventory = null;\n                                    }\n                                }\n                            }\n                            else if ( 620 < y && y < 680 ){\n                                if ( currentSlotInInventory == null ){\n                                    currentSlotInInventory = i+12;\n                                }\n                                else{\n                                    if ( currentSlotInInventory != (i+12) ){\n                                        currentSlotInInventory = i+12;\n                                    }\n                                    else{\n                                        currentSlotInInventory = null;\n                                    }\n                                }\n                            }\n                            else if ( 550 < y && y < 610 ){\n                                if ( currentSlotInInventory == null ){\n                                    currentSlotInInventory = i+24;\n                                }\n                                else{\n                                    if ( currentSlotInInventory != (i+24) ){\n                                        currentSlotInInventory = i+24;\n                                    }\n                                    else{\n                                        currentSlotInInventory = null;\n                                    }\n                                }\n                            }\n\n\n                        }\n\n                    }\n\n\n                }\n\n                return false;\n            }\n\n            @Override\n            public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {\n\n                if (!isInputFieldVisible && currentMenu == InGameMenuType.NONE) {\n\n                    if (amountY > 0) {\n                        controller.updateSlotIndex(-1);\n                    } else if (amountY < 0) {\n                        controller.updateSlotIndex(1);\n                    }\n                    return true;\n\n                }\n                else if ( currentMenu == InGameMenuType.INVENTORY ) {\n                    if ( (495 < x && x < 1300) && (540 < y && y < 780) ){\n                        if (amountY > 0 && (rowCoEfficient+2)*12 < onScreenItems.size()) {\n                            rowCoEfficient += 1;\n                            if ( currentSlotInInventory != null ){\n                                if ( 12 <= currentSlotInInventory && currentSlotInInventory < 24 ){\n                                    currentSlotInInventory = null;\n                                }\n                                else if ( 24 <= currentSlotInInventory ){\n                                    currentSlotInInventory -= 12;\n                                }\n                            }\n                        }\n                        else if ( amountY < 0 ){\n                            rowCoEfficient = Math.max(1, rowCoEfficient-1);\n                            if ( currentSlotInInventory != null){\n                                if ( 24 <= currentSlotInInventory ){\n                                    currentSlotInInventory = null;\n                                }\n                                else if (12 <= currentSlotInInventory){\n                                    currentSlotInInventory += 12;\n                                }\n                            }\n\n                        }\n                    }\n                    return true;\n                }\n                return false;\n\n            }\n\n        });\n\n        for (Map.Entry<CraftingProduct, ImageButton> entry : craftingProducts.entrySet()) {\n            ImageButton imageButton = entry.getValue();\n            imageButton.addListener(new ClickListener() {\n               @Override\n               public void clicked(InputEvent event, float x, float y) {\n                   playClickSound();\n                   if (imageButton.getColor().a > 0.3f) {   // has ingredient\n                       errorLabel.set(controller.craft(entry.getKey()));\n                   }\n                   else {\n                       errorLabel.set(new GraphicalResult(\"You don't have enough ingredient!\"));\n\n                   }\n               }\n            });\n        }\n    }\n\n\n    public void setInputFieldVisible(boolean inputFieldVisible) {\n        isInputFieldVisible = inputFieldVisible;\n    }\n\n    public void setClockImage(Image clockImage) {\n        this.clockImage = clockImage;\n    }\n\n    public TextField getTextInputField() {\n        return textInputField;\n    }\n\n    @Override\n    public void executeCommands(Scanner scanner) {\n\n    }\n\n    public boolean isInputFieldVisible() {\n        return isInputFieldVisible;\n    }\n\n    private void removeFromScreen(Stacks stack) {\n\n        stack.getItem().getItemImage().remove();\n        onScreenItems.remove(stack);\n\n    }\n\n    private void addToScreen(Stacks stack) {\n\n        stack.getItem().getItemImage().setSize(48,48);\n        stack.getItem().getItemImage().setVisible(false);\n        stage.addActor(stack.getItem().getItemImage());\n        onScreenItems.add(stack);\n\n\n    }\n\n    private void makeOnScreenItemsInvisible(){\n\n        for (Stacks onScreenItem : onScreenItems) {\n            onScreenItem.getItem().getItemImage().setVisible(false);\n        }\n\n    }\n\n    public InGameMenuType getCurrentMenu() {\n        return currentMenu;\n    }\n\n    public ArrayList<Stacks> getInventoryItems() {\n        return inventoryItems;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/core/src/main/java/org/example/client/view/HUDView.java b/core/src/main/java/org/example/client/view/HUDView.java
+--- a/core/src/main/java/org/example/client/view/HUDView.java	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
++++ b/core/src/main/java/org/example/client/view/HUDView.java	(date 1754061062178)
+@@ -170,8 +170,8 @@
+     }
+ 
+     private void showErrorMessage() {
+-
+-        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight() - 40);
++        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
++//        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight() - 40);
+         stage.addActor(errorLabel.getMessage());
+ 
+     }
+Index: .idea/inspectionProfiles/Project_Default.xml
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+deleted file mode 100644
+--- a/.idea/inspectionProfiles/Project_Default.xml	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
++++ /dev/null	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
+@@ -1,10 +0,0 @@
+-<component name="InspectionProjectProfileManager">
+-  <profile version="1.0">
+-    <option name="myName" value="Project Default" />
+-    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+-      <Languages>
+-        <language minSize="90" name="Java" />
+-      </Languages>
+-    </inspection_tool>
+-  </profile>
+-</component>
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
++++ /dev/null	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
+@@ -1,3 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+Index: .idea/dataSources.local.xml
+===================================================================
+diff --git a/.idea/dataSources.local.xml b/.idea/dataSources.local.xml
+deleted file mode 100644
+--- a/.idea/dataSources.local.xml	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
++++ /dev/null	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
+@@ -1,29 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="dataSourceStorageLocal" created-in="IU-243.26053.27">
+-    <data-source name="users" uuid="04d90446-1331-44a8-a1ea-0ff365445779">
+-      <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
+-        <identifier-quote-string>&quot;</identifier-quote-string>
+-      </database-info>
+-      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+-      <auth-provider>no-auth</auth-provider>
+-      <schema-mapping>
+-        <introspection-scope>
+-          <node kind="schema" qname="@" />
+-        </introspection-scope>
+-      </schema-mapping>
+-    </data-source>
+-    <data-source name="users [2]" uuid="2e763056-f27c-40b2-9f16-c76aae2e6936">
+-      <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
+-        <identifier-quote-string>&quot;</identifier-quote-string>
+-      </database-info>
+-      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+-      <auth-provider>no-auth</auth-provider>
+-      <schema-mapping>
+-        <introspection-scope>
+-          <node kind="schema" qname="@" />
+-        </introspection-scope>
+-      </schema-mapping>
+-    </data-source>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/encodings.xml
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+deleted file mode 100644
+--- a/.idea/encodings.xml	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
++++ /dev/null	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
+@@ -1,7 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="Encoding">
+-    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+-    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/dataSources.xml
+===================================================================
+diff --git a/.idea/dataSources.xml b/.idea/dataSources.xml
+deleted file mode 100644
+--- a/.idea/dataSources.xml	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
++++ /dev/null	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
+@@ -1,41 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+-    <data-source source="LOCAL" name="users" uuid="04d90446-1331-44a8-a1ea-0ff365445779">
+-      <driver-ref>sqlite.xerial</driver-ref>
+-      <synchronize>true</synchronize>
+-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+-      <jdbc-url>jdbc:sqlite:C:\Users\shahp\Desktop\Project\users.db</jdbc-url>
+-      <jdbc-additional-properties>
+-        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+-      </jdbc-additional-properties>
+-      <working-dir>$ProjectFileDir$</working-dir>
+-      <libraries>
+-        <library>
+-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/xerial/sqlite-jdbc/3.45.1.0/sqlite-jdbc-3.45.1.0.jar</url>
+-        </library>
+-        <library>
+-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar</url>
+-        </library>
+-      </libraries>
+-    </data-source>
+-    <data-source source="LOCAL" name="users [2]" uuid="2e763056-f27c-40b2-9f16-c76aae2e6936">
+-      <driver-ref>sqlite.xerial</driver-ref>
+-      <synchronize>true</synchronize>
+-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+-      <jdbc-url>jdbc:sqlite:C:\Users\shahp\Desktop\Project1\users.db</jdbc-url>
+-      <jdbc-additional-properties>
+-        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+-      </jdbc-additional-properties>
+-      <working-dir>$ProjectFileDir$</working-dir>
+-      <libraries>
+-        <library>
+-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/xerial/sqlite-jdbc/3.45.1.0/sqlite-jdbc-3.45.1.0.jar</url>
+-        </library>
+-        <library>
+-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar</url>
+-        </library>
+-      </libraries>
+-    </data-source>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"FrameworkDetectionExcludesConfiguration\">\n    <file type=\"web\" url=\"file://$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MavenProjectsManager\">\n    <option name=\"originalFiles\">\n      <list>\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_23\" default=\"true\" project-jdk-name=\"23\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/out\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
++++ b/.idea/misc.xml	(date 1754060634500)
+@@ -1,17 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="FrameworkDetectionExcludesConfiguration">
+-    <file type="web" url="file://$PROJECT_DIR$" />
+-  </component>
+-  <component name="MavenProjectsManager">
+-    <option name="originalFiles">
+-      <list>
+-        <option value="$PROJECT_DIR$/pom.xml" />
+-      </list>
+-    </option>
+-  </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="23" project-jdk-type="JavaSDK">
+-    <output url="file://$PROJECT_DIR$/out" />
+-  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" project-jdk-name="23" project-jdk-type="JavaSDK" />
+ </project>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"gradleJvm\" value=\"23\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/core\" />\n            <option value=\"$PROJECT_DIR$/lwjgl3\" />\n          </set>\n        </option>\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision cd795151b1da8b5c28eaa28fbe1346c78f48cdab)
++++ b/.idea/gradle.xml	(date 1754060886606)
+@@ -5,7 +5,6 @@
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+-        <option name="gradleJvm" value="23" />
+         <option name="modules">
+           <set>
+             <option value="$PROJECT_DIR$" />

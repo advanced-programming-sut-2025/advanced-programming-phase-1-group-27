@@ -20,6 +20,7 @@ import org.example.server.models.Player;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.InGameMenuType;
 import org.example.server.models.enums.items.products.CraftingProduct;
+import org.example.server.models.tools.Backpack;
 
 import java.util.*;
 
@@ -44,7 +45,7 @@ public class HUDView extends AppMenu {
     private boolean isInputFieldVisible;
     private boolean tJustPressed;
     private final Player player;
-    private ArrayList<Stacks> inventoryItems;
+    private Backpack inventoryItems;
     private ArrayList<Stacks> onScreenItems;
     private int rowCoEfficient;
     private Integer currentSlotInInventory;
@@ -76,9 +77,9 @@ public class HUDView extends AppMenu {
         errorLabel = new GraphicalResult();
         this.stage = stage;
         player = ClientApp.getCurrentGame().getCurrentPlayer();
-        inventoryItems = player.getBackpack().getItems();
+        inventoryItems = player.getBackpack();
         onScreenItems = new ArrayList<>();
-        for ( Stacks stack : inventoryItems ) {
+        for ( Stacks stack : inventoryItems.getItems() ) {
             addToScreen(Stacks.copy(stack));
         }
 
@@ -170,8 +171,8 @@ public class HUDView extends AppMenu {
     }
 
     private void showErrorMessage() {
-
-        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight() - 40);
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
+//        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight() - 40);
         stage.addActor(errorLabel.getMessage());
 
     }
@@ -349,7 +350,7 @@ public class HUDView extends AppMenu {
 
     private void updateOnScreenItems() {
 
-        int commonPrefix = Math.min(onScreenItems.size(), inventoryItems.size());
+        int commonPrefix = Math.min(onScreenItems.size(), inventoryItems.getItems().size());
         ArrayList<Stacks> removableStacks = new ArrayList<>();
         ArrayList<Stacks> addableStack = new ArrayList<>();
 
@@ -364,7 +365,7 @@ public class HUDView extends AppMenu {
             }
         }
 
-        for (int i = commonPrefix; i < inventoryItems.size(); i++) {
+        for (int i = commonPrefix; i < inventoryItems.getItems().size(); i++) {
             addableStack.add(Stacks.copy(inventoryItems.get(i)));
         }
 
@@ -394,7 +395,7 @@ public class HUDView extends AppMenu {
 
 
         errorLabel.update(delta);
-        inventoryItems = player.getBackpack().getItems();
+        inventoryItems = player.getBackpack();
 
         updateOnScreenItems();
 
@@ -647,18 +648,18 @@ public class HUDView extends AppMenu {
                             else{       // SWITCH ITEM
 
                                 if ( 700 < y && y < 760 ){
-                                    if ( currentSlotInInventory != null){
-                                        controller.switchItem(currentSlotInInventory, i);
+                                    if ( currentSlotInInventory != null) {
+                                        inventoryItems.switchItem(currentSlotInInventory, i);
                                     }
                                 }
                                 else if ( 620 < y && y < 680 ){
                                     if ( currentSlotInInventory != null){
-                                        controller.switchItem(currentSlotInInventory, i+12);
+                                        inventoryItems.switchItem(currentSlotInInventory, i + 12);
                                     }
                                 }
                                 else if ( 550 < y && y < 610 ){
                                     if ( currentSlotInInventory != null){
-                                        controller.switchItem(currentSlotInInventory, i+24);
+                                        inventoryItems.switchItem(currentSlotInInventory, i + 24);
                                     }
                                 }
 
@@ -789,10 +790,6 @@ public class HUDView extends AppMenu {
 
     public InGameMenuType getCurrentMenu() {
         return currentMenu;
-    }
-
-    public ArrayList<Stacks> getInventoryItems() {
-        return inventoryItems;
     }
 
 }

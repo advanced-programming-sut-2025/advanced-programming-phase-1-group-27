@@ -7,6 +7,7 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.items.ToolType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Backpack extends Tool {
@@ -333,5 +334,13 @@ public class Backpack extends Tool {
             stack.setItem(ToolType.IridiumTrashCan);
             stack.setStackLevel(StackLevel.Iridium);
         }
+    }
+
+    public Stacks get(int index) {
+        return items.get(index);
+    }
+
+    public void switchItem(int index1, int index2){
+        Collections.swap(items, index1, index2);
     }
 }

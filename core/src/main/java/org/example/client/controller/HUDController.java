@@ -230,13 +230,6 @@ public class HUDController extends MenuController {
 
     }
 
-    public void switchItem(int index1, int index2){
-
-        
-
-    }
-
-
     private GraphicalResult handleCheat(String input){
 
         Matcher matcher;
