@@ -714,6 +714,9 @@ public class HUDView extends AppMenu {
 
     }
 
+    public boolean isInputFieldVisible() {
+        return isInputFieldVisible;
+    }
 
     private void removeFromScreen(Stacks stack) {
 
