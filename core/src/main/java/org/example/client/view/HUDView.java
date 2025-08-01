@@ -696,9 +696,6 @@ public class HUDView extends AppMenu {
         }
     }
 
-    public boolean isInputFieldVisible() {
-        return isInputFieldVisible;
-    }
 
     public void setInputFieldVisible(boolean inputFieldVisible) {
         isInputFieldVisible = inputFieldVisible;
@@ -737,8 +734,8 @@ public class HUDView extends AppMenu {
 
     private void makeOnScreenItemsInvisible(){
 
-        for ( int i = 0; i < onScreenItems.size(); i++ ) {
-            onScreenItems.get(i).getItem().getItemImage().setVisible(false);
+        for (Stacks onScreenItem : onScreenItems) {
+            onScreenItem.getItem().getItemImage().setVisible(false);
         }
 
     }
