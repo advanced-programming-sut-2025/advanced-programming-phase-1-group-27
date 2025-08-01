@@ -55,5 +55,8 @@ public class Message {
         set_weather,
         crows_attack,
         foraging_updates,
+        enter_npc,
+        leave_npc,
+        walk_update
     }
 }

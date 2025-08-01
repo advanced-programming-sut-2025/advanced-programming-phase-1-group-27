@@ -3,10 +3,7 @@ package org.example.server.controller;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
-import org.example.server.models.ServerGame;
-import org.example.server.models.Item;
-import org.example.server.models.Lobby;
-import org.example.server.models.ServerApp;
+import org.example.server.models.*;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.enums.Weathers.Weather;
 
@@ -47,5 +44,14 @@ public class ClientUpdatesController {
             put("itemName", item.getName());
             put("quantity", quantity);
         }}, Message.Type.update_shop));
+    }
+
+    public static void notifyExcept(Message message, Lobby lobby) {
+        String username = message.getFromBody("username");
+        assert username != null;
+        for (User user : lobby.getUsers()) {
+            if (!user.getUsername().equals(username))
+                lobby.notifyUser(user, message);
+        }
     }
 }
