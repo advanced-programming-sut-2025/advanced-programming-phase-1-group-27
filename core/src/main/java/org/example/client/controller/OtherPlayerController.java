@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.example.client.Main;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
+import org.example.common.models.Direction;
 import org.example.common.models.GameAssetManager;
 import org.example.server.controller.GameMenuController;
 import org.example.server.models.App;
@@ -46,9 +47,9 @@ public class OtherPlayerController {
 
     }
 
-    public void walk(String direction) {
+    public void walk(Direction direction) {
         switch (direction) {
-            case "Up":
+            case Direction.Up:
                 lastX = x;
                 lastY = y;
                 walking = true;
@@ -56,7 +57,7 @@ public class OtherPlayerController {
                 destY = y + 40;
                 currentAnimation = GameAssetManager.getGameAssetManager().getWalkUp();
                 break;
-            case "Down":
+            case Direction.Down:
                 lastX = x;
                 lastY = y;
                 walking = true;
@@ -64,7 +65,7 @@ public class OtherPlayerController {
                 destY = y - 40;
                 currentAnimation = GameAssetManager.getGameAssetManager().getWalkDown();
                 break;
-            case "Right":
+            case Direction.Right:
                 lastX = x;
                 lastY = y;
                 walking = true;
@@ -72,7 +73,7 @@ public class OtherPlayerController {
                 destY = y;
                 currentAnimation = GameAssetManager.getGameAssetManager().getWalkRight();
                 break;
-            case "Left":
+            case Direction.Left:
                 lastX = x;
                 lastY = y;
                 walking = true;

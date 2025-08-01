@@ -142,7 +142,7 @@ public class Lobby {
         }
     }
 
-    public void notifyPlayer(Player player, Message message) {
-        ServerApp.getClientConnectionThreadByUsername(player.getUsername()).sendMessage(message);
+    public void notifyUser(User user, Message message) {
+        ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
     }
 }

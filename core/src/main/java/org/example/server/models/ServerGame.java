@@ -312,7 +312,7 @@ public class ServerGame implements Game {
                     }
                 }
             }
-            lobby.notifyPlayer(player, new Message(new HashMap<>() {{
+            lobby.notifyUser(player, new Message(new HashMap<>() {{
                 put("foragingInfo", info);
             }}, Message.Type.foraging_updates));
         }
@@ -338,7 +338,7 @@ public class ServerGame implements Game {
                     }
                 }
             }
-            lobby.notifyPlayer(player, new Message(new HashMap<>() {{
+            lobby.notifyUser(player, new Message(new HashMap<>() {{
                 put("attackedPlants", attackedPlants);
             }}, Message.Type.crows_attack));
         }

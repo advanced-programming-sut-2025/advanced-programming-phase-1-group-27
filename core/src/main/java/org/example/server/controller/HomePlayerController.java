@@ -9,6 +9,7 @@ import org.example.client.view.HomeView;
 import org.example.client.view.OutsideView;
 import org.example.server.models.App;
 import org.example.common.models.GameAssetManager;
+import org.example.server.models.enums.InGameMenuType;
 import org.example.server.models.enums.Menu;
 
 import static java.lang.Math.max;
@@ -46,7 +47,8 @@ public class HomePlayerController {
         characterSprite.setScale(2f);
 
 
-        if (!view.getHudView().isInputFieldVisible()) {
+        if (!view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
+        InGameMenuType.NONE) {
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 x -= speed;
                 updateAnimation(GameAssetManager.getGameAssetManager().getWalkLeft());

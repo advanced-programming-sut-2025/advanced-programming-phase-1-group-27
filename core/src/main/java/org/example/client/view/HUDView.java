@@ -47,14 +47,15 @@ public class HUDView extends AppMenu {
     private ArrayList<Stacks> inventoryItems;
     private ArrayList<Stacks> onScreenItems;
     private int rowCoEfficient;
-
+    private Integer currentSlotInInventory;
     private InGameMenuType currentMenu;
 
 
     public HUDView(Stage stage) {
 
         controller = new HUDController(this);
-        rowCoEfficient = 0;
+        rowCoEfficient = 1;
+        currentSlotInInventory = null;
         craftingMenuBackground = GameAssetManager.getGameAssetManager().getCraftingMenuBackground();
         inventoryMenuBackground = GameAssetManager.getGameAssetManager().getInventoryMenuBackground();
         skillMenuBackground = GameAssetManager.getGameAssetManager().getSkillMenuBackground();
@@ -177,14 +178,19 @@ public class HUDView extends AppMenu {
 
     private void displayInventoryHotBar() {
 
+        if ( currentMenu == InGameMenuType.NONE ) {
+            inventoryHotBarImage.setPosition((Gdx.graphics.getWidth() - inventoryHotBarImage.getWidth()) / 2, 10);
+            inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(), 26);
 
-        inventoryHotBarImage.setPosition((Gdx.graphics.getWidth() - inventoryHotBarImage.getWidth()) / 2, 10);
-        inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(), 26);
-
-        inventoryHotBarImage.setVisible(currentMenu == InGameMenuType.NONE);
-        inventorySelectSlotImage.setVisible(currentMenu == InGameMenuType.NONE);
-        stage.addActor(inventoryHotBarImage);
-        stage.addActor(inventorySelectSlotImage);
+            inventoryHotBarImage.setVisible(true);
+            inventorySelectSlotImage.setVisible(true);
+            stage.addActor(inventoryHotBarImage);
+            stage.addActor(inventorySelectSlotImage);
+        }
+        else{
+            inventoryHotBarImage.setVisible(false);
+            inventorySelectSlotImage.setVisible(false);
+        }
 
     }
 
@@ -224,30 +230,56 @@ public class HUDView extends AppMenu {
         if ( currentMenu == InGameMenuType.INVENTORY ) {
 
             for ( int i = 0; i < Math.min(onScreenItems.size(),12); i++ ){
-                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705 - (float)((80-((i/12)-1)*5) * (i/12)));
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705);
                 onScreenItems.get(i).getItem().getItemImage().setVisible(true);
                 onScreenItems.get(i).getItem().getItemImage().toFront();
             }
 
+            for ( int i = 12; i < onScreenItems.size(); i++ ){
 
-
-
-            for ( int i = 12; i < (12 + 12*rowCoEfficient) && i < onScreenItems.size(); i++ ){
                 onScreenItems.get(i).getItem().getItemImage().setVisible(false);
-            }
-            for ( int i = 12 + 12*(rowCoEfficient+2); i < onScreenItems.size(); i++  ){
-                onScreenItems.get(i).getItem().getItemImage().setVisible(false);
-            }
-
-            for ( int i = 12; i < Math.min(onScreenItems.size(),36) && (i + 12*rowCoEfficient) < onScreenItems.size() ; i++ ){
-
-                onScreenItems.get(i + 12*rowCoEfficient).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705 - (float)((80-((i/12)-1)*5) * (i/12)));
-                onScreenItems.get(i + 12*rowCoEfficient).getItem().getItemImage().setVisible(true);
-                onScreenItems.get(i + 12*rowCoEfficient).getItem().getItemImage().toFront();
 
             }
+
+            int k = 12;
+
+            for ( int i = 12 * rowCoEfficient; i < Math.min(12 * (rowCoEfficient+2),onScreenItems.size()); i++){
+                onScreenItems.get(i).getItem().getItemImage().setVisible(true);
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(k%12), 705 - (float)((80-((k/12)-1)*5) * (k/12)));
+                onScreenItems.get(i).getItem().getItemImage().toFront();
+                k++;
+            }
+
 
         }
+
+        // DISPLAYING RED BOX
+
+        if ( currentMenu == InGameMenuType.INVENTORY) {
+
+            if (currentSlotInInventory != null) {
+                inventorySelectSlotImage.setVisible(true);
+                inventorySelectSlotImage.setSize(63,60);
+                if ( currentSlotInInventory/12 == 0 ){
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 700);
+                }
+                else if ( currentSlotInInventory/12 == 1 ){
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 620);
+                }
+                else if ( currentSlotInInventory/12 == 2 ){
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 550);
+                }
+                inventorySelectSlotImage.toFront();
+            }
+            else{
+                inventorySelectSlotImage.setVisible(false);
+            }
+
+
+        }
+
+
+
 
     }
 
@@ -422,7 +454,8 @@ public class HUDView extends AppMenu {
                         textInputField.setText("");
                         tJustPressed = true;
                         return true;
-                    } else if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.E) {
+                    }
+                    else if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.E) {
 
                         if (currentMenu != InGameMenuType.INVENTORY ) {
                             currentMenu = InGameMenuType.INVENTORY;
@@ -437,77 +470,81 @@ public class HUDView extends AppMenu {
                         }
                         else {
                             currentMenu = InGameMenuType.CRAFTING;
+                            makeOnScreenItemsInvisible();
                         }
-
-                    } else if (keycode == Input.Keys.DOWN) {
-
-                        controller.updateSlotIndex(-1);
-
-                    } else if (keycode == Input.Keys.NUM_1) {
-
-                        controller.quickSetHotBarIndex(0);
-
-                    } else if (keycode == Input.Keys.NUM_2) {
-
-                        controller.quickSetHotBarIndex(1);
-
-                    } else if (keycode == Input.Keys.NUM_3) {
-
-                        controller.quickSetHotBarIndex(2);
-
-                    } else if (keycode == Input.Keys.NUM_4) {
-
-                        controller.quickSetHotBarIndex(3);
-
-                    } else if (keycode == Input.Keys.NUM_5) {
-
-                        controller.quickSetHotBarIndex(4);
-
-                    } else if (keycode == Input.Keys.NUM_6) {
-
-                        controller.quickSetHotBarIndex(5);
-
-                    } else if (keycode == Input.Keys.NUM_7) {
-
-                        controller.quickSetHotBarIndex(6);
-
-                    } else if (keycode == Input.Keys.NUM_8) {
-
-                        controller.quickSetHotBarIndex(7);
-
-                    } else if (keycode == Input.Keys.NUM_9) {
-
-                        controller.quickSetHotBarIndex(8);
-
-                    } else if (keycode == Input.Keys.NUM_0) {
-
-                        controller.quickSetHotBarIndex(9);
-
-                    } else if (keycode == Input.Keys.MINUS) {
-
-                        controller.quickSetHotBarIndex(10);
-
-                    } else if (keycode == Input.Keys.EQUALS) {
-
-                        controller.quickSetHotBarIndex(11);
 
                     }
-                    else if ( keycode == Input.Keys.P ) {
 
-                        for ( Stacks item : inventoryItems ) {
-                            System.out.println(item.getItem() + " " + item.getQuantity());
+                    if ( currentMenu == InGameMenuType.INVENTORY ) {
+
+                        if ( keycode == Input.Keys.D ) {
+
+                            if ( currentSlotInInventory != null ) {
+
+                                int itemNumber = (currentSlotInInventory<12)? currentSlotInInventory:(currentSlotInInventory + (rowCoEfficient-1) * 12);
+
+                                if ( itemNumber >= onScreenItems.size() ){
+                                    errorLabel.set(new GraphicalResult("Selected slot is empty!"));
+                                }
+                                else{
+                                    errorLabel.set(controller.removeFromInventory(onScreenItems.get(itemNumber)));
+                                }
+                            }
+
                         }
-                        System.out.println("---------------------");
 
                     }
-                    else if ( keycode == Input.Keys.O ) {
 
-                        for ( Stacks item : onScreenItems ) {
-                            System.out.println(item.getItem() + " " + item.getQuantity());
+                    else if ( currentMenu == InGameMenuType.NONE ) {
+                        if (keycode == Input.Keys.NUM_1) {
+
+                            controller.quickSetHotBarIndex(0);
+
+                        } else if (keycode == Input.Keys.NUM_2) {
+
+                            controller.quickSetHotBarIndex(1);
+
+                        } else if (keycode == Input.Keys.NUM_3) {
+
+                            controller.quickSetHotBarIndex(2);
+
+                        } else if (keycode == Input.Keys.NUM_4) {
+
+                            controller.quickSetHotBarIndex(3);
+
+                        } else if (keycode == Input.Keys.NUM_5) {
+
+                            controller.quickSetHotBarIndex(4);
+
+                        } else if (keycode == Input.Keys.NUM_6) {
+
+                            controller.quickSetHotBarIndex(5);
+
+                        } else if (keycode == Input.Keys.NUM_7) {
+
+                            controller.quickSetHotBarIndex(6);
+
+                        } else if (keycode == Input.Keys.NUM_8) {
+
+                            controller.quickSetHotBarIndex(7);
+
+                        } else if (keycode == Input.Keys.NUM_9) {
+
+                            controller.quickSetHotBarIndex(8);
+
+                        } else if (keycode == Input.Keys.NUM_0) {
+
+                            controller.quickSetHotBarIndex(9);
+
+                        } else if (keycode == Input.Keys.MINUS) {
+
+                            controller.quickSetHotBarIndex(10);
+
+                        } else if (keycode == Input.Keys.EQUALS) {
+
+                            controller.quickSetHotBarIndex(11);
+
                         }
-                        System.out.println("---------------------");
-
-
                     }
 
 
@@ -527,6 +564,77 @@ public class HUDView extends AppMenu {
                 return false;
             }
 
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                if (!isInputFieldVisible) {
+
+                    if ( (525 < x && x < 580) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.INVENTORY;
+                        return true;
+                    }
+                    else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.CRAFTING;
+                        makeOnScreenItemsInvisible();
+                        return true;
+                    }
+
+                    for ( int i = 0; i < 12; i++ ){
+
+                        if ( (520 + i*63) < x && x < (520 + (i+1)*63) ){
+
+                            if ( 700 < y && y < 760 ){
+                                if ( currentSlotInInventory == null ){
+                                    currentSlotInInventory = i;
+                                }
+                                else{
+                                    if ( currentSlotInInventory != i ){
+                                        currentSlotInInventory = i;
+                                    }
+                                    else{
+                                        currentSlotInInventory = null;
+                                    }
+                                }
+                            }
+                            else if ( 620 < y && y < 680 ){
+                                if ( currentSlotInInventory == null ){
+                                    currentSlotInInventory = i+12;
+                                }
+                                else{
+                                    if ( currentSlotInInventory != (i+12) ){
+                                        currentSlotInInventory = i+12;
+                                    }
+                                    else{
+                                        currentSlotInInventory = null;
+                                    }
+                                }
+                            }
+                            else if ( 550 < y && y < 610 ){
+                                if ( currentSlotInInventory == null ){
+                                    currentSlotInInventory = i+24;
+                                }
+                                else{
+                                    if ( currentSlotInInventory != (i+24) ){
+                                        currentSlotInInventory = i+24;
+                                    }
+                                    else{
+                                        currentSlotInInventory = null;
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                    }
+
+
+                }
+
+                return false;
+            }
+
             @Override
             public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
 
@@ -542,39 +650,34 @@ public class HUDView extends AppMenu {
                 }
                 else if ( currentMenu == InGameMenuType.INVENTORY ) {
                     if ( (495 < x && x < 1300) && (540 < y && y < 780) ){
-                        if (amountY > 0 && ((rowCoEfficient+3)*12) < onScreenItems.size()) {
+                        if (amountY > 0 && (rowCoEfficient+2)*12 < onScreenItems.size()) {
                             rowCoEfficient += 1;
+                            if ( currentSlotInInventory != null ){
+                                if ( 12 <= currentSlotInInventory && currentSlotInInventory < 24 ){
+                                    currentSlotInInventory = null;
+                                }
+                                else if ( 24 <= currentSlotInInventory ){
+                                    currentSlotInInventory -= 12;
+                                }
+                            }
                         }
                         else if ( amountY < 0 ){
-                            rowCoEfficient = Math.max(0, rowCoEfficient-1);
+                            rowCoEfficient = Math.max(1, rowCoEfficient-1);
+                            if ( currentSlotInInventory != null){
+                                if ( 24 <= currentSlotInInventory ){
+                                    currentSlotInInventory = null;
+                                }
+                                else if (12 <= currentSlotInInventory){
+                                    currentSlotInInventory += 12;
+                                }
+                            }
+
                         }
                     }
                     return true;
                 }
                 return false;
 
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-                if (!isInputFieldVisible) {
-
-                    if ( (525 < x && x < 580) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.INVENTORY;
-                        return true;
-                    }
-                    else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.CRAFTING;
-                        return true;
-                    }
-
-                    System.out.println("X: " + x + " Y: " + y);
-
-
-                }
-
-                return false;
             }
 
         });
@@ -597,9 +700,6 @@ public class HUDView extends AppMenu {
         }
     }
 
-    public boolean isInputFieldVisible() {
-        return isInputFieldVisible;
-    }
 
     public void setInputFieldVisible(boolean inputFieldVisible) {
         isInputFieldVisible = inputFieldVisible;
@@ -618,6 +718,9 @@ public class HUDView extends AppMenu {
 
     }
 
+    public boolean isInputFieldVisible() {
+        return isInputFieldVisible;
+    }
 
     private void removeFromScreen(Stacks stack) {
 
@@ -629,10 +732,26 @@ public class HUDView extends AppMenu {
     private void addToScreen(Stacks stack) {
 
         stack.getItem().getItemImage().setSize(48,48);
+        stack.getItem().getItemImage().setVisible(false);
         stage.addActor(stack.getItem().getItemImage());
         onScreenItems.add(stack);
 
 
     }
 
+    private void makeOnScreenItemsInvisible(){
+
+        for (Stacks onScreenItem : onScreenItems) {
+            onScreenItem.getItem().getItemImage().setVisible(false);
+        }
+
+    }
+
+    public InGameMenuType getCurrentMenu() {
+        return currentMenu;
+    }
+
+    public ArrayList<Stacks> getInventoryItems() {
+        return inventoryItems;
+    }
 }
