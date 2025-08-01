@@ -223,7 +223,7 @@ public class MarnieRanch extends AppMenu {
             timer += v;
         }
         Main.getBatch().begin();
-        hudView.displayHUD(v);
+        hudView.displayOnlyClock();
         Main.getBatch().end();
     }
 

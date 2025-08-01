@@ -8,10 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.client.Main;
 import org.example.client.controller.shopControllers.UpgradeMenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
+import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.App;
 import org.example.server.models.Stacks;
@@ -36,6 +38,8 @@ public class UpgradeMenuView extends AppMenu {
     private Label moneyLabel;
 
     private final TextButton exitButton;
+
+    private final HUDView hudView;
 
     private ArrayList<Stacks> stockItems;
     private Table stockTable;
@@ -76,6 +80,9 @@ public class UpgradeMenuView extends AppMenu {
         moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
 
         exitButton = new TextButton("Exit", skin);
+
+        stage = new Stage(new ScreenViewport());
+        hudView = new HUDView(stage);
 
         upgradeLimit = App.getCurrentGame().getBlacksmith().getUpgradeLimit();
 
@@ -179,8 +186,6 @@ public class UpgradeMenuView extends AppMenu {
 
         scrollPane.setSize(redAreaWidth, 600);
         scrollPane.setPosition(-120, Gdx.graphics.getHeight() / 2f - 150);
-
-        stage.addActor(scrollPane);
     }
 
     private void displayMoney(){
@@ -228,8 +233,12 @@ public class UpgradeMenuView extends AppMenu {
 
     @Override
     public void show() {
-        stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        displayBackground();
+        displayButtons();
+        displayNPC();
+        stage.addActor(scrollPane);
+        displayItems();
     }
 
     @Override
@@ -237,11 +246,9 @@ public class UpgradeMenuView extends AppMenu {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        displayBackground();
-        displayNPC();
-        displayMoney();
-        displayItems();
-        displayButtons();
+        Main.getBatch().begin();
+        hudView.displayOnlyClock();
+        Main.getBatch().end();
     }
 
     @Override

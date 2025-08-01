@@ -219,7 +219,7 @@ public class PierreGeneralShop extends AppMenu {
             timer += v;
         }
         Main.getBatch().begin();
-        hudView.displayHUD(v);
+        hudView.displayOnlyClock();
         Main.getBatch().end();
     }
 

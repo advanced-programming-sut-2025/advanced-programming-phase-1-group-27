@@ -415,6 +415,14 @@ public class HUDView extends AppMenu {
 
     }
 
+    public void displayOnlyClock() {
+        displayClock();
+        displayDayInfo();
+        displayMoneyInfo();
+        displayTimeInfo();
+        makeOnScreenItemsInvisible();
+    }
+
     @Override
     public void resize(int i, int i1) {
 

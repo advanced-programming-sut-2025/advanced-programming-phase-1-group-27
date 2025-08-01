@@ -10,10 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.client.Main;
 import org.example.client.controller.shopControllers.PurchaseMenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
+import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
@@ -31,7 +33,6 @@ public class PurchaseMenuView extends AppMenu {
     private final TextButton exitButton;
     private final TextButton purchaseButton;
 
-    private final Label moneyLabel;
     private final Label priceLabel;
     private final Label quantityLabel;
     private final Label nameLabel;
@@ -45,11 +46,12 @@ public class PurchaseMenuView extends AppMenu {
     private Label sumLabel;
     private int number;
 
+    private final HUDView hudView;
+
     private final Image npcImage;
     private final Image itemImage;
     private final Image creamImage;
     private final Image brownImage;
-    private final Image coinImage;
 
 
     private Stage stage;
@@ -66,10 +68,6 @@ public class PurchaseMenuView extends AppMenu {
         itemImage = new Image(stock.getItem().getTexture());
         itemImage.setSize(itemImage.getWidth() * 2.5f, itemImage.getHeight() * 2.5f);
 
-
-        coinImage = new Image(GameAssetManager.getGameAssetManager().getCoinTexture());
-        coinImage.setSize(coinImage.getWidth() * 3f, coinImage.getHeight() * 3f);
-
         priceLabel = new Label(stock.getPrice() + "" , skin);
         quantityLabel = new Label("" , skin);
         if(stock.getQuantity() == -1){
@@ -85,7 +83,6 @@ public class PurchaseMenuView extends AppMenu {
         }else {
             levelLabel = new Label(stock.getStackLevel().toString() , skin);
         }
-
 
         image = new Label("Image" , skin);
         name = new Label("Name" , skin);
@@ -123,8 +120,6 @@ public class PurchaseMenuView extends AppMenu {
                 (int) npcImage.getHeight(),
                 30));
 
-        moneyLabel = new Label(ClientApp.getCurrentGame().getCurrentPlayer().getMoney() + "" , skin);
-
         increaseItemButton = new TextButton("+", skin);
         decreaseItemButton = new TextButton("-", skin);
         exitButton = new TextButton("Exit", skin);
@@ -137,6 +132,9 @@ public class PurchaseMenuView extends AppMenu {
         sumLabel.setFontScale(2f);
         sumLabel.setColor(Color.BLACK);
         numberLabel.setColor(Color.BLACK);
+
+        stage = new Stage(new ScreenViewport());
+        hudView = new HUDView(stage);
 
         setListeners();
     }
@@ -196,15 +194,6 @@ public class PurchaseMenuView extends AppMenu {
         });
     }
 
-    private void displayMoney(){
-        moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
-        moneyLabel.setFontScale(1.5f);
-        moneyLabel.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 100);
-        coinImage.setPosition(Gdx.graphics.getWidth() - 120, Gdx.graphics.getHeight() - 50);
-        stage.addActor(moneyLabel);
-        stage.addActor(coinImage);
-    }
-
     private void displayItem(){
         quantityLabel.setText(stock.getQuantity() == -1? "unlimited" : String.valueOf(stock.getQuantity()));
         priceLabel.setText(stock.getSalePrice() + "");
@@ -256,22 +245,22 @@ public class PurchaseMenuView extends AppMenu {
         stage.addActor(sumLabel);
     }
 
-    @Override
     public void show() {
-        stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        displayBackground();
+        displayButtons();
+        displayNPC();
+        displayItem();
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float v) {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
-        displayBackground();
-        displayNPC();
-        displayMoney();
-        displayItem();
         displayButtons();
+        Main.getBatch().begin();
+        hudView.displayOnlyClock();
+        Main.getBatch().end();
     }
 
     @Override
