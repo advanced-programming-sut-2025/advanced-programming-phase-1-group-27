@@ -143,87 +143,87 @@ public enum CropType implements PlantType {
     Daffodil(FruitType.Daffodil, new int[]{}, 30, 0
             , null, 0, false, false, false
             , new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter},
-            "assets/Images/Crops/Daffodil.png"),
+            "assets/Images/Crops/Foragings/Daffodil.png"),
     Dandelion(FruitType.Dandelion, new int[]{}, 40, 0
             , null, 25, false, true, false
             , new Season[]{Season.Spring},
-            "assets/Images/Crops/Dandelion.png"),
+            "assets/Images/Crops/Foragings/Dandelion.png"),
     Leek(FruitType.Leek, new int[]{}, 60, 0
             , null, 40, false, true, false
             , new Season[]{Season.Spring},
-            "assets/Images/Crops/Leek.png"),
+            "assets/Images/Crops/Foragings/Leek.png"),
     Morel(FruitType.Morel, new int[]{}, 150, 0
             , null, 20, false, true, false
             , new Season[]{Season.Spring},
-            "assets/Images/Crops/Morel.png"),
+            "assets/Images/Crops/Foragings/Morel.png"),
     SalmonBerry(FruitType.SalmonBerry, new int[]{}, 5, 0
             , null, 25, false, true, false
             , new Season[]{Season.Spring},
-            "assets/Images/Crops/Salmonberry.png"),
+            "assets/Images/Crops/Foragings/Salmonberry.png"),
     SpringOnion(FruitType.SpringOnion, new int[]{}, 8, 0
             , null, 13, false, true, false
             , new Season[]{Season.Spring},
-            "assets/Images/Crops/Spring_Onion.png"),
+            "assets/Images/Crops/Foragings/Spring_Onion.png"),
     WildHorseradish(FruitType.WildHorseradish, new int[]{}, 50, 0
             , null, 13, false, true, false
             , new Season[]{Season.Spring},
-            "assets/Images/Crops/Wild_Horseradish.png"),
+            "assets/Images/Crops/Foragings/Wild_Horseradish.png"),
     FiddleheadFern(FruitType.FiddleheadFern, new int[]{}, 90, 0
             , null, 25, false, true, false
             , new Season[]{Season.Summer},
-            "assets/Images/Crops/Fiddlehead_Fern.png"),
+            "assets/Images/Crops/Foragings/Fiddlehead_Fern.png"),
     RedMushroom(FruitType.RedMushroom, new int[]{}, 75, 0
             , null, -50, false, true, false
             , new Season[]{Season.Summer},
-            "assets/Images/Crops/Red_Mushroom.png"),
+            "assets/Images/Crops/Foragings/Red_Mushroom.png"),
     SpiceBerry(FruitType.SpiceBerry, new int[]{}, 80, 0
             , null, 25, false, true, false
             , new Season[]{Season.Summer},
-            "assets/Images/Crops/Spice_Berry.png"),
+            "assets/Images/Crops/Foragings/Spice_Berry.png"),
     SweetPea(FruitType.SweetPea, new int[]{}, 50, 0
             , null, 0, false, false, false
             , new Season[]{Season.Summer},
-            "assets/Images/Crops/Sweet_Pea.png"),
+            "assets/Images/Crops/Foragings/Sweet_Pea.png"),
     Blackberry(FruitType.Blackberry, new int[]{}, 25, 0
             , null, 25, false, true, false
             , new Season[]{Season.Fall},
-            "assets/Images/Crops/Blackberry.png"),
+            "assets/Images/Crops/Foragings/Blackberry.png"),
     Chanterelle(FruitType.Chanterelle, new int[]{}, 160, 0
             , null, 75, false, true, false
             , new Season[]{Season.Fall},
-            "assets/Images/Crops/Chanterelle.png"),
+            "assets/Images/Crops/Foragings/Chanterelle.png"),
     Hazelnut(FruitType.Hazelnut, new int[]{}, 40, 0
             , null, 38, false, true, false
             , new Season[]{Season.Fall},
-            "assets/Images/Crops/Hazelnut.png"),
+            "assets/Images/Crops/Foragings/Hazelnut.png"),
     PurpleMushroom(FruitType.PurpleMushroom, new int[]{}, 90, 0
             , null, 30, false, true, false
             , new Season[]{Season.Fall},
-            "assets/Images/Crops/Purple_Mushroom.png"),
+            "assets/Images/Crops/Foragings/Purple_Mushroom.png"),
     WildPlum(FruitType.WildPlum, new int[]{}, 80, 0
             , null, 25, false, true, false
             , new Season[]{Season.Fall},
-            "assets/Images/Crops/Wild_Plum.png"),
+            "assets/Images/Crops/Foragings/Wild_Plum.png"),
     Crocus(FruitType.Crocus, new int[]{}, 60, 0
             , null, 0, false, false, false
             , new Season[]{Season.Winter},
-            "assets/Images/Crops/Crocus.png"),
+            "assets/Images/Crops/Foragings/Crocus.png"),
     CrystalFruit(FruitType.CrystalFruit, new int[]{}, 150, 0
             , null, 63, false, true, false
             , new Season[]{Season.Winter},
-            "assets/Images/Crops/Crystal_Fruit.png"),
+            "assets/Images/Crops/Foragings/Crystal_Fruit.png"),
     Holly(FruitType.Holly, new int[]{}, 80, 0
             , null, -37, false, true, false
             , new Season[]{Season.Winter},
-            "assets/Images/Crops/Holly.png"),
+            "assets/Images/Crops/Foragings/Holly.png"),
     SnowYum(FruitType.SnowYam, new int[]{}, 100, 0
             , null, 30, false, true, false
             , new Season[]{Season.Winter},
-            "assets/Images/Crops/Snow_Yam.png"),
+            "assets/Images/Crops/Foragings/Snow_Yam.png"),
     WinterRoot(FruitType.WinterRoot, new int[]{}, 70, 0
             , null, 25, false, true, false
             , new Season[]{Season.Winter},
-            "assets/Images/Crops/Winter_Root.png"),;
+            "assets/Images/Crops/Foragings/Winter_Root.png"),;
 
     private static final HashMap<Season, ArrayList<CropType>> foragingCropsBySeason = new HashMap<>() {{
         put(Season.Spring, new ArrayList<>(List.of(Grass, Daffodil, Dandelion, Leek, Morel, SalmonBerry,
@@ -254,7 +254,7 @@ public enum CropType implements PlantType {
     CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons) {
         this(fruit, stages, price, totalHarvestTime, regrowthTime, energy, oneTime, isEdible, canBecomeGiant, seasons,
-                "assets/Images/Crops/Crocus.png",
+                "assets/Images/Crops/Foragings/Crocus.png",
                 null);
     }
 

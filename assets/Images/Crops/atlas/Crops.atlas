@@ -3,11 +3,6 @@ size: 256,832
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-
-// 16 columns × 26 rows (416 sprites)
-// Naming: row_column (top-left=1_1, top-right=1_16)
-// Coordinates: (0,0) at top-left
-
 1_1
   rotate: false
   xy: 0, 0
