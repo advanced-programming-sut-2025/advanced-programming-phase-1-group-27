@@ -91,4 +91,8 @@ public enum ShopType {
     public int getEndTime() {
         return endTime;
     }
+
+    public NPCType getManager() {
+        return manager;
+    }
 }

@@ -1,6 +1,7 @@
 package org.example.server.models.enums;
 
 import org.example.server.models.Stock;
+import org.example.server.models.enums.Plants.FruitType;
 import org.example.server.models.enums.Plants.SaplingType;
 import org.example.server.models.enums.Plants.SeedType;
 import org.example.server.models.enums.Seasons.Season;
@@ -49,7 +50,8 @@ public enum StocksForShops {
         blacksmithStore.add(new Stock(MineralType.CopperOre, -1, 75));
         blacksmithStore.add(new Stock(MineralType.IronOre, -1, 150));
         blacksmithStore.add(new Stock(MineralType.GoldOre, -1, 400));
-        blacksmithStore.add(new Stock(ProcessedProductType.Coal, -1, 150));
+        blacksmithStore.add(new Stock(MineralType.Coal, -1, 150));
+        blacksmithStore.add(new Stock(FruitType.Carrot, 0, 150));
         return blacksmithStore;
     }
 

@@ -3,6 +3,8 @@ package org.example.client.view;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.*;
+import org.example.client.view.shopview.BlackSmithShop;
+import org.example.client.view.shopview.StardropSaloonShop;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.enums.Gender;
@@ -45,12 +47,9 @@ public class AppView {
 //            return;
 //        }
         Main.getMain().setScreen(new WelcomeMenuView());
-        Main.getMain().setScreen(new WelcomeMenuView());
 
         // For Graphics team
         cheat();
-
-
 
         // For GigaChads
 //        int clown = 0;
