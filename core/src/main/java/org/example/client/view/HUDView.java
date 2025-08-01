@@ -48,6 +48,7 @@ public class HUDView extends AppMenu {
     private final Player player;
     private Backpack inventoryItems;
     private ArrayList<Stacks> onScreenItems;
+    private HashMap<Stacks,Label> onScreenItemsQuantity;
     private int rowCoEfficient;
     private Integer currentSlotInInventory;
     private InGameMenuType currentMenu;
@@ -80,6 +81,7 @@ public class HUDView extends AppMenu {
         player = ClientApp.getCurrentGame().getCurrentPlayer();
         inventoryItems = player.getBackpack();
         onScreenItems = new ArrayList<>();
+        onScreenItemsQuantity = new HashMap<>();
         for ( Stacks stack : inventoryItems.getItems() ) {
             addToScreen(Stacks.copy(stack));
         }
@@ -381,6 +383,24 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayItemQuantity(){
+
+        for ( Stacks stacks: onScreenItems ){
+            Label label = onScreenItemsQuantity.get(stacks);
+            if ( stacks.getItem().getItemImage().isVisible() ){
+                label.setVisible(true);
+                label.setPosition(stacks.getItem().getItemImage().getX()+stacks.getItem().getItemImage().getWidth()-15,
+                        stacks.getItem().getItemImage().getY()+stacks.getItem().getItemImage().getHeight()-25);
+                label.toFront();
+            }
+            else{
+                label.setVisible(false);
+            }
+
+        }
+
+    }
+
     @Override
     public void show() {
 
@@ -394,7 +414,6 @@ public class HUDView extends AppMenu {
 
     public void displayHUD(float delta) {
 
-//        ctrlPressed = false;
         errorLabel.update(delta);
         inventoryItems = player.getBackpack();
         updateOnScreenItems();
@@ -404,7 +423,6 @@ public class HUDView extends AppMenu {
         displayInventoryHotBar();
         showErrorMessage();
         showHotBarItems();
-        displayInputField();
         displayDayInfo();
         displayMoneyInfo();
         displayTimeInfo();
@@ -412,6 +430,8 @@ public class HUDView extends AppMenu {
         displaySkillMenu();
         displayCraftingMenu();
         displayExitMenu();
+        displayItemQuantity();
+        displayInputField();
 
 
     }
@@ -656,17 +676,40 @@ public class HUDView extends AppMenu {
                                 if ( currentSlotInInventory != null ){
                                     int currentItemIndex = (currentSlotInInventory<12)? currentSlotInInventory:currentSlotInInventory+12*(rowCoEfficient-1);
 
+                                    if ( currentItemIndex >= onScreenItems.size() ){
+                                        errorLabel.set(new GraphicalResult("First item was empty"));
+                                        return true;
+                                    }
+
                                     if ( 700 < y && y < 760 ){
+
+                                        if ( i >= onScreenItems.size() ){
+                                            errorLabel.set(new GraphicalResult("You can't place your item here"));
+                                            return true;
+                                        }
+
                                         inventoryItems.switchItem(currentItemIndex, i);
                                         currentSlotInInventory = null;
                                         return true;
                                     }
                                     else if ( 620 < y && y < 680 ){
+
+                                        if ( (i+12*rowCoEfficient) >= onScreenItems.size() ){
+                                            errorLabel.set(new GraphicalResult("You can't place your item here"));
+                                            return true;
+                                        }
+
                                         inventoryItems.switchItem(currentItemIndex, i+12*rowCoEfficient);
                                         currentSlotInInventory = null;
                                         return true;
                                     }
                                     else if ( 550 < y && y < 610 ){
+
+                                        if ( (i+12*(rowCoEfficient+1)) >= onScreenItems.size() ){
+                                            errorLabel.set(new GraphicalResult("You can't place your item here"));
+                                            return true;
+                                        }
+
                                         inventoryItems.switchItem(currentItemIndex, i+12*(rowCoEfficient+1));
                                         currentSlotInInventory = null;
                                         return true;
@@ -775,6 +818,9 @@ public class HUDView extends AppMenu {
 
     private void removeFromScreen(Stacks stack) {
 
+        onScreenItemsQuantity.get(stack).remove();
+        onScreenItemsQuantity.remove(stack);
+
         stack.getItem().getItemImage().remove();
         onScreenItems.remove(stack);
 
@@ -782,10 +828,18 @@ public class HUDView extends AppMenu {
 
     private void addToScreen(Stacks stack) {
 
+        Label quantityLabel = new Label(Integer.toString(stack.getQuantity()),skin);
+        quantityLabel.setVisible(false);
+        quantityLabel.setColor(Color.RED);
+        quantityLabel.setFontScale(0.7f);
+        stage.addActor(quantityLabel);
+        onScreenItemsQuantity.put(stack,quantityLabel);
+
         stack.getItem().getItemImage().setSize(48,48);
         stack.getItem().getItemImage().setVisible(false);
         stage.addActor(stack.getItem().getItemImage());
         onScreenItems.add(stack);
+
 
 
     }

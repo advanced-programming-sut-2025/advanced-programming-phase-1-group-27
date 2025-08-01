@@ -61,7 +61,7 @@ public class Player extends User {
         backpack.addItems(ToolType.BasicWateringCan, ToolType.BasicWateringCan.getLevel(), 1);
         backpack.addItems(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1);
         backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
-        backpack.addItems(MineralType.Wood, StackLevel.Basic, 50);
+        backpack.addItems(MineralType.Wood, StackLevel.Basic, 55);
         backpack.addItems(MineralType.Coal, StackLevel.Basic, 1);
 //        backpack.addItems(FruitType.Fiber, StackLevel.Basic, 20);
 //        backpack.addItems(FruitType.Cherry, StackLevel.Basic, 20);
