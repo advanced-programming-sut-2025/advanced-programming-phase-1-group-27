@@ -453,10 +453,19 @@ public class HUDView extends AppMenu {
 
         stage.addListener(new InputListener() {
 
+            boolean ctrlPressed = false;
+
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
 
                 if (!isInputFieldVisible) {
+
+                    if ( keycode == Input.Keys.CONTROL_LEFT ){
+                        ctrlPressed = true;
+                    }
+                    else{
+                        ctrlPressed = false;
+                    }
 
                     if (keycode == Input.Keys.T) {
                         playClickSound();
@@ -594,44 +603,65 @@ public class HUDView extends AppMenu {
 
                         if ( (520 + i*63) < x && x < (520 + (i+1)*63) ){
 
-                            if ( 700 < y && y < 760 ){
-                                if ( currentSlotInInventory == null ){
-                                    currentSlotInInventory = i;
-                                }
-                                else{
-                                    if ( currentSlotInInventory != i ){
+                            if ( !ctrlPressed ){
+                                if ( 700 < y && y < 760 ){
+                                    if ( currentSlotInInventory == null ){
                                         currentSlotInInventory = i;
                                     }
                                     else{
-                                        currentSlotInInventory = null;
+                                        if ( currentSlotInInventory != i ){
+                                            currentSlotInInventory = i;
+                                        }
+                                        else{
+                                            currentSlotInInventory = null;
+                                        }
                                     }
                                 }
-                            }
-                            else if ( 620 < y && y < 680 ){
-                                if ( currentSlotInInventory == null ){
-                                    currentSlotInInventory = i+12;
-                                }
-                                else{
-                                    if ( currentSlotInInventory != (i+12) ){
+                                else if ( 620 < y && y < 680 ){
+                                    if ( currentSlotInInventory == null ){
                                         currentSlotInInventory = i+12;
                                     }
                                     else{
-                                        currentSlotInInventory = null;
+                                        if ( currentSlotInInventory != (i+12) ){
+                                            currentSlotInInventory = i+12;
+                                        }
+                                        else{
+                                            currentSlotInInventory = null;
+                                        }
                                     }
                                 }
-                            }
-                            else if ( 550 < y && y < 610 ){
-                                if ( currentSlotInInventory == null ){
-                                    currentSlotInInventory = i+24;
-                                }
-                                else{
-                                    if ( currentSlotInInventory != (i+24) ){
+                                else if ( 550 < y && y < 610 ){
+                                    if ( currentSlotInInventory == null ){
                                         currentSlotInInventory = i+24;
                                     }
                                     else{
-                                        currentSlotInInventory = null;
+                                        if ( currentSlotInInventory != (i+24) ){
+                                            currentSlotInInventory = i+24;
+                                        }
+                                        else{
+                                            currentSlotInInventory = null;
+                                        }
                                     }
                                 }
+                            }
+                            else{       // SWITCH ITEM
+
+                                if ( 700 < y && y < 760 ){
+                                    if ( currentSlotInInventory != null){
+                                        controller.switchItem(currentSlotInInventory, i);
+                                    }
+                                }
+                                else if ( 620 < y && y < 680 ){
+                                    if ( currentSlotInInventory != null){
+                                        controller.switchItem(currentSlotInInventory, i+12);
+                                    }
+                                }
+                                else if ( 550 < y && y < 610 ){
+                                    if ( currentSlotInInventory != null){
+                                        controller.switchItem(currentSlotInInventory, i+24);
+                                    }
+                                }
+
                             }
 
 
@@ -764,4 +794,5 @@ public class HUDView extends AppMenu {
     public ArrayList<Stacks> getInventoryItems() {
         return inventoryItems;
     }
+
 }
