@@ -204,15 +204,15 @@ public class PurchaseMenuView extends AppMenu {
 
         image.setPosition(Gdx.graphics.getWidth() / 4f - 300 , Gdx.graphics.getHeight() - 100);
         name.setPosition(Gdx.graphics.getWidth() / 4f - 100, Gdx.graphics.getHeight() - 100);
-        level.setPosition(Gdx.graphics.getWidth() / 4f + width1, Gdx.graphics.getHeight() - 100);
+        level.setPosition(Gdx.graphics.getWidth() / 4f + width1 + 100, Gdx.graphics.getHeight() - 100);
         quantity.setPosition(Gdx.graphics.getWidth() / 4f + width2 + 200, Gdx.graphics.getHeight() - 100);
-        price.setPosition(Gdx.graphics.getWidth() / 4f + width3 + 400, Gdx.graphics.getHeight() - 100);
+        price.setPosition(Gdx.graphics.getWidth() / 4f + width3 + 450, Gdx.graphics.getHeight() - 100);
 
         itemImage.setPosition(Gdx.graphics.getWidth() / 4f - 300 , Gdx.graphics.getHeight() - 250);
         nameLabel.setPosition(Gdx.graphics.getWidth() / 4f - 100 , Gdx.graphics.getHeight() - 250);
-        levelLabel.setPosition(Gdx.graphics.getWidth()/4f + width1 , Gdx.graphics.getHeight() - 250);
-        quantityLabel.setPosition(Gdx.graphics.getWidth()/4f + width2 + 200 , Gdx.graphics.getHeight() - 200);
-        priceLabel.setPosition(Gdx.graphics.getWidth()/4f + width3 + 400, Gdx.graphics.getHeight() - 250);
+        levelLabel.setPosition(Gdx.graphics.getWidth()/4f + width1 + 100 , Gdx.graphics.getHeight() - 250);
+        quantityLabel.setPosition(Gdx.graphics.getWidth()/4f + width2 + 200 , Gdx.graphics.getHeight() - 230);
+        priceLabel.setPosition(Gdx.graphics.getWidth()/4f + width3 + 450, Gdx.graphics.getHeight() - 250);
 
         stage.addActor(itemImage);
         stage.addActor(priceLabel);
