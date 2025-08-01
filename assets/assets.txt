@@ -65,6 +65,8 @@ Images/Crops/Snow_Yam.png
 Images/Crops/Spice_Berry.png
 Images/Crops/Sweet_Pea.png
 Images/Crops/Yam.png
+Images/Crops/atlas/Crops.atlas
+Images/Crops/atlas/Crops_sheet.png
 Images/Exit/ExitMenuMan.png
 Images/Exit/ExitMenuWoman.png
 Images/Floorings/Free.png
