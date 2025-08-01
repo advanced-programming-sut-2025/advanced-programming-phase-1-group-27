@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.view.menu.AvatarMenuView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.ProfileMenuView;
 import org.example.common.models.GraphicalResult;
@@ -104,6 +105,12 @@ public class ProfileMenuController extends MenuController {
     @Override
     public Result enterMenu(String menuName) {
         return null;
+    }
+
+    public void goToAvatarMenu() {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new AvatarMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
     @Override

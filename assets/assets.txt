@@ -1,3 +1,12 @@
+Avatars/stardew_avatar_0_0.png
+Avatars/stardew_avatar_0_1.png
+Avatars/stardew_avatar_0_2.png
+Avatars/stardew_avatar_1_0.png
+Avatars/stardew_avatar_1_1.png
+Avatars/stardew_avatar_1_2.png
+Avatars/stardew_avatar_2_0.png
+Avatars/stardew_avatar_2_1.png
+Avatars/stardew_avatar_2_2.png
 Buildings/Buildings.atlas
 Buildings/Cabins.png
 Character/Vincent.png
