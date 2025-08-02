@@ -339,6 +339,7 @@ Images/Fruits/Hot_Pepper.png
 Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
+Images/HoveringInfoWindow.png
 Images/Inventory/InventoryMenuMan.png
 Images/Inventory/InventoryMenuWoman.png
 Images/Shops/JojaMart.png

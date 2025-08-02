@@ -293,6 +293,8 @@ public class GameAssetManager {
 
     private final Image cookingMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png")));
 
+    private final Image hoveringInfoWindow = new Image(new Texture(Gdx.files.internal("Images/HoveringInfoWindow.png")));
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -300,6 +302,10 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getHoveringInfoWindow() {
+        return hoveringInfoWindow;
     }
 
     public Image getCookingMenuBackground() {

@@ -582,6 +582,16 @@ public enum Recipe implements Item {
         return result.toString();
     }
 
+    public String getInfo() {
+        StringBuilder result = new StringBuilder();
+//        result.append("--->").append(finalProduct.getName()).append("\n\n");
+        result.append("Ingredients:\n");
+        for (Ingredient ingredient : ingredients) {
+            result.append("    ").append(ingredient.getPossibleIngredients().getFirst()).append(" (").append(ingredient.getQuantity()).append(")\n");
+        }
+        return result.toString();
+    }
+
     public boolean isEqual(String[] itemsList) {
         if (itemsList.length != ingredients.size())
             return false;
