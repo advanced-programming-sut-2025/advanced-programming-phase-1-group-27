@@ -23,10 +23,6 @@ public interface PlantType {
 
     public String toString();
 
-    default Texture getTexture() {
-        return GameAssetManager.getGameAssetManager().getPlantTexture(this);
-    }
-
     default String getName() {
         return this.toString().replaceAll("([A-Z])", " $1").trim();
     }

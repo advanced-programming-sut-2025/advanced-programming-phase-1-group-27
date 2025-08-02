@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.model.ClientApp;
 import org.example.server.controller.HomeController;
 import org.example.server.controller.HomePlayerController;
 import org.example.server.models.App;
@@ -49,7 +50,7 @@ public class HomeView extends AppMenu {
     }
 
     private void preProcess() {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         player.setCurrentMap(player.getFarmMap());
         player.setCurrentCell(player.getFarmMap().getCell(50, 71));
     }

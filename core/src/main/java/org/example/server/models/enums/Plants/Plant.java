@@ -1,5 +1,10 @@
 package org.example.server.models.enums.Plants;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import org.example.client.controller.menus.OnlinePlayersMenuController;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.Cell;
 import org.example.server.models.Stacks;
 
@@ -45,6 +50,10 @@ public abstract class Plant {
 
     public int getCurrentStage() {
         return currentStage;
+    }
+
+    public void maxCurrentStage() {
+        currentStage = type.getStages().length;
     }
 
     public Stacks harvest() {
@@ -98,4 +107,6 @@ public abstract class Plant {
     public void setForaging(boolean foraging) {
         isForaging = foraging;
     }
+
+    public abstract Object getTexture();
 }

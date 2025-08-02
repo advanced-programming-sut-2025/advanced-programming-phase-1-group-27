@@ -15,127 +15,168 @@ public enum CropType implements PlantType {
     // Regular Crops:
     BlueJazz(FruitType.BlueJazz, new int[]{1, 2, 2, 2}, 50, 7
             , null, 45, true, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/BlueJazz"),
     Carrot(FruitType.Carrot, new int[]{1, 1, 1}, 35, 3
             , null, 75, true, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Carrot"),
     Cauliflower(FruitType.Cauliflower, new int[]{1, 2, 4, 4, 1}, 175, 12
             , null, 75, true, true, true
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Cauliflower"),
     CoffeeBean(FruitType.CoffeeBean, new int[]{1, 2, 2, 3, 2}, 15, 10
             , 2, 0, false, false, false
-            , new Season[]{Season.Spring, Season.Summer}),
+            , new Season[]{Season.Spring, Season.Summer},
+            "assets/Images/Crops/CoffeeBean"),
     Garlic(FruitType.Garlic, new int[]{1, 1, 1, 1}, 60, 4
             , null, 20, true, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Garlic"),
     GreenBean(FruitType.GreenBean, new int[]{1, 1, 1, 3, 4}, 40, 10
             , 3, 25, false, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/GreenBean"),
     Kale(FruitType.Kale, new int[]{1, 2, 2, 1}, 110, 6
             , null, 50, true, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Kale"),
     Parsnip(FruitType.Parsnip, new int[]{1, 1, 1, 1}, 35, 4
             , null, 25, true, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Parsnip"),
     Potato(FruitType.Potato, new int[]{1, 1, 1, 2, 1}, 80, 6
             , null, 25, true, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Potato"),
     Rhubarb(FruitType.Rhubarb, new int[]{2, 2, 2, 3, 4}, 220, 13
             , null, 0, true, false, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Rhubarb"),
     Strawberry(FruitType.Strawberry, new int[]{1, 1, 2, 2, 2}, 120, 8
             , 4, 50, false, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Strawberry"),
     Tulip(FruitType.Tulip, new int[]{1, 1, 2, 2}, 30, 6
             , null, 45, true, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/Tulip"),
     UnmilledRice(FruitType.UnmilledRice, new int[]{1, 2, 2, 3}, 30, 8
             , null, 3, true, true, false
-            , new Season[]{Season.Spring}),
+            , new Season[]{Season.Spring},
+            "assets/Images/Crops/UnmilledRice"),
     Blueberry(FruitType.Blueberry, new int[]{1, 3, 3, 4, 2}, 50, 13
             , 4, 25, false, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/Blueberry"),
     Corn(FruitType.Corn, new int[]{2, 3, 3, 3, 3}, 50, 14
             , 4, 25, false, true, false
-            , new Season[]{Season.Summer, Season.Fall}),
+            , new Season[]{Season.Summer, Season.Fall},
+            "assets/Images/Crops/Corn"),
     Hops(FruitType.Hops, new int[]{1, 1, 2, 3, 4}, 25, 11
             , 1, 45, false, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/Hops"),
     HotPepper(FruitType.HotPepper, new int[]{1, 1, 1, 1, 1}, 40, 5
             , 3, 13, false, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/HotPepper"),
     Melon(FruitType.Melon, new int[]{1, 2, 3, 3, 3}, 250, 12
             , null, 113, true, true, true
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/Melon"),
     Poppy(FruitType.Poppy, new int[]{1, 2, 2, 2}, 140, 7
             , null, 45, true, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/Poppy"),
     Radish(FruitType.Radish, new int[]{2, 1, 2, 1}, 90, 6
             , null, 45, true, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/Radish"),
     RedCabbage(FruitType.RedCabbage, new int[]{2, 1, 2, 2, 2}, 260, 9
             , null, 75, true, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/RedCabbage"),
     Starfruit(FruitType.Starfruit, new int[]{2, 3, 2, 3, 3}, 750, 13
             , null, 125, true, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/Starfruit"),
     SummerSpangle(FruitType.SummerSpangle, new int[]{1, 2, 3, 1}, 90, 8
             , null, 45, true, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/SummerSpangle"),
     SummerSquash(FruitType.SummerSquash, new int[]{1, 1, 1, 2, 1}, 45, 6
             , 3, 63, false, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/SummerSquash"),
     Sunflower(FruitType.Sunflower, new int[]{1, 2, 3, 2}, 80, 8
             , null, 45, true, true, false
-            , new Season[]{Season.Summer, Season.Fall}),
+            , new Season[]{Season.Summer, Season.Fall},
+            "assets/Images/Crops/Sunflower"),
     Tomato(FruitType.Tomato, new int[]{2, 2, 2, 2, 3}, 60, 11
             , 4, 20, false, true, false
-            , new Season[]{Season.Summer}),
+            , new Season[]{Season.Summer},
+            "assets/Images/Crops/Tomato"),
     Wheat(FruitType.Wheat, new int[]{1, 1, 1, 1}, 25, 4
             , null, 0, true, false, false
-            , new Season[]{Season.Summer, Season.Fall}),
+            , new Season[]{Season.Summer, Season.Fall},
+            "assets/Images/Crops/Wheat"),
     Amaranth(FruitType.Amaranth, new int[]{1, 2, 2, 2}, 150, 7
             , null, 50, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Amaranth"),
     Artichoke(FruitType.Artichoke, new int[]{2, 2, 1, 2, 1}, 160, 8
             , null, 30, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Artichoke"),
     Beet(FruitType.Beet, new int[]{1, 1, 2, 2}, 100, 6
             , null, 30, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Beet"),
     BokChoy(FruitType.BokChoy, new int[]{1, 1, 1, 1}, 80, 4
             , null, 25, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/BokChoy"),
     Broccoli(FruitType.Broccoli, new int[]{2, 2, 2, 2}, 70, 8
             , 4, 63, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Broccoli"),
     Cranberry(FruitType.Cranberry, new int[]{1, 2, 1, 1, 2}, 75, 7
             , 5, 38, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Cranberry"),
     Eggplant(FruitType.Eggplant, new int[]{1, 1, 1, 1}, 60, 5
             , 5, 20, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Eggplant"),
     FairyRose(FruitType.FairyRose, new int[]{1, 4, 4, 3}, 290, 12
             , null, 45, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/FairyRose"),
     Grape(FruitType.Grape, new int[]{1, 1, 2, 3, 3}, 80, 10
             , 3, 38, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Grape"),
     Pumpkin(FruitType.Pumpkin, new int[]{1, 2, 3, 4, 3}, 320, 13
             , null, 0, false, false, true
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Pumpkin"),
     Yam(FruitType.Yam, new int[]{1, 3, 3, 3}, 160, 10
             , null, 45, true, true, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/Yam"),
     SweetGemBerry(FruitType.SweetGemBerry, new int[]{2, 4, 6, 6, 6}, 3000, 24
             , null, 0, false, false, false
-            , new Season[]{Season.Fall}),
+            , new Season[]{Season.Fall},
+            "assets/Images/Crops/SweetGemBerry"),
     PowderMelon(FruitType.PowderMelon, new int[]{1, 2, 1, 2, 1}, 60, 7
             , null, 63, true, true, false
-            , new Season[]{Season.Winter}),
+            , new Season[]{Season.Winter},
+            "assets/Images/Crops/PowderMelon"),
     AncientFruit(FruitType.AncientFruit, new int[]{2, 7, 7, 7, 5}, 550, 28
             , 7, 0, false, false, false
-            , new Season[]{Season.Spring, Season.Summer, Season.Fall}),
+            , new Season[]{Season.Spring, Season.Summer, Season.Fall},
+            "assets/Images/Crops/AncientFruit"),
 
 
 
@@ -248,26 +289,17 @@ public enum CropType implements PlantType {
     private final boolean oneTime, isEdible, canBecomeGiant;
     private final ArrayList<Season> seasons;
     private final String address;
-    private final ArrayList<String> addresses;
     private SeedType source;
 
     CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons) {
         this(fruit, stages, price, totalHarvestTime, regrowthTime, energy, oneTime, isEdible, canBecomeGiant, seasons,
-                "assets/Images/Crops/Foragings/Crocus.png",
-                null);
-    }
-
-    CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
-             int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons, String address) {
-        this(fruit, stages, price, totalHarvestTime, regrowthTime, energy, oneTime, isEdible, canBecomeGiant, seasons,
-                address,
-                null);
+                "assets/Images/Crops/Foragings/Crocus.png");
     }
 
     CropType(FruitType fruit, int[] stages, int price, int totalHarvestTime, Integer regrowthTime,
              int energy, boolean oneTime, boolean isEdible, boolean canBecomeGiant, Season[] seasons,
-             String address, ArrayList<String> addresses) {
+             String address) {
         this.fruit = fruit;
         this.stages = stages;
         this.price = price;
@@ -280,7 +312,6 @@ public enum CropType implements PlantType {
         this.canBecomeGiant = canBecomeGiant;
         this.seasons = new ArrayList<>(List.of(seasons));
         this.address = address;
-        this.addresses = addresses;
     }
 
     public static HashMap<Season, ArrayList<CropType>> getForagingCropsBySeason() {

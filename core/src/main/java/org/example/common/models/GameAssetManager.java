@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -21,9 +20,9 @@ import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.utils.MusicPlayer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class GameAssetManager {
@@ -204,27 +203,26 @@ public class GameAssetManager {
         }
     }};
 
-    private final TextureAtlas cropsAtlas = new TextureAtlas("assets/Images/Crops/atlas/Crops.atlas");
-
-    private final HashMap<CropType, ArrayList<TextureRegion>> cropTextureMap = new HashMap<>() {{
-        for (CropType cropType : CropType.values()) {
-            if (cropType.getAddress() == null) {
-                put(cropType, new ArrayList<>(){{
-
-                }});
-            }
-        }
-    }};
-
     private final HashMap<Item, Image> itemImageMap = new HashMap<>() {{
         for (Entry<Item, Texture> entry : itemTextureMap.entrySet()) {
             put(entry.getKey(), new Image(entry.getValue()));
         }
     }};
 
-    private final HashMap<PlantType, Texture> plantTextureMap = new HashMap<>() {{
+    private final HashMap<PlantType, ArrayList<Texture>> cropTextureMap = new HashMap<>() {{
         for (CropType cropType : CropType.values()) {
-            put(cropType, new Texture(Gdx.files.internal(cropType.getAddress())));
+            if (new File(cropType.getAddress()).isDirectory()) {
+                int stageCount = cropType.getStages().length + 1;
+                ArrayList<Texture> arrayList = new ArrayList<Texture>();
+                for (int i = 1; i <= stageCount; i++) {
+                    arrayList.add(new Texture(cropType.getAddress() + "/  (" + i + ").png"));
+                }
+                put(cropType, arrayList);
+            } else {
+                put(cropType, new ArrayList<>(){{
+                    add(new Texture(Gdx.files.internal(cropType.getAddress())));
+                }});
+            }
         }
     }};
 
@@ -598,8 +596,13 @@ public class GameAssetManager {
         return itemImageMap.get(item);
     }
 
-    public Texture getPlantTexture(PlantType plantType) {
-        return plantTextureMap.get(plantType);
+
+    public Texture getCropTexture(CropType cropType, int index) {
+        return cropTextureMap.get(cropType).get(index);
+    }
+
+    public TextureRegion getTreeTexture(TreeType treeType, int index) {
+        return treeTextureMap.get(treeType).get(index);
     }
 
     public Texture getPierresGeneralTexture() {

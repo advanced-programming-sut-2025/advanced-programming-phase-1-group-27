@@ -191,16 +191,18 @@ public class Map {
                 Main.getBatch().draw(texture, x, y, tileSize, tileSize);
             }
         }
+        Texture texture;
+        TextureRegion textureRegion;
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 float y = (cells.length - 1 - i) * tileSize;
                 float x = j * tileSize;
-                Texture texture = cells[i][j].getTexture();
+                texture = cells[i][j].getTexture();
 
                 if (texture == null) continue;
 
                 if (cells[i][j].getObject() instanceof Crop crop) {
-                    texture = ((CropType) crop.getType()).getTexture();
+                    texture = crop.getTexture();
                     if (texture != null)
                         Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
                 }
@@ -210,9 +212,9 @@ public class Map {
                         Main.getBatch().draw(texture, x, y, 40, 40);
                 }
                 if (cells[i][j].getObject() instanceof Tree tree) {
-                    ArrayList<TextureRegion>  textures = ((TreeType) tree.getType()).getTextures();
-                    if (textures != null)
-                        Main.getBatch().draw(textures.get(4), x - 10, y, 60, 100);
+                    textureRegion = tree.getTexture();
+                    if (textureRegion != null)
+                        Main.getBatch().draw(textureRegion, x - 10, y, 60, 100);
                 }
             }
         }

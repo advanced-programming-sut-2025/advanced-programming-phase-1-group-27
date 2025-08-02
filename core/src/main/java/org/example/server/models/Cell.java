@@ -105,6 +105,7 @@ public class Cell {
     public void placeTree(TreeType treeType) {
         Tree tree = new Tree(treeType);
         tree.setTillNextHarvest(0);
+        tree.maxCurrentStage();
         tree.setForaging(true);
         plant(tree);
     }

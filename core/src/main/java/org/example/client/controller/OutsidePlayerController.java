@@ -33,6 +33,7 @@ public class OutsidePlayerController {
     private Sprite characterSprite = new Sprite(GameAssetManager.getGameAssetManager().getStandingSprite());
     private float time = 0f, animationTime = 0f;
     private Camera camera;
+    private final GameMenuController gameMenuController = new GameMenuController(new GameView());
 
     private boolean walking = false;
     private Direction direction = null;
@@ -59,7 +60,7 @@ public class OutsidePlayerController {
             animationTime = 0f;
         }
 
-        characterSprite = new Sprite(currentAnimation.getKeyFrame(animationTime));
+        characterSprite.setRegion(currentAnimation.getKeyFrame(animationTime));
         characterSprite.setScale(2f);
 
         currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -72,8 +73,8 @@ public class OutsidePlayerController {
         characterSprite.setRegion(GameAssetManager.getGameAssetManager().getStandingSprite());
         characterSprite.setScale(2f);
 
-        if (!walking && !view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
-        InGameMenuType.NONE) {
+        if (!walking /*&& !view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
+        InGameMenuType.NONE*/) {
             x = OutsideView.getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getX();
             y = OutsideView.getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getY();
             lastX = x;
@@ -82,7 +83,7 @@ public class OutsidePlayerController {
             time = 0;
             direction = null;
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                Result result = new GameMenuController(new GameView()).walk(
+                Result result = gameMenuController.walk(
                         OutsideView.getIndices(x - 40, y).getX() + "",
                         OutsideView.getIndices(x - 40, y).getY() + "");
                 System.out.println(result.message());
@@ -95,7 +96,7 @@ public class OutsidePlayerController {
                 direction = Direction.Left;
             }
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                Result result = new GameMenuController(new GameView()).walk(
+                Result result = gameMenuController.walk(
                         OutsideView.getIndices(x + 40, y).getX() + "",
                         OutsideView.getIndices(x + 40, y).getY() + "");
                 System.out.println(result.message());
@@ -108,7 +109,7 @@ public class OutsidePlayerController {
                 direction = Direction.Right;
             }
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                Result result = new GameMenuController(new GameView()).walk(
+                Result result = gameMenuController.walk(
                         OutsideView.getIndices(x, y + 40).getX() + "",
                         OutsideView.getIndices(x, y + 40).getY() + "");
                 System.out.println(result.message());
@@ -121,7 +122,7 @@ public class OutsidePlayerController {
                 direction = Direction.Up;
             }
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                Result result = new GameMenuController(new GameView()).walk(
+                Result result = gameMenuController.walk(
                         OutsideView.getIndices(x, y - 40).getX() + "",
                         OutsideView.getIndices(x, y - 40).getY() + "");
                 System.out.println(result.message());
