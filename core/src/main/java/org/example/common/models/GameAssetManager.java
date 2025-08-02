@@ -288,6 +288,7 @@ public class GameAssetManager {
     private final Image craft_fishSmoker = new Image(new Texture(Gdx.files.internal("Images/Crafting/Fish_Smoker.png")));
     private final Image craft_mysticTreeSeed = new Image(new Texture(Gdx.files.internal("Images/Crafting/Mystic_Tree_Seed.png")));
 
+    private final Image cookingMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png")));
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -296,6 +297,10 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getCookingMenuBackground() {
+        return cookingMenuBackground;
     }
 
     public Image getCraft_bomb() {

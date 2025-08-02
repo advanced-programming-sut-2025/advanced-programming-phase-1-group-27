@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Recipe implements Item {
+
     HoneyRecipe(0, ProcessedProductType.Honey, new ArrayList<>(List.of())),
     CheeseRecipe(0, ProcessedProductType.Cheese, new ArrayList<>(List.of(
             new Ingredient(AnimalProduct.CowMilk, 1)
