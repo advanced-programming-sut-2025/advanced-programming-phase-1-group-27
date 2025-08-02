@@ -29,9 +29,12 @@ import java.util.List;
 public class GameAssetManager {
 
 
+
     private static GameAssetManager gameAssetManager;
 
     private final Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
+
+    private final Image blackImage = new Image(new Texture(Gdx.files.internal("black_4k.png")));
 
     private final Texture background = new Texture(Gdx.files.internal("Images/menu_background.png"));
     private final Texture StardewValleyText = new Texture(Gdx.files.internal("Images/stardew_valley_text.png"));
@@ -301,6 +304,10 @@ public class GameAssetManager {
 
     public Image getCookingMenuBackground() {
         return cookingMenuBackground;
+    }
+
+    public Image getBlackImage() {
+        return blackImage;
     }
 
     public Image getCraft_bomb() {

@@ -56,12 +56,15 @@ public class HUDView extends AppMenu {
     private Integer currentSlotInInventory;
     private InGameMenuType currentMenu;
     private boolean ctrlPressed;
+    private final Image blackImage;
 
     public HUDView(Stage stage) {
+
 
         controller = new HUDController(this);
         rowCoEfficient = 1;
         currentSlotInInventory = null;
+        blackImage = GameAssetManager.getGameAssetManager().getBlackImage();
         coockingMenuBackground = GameAssetManager.getGameAssetManager().getCookingMenuBackground();
         craftingMenuBackground = GameAssetManager.getGameAssetManager().getCraftingMenuBackground();
         inventoryMenuBackground = GameAssetManager.getGameAssetManager().getInventoryMenuBackground();
@@ -116,6 +119,7 @@ public class HUDView extends AppMenu {
 
         coockingMenuBackground.setPosition((Gdx.graphics.getWidth()-coockingMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-coockingMenuBackground.getHeight())/2f);
         coockingMenuBackground.setVisible(false);
+        stage.addActor(blackImage);
         stage.addActor(coockingMenuBackground);
 
 
@@ -466,6 +470,10 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void applyNightEffect(){
+        blackImage.setColor(0,0,0,(ClientApp.getCurrentGame().getTime().getHour()>18)? 0.5f:0);
+    }
+
     @Override
     public void show() {
 
@@ -483,7 +491,7 @@ public class HUDView extends AppMenu {
         inventoryItems = player.getBackpack();
         updateOnScreenItems();
 
-
+        applyNightEffect();
         displayClock();
         displayInventoryHotBar();
         showErrorMessage();
