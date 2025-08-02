@@ -139,7 +139,7 @@ public class GameMenuController extends MenuController {
 
 
 //        System.out.println("Walking to " + i + " and " + j);
-        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+        Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
         Map currentMap = currentPlayer.getCurrentMap();
         Cell destination = currentMap.getCell(i, j);
         if (destination == null)
@@ -159,7 +159,7 @@ public class GameMenuController extends MenuController {
                         currentPlayer.setCurrentCell(destination);
                         if (destination.getType() == CellType.MapLink) {
                             if (((Cell) destination.getObject()).getMap() == currentPlayer.getFarmMap() ||
-                                    ((Cell) destination.getObject()).getMap() == App.getCurrentGame().getNpcMap() ||
+                                    ((Cell) destination.getObject()).getMap() == ClientApp.getCurrentGame().getNpcMap() ||
                                     (currentPlayer.getSpouse() != null &&
                                             ((Cell) destination.getObject()).getMap() == currentPlayer.getSpouse().getFarmMap())) {
                                 Cell newDestination = (Cell) destination.getObject();

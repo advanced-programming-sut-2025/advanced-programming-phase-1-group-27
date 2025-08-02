@@ -19,7 +19,6 @@ import org.example.client.controller.OtherPlayerController;
 import org.example.client.model.ClientApp;
 import org.example.client.controller.OutsidePlayerController;
 import org.example.common.models.Direction;
-import org.example.server.models.App;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Position;
 
@@ -52,7 +51,7 @@ public class OutsideView extends AppMenu {
 
     /// ---> Gives the Player Position <---
     public static Position getGraphicalPosition(int i, int j) {
-        int k = App.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
+        int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
         return new Position(j * 40 + 20, (k - i) * 40 + 30);
     }
 
@@ -63,7 +62,7 @@ public class OutsideView extends AppMenu {
 
     /// ---> Gets the Player Position and gives his cell <---
     public static Position getIndices(float x, float y) {
-        int k = App.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
+        int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
         return new Position(k - (int) (y / 40), (int) (x / 40));
     }
 
@@ -80,8 +79,8 @@ public class OutsideView extends AppMenu {
 
         camera = new OrthographicCamera(1920, 1080);
 
-        camera.position.set(getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getX(),
-                getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getY(), 0);
+        camera.position.set(getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX(),
+                getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY(), 0);
 
         playerController.setCamera(camera);
 
@@ -94,7 +93,7 @@ public class OutsideView extends AppMenu {
         Main.getBatch().begin();
 
 
-        App.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
+        ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
 
         playerController.update();
         for (OtherPlayerController otherPlayerController : otherPlayerControllers)

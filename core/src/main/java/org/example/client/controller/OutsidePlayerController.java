@@ -15,7 +15,6 @@ import org.example.common.models.Direction;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.controller.GameMenuController;
-import org.example.server.models.App;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Result;
 import org.example.server.models.enums.InGameMenuType;
@@ -75,8 +74,8 @@ public class OutsidePlayerController {
 
         if (!walking /*&& !view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
         InGameMenuType.NONE*/) {
-            x = OutsideView.getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getX();
-            y = OutsideView.getGraphicalPosition(App.getCurrentGame().getCurrentPlayer().getPosition()).getY();
+            x = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX();
+            y = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY();
             lastX = x;
             lastY = y;
 

@@ -12,7 +12,6 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.server.controller.HomeController;
 import org.example.server.controller.HomePlayerController;
-import org.example.server.models.App;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Player;
 import org.example.server.models.Result;
@@ -126,7 +125,7 @@ public class HomeView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                App.getCurrentGame().getTime().cheatAdvanceTime(1);
+                ClientApp.getCurrentGame().getTime().cheatAdvanceTime(1);
             }
         });
 
@@ -134,11 +133,11 @@ public class HomeView extends AppMenu {
 
 
     public void executeCommands(Scanner scanner) {
-        if (controller.playerPassedOut()) {
-            System.out.println(App.getCurrentGame().getCurrentPlayer().getUsername() + " has passed out!");
-            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
-            return;
-        }
+//        if (controller.playerPassedOut()) {
+//            System.out.println(App.getCurrentGame().getCurrentPlayer().getUsername() + " has passed out!");
+//            System.out.println(((GameView) Menu.GameMenu.getMenu()).getController().nextTurn(scanner));
+//            return;
+//        }
         String input = scanner.nextLine();
         Matcher matcher;
         if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
