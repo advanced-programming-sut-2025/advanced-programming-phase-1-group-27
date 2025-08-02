@@ -31,7 +31,7 @@ public class User {
     }
 
     public User(String username, String password, String nickname, String email, String gender ,
-                String question, String answer , int maxMoneyEarned, int numberOfGamesPlayed) {
+                String question, String answer , int maxMoneyEarned, int numberOfGamesPlayed , int avatarId) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
@@ -44,6 +44,7 @@ public class User {
         this.recoveryQuestion = new SecurityQuestion(question, answer);
         this.maxMoneyEarned = maxMoneyEarned;
         this.numberOfGamesPlayed = numberOfGamesPlayed;
+        this.avatarId = avatarId;
     }
 
     public User(LinkedTreeMap<String, Object> data) {

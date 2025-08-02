@@ -31,7 +31,8 @@ public class DataBaseHelper {
                 "securityQuestion TEXT," +
                 "answer TEXT," +
                 "maxMoney INTEGER DEFAULT 0," +
-                "numberOfGamesPlayed INTEGER DEFAULT 0" +
+                "numberOfGamesPlayed INTEGER DEFAULT 0," +
+                "avatarId INTEGER DEFAULT 0" +
                 ")";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -63,7 +64,8 @@ public class DataBaseHelper {
                         rs.getString("securityQuestion"),
                         rs.getString("answer"),
                         rs.getInt("maxMoney"),
-                        rs.getInt("numberOfGamesPlayed")
+                        rs.getInt("numberOfGamesPlayed"),
+                        rs.getInt("avatarId")
                 );
             }
         } catch (SQLException e) {
@@ -173,6 +175,25 @@ public class DataBaseHelper {
         }
     }
 
+    public static void changeAvatar(String username, int avatarId) {
+        String sql = "UPDATE users SET avatarId = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, avatarId);
+            pstmt.setString(2, username);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("AvatarID for user '" + username + "' changed to '" + avatarId + "' successfully.");
+            } else {
+                System.out.println("User '" + username + "' not found, nickname not changed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error changing avatarId for user '" + username + "': " + e.getMessage());
+        }
+    }
+
     public static void deleteUser(String username) {
         String sql = "DELETE FROM users WHERE username = ?";
 
@@ -210,7 +231,8 @@ public class DataBaseHelper {
                             rs.getString("securityQuestion"),
                             rs.getString("answer"),
                             rs.getInt("maxMoney"),
-                            rs.getInt("numberOfGamesPlayed")
+                            rs.getInt("numberOfGamesPlayed"),
+                            rs.getInt("avatarId")
                     );
                     users.add(user);
                 } catch (IllegalArgumentException e) {
