@@ -49,7 +49,7 @@ public class AppView {
         Main.getMain().setScreen(new WelcomeMenuView());
 
         // For Graphics team
-        //cheat();
+        cheat();
 
         // For GigaChads
 //        int clown = 0;

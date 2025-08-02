@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.OtherPlayerController;
+import org.example.client.controller.ToolGraphicalController;
 import org.example.client.model.ClientApp;
 import org.example.client.controller.OutsidePlayerController;
 import org.example.common.models.Direction;
@@ -32,7 +33,9 @@ public class OutsideView extends AppMenu {
     private final Stage stage;
 
     private final OutsidePlayerController playerController = new OutsidePlayerController(this);
-    private Camera camera;
+    private final ToolGraphicalController toolController = new ToolGraphicalController(this);
+    private Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
 
     private final int tileSize = 40;
 
@@ -51,6 +54,11 @@ public class OutsideView extends AppMenu {
     /// ---> Gives the Player Position <---
     public static Position getGraphicalPosition(int i, int j) {
         int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
+        return new Position(j * 40 + 20, (k - i) * 40 + 30);
+    }
+
+    public static Position getGraphicalPositionInNPCMap(int i, int j) {
+        int k = 15;
         return new Position(j * 40 + 20, (k - i) * 40 + 30);
     }
 
@@ -75,13 +83,11 @@ public class OutsideView extends AppMenu {
 
         Gdx.input.setInputProcessor(stage);
 
-
-        camera = new OrthographicCamera(1920, 1080);
-
         camera.position.set(getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX(),
                 getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY(), 0);
 
         playerController.setCamera(camera);
+        toolController.setCamera(camera);
 
     }
 
@@ -95,9 +101,13 @@ public class OutsideView extends AppMenu {
         ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
 
         playerController.update();
+        toolController.update();
+        toolController.render();
         ClientApp.getCurrentGame().updateOtherPlayers();
-        if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap) {
             ClientApp.getCurrentGame().renderOtherPlayers();
+            System.out.println("TOFFF");
+        }
         camera.update();
         hudView.displayHUD(delta);
         Main.getBatch().end();

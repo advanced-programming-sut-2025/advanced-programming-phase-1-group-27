@@ -33,8 +33,8 @@ public class OtherPlayerController {
     public OtherPlayerController(String username, int i, int j) {
         this.username = username;
         characterSprite.setScale(2f);
-        x = OutsideView.getGraphicalPosition(i, j).getX();
-        y = OutsideView.getGraphicalPosition(i, j).getY();
+        x = OutsideView.getGraphicalPositionInNPCMap(i, j).getX();
+        y = OutsideView.getGraphicalPositionInNPCMap(i, j).getY();
     }
 
 
@@ -55,6 +55,10 @@ public class OtherPlayerController {
         if (!sobhan) {
             sobhan = true;
             return;
+        }
+        if (walking) {
+            x = destX;
+            y = destY;
         }
         switch (direction) {
             case Direction.Up:
@@ -116,6 +120,8 @@ public class OtherPlayerController {
             walking = false;
 
         characterSprite.setCenter(x, y);
+
+        System.out.println("MANAMAMAM " + x + " , " + y);
     }
 
     public void render() {

@@ -236,7 +236,7 @@ public class ClientGame implements Game {
 
     public void addOtherPlayer(String username, int i, int j) {
         otherPlayerControllers.add(new OtherPlayerController(username, i, j));
-        System.out.println(username + " : " + i + ", " + j);
+        System.out.println("Adding " + username + " : " + i + ", " + j);
     }
 
     public void updateOtherPlayers() {
@@ -258,6 +258,7 @@ public class ClientGame implements Game {
 //        }
         otherPlayerControllers.removeIf(otherPlayerController ->
                 otherPlayerController.getUsername().equals(username));
+        System.out.println("Removing " + username);
     }
 
     public void walkPlayer(String username, Direction direction) {

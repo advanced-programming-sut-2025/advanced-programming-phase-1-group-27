@@ -1007,4 +1007,7 @@ public class HUDView extends AppMenu {
         return currentMenu;
     }
 
+    public HUDController getController() {
+        return controller;
+    }
 }
