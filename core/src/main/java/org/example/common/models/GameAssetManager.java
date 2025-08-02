@@ -75,7 +75,7 @@ public class GameAssetManager {
     private final Texture WaterCellTexture = new Texture("assets/Images/Floorings/Water.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
-    private final Sprite standingSprite = characterAtlas.createSprite("standing_1");
+    private final TextureRegion standingTexture = characterAtlas.createSprite("standing_1");
 
     private final Texture inventoryHotBar = new Texture(Gdx.files.internal("Inventory/InventoryHotbar.png"));
 
@@ -213,28 +213,28 @@ public class GameAssetManager {
         }
     }};
 
-    private final Animation<Sprite> walkDown = new Animation<>(
+    private final Animation<TextureRegion> walkDown = new Animation<>(
             0.1f,
             characterAtlas.createSprite("down_1"),
             characterAtlas.createSprite("down_2"),
             characterAtlas.createSprite("down_3"),
             characterAtlas.createSprite("down_4")
     );
-    private final Animation<Sprite> walkRight = new Animation<>(
+    private final Animation<TextureRegion> walkRight = new Animation<>(
             0.1f,
             characterAtlas.createSprite("right_1"),
             characterAtlas.createSprite("right_2"),
             characterAtlas.createSprite("right_3"),
             characterAtlas.createSprite("right_4")
     );
-    private final Animation<Sprite> walkUp = new Animation<>(
+    private final Animation<TextureRegion> walkUp = new Animation<>(
             0.1f,
             characterAtlas.createSprite("up_1"),
             characterAtlas.createSprite("up_2"),
             characterAtlas.createSprite("up_3"),
             characterAtlas.createSprite("up_4")
     );
-    private final Animation<Sprite> walkLeft = new Animation<>(
+    private final Animation<TextureRegion> walkLeft = new Animation<>(
             0.1f,
             characterAtlas.createSprite("left_1"),
             characterAtlas.createSprite("left_2"),
@@ -500,19 +500,19 @@ public class GameAssetManager {
         return characterAtlas;
     }
 
-    public Animation<Sprite> getWalkDown() {
+    public Animation<TextureRegion> getWalkDown() {
         return walkDown;
     }
 
-    public Animation<Sprite> getWalkRight() {
+    public Animation<TextureRegion> getWalkRight() {
         return walkRight;
     }
 
-    public Animation<Sprite> getWalkUp() {
+    public Animation<TextureRegion> getWalkUp() {
         return walkUp;
     }
 
-    public Animation<Sprite> getWalkLeft() {
+    public Animation<TextureRegion> getWalkLeft() {
         return walkLeft;
     }
 
@@ -548,8 +548,8 @@ public class GameAssetManager {
         return inventoryHotBar;
     }
 
-    public Sprite getStandingSprite() {
-        return standingSprite;
+    public TextureRegion getStandingSprite() {
+        return standingTexture;
     }
 
     public Texture getInventorySelectSlot() {

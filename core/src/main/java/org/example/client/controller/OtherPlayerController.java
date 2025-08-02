@@ -3,8 +3,10 @@ package org.example.client.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
@@ -19,8 +21,8 @@ import static java.lang.Math.min;
 public class OtherPlayerController {
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f,
             lastX, lastY, destX, destY;
-    private Animation<Sprite> currentAnimation;
-    private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
+    private Animation<TextureRegion> currentAnimation;
+    private Sprite characterSprite = new Sprite(GameAssetManager.getGameAssetManager().getStandingSprite());
     private float time = 0f, animationTime = 0f;
     private boolean walking = false;
 
@@ -34,16 +36,16 @@ public class OtherPlayerController {
     }
 
 
-    private void updateAnimation(Animation<Sprite> animation) {
+    private void updateAnimation() {
 
-        if (animation.isAnimationFinished(animationTime)) {
+        if (currentAnimation.isAnimationFinished(animationTime)) {
             animationTime = 0f;
         }
 
-        characterSprite = new Sprite(animation.getKeyFrame(animationTime));
+        characterSprite = new Sprite(currentAnimation.getKeyFrame(animationTime));
         characterSprite.setScale(2f);
 
-        animation.setPlayMode(Animation.PlayMode.LOOP);
+        currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
     }
 
@@ -87,7 +89,7 @@ public class OtherPlayerController {
     public void update() {
         animationTime += Gdx.graphics.getDeltaTime();
 
-        characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
+        characterSprite.setRegion(GameAssetManager.getGameAssetManager().getStandingSprite());
         characterSprite.setScale(2f);
 
         time += Gdx.graphics.getDeltaTime();
@@ -101,7 +103,7 @@ public class OtherPlayerController {
             float modif = min(1f, time * 8f);
             x = modif * (destX - lastX) + lastX;
             y = modif * (destY - lastY) + lastY;
-            updateAnimation(currentAnimation);
+            updateAnimation();
         }
 
         if (time >= 0.125f)

@@ -138,12 +138,13 @@ public class OutsideView extends AppMenu {
     }
 
     public void removeOtherPlayer(String username) {
-        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
-            if (otherPlayerController.getUsername().equals(username)) {
-                otherPlayerControllers.remove(otherPlayerController);
-                break;
-            }
-        }
+//        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
+//            if (otherPlayerController.getUsername().equals(username)) {
+//                otherPlayerControllers.remove(otherPlayerController);
+//                break;
+//            }
+//        }
+        otherPlayerControllers.removeIf(otherPlayerController -> otherPlayerController.getUsername().equals(username));
     }
 
     public void walkPlayer(String username, Direction direction) {

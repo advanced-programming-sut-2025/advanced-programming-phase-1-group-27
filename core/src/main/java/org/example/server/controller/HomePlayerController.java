@@ -2,8 +2,10 @@ package org.example.server.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
 import org.example.client.view.HomeView;
 import org.example.client.view.OutsideView;
@@ -18,7 +20,7 @@ import static java.lang.Math.min;
 public class HomePlayerController {
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f;
     private final float speed = 3f;
-    private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
+    private Sprite characterSprite = new Sprite(GameAssetManager.getGameAssetManager().getStandingSprite());
     private float time = 0f;
     private final HomeView view;
 
@@ -27,13 +29,13 @@ public class HomePlayerController {
         this.view = view;
     }
 
-    private void updateAnimation(Animation<Sprite> animation) {
+    private void updateAnimation(Animation<TextureRegion> animation) {
 
         if (animation.isAnimationFinished(time)) {
             time = 0f;
         }
 
-        characterSprite = new Sprite(animation.getKeyFrame(time));
+        characterSprite.setRegion(animation.getKeyFrame(time));
         characterSprite.setScale(2f);
 
         animation.setPlayMode(Animation.PlayMode.LOOP);
@@ -43,7 +45,7 @@ public class HomePlayerController {
     public void update() {
         time += Gdx.graphics.getDeltaTime();
 
-        characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
+        characterSprite.setRegion(GameAssetManager.getGameAssetManager().getStandingSprite());
         characterSprite.setScale(2f);
 
 

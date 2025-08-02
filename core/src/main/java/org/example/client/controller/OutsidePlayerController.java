@@ -3,8 +3,10 @@ package org.example.client.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.GameView;
@@ -26,9 +28,9 @@ import static java.lang.Math.min;
 public class OutsidePlayerController {
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f,
     lastX, lastY, destX, destY;
-    private Animation<Sprite> currentAnimation;
+    private Animation<TextureRegion> currentAnimation;
     private final float speed = 160f;
-    private  Sprite characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
+    private Sprite characterSprite = new Sprite(GameAssetManager.getGameAssetManager().getStandingSprite());
     private float time = 0f, animationTime = 0f;
     private Camera camera;
 
@@ -51,23 +53,23 @@ public class OutsidePlayerController {
         y = camera.position.y;
     }
 
-    private void updateAnimation(Animation<Sprite> animation) {
+    private void updateAnimation() {
 
-        if (animation.isAnimationFinished(animationTime)) {
+        if (currentAnimation.isAnimationFinished(animationTime)) {
             animationTime = 0f;
         }
 
-        characterSprite = new Sprite(animation.getKeyFrame(animationTime));
+        characterSprite = new Sprite(currentAnimation.getKeyFrame(animationTime));
         characterSprite.setScale(2f);
 
-        animation.setPlayMode(Animation.PlayMode.LOOP);
+        currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
     }
 
     public void update() {
         animationTime += Gdx.graphics.getDeltaTime();
 
-        characterSprite = GameAssetManager.getGameAssetManager().getStandingSprite();
+        characterSprite.setRegion(GameAssetManager.getGameAssetManager().getStandingSprite());
         characterSprite.setScale(2f);
 
         if (!walking && !view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
@@ -147,7 +149,7 @@ public class OutsidePlayerController {
             float modif = min(1f, time * 8f);
             x = modif * (destX - lastX) + lastX;
             y = modif * (destY - lastY) + lastY;
-            updateAnimation(currentAnimation);
+            updateAnimation();
         }
 
         if (time >= 0.125f)
