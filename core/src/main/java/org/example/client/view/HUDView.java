@@ -3,6 +3,7 @@ package org.example.client.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,9 +18,12 @@ import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.controller.HUDController;
 import org.example.common.utils.JSONUtils;
+import org.example.server.models.Item;
 import org.example.server.models.Player;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.InGameMenuType;
+import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.tools.Backpack;
 
@@ -38,7 +42,9 @@ public class HUDView extends AppMenu {
     private final Image inventoryMenuBackground;
     private final Image skillMenuBackground;
     private final Image exitMenuBackground;
+    private final Image cookingMenuBackground;
     private final HashMap<CraftingProduct, ImageButton> craftingProducts;
+    private final HashMap<CookingProduct, ImageButton> cookingProducts;
     private final TextField textInputField;
     private final GraphicalResult errorLabel;
     private final Stage stage;
@@ -53,12 +59,24 @@ public class HUDView extends AppMenu {
     private Integer currentSlotInInventory;
     private InGameMenuType currentMenu;
     private boolean ctrlPressed;
+    private final Image blackImage;
+    private final Image hoveringInfoWindow;
+    private Item currentStacksHover;
+    private final Label craftingProductNameLabel;
+    private final Label craftingProductIngredientsLabel;
 
     public HUDView(Stage stage) {
 
+
         controller = new HUDController(this);
+        craftingProductNameLabel = new Label("",skin);
+        craftingProductIngredientsLabel = new Label("", skin);
         rowCoEfficient = 1;
+        currentStacksHover = null;
         currentSlotInInventory = null;
+        hoveringInfoWindow = GameAssetManager.getGameAssetManager().getHoveringInfoWindow();
+        blackImage = GameAssetManager.getGameAssetManager().getBlackImage();
+        cookingMenuBackground = GameAssetManager.getGameAssetManager().getCookingMenuBackground();
         craftingMenuBackground = GameAssetManager.getGameAssetManager().getCraftingMenuBackground();
         inventoryMenuBackground = GameAssetManager.getGameAssetManager().getInventoryMenuBackground();
         skillMenuBackground = GameAssetManager.getGameAssetManager().getSkillMenuBackground();
@@ -97,6 +115,41 @@ public class HUDView extends AppMenu {
             craftingProducts.put(craftingProduct, productButton);
             i++;
         }
+
+        cookingProducts = new HashMap<>();
+
+        i = 0;
+        for (CookingProduct cookingProduct : CookingProduct.values()) {
+            ImageButton productButton = new ImageButton(new TextureRegionDrawable(cookingProduct.getTexture()));
+            productButton.setSize(36, 36);
+            productButton.setPosition(520 + 110 * (i % 7), (float) (750 - (i / 7) * 80));
+            productButton.setColor(productButton.getColor().r, productButton.getColor().g, productButton.getColor().b, 0.3f + ((ClientApp.getCurrentGame().getCurrentPlayer().hasEnoughIngredients(cookingProduct.getRecipe())) ? 0.7f : 0f));
+            cookingProducts.put(cookingProduct, productButton);
+            i++;
+        }
+
+        cookingMenuBackground.setPosition((Gdx.graphics.getWidth()-cookingMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-cookingMenuBackground.getHeight())/2f);
+        cookingMenuBackground.setVisible(false);
+        stage.addActor(blackImage);
+        stage.addActor(cookingMenuBackground);
+
+        hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-20,
+                20);
+
+        stage.addActor(hoveringInfoWindow);
+
+        craftingProductNameLabel.setPosition(hoveringInfoWindow.getX()+20,hoveringInfoWindow.getHeight()-20);
+        craftingProductNameLabel.setVisible(false);
+        craftingProductNameLabel.setColor(Color.BLACK);
+        stage.addActor(craftingProductNameLabel);
+
+        craftingProductIngredientsLabel.setPosition(hoveringInfoWindow.getX()+20,
+                hoveringInfoWindow.getHeight()/2f);
+        craftingProductIngredientsLabel.setVisible(false);
+        craftingProductIngredientsLabel.setColor(Color.BLACK);
+        craftingProductIngredientsLabel.setFontScale(0.7f);
+        stage.addActor(craftingProductIngredientsLabel);
+
 
         setListeners();
 
@@ -175,7 +228,6 @@ public class HUDView extends AppMenu {
 
     private void showErrorMessage() {
         errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
-//        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f * errorLabel.getDisplayTime() / 3, Gdx.graphics.getHeight() - 40);
         stage.addActor(errorLabel.getMessage());
 
     }
@@ -401,6 +453,72 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayCookingMenu(){
+
+        // BACKGROUND
+        cookingMenuBackground.setVisible(currentMenu == InGameMenuType.COOKING);
+
+        //  ITEMS
+        for (CookingProduct cookingProduct : cookingProducts.keySet()) {
+
+            ImageButton imageButton = cookingProducts.get(cookingProduct);
+
+            imageButton.setColor(
+                    imageButton.getColor().r,
+                    imageButton.getColor().g,
+                    imageButton.getColor().b,
+                    0.3f + ((ClientApp.getCurrentGame().getCurrentPlayer().hasEnoughIngredients(cookingProduct.getRecipe())) ? 0.7f : 0f)
+            );
+
+            if (currentMenu == InGameMenuType.COOKING) {
+                imageButton.setVisible(
+                        ClientApp.getCurrentGame().getCurrentPlayer().getAvailableCookingRecipes().contains(cookingProduct.getRecipe())
+                );
+            } else {
+                imageButton.setVisible(false);
+            }
+            stage.addActor(imageButton);
+
+        }
+
+        // INVENTORY ITEMS
+
+        if ( currentMenu == InGameMenuType.COOKING ) {
+
+            for ( int i = 0; i < Math.min(onScreenItems.size(),36); i++ ){
+
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 420 - (float)(70 * (i/12)) );
+                onScreenItems.get(i).getItem().getItemImage().setVisible(true);
+                onScreenItems.get(i).getItem().getItemImage().toFront();
+
+            }
+
+        }
+
+
+    }
+
+    private void applyNightEffect(){
+        blackImage.setColor(0,0,0,(ClientApp.getCurrentGame().getTime().getHour()>18)? 0.5f:0);
+    }
+
+    private void displayHoveringItemInfo(){
+
+        if ( currentStacksHover != null ){
+            craftingProductNameLabel.setText(currentStacksHover.getName());
+            CraftingProduct product = (CraftingProduct) currentStacksHover;
+            Recipe recipe = product.getRecipe();
+            craftingProductIngredientsLabel.setText(recipe.getInfo());
+            craftingProductNameLabel.setFontScale(1f);
+        }
+
+        hoveringInfoWindow.setVisible(currentStacksHover != null);
+        craftingProductNameLabel.setVisible(currentStacksHover != null);
+        craftingProductIngredientsLabel.setVisible(currentStacksHover != null);
+
+
+    }
+
     @Override
     public void show() {
 
@@ -418,7 +536,7 @@ public class HUDView extends AppMenu {
         inventoryItems = player.getBackpack();
         updateOnScreenItems();
 
-
+        applyNightEffect();
         displayClock();
         displayInventoryHotBar();
         showErrorMessage();
@@ -430,8 +548,11 @@ public class HUDView extends AppMenu {
         displaySkillMenu();
         displayCraftingMenu();
         displayExitMenu();
+        displayCookingMenu();
         displayItemQuantity();
+        displayHoveringItemInfo();
         displayInputField();
+
 
 
     }
@@ -506,6 +627,16 @@ public class HUDView extends AppMenu {
                         }
                         else {
                             currentMenu = InGameMenuType.CRAFTING;
+                            makeOnScreenItemsInvisible();
+                        }
+
+                    } else if ( keycode == Input.Keys.C ) {
+
+                        if ( currentMenu == InGameMenuType.COOKING ) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.COOKING;
                             makeOnScreenItemsInvisible();
                         }
 
@@ -776,6 +907,25 @@ public class HUDView extends AppMenu {
 
         });
 
+        for ( CraftingProduct craftingProduct: craftingProducts.keySet()  ){
+
+            ImageButton imageButton = craftingProducts.get(craftingProduct);
+            imageButton.addListener(new ClickListener() {
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    super.enter(event, x, y, pointer, fromActor);
+                    currentStacksHover = craftingProduct;
+                }
+
+                @Override
+                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    super.exit(event, x, y, pointer, toActor);
+                    currentStacksHover = null;
+                }
+            });
+
+        }
+
         for (Map.Entry<CraftingProduct, ImageButton> entry : craftingProducts.entrySet()) {
             ImageButton imageButton = entry.getValue();
             imageButton.addListener(new ClickListener() {
@@ -792,6 +942,7 @@ public class HUDView extends AppMenu {
                }
             });
         }
+
     }
 
 

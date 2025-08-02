@@ -29,9 +29,12 @@ import java.util.List;
 public class GameAssetManager {
 
 
+
     private static GameAssetManager gameAssetManager;
 
     private final Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
+
+    private final Image blackImage = new Image(new Texture(Gdx.files.internal("black_4k.png")));
 
     private final Texture background = new Texture(Gdx.files.internal("Images/menu_background.png"));
     private final Texture StardewValleyText = new Texture(Gdx.files.internal("Images/stardew_valley_text.png"));
@@ -42,6 +45,18 @@ public class GameAssetManager {
 
     private final Color errorColor = new Color(1, 0.31f, 0, 1);
     private final Color acceptColor = new Color(0.216f, 0.831f, 0.255f, 1);
+
+    private final Texture[] avatarTextures = {
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_0_0.png")),
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_0_1.png")),
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_0_2.png")),
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_1_0.png")),
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_1_1.png")),
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_1_2.png")),
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_2_0.png")),
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_2_1.png")),
+            new Texture(Gdx.files.internal("Avatars/stardew_avatar_2_2.png")),
+    };
 
     private final Texture map1 = new Texture(Gdx.files.internal("MapImage/avatar7.png"));
     private final Texture map2 = new Texture(Gdx.files.internal("MapImage/avatar10.png"));
@@ -276,6 +291,9 @@ public class GameAssetManager {
     private final Image craft_fishSmoker = new Image(new Texture(Gdx.files.internal("Images/Crafting/Fish_Smoker.png")));
     private final Image craft_mysticTreeSeed = new Image(new Texture(Gdx.files.internal("Images/Crafting/Mystic_Tree_Seed.png")));
 
+    private final Image cookingMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png")));
+
+    private final Image hoveringInfoWindow = new Image(new Texture(Gdx.files.internal("Images/HoveringInfoWindow.png")));
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -284,6 +302,18 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getHoveringInfoWindow() {
+        return hoveringInfoWindow;
+    }
+
+    public Image getCookingMenuBackground() {
+        return cookingMenuBackground;
+    }
+
+    public Image getBlackImage() {
+        return blackImage;
     }
 
     public Image getCraft_bomb() {
@@ -590,5 +620,9 @@ public class GameAssetManager {
 
     public HashMap<TreeType, ArrayList<TextureRegion>> getTreeTextureMap() {
         return treeTextureMap;
+    }
+
+    public Texture getAvatarTexture(int id) {
+        return avatarTextures[id];
     }
 }

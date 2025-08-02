@@ -1,3 +1,12 @@
+Avatars/stardew_avatar_0_0.png
+Avatars/stardew_avatar_0_1.png
+Avatars/stardew_avatar_0_2.png
+Avatars/stardew_avatar_1_0.png
+Avatars/stardew_avatar_1_1.png
+Avatars/stardew_avatar_1_2.png
+Avatars/stardew_avatar_2_0.png
+Avatars/stardew_avatar_2_1.png
+Avatars/stardew_avatar_2_2.png
 Buildings/Buildings.atlas
 Buildings/Cabins.png
 Character/Vincent.png
@@ -26,6 +35,7 @@ Fonts/lantern_white.png
 Fonts/stardew-font.fnt
 Fonts/stardew-font.png
 Fonts/stardew-valley.ttf
+Images/Cooking/CookingMenu.png
 Images/Crafting/Bee_House.png
 Images/Crafting/Bomb.png
 Images/Crafting/Charcoal_Kiln.png
@@ -329,6 +339,7 @@ Images/Fruits/Hot_Pepper.png
 Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
+Images/HoveringInfoWindow.png
 Images/Inventory/InventoryMenuMan.png
 Images/Inventory/InventoryMenuWoman.png
 Images/Shops/JojaMart.png
@@ -692,6 +703,7 @@ NPCs/Shop/Willy.png
 Sounds/click.wav
 Sounds/music/theme1.mp3
 Sounds/music/theme2.mp3
+black_4k.png
 logo.jpg
 skin/font-export.fnt
 skin/font-subtitle-export.fnt

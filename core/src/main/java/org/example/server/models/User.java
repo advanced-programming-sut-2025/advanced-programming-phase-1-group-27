@@ -20,6 +20,7 @@ public class User {
     private SecurityQuestion recoveryQuestion;
     private int maxMoneyEarned = 0;
     private int numberOfGamesPlayed = 0;
+    private int avatarId = 0;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -206,5 +207,13 @@ public class User {
 
     public void setRecoveryQuestion(SecurityQuestion securityQuestion) {
         recoveryQuestion = securityQuestion;
+    }
+
+    public int getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(int avatarId) {
+        this.avatarId = avatarId;
     }
 }

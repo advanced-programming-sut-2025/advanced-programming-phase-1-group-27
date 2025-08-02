@@ -35,6 +35,7 @@ public class ProfileMenuView extends AppMenu {
     private final TextField passwordTextField;
 
     private final TextButton changeButton;
+    private final TextButton avatarMenuButton;
     private final TextButton backButton;
 
     private final GraphicalResult errorLabel;
@@ -59,6 +60,7 @@ public class ProfileMenuView extends AppMenu {
         passwordTextField = new TextField("", skin);
 
         changeButton = new TextButton("Change", skin);
+        avatarMenuButton = new TextButton("Avatar Menu", skin);
         backButton = new TextButton("Back", skin);
 
         errorLabel = new GraphicalResult();
@@ -124,15 +126,22 @@ public class ProfileMenuView extends AppMenu {
     private void showButtons(){
 
         backButton.setWidth(Gdx.graphics.getWidth() / 5f);
+        avatarMenuButton.setWidth(Gdx.graphics.getWidth() / 5f);
         changeButton.setWidth(Gdx.graphics.getWidth() / 5f);
 
         backButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-backButton.getWidth())/2,
-                 Gdx.graphics.getHeight()/3f);
+                 Gdx.graphics.getHeight()/3f - 100);
+
+        avatarMenuButton.setPosition(
+                Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-avatarMenuButton.getWidth())/2,
+                Gdx.graphics.getHeight()/3f + 100
+        );
 
         changeButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-changeButton.getWidth())/2,
-                Gdx.graphics.getHeight()/3f + 200);
+                Gdx.graphics.getHeight()/3f + 300);
 
         stage.addActor(backButton);
+        stage.addActor(avatarMenuButton);
         stage.addActor(changeButton);
 
     }
@@ -153,8 +162,6 @@ public class ProfileMenuView extends AppMenu {
 
         stage.addActor(menuBackground);
         showErrorMessage();
-
-        stage.addActor(new Label("PROFILE", skin));
 
     }
 
@@ -214,6 +221,14 @@ public class ProfileMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 errorLabel.set(controller.changeViaGraphics());
+            }
+        });
+
+        avatarMenuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.goToAvatarMenu();
             }
         });
 

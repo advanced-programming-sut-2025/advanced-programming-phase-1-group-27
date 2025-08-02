@@ -82,6 +82,11 @@ public class ProfileMenuController{
         }} , Message.Type.response);
     }
 
+    public static void updateAvatar(Message message, User user) {
+        int avatarId = message.getIntFromBody("avatarId");
+        user.setAvatarId(avatarId);
+    }
+
     private static Result changeUsername(String newUsername , User currentUser) {
         if (!User.isValidUsername(newUsername))
             return new Result(false, "Username format is invalid!");

@@ -66,6 +66,9 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.change_profile) {
             sendMessage(ProfileMenuController.change(message, this));
             return true;
+        } else if (message.getType() == Message.Type.update_avatar) {
+            ProfileMenuController.updateAvatar(message, user);
+            return true;
         } else if (message.getType() == Message.Type.create_lobby) {
             sendMessage(LobbyController.createLobby(message));
             return true;

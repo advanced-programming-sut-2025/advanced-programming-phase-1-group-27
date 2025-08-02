@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Recipe implements Item {
+
     HoneyRecipe(0, ProcessedProductType.Honey, new ArrayList<>(List.of())),
     CheeseRecipe(0, ProcessedProductType.Cheese, new ArrayList<>(List.of(
             new Ingredient(AnimalProduct.CowMilk, 1)
@@ -577,6 +578,16 @@ public enum Recipe implements Item {
         result.append("Ingredients:\n");
         for (Ingredient ingredient : ingredients) {
             result.append(ingredient.toString()).append("\n");
+        }
+        return result.toString();
+    }
+
+    public String getInfo() {
+        StringBuilder result = new StringBuilder();
+//        result.append("--->").append(finalProduct.getName()).append("\n\n");
+        result.append("Ingredients:\n");
+        for (Ingredient ingredient : ingredients) {
+            result.append("    ").append(ingredient.getPossibleIngredients().getFirst()).append(" (").append(ingredient.getQuantity()).append(")\n");
         }
         return result.toString();
     }
