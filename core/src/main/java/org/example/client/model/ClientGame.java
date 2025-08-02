@@ -1,6 +1,8 @@
 package org.example.client.model;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.controller.OtherPlayerController;
+import org.example.common.models.Direction;
 import org.example.common.models.Game;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
@@ -31,6 +33,7 @@ public class ClientGame implements Game {
     private Shop jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
+    private ArrayList<OtherPlayerController> otherPlayerControllers = new ArrayList<>();
 
     public ClientGame(Lobby lobby, Player player, ArrayList<MiniPlayer> players) {
         this.lobbyId = lobby.getId();
@@ -229,6 +232,45 @@ public class ClientGame implements Game {
         fishShop = new Shop(ShopType.FishShop, time.getSeason());
         marnieRanch = new Shop(ShopType.MarnieRanch, time.getSeason());
         stardropSaloon = new Shop(ShopType.StardropSaloon, time.getSeason());
+    }
+
+    public void addOtherPlayer(String username, int i, int j) {
+        otherPlayerControllers.add(new OtherPlayerController(username, i, j));
+        System.out.println(username + " : " + i + ", " + j);
+    }
+
+    public void updateOtherPlayers() {
+        for (OtherPlayerController otherPlayerController : otherPlayerControllers)
+            otherPlayerController.update();
+    }
+
+    public void renderOtherPlayers() {
+        for (OtherPlayerController otherPlayerController : otherPlayerControllers)
+            otherPlayerController.render();
+    }
+
+    public void removeOtherPlayer(String username) {
+//        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
+//            if (otherPlayerController.getUsername().equals(username)) {
+//                otherPlayerControllers.remove(otherPlayerController);
+//                break;
+//            }
+//        }
+        otherPlayerControllers.removeIf(otherPlayerController ->
+                otherPlayerController.getUsername().equals(username));
+    }
+
+    public void walkPlayer(String username, Direction direction) {
+        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
+            if (otherPlayerController.getUsername().equals(username)) {
+                otherPlayerController.walk(direction);
+            }
+        }
+        System.out.println(username + direction);
+    }
+
+    public ArrayList<OtherPlayerController> getOtherPlayerControllers() {
+        return otherPlayerControllers;
     }
 
     public NPC getGus() {

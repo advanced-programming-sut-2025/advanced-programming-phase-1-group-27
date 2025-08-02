@@ -26,6 +26,8 @@ public class OtherPlayerController {
     private float time = 0f, animationTime = 0f;
     private boolean walking = false;
 
+    private boolean sobhan = false;
+
     private final String username;
 
     public OtherPlayerController(String username, int i, int j) {
@@ -42,7 +44,7 @@ public class OtherPlayerController {
             animationTime = 0f;
         }
 
-        characterSprite = new Sprite(currentAnimation.getKeyFrame(animationTime));
+        characterSprite.setRegion((currentAnimation.getKeyFrame(animationTime)));
         characterSprite.setScale(2f);
 
         currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -50,6 +52,10 @@ public class OtherPlayerController {
     }
 
     public void walk(Direction direction) {
+        if (!sobhan) {
+            sobhan = true;
+            return;
+        }
         switch (direction) {
             case Direction.Up:
                 lastX = x;
@@ -110,6 +116,9 @@ public class OtherPlayerController {
             walking = false;
 
         characterSprite.setCenter(x, y);
+    }
+
+    public void render() {
         characterSprite.draw(Main.getBatch());
     }
 

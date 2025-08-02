@@ -86,7 +86,7 @@ public class HomeView extends AppMenu {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
+        ClientApp.getCurrentGame().updateOtherPlayers();
 
     }
 

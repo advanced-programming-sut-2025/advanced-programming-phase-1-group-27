@@ -1,6 +1,7 @@
 package org.example.client.controller;
 
 import org.example.client.model.ClientApp;
+import org.example.client.model.ClientGame;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
 import org.example.common.models.ItemManager;
@@ -97,23 +98,17 @@ public class ServerUpdatesController { // handles updates sent by server
     public static void otherPlayerEnteredNpcMap(Message message) {
         String username = message.getFromBody("username");
         int i = message.getIntFromBody("x"), j = message.getIntFromBody("y");
-        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
-            outsideView.addOtherPlayer(username, i, j);
-        }
+        ClientApp.getCurrentGame().addOtherPlayer(username, i, j);
     }
 
     public static void otherPlayerLeftNpcMap(Message message) {
         String username = message.getFromBody("username");
-        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
-            outsideView.removeOtherPlayer(username);
-        }
+        ClientApp.getCurrentGame().removeOtherPlayer(username);
     }
 
     public static void otherPlayerWalking(Message message) {
         String username = message.getFromBody("username");
         Direction direction = Direction.getDirection(message.getFromBody("direction"));
-        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
-            outsideView.walkPlayer(username, direction);
-        }
+        ClientApp.getCurrentGame().walkPlayer(username, direction);
     }
 }

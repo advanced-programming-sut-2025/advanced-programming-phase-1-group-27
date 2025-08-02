@@ -194,57 +194,57 @@ public class GameMenuController extends MenuController {
                                 int time = ClientApp.getCurrentGame().getTime().getHour();
                                 if (storeBuilding.getStore().getShopType().getStartTime() > time ||
                                         storeBuilding.getStore().getShopType().getEndTime() < time) {
-                                    return new Result(true,
+                                    return new Result(false,
                                             "The shop you want to enter is closed at the moment.");
                                 }
                                 switch (storeBuilding.getStore().getShopType()) {
                                     case ShopType.CarpenterShop -> {
                                         currentPlayer.setCurrentMenu(Menu.CarpenterShop);
-                                        App.setCurrentMenu(Menu.CarpenterShop);
+                                        ClientApp.setCurrentMenu(new CarpenterShop());
                                         Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(new CarpenterShop());
+                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
                                         return new Result(true, "You Entered The Carpenter Shop!");
                                     }
                                     case ShopType.FishShop -> {
                                         currentPlayer.setCurrentMenu(Menu.FishShop);
-                                        App.setCurrentMenu(Menu.FishShop);
+                                        ClientApp.setCurrentMenu(new FishShop());
                                         Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(new FishShop());
+                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
                                         return new Result(true, "You Entered The Fish Shop!");
                                     }
                                     case ShopType.Blacksmith -> {
                                         currentPlayer.setCurrentMenu(Menu.BlackSmithShop);
-                                        App.setCurrentMenu(Menu.BlackSmithShop);
+                                        ClientApp.setCurrentMenu(new BlackSmithShop());
                                         Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(new BlackSmithShop());
+                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
                                         return new Result(true, "You Entered The Blacksmith Shop!");
                                     }
                                     case ShopType.JojaMart -> {
                                         currentPlayer.setCurrentMenu(Menu.JojaMartShop);
-                                        App.setCurrentMenu(Menu.JojaMartShop);
+                                        ClientApp.setCurrentMenu(new JojaMartShop());
                                         Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(new JojaMartShop());
+                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
                                         return new Result(true, "You Entered The Joja Mart Shop!");
                                     }
                                     case ShopType.MarnieRanch -> {
                                         currentPlayer.setCurrentMenu(Menu.MarnieRanch);
-                                        App.setCurrentMenu(Menu.MarnieRanch);
+                                        ClientApp.setCurrentMenu(new MarnieRanch());
                                         Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(new MarnieRanch());
+                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
                                         return new Result(true, "You Entered The Marnie Ranch!");
                                     }
                                     case ShopType.PierreGeneralStore -> {
                                         currentPlayer.setCurrentMenu(Menu.PierreGeneralShop);
-                                        App.setCurrentMenu(Menu.PierreGeneralShop);
+                                        ClientApp.setCurrentMenu(new PierreGeneralShop());
                                         Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(new PierreGeneralShop());
+                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
                                         return new Result(true, "You Entered The Pierre General Shop!");
                                     }
                                     case ShopType.StardropSaloon -> {
                                         currentPlayer.setCurrentMenu(Menu.StardropSaloonShop);
-                                        App.setCurrentMenu(Menu.StardropSaloonShop);
+                                        ClientApp.setCurrentMenu(new StardropSaloonShop());
                                         Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(new StardropSaloonShop());
+                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
                                         return new Result(true, "You Entered The Stardrop Saloon Shop!");
                                     }
                                 }

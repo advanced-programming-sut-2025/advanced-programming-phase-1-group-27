@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
+import org.example.client.model.ClientApp;
 import org.example.client.view.HomeView;
 import org.example.client.view.OutsideView;
 import org.example.server.models.App;
@@ -74,11 +75,10 @@ public class HomePlayerController {
         y = min(y, Gdx.graphics.getHeight() / 2f + 50);
         y = max(y, Gdx.graphics.getHeight() / 2f - 70);
 
-        if (y == Gdx.graphics.getHeight() / 2f - 70 &&
-        App.getCurrentMenu() != Menu.Outside) {
-            App.setCurrentMenu(Menu.Outside);
+        if (y == Gdx.graphics.getHeight() / 2f - 70) {
+            ClientApp.setCurrentMenu(new OutsideView());
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new OutsideView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
         }
 
 

@@ -32,7 +32,6 @@ public class OutsideView extends AppMenu {
     private final Stage stage;
 
     private final OutsidePlayerController playerController = new OutsidePlayerController(this);
-    private final ArrayList<OtherPlayerController> otherPlayerControllers = new ArrayList<>();
     private Camera camera;
 
     private final int tileSize = 40;
@@ -63,7 +62,7 @@ public class OutsideView extends AppMenu {
     /// ---> Gets the Player Position and gives his cell <---
     public static Position getIndices(float x, float y) {
         int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
-        return new Position(k - (int) (y / 40), (int) (x / 40));
+        return new Position(k - (int) Math.floor(y / 40), (int) Math.floor(x / 40));
     }
 
     @Override
@@ -96,8 +95,9 @@ public class OutsideView extends AppMenu {
         ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
 
         playerController.update();
-        for (OtherPlayerController otherPlayerController : otherPlayerControllers)
-            otherPlayerController.update();
+        ClientApp.getCurrentGame().updateOtherPlayers();
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
+            ClientApp.getCurrentGame().renderOtherPlayers();
         camera.update();
         hudView.displayHUD(delta);
         Main.getBatch().end();
@@ -136,25 +136,4 @@ public class OutsideView extends AppMenu {
         return hudView;
     }
 
-    public void addOtherPlayer(String username, int i, int j) {
-        otherPlayerControllers.add(new OtherPlayerController(username, i, j));
-    }
-
-    public void removeOtherPlayer(String username) {
-//        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
-//            if (otherPlayerController.getUsername().equals(username)) {
-//                otherPlayerControllers.remove(otherPlayerController);
-//                break;
-//            }
-//        }
-        otherPlayerControllers.removeIf(otherPlayerController -> otherPlayerController.getUsername().equals(username));
-    }
-
-    public void walkPlayer(String username, Direction direction) {
-        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
-            if (otherPlayerController.getUsername().equals(username)) {
-                otherPlayerController.walk(direction);
-            }
-        }
-    }
 }
