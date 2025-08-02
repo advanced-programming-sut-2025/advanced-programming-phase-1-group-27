@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import org.example.common.models.Message;
 import org.example.server.models.Lobby;
+import org.example.server.models.ServerApp;
 
 import java.util.HashMap;
 
@@ -10,7 +11,8 @@ public class TimeController {
         lobby.notifyAll(new Message(null, Message.Type.pass_an_hour));
     }
 
-    public static void cheatAdvanceTime(Message message, Lobby lobby) {
+    public static void cheatAdvanceTime(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
         if (message.getFromBody("unit").equals("hour"))
             lobby.getGame().getTime().cheatAdvanceTime(message.getIntFromBody("value"));

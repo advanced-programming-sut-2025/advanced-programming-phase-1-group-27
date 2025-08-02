@@ -79,6 +79,7 @@ public class PregameMenuController extends MenuController {
                 miniPlayers
         ));
         clientGame.init(message.getFromBody("farmInfo"));
+        System.out.println("FARM ID: " + view.getLobby().getUsernameToMap().get(currentPlayer.getUsername()));
         currentPlayer.setFarmMap(clientGame.getFarmMap(
                 view.getLobby().getUsernameToMap().get(currentPlayer.getUsername())
         ));

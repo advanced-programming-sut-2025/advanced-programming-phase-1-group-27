@@ -186,6 +186,9 @@ public class GameAssetManager {
             put(fishType, new Texture(Gdx.files.internal(fishType.getAddress())));
     }};
 
+    private final Texture redCrossTexture = new Texture(Gdx.files.internal("Images/red-cross.png"));
+    private final Image redCrossImage = new Image(redCrossTexture);
+
     private final TextureAtlas treeAtlas = new TextureAtlas("assets/Images/Trees/Trees.atlas");
 
     private final HashMap<TreeType, ArrayList<TextureRegion>> treeTextureMap = new HashMap<>() {{
@@ -589,11 +592,15 @@ public class GameAssetManager {
     }
 
     public Texture getItemTexture(Item item) {
-        return itemTextureMap.get(item);
+        if (itemTextureMap.containsKey(item))
+            return itemTextureMap.get(item);
+        return redCrossTexture;
     }
 
     public Image getItemImage(Item item) {
-        return itemImageMap.get(item);
+        if (itemImageMap.containsKey(item))
+            return itemImageMap.get(item);
+        return redCrossImage;
     }
 
 

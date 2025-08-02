@@ -41,6 +41,7 @@ public class CheatController {
             return new Result(false, "Please choose a valid weather type from " + Weather.values());
         }
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("weather", weatherString);
         }}, Message.Type.set_weather));
         return new Result(true, "Weather set to " + weather.toString() + " Weather!");
@@ -95,6 +96,7 @@ public class CheatController {
         int hour = Integer.parseInt(hourString);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(
                 new Message(new HashMap<>() {{
+                    put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
                     put("unit", "hour");
                     put("value", hour);
                 }}, Message.Type.advance_time),
@@ -111,6 +113,7 @@ public class CheatController {
         int day = Integer.parseInt(dayString);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(
                 new Message(new HashMap<>() {{
+                    put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
                     put("unit", "day");
                     put("value", day);
                 }}, Message.Type.advance_time),

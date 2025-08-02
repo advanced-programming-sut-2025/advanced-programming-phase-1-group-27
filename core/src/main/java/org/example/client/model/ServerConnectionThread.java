@@ -90,6 +90,7 @@ public class ServerConnectionThread extends ConnectionThread {
     @Override
     public void run() {
         super.run();
+        System.out.println("TAMAM SHOD");
         ClientApp.end();
     }
 }

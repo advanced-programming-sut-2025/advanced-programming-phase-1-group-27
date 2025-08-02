@@ -259,12 +259,12 @@ Images/Crops/Rhubarb/  (3).png
 Images/Crops/Rhubarb/  (4).png
 Images/Crops/Rhubarb/  (5).png
 Images/Crops/Rhubarb/  (6).png
-Images/Crops/Starfruit/ (1).png
-Images/Crops/Starfruit/ (2).png
-Images/Crops/Starfruit/ (3).png
-Images/Crops/Starfruit/ (4).png
-Images/Crops/Starfruit/ (5).png
-Images/Crops/Starfruit/ (6).png
+Images/Crops/Starfruit/  (1).png
+Images/Crops/Starfruit/  (2).png
+Images/Crops/Starfruit/  (3).png
+Images/Crops/Starfruit/  (4).png
+Images/Crops/Starfruit/  (5).png
+Images/Crops/Starfruit/  (6).png
 Images/Crops/Strawberry/  (1).png
 Images/Crops/Strawberry/  (2).png
 Images/Crops/Strawberry/  (3).png
@@ -272,11 +272,11 @@ Images/Crops/Strawberry/  (4).png
 Images/Crops/Strawberry/  (5).png
 Images/Crops/Strawberry/  (6).png
 Images/Crops/Strawberry/  (7).png
-Images/Crops/SummerSprangle/  (1).png
-Images/Crops/SummerSprangle/  (2).png
-Images/Crops/SummerSprangle/  (3).png
-Images/Crops/SummerSprangle/  (4).png
-Images/Crops/SummerSprangle/  (5).png
+Images/Crops/SummerSpangle/  (1).png
+Images/Crops/SummerSpangle/  (2).png
+Images/Crops/SummerSpangle/  (3).png
+Images/Crops/SummerSpangle/  (4).png
+Images/Crops/SummerSpangle/  (5).png
 Images/Crops/SummerSquash/  (1).png
 Images/Crops/SummerSquash/  (2).png
 Images/Crops/SummerSquash/  (3).png
@@ -357,6 +357,7 @@ Images/home3.png
 Images/home_cropped.png
 Images/hut.png
 Images/menu_background.png
+Images/red-cross.png
 Images/stardew_valley_text.png
 Inventory/InventoryHotbar.png
 Inventory/Inventory_Parts.png

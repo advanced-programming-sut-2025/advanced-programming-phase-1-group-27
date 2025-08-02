@@ -16,7 +16,6 @@ import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class ClientConnectionThread extends ConnectionThread {
     private User user = null;
-    private Lobby lobby = null; // TODO: whenever the game ends, this should return to null
 
     public ClientConnectionThread(Socket socket) throws IOException {
         super(socket);
@@ -83,7 +82,6 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         } else if (message.getType() == Message.Type.create_game) {
             PregameMenuController.createGame(message);
-            this.lobby = ServerApp.getLobbyById(new Lobby(message.getFromBody("lobbyInfo")).getId());
             return true;
         } else if (message.getType() == Message.Type.get_online_users) {
             sendMessage(LobbyController.getOnlineUsersUsernames(message));
@@ -95,16 +93,16 @@ public class ClientConnectionThread extends ConnectionThread {
             PregameMenuController.leaveLobby(message);
             return true;
         } else if (message.getType() == Message.Type.advance_time) {
-            TimeController.cheatAdvanceTime(message, lobby);
+            TimeController.cheatAdvanceTime(message);
             sendMessage(new Message(null, Message.Type.response));
             return true;
         } else if (message.getType() == Message.Type.set_weather) {
-            ClientUpdatesController.setTomorrowWeather(message, lobby);
+            ClientUpdatesController.setTomorrowWeather(message);
             return true;
         } else if (message.getType() == Message.Type.enter_npc ||
                    message.getType() == Message.Type.leave_npc ||
                    message.getType() == Message.Type.walk_update) {
-            ClientUpdatesController.notifyExcept(message, lobby);
+            ClientUpdatesController.notifyExcept(message);
             return true;
         } else if (message.getType() == Message.Type.purchase_from_shop) {
             sendMessage(ClientUpdatesController.purchase(message));

@@ -167,6 +167,7 @@ public class GameMenuController extends MenuController {
                                 currentPlayer.setCurrentMap(newDestination.getMap());
                                 if (((Cell) destination.getObject()).getMap() instanceof NPCMap) {
                                     ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                                        put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
                                         put("username", currentPlayer.getUsername());
                                         put("x", ((Cell) destination.getObject()).getPosition().getX());
                                         put("y", ((Cell) destination.getObject()).getPosition().getY());
@@ -174,6 +175,7 @@ public class GameMenuController extends MenuController {
                                 }
                                 if (((Cell) destination.getObject()).getMap() instanceof FarmMap) {
                                     ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                                        put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
                                         put("username", currentPlayer.getUsername());
                                         put("x", ((Cell) destination.getObject()).getPosition().getX());
                                         put("y", ((Cell) destination.getObject()).getPosition().getY());

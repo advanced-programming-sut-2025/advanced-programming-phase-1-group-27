@@ -131,4 +131,8 @@ public class ServerApp {
         }
         return null;
     }
+
+    public static ArrayList<ClientConnectionThread> getClientConnectionThreads() {
+            return connections;
+    }
 }

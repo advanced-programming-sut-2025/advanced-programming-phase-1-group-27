@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.shopControllers.PurchaseMenuController;
@@ -66,7 +67,8 @@ public class PurchaseMenuView extends AppMenu {
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
 
         itemImage = new Image(stock.getItem().getTexture());
-        itemImage.setSize(itemImage.getWidth() * 2.5f, itemImage.getHeight() * 2.5f);
+        itemImage.setScaling(Scaling.fit);
+        itemImage.setSize(150, 150);
 
         priceLabel = new Label(stock.getPrice() + "" , skin);
         quantityLabel = new Label("" , skin);

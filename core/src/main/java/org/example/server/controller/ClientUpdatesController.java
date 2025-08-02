@@ -10,7 +10,8 @@ import org.example.server.models.enums.Weathers.Weather;
 import java.util.HashMap;
 
 public class ClientUpdatesController {
-    public static synchronized void setTomorrowWeather(Message message, Lobby lobby) {
+    public static synchronized void setTomorrowWeather(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         Weather weather = Weather.getWeather(message.getFromBody("weather"));
         assert weather != null;
         lobby.getGame().setTomorrowWeather(weather);
@@ -29,7 +30,7 @@ public class ClientUpdatesController {
             return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("Sorry! we are out of stock."));
             }}, Message.Type.response);
-//        updateShopStock(lobby, item, quantity, shop);
+        updateShopStock(lobby, item, quantity, shop);
         return new Message(new HashMap<>() {{
             put("GraphicalResult", GraphicalResult.getInfo(
                     "You have successfully purchased " + quantity + " of " + item.getName() + ".",
@@ -46,7 +47,8 @@ public class ClientUpdatesController {
         }}, Message.Type.update_shop));
     }
 
-    public static void notifyExcept(Message message, Lobby lobby) {
+    public static void notifyExcept(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         String username = message.getFromBody("username");
         assert username != null;
         for (User user : lobby.getUsers()) {

@@ -2,6 +2,7 @@ package org.example.server.models;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Message;
+import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.ArrayList;

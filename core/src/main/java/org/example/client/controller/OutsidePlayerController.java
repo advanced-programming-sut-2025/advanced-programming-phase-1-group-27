@@ -85,7 +85,7 @@ public class OutsidePlayerController {
                 Result result = gameMenuController.walk(
                         OutsideView.getIndices(x - 40, y).getX() + "",
                         OutsideView.getIndices(x - 40, y).getY() + "");
-                System.out.println(result.message());
+//                System.out.println(result.message());
                 if (result.success()) {
                     walking = true;
                     destX = x - 40;
@@ -98,7 +98,7 @@ public class OutsidePlayerController {
                 Result result = gameMenuController.walk(
                         OutsideView.getIndices(x + 40, y).getX() + "",
                         OutsideView.getIndices(x + 40, y).getY() + "");
-                System.out.println(result.message());
+//                System.out.println(result.message());
                 if (result.success()) {
                     walking = true;
                     destX = x + 40;
@@ -111,7 +111,7 @@ public class OutsidePlayerController {
                 Result result = gameMenuController.walk(
                         OutsideView.getIndices(x, y + 40).getX() + "",
                         OutsideView.getIndices(x, y + 40).getY() + "");
-                System.out.println(result.message());
+//                System.out.println(result.message());
                 if (result.success()) {
                     walking = true;
                     destX = x;
@@ -124,7 +124,7 @@ public class OutsidePlayerController {
                 Result result = gameMenuController.walk(
                         OutsideView.getIndices(x, y - 40).getX() + "",
                         OutsideView.getIndices(x, y - 40).getY() + "");
-                System.out.println(result.message());
+//                System.out.println(result.message());
                 if (result.success()) {
                     walking = true;
                     destX = x;
@@ -134,7 +134,10 @@ public class OutsidePlayerController {
                 direction = Direction.Down;
             }
             if (direction != null) {
+                System.out.println("username: " + ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+                System.out.println("direction: " + direction.name());
                 ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                    put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
                     put("username", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
                     put("direction", direction.name());
                 }}, Message.Type.walk_update));
@@ -145,7 +148,6 @@ public class OutsidePlayerController {
 
 
         if (walking) {
-            //System.out.println("WALKING");
             float modif = min(1f, time * 8f);
             x = modif * (destX - lastX) + lastX;
             y = modif * (destY - lastY) + lastY;
