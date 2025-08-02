@@ -85,6 +85,7 @@ public class ProfileMenuController{
     public static void updateAvatar(Message message, User user) {
         int avatarId = message.getIntFromBody("avatarId");
         user.setAvatarId(avatarId);
+        DataBaseHelper.changeAvatar(user.getUsername() , avatarId);
     }
 
     private static Result changeUsername(String newUsername , User currentUser) {

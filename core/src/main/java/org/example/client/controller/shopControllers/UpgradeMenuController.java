@@ -3,10 +3,10 @@ package org.example.client.controller.shopControllers;
 import org.example.client.Main;
 import org.example.client.controller.ToolController;
 import org.example.client.controller.menus.MenuController;
+import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.shopview.UpgradeMenuView;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.App;
 import org.example.server.models.Result;
 import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.items.ToolType;
@@ -27,7 +27,7 @@ public class UpgradeMenuController extends MenuController {
     public GraphicalResult upgradeTool(String toolName) {
         ToolType toolType = ToolType.getItem(toolName);
         StackLevel stackLevel = toolType.getLevel();
-        Map<String, Integer> upgradeLimit = App.getCurrentGame().getBlacksmith().getUpgradeLimit();
+        Map<String, Integer> upgradeLimit = ClientApp.getCurrentGame().getBlacksmith().getUpgradeLimit();
         Integer limit = 0;
         String mode = null;
         if (toolType == ToolType.TrainingRod
@@ -88,7 +88,7 @@ public class UpgradeMenuController extends MenuController {
         if (result.hasError()) {
             return result;
         }
-        App.getCurrentGame().getBlacksmith().getUpgradeLimit().put(mode, 0);
+        ClientApp.getCurrentGame().getBlacksmith().getUpgradeLimit().put(mode, 0);
         return result;
     }
 
