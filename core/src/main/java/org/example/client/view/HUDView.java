@@ -10,7 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import org.example.client.model.ClientApp;
+import org.example.client.model.MiniPlayer;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.controller.HUDController;
@@ -24,7 +26,9 @@ import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.tools.Backpack;
 
+import java.rmi.ConnectIOException;
 import java.util.*;
+import java.util.List;
 
 public class HUDView extends AppMenu {
 
@@ -75,9 +79,11 @@ public class HUDView extends AppMenu {
 
     private Item currentStacksHover;
 
-
     private final TextButton exitGameButton;
     private final TextButton exitToMainButton;
+    private final TextButton kickPlayerButton;
+
+    private final SelectBox<String> playerSelectBox;
 
     public HUDView(Stage stage) {
 
@@ -94,9 +100,25 @@ public class HUDView extends AppMenu {
         moneyInfo = new Label("", skin);
         timeInfo = new Label("", skin);
 
+        playerSelectBox = new SelectBox<>(skin);
+
+        Array<String> playersUsername = new Array<>();
+        ///  TODO: esm player haye game ezafe shan
+        playersUsername.add("ali");
+        playersUsername.add("mohsen");
+        playersUsername.add("majid");
+        playerSelectBox.setItems(playersUsername);
+        playerSelectBox.setWidth(300);
+        playerSelectBox.setPosition(600,380);
+        playerSelectBox.setVisible(false);
 
         exitGameButton = new TextButton("Exit Game",skin);
         exitToMainButton = new TextButton("Exit to main",skin);
+        kickPlayerButton = new TextButton("Kick",skin);
+
+        kickPlayerButton.setPosition(950,380-(kickPlayerButton.getHeight()-playerSelectBox.getHeight())/2f);
+        kickPlayerButton.setVisible(false);
+
 
         rowCoEfficient = 1;
         currentSlotInInventory = null;
@@ -129,7 +151,6 @@ public class HUDView extends AppMenu {
         onScreenItemsQuantity = new HashMap<>();
         craftingProducts = new HashMap<>();
         cookingProducts = new HashMap<>();
-
 
         controller.setDayInfo(dayInfo);
         controller.setMoneyInfo(moneyInfo);
@@ -183,7 +204,7 @@ public class HUDView extends AppMenu {
         craftingProductIngredientsLabel.setFontScale(0.7f);
 
         exitGameButton.setPosition((Gdx.graphics.getWidth()-exitGameButton.getWidth())/2f,
-                700);
+                620);
         exitToMainButton.setPosition((Gdx.graphics.getWidth()-exitToMainButton.getWidth())/2f,
                 500);
 
@@ -200,7 +221,9 @@ public class HUDView extends AppMenu {
         stage.addActor(craftingProductNameLabel);
         stage.addActor(craftingProductIngredientsLabel);
         stage.addActor(exitGameButton);
+        stage.addActor(kickPlayerButton);
         stage.addActor(exitToMainButton);
+        stage.addActor(playerSelectBox);
         stage.addActor(exitMenuBackground);
         stage.addActor(clockImage);
         stage.addActor(clockArrowImage);
@@ -213,6 +236,7 @@ public class HUDView extends AppMenu {
         stage.addActor(inventoryMenuBackground);
         stage.addActor(skillMenuBackground);
         stage.addActor(craftingMenuBackground);
+
 
 
         for (CraftingProduct craftingProduct : craftingProducts.keySet()) {
@@ -237,6 +261,10 @@ public class HUDView extends AppMenu {
 
 
     private void displayClock() {
+
+        if ( ClientApp.getCurrentGame().getTime().getHour() == 9 ){
+            clockImage.remove();
+        }
 
         controller.updateClockImage();
 
@@ -470,9 +498,15 @@ public class HUDView extends AppMenu {
         exitMenuBackground.setVisible(currentMenu == InGameMenuType.EXIT);
         exitToMainButton.setVisible(currentMenu == InGameMenuType.EXIT);
         exitGameButton.setVisible(currentMenu == InGameMenuType.EXIT);
+        playerSelectBox.setVisible(currentMenu == InGameMenuType.EXIT &&
+                Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
+        kickPlayerButton.setVisible(currentMenu == InGameMenuType.EXIT &&
+                Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
 
         exitGameButton.toFront();
+        kickPlayerButton.toFront();
         exitToMainButton.toFront();
+        playerSelectBox.toFront();
 
     }
 
@@ -831,11 +865,23 @@ public class HUDView extends AppMenu {
                         currentMenu = InGameMenuType.INVENTORY;
                         return true;
                     }
+                    else if ( (590 < x && x < 645) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.SKILL;
+                        makeOnScreenItemsInvisible();
+                        return true;
+                    }
                     else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
                         currentMenu = InGameMenuType.CRAFTING;
                         makeOnScreenItemsInvisible();
                         return true;
                     }
+                    else if ( (850 < x && x < 900) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.EXIT;
+                        makeOnScreenItemsInvisible();
+                        return true;
+                    }
+
+//                    System.out.println(x);
 
                     for ( int i = 0; i < 12; i++ ){
 
@@ -1035,6 +1081,7 @@ public class HUDView extends AppMenu {
 
     public void setClockImage(Image clockImage) {
         this.clockImage = clockImage;
+        stage.addActor(clockImage);
     }
 
     public TextField getTextInputField() {
