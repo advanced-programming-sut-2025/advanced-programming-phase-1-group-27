@@ -111,6 +111,17 @@ public class NPCMap extends Map {
         for (BuildingTexture bt : buildingTextures) {
             renderBuilding(bt.i, bt.j, bt.textureIndex);
         }
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                float y = (cells.length - 1 - i) * tileSize;
+                float x = j * tileSize;
+                if (cells[i][j].getObject() instanceof NPC npc)
+                    Main.getBatch().draw(GameAssetManager.getGameAssetManager().getNpcTexture(npc.getType()),
+                            x + 4, y, 32, 64);
+            }
+        }
+
     }
 }
 

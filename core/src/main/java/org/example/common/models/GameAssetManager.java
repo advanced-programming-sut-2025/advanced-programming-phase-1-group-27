@@ -4,17 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.example.server.models.Item;
+import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.Plants.*;
-import org.example.server.models.enums.items.FishType;
-import org.example.server.models.enums.items.MineralType;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.enums.items.*;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
@@ -87,6 +86,7 @@ public class GameAssetManager {
     private final Texture quarryCellTexture = new Texture("assets/Images/Floorings/Quarry.png");
     private final Texture NpcMapCellTexture = new Texture("assets/Images/Floorings/NPCValley.png");
     private final Texture WaterCellTexture = new Texture("assets/Images/Floorings/Water.png");
+    private final Texture plowedCellTexture = new Texture("assets/Images/Floorings/Plowed.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
     private final TextureRegion standingTexture = characterAtlas.createSprite("standing_1");
@@ -153,6 +153,45 @@ public class GameAssetManager {
                     cabinsAtlas.findRegion("cabin_12").getRegionY(),
                     80, 112),
     };
+
+    private final TextureAtlas abigailAtlas = new TextureAtlas("assets/NPCs/Other/Abigail.atlas");
+    private final TextureRegion abigailTexture = new TextureRegion(abigailAtlas.createSprite("standing_1"),
+            abigailAtlas.findRegion("standing_1").getRegionX(),
+            abigailAtlas.findRegion("standing_1").getRegionY(),
+            16, 32);
+
+    private final TextureAtlas harveyAtlas = new TextureAtlas("assets/NPCs/Other/Harvey.atlas");
+    private final TextureRegion harveyTexture = new TextureRegion(harveyAtlas.createSprite("standing_1"),
+            harveyAtlas.findRegion("standing_1").getRegionX(),
+            harveyAtlas.findRegion("standing_1").getRegionY(),
+            16, 32);
+
+    private final TextureAtlas liaAtlas = new TextureAtlas("assets/NPCs/Other/Lia.atlas");
+    private final TextureRegion liaTexture = new TextureRegion(liaAtlas.createSprite("standing_1"),
+            liaAtlas.findRegion("standing_1").getRegionX(),
+            liaAtlas.findRegion("standing_1").getRegionY(),
+            16, 32);
+
+    private final TextureAtlas robbinAtlas = new TextureAtlas("assets/NPCs/Other/Robbin.atlas");
+    private final TextureRegion robbinTexture = new TextureRegion(robbinAtlas.createSprite("standing_1"),
+            robbinAtlas.findRegion("standing_1").getRegionX(),
+            robbinAtlas.findRegion("standing_1").getRegionY(),
+            16, 32);
+
+    private final TextureAtlas sebastianAtlas = new TextureAtlas("assets/NPCs/Other/Sebastian.atlas");
+    private final TextureRegion sebastianTexture = new TextureRegion(sebastianAtlas.createSprite("standing_1"),
+            sebastianAtlas.findRegion("standing_1").getRegionX(),
+            sebastianAtlas.findRegion("standing_1").getRegionY(),
+            16, 32);
+
+    private final HashMap<NPCType, TextureRegion> NPCTextureMap = new HashMap<>(){{
+        put(NPCType.Abigail, abigailTexture);
+        put(NPCType.Harvey, harveyTexture);
+        put(NPCType.Lia, liaTexture);
+        put(NPCType.Robbin, robbinTexture);
+        put(NPCType.Sebastian, sebastianTexture);
+
+    }};
 
     private final HashMap<Item, Texture> itemTextureMap = new HashMap<>() {{
         for (ToolType toolType : ToolType.values())
@@ -634,5 +673,33 @@ public class GameAssetManager {
 
     public Texture getAvatarTexture(int id) {
         return avatarTextures[id];
+    }
+
+    public Texture getPlowedCellTexture() {
+        return plowedCellTexture;
+    }
+
+    public TextureRegion getAbigailTexture() {
+        return abigailTexture;
+    }
+
+    public TextureRegion getHarveyTexture() {
+        return harveyTexture;
+    }
+
+    public TextureRegion getLiaTexture() {
+        return liaTexture;
+    }
+
+    public TextureRegion getRobbinTexture() {
+        return robbinTexture;
+    }
+
+    public TextureRegion getSebastianTexture() {
+        return sebastianTexture;
+    }
+
+    public TextureRegion getNpcTexture(NPCType npcType) {
+        return NPCTextureMap.get(npcType);
     }
 }

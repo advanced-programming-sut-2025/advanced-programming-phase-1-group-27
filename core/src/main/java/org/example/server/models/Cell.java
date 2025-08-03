@@ -1,6 +1,7 @@
 package org.example.server.models;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.Barn;
@@ -186,6 +187,8 @@ public class Cell {
             return GameAssetManager.getGameAssetManager().getNpcMapCellTexture();
         else if (cellType == CellType.Building && map instanceof FarmMap)
             return GameAssetManager.getGameAssetManager().getFreeCellTexture();
+        else if (cellType == CellType.Plowed)
+            return GameAssetManager.getGameAssetManager().getPlowedCellTexture();
         return null;
     }
 
