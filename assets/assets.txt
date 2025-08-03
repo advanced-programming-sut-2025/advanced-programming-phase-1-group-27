@@ -322,9 +322,9 @@ Images/Crops/Yam/  (2).png
 Images/Crops/Yam/  (3).png
 Images/Crops/Yam/  (4).png
 Images/Crops/Yam/  (5).png
-Images/Crops/atlas/Crops.atlas
 Images/Crops/atlas/Crops_sheet.png
 Images/Exit/ExitMenuMan.png
+Images/Exit/ExitMenuMan2.png
 Images/Exit/ExitMenuWoman.png
 Images/Floorings/Free.png
 Images/Floorings/Free2.png
@@ -347,6 +347,10 @@ Images/Shops/Pierres General Store.png
 Images/Shops/The Stardrop Saloon.png
 Images/Skill/SkillsMenuMan.png
 Images/Skill/SkillsMenuWoman.png
+Images/Social/SocialMenuMan.png
+Images/Social/SocialMenuPage1.png
+Images/Social/SocialMenuPage2.png
+Images/Social/SocialMenuPage3.png
 Images/Trees/Trees.atlas
 Images/Trees/Trees.png
 Images/greenhouse.png

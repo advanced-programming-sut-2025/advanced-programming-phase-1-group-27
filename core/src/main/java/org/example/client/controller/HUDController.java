@@ -115,7 +115,7 @@ public class HUDController extends MenuController {
         ClientApp.getCurrentGame().getCurrentPlayer().setCurrentInventorySlotIndex(index);
     }
 
-    private Texture getClockByGameState(){
+    private Image getClockByGameState(){
 
         ClientGame currentGame = ClientApp.getCurrentGame();
 
@@ -191,7 +191,7 @@ public class HUDController extends MenuController {
     }
 
     public void updateClockImage(){
-        view.setClockImage(new Image(getClockByGameState()));
+        view.setClockImage(getClockByGameState());
     }
 
     public GraphicalResult handleTextInput(){

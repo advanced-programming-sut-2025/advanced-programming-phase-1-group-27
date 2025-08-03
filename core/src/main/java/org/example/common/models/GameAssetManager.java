@@ -62,22 +62,22 @@ public class GameAssetManager {
     private final Texture map3 = new Texture(Gdx.files.internal("MapImage/avatar11.png"));
     private final Texture map4 = new Texture(Gdx.files.internal("MapImage/avatar15.png"));
 
-    private final Texture rainyFall = new Texture(Gdx.files.internal("Clock/RainyFall.png"));
-    private final Texture stormyFall = new Texture(Gdx.files.internal("Clock/StormyFall.png"));
-    private final Texture sunnyFall = new Texture(Gdx.files.internal("Clock/SunnyFall.png"));
-    private final Texture snowyFall = new Texture(Gdx.files.internal("Clock/SnowyFall.png"));
-    private final Texture rainyWinter = new Texture(Gdx.files.internal("Clock/RainyWinter.png"));
-    private final Texture stormyWinter = new Texture(Gdx.files.internal("Clock/StormyWinter.png"));
-    private final Texture sunnyWinter = new Texture(Gdx.files.internal("Clock/SunnyWinter.png"));
-    private final Texture snowyWinter = new Texture(Gdx.files.internal("Clock/SnowyWinter.png"));
-    private final Texture rainySpring = new Texture(Gdx.files.internal("Clock/RainySpring.png"));
-    private final Texture stormySpring = new Texture(Gdx.files.internal("Clock/StormySpring.png"));
-    private final Texture sunnySpring = new Texture(Gdx.files.internal("Clock/SunnySpring.png"));
-    private final Texture snowySpring = new Texture(Gdx.files.internal("Clock/SnowySpring.png"));
-    private final Texture rainySummer = new Texture(Gdx.files.internal("Clock/RainySummer.png"));
-    private final Texture stormySummer = new Texture(Gdx.files.internal("Clock/StormySummer.png"));
-    private final Texture sunnySummer = new Texture(Gdx.files.internal("Clock/SunnySummer.png"));
-    private final Texture snowySummer = new Texture(Gdx.files.internal("Clock/SnowySummer.png"));
+    private final Image rainyFall = new Image(new Texture(Gdx.files.internal("Clock/RainyFall.png")));
+    private final Image stormyFall = new Image(new Texture(Gdx.files.internal("Clock/StormyFall.png")));
+    private final Image sunnyFall = new Image(new Texture(Gdx.files.internal("Clock/SunnyFall.png")));
+    private final Image snowyFall = new Image(new Texture(Gdx.files.internal("Clock/SnowyFall.png")));
+    private final Image rainyWinter = new Image(new Texture(Gdx.files.internal("Clock/RainyWinter.png")));
+    private final Image stormyWinter = new Image(new Texture(Gdx.files.internal("Clock/StormyWinter.png")));
+    private final Image sunnyWinter = new Image(new Texture(Gdx.files.internal("Clock/SunnyWinter.png")));
+    private final Image snowyWinter = new Image(new Texture(Gdx.files.internal("Clock/SnowyWinter.png")));
+    private final Image rainySpring = new Image(new Texture(Gdx.files.internal("Clock/RainySpring.png")));
+    private final Image stormySpring = new Image(new Texture(Gdx.files.internal("Clock/StormySpring.png")));
+    private final Image sunnySpring = new Image(new Texture(Gdx.files.internal("Clock/SunnySpring.png")));
+    private final Image snowySpring = new Image(new Texture(Gdx.files.internal("Clock/SnowySpring.png")));
+    private final Image rainySummer = new Image(new Texture(Gdx.files.internal("Clock/RainySummer.png")));
+    private final Image stormySummer = new Image(new Texture(Gdx.files.internal("Clock/StormySummer.png")));
+    private final Image sunnySummer = new Image(new Texture(Gdx.files.internal("Clock/SunnySummer.png")));
+    private final Image snowySummer = new Image(new Texture(Gdx.files.internal("Clock/SnowySummer.png")));
 
     private final Texture homeTexture = new Texture("assets/Images/home_cropped.png");
     private final Texture greenHouseTexture = new Texture("assets/Images/greenhouse2.1.png");
@@ -267,7 +267,7 @@ public class GameAssetManager {
     private final Image craftingMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Crafting/CraftingMenuMan.png")));
     private final Image inventoryMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Inventory/InventoryMenuMan.png")));
     private final Image skillMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Skill/SkillsMenuMan.png")));
-    private final Image exitMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Exit/ExitMenuMan.png")));
+    private final Image exitMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Exit/ExitMenuMan2.png")));
 
 
     private final Image craft_bomb = new Image(new Texture(Gdx.files.internal("Images/Crafting/Bomb.png")));
@@ -419,67 +419,67 @@ public class GameAssetManager {
         return exitMenuBackground;
     }
 
-    public Texture getRainyFall() {
+    public Image getRainyFall() {
         return rainyFall;
     }
 
-    public Texture getStormyFall() {
+    public Image getStormyFall() {
         return stormyFall;
     }
 
-    public Texture getSunnyFall() {
+    public Image getSunnyFall() {
         return sunnyFall;
     }
 
-    public Texture getSnowyFall() {
+    public Image getSnowyFall() {
         return snowyFall;
     }
 
-    public Texture getRainyWinter() {
+    public Image getRainyWinter() {
         return rainyWinter;
     }
 
-    public Texture getStormyWinter() {
+    public Image getStormyWinter() {
         return stormyWinter;
     }
 
-    public Texture getSunnyWinter() {
+    public Image getSunnyWinter() {
         return sunnyWinter;
     }
 
-    public Texture getSnowyWinter() {
+    public Image getSnowyWinter() {
         return snowyWinter;
     }
 
-    public Texture getRainySpring() {
+    public Image getRainySpring() {
         return rainySpring;
     }
 
-    public Texture getStormySpring() {
+    public Image getStormySpring() {
         return stormySpring;
     }
 
-    public Texture getSunnySpring() {
+    public Image getSunnySpring() {
         return sunnySpring;
     }
 
-    public Texture getSnowySpring() {
+    public Image getSnowySpring() {
         return snowySpring;
     }
 
-    public Texture getRainySummer() {
+    public Image getRainySummer() {
         return rainySummer;
     }
 
-    public Texture getStormySummer() {
+    public Image getStormySummer() {
         return stormySummer;
     }
 
-    public Texture getSunnySummer() {
+    public Image getSunnySummer() {
         return sunnySummer;
     }
 
-    public Texture getSnowySummer() {
+    public Image getSnowySummer() {
         return snowySummer;
     }
 

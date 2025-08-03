@@ -7,10 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.example.client.model.ClientApp;
@@ -32,9 +29,19 @@ import java.util.*;
 public class HUDView extends AppMenu {
 
     private final HUDController controller;
+
+    private final Stage stage;
+
+    private final Player player;
+
     private final Label dayInfo;
     private final Label moneyInfo;
     private final Label timeInfo;
+    private final Label craftingProductNameLabel;
+    private final Label craftingProductIngredientsLabel;
+
+    private final Image blackImage;
+    private final Image hoveringInfoWindow;
     private final Image clockArrowImage;
     private final Image inventoryHotBarImage;
     private final Image inventorySelectSlotImage;
@@ -43,37 +50,59 @@ public class HUDView extends AppMenu {
     private final Image skillMenuBackground;
     private final Image exitMenuBackground;
     private final Image cookingMenuBackground;
+    private Image clockImage;
+
     private final HashMap<CraftingProduct, ImageButton> craftingProducts;
     private final HashMap<CookingProduct, ImageButton> cookingProducts;
+    private HashMap<Stacks,Label> onScreenItemsQuantity;
+
     private final TextField textInputField;
+
     private final GraphicalResult errorLabel;
-    private final Stage stage;
-    private Image clockImage;
+
     private boolean isInputFieldVisible;
     private boolean tJustPressed;
-    private final Player player;
-    private Backpack inventoryItems;
-    private ArrayList<Stacks> onScreenItems;
-    private HashMap<Stacks,Label> onScreenItemsQuantity;
-    private int rowCoEfficient;
-    private Integer currentSlotInInventory;
-    private InGameMenuType currentMenu;
     private boolean ctrlPressed;
-    private final Image blackImage;
-    private final Image hoveringInfoWindow;
+
+    private Backpack inventoryItems;
+
+    private ArrayList<Stacks> onScreenItems;
+
+    private Integer rowCoEfficient;
+    private Integer currentSlotInInventory;
+
+    private InGameMenuType currentMenu;
+
     private Item currentStacksHover;
-    private final Label craftingProductNameLabel;
-    private final Label craftingProductIngredientsLabel;
+
+
+    private final TextButton exitGameButton;
+    private final TextButton exitToMainButton;
 
     public HUDView(Stage stage) {
 
 
         controller = new HUDController(this);
+
+        this.stage = stage;
+
+        player = ClientApp.getCurrentGame().getCurrentPlayer();
+
         craftingProductNameLabel = new Label("",skin);
         craftingProductIngredientsLabel = new Label("", skin);
+        dayInfo = new Label("", skin);
+        moneyInfo = new Label("", skin);
+        timeInfo = new Label("", skin);
+
+
+        exitGameButton = new TextButton("Exit Game",skin);
+        exitToMainButton = new TextButton("Exit to main",skin);
+
         rowCoEfficient = 1;
-        currentStacksHover = null;
         currentSlotInInventory = null;
+
+        currentStacksHover = null;
+
         hoveringInfoWindow = GameAssetManager.getGameAssetManager().getHoveringInfoWindow();
         blackImage = GameAssetManager.getGameAssetManager().getBlackImage();
         cookingMenuBackground = GameAssetManager.getGameAssetManager().getCookingMenuBackground();
@@ -84,27 +113,32 @@ public class HUDView extends AppMenu {
         clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
         inventoryHotBarImage = new Image(GameAssetManager.getGameAssetManager().getInventoryHotBar());
         inventorySelectSlotImage = new Image(GameAssetManager.getGameAssetManager().getInventorySelectSlot());
+
         textInputField = new TextField("", skin);
+
         currentMenu = InGameMenuType.NONE;
+
         isInputFieldVisible = false;
         tJustPressed = false;
-        dayInfo = new Label("", skin);
-        controller.setDayInfo(dayInfo);
-        moneyInfo = new Label("", skin);
-        controller.setMoneyInfo(moneyInfo);
-        timeInfo = new Label("", skin);
-        controller.setTimeInfo(timeInfo);
+
         errorLabel = new GraphicalResult();
-        this.stage = stage;
-        player = ClientApp.getCurrentGame().getCurrentPlayer();
+
         inventoryItems = player.getBackpack();
+
         onScreenItems = new ArrayList<>();
         onScreenItemsQuantity = new HashMap<>();
+        craftingProducts = new HashMap<>();
+        cookingProducts = new HashMap<>();
+
+
+        controller.setDayInfo(dayInfo);
+        controller.setMoneyInfo(moneyInfo);
+        controller.setTimeInfo(timeInfo);
+
         for ( Stacks stack : inventoryItems.getItems() ) {
             addToScreen(Stacks.copy(stack));
         }
 
-        craftingProducts = new HashMap<>();
 
         int i = 0;
         for (CraftingProduct craftingProduct : CraftingProduct.values()) {
@@ -116,7 +150,6 @@ public class HUDView extends AppMenu {
             i++;
         }
 
-        cookingProducts = new HashMap<>();
 
         i = 0;
         for (CookingProduct cookingProduct : CookingProduct.values()) {
@@ -128,27 +161,74 @@ public class HUDView extends AppMenu {
             i++;
         }
 
+
+
+
+
         cookingMenuBackground.setPosition((Gdx.graphics.getWidth()-cookingMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-cookingMenuBackground.getHeight())/2f);
         cookingMenuBackground.setVisible(false);
-        stage.addActor(blackImage);
-        stage.addActor(cookingMenuBackground);
 
         hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-20,
                 20);
 
-        stage.addActor(hoveringInfoWindow);
 
         craftingProductNameLabel.setPosition(hoveringInfoWindow.getX()+20,hoveringInfoWindow.getHeight()-20);
         craftingProductNameLabel.setVisible(false);
         craftingProductNameLabel.setColor(Color.BLACK);
-        stage.addActor(craftingProductNameLabel);
 
         craftingProductIngredientsLabel.setPosition(hoveringInfoWindow.getX()+20,
                 hoveringInfoWindow.getHeight()/2f);
         craftingProductIngredientsLabel.setVisible(false);
         craftingProductIngredientsLabel.setColor(Color.BLACK);
         craftingProductIngredientsLabel.setFontScale(0.7f);
+
+        exitGameButton.setPosition((Gdx.graphics.getWidth()-exitGameButton.getWidth())/2f,
+                700);
+        exitToMainButton.setPosition((Gdx.graphics.getWidth()-exitToMainButton.getWidth())/2f,
+                500);
+
+        exitToMainButton.setVisible(false);
+        exitGameButton.setVisible(false);
+
+        controller.updateClockImage();
+
+
+        // STAGE
+        stage.addActor(blackImage);
+        stage.addActor(cookingMenuBackground);
+        stage.addActor(hoveringInfoWindow);
+        stage.addActor(craftingProductNameLabel);
         stage.addActor(craftingProductIngredientsLabel);
+        stage.addActor(exitGameButton);
+        stage.addActor(exitToMainButton);
+        stage.addActor(exitMenuBackground);
+        stage.addActor(clockImage);
+        stage.addActor(clockArrowImage);
+        stage.addActor(inventoryHotBarImage);
+        stage.addActor(inventorySelectSlotImage);
+        stage.addActor(errorLabel.getMessage());
+        stage.addActor(dayInfo);
+        stage.addActor(moneyInfo);
+        stage.addActor(timeInfo);
+        stage.addActor(inventoryMenuBackground);
+        stage.addActor(skillMenuBackground);
+        stage.addActor(craftingMenuBackground);
+
+
+        for (CraftingProduct craftingProduct : craftingProducts.keySet()) {
+
+            ImageButton imageButton = craftingProducts.get(craftingProduct);
+            stage.addActor(imageButton);
+
+        }
+
+        for (CookingProduct cookingProduct : cookingProducts.keySet()) {
+
+            ImageButton imageButton = cookingProducts.get(cookingProduct);
+            stage.addActor(imageButton);
+
+        }
+        stage.addActor(textInputField);
 
 
         setListeners();
@@ -167,9 +247,6 @@ public class HUDView extends AppMenu {
         clockArrowImage.setOrigin(clockArrowImage.getWidth() / 2, clockArrowImage.getHeight());
         clockArrowImage.setRotation(controller.getClockArrowDegree());
 
-
-        stage.addActor(clockImage);
-        stage.addActor(clockArrowImage);
         clockArrowImage.toFront();
 
 
@@ -180,7 +257,6 @@ public class HUDView extends AppMenu {
         controller.setDayInfo(dayInfo);
         dayInfo.setPosition(clockImage.getX() + clockImage.getWidth() / 2, clockImage.getY() + clockImage.getHeight() - 35);
         dayInfo.setColor(new Color(0.86f, 0.169f, 0f, 1f));
-        stage.addActor(dayInfo);
         dayInfo.toFront();
 
     }
@@ -190,7 +266,6 @@ public class HUDView extends AppMenu {
         controller.setMoneyInfo(moneyInfo);
         moneyInfo.setPosition(clockImage.getX() + clockImage.getWidth() / 2 + 25, clockImage.getY() + 30);
         moneyInfo.setColor(new Color(0.86f, 0.169f, 0f, 1f));
-        stage.addActor(moneyInfo);
         moneyInfo.toFront();
 
     }
@@ -200,7 +275,6 @@ public class HUDView extends AppMenu {
         controller.setTimeInfo(timeInfo);
         timeInfo.setPosition(clockImage.getX() + clockImage.getWidth() / 2, clockImage.getY() + clockImage.getHeight() / 2f - 5);
         timeInfo.setColor(new Color(0.86f, 0.169f, 0f, 1f));
-        stage.addActor(timeInfo);
         timeInfo.toFront();
 
     }
@@ -222,13 +296,11 @@ public class HUDView extends AppMenu {
 
         textInputField.setWidth(Gdx.graphics.getWidth());
 
-        stage.addActor(textInputField);
 
     }
 
     private void showErrorMessage() {
         errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
-        stage.addActor(errorLabel.getMessage());
 
     }
 
@@ -240,8 +312,6 @@ public class HUDView extends AppMenu {
 
             inventoryHotBarImage.setVisible(true);
             inventorySelectSlotImage.setVisible(true);
-            stage.addActor(inventoryHotBarImage);
-            stage.addActor(inventorySelectSlotImage);
         }
         else{
             inventoryHotBarImage.setVisible(false);
@@ -278,7 +348,6 @@ public class HUDView extends AppMenu {
         inventoryMenuBackground.setPosition((Gdx.graphics.getWidth() - inventoryMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - inventoryMenuBackground.getHeight()) / 2f);
 
         inventoryMenuBackground.setVisible(currentMenu == InGameMenuType.INVENTORY);
-        stage.addActor(inventoryMenuBackground);
 
 
         // INVENTORY ITEMS
@@ -344,8 +413,10 @@ public class HUDView extends AppMenu {
         skillMenuBackground.setPosition((Gdx.graphics.getWidth() - skillMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - skillMenuBackground.getHeight()) / 2f);
 
         skillMenuBackground.setVisible(currentMenu == InGameMenuType.SKILL);
-        stage.addActor(skillMenuBackground);
 
+    }
+
+    private void displaySocialMenu(){
     }
 
     private void displayCraftingMenu() {
@@ -353,7 +424,6 @@ public class HUDView extends AppMenu {
         //  BACKGROUND
         craftingMenuBackground.setPosition((Gdx.graphics.getWidth() - craftingMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - craftingMenuBackground.getHeight()) / 2f);
         craftingMenuBackground.setVisible(currentMenu == InGameMenuType.CRAFTING);
-        stage.addActor(craftingMenuBackground);
 
         //  ITEMS
         for (CraftingProduct craftingProduct : craftingProducts.keySet()) {
@@ -374,7 +444,6 @@ public class HUDView extends AppMenu {
             } else {
                 imageButton.setVisible(false);
             }
-            stage.addActor(imageButton);
 
         }
 
@@ -399,7 +468,11 @@ public class HUDView extends AppMenu {
         exitMenuBackground.setPosition((Gdx.graphics.getWidth() - exitMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - exitMenuBackground.getHeight()) / 2f);
 
         exitMenuBackground.setVisible(currentMenu == InGameMenuType.EXIT);
-        stage.addActor(exitMenuBackground);
+        exitToMainButton.setVisible(currentMenu == InGameMenuType.EXIT);
+        exitGameButton.setVisible(currentMenu == InGameMenuType.EXIT);
+
+        exitGameButton.toFront();
+        exitToMainButton.toFront();
 
     }
 
@@ -477,7 +550,6 @@ public class HUDView extends AppMenu {
             } else {
                 imageButton.setVisible(false);
             }
-            stage.addActor(imageButton);
 
         }
 
@@ -546,6 +618,7 @@ public class HUDView extends AppMenu {
         displayTimeInfo();
         displayInventoryMenu();
         displaySkillMenu();
+        displaySocialMenu();
         displayCraftingMenu();
         displayExitMenu();
         displayCookingMenu();
@@ -612,12 +685,22 @@ public class HUDView extends AppMenu {
                         tJustPressed = true;
                         return true;
                     }
-                    else if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.E) {
+                    else if (keycode == Input.Keys.E) {
 
                         if (currentMenu != InGameMenuType.INVENTORY ) {
                             currentMenu = InGameMenuType.INVENTORY;
                         } else {
                             currentMenu = InGameMenuType.NONE;
+                        }
+
+                    } else if (keycode == Input.Keys.ESCAPE) {
+
+                        if (currentMenu == InGameMenuType.EXIT) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else {
+                            currentMenu = InGameMenuType.EXIT;
+                            makeOnScreenItemsInvisible();
                         }
 
                     } else if (keycode == Input.Keys.B) {
