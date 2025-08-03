@@ -289,6 +289,16 @@ public class HUDView extends AppMenu {
             stage.addActor(imageButton);
 
         }
+
+        for ( int k = 0 ; k < 16; k++ ){
+
+            Image skillPoint = skillPoints.get(k);
+            skillPoint.setPosition(874 + (k%4) * 57,704 - (k/4) * 84);
+            skillPoint.setVisible(false);
+            stage.addActor(skillPoint);
+
+        }
+
         stage.addActor(textInputField);
 
 
@@ -478,7 +488,21 @@ public class HUDView extends AppMenu {
         skillMenuBackground.setPosition((Gdx.graphics.getWidth() - skillMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - skillMenuBackground.getHeight()) / 2f);
         skillMenuBackground.setVisible(currentMenu == InGameMenuType.SKILL);
 
-        System.out.println(player.getAbility(AbilityType.Farming).getLevel());
+        for( int i = 0; i < Math.min(3,player.getAbility(AbilityType.Farming).getLevel()); i++ ){
+            skillPoints.get(i).setVisible(currentMenu == InGameMenuType.SKILL);
+        }
+
+        for( int i = 0; i < Math.min(3,player.getAbility(AbilityType.Mining).getLevel()); i++ ){
+            skillPoints.get(i+4).setVisible(currentMenu == InGameMenuType.SKILL);
+        }
+
+        for( int i = 0; i < Math.min(3,player.getAbility(AbilityType.Foraging).getLevel()); i++ ){
+            skillPoints.get(i+8).setVisible(currentMenu == InGameMenuType.SKILL);
+        }
+
+        for( int i = 0; i < Math.min(3,player.getAbility(AbilityType.Fishing).getLevel()); i++ ){
+            skillPoints.get(i+12).setVisible(currentMenu == InGameMenuType.SKILL);
+        }
 
 
     }
@@ -849,10 +873,11 @@ public class HUDView extends AppMenu {
                     }
                     else if (keycode == Input.Keys.R) {
 
-                        if (currentMenu != InGameMenuType.SKILL ) {
-                            currentMenu = InGameMenuType.SKILL;
-                        } else {
+                        if ( currentMenu == InGameMenuType.SKILL ) {
                             currentMenu = InGameMenuType.NONE;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.SKILL;
                             makeOnScreenItemsInvisible();
                         }
 
