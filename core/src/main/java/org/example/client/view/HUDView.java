@@ -100,12 +100,25 @@ public class HUDView extends AppMenu {
         moneyInfo = new Label("", skin);
         timeInfo = new Label("", skin);
 
+        playerSelectBox = new SelectBox<>(skin);
+
+        Array<String> playersUsername = new Array<>();
+        ///  TODO: esm player haye game ezafe shan
+        playersUsername.add("ali");
+        playersUsername.add("mohsen");
+        playersUsername.add("majid");
+        playerSelectBox.setItems(playersUsername);
+        playerSelectBox.setWidth(300);
+        playerSelectBox.setPosition(600,380);
+        playerSelectBox.setVisible(false);
 
         exitGameButton = new TextButton("Exit Game",skin);
         exitToMainButton = new TextButton("Exit to main",skin);
-        kickPlayerButton = new TextButton("Kick Player",skin);
+        kickPlayerButton = new TextButton("Kick",skin);
 
-        playerSelectBox = new SelectBox<>(skin);
+        kickPlayerButton.setPosition(950,380-(kickPlayerButton.getHeight()-playerSelectBox.getHeight())/2f);
+        kickPlayerButton.setVisible(false);
+
 
         rowCoEfficient = 1;
         currentSlotInInventory = null;
@@ -138,16 +151,6 @@ public class HUDView extends AppMenu {
         onScreenItemsQuantity = new HashMap<>();
         craftingProducts = new HashMap<>();
         cookingProducts = new HashMap<>();
-
-        Array<String> playersUsername = new Array<>();
-        ///  TODO: esm player haye game ezafe shan
-        playersUsername.add("ali");
-        playersUsername.add("mohsen");
-        playersUsername.add("majid");
-        playerSelectBox.setItems(playersUsername);
-        playerSelectBox.setPosition(500,380);
-        playerSelectBox.setVisible(false);
-
 
         controller.setDayInfo(dayInfo);
         controller.setMoneyInfo(moneyInfo);
@@ -218,6 +221,7 @@ public class HUDView extends AppMenu {
         stage.addActor(craftingProductNameLabel);
         stage.addActor(craftingProductIngredientsLabel);
         stage.addActor(exitGameButton);
+        stage.addActor(kickPlayerButton);
         stage.addActor(exitToMainButton);
         stage.addActor(playerSelectBox);
         stage.addActor(exitMenuBackground);
@@ -495,9 +499,12 @@ public class HUDView extends AppMenu {
         exitToMainButton.setVisible(currentMenu == InGameMenuType.EXIT);
         exitGameButton.setVisible(currentMenu == InGameMenuType.EXIT);
         playerSelectBox.setVisible(currentMenu == InGameMenuType.EXIT &&
-                player.getUsername() == ClientApp.getCurrentGame().getAdmin().getUsername());
+                Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
+        kickPlayerButton.setVisible(currentMenu == InGameMenuType.EXIT &&
+                Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
 
         exitGameButton.toFront();
+        kickPlayerButton.toFront();
         exitToMainButton.toFront();
         playerSelectBox.toFront();
 
@@ -874,7 +881,7 @@ public class HUDView extends AppMenu {
                         return true;
                     }
 
-                    System.out.println(x);
+//                    System.out.println(x);
 
                     for ( int i = 0; i < 12; i++ ){
 
