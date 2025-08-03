@@ -47,6 +47,8 @@ public class UpgradeMenuView extends AppMenu {
 
     private final Map<String, Integer> upgradeLimit;
 
+    private float timer = 0f;
+
     private Stage stage;
 
     public UpgradeMenuView(NPCType npc , AppMenu shopMenu) {
@@ -245,7 +247,12 @@ public class UpgradeMenuView extends AppMenu {
     public void render(float v) {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
+        if (timer > 2f) {
+            timer = 0f;
+            displayItems();
+        } else {
+            timer += v;
+        }
         Main.getBatch().begin();
         hudView.displayOnlyClock();
         Main.getBatch().end();
