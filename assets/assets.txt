@@ -346,6 +346,11 @@ Images/Inventory/InventoryMenuWoman.png
 Images/Shops/JojaMart.png
 Images/Shops/Pierres General Store.png
 Images/Shops/The Stardrop Saloon.png
+Images/Skill/HoverFarming.png
+Images/Skill/HoverFishing.png
+Images/Skill/HoverForaging.png
+Images/Skill/HoverMining.png
+Images/Skill/SkillPoint.png
 Images/Skill/SkillsMenuMan.png
 Images/Skill/SkillsMenuWoman.png
 Images/Social/SocialMenuMan.png

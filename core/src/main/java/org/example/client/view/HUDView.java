@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -20,12 +23,14 @@ import org.example.common.utils.JSONUtils;
 import org.example.server.models.Item;
 import org.example.server.models.Player;
 import org.example.server.models.Stacks;
+import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.InGameMenuType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.tools.Backpack;
 
+import java.awt.*;
 import java.rmi.ConnectIOException;
 import java.util.*;
 import java.util.List;
@@ -54,7 +59,13 @@ public class HUDView extends AppMenu {
     private final Image skillMenuBackground;
     private final Image exitMenuBackground;
     private final Image cookingMenuBackground;
+    private final Image farmingHoverImage;
+    private final Image fishingHoverImage;
+    private final Image miningHoverImage;
+    private final Image foragingHoverImage;
     private Image clockImage;
+
+    private final ArrayList<Image> skillPoints;
 
     private final HashMap<CraftingProduct, ImageButton> craftingProducts;
     private final HashMap<CookingProduct, ImageButton> cookingProducts;
@@ -85,6 +96,8 @@ public class HUDView extends AppMenu {
 
     private final SelectBox<String> playerSelectBox;
 
+    private AbilityType currentAbilityTypeHovering;
+
     public HUDView(Stage stage) {
 
 
@@ -92,7 +105,14 @@ public class HUDView extends AppMenu {
 
         this.stage = stage;
 
+        skillPoints = new ArrayList<>();
+        for( int i = 0 ; i < 16; i++ ){
+            skillPoints.add(new Image(GameAssetManager.getGameAssetManager().getSkillPointImage()));
+        }
+
         player = ClientApp.getCurrentGame().getCurrentPlayer();
+
+        currentAbilityTypeHovering = null;
 
         craftingProductNameLabel = new Label("",skin);
         craftingProductIngredientsLabel = new Label("", skin);
@@ -135,6 +155,11 @@ public class HUDView extends AppMenu {
         clockArrowImage = new Image(GameAssetManager.getGameAssetManager().getArrowTexture());
         inventoryHotBarImage = new Image(GameAssetManager.getGameAssetManager().getInventoryHotBar());
         inventorySelectSlotImage = new Image(GameAssetManager.getGameAssetManager().getInventorySelectSlot());
+        farmingHoverImage = GameAssetManager.getGameAssetManager().getHoveringFarmingWindow();
+        miningHoverImage = GameAssetManager.getGameAssetManager().getHoveringMiningWindow();
+        foragingHoverImage = GameAssetManager.getGameAssetManager().getHoveringForagingWindow();
+        fishingHoverImage = GameAssetManager.getGameAssetManager().getHoveringFishingWindow();
+
 
         textInputField = new TextField("", skin);
 
@@ -196,6 +221,7 @@ public class HUDView extends AppMenu {
         craftingProductNameLabel.setPosition(hoveringInfoWindow.getX()+20,hoveringInfoWindow.getHeight()-20);
         craftingProductNameLabel.setVisible(false);
         craftingProductNameLabel.setColor(Color.BLACK);
+        craftingProductNameLabel.setFontScale(1f);
 
         craftingProductIngredientsLabel.setPosition(hoveringInfoWindow.getX()+20,
                 hoveringInfoWindow.getHeight()/2f);
@@ -212,6 +238,11 @@ public class HUDView extends AppMenu {
         exitGameButton.setVisible(false);
 
         controller.updateClockImage();
+
+        farmingHoverImage.setVisible(false);
+        fishingHoverImage.setVisible(false);
+        miningHoverImage.setVisible(false);
+        foragingHoverImage.setVisible(false);
 
 
         // STAGE
@@ -236,12 +267,17 @@ public class HUDView extends AppMenu {
         stage.addActor(inventoryMenuBackground);
         stage.addActor(skillMenuBackground);
         stage.addActor(craftingMenuBackground);
+        stage.addActor(farmingHoverImage);
+        stage.addActor(fishingHoverImage);
+        stage.addActor(miningHoverImage);
+        stage.addActor(foragingHoverImage);
 
 
 
         for (CraftingProduct craftingProduct : craftingProducts.keySet()) {
 
             ImageButton imageButton = craftingProducts.get(craftingProduct);
+            imageButton.setVisible(false);
             stage.addActor(imageButton);
 
         }
@@ -249,6 +285,7 @@ public class HUDView extends AppMenu {
         for (CookingProduct cookingProduct : cookingProducts.keySet()) {
 
             ImageButton imageButton = cookingProducts.get(cookingProduct);
+            imageButton.setVisible(false);
             stage.addActor(imageButton);
 
         }
@@ -439,8 +476,10 @@ public class HUDView extends AppMenu {
     private void displaySkillMenu() {
 
         skillMenuBackground.setPosition((Gdx.graphics.getWidth() - skillMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - skillMenuBackground.getHeight()) / 2f);
-
         skillMenuBackground.setVisible(currentMenu == InGameMenuType.SKILL);
+
+        System.out.println(player.getAbility(AbilityType.Farming).getLevel());
+
 
     }
 
@@ -612,15 +651,82 @@ public class HUDView extends AppMenu {
 
         if ( currentStacksHover != null ){
             craftingProductNameLabel.setText(currentStacksHover.getName());
-            CraftingProduct product = (CraftingProduct) currentStacksHover;
-            Recipe recipe = product.getRecipe();
-            craftingProductIngredientsLabel.setText(recipe.getInfo());
-            craftingProductNameLabel.setFontScale(1f);
+
+            if (currentStacksHover instanceof CraftingProduct product){
+                Recipe recipe = product.getRecipe();
+                craftingProductIngredientsLabel.setText(recipe.getInfo());
+            }else if (currentStacksHover instanceof CookingProduct product){
+                Recipe recipe = product.getRecipe();
+                craftingProductIngredientsLabel.setText(recipe.getInfo());
+            }
+
+
         }
 
         hoveringInfoWindow.setVisible(currentStacksHover != null);
         craftingProductNameLabel.setVisible(currentStacksHover != null);
         craftingProductIngredientsLabel.setVisible(currentStacksHover != null);
+
+
+    }
+
+    private void displaySkillInfo(){
+
+        farmingHoverImage.setVisible(false);
+        miningHoverImage.setVisible(false);
+        foragingHoverImage.setVisible(false);
+        fishingHoverImage.setVisible(false);
+
+        farmingHoverImage.toFront();
+        miningHoverImage.toFront();
+        foragingHoverImage.toFront();
+        fishingHoverImage.toFront();
+
+        if ( currentMenu == InGameMenuType.SKILL ){
+
+            double mouseX = Gdx.input.getX();
+            double mouseY = 1080 - Gdx.input.getY();
+
+
+            if ( (690< mouseX && mouseX < 850 ) && ( 715 < mouseY && mouseY < 760 ) ){
+                currentAbilityTypeHovering = AbilityType.Farming;
+            }
+            else if ( (716< mouseX && mouseX < 854 ) && ( 634 < mouseY && mouseY < 666 ) ){
+                currentAbilityTypeHovering = AbilityType.Mining;
+            }
+            else if ( (686< mouseX && mouseX < 854 ) && ( 554 < mouseY && mouseY < 581 ) ){
+                currentAbilityTypeHovering = AbilityType.Foraging;
+            }
+            else if ( (708< mouseX && mouseX < 856 ) && ( 459 < mouseY && mouseY < 497 ) ){
+                currentAbilityTypeHovering = AbilityType.Fishing;
+            }
+            else{
+                currentAbilityTypeHovering = null;
+            }
+
+            if ( currentAbilityTypeHovering != null ){
+
+                if ( currentAbilityTypeHovering == AbilityType.Farming ){
+                    farmingHoverImage.setVisible(true);
+                    farmingHoverImage.setPosition((float)  mouseX,(float) mouseY);
+                }
+                else if ( currentAbilityTypeHovering == AbilityType.Mining ){
+                    miningHoverImage.setVisible(true);
+                    miningHoverImage.setPosition((float)  mouseX,(float) mouseY);
+                }
+                else if ( currentAbilityTypeHovering == AbilityType.Fishing ){
+                    fishingHoverImage.setVisible(true);
+                    fishingHoverImage.setPosition((float)  mouseX,(float) mouseY);
+                }
+                else {
+                    foragingHoverImage.setVisible(true);
+                    foragingHoverImage.setPosition((float)  mouseX,(float) mouseY);
+                }
+
+            }
+
+
+        }
 
 
     }
@@ -658,7 +764,9 @@ public class HUDView extends AppMenu {
         displayCookingMenu();
         displayItemQuantity();
         displayHoveringItemInfo();
+        displaySkillInfo();
         displayInputField();
+
 
 
 
@@ -702,7 +810,6 @@ public class HUDView extends AppMenu {
 
         stage.addListener(new InputListener() {
 
-
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
 
@@ -727,7 +834,8 @@ public class HUDView extends AppMenu {
                             currentMenu = InGameMenuType.NONE;
                         }
 
-                    } else if (keycode == Input.Keys.ESCAPE) {
+                    }
+                    else if (keycode == Input.Keys.ESCAPE) {
 
                         if (currentMenu == InGameMenuType.EXIT) {
                             currentMenu = InGameMenuType.NONE;
@@ -737,7 +845,17 @@ public class HUDView extends AppMenu {
                             makeOnScreenItemsInvisible();
                         }
 
-                    } else if (keycode == Input.Keys.B) {
+                    }
+                    else if (keycode == Input.Keys.R) {
+
+                        if (currentMenu != InGameMenuType.SKILL ) {
+                            currentMenu = InGameMenuType.SKILL;
+                        } else {
+                            currentMenu = InGameMenuType.NONE;
+                            makeOnScreenItemsInvisible();
+                        }
+
+                    }else if (keycode == Input.Keys.B) {
 
                         if (currentMenu == InGameMenuType.CRAFTING) {
                             currentMenu = InGameMenuType.NONE;
@@ -881,7 +999,7 @@ public class HUDView extends AppMenu {
                         return true;
                     }
 
-//                    System.out.println(x);
+                    System.out.println("x: "+x+"y: "+y);
 
                     for ( int i = 0; i < 12; i++ ){
 
@@ -1071,6 +1189,27 @@ public class HUDView extends AppMenu {
                }
             });
         }
+
+        for ( CookingProduct cookingProduct: cookingProducts.keySet()  ){
+
+            ImageButton imageButton = cookingProducts.get(cookingProduct);
+            imageButton.addListener(new ClickListener() {
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    super.enter(event, x, y, pointer, fromActor);
+                    currentStacksHover = cookingProduct;
+                }
+
+                @Override
+                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    super.exit(event, x, y, pointer, toActor);
+                    currentStacksHover = null;
+                }
+            });
+
+        }
+
+
 
     }
 
