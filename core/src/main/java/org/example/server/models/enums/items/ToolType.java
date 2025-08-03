@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Item;
 import org.example.server.models.enums.StackLevel;
+import org.example.server.models.tools.*;
 import org.w3c.dom.Text;
 
 public enum ToolType implements Item {
@@ -146,5 +147,28 @@ public enum ToolType implements Item {
         if (this == ToolType.GoldTrashCan)
             return 0.45;
         return 0.6;
+    }
+
+    public Tool getTheFuckingTool() {
+        if (this.getName().matches(".*Hoe"))
+            return new Hoe(this);
+        else if (this.getName().matches("[.]*Pickaxe"))
+            return new Pickaxe(this);
+        else if (this.getName().matches(".*Axe"))
+            return new Axe(this);
+        else if (this.getName().matches(".*Watering Can"))
+            return new WateringCan(this);
+        else if (this.getName().matches(".*Trash Can"))
+            return new TrashCan(this);
+        else if (this.getName().matches(".*Shear"))
+            return new Shear();
+        else if (this.getName().equals("Scythe"))
+            return new Scythe();
+        else if (this.getName().equals("Milk pail"))
+            return new MilkPail();
+        else if (this.getName().matches(".*[Rod|Pole]"))
+            return new FishingPole(this);
+        else
+            return null;
     }
 }

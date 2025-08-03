@@ -13,6 +13,7 @@ import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
+import org.example.server.models.tools.Axe;
 import org.example.server.models.tools.Backpack;
 import org.example.server.models.tools.Tool;
 

@@ -113,6 +113,21 @@ public class OutsideView extends AppMenu {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
+
+
+        if (Gdx.input.justTouched()) {
+            // Get the mouse/touch coordinates
+            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+
+            // Transform the coordinates to world space
+            camera.unproject(touchPos);
+
+            // Now touchPos contains the world coordinates
+            System.out.println("World coordinates: " + touchPos.x + ", " + touchPos.y);
+
+            // You can use these coordinates for your game logic
+        }
+
     }
 
     @Override
