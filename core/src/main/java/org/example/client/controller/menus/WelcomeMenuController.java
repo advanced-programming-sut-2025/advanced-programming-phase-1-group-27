@@ -1,7 +1,6 @@
-package org.example.server.controller;
+package org.example.client.controller.menus;
 
 import org.example.client.Main;
-import org.example.client.controller.menus.MenuController;
 import org.example.server.models.App;
 import org.example.server.models.Result;
 import org.example.server.models.enums.Menu;

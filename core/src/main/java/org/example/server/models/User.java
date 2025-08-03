@@ -56,6 +56,7 @@ public class User {
         recoveryQuestion = new SecurityQuestion((String) data.get("question"), (String) data.get("answer"));
         maxMoneyEarned = ((Number) data.get("maxMoneyEarned")).intValue();
         numberOfGamesPlayed = ((Number) data.get("numberOfGamesPlayed")).intValue();
+        avatarId = ((Number) data.get("avatarId")).intValue();
     }
 
     public User() {}
@@ -71,6 +72,7 @@ public class User {
         info.put("answer", recoveryQuestion.getAnswer());
         info.put("maxMoneyEarned", maxMoneyEarned);
         info.put("numberOfGamesPlayed", numberOfGamesPlayed);
+        info.put("avatarId", avatarId);
         return info;
     }
 

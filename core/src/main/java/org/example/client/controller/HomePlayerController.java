@@ -1,8 +1,7 @@
-package org.example.server.controller;
+package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,10 +9,8 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.HomeView;
 import org.example.client.view.OutsideView;
-import org.example.server.models.App;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.enums.InGameMenuType;
-import org.example.server.models.enums.Menu;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;

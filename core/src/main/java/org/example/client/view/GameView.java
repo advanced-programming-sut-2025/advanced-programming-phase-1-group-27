@@ -1,6 +1,6 @@
 package org.example.client.view;
 
-import org.example.server.controller.GameMenuController;
+import org.example.client.controller.GameMenuController;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.controller.InteractionsWithOthers.MarriageController;

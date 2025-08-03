@@ -58,6 +58,7 @@ public class Message {
         foraging_updates,
         enter_npc,
         leave_npc,
-        walk_update
+        walk_update,
+        get_player_inventory
     }
 }

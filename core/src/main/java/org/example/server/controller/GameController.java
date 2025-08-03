@@ -9,7 +9,7 @@ import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.HashMap;
 
-public class ClientUpdatesController {
+public class GameController {
     public static synchronized void setTomorrowWeather(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         Weather weather = Weather.getWeather(message.getFromBody("weather"));
@@ -36,6 +36,12 @@ public class ClientUpdatesController {
                     "You have successfully purchased " + quantity + " of " + item.getName() + ".",
                     false));
         }}, Message.Type.response);
+    }
+
+    public static Message getPlayerInventory(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        return null;
     }
 
     private static void updateShopStock(Lobby lobby, Item item, int quantity, Shop shop) {

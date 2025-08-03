@@ -1036,8 +1036,7 @@ public class HUDView extends AppMenu {
 
         });
 
-        for ( CraftingProduct craftingProduct: craftingProducts.keySet()  ){
-
+        for (CraftingProduct craftingProduct: craftingProducts.keySet()) {
             ImageButton imageButton = craftingProducts.get(craftingProduct);
             imageButton.addListener(new ClickListener() {
                 @Override
@@ -1061,14 +1060,29 @@ public class HUDView extends AppMenu {
                @Override
                public void clicked(InputEvent event, float x, float y) {
                    playClickSound();
-                   if (imageButton.getColor().a > 0.3f) {   // has ingredient
+                   if (imageButton.getColor().a > 0.3f) {   // not enough ingredient
                        errorLabel.set(controller.craft(entry.getKey()));
                    }
                    else {
                        errorLabel.set(new GraphicalResult("You don't have enough ingredient!"));
-
                    }
                }
+            });
+        }
+
+        for (Map.Entry<CookingProduct, ImageButton> entry : cookingProducts.entrySet()) {
+            ImageButton imageButton = entry.getValue();
+            imageButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    playClickSound();
+                    if (imageButton.getColor().a > 0.3f) {
+                        errorLabel.set(controller.cook(entry.getKey()));
+                    }
+                    else {
+                        errorLabel.set(new GraphicalResult("You don't have enough ingredient!"));
+                    }
+                }
             });
         }
 

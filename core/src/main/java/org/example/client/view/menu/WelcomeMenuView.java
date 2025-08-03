@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.server.controller.WelcomeMenuController;
+import org.example.client.controller.menus.WelcomeMenuController;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Result;
 import org.example.server.models.enums.commands.MainMenuCommands;

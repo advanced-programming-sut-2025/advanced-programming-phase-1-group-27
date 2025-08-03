@@ -1,10 +1,8 @@
 package org.example.server.models.connections;
 
-import org.example.client.model.ClientApp;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
-import org.example.server.models.Lobby;
 import org.example.server.models.ServerApp;
 import org.example.server.models.User;
 
@@ -97,15 +95,18 @@ public class ClientConnectionThread extends ConnectionThread {
             sendMessage(new Message(null, Message.Type.response));
             return true;
         } else if (message.getType() == Message.Type.set_weather) {
-            ClientUpdatesController.setTomorrowWeather(message);
+            GameController.setTomorrowWeather(message);
             return true;
         } else if (message.getType() == Message.Type.enter_npc ||
                    message.getType() == Message.Type.leave_npc ||
                    message.getType() == Message.Type.walk_update) {
-            ClientUpdatesController.notifyExcept(message);
+            GameController.notifyExcept(message);
             return true;
         } else if (message.getType() == Message.Type.purchase_from_shop) {
-            sendMessage(ClientUpdatesController.purchase(message));
+            sendMessage(GameController.purchase(message));
+            return true;
+        } else if (message.getType() == Message.Type.get_player_inventory) {
+            sendMessage(GameController.getPlayerInventory(message));
             return true;
         }
         return false;

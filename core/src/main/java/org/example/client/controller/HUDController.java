@@ -15,6 +15,7 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.commands.CheatCommands;
 import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 
 import java.util.regex.Matcher;
@@ -115,7 +116,7 @@ public class HUDController extends MenuController {
         ClientApp.getCurrentGame().getCurrentPlayer().setCurrentInventorySlotIndex(index);
     }
 
-    private Image getClockByGameState(){
+    private Image getClockByGameState() {
 
         ClientGame currentGame = ClientApp.getCurrentGame();
 
@@ -219,6 +220,21 @@ public class HUDController extends MenuController {
         }
         player.consumeEnergy(2);
         return new GraphicalResult(craftingProduct.getName() + " crafted successfully", false);
+    }
+
+    public GraphicalResult cook(CookingProduct cookingProduct) {
+        Recipe recipe = cookingProduct.getRecipe();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        if (!player.getBackpack().canAdd(recipe.getFinalProduct(), StackLevel.Basic, 1))
+            return new GraphicalResult("Your backpack is full!");
+        player.useRecipe(recipe);
+        if (player.getEnergy() < 3) {
+            player.consumeEnergy(player.getEnergy());
+            player.getBackpack().reduceItems(recipe.getFinalProduct(), StackLevel.Basic, 1);
+            return new GraphicalResult("Cooking failed! You don't have enough energy!");
+        }
+        player.consumeEnergy(3);
+        return new GraphicalResult(cookingProduct.getName() + " cooked successfully!", false);
     }
 
     public GraphicalResult removeFromInventory(Stacks stacks) {

@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.server.controller.HomeController;
-import org.example.server.controller.HomePlayerController;
+import org.example.client.controller.HomePlayerController;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.Player;
 import org.example.server.models.Result;

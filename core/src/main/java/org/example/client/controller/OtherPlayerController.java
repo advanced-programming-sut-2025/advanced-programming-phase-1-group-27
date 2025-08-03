@@ -1,20 +1,13 @@
 package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
-import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
 import org.example.common.models.GameAssetManager;
-import org.example.server.controller.GameMenuController;
-import org.example.server.models.App;
-import org.example.server.models.Result;
 
 import static java.lang.Math.min;
 
