@@ -334,6 +334,12 @@ public class GameAssetManager {
     private final Image cookingMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png")));
 
     private final Image hoveringInfoWindow = new Image(new Texture(Gdx.files.internal("Images/HoveringInfoWindow.png")));
+    private final Image hoveringMiningWindow = new Image(new Texture(Gdx.files.internal("Images/Skill/HoverMining.png")));
+    private final Image hoveringFarmingWindow = new Image(new Texture(Gdx.files.internal("Images/Skill/HoverFarming.png")));
+    private final Image hoveringFishingWindow = new Image(new Texture(Gdx.files.internal("Images/Skill/HoverFishing.png")));
+    private final Image hoveringForagingWindow = new Image(new Texture(Gdx.files.internal("Images/Skill/HoverForaging.png")));
+
+    private final Texture skillPointImage = new Texture(Gdx.files.internal("Images/Skill/SkillPoint.png"));
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -342,6 +348,26 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Texture getSkillPointImage() {
+        return skillPointImage;
+    }
+
+    public Image getHoveringMiningWindow() {
+        return hoveringMiningWindow;
+    }
+
+    public Image getHoveringFarmingWindow() {
+        return hoveringFarmingWindow;
+    }
+
+    public Image getHoveringFishingWindow() {
+        return hoveringFishingWindow;
+    }
+
+    public Image getHoveringForagingWindow() {
+        return hoveringForagingWindow;
     }
 
     public Image getHoveringInfoWindow() {

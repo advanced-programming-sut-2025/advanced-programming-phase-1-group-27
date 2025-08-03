@@ -9,7 +9,8 @@ public enum InGameMenuType {
     MAP(3),
     CRAFTING(4),
     EXIT(5),
-    COOKING(6);
+    COOKING(6),
+    SHOP(7);
 
 
     private final Integer menuIndex;
