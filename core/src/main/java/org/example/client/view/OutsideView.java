@@ -104,10 +104,8 @@ public class OutsideView extends AppMenu {
         toolController.update();
         toolController.render();
         ClientApp.getCurrentGame().updateOtherPlayers();
-        if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap) {
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
             ClientApp.getCurrentGame().renderOtherPlayers();
-            System.out.println("TOFFF");
-        }
         camera.update();
         hudView.displayHUD(delta);
         Main.getBatch().end();
