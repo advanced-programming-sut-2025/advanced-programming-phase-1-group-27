@@ -85,12 +85,20 @@ public class ClientGame implements Game {
         return player;
     }
 
+    public User getAdmin() {
+        return admin;
+    }
+
     public FarmMap getFarmMap(int mapIndex) {
         return farmMaps[mapIndex];
     }
 
     public NPCMap getNpcMap() {
         return npcMap;
+    }
+
+    public ArrayList<MiniPlayer> getPlayers() {
+        return players;
     }
 
     @Override
