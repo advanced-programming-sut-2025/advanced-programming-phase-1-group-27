@@ -32,4 +32,13 @@ public enum StackLevel {
     public double getPriceModifier() {
         return priceModifier;
     }
+
+    public static StackLevel getStackLevel(String levelName) {
+        for (StackLevel stackLevel : values()) {
+            if (stackLevel.name().equalsIgnoreCase(levelName)) {
+                return stackLevel;
+            }
+        }
+        return null;
+    }
 }

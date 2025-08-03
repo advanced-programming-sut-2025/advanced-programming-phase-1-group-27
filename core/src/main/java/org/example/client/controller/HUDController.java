@@ -15,6 +15,7 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.commands.CheatCommands;
 import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 
@@ -237,13 +238,16 @@ public class HUDController extends MenuController {
         return new GraphicalResult(cookingProduct.getName() + " cooked successfully!", false);
     }
 
-    public GraphicalResult removeFromInventory(Stacks stacks) {
-
+    public GraphicalResult removeFromInventory(Stacks slot) {
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
-        player.getBackpack().reduceItems(stacks.getItem(),stacks.getQuantity());
-        return new GraphicalResult(stacks.getItem()+" ("+stacks.getQuantity()+")  removed successfully",false);
-
-
+        double modifier = player.getTrashCan() == null? 0 : player.getTrashCan().getTrashCanModifier();
+        int money = (int) (slot.getTotalPrice() * modifier);
+        player.addMoney(money);
+        player.getBackpack().reduceItems(slot.getItem(), slot.getQuantity());
+        return new GraphicalResult(
+                slot.getItem() + " (" + slot.getQuantity() + ")  removed successfully. You earned " + money,
+                false
+        );
     }
 
     private GraphicalResult handleCheat(String input){

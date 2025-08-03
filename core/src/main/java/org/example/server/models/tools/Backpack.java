@@ -1,5 +1,6 @@
 package org.example.server.models.tools;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.Item;
 import org.example.server.models.ProcessedProduct;
 import org.example.server.models.Stacks;
@@ -8,6 +9,7 @@ import org.example.server.models.enums.items.ToolType;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class Backpack extends Tool {
@@ -21,6 +23,28 @@ public class Backpack extends Tool {
 
         this.capacity = ToolType.getBackpackCapacity(backpackType);
 
+    }
+
+    public Backpack(LinkedTreeMap<String, Object> info) {
+        ToolType backpackType = ToolType.getItem((String) info.get("type"));
+        super(backpackType.getLevel(), 0, backpackType.getName(), backpackType);
+        this.capacity = ((Number) info.get("capacity")).intValue();
+        ArrayList<LinkedTreeMap<String, Object>> itemsInfo = (ArrayList<LinkedTreeMap<String, Object>>) info.get("items");
+        for (LinkedTreeMap<String, Object> slotInfo : itemsInfo) {
+            items.add(new Stacks(slotInfo));
+        }
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("type", this.getToolType().getName());
+        info.put("capacity", capacity);
+        ArrayList itemsInfo = new ArrayList();
+        for (Stacks stack : items) {
+            itemsInfo.add(stack.getInfo());
+        }
+        info.put("items", itemsInfo);
+        return info;
     }
 
     public ArrayList<Stacks> getItems() {
@@ -88,74 +112,6 @@ public class Backpack extends Tool {
         }
         return amount;
     }
-
-//    public int addItems(Item item, StackLevel stackLevel, int amount) {
-//        arranging();
-//        if (capacity == -1) {
-//            while (amount > 0) {
-//                if (amount > 999) {
-//                    items.add(new Stacks(item, stackLevel ,999));
-//                    amount -= 999;
-//                } else {
-//                    items.add(new Stacks(item, stackLevel ,amount));
-//                }
-//            }
-//            arranging();
-//            return 0;
-//        } else {
-//            for (Stacks stacks : items) {
-//                if (stacks.getItem() == item
-//                        && stacks.getQuantity() < 999) {
-//                    int canAdd = 999 - stacks.getQuantity();
-//                    canAdd = Math.min(amount, canAdd);
-//                    stacks.setQuantity(stacks.getQuantity() + canAdd);
-//                    amount -= canAdd;
-//                    if (amount == 0) {
-//                        return 0;
-//                    }
-//                }
-//            }
-//            while (amount > 0) {
-//                if (amount > 999) {
-//                    if (items.size() <= capacity) {
-//                        items.add(new Stacks(item, 999));
-//                        amount -= 999;
-//                    } else {
-//                        break;
-//                    }
-//                } else {
-//                    if (items.size() <= capacity) {
-//                        items.add(new Stacks(item, amount));
-//                        amount -= amount;
-//                    } else {
-//                        break;
-//                    }
-//                }
-//            }
-//            return amount;
-//        }
-//    }
-//
-//    private void arranging() {
-//        Map<Item, Integer> itemCount = new HashMap<>();
-//        for (Stacks stacks : items) {
-//            if (stacks.getQuantity() > 0) {
-//                itemCount.merge(stacks.getItem(), stacks.getQuantity(), Integer::sum);
-//            }
-//        }
-//        items.clear();
-//        for (Map.Entry<Item, Integer> entry : itemCount.entrySet()) {
-//            Item item = entry.getKey();
-//            int total = entry.getValue();
-//            while (total >= 999) {
-//                items.add(new Stacks(item, 999));
-//                total -= 999;
-//            }
-//            if (total > 0) {
-//                items.add(new Stacks(item, total));
-//            }
-//        }
-//    }
 
     public Stacks getStackToolWithName(String toolName) {
         for (Stacks stacks : items) {

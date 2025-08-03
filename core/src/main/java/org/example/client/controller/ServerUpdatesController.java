@@ -13,6 +13,7 @@ import org.example.server.models.Shops.Shop;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Weathers.Weather;
 
+import java.util.HashMap;
 import java.util.Random;
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.Tree;
@@ -110,5 +111,11 @@ public class ServerUpdatesController { // handles updates sent by server
         String username = message.getFromBody("username");
         Direction direction = Direction.getDirection(message.getFromBody("direction"));
         ClientApp.getCurrentGame().walkPlayer(username, direction);
+    }
+
+    public static Message getInventory() {
+        return new Message(new HashMap<>() {{
+            put("inventoryInfo", ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getInfo());
+        }}, Message.Type.response);
     }
 }

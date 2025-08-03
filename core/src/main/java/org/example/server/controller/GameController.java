@@ -9,6 +9,8 @@ import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.HashMap;
 
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+
 public class GameController {
     public static synchronized void setTomorrowWeather(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
@@ -41,7 +43,10 @@ public class GameController {
     public static Message getPlayerInventory(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
-        return null;
+        String playerUsername = message.getFromBody("username");
+        return ServerApp.getClientConnectionThreadByUsername(playerUsername).sendAndWaitForResponse(
+                new Message(null, Message.Type.get_player_inventory), TIMEOUT_MILLIS
+        );
     }
 
     private static void updateShopStock(Lobby lobby, Item item, int quantity, Shop shop) {

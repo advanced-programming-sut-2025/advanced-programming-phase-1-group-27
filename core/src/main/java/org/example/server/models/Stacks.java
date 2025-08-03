@@ -1,6 +1,10 @@
 package org.example.server.models;
 
+import com.google.gson.internal.LinkedTreeMap;
+import org.example.common.models.ItemManager;
 import org.example.server.models.enums.StackLevel;
+
+import java.util.HashMap;
 
 public class Stacks {
     private Item item;
@@ -17,6 +21,20 @@ public class Stacks {
         this.item = item;
         this.stackLevel = stackLevel;
         this.quantity = quantity;
+    }
+
+    public Stacks(LinkedTreeMap<String, Object> info) {
+        this.item = ItemManager.getItemByName((String) info.get("item"));
+        this.stackLevel = StackLevel.getStackLevel((String) info.get("stackLevel"));
+        this.quantity = ((Number) info.get("quantity")).intValue();
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("item", item.getName());
+        info.put("stackLevel", stackLevel.name());
+        info.put("quantity", quantity);
+        return info;
     }
 
     public Item getItem() {

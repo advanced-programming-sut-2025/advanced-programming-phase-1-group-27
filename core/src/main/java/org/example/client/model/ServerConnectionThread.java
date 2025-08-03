@@ -84,6 +84,10 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.otherPlayerWalking(message);
             return true;
         }
+        else if (message.getType() == Message.Type.get_player_inventory) {
+            sendMessage(ServerUpdatesController.getInventory());
+            return true;
+        }
         return false;
     }
 
