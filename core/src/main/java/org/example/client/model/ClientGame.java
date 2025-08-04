@@ -40,6 +40,9 @@ public class ClientGame implements Game {
         this.admin = lobby.getAdmin();
         this.player = player;
         this.players = players;
+        for (MiniPlayer miniPlayer : players) {
+            System.out.println(miniPlayer.getUsername());
+        }
         this.time = new Time(this);
     }
 

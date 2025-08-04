@@ -907,15 +907,12 @@ public class HUDView extends AppMenu {
 
         playerSocialMenuBackground.setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
 
-        for ( int i = 0; i < Math.min(4,ClientApp.getCurrentGame().getPlayers().size()); i++ ){
+        for ( int i = 0; i < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()) - 1; i++ ){
 
-            if ( !Objects.equals(ClientApp.getCurrentGame().getPlayers().get(i).getUsername(),
-                    player.getUsername()) ){
-                friendsLabels.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
-                friendshipInfos.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
-                friendsLabels.get(i).toFront();
-                friendshipInfos.get(i).toFront();
-            }
+            friendsLabels.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
+            friendshipInfos.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
+            friendsLabels.get(i).toFront();
+            friendshipInfos.get(i).toFront();
 
         }
 

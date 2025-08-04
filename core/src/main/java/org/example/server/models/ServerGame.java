@@ -259,7 +259,7 @@ public class ServerGame implements Game {
     }
 
     private void applyRain() {
-        for (Player player : App.getCurrentGame().getPlayers()) {
+        for (Player player : players) {
             FarmMap map = player.getFarmMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < cells.length; i++) {
@@ -274,7 +274,7 @@ public class ServerGame implements Game {
     }
 
     private void applyThor() {
-        for (Player player : App.getCurrentGame().getPlayers()) {
+        for (Player player : players) {
             FarmMap map = player.getFarmMap();
             Cell[][] cells = map.getCells();
             for (int i = 0; i < 3; i++) {
