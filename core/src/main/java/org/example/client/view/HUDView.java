@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
 import org.example.common.models.Game;
@@ -24,6 +25,7 @@ import org.example.client.controller.HUDController;
 import org.example.common.utils.JSONUtils;
 import org.example.server.models.Item;
 import org.example.server.models.Player;
+import org.example.server.models.Relations.Relation;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.InGameMenuType;
@@ -340,13 +342,17 @@ public class HUDView extends AppMenu {
         friendshipInfos = new ArrayList<>();
         friendButtons = new ArrayList<>();
 
+        int counter = 0;
+
         for ( int z = 0; z < Math.min(4,ClientApp.getCurrentGame().getPlayers().size()); z++ ){
 
             if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),
                     player.getUsername())){
 
-                Label nameLabel = new Label(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),skin); // ClientApp.getCurrentGame().getPlayers().get(i).getUsername()
-                Label friendshipInfo = new Label("Level: "+4+"    XP: "+99,skin); /// TODO: PARSA XP/LVL por kon pls
+                Relation relation = InteractionsWithUserController.getRelation(ClientApp.getCurrentGame().getPlayers().get(z).getUsername());
+
+                Label nameLabel = new Label(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),skin);
+                Label friendshipInfo = new Label("Level: "+relation.getLevel()+"    XP: "+relation.getXp(),skin); /// TODO: PARSA XP/LVL por kon pls
                 TextButton giftButton = new TextButton("Gift",skin);
                 TextButton tradeMenuButton = new TextButton("Trade",skin);
 
@@ -363,11 +369,12 @@ public class HUDView extends AppMenu {
                 friendButtons.add(giftButton);
                 friendButtons.add(tradeMenuButton);
 
-                nameLabel.setPosition(550,680 - 80 * z);
-                friendshipInfo.setPosition(700,680 - 80 * z);
+                nameLabel.setPosition(550,680 - 80 * counter);
+                friendshipInfo.setPosition(700,680 - 80 * counter);
                 stage.addActor(nameLabel);
                 stage.addActor(friendshipInfo);
 
+                counter ++;
 
 
             }
