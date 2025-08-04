@@ -633,4 +633,13 @@ public class ServerGame implements Game {
             return stardropSaloon;
         return null;
     }
+
+    public Player getPlayerByUsername(String username) {
+        for(Player player : players){
+            if(player.getUsername().equals(username)){
+                return player;
+            }
+        }
+        return null;
+    }
 }
