@@ -1,17 +1,17 @@
 package org.example.client.controller.InteractionsWithOthers;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.model.ClientApp;
 import org.example.common.models.Message;
-import org.example.server.models.App;
-import org.example.server.models.Item;
-import org.example.server.models.Player;
+import org.example.server.models.*;
 import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Relation;
-import org.example.server.models.Result;
 import org.example.server.models.enums.DialogueType;
 import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.tools.Backpack;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
@@ -72,11 +72,11 @@ public class InteractionsWithUserController {
 //    }
 
     public static Relation getRelation(String username) {
-        Message message = new Message(new HashMap<>(){{
+        Message message = new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("username1", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
             put("username2", username);
-        }} , Message.Type.get_player_relation);
+        }}, Message.Type.get_player_relation);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
             return new Relation();
@@ -87,6 +87,19 @@ public class InteractionsWithUserController {
         relation.setLevel(level);
         relation.setXp(xp);
         return relation;
+    }
+
+    public static ArrayList<Stacks> getInventory(String username) {
+        Message message = new Message(new HashMap<>(){{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("username", username);
+        }} , Message.Type.get_player_inventory);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response) {
+            System.out.println("Inventory failed!");
+            return new ArrayList<Stacks>();
+        }
+        return new Backpack(response.<LinkedTreeMap<String, Object>>getFromBody("inventoryInfo")).getItems();
     }
 
 }

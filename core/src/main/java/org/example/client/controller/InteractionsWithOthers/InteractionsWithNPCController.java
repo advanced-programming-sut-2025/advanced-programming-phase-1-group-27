@@ -37,7 +37,7 @@ public class InteractionsWithNPCController {
                 put("npcName" , npcName);
                 put("XP" , 20);
             }} , Message.Type.InteractionP2NPC);
-            ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+            ClientApp.getServerConnectionThread().sendMessage(message);
         }
         // TODO : Rassa dialogue
         return null;
@@ -78,7 +78,7 @@ public class InteractionsWithNPCController {
                 put("npcName" , npcName);
                 put("XP" , finalXp);
             }} , Message.Type.InteractionP2NPC);
-            ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+            ClientApp.getServerConnectionThread().sendMessage(message);
         }
         // TODO : Rassa dialogue
         return null;
