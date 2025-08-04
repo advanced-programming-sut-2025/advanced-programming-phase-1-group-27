@@ -357,6 +357,9 @@ public class GameAssetManager {
 
     private final Image mapMenuBackground = new Image( new Texture(Gdx.files.internal("Images/Map/MapMenu.png")));
 
+    private final Image energyBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/EnergyBar2.png")));
+    private final Image greenBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/GreenBar.png")));
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -364,6 +367,14 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getGreenBar() {
+        return greenBar;
+    }
+
+    public Image getEnergyBar() {
+        return energyBar;
     }
 
     public Image getMapMenuBackground() {

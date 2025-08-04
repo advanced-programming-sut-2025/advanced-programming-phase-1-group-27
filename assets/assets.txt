@@ -28,6 +28,9 @@ Clock/SunnyFall.png
 Clock/SunnySpring.png
 Clock/SunnySummer.png
 Clock/SunnyWinter.png
+EnergyIcons/EnergyBar.png
+EnergyIcons/EnergyBar2.png
+EnergyIcons/GreenBar.png
 Fonts/lantern_lightred.fnt
 Fonts/lantern_lightred.png
 Fonts/lantern_white.fnt

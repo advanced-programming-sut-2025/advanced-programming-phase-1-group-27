@@ -69,6 +69,8 @@ public class HUDView extends AppMenu {
     private final Image socialMenuBackground;
     private final Image playerSocialMenuBackground;
     private final Image mapMenuBackground;
+    private final Image energyBar;
+    private final Image greenBar;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -197,6 +199,8 @@ public class HUDView extends AppMenu {
         socialMenuBackground = GameAssetManager.getGameAssetManager().getSocialMenuBackgroundImage();
         playerSocialMenuBackground = GameAssetManager.getGameAssetManager().getPlayerSocialBackground();
         mapMenuBackground = GameAssetManager.getGameAssetManager().getMapMenuBackground();
+        energyBar = GameAssetManager.getGameAssetManager().getEnergyBar();
+        greenBar = GameAssetManager.getGameAssetManager().getGreenBar();
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
         socialButton.setPosition(100,100);
@@ -258,7 +262,7 @@ public class HUDView extends AppMenu {
         cookingMenuBackground.setPosition((Gdx.graphics.getWidth()-cookingMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-cookingMenuBackground.getHeight())/2f);
         cookingMenuBackground.setVisible(false);
 
-        hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-20,
+        hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-80,
                 20);
 
 
@@ -287,7 +291,6 @@ public class HUDView extends AppMenu {
         fishingHoverImage.setVisible(false);
         miningHoverImage.setVisible(false);
         foragingHoverImage.setVisible(false);
-
 
         // STAGE
         stage.addActor(blackImage);
@@ -319,6 +322,8 @@ public class HUDView extends AppMenu {
         stage.addActor(socialButton);
         stage.addActor(playerSocialMenuBackground);
         stage.addActor(mapMenuBackground);
+        stage.addActor(energyBar);
+        stage.addActor(greenBar);
 
 
 
@@ -380,7 +385,6 @@ public class HUDView extends AppMenu {
         setListeners();
 
     }
-
 
     private void displayClock() {
 
@@ -863,6 +867,15 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayEnergy(){
+
+        ///  TODO: Rassa 2 khat paain tar jaye 50f max energy yaro ro bezar
+        energyBar.setPosition(Gdx.graphics.getWidth()-energyBar.getWidth()-20,20);
+        greenBar.setHeight(250 * (player.getEnergy() / 50f));
+        greenBar.setPosition(energyBar.getX()+11,energyBar.getY()+9);
+
+    }
+
     @Override
     public void show() {
 
@@ -899,6 +912,7 @@ public class HUDView extends AppMenu {
         displayHoveringItemInfo();
         displaySkillInfo();
         displayPlayerSocial();
+        displayEnergy();
         displayInputField();
 
     }
@@ -1416,8 +1430,6 @@ public class HUDView extends AppMenu {
 
         }
 
-
-
     }
 
 
@@ -1486,4 +1498,5 @@ public class HUDView extends AppMenu {
     public HUDController getController() {
         return controller;
     }
+
 }
