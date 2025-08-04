@@ -59,6 +59,8 @@ public class Message {
         enter_npc,
         leave_npc,
         walk_update,
-        get_player_inventory
+        get_player_inventory,
+        InteractionP2NPC,
+        InteractionP2P,
     }
 }

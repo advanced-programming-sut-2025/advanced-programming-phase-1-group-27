@@ -1,9 +1,9 @@
 package org.example.client.controller;
 
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
-import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
@@ -150,7 +150,7 @@ public class CheatController {
         int amount = Integer.parseInt(amountString);
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         // TODO: rassa, hamahang ba server va parsa shavad
-        NPC npc = InteractionsWithNPCController.getNPCByName(NPCName);
+        NPC npc = InteractionsWithNPCController.findNPC(NPCName);
         if (npc == null) {
             return new Result(false, "NPC not found!");
         }

@@ -190,26 +190,26 @@ public class GameView extends AppMenu {
                     matcher.group("itemName").trim(),
                     Integer.parseInt(matcher.group("number").trim())
             ));
-        }
+//        }
         // Interaction With NPCs
-        else if ((matcher = InteractionsWithNPCCommands.MeetNPC.getMatcher(input)) != null) {
-            System.out.println(interactionsWithNPCController.meetNPC(
-                    matcher.group("npcName").trim()
-            ));
-        } else if ((matcher = InteractionsWithNPCCommands.GiftNPC.getMatcher(input)) != null) {
-            System.out.println(interactionsWithNPCController.giftNPC(
-                    matcher.group("npcName").trim(),
-                    matcher.group("item").trim()
-            ));
-        } else if ((matcher = InteractionsWithNPCCommands.FriendshipNPCList.getMatcher(input)) != null) {
-            System.out.println(interactionsWithNPCController.friendshipNPC());
-        } else if ((matcher = InteractionsWithNPCCommands.QuestList.getMatcher(input)) != null) {
-            System.out.println(interactionsWithNPCController.questList());
-        } else if ((matcher = InteractionsWithNPCCommands.QuestFinish.getMatcher(input)) != null) {
-            System.out.println(interactionsWithNPCController.questsFinish(
-                    matcher.group("npcName").trim(),
-                    matcher.group("index").trim()
-            ));
+//        else if ((matcher = InteractionsWithNPCCommands.MeetNPC.getMatcher(input)) != null) {
+//            System.out.println(interactionsWithNPCController.meetNPC(
+//                    matcher.group("npcName").trim()
+//            ));
+//        } else if ((matcher = InteractionsWithNPCCommands.GiftNPC.getMatcher(input)) != null) {
+//            System.out.println(interactionsWithNPCController.giftNPC(
+//                    matcher.group("npcName").trim(),
+//                    matcher.group("item").trim()
+//            ));
+//        } else if ((matcher = InteractionsWithNPCCommands.FriendshipNPCList.getMatcher(input)) != null) {
+//            System.out.println(interactionsWithNPCController.friendshipNPC());
+//        } else if ((matcher = InteractionsWithNPCCommands.QuestList.getMatcher(input)) != null) {
+//            System.out.println(interactionsWithNPCController.questList());
+//        } else if ((matcher = InteractionsWithNPCCommands.QuestFinish.getMatcher(input)) != null) {
+//            System.out.println(interactionsWithNPCController.questsFinish(
+//                    matcher.group("npcName").trim(),
+//                    matcher.group("index").trim()
+//            ));
         } else if ((matcher = InteractionsWithUserCommands.Friendships.getMatcher(input)) != null) {
             System.out.println(interactionsWithUserController.friendship());
         } else if ((matcher = InteractionsWithUserCommands.TalkToUser.getMatcher(input)) != null) {

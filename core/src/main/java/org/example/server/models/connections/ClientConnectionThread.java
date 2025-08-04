@@ -3,6 +3,7 @@ package org.example.server.models.connections;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
+import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.server.models.ServerApp;
 import org.example.server.models.User;
 
@@ -108,6 +109,8 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.get_player_inventory) {
             sendMessage(GameController.getPlayerInventory(message));
             return true;
+        } else if (message.getType() == Message.Type.InteractionP2NPC){
+            sendMessage(InteractionsWithNPCController.handleMessage(message));
         }
         return false;
     }
