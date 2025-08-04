@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
 public class MusicPlayer {
+
     private Music music;
     private float volume = 0.5f;
     private Track currentTrack;

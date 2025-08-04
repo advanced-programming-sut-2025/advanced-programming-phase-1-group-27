@@ -360,6 +360,15 @@ public class GameAssetManager {
     private final Image energyBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/EnergyBar2.png")));
     private final Image greenBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/GreenBar.png")));
 
+    private final Sound thorSound = Gdx.audio.newSound(Gdx.files.internal("Thor/ThorSFX.wav"));
+
+    private final Texture thor1 = new Texture(Gdx.files.internal("Thor/Lightning1.png"));
+    private final Texture thor2 = new Texture(Gdx.files.internal("Thor/Lightning2.png"));
+    private final Texture thor3 = new Texture(Gdx.files.internal("Thor/Lightning3.png"));
+    private final Texture thor4 = new Texture(Gdx.files.internal("Thor/Lightning4.png"));
+
+    private final Animation<Texture> thorAnimationFrames = new Animation<>(0.25f, thor1,thor2,thor3,thor4);
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -367,6 +376,14 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Animation<Texture> getThorAnimationFrames() {
+        return thorAnimationFrames;
+    }
+
+    public Sound getThorSound() {
+        return thorSound;
     }
 
     public Image getGreenBar() {

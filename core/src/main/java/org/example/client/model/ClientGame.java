@@ -190,10 +190,10 @@ public class ClientGame implements Game {
     private void setPlayerEnergy() {
         // Setting Energies :
         if (player.hasPassedOut())
-            player.setDayEnergy(player.getMaxEnergy() * 3 / 4);
+            player.setEnergy(player.getMaxEnergy() * 3 / 4);
 
         else
-            player.setDayEnergy(player.getMaxEnergy());
+            player.setEnergy(player.getMaxEnergy());
     }
 
     private void updateShippingBin() {

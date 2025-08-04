@@ -731,6 +731,11 @@ NPCs/Shop/Willy.png
 Sounds/click.wav
 Sounds/music/theme1.mp3
 Sounds/music/theme2.mp3
+Thor/Lightning1.png
+Thor/Lightning2.png
+Thor/Lightning3.png
+Thor/Lightning4.png
+Thor/ThorSFX.wav
 black_4k.png
 logo.jpg
 skin/font-export.fnt

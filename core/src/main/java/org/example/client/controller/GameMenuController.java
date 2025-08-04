@@ -253,7 +253,8 @@ public class GameMenuController extends MenuController {
                                 currentPlayer.setCurrentMenu(Menu.Home);
                                 App.setCurrentMenu(Menu.Home);
                                 Main.getMain().getScreen().dispose();
-                                Main.getMain().setScreen(new HomeView());
+                                ClientApp.setCurrentMenu(new HomeView());
+                                Main.getMain().setScreen(ClientApp.getCurrentMenu());
                                 Main.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, 1920, 1080);
                                 return new Result(true, "You Entered Your Home :)");
                             }
@@ -846,7 +847,6 @@ public class GameMenuController extends MenuController {
         int energy = Integer.parseInt(energyString);
 
         App.getCurrentGame().getCurrentPlayer().setEnergy(energy);
-        App.getCurrentGame().getCurrentPlayer().setDayEnergy(energy);
         return new Result(true, "Energy Set to " + energy);
     }
 

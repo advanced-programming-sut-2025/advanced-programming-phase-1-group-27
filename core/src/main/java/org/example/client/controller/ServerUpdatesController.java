@@ -9,6 +9,7 @@ import org.example.common.models.Message;
 import org.example.server.models.Cell;
 import org.example.server.models.Item;
 import org.example.server.models.Map.FarmMap;
+import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Weathers.Weather;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import static java.lang.Math.min;
 
 public class ServerUpdatesController { // handles updates sent by server
+
     public static void updateShopStock(Message message) {
         Shop shop = ClientApp.getCurrentGame().getShop(message.getFromBody("shopName"));
         Item item = ItemManager.getItemByName(message.getFromBody("itemName"));
@@ -40,6 +42,12 @@ public class ServerUpdatesController { // handles updates sent by server
             int x = (new Random()).nextInt(cells.length);
             int y = (new Random()).nextInt(cells[0].length);
             cells[x][y].thor();
+            if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView
+                    && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap npcMap)) {
+
+                outsideView.displayThorAnimation(x,y);
+
+            }
         }
     }
 

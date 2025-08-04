@@ -2,12 +2,14 @@ package org.example.client.controller;
 
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
+import org.example.client.view.OutsideView;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.FarmMap;
+import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.AbilityType;
@@ -51,10 +53,19 @@ public class CheatController {
         int i = Integer.parseInt(s), j = Integer.parseInt(t);
         FarmMap map = ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap();
         Cell cell = map.getCell(i, j);
+
         if (cell.getBuilding() != null) {
             return new Result(false, "There is A Building!!");
         } else {
             cell.thor();
+
+            if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView
+            && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap npcMap)) {
+
+                outsideView.displayThorAnimation(i,j);
+
+            }
+
             return new Result(true, "The Cell [" + i + ", " + j + "] was hit by Thor!");
         }
     }
@@ -63,7 +74,7 @@ public class CheatController {
         int energy = Integer.parseInt(energyString);
 
         ClientApp.getCurrentGame().getCurrentPlayer().setEnergy(energy);
-        ClientApp.getCurrentGame().getCurrentPlayer().setDayEnergy(energy);
+//        ClientApp.getCurrentGame().getCurrentPlayer().setDayEnergy(energy);
         return new Result(true, "Energy Set to " + energy);
     }
 

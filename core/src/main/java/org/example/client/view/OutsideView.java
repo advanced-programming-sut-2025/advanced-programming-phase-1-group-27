@@ -12,10 +12,12 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.OtherPlayerController;
+import org.example.client.controller.OutsideWorldController;
 import org.example.client.controller.ToolGraphicalController;
 import org.example.client.model.ClientApp;
 import org.example.client.controller.OutsidePlayerController;
@@ -24,6 +26,7 @@ import org.example.server.models.Cell;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Position;
+import org.example.server.models.enums.SFX;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -35,9 +38,9 @@ public class OutsideView extends AppMenu {
     private final Stage stage;
 
     private final OutsidePlayerController playerController = new OutsidePlayerController(this);
+    private final OutsideWorldController worldController = new OutsideWorldController(this);
     private final ToolGraphicalController toolController = new ToolGraphicalController(this);
     private Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
 
     private final int tileSize = 40;
 
@@ -92,6 +95,13 @@ public class OutsideView extends AppMenu {
         return new Position(k - (int) Math.floor(y / 40), (int) Math.floor(x / 40));
     }
 
+    public void displayThorAnimation(int i, int j){
+
+        SFX.THOR.play();
+        worldController.setThor(1f,i,j);
+
+    }
+
     @Override
     public void executeCommands(Scanner scanner) {
 
@@ -116,7 +126,6 @@ public class OutsideView extends AppMenu {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
 
-
         ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
 
         playerController.update();
@@ -126,6 +135,8 @@ public class OutsideView extends AppMenu {
         if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
             ClientApp.getCurrentGame().renderOtherPlayers();
         camera.update();
+        worldController.update(delta);
+
         hudView.displayHUD(delta);
         Main.getBatch().end();
 
