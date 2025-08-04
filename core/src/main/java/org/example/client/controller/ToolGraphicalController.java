@@ -64,6 +64,8 @@ public class ToolGraphicalController {
                 int i = OutsideView.getIndices(touchPos.x, touchPos.y).getX(),
                         j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
                 Cell cell = player.getCurrentMap().getCell(i, j);
+                if (cell == null)
+                    return;
                 System.out.println("you clicked the cell " + i + " " + j);
                 if (cell.getAdjacentCells().contains(player.getCurrentCell())) {
                     toolType.getTheFuckingTool().use(cell);

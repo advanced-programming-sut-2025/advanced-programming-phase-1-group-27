@@ -20,7 +20,9 @@ import org.example.client.controller.ToolGraphicalController;
 import org.example.client.model.ClientApp;
 import org.example.client.controller.OutsidePlayerController;
 import org.example.common.models.Direction;
+import org.example.server.models.Cell;
 import org.example.server.models.Map.NPCMap;
+import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Position;
 
 import java.util.ArrayList;
@@ -62,6 +64,11 @@ public class OutsideView extends AppMenu {
         return new Position(j * 40 + 20, (k - i) * 40 + 30);
     }
 
+    public static Position getGraphicalPositionInFarmMap(int i, int j) {
+        int k = 54;
+        return new Position(j * 40 + 20, (k - i) * 40 + 30);
+    }
+
 //    /// ---> Gets the Player Position and gives his cell <---
 //    public static Position getIndices(Position pos) {
 //        return getIndices(pos.getX(), pos.getY());
@@ -70,6 +77,18 @@ public class OutsideView extends AppMenu {
     /// ---> Gets the Player Position and gives his cell <---
     public static Position getIndices(float x, float y) {
         int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
+        return new Position(k - (int) Math.floor(y / 40), (int) Math.floor(x / 40));
+    }
+
+    /// ---> Receives the x,y and gives the corresponding cells indices in a NPCMap
+    public static Position getIndicesInNPCMap(float x, float y) {
+        int k = 15;
+        return new Position(k - (int) Math.floor(y / 40), (int) Math.floor(x / 40));
+    }
+
+    /// ---> Receives the x,y and gives the corresponding cells indices in a FarmMap
+    public static Position getIndicesInFarmMap(float x, float y) {
+        int k = 54;
         return new Position(k - (int) Math.floor(y / 40), (int) Math.floor(x / 40));
     }
 
@@ -116,18 +135,17 @@ public class OutsideView extends AppMenu {
 
 
         if (Gdx.input.justTouched()) {
-            // Get the mouse/touch coordinates
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-
-            // Transform the coordinates to world space
             camera.unproject(touchPos);
-
-            // Now touchPos contains the world coordinates
             System.out.println("World coordinates: " + touchPos.x + ", " + touchPos.y);
 
-            // You can use these coordinates for your game logic
+            int i = OutsideView.getIndices(touchPos.x, touchPos.y).getX(),
+                    j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
+            Cell cell = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().getCell(i, j);
+            if (cell != null && cell.getObject() instanceof NPC npc) {
+                System.out.println(npc.getType().getName() + " WAS CLICKED"); // TODO parsa inja click shode ro in NPC
+            }
         }
-
     }
 
     @Override
