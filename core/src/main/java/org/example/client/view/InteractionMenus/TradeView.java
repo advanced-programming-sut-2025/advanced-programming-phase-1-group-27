@@ -1,5 +1,7 @@
-package org.example.client.view;
+package org.example.client.view.InteractionMenus;
 
+import org.example.client.view.AppMenu;
+import org.example.client.view.GameView;
 import org.example.server.controller.InteractionsWithOthers.TradeController;
 import org.example.server.models.App;
 import org.example.server.models.Result;

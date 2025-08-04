@@ -174,6 +174,7 @@ public class CheatController {
         }
         relation.setLevel(relation.getLevel() + amount);
         int finalAmount = relation.getLevel();
+        // TODO : message server
         return new Result(true, "Level is added! ( " + finalAmount + " )");
     }
 
