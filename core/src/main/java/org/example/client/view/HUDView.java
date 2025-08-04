@@ -3,6 +3,7 @@ package org.example.client.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -66,7 +67,11 @@ public class HUDView extends AppMenu {
     private final Image miningHoverImage;
     private final Image foragingHoverImage;
     private final Image socialMenuBackground;
+    private final Image playerSocialMenuBackground;
+    private final Image mapMenuBackground;
     private Image clockImage;
+
+    private final ImageButton socialButton;
 
     private final ArrayList<Image> skillPoints;
     private final ArrayList<Image> npcAvatars;
@@ -190,7 +195,11 @@ public class HUDView extends AppMenu {
         foragingHoverImage = GameAssetManager.getGameAssetManager().getHoveringForagingWindow();
         fishingHoverImage = GameAssetManager.getGameAssetManager().getHoveringFishingWindow();
         socialMenuBackground = GameAssetManager.getGameAssetManager().getSocialMenuBackgroundImage();
+        playerSocialMenuBackground = GameAssetManager.getGameAssetManager().getPlayerSocialBackground();
+        mapMenuBackground = GameAssetManager.getGameAssetManager().getMapMenuBackground();
 
+        socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
+        socialButton.setPosition(100,100);
 
         textInputField = new TextField("", skin);
 
@@ -240,7 +249,11 @@ public class HUDView extends AppMenu {
 
 
 
+        mapMenuBackground.setPosition((Gdx.graphics.getWidth()-mapMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-mapMenuBackground.getHeight())/2f);
+        mapMenuBackground.setVisible(false);
 
+        playerSocialMenuBackground.setPosition((Gdx.graphics.getWidth()-playerSocialMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-playerSocialMenuBackground.getHeight())/2f);
+        playerSocialMenuBackground.setVisible(false);
 
         cookingMenuBackground.setPosition((Gdx.graphics.getWidth()-cookingMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-cookingMenuBackground.getHeight())/2f);
         cookingMenuBackground.setVisible(false);
@@ -303,6 +316,9 @@ public class HUDView extends AppMenu {
         stage.addActor(fishingHoverImage);
         stage.addActor(miningHoverImage);
         stage.addActor(foragingHoverImage);
+        stage.addActor(socialButton);
+        stage.addActor(playerSocialMenuBackground);
+        stage.addActor(mapMenuBackground);
 
 
 
@@ -835,6 +851,18 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayPlayerSocial(){
+
+        playerSocialMenuBackground.setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
+
+    }
+
+    private void displayMapMenu(){
+
+        mapMenuBackground.setVisible(currentMenu == InGameMenuType.MAP);
+
+    }
+
     @Override
     public void show() {
 
@@ -865,14 +893,13 @@ public class HUDView extends AppMenu {
         displaySocialMenu();
         displayCraftingMenu();
         displayExitMenu();
+        displayMapMenu();
         displayCookingMenu();
         displayItemQuantity();
         displayHoveringItemInfo();
         displaySkillInfo();
+        displayPlayerSocial();
         displayInputField();
-
-
-
 
     }
 
@@ -951,7 +978,7 @@ public class HUDView extends AppMenu {
                         }
 
                     }
-                    else if (keycode == Input.Keys.R) {
+                    else if (keycode == Input.Keys.V) {
 
                         if ( currentMenu == InGameMenuType.SKILL ) {
                             currentMenu = InGameMenuType.NONE;
@@ -962,7 +989,18 @@ public class HUDView extends AppMenu {
                         }
 
                     }
-                    else if (keycode == Input.Keys.Z) {
+                    else if (keycode == Input.Keys.N) {
+
+                        if ( currentMenu == InGameMenuType.MAP ) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.MAP;
+                            makeOnScreenItemsInvisible();
+                        }
+
+                    }
+                    else if (keycode == Input.Keys.B) {
 
                         if ( currentMenu == InGameMenuType.SOCIAL ) {
                             currentMenu = InGameMenuType.NONE;
@@ -972,7 +1010,18 @@ public class HUDView extends AppMenu {
                             makeOnScreenItemsInvisible();
                         }
 
-                    }else if (keycode == Input.Keys.B) {
+                    }
+                    else if (keycode == Input.Keys.Z) {
+
+                        if ( currentMenu == InGameMenuType.PLAYER_SOCIAL ) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.PLAYER_SOCIAL;
+                            makeOnScreenItemsInvisible();
+                        }
+
+                    }else if (keycode == Input.Keys.M) {
 
                         if (currentMenu == InGameMenuType.CRAFTING) {
                             currentMenu = InGameMenuType.NONE;
@@ -1111,6 +1160,11 @@ public class HUDView extends AppMenu {
                         makeOnScreenItemsInvisible();
                         return true;
                     }
+                    else if ( (715 < x && x < 780) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.MAP;
+                        makeOnScreenItemsInvisible();
+                        return true;
+                    }
                     else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
                         currentMenu = InGameMenuType.CRAFTING;
                         makeOnScreenItemsInvisible();
@@ -1122,7 +1176,7 @@ public class HUDView extends AppMenu {
                         return true;
                     }
 
-                    System.out.println(x+" "+y);
+//                    System.out.println(x+" "+y);
 
                     for ( int i = 0; i < 12; i++ ){
 
@@ -1273,6 +1327,22 @@ public class HUDView extends AppMenu {
                 }
                 return false;
 
+            }
+
+
+        });
+
+        socialButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if ( currentMenu == InGameMenuType.PLAYER_SOCIAL ) {
+                    currentMenu = InGameMenuType.NONE;
+                }
+                else{
+                    currentMenu = InGameMenuType.PLAYER_SOCIAL;
+                    makeOnScreenItemsInvisible();
+                }
             }
 
         });

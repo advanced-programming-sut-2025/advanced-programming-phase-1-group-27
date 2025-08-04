@@ -351,6 +351,12 @@ public class GameAssetManager {
 
     private final Texture checkBox = new Texture(Gdx.files.internal("Images/Social/CheckedBox.png"));
 
+    private final Texture socialButton = new Texture(Gdx.files.internal("Images/PlayerSocial/SocialButton.png"));
+
+    private final Image playerSocialBackground = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
+
+    private final Image mapMenuBackground = new Image( new Texture(Gdx.files.internal("Images/Map/MapMenu.png")));
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -358,6 +364,18 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getMapMenuBackground() {
+        return mapMenuBackground;
+    }
+
+    public Texture getSocialButton() {
+        return socialButton;
+    }
+
+    public Image getPlayerSocialBackground() {
+        return playerSocialBackground;
     }
 
     public Texture getCheckBox() {
