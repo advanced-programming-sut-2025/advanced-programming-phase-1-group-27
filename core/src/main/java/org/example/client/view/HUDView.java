@@ -115,6 +115,11 @@ public class HUDView extends AppMenu {
     private final ArrayList<Label> npcLabels;
     private final ArrayList<Label> npcInfos;
 
+    private final ArrayList<Label> friendsLabels;
+    private final ArrayList<Label> friendshipInfos;
+    private final ArrayList<TextButton> friendButtons;
+
+
     public HUDView(Stage stage) {
 
 
@@ -147,7 +152,6 @@ public class HUDView extends AppMenu {
         npcLabels.add(new Label(NPCType.Sebastian.getName(),skin));
 
         npcInfos = new ArrayList<>();
-
 
         player = ClientApp.getCurrentGame().getCurrentPlayer();
 
@@ -332,6 +336,43 @@ public class HUDView extends AppMenu {
         stage.addActor(redBar);
 
 
+        friendsLabels = new ArrayList<>();
+        friendshipInfos = new ArrayList<>();
+        friendButtons = new ArrayList<>();
+
+        for ( int z = 0; z < Math.min(4,ClientApp.getCurrentGame().getPlayers().size()); z++ ){
+
+            if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),
+                    player.getUsername())){
+
+                Label nameLabel = new Label(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),skin); // ClientApp.getCurrentGame().getPlayers().get(i).getUsername()
+                Label friendshipInfo = new Label("Level: "+4+"    XP: "+99,skin); /// TODO: PARSA XP/LVL por kon pls
+                TextButton giftButton = new TextButton("Gift",skin);
+                TextButton tradeMenuButton = new TextButton("Trade",skin);
+
+                nameLabel.setColor(Color.BLACK);
+                friendshipInfo.setColor(Color.BLACK);
+
+                nameLabel.setVisible(false);
+                friendshipInfo.setVisible(false);
+                giftButton.setVisible(false);
+                tradeMenuButton.setVisible(false);
+
+                friendsLabels.add(nameLabel);
+                friendshipInfos.add(friendshipInfo);
+                friendButtons.add(giftButton);
+                friendButtons.add(tradeMenuButton);
+
+                nameLabel.setPosition(550,680 - 80 * z);
+                friendshipInfo.setPosition(700,680 - 80 * z);
+                stage.addActor(nameLabel);
+                stage.addActor(friendshipInfo);
+
+
+
+            }
+
+        }
 
 
         for (CraftingProduct craftingProduct : craftingProducts.keySet()) {
@@ -866,6 +907,18 @@ public class HUDView extends AppMenu {
 
         playerSocialMenuBackground.setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
 
+        for ( int i = 0; i < Math.min(4,ClientApp.getCurrentGame().getPlayers().size()); i++ ){
+
+            if ( !Objects.equals(ClientApp.getCurrentGame().getPlayers().get(i).getUsername(),
+                    player.getUsername()) ){
+                friendsLabels.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
+                friendshipInfos.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
+                friendsLabels.get(i).toFront();
+                friendshipInfos.get(i).toFront();
+            }
+
+        }
+
     }
 
     private void displayMapMenu(){
@@ -968,7 +1021,6 @@ public class HUDView extends AppMenu {
     public void dispose() {
 
     }
-
 
     private void setListeners() {
 
@@ -1209,7 +1261,7 @@ public class HUDView extends AppMenu {
                         return true;
                     }
 
-//                    System.out.println(x+" "+y);
+                    System.out.println(x+" "+y);
 
                     for ( int i = 0; i < 12; i++ ){
 
