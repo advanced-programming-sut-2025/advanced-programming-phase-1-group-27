@@ -307,7 +307,7 @@ public class GameMenuController extends MenuController {
 
     public Result showEnergy() {
         return new Result(true, "Energy Remaining for The Day : " +
-                App.getCurrentGame().getCurrentPlayer().getDayEnergy() + "\n" +
+                App.getCurrentGame().getCurrentPlayer().getEnergy() + "\n" +
                 "Energy Remaining for This Turn : " +
                 App.getCurrentGame().getCurrentPlayer().getEnergy());
     }
