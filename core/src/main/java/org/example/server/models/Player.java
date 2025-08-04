@@ -28,7 +28,7 @@ public class Player extends User {
     private Backpack backpack = new Backpack(ToolType.DeluxeBackpack); // TODO: ba parsa check shavad
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>();
-    private int energy, dayEnergy, maxEnergy = 200, boostEnergy = 0;
+    private int energy, maxEnergy = 200, boostEnergy = 0;
     private boolean cheater = false;
     private Ability farming = new Ability(),
             mining = new Ability(),
@@ -62,22 +62,6 @@ public class Player extends User {
         backpack.addItems(ToolType.BasicWateringCan, ToolType.BasicWateringCan.getLevel(), 1);
         backpack.addItems(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1);
         backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
-        backpack.addItems(MineralType.Wood, StackLevel.Basic, 55);
-        backpack.addItems(MineralType.Coal, StackLevel.Basic, 1);
-//        backpack.addItems(FruitType.Fiber, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Cherry, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Mango, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Apple, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Peach, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Apricot, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Sap, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Leek, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Morel, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Grape, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.RedMushroom, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Carrot, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Garlic, StackLevel.Basic, 20);
-//        backpack.addItems(FruitType.Potato, StackLevel.Basic, 20);
 
         for ( FruitType ft: FruitType.values() ){
             backpack.addItems(ft, StackLevel.Basic, 20);
@@ -141,8 +125,7 @@ public class Player extends User {
     }
 
     private void initFields() {
-        this.energy = 50;
-        this.dayEnergy = 200;
+        this.energy = 200;
         this.farming = new Ability();
         this.mining = new Ability();
         this.foraging = new Ability();
@@ -181,7 +164,6 @@ public class Player extends User {
         if (spouse != null)
             spouse.addMoney(money);
 
-        // TODO: rassa, hamahang ba server
     }
 
     public void spendMoney(int money) {
@@ -203,7 +185,6 @@ public class Player extends User {
     }
 
     public void setBackpack(ToolType backpack) {
-        // TODO : Rassa dige chia baladi???
         Backpack backpack1 = new Backpack(backpack);
         for (Stacks stack : this.backpack.getItems()) {
             backpack1.addItems(stack.getItem(), stack.getStackLevel(), stack.getQuantity());
@@ -267,43 +248,32 @@ public class Player extends User {
     public void consumeEnergy(int amount) {
         if (cheater)
             return;
-        energy -= amount;
         if (amount > boostEnergy) {
-            dayEnergy -= amount - boostEnergy;
+            energy -= amount - boostEnergy;
             boostEnergy = 0;
         } else
             boostEnergy -= amount;
     }
 
-    public void setNextTurnEnergy() {
-        energy = Math.min(50, dayEnergy + boostEnergy);
-    }
-
     public int getEnergy() {
-        return this.energy;
+        return energy;
     }
 
     public void setEnergy(int energy) {
-        this.energy = this.dayEnergy = energy;
+        this.energy = energy;
     }
 
     public void addEnergy(int amount) {
-        int val = Math.min(maxEnergy - dayEnergy, amount);
-        val = Math.min(50 - energy, val);
+        int val = Math.min(maxEnergy - energy, amount);
         energy += val;
-        dayEnergy += val;
     }
 
     public void setCheater(boolean cheater) {
         this.cheater = cheater;
     }
 
-    public int getDayEnergy() {
-        return dayEnergy;
-    }
-
-    public void setDayEnergy(int dayEnergy) {
-        this.dayEnergy = dayEnergy;
+    public boolean isCheater() {
+        return cheater;
     }
 
     public int getMaxEnergy() {
@@ -315,7 +285,7 @@ public class Player extends User {
     }
 
     public boolean hasPassedOut() {
-        return (energy <= 0 && dayEnergy <= 0 && boostEnergy <= 0);
+        return (energy <= 0 && boostEnergy <= 0);
     }
 
     public Menu getCurrentMenu() {

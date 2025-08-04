@@ -136,7 +136,6 @@ public class ClientGame implements Game {
     public void passAnHour() {
         updateBuff();
         updateArtisans();
-        player.setNextTurnEnergy();
     }
 
     @Override
@@ -195,7 +194,6 @@ public class ClientGame implements Game {
 
         else
             player.setDayEnergy(player.getMaxEnergy());
-        player.setNextTurnEnergy();
     }
 
     private void updateShippingBin() {

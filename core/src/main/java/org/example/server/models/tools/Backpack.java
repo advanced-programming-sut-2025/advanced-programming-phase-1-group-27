@@ -28,7 +28,7 @@ public class Backpack extends Tool {
     public Backpack(LinkedTreeMap<String, Object> info) {
         super(
                 ToolType.getItem((String) info.get("type")).getLevel(), // level
-                0, // default value (if not dynamic)
+                0, // energy usage
                 ToolType.getItem((String) info.get("type")).getName(), // name
                 ToolType.getItem((String) info.get("type")) // backpackType
         );
