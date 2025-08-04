@@ -28,7 +28,7 @@ public class Player extends User {
     private Backpack backpack = new Backpack(ToolType.DeluxeBackpack); // TODO: ba parsa check shavad
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>();
-    private int energy, maxEnergy = 200, boostEnergy = 0;
+    private int energy, maxEnergy = 200, boostEnergy = 10;
     private boolean cheater = false;
     private Ability farming = new Ability(),
             mining = new Ability(),
@@ -257,6 +257,10 @@ public class Player extends User {
 
     public int getEnergy() {
         return energy;
+    }
+
+    public int getBoostEnergy() {
+        return boostEnergy;
     }
 
     public void setEnergy(int energy) {

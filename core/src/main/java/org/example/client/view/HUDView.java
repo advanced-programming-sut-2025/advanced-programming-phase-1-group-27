@@ -70,7 +70,9 @@ public class HUDView extends AppMenu {
     private final Image playerSocialMenuBackground;
     private final Image mapMenuBackground;
     private final Image energyBar;
+    private final Image boostBar;
     private final Image greenBar;
+    private final Image redBar;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -200,7 +202,9 @@ public class HUDView extends AppMenu {
         playerSocialMenuBackground = GameAssetManager.getGameAssetManager().getPlayerSocialBackground();
         mapMenuBackground = GameAssetManager.getGameAssetManager().getMapMenuBackground();
         energyBar = GameAssetManager.getGameAssetManager().getEnergyBar();
+        boostBar = GameAssetManager.getGameAssetManager().getBoostBar();
         greenBar = GameAssetManager.getGameAssetManager().getGreenBar();
+        redBar = GameAssetManager.getGameAssetManager().getRedBar();
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
         socialButton.setPosition(100,100);
@@ -323,7 +327,10 @@ public class HUDView extends AppMenu {
         stage.addActor(playerSocialMenuBackground);
         stage.addActor(mapMenuBackground);
         stage.addActor(energyBar);
+        stage.addActor(boostBar);
         stage.addActor(greenBar);
+        stage.addActor(redBar);
+
 
 
 
@@ -869,10 +876,21 @@ public class HUDView extends AppMenu {
 
     private void displayEnergy(){
 
-        ///  TODO: Rassa 2 khat paain tar jaye 50f max energy yaro ro bezar
+        boostBar.setVisible(player.getBoostEnergy() != 0);
+        redBar.setVisible(player.getBoostEnergy() != 0);
+
         energyBar.setPosition(Gdx.graphics.getWidth()-energyBar.getWidth()-20,20);
-        greenBar.setHeight(250 * (player.getEnergy() / 50f));
+        boostBar.setPosition(Gdx.graphics.getWidth()-boostBar.getWidth()-20,20 + boostBar.getHeight() + 20);
+        greenBar.setHeight(250 * ((float) player.getEnergy() / player.getMaxEnergy()));
         greenBar.setPosition(energyBar.getX()+11,energyBar.getY()+9);
+        redBar.setHeight(250 * ((float) player.getBoostEnergy() /100));
+        redBar.setPosition(boostBar.getX()+11,boostBar.getY()+9);
+
+        energyBar.toFront();
+        boostBar.toFront();
+        redBar.toFront();
+        greenBar.toFront();
+
 
     }
 
@@ -922,6 +940,7 @@ public class HUDView extends AppMenu {
         displayDayInfo();
         displayMoneyInfo();
         displayTimeInfo();
+        displayEnergy();
         makeOnScreenItemsInvisible();
     }
 
