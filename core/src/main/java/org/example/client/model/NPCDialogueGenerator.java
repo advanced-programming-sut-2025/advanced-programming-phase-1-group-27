@@ -7,8 +7,6 @@ import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.Weathers.Weather;
 
-import java.io.IOException;
-
 public class NPCDialogueGenerator implements Runnable {
     private final static String NPCRole =
             "You are an NPC in Stardew Valley. **Strict Rules:**\n" +
@@ -20,7 +18,7 @@ public class NPCDialogueGenerator implements Runnable {
                     "4. **NEVER** add:\n" +
                     "   - Explanations, notes, or OOC text\n" +
                     "   - Dialogue beyond 3 sentences.";
-    private final static String[] friendshipTone = {};
+    private final static String[] friendshipTone = {"neutral", "polite", "friendly", "warm", "affectionate"};
 
     private final NPC npc;
     private final Player currentPlayer;
@@ -32,6 +30,7 @@ public class NPCDialogueGenerator implements Runnable {
 
     @Override
     public void run() {
+        npc.setThinking(true);
         Season season = ClientApp.getCurrentGame().getTime().getSeason();
         Weather weather = ClientApp.getCurrentGame().getCurrentWeather();
         int friendshipLevel = npc.getRelations().computeIfAbsent(currentPlayer, k->new Relation()).getLevel();
@@ -40,17 +39,19 @@ public class NPCDialogueGenerator implements Runnable {
                     "Context:\n" +
                             "- Season: " + season.name() + " (say '" + season.name() + "')\n" +
                             "- Weather: " + weather.name() + " (say '" + weather.name() + "')\n" +
-                            "- Friendship: " + friendshipLevel + "/4 (neutral tone)\n\n" +
+                            "- Friendship: " + friendshipLevel + "/4 (" + friendshipTone[friendshipLevel] + " tone)\n\n" +
                             "Reply with 1-3 short sentences IN CHARACTER.\n" +
-                            "NO EXTRA TEXT.\n" +
+                            "NO EXTRA TEXT. JUST THE DIALOGUE\n" +
                             "Example:\n" +
-                            getPromptExample(season, weather, friendshipLevel));
+                            getDialogueExample(season, weather, friendshipLevel));
+            npc.setDialogue(dialogue);
+            npc.setThinking(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private String getPromptExample(Season season, Weather weather, int friendshipLevel) {
+    private String getDialogueExample(Season season, Weather weather, int friendshipLevel) {
         if (season == Season.Spring) {
             if (weather == Weather.Sunny) {
                 switch (friendshipLevel) {

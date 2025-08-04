@@ -183,16 +183,16 @@ public class ServerGame implements Game {
     }
 
     public void newDay() {
-        crowsAttack();
-        System.out.println("Crows attack checked.");
-        updateAnimals(); // TODO: rassa, maybe automatic??
+//        crowsAttack();
+//        System.out.println("Crows attack checked.");
+        updateAnimals();
         System.out.println("Animals update checked.");
         updateShippingBin();
         System.out.println("Shipping Bin checked.");
         setNewWeather();
         System.out.println("Weather checked.");
-        growPlants();
-        System.out.println("Grow plants checked.");
+//        growPlants();
+//        System.out.println("Grow plants checked.");
 //        // Walking to their houses
 //        for (int i = 0; i < players.size(); i++) {
 //            Player player = players.get(i);
@@ -251,7 +251,7 @@ public class ServerGame implements Game {
         initShops();
 
         // Apply weather effect
-        applyWeatherEffect(currentWeather);
+//        applyWeatherEffect(currentWeather);
     }
 
     public void newSeason() {

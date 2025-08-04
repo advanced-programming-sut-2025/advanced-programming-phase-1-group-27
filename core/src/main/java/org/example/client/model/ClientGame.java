@@ -14,11 +14,16 @@ import org.example.server.models.Shops.Shop;
 import org.example.common.models.Time;
 import org.example.server.models.User;
 import org.example.server.models.enums.NPCType;
+import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.Plant;
+import org.example.server.models.enums.Plants.Tree;
 import org.example.server.models.enums.ShopType;
 import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import static java.lang.Math.min;
 
 public class ClientGame implements Game {
     private final int lobbyId;
@@ -40,9 +45,6 @@ public class ClientGame implements Game {
         this.admin = lobby.getAdmin();
         this.player = player;
         this.players = players;
-        for (MiniPlayer miniPlayer : players) {
-            System.out.println(miniPlayer.getUsername());
-        }
         this.time = new Time(this);
     }
 
@@ -82,6 +84,8 @@ public class ClientGame implements Game {
             farmMaps[i] = builder.getFinalProduct();
             farmMaps[i].addForaging(info.get(i));
         }
+
+        generateNPCDialouges();
     }
 
     public Player getCurrentPlayer() {
@@ -143,12 +147,14 @@ public class ClientGame implements Game {
 
     @Override
     public void newDay() {
+        crowsAttack();
         updateAnimals();
         updateShippingBin();
         setPlayerEnergy();
         growPlants();
         initShops();
         refreshRelations(); // refreshing relationships between players and between player and npcs
+        generateNPCDialouges();
     }
 
     @Override
@@ -160,12 +166,41 @@ public class ClientGame implements Game {
         return currentWeather;
     }
 
+    private void generateNPCDialouges() {
+        for (NPC npc : npcs) {
+            if (!npc.isThinking() && npc.getType().getJob() == null) {
+                new Thread(new NPCDialogueGenerator(npc, player)).start();
+            }
+        }
+    }
+
     private void refreshRelations() {
         player.refreshNPCThings(this);
         player.refreshPlayerThings();
     }
+
+    private void crowsAttack() {
+        // Crows Attacking
+        ArrayList<Plant> allPlants = player.getFarmMap().getAllPlants();
+        int crowsCount = allPlants.size() / 16;
+        for (int i = 0; i < crowsCount; i++) {
+            if (new Random().nextInt(4) == 0) {
+                int plantIndex = new Random().nextInt(allPlants.size());
+                Plant plant = allPlants.get(plantIndex);
+                if (plant.getCell().isProtected())
+                    continue;
+                if (plant instanceof Crop crop) {
+                    crop.getCell().setObject(null);
+                } else if (plant instanceof Tree tree) {
+                    tree.setTillNextHarvest(min(1, tree.getTillNextHarvest()));
+                }
+            }
+        }
+    }
+
     private void growPlants() {
         // Grow (and deleting) Plants :
+        player.getFarmMap().generateForaging(time.getSeason());
         Cell[][] cells = player.getFarmMap().getCells();
         for (int i = 0; i < player.getFarmMap().getHeight(); i++) {
             for (int j = 0; j < player.getFarmMap().getWidth(); j++) {

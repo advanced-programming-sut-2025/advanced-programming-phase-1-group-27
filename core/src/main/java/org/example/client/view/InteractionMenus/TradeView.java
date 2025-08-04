@@ -2,33 +2,25 @@ package org.example.client.view.InteractionMenus;
 
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
+import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
-import org.example.client.view.GameView;
-import org.example.server.models.App;
-import org.example.server.models.Result;
 import org.example.server.models.Stacks;
-import org.example.server.models.User;
-import org.example.server.models.enums.Menu;
-import org.example.server.models.enums.commands.CheatCommands;
-import org.example.server.models.enums.commands.GameMenuCommands;
-import org.example.server.models.enums.commands.InteractionsWithUserCommands;
-import org.example.server.models.enums.commands.MainMenuCommands;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.regex.Matcher;
 
 public class TradeView extends AppMenu {
-    private final org.example.client.controller.InteractionsWithOthers.TradeController controller;
+    private final TradeController controller;
 
     private ArrayList<Stacks> selectedCurrent;
     private ArrayList<Stacks> selectedOther;
     private ArrayList<Stacks> othersInventory;
 
-    public TradeView(String username) {
+    public TradeView(String starter, String other) {
         controller = new TradeController();
-        othersInventory = InteractionsWithUserController.getInventory(username);
+        othersInventory = InteractionsWithUserController.getInventory(
+                ClientApp.getLoggedInUser().getUsername().equals(starter)? other : starter
+        );
         selectedCurrent = new ArrayList<>();
         selectedOther = new ArrayList<>();
     }
@@ -66,6 +58,10 @@ public class TradeView extends AppMenu {
     @Override
     public void dispose() {
 
+    }
+
+    public TradeController getController() {
+        return controller;
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.Shops.Shop;
+import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.HashMap;
@@ -83,5 +84,16 @@ public class GameController {
             put("Level" , relation.getLevel());
             put("XP" ,  relation.getXp());
         }} , Message.Type.response);
+    }
+
+    public static void handleP2P(Message message) {
+        String starter = message.getFromBody("starter");
+        String other = message.getFromBody("other");
+        String self = message.getFromBody("self");
+        ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
+                starter.equals(self)? other : starter
+        );
+        assert connection != null;
+        connection.sendMessage(message);
     }
 }

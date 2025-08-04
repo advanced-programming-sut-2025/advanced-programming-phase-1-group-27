@@ -2,6 +2,7 @@ package org.example.client.controller;
 
 import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
+import org.example.client.view.InteractionMenus.TradeView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
 import org.example.common.models.ItemManager;
@@ -125,5 +126,22 @@ public class ServerUpdatesController { // handles updates sent by server
         return new Message(new HashMap<>() {{
             put("inventoryInfo", ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getInfo());
         }}, Message.Type.response);
+    }
+
+    public static void handleP2P(Message message) {
+        String mode = message.getFromBody("mode");
+        if (mode.equals("startTrade")) {
+            // TODO : parsa
+        }
+        else if (mode.equals("respondToStartTrade")) {
+            // TODO : parsa
+        }
+        else if (mode.equals("updateSelected")) {
+            if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
+                tradeView.getController().updateSelected(message);
+        }
+        else {
+            throw new UnsupportedOperationException(mode + " hasn't been handled");
+        }
     }
 }
