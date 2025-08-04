@@ -73,7 +73,8 @@ public class InteractionsWithUserController {
 
     public static Relation getRelation(String username) {
         Message message = new Message(new HashMap<>(){{
-            put("username", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("username1", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
             put("username2", username);
         }} , Message.Type.get_player_relation);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);

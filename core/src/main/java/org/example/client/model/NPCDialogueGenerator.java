@@ -20,6 +20,7 @@ public class NPCDialogueGenerator implements Runnable {
                     "4. **NEVER** add:\n" +
                     "   - Explanations, notes, or OOC text\n" +
                     "   - Dialogue beyond 3 sentences.";
+    private final static String[] friendshipTone = {};
 
     private final NPC npc;
     private final Player currentPlayer;
