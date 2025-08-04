@@ -371,6 +371,7 @@ public class GameAssetManager {
 
     private final Animation<Texture> thorAnimationFrames = new Animation<>(0.25f, thor1,thor2,thor3,thor4);
 
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
