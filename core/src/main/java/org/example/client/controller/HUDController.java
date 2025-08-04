@@ -10,6 +10,9 @@ import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
+import org.example.server.models.NPCs.NPC;
+import org.example.server.models.Relations.Relation;
+import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
@@ -27,6 +30,46 @@ public class HUDController extends MenuController {
 
     public HUDController(HUDView view) {
         this.view = view;
+    }
+
+    public boolean gotGiftedToday(NPCType type){
+
+        NPC npc = ClientApp.getCurrentGame().getNPCByType(type);
+        Boolean bool = ClientApp.getCurrentGame().getCurrentPlayer().getNpcGiftToday().get(npc);
+        if ( bool == null ){
+            ClientApp.getCurrentGame().getCurrentPlayer().getNpcGiftToday().put(npc,Boolean.FALSE);
+            return false;
+        }
+        return bool;
+
+    }
+
+    public boolean metToday(NPCType type){
+
+        NPC npc = ClientApp.getCurrentGame().getNPCByType(type);
+        Boolean bool = ClientApp.getCurrentGame().getCurrentPlayer().getNpcMetToday().get(npc);
+        if ( bool == null ){
+            ClientApp.getCurrentGame().getCurrentPlayer().getNpcMetToday().put(npc,Boolean.FALSE);
+            return false;
+        }
+        return bool;
+
+    }
+
+    public String getNPCInfo(NPCType type) {
+
+        NPC npc = ClientApp.getCurrentGame().getNPCByType(type);
+        Relation relation = npc.getRelations().computeIfAbsent(
+                ClientApp.getCurrentGame().getCurrentPlayer(),k->new Relation()
+        );
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Level: ").append(relation.getLevel()).append("    ").
+                append("XP: ").append(relation.getXp());
+
+
+        return sb.toString();
+
     }
 
     public void setMoneyInfo(Label label){
@@ -97,6 +140,7 @@ public class HUDController extends MenuController {
 
     public void updateSlotIndex(Integer slotChange){
 
+        ///  TODO: RASSA MOVE KON TO TRASH CAN
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
 
         Integer currentSlot = player.getCurrentInventorySlotIndex();

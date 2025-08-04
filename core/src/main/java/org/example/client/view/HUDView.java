@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
+import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.controller.HUDController;
@@ -25,6 +26,7 @@ import org.example.server.models.Player;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.InGameMenuType;
+import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
@@ -63,9 +65,12 @@ public class HUDView extends AppMenu {
     private final Image fishingHoverImage;
     private final Image miningHoverImage;
     private final Image foragingHoverImage;
+    private final Image socialMenuBackground;
     private Image clockImage;
 
     private final ArrayList<Image> skillPoints;
+    private final ArrayList<Image> npcAvatars;
+    private final ArrayList<Image> checkBoxes;
 
     private final HashMap<CraftingProduct, ImageButton> craftingProducts;
     private final HashMap<CookingProduct, ImageButton> cookingProducts;
@@ -98,6 +103,9 @@ public class HUDView extends AppMenu {
 
     private AbilityType currentAbilityTypeHovering;
 
+    private final ArrayList<Label> npcLabels;
+    private final ArrayList<Label> npcInfos;
+
     public HUDView(Stage stage) {
 
 
@@ -109,6 +117,28 @@ public class HUDView extends AppMenu {
         for( int i = 0 ; i < 16; i++ ){
             skillPoints.add(new Image(GameAssetManager.getGameAssetManager().getSkillPointImage()));
         }
+
+        checkBoxes = new ArrayList<>();
+        for( int i = 0 ; i < 10; i++ ){
+            checkBoxes.add(new Image(GameAssetManager.getGameAssetManager().getCheckBox()));
+        }
+
+        npcAvatars = new ArrayList<>();
+        npcAvatars.add(GameAssetManager.getGameAssetManager().getNpc1Avatar());
+        npcAvatars.add(GameAssetManager.getGameAssetManager().getNpc2Avatar());
+        npcAvatars.add(GameAssetManager.getGameAssetManager().getNpc3Avatar());
+        npcAvatars.add(GameAssetManager.getGameAssetManager().getNpc4Avatar());
+        npcAvatars.add(GameAssetManager.getGameAssetManager().getNpc5Avatar());
+
+        npcLabels = new ArrayList<>();
+        npcLabels.add(new Label(NPCType.Abigail.getName(),skin));
+        npcLabels.add(new Label(NPCType.Harvey.getName(),skin));
+        npcLabels.add(new Label(NPCType.Lia.getName(),skin));
+        npcLabels.add(new Label(NPCType.Robbin.getName(),skin));
+        npcLabels.add(new Label(NPCType.Sebastian.getName(),skin));
+
+        npcInfos = new ArrayList<>();
+
 
         player = ClientApp.getCurrentGame().getCurrentPlayer();
 
@@ -159,6 +189,7 @@ public class HUDView extends AppMenu {
         miningHoverImage = GameAssetManager.getGameAssetManager().getHoveringMiningWindow();
         foragingHoverImage = GameAssetManager.getGameAssetManager().getHoveringForagingWindow();
         fishingHoverImage = GameAssetManager.getGameAssetManager().getHoveringFishingWindow();
+        socialMenuBackground = GameAssetManager.getGameAssetManager().getSocialMenuBackgroundImage();
 
 
         textInputField = new TextField("", skin);
@@ -267,6 +298,7 @@ public class HUDView extends AppMenu {
         stage.addActor(inventoryMenuBackground);
         stage.addActor(skillMenuBackground);
         stage.addActor(craftingMenuBackground);
+        stage.addActor(socialMenuBackground);
         stage.addActor(farmingHoverImage);
         stage.addActor(fishingHoverImage);
         stage.addActor(miningHoverImage);
@@ -297,6 +329,33 @@ public class HUDView extends AppMenu {
             skillPoint.setVisible(false);
             stage.addActor(skillPoint);
 
+        }
+
+        for ( int t = 0 ; t < 10; t++ ){
+
+            Image checkBox = checkBoxes.get(t);
+            checkBox.setPosition(1123 + (t%2) * 118,688 - (t/2) * 112);
+            checkBox.setVisible(false);
+            stage.addActor(checkBox);
+
+        }
+
+        for ( int j = 0; j < 5; j++ ) {
+            npcAvatars.get(j).setSize(110,110);
+            npcAvatars.get(j).setPosition(496,680 - 110 * j - 2 * j);
+            npcAvatars.get(j).setVisible(false);
+            npcLabels.get(j).setPosition(620,680 - 110 * j - 2 * j+40);
+            npcLabels.get(j).setVisible(false);
+            npcLabels.get(j).setFontScale(0.8f);
+            npcLabels.get(j).setColor(Color.BLACK);
+            stage.addActor(npcAvatars.get(j));
+            stage.addActor(npcLabels.get(j));
+            Label infoLabel = new Label("",skin);
+            npcInfos.add(infoLabel);
+            infoLabel.setVisible(false);
+            infoLabel.setColor(Color.BLACK);
+            infoLabel.setPosition(800,680 - 110 * j - 2 * j+50);
+            stage.addActor(infoLabel);
         }
 
         stage.addActor(textInputField);
@@ -508,6 +567,27 @@ public class HUDView extends AppMenu {
     }
 
     private void displaySocialMenu(){
+
+        socialMenuBackground.setPosition((Gdx.graphics.getWidth() - socialMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - socialMenuBackground.getHeight()) / 2f);
+        socialMenuBackground.setVisible(currentMenu == InGameMenuType.SOCIAL);
+
+        for ( int i = 0; i < 5; i++ ){
+
+            npcInfos.get(i).setText(controller.getNPCInfo(NPCType.values()[i]));
+
+            npcAvatars.get(i).setVisible(currentMenu == InGameMenuType.SOCIAL);
+            npcLabels.get(i).setVisible(currentMenu == InGameMenuType.SOCIAL);
+            npcInfos.get(i).setVisible(currentMenu == InGameMenuType.SOCIAL);
+            checkBoxes.get(2*i).setVisible(currentMenu == InGameMenuType.SOCIAL &&
+                    controller.gotGiftedToday(NPCType.values()[i]) );
+
+            checkBoxes.get(2*i + 1).setVisible(currentMenu == InGameMenuType.SOCIAL &&
+                    controller.metToday(NPCType.values()[i]) );
+
+        }
+
+
+
     }
 
     private void displayCraftingMenu() {
@@ -881,6 +961,17 @@ public class HUDView extends AppMenu {
                             makeOnScreenItemsInvisible();
                         }
 
+                    }
+                    else if (keycode == Input.Keys.Z) {
+
+                        if ( currentMenu == InGameMenuType.SOCIAL ) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.SOCIAL;
+                            makeOnScreenItemsInvisible();
+                        }
+
                     }else if (keycode == Input.Keys.B) {
 
                         if (currentMenu == InGameMenuType.CRAFTING) {
@@ -915,6 +1006,7 @@ public class HUDView extends AppMenu {
                                     errorLabel.set(new GraphicalResult("Selected slot is empty!"));
                                 }
                                 else{
+                                    ///  TODO: RASSA MOVE KON TO TRASH CAN
                                     errorLabel.set(controller.removeFromInventory(onScreenItems.get(itemNumber)));
                                 }
                             }
@@ -1014,6 +1106,11 @@ public class HUDView extends AppMenu {
                         makeOnScreenItemsInvisible();
                         return true;
                     }
+                    else if ( (650 < x && x < 715) && ( 800 < y && y < 860 )){
+                        currentMenu = InGameMenuType.SOCIAL;
+                        makeOnScreenItemsInvisible();
+                        return true;
+                    }
                     else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
                         currentMenu = InGameMenuType.CRAFTING;
                         makeOnScreenItemsInvisible();
@@ -1025,7 +1122,7 @@ public class HUDView extends AppMenu {
                         return true;
                     }
 
-//                    System.out.println(x);
+                    System.out.println(x+" "+y);
 
                     for ( int i = 0; i < 12; i++ ){
 

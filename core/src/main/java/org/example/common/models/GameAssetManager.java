@@ -341,6 +341,16 @@ public class GameAssetManager {
 
     private final Texture skillPointImage = new Texture(Gdx.files.internal("Images/Skill/SkillPoint.png"));
 
+    private final Image socialMenuBackgroundImage = new Image(new Texture(Gdx.files.internal("Images/Social/SocialMenuMan.png")));
+
+    private final Texture npc1Avatar = new Texture(Gdx.files.internal("NPCs/Other/Abigail.png"));
+    private final Texture npc2Avatar = new Texture(Gdx.files.internal("NPCs/Other/Harvey.png"));
+    private final Texture npc3Avatar = new Texture(Gdx.files.internal("NPCs/Other/Lia.png"));
+    private final Texture npc4Avatar = new Texture(Gdx.files.internal("NPCs/Other/Robbin.png"));
+    private final Texture npc5Avatar = new Texture(Gdx.files.internal("NPCs/Other/Sebastian.png"));
+
+    private final Texture checkBox = new Texture(Gdx.files.internal("Images/Social/CheckedBox.png"));
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -348,6 +358,44 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Texture getCheckBox() {
+        return checkBox;
+    }
+
+    public Image getNpc5Avatar() {
+        TextureRegion region = new TextureRegion(npc5Avatar);
+        region.flip(false, false);
+        return new Image(region);
+    }
+
+    public Image getNpc4Avatar() {
+        TextureRegion region = new TextureRegion(npc4Avatar);
+        region.flip(true, false);
+        return new Image(region);
+    }
+
+    public Image getNpc3Avatar() {
+        TextureRegion region = new TextureRegion(npc3Avatar);
+        region.flip(true, false);
+        return new Image(region);
+    }
+
+    public Image getNpc2Avatar() {
+        TextureRegion region = new TextureRegion(npc2Avatar);
+        region.flip(true, false);
+        return new Image(region);
+    }
+
+    public Image getNpc1Avatar() {
+        TextureRegion region = new TextureRegion(npc1Avatar);
+        region.flip(true, false);
+        return new Image(region);
+    }
+
+    public Image getSocialMenuBackgroundImage() {
+        return socialMenuBackgroundImage;
     }
 
     public Texture getSkillPointImage() {

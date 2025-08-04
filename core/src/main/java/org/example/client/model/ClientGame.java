@@ -330,6 +330,15 @@ public class ClientGame implements Game {
         return Sebastian;
     }
 
+    public NPC getNPCByType(NPCType type) {
+        for ( NPC npc : npcs ) {
+            if ( npc.getType() == type ){
+                return npc;
+            }
+        }
+        return null;
+    }
+
     public Shop getJojaMart() {
         return jojaMart;
     }
@@ -361,4 +370,5 @@ public class ClientGame implements Game {
     public int getLobbyId() {
         return lobbyId;
     }
+
 }

@@ -353,6 +353,7 @@ Images/Skill/HoverMining.png
 Images/Skill/SkillPoint.png
 Images/Skill/SkillsMenuMan.png
 Images/Skill/SkillsMenuWoman.png
+Images/Social/CheckedBox.png
 Images/Social/SocialMenuMan.png
 Images/Social/SocialMenuPage1.png
 Images/Social/SocialMenuPage2.png
