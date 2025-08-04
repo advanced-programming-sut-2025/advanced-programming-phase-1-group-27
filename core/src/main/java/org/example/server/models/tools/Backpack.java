@@ -26,10 +26,15 @@ public class Backpack extends Tool {
     }
 
     public Backpack(LinkedTreeMap<String, Object> info) {
-        ToolType backpackType = ToolType.getItem((String) info.get("type"));
-        super(backpackType.getLevel(), 0, backpackType.getName(), backpackType);
+        super(
+                ToolType.getItem((String) info.get("type")).getLevel(), // level
+                0, // default value (if not dynamic)
+                ToolType.getItem((String) info.get("type")).getName(), // name
+                ToolType.getItem((String) info.get("type")) // backpackType
+        );
         this.capacity = ((Number) info.get("capacity")).intValue();
-        ArrayList<LinkedTreeMap<String, Object>> itemsInfo = (ArrayList<LinkedTreeMap<String, Object>>) info.get("items");
+        ArrayList<LinkedTreeMap<String, Object>> itemsInfo =
+                (ArrayList<LinkedTreeMap<String, Object>>) info.get("items");
         for (LinkedTreeMap<String, Object> slotInfo : itemsInfo) {
             items.add(new Stacks(slotInfo));
         }

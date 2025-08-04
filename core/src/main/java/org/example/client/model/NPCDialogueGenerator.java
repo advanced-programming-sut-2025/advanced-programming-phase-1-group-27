@@ -12,6 +12,6 @@ public class NPCDialogueGenerator implements Runnable {
 
     @Override
     public void run() {
-        OllamaService.queryModelWithRole()
+//        OllamaService.queryModelWithRole()
     }
 }
