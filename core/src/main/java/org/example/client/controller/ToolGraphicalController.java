@@ -10,11 +10,14 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Cell;
 import org.example.server.models.Player;
+import org.example.server.models.Result;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.tools.Tool;
 
+import java.util.ArrayList;
 import java.util.Spliterator;
 
 public class ToolGraphicalController {
@@ -27,6 +30,7 @@ public class ToolGraphicalController {
     ));
 
     private Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+    private ArrayList<GraphicalResult> errors = new ArrayList<>();
 
     public ToolGraphicalController(OutsideView view) {
         this.view = view;
@@ -68,7 +72,15 @@ public class ToolGraphicalController {
                     return;
                 System.out.println("you clicked the cell " + i + " " + j);
                 if (cell.getAdjacentCells().contains(player.getCurrentCell())) {
-                    toolType.getTheFuckingTool().use(cell);
+                    Result res = toolType.getTheFuckingTool().use(cell);
+                    if (!res.success()) {
+                        GraphicalResult error = new GraphicalResult(res.message(), true);
+                        Vector3 position = new Vector3(Gdx.graphics.getWidth() / 2f - error.getMessage().getWidth() / 2f,
+                                50, 0);
+                        camera.unproject(position);
+                        error.setPosition(position.x, position.y);
+                        errors.add(error);
+                    }
                 }
             }
         }
@@ -79,5 +91,13 @@ public class ToolGraphicalController {
         if (toolSprite.getTexture() != null &&
                 player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem() instanceof ToolType toolType)
             toolSprite.draw(Main.getBatch());
+        for (GraphicalResult error : errors) {
+            error.update(Gdx.graphics.getDeltaTime());
+            Vector3 position = new Vector3(Gdx.graphics.getWidth() / 2f - error.getMessage().getWidth() / 2f,
+                    50, 0);
+            camera.unproject(position);
+            error.setPosition(position.x, position.y);
+            error.getMessage().draw(Main.getBatch(), 1);
+        }
     }
 }

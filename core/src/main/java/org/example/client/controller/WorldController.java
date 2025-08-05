@@ -1,15 +1,20 @@
 package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
@@ -26,6 +31,7 @@ import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.Tree;
 import org.example.server.models.enums.items.MineralType;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class WorldController {
@@ -33,6 +39,7 @@ public class WorldController {
     private Camera camera;
     private final OutsideView view;
     private ArrayList<Label> dialogueLabels = new ArrayList<>();
+    private ArrayList<GlyphLayout> glyphLayouts = new ArrayList<>();
 
     public WorldController(OutsideView view) {
         this.view = view;
@@ -100,13 +107,16 @@ public class WorldController {
                             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                             camera.unproject(touchPos);
                             if (bounds.contains(touchPos.x, touchPos.y)) {
-                                System.out.println("ASDF dsaFASDFASDF");
                                 Label dialogueLabel = new Label(npc.getDialogue(),
                                         GameAssetManager.getGameAssetManager().getSkin());
+                                dialogueLabel.setWrap(true);
+                                dialogueLabel.setWidth(300);
                                 dialogueLabel.setPosition(x + 32, y + 56);
+
                                 dialogueLabels.add(dialogueLabel);
-                                //TODO
                                 npc.setDialogue(null);
+
+
                             }
                         }
                     }
@@ -172,17 +182,15 @@ public class WorldController {
         }
     }
 
-    private void drawLabel(Label label) {
-        Color backGroundColor = new Color(0, 0, 0, label.getColor().a * 0.7f);
-        Main.getBatch().setColor(backGroundColor);
-        Main.getBatch().draw(createColoredTexture(backGroundColor),
-                label.getX(),
-                label.getY(),
-                label.getWidth(),
-                label.getHeight());
-
-        // Draw text
-        label.draw(Main.getBatch(), 1);
+    private void drawLabel(GlyphLayout glyphLayout, float x, float y) {
+ //       Color backGroundColor = new Color(0, 0, 0, 0.7f);
+//        Main.getBatch().setColor(backGroundColor);
+        Main.getBatch().draw(/*createColoredTexture(backGroundColor)*/
+                GameAssetManager.getGameAssetManager().getNpcDialogueBox(),
+                x,
+                y,
+                glyphLayout.width + 30,
+                glyphLayout.height + 30);
 
         Main.getBatch().setColor(Color.WHITE);
     }
@@ -190,17 +198,35 @@ public class WorldController {
     private void renderDialogues() {
         for (Label label: dialogueLabels) {
 
-            drawLabel(label);
+            BitmapFont font = GameAssetManager.getGameAssetManager().getSkin().getFont("font");
+            font.getData().setScale(0.85f);
+            GlyphLayout glyphLayout = new GlyphLayout();
+            glyphLayout.setText(
+                    GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
+                    label.getText(),
+                    Color.BLACK,
+                    200,
+                    Align.left,
+                    true
+            );
+            drawLabel(glyphLayout, label.getX(), label.getY());
 
-
-            label.draw(Main.getBatch(), 1);
-            label.setColor(1, 1, 1, 0.996f * label.getColor().a);
+            GameAssetManager.getGameAssetManager().getSkin().getFont("font").draw(
+                    Main.getBatch(),
+                    glyphLayout,
+                    label.getX() + 15,
+                    label.getY() + glyphLayout.height + 15
+                    );
         }
-        dialogueLabels.removeIf(label -> label.getColor().a <= 0.3f);
+
+        dialogueLabels.removeIf(label -> label.getColor().a <= 0.4f);
     }
 
     public void update() {
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        if (Gdx.input.justTouched()) {
+            dialogueLabels.clear();
+        }
         renderMap(player.getCurrentMap());
         renderDialogues();
     }

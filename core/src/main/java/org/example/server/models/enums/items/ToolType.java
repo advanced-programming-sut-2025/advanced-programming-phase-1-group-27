@@ -152,7 +152,7 @@ public enum ToolType implements Item {
     public Tool getTheFuckingTool() {
         if (this.getName().matches(".*Hoe"))
             return new Hoe(this);
-        else if (this.getName().matches("[.]*Pickaxe"))
+        else if (this.getName().matches(".*Pickaxe"))
             return new Pickaxe(this);
         else if (this.getName().matches(".*Axe"))
             return new Axe(this);

@@ -61,7 +61,7 @@ public abstract class Plant {
             return null;
         }
         tillNextHarvest = type.getHarvestCycle();
-        return new Stacks(new Fruit(type.getFruit()), (isGiant ? 10 : 1));
+        return new Stacks(type.getFruit(), (isGiant ? 10 : 1));
     }
 
     public PlantType getType() {
