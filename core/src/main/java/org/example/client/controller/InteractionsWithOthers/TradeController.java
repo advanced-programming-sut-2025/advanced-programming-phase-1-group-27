@@ -2,7 +2,6 @@ package org.example.client.controller.InteractionsWithOthers;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.model.ClientApp;
-import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.items.ToolType;
@@ -10,7 +9,6 @@ import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class TradeController {
     public void startTrade(String username) {
@@ -43,14 +41,38 @@ public class TradeController {
         }
     }
 
-    public GraphicalResult getRespondToStart(Message message) {
+    public void checkRespondToStart(Message message) {
         boolean answer = message.getFromBody("answer");
         if (answer) {
             //TODO : Go to TradeView
         } else {
             // TODO : Go to last Menu
         }
-        return null;
+    }
+
+    public void getSuggestedTrade(Message message) {
+        // TODO : bayad begi ke in trade mored ghabool hast ya na
+    }
+
+    public void sendConfirmation(boolean answer, String starter, String other) {
+        // TODO : age okay boodi ba in trade bayad in function seda beshe to nahayee she
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "confirmTrade");
+            put("answer", answer);
+            put("starter", starter);
+            put("other", other);
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+        }}, Message.Type.interaction_p2p));
+    }
+
+    public void checkConfirmation(Message message) {
+        boolean answer = message.getFromBody("answer");
+        if (answer) {
+            // TODO: trade tamam shod va bayad variz shavad be do traf
+        }
+        else {
+            // TODO : trade namovafagh bood
+        }
     }
 
     public void sendSelected(ArrayList<Stacks> selected, String starter, String other) {
@@ -65,6 +87,15 @@ public class TradeController {
 
     public ArrayList<Stacks> updateSelected(Message message) {
         return new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("selectedInfo")).getItems();
+    }
+
+    public void suggestTrade(String starter, String other) {
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "suggestTrade");
+            put("starter", starter);
+            put("other", other);
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+        }}, Message.Type.interaction_p2p));
     }
 
 }

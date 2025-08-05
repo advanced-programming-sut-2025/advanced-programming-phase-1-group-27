@@ -1,7 +1,6 @@
 package org.example.client.controller;
 
 import org.example.client.model.ClientApp;
-import org.example.client.model.ClientGame;
 import org.example.client.view.InteractionMenus.TradeView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
@@ -134,11 +133,20 @@ public class ServerUpdatesController { // handles updates sent by server
             // TODO : parsa
         }
         else if (mode.equals("respondToStartTrade")) {
-            // TODO : parsa
+            if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
+                tradeView.getController().checkRespondToStart(message);
         }
         else if (mode.equals("updateSelected")) {
             if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
                 tradeView.getController().updateSelected(message);
+        }
+        else if (mode.equals("suggestedTrade")) {
+            if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
+                tradeView.getController().getSuggestedTrade(message);
+        }
+        else if (mode.equals("confirmTrade")) {
+            if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
+                tradeView.getController().checkConfirmation(message);
         }
         else {
             throw new UnsupportedOperationException(mode + " hasn't been handled");
