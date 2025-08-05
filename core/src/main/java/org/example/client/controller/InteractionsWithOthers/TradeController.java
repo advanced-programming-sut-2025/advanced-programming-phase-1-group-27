@@ -36,6 +36,7 @@ public class TradeController {
         ClientApp.getServerConnectionThread().sendMessage(message);
         if (answer) {
             // TODO : Go to TradeView
+
         } else {
             // TODO : Go to last Menu
         }
