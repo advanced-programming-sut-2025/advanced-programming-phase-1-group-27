@@ -93,6 +93,7 @@ public class GameAssetManager {
     private final Texture mapLinkCellTexture = new Texture("assets/Images/Floorings/Flooring_34.png");
 
     private final Texture NPCDialogueSign = new Texture("assets/Images/!_Npc_Talking.png");
+    private final Texture npcDialogueBox = new Texture("assets/Images/HoveringInfoWindow.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
     private final TextureRegion standingTexture = characterAtlas.createSprite("standing_1");
@@ -511,6 +512,10 @@ public class GameAssetManager {
 
     public Texture getNPCDialogueSign() {
         return NPCDialogueSign;
+    }
+
+    public Texture getNpcDialogueBox() {
+        return npcDialogueBox;
     }
 
     public Image getCraft_bomb() {

@@ -21,7 +21,7 @@ public class NPC {
     private Map<Player, Relation> relations = new HashMap<>();
     private Quest[] quests = new Quest[3];
     private Building home;
-    private String dialogue = null;
+    private String dialogue = "hello, do you know the doesn't of isn't? I'm gl'ad to k'now all of them! very very good and thanks ";
     private boolean isThinking = false;
 
     public NPC(NPCType type, int daysForThirdQuest) {
