@@ -3,6 +3,7 @@ package org.example.server.models.Map;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
+import org.example.common.models.GameAssetManager;
 import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Position;
@@ -181,14 +182,24 @@ public class Map {
     }
 
     public void print(float tileSize) {
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                float y = (cells.length - 1 - i) * tileSize;
-                float x = j * tileSize;
-                Texture texture = cells[i][j].getTexture();
+        for (int i = -20; i < height + 20; i++) {
+            for (int j = -30; j < width + 30; j++) {
+                if (i >= 0 && i < height && j >= 0 && j < width) {
+                    float y = (height - 1 - i) * tileSize;
+                    float x = j * tileSize;
+                    Texture texture = cells[i][j].getTexture();
 
-                if (texture == null) continue;
-                Main.getBatch().draw(texture, x, y, tileSize, tileSize);
+                    if (texture == null) continue;
+                    Main.getBatch().draw(texture, x, y, tileSize, tileSize);
+                }
+                else {
+                    float x = j * tileSize;
+                    float y = (height - 1 - i) * tileSize;
+                    Texture texture = (i * i + j * j + j - 1) % 2 < 2?
+                            GameAssetManager.getGameAssetManager().getDarkGrassCellTexture():
+                            GameAssetManager.getGameAssetManager().getDarkGrass2CellTexture();
+                    Main.getBatch().draw(texture, x, y, tileSize, tileSize);
+                }
             }
         }
         Texture texture;

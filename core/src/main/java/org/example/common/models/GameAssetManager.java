@@ -87,6 +87,10 @@ public class GameAssetManager {
     private final Texture NpcMapCellTexture = new Texture("assets/Images/Floorings/NPCValley.png");
     private final Texture WaterCellTexture = new Texture("assets/Images/Floorings/Water.png");
     private final Texture plowedCellTexture = new Texture("assets/Images/Floorings/Plowed.png");
+    private final Texture lightGrassCellTexture = new Texture("assets/Images/Floorings/LightGrass.png");
+    private final Texture darkGrassCellTexture = new Texture("assets/Images/Floorings/Flooring_40.png");
+    private final Texture darkGrass2CellTexture = new Texture("assets/Images/Floorings/DarkGrass2.png");
+    private final Texture mapLinkCellTexture = new Texture("assets/Images/Floorings/Flooring_34.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
     private final TextureRegion standingTexture = characterAtlas.createSprite("standing_1");
@@ -485,6 +489,22 @@ public class GameAssetManager {
 
     public Image getBlackImage() {
         return blackImage;
+    }
+
+    public Texture getLightGrassCellTexture() {
+        return lightGrassCellTexture;
+    }
+
+    public Texture getDarkGrassCellTexture() {
+        return darkGrassCellTexture;
+    }
+
+    public Texture getDarkGrass2CellTexture() {
+        return darkGrass2CellTexture;
+    }
+
+    public Texture getMapLinkCellTexture() {
+        return mapLinkCellTexture;
     }
 
     public Image getCraft_bomb() {

@@ -1,5 +1,6 @@
 package org.example.server.models.tools;
 
+import org.example.client.model.ClientApp;
 import org.example.server.models.App;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.StackLevel;
@@ -42,7 +43,7 @@ public class FishingPole extends Tool {
     @Override
     public int getEnergyUsage() {
         int energy = super.getEnergyUsage();
-        if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() == 4) {
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() == 4) {
             energy--;
         }
         return Math.min(energy, 0);
@@ -50,13 +51,13 @@ public class FishingPole extends Tool {
 
     public boolean enoughAbility() {
         if (this.getLevel() == StackLevel.Basic) {
-            return App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 0;
+            return ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 0;
         } else if (this.getLevel() == StackLevel.Large) {
-            return App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 0;
+            return ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 0;
         } else if (this.getLevel() == StackLevel.Fiberglass) {
-            return App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 2;
+            return ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 2;
         } else if (this.getLevel() == StackLevel.Iridium) {
-            return App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 4;
+            return ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() >= 4;
         }
         return false;
     }

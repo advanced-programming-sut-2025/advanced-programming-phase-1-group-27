@@ -1,5 +1,6 @@
 package org.example.server.models.tools;
 
+import org.example.client.model.ClientApp;
 import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Player;
@@ -37,7 +38,7 @@ public class Hoe extends Tool {
 
     @Override
     public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         player.consumeEnergy(this.getEnergyUsage());
         if (cell.getType() == CellType.Free) {
             cell.setType(CellType.Plowed);

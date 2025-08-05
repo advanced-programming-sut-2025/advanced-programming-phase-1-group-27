@@ -1,5 +1,6 @@
 package org.example.server.models.tools;
 
+import org.example.client.model.ClientApp;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.enums.items.AnimalType;
@@ -17,7 +18,7 @@ public class Shear extends Tool {
 
     @Override
     public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         player.consumeEnergy(getEnergyUsage());
         if (cell.getObject() instanceof Animal animal && animal.getType() == AnimalType.Sheep) {
             Stacks product = animal.getProduct();
