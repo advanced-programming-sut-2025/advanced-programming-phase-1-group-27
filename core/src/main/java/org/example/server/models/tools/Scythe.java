@@ -1,5 +1,6 @@
 package org.example.server.models.tools;
 
+import org.example.client.model.ClientApp;
 import org.example.server.models.*;
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.CropType;
@@ -25,7 +26,7 @@ public class Scythe extends Tool {
 
     @Override
     public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         player.consumeEnergy(getEnergyUsage());
         if (cell.getObject() instanceof Plant plant) {
             if (plant.isForaging())

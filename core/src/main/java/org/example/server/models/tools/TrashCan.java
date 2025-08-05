@@ -1,6 +1,6 @@
 package org.example.server.models.tools;
 
-import org.example.server.models.App;
+import org.example.client.model.ClientApp;
 import org.example.server.models.Result;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.StackLevel;
@@ -33,7 +33,7 @@ public class TrashCan extends Tool {
 
     public Result deleteItem(Stacks stack) {
         int refund = stack.getTotalPrice() * this.percentage / 100;
-        App.getCurrentGame().getCurrentPlayer().addMoney(refund);
+        ClientApp.getCurrentGame().getCurrentPlayer().addMoney(refund);
         return new Result(true, "Item Sold");
     }
 }

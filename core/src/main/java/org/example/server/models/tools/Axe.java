@@ -1,6 +1,6 @@
 package org.example.server.models.tools;
 
-import org.example.server.models.App;
+import org.example.client.model.ClientApp;
 import org.example.server.models.Cell;
 import org.example.server.models.Player;
 import org.example.server.models.Result;
@@ -47,7 +47,7 @@ public class Axe extends Tool {
     @Override
     public int getEnergyUsage() {
         int energy = super.getEnergyUsage();
-        if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Foraging).getLevel() == 4) {
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Foraging).getLevel() == 4) {
             energy--;
         }
 
@@ -56,7 +56,7 @@ public class Axe extends Tool {
 
     @Override
     public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         if (cell.getObject() instanceof Tree tree) {
             cell.setObject(null);
             cell.setType(CellType.Free);

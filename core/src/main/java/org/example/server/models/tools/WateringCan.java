@@ -1,5 +1,6 @@
 package org.example.server.models.tools;
 
+import org.example.client.model.ClientApp;
 import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Player;
@@ -47,7 +48,7 @@ public class WateringCan extends Tool {
     @Override
     public int getEnergyUsage() {
         int energy = super.getEnergyUsage();
-        if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Farming).getLevel() == 4) {
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Farming).getLevel() == 4) {
             energy--;
         }
         return Math.min(energy, 0);
@@ -55,7 +56,7 @@ public class WateringCan extends Tool {
 
     @Override
     public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         if (cell.getType() == CellType.Water) {
             player.consumeEnergy(getEnergyUsage());
             this.waterCapacity = maxCapacity;

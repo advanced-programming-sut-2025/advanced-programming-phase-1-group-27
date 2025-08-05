@@ -1,5 +1,6 @@
 package org.example.server.models.tools;
 
+import org.example.client.model.ClientApp;
 import org.example.server.models.*;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.CellType;
@@ -42,7 +43,7 @@ public class Pickaxe extends Tool {
     @Override
     public int getEnergyUsage() {
         int energy = super.getEnergyUsage();
-        if (App.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Mining).getLevel() == 4) {
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Mining).getLevel() == 4) {
             energy--;
         }
         return Math.min(energy, 0);
@@ -50,7 +51,7 @@ public class Pickaxe extends Tool {
 
     @Override
     public Result use(Cell cell) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         Object object = cell.getObject();
         if (cell.getType() == CellType.Plowed && object == null) {
             player.consumeEnergy(this.getEnergyUsage());
