@@ -36,6 +36,7 @@ public class TradeController {
         ClientApp.getServerConnectionThread().sendMessage(message);
         if (answer) {
             // TODO : Go to TradeView
+
         } else {
             // TODO : Go to last Menu
         }
@@ -54,14 +55,20 @@ public class TradeController {
         // TODO : bayad begi ke in trade mored ghabool hast ya na
     }
 
-    public void sendConfirmation(boolean answer, String starter, String other) {
+    public void sendConfirmation(boolean answer, String starter, String other , ArrayList<Stacks> starterInventory,
+                                 ArrayList<Stacks> otherInventory) {
         // TODO : age okay boodi ba in trade bayad in function seda beshe to nahayee she
+        if(answer){
+            // Inventory dorost she
+        }
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "confirmTrade");
             put("answer", answer);
             put("starter", starter);
             put("other", other);
             put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("starterInventory" , new Backpack(ToolType.BasicBackpack , starterInventory).getInfo());
+            put("otherInventory" , new  Backpack(ToolType.BasicBackpack , otherInventory).getInfo());
         }}, Message.Type.interaction_p2p));
     }
 

@@ -349,6 +349,7 @@ public class PregameMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
+                usernameLabels.remove(ClientApp.getLoggedInUser().getUsername());
                 controller.leave();
             }
         });

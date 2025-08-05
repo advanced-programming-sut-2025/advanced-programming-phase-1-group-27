@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.*;
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
 import org.example.server.models.Cell;
 import org.example.server.models.Map.NPCMap;
@@ -144,6 +145,8 @@ public class OutsideView extends AppMenu {
             Cell cell = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().getCell(i, j);
             if (cell != null && cell.getObject() instanceof NPC npc) {
                 System.out.println(npc.getType().getName() + " WAS CLICKED"); // TODO : parsa inja click shode ro in NPC
+                InteractionsWithNPCController controller = new InteractionsWithNPCController();
+                controller.meetNPC(npc.getName());
             }
         }
     }

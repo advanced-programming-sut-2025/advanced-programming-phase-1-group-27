@@ -54,7 +54,6 @@ public class ServerApp {
             return;
         connections.remove(clientConnectionThread);
         System.err.println("REMOVED CONNECTION: " + (clientConnectionThread.getUser() == null? "null" : clientConnectionThread.getUser().getUsername()));
-
     }
 
     public static void addConnection(ClientConnectionThread clientConnectionThread) {

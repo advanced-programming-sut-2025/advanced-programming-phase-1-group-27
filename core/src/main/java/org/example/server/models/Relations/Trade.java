@@ -1,80 +1,44 @@
 package org.example.server.models.Relations;
 
-import org.example.server.models.Item;
-import org.example.server.models.Player;
-import org.example.server.models.enums.DialogueType;
+import com.google.gson.internal.LinkedTreeMap;
+import org.example.server.models.Stacks;
+import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.tools.Backpack;
 
-public class Trade extends Dialogue {
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Trade {
 
     private static int idCounter = 1;
-    private Item offeredItem;
-    private Item requestedItem;
-    private int offeredItemQuantity;
-    private int requestedItemQuantity;
-    private Integer moneyOffered;
-    private DialogueType tradeType;
+    private String starter, other;
+    private ArrayList<Stacks> starterSelected, othersSelected;
     private int id;
 
-    public Trade(Player responder, Player sender, Item offeredItem, int offeredItemQuantity, Item requestedItem,
-                 int requestedItemQuantity, Integer moneyOffered, DialogueType tradeType) {
-        super(DialogueType.Trade, null, null, responder, sender);
-        this.offeredItem = offeredItem;
-        this.offeredItemQuantity = offeredItemQuantity;
-        this.requestedItem = requestedItem;
-        this.requestedItemQuantity = requestedItemQuantity;
-        this.moneyOffered = moneyOffered;
-        this.tradeType = tradeType;
-        id = idCounter;
+    public Trade(String starter, String other, ArrayList<Stacks> starterSelected, ArrayList<Stacks> othersSelected) {
+        this.starter = starter;
+        this.other = other;
+        this.starterSelected = starterSelected;
+        this.othersSelected = othersSelected;
+        this.id = idCounter;
         idCounter++;
     }
 
-    public Item getOfferedItem() {
-        return offeredItem;
+    public Trade(LinkedTreeMap<String, Object> info) {
+        this.starter = (String) info.get("starter");
+        this.other = (String) info.get("other");
+        this.starterSelected = new Backpack((LinkedTreeMap<String, Object>) info.get("starterSelected")).getItems();
+        this.othersSelected = new Backpack((LinkedTreeMap<String, Object>) info.get("otherSelected")).getItems();
+        this.id = ((Number) info.get("id")).intValue();
     }
 
-    public Item getRequestedItem() {
-        return requestedItem;
-    }
-
-    public int getOfferedItemQuantity() {
-        return offeredItemQuantity;
-    }
-
-    public int getRequestedItemQuantity() {
-        return requestedItemQuantity;
-    }
-
-    public Integer getMoneyOffered() {
-        return moneyOffered;
-    }
-
-    public void setMoneyOffered(Integer moneyOffered) {
-        this.moneyOffered = moneyOffered;
-    }
-
-    public DialogueType getTradeType() {
-        return tradeType;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void tradeIsAccepted() {
-        this.setRespond("accept");
-    }
-
-    public void tradeIsRejected() {
-        this.setRespond("reject");
-    }
-
-    public void setOfferedItem(Item offeredItem, int offeredItemQuantity) {
-        this.offeredItem = offeredItem;
-        this.offeredItemQuantity = offeredItemQuantity;
-    }
-
-    public void setRequestedItem(Item requestedItem, int requestedItemQuantity) {
-        this.requestedItem = requestedItem;
-        this.requestedItemQuantity = requestedItemQuantity;
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("starter", starter);
+        info.put("other", other);
+        info.put("starterSelected", new Backpack(ToolType.BasicBackpack, starterSelected).getInfo());
+        info.put("otherSelected", new Backpack(ToolType.BasicBackpack, othersSelected).getInfo());
+        info.put("id", id);
+        return info;
     }
 }

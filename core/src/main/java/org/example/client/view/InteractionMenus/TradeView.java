@@ -3,6 +3,7 @@ package org.example.client.view.InteractionMenus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,6 +20,8 @@ import java.util.Scanner;
 public class TradeView extends AppMenu {
     private final TradeController controller;
 
+    private final AppMenu lastView;
+
     private ArrayList<Stacks> selectedCurrent;
     private ArrayList<Stacks> selectedOther;
     private ArrayList<Stacks> othersInventory;
@@ -32,8 +35,11 @@ public class TradeView extends AppMenu {
     private Table stockTableOther;
     private ScrollPane scrollPaneOther;
 
-    public TradeView(String starter, String other) {
+    private Stage stage;
+
+    public TradeView(String starter, String other , AppMenu lastView) {
         controller = new TradeController();
+        this.lastView = lastView;
         othersInventory = InteractionsWithUserController.getInventory(
                 ClientApp.getLoggedInUser().getUsername().equals(starter) ? other : starter
         );
@@ -164,7 +170,8 @@ public class TradeView extends AppMenu {
 
     @Override
     public void show() {
-
+        stage.addActor(scrollPaneCurrent);
+        stage.addActor(scrollPaneOther);
     }
 
     @Override

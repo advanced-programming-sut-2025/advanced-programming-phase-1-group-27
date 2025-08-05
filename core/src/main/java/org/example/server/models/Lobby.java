@@ -8,6 +8,7 @@ import org.example.server.models.enums.Weathers.Weather;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Lobby {
     private User admin;
@@ -20,6 +21,16 @@ public class Lobby {
     private HashMap<String, Integer> usernameToMap = new HashMap<>();
     private ServerGame serverGame = null;
     private boolean active;
+    private AtomicLong lastChange = new AtomicLong(System.currentTimeMillis());
+
+    public Lobby () {
+        this.admin = new User();
+        this.isPublic = true;
+        this.isVisible = true;
+        this.id = 0;
+        this.name = "";
+        this.password = "";
+    }
 
     public Lobby(User admin, boolean isPublic, String password, boolean isVisible, int id, String name) {
         this.admin = admin;
@@ -76,8 +87,15 @@ public class Lobby {
 
     public boolean addUser(User user) {
         if (users.size() == 4) return false;
+        lastChange.set(System.currentTimeMillis());
         users.add(user);
         return true;
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        usernameToMap.remove(user.getUsername());
+        lastChange.set(System.currentTimeMillis());
     }
 
     public int getId() {
@@ -137,12 +155,17 @@ public class Lobby {
         this.serverGame = serverGame;
     }
 
+    public AtomicLong getLastChange() {
+        return lastChange;
+    }
+
     public void notifyAll(Message message) {
         for (User user : users) {
             try {
                 ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
             } catch (Exception e) {
                 System.err.println("Error notifying user " + user.getUsername());
+                e.printStackTrace();
             }
         }
     }
