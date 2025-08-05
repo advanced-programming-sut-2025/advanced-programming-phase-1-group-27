@@ -21,7 +21,7 @@ public class NPC {
     private Map<Player, Relation> relations = new HashMap<>();
     private Quest[] quests = new Quest[3];
     private Building home;
-    private String dialogue = null;
+    private String dialogue = "Kose Nanat";
     private boolean isThinking = false;
 
     public NPC(NPCType type, int daysForThirdQuest) {
@@ -117,6 +117,10 @@ public class NPC {
 
     public void setDialogue(String dialogue) {
         this.dialogue = dialogue;
+    }
+
+    public String getDialogue() {
+        return dialogue;
     }
 
     public boolean isThinking() {

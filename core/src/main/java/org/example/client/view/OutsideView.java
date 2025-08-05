@@ -1,34 +1,21 @@
 package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.OtherPlayerController;
-import org.example.client.controller.OutsideWorldController;
-import org.example.client.controller.ToolGraphicalController;
+import org.example.client.controller.*;
 import org.example.client.model.ClientApp;
-import org.example.client.controller.OutsidePlayerController;
-import org.example.common.models.Direction;
 import org.example.server.models.Cell;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Position;
 import org.example.server.models.enums.SFX;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class OutsideView extends AppMenu {
@@ -38,8 +25,9 @@ public class OutsideView extends AppMenu {
     private final Stage stage;
 
     private final OutsidePlayerController playerController = new OutsidePlayerController(this);
-    private final OutsideWorldController worldController = new OutsideWorldController(this);
+    private final OutsideWorldController outsideWorldController = new OutsideWorldController(this);
     private final ToolGraphicalController toolController = new ToolGraphicalController(this);
+    private final WorldController worldController = new WorldController(this);
     private Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     private final int tileSize = 40;
@@ -98,7 +86,7 @@ public class OutsideView extends AppMenu {
     public void displayThorAnimation(int i, int j){
 
         SFX.THOR.play();
-        worldController.setThor(1f,i,j);
+        outsideWorldController.setThor(1f,i,j);
 
     }
 
@@ -117,7 +105,7 @@ public class OutsideView extends AppMenu {
 
         playerController.setCamera(camera);
         toolController.setCamera(camera);
-
+        worldController.setCamera(camera);
     }
 
     @Override
@@ -126,8 +114,9 @@ public class OutsideView extends AppMenu {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
 
-        ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().print(tileSize);
 
+
+        worldController.update();
         playerController.update();
         toolController.update();
         toolController.render();
@@ -135,7 +124,7 @@ public class OutsideView extends AppMenu {
         if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
             ClientApp.getCurrentGame().renderOtherPlayers();
         camera.update();
-        worldController.update(delta);
+        outsideWorldController.update(delta);
 
         hudView.displayHUD(delta);
         Main.getBatch().end();

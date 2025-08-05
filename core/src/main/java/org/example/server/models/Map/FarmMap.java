@@ -222,20 +222,6 @@ public class FarmMap extends Map {
         return info;
     }
 
-    public void print(float tileSize) {
-        super.print(tileSize);
-        Position position = greenHouse.getTopLeftCell().getPosition();
-        int x = OutsideView.getGraphicalPosition(position).getX() - 20,
-                y = OutsideView.getGraphicalPosition(position).getY() - 30;
-        Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
-                x, y - 240, 320, 280);
-
-        position = hut.getTopLeftCell().getPosition();
-        x = OutsideView.getGraphicalPosition(position).getX() - 20;
-        y = OutsideView.getGraphicalPosition(position).getY() - 30;
-        Main.getBatch().draw(GameAssetManager.getGameAssetManager().getHutTexture(),
-                x, y - 125, 160, 160);
-    }
 
     public ArrayList<Plant> getAllPlants() {
         ArrayList<Plant> plants = new ArrayList<>();

@@ -39,6 +39,7 @@ Fonts/lantern_white.png
 Fonts/stardew-font.fnt
 Fonts/stardew-font.png
 Fonts/stardew-valley.ttf
+Images/!_Npc_Talking.png
 Images/Cooking/CookingMenu.png
 Images/Crafting/Bee_House.png
 Images/Crafting/Bomb.png

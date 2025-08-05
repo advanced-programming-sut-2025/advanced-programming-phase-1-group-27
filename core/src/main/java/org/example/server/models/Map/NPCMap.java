@@ -1,20 +1,27 @@
 package org.example.server.models.Map;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.App;
+import org.example.server.models.BuildingTexture;
 import org.example.server.models.Cell;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.enums.CellType;
+import org.example.server.models.Map.FarmMap;
+import org.example.server.models.enums.items.BuildingType;
 
 public class NPCMap extends Map {
 
-    private BuildingTexture[] buildingTextures = new BuildingTexture[] {
+    private final BuildingTexture[] buildingTextures = new BuildingTexture[] {
             new BuildingTexture(2, 9, 2),
             new BuildingTexture(5, 9, 8),
             new BuildingTexture(2, 9, 15),
@@ -29,6 +36,8 @@ public class NPCMap extends Map {
             new BuildingTexture(10, 0, 25),
             new BuildingTexture(9, 0, 30)
     };
+
+
 
     public NPCMap(Game game) {
         super(16, 34);
@@ -104,34 +113,8 @@ public class NPCMap extends Map {
         Main.getBatch().draw(textureRegion, x, y - 160, 164, 224);
     }
 
-
-    public void print(float tileSize) {
-        super.print(tileSize);
-        //NPC houses:
-        for (BuildingTexture bt : buildingTextures) {
-            renderBuilding(bt.i, bt.j, bt.textureIndex);
-        }
-
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                float y = (cells.length - 1 - i) * tileSize;
-                float x = j * tileSize;
-                if (cells[i][j].getObject() instanceof NPC npc)
-                    Main.getBatch().draw(GameAssetManager.getGameAssetManager().getNpcTexture(npc.getType()),
-                            x + 4, y, 32, 64);
-            }
-        }
-
+    public BuildingTexture[] getBuildingTextures() {
+        return buildingTextures;
     }
 }
 
-class BuildingTexture {
-    public int textureIndex;
-    public int i, j;
-
-    public BuildingTexture(int textureIndex, int i, int j) {
-        this.textureIndex = textureIndex;
-        this.i = i;
-        this.j = j;
-    }
-}
