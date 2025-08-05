@@ -72,7 +72,6 @@ public class PregameMenuController {
         if (lobby == null) {
             return;
         }
-        lobby.removeUsernameMap(username);
         User selectedUser = null;
         for(User user : lobby.getUsers()) {
             if(user.getUsername().equals(username)) {
@@ -81,7 +80,7 @@ public class PregameMenuController {
         }
 
         if(selectedUser != null) {
-            lobby.getUsers().remove(selectedUser);
+            lobby.removeUser(selectedUser);
 
             if (lobby.getUsers().isEmpty()) {
                 ServerApp.getLobbies().remove(lobby);

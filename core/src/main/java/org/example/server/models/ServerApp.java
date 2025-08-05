@@ -53,6 +53,7 @@ public class ServerApp {
         if (clientConnectionThread == null)
             return;
         connections.remove(clientConnectionThread);
+        System.err.println("REMOVED CONNECTION: " + (clientConnectionThread.getUser() == null? "null" : clientConnectionThread.getUser().getUsername()));
     }
 
     public static void addConnection(ClientConnectionThread clientConnectionThread) {
@@ -98,6 +99,23 @@ public class ServerApp {
 
     public static void addLobby(Lobby lobby) {
         lobbies.add(lobby);
+        new Thread(() -> {
+            while (lobby.getGame() == null) {
+                try {
+                    Thread.sleep(2_000);
+                    long passed = System.currentTimeMillis() - lobby.getLastChange().get();
+                    if (passed > 5 * 60 * 1000) {
+                        lobby.notifyAll(new Message(null, Message.Type.terminating_lobby));
+                        removeLobby(lobby);
+                        break;
+                    }
+                } catch (Exception ignored) {}
+            }
+        }).start();
+    }
+
+    public static void removeLobby(Lobby lobby) {
+        lobbies.remove(lobby);
     }
 
     public static ArrayList<User> getOnlineUsers() {

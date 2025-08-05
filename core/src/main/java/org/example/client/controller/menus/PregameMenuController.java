@@ -101,7 +101,7 @@ public class PregameMenuController extends MenuController {
         }
         boolean found = response.getFromBody("found?");
         if(!found){
-            return null;
+            return new Lobby();
         }
         return new Lobby(response.getFromBody("lobbyInfo"));
     }
@@ -114,6 +114,14 @@ public class PregameMenuController extends MenuController {
         ClientApp.setCurrentMenu(new LobbyMenuView());
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
+    }
+
+    public void goToLobbyMenu() {
+        Gdx.app.postRunnable(() -> {
+            Main.getMain().getScreen().dispose();
+            ClientApp.setCurrentMenu(new LobbyMenuView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        });
     }
 
     @Override

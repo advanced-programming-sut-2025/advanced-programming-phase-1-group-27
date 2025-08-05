@@ -35,7 +35,12 @@ public class ServerConnectionThread extends ConnectionThread {
 
     @Override
     protected boolean handleMessage(Message message) {
-        if (message.getType() == Message.Type.start_game) {
+        if (message.getType() == Message.Type.terminating_lobby) {
+            if (ClientApp.getCurrentMenu() instanceof PregameMenuView pregameMenuView)
+                pregameMenuView.getController().goToLobbyMenu();
+            return true;
+        }
+        else if (message.getType() == Message.Type.start_game) {
             if (ClientApp.getCurrentMenu() instanceof PregameMenuView pregameMenuView) {
                 pregameMenuView.getController().startGame(message);
                 return true;
