@@ -21,7 +21,7 @@ public class NPC {
     private Map<Player, Relation> relations = new HashMap<>();
     private Quest[] quests = new Quest[3];
     private Building home;
-    private String dialogue = "Kose Nanat";
+    private String dialogue = null;
     private boolean isThinking = false;
 
     public NPC(NPCType type, int daysForThirdQuest) {
