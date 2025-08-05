@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import org.example.client.Main;
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
@@ -107,6 +108,9 @@ public class WorldController {
                                 dialogueLabels.add(dialogueLabel);
                                 //TODO
                                 npc.setDialogue(null);
+                                // TODO : Sobhan in doroste?
+                                InteractionsWithNPCController controller = new InteractionsWithNPCController();
+                                controller.meetNPC(npc.getName());
                             }
                         }
                     }

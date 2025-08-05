@@ -90,6 +90,10 @@ public class GameController {
         String starter = message.getFromBody("starter");
         String other = message.getFromBody("other");
         String self = message.getFromBody("self");
+        String mode = message.getFromBody("mode");
+        if(mode.equals("confirmTrade")) {
+            // Make Trade in server
+        }
         ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
                 starter.equals(self)? other : starter
         );

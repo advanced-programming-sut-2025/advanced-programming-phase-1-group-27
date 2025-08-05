@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InteractionsWithNPCController {
-    public GraphicalResult meetNPC(String npcName) {
+    public void meetNPC(String npcName) {
         NPC npc = InteractionsWithNPCController.findNPC(npcName);
         if (firstTimeMet(npc, ClientApp.getCurrentGame().getCurrentPlayer())) {
             npc.getRelations().computeIfAbsent(ClientApp.getCurrentGame().getCurrentPlayer(), k -> new Relation());
@@ -35,7 +35,6 @@ public class InteractionsWithNPCController {
             ClientApp.getServerConnectionThread().sendMessage(message);
         }
         // TODO : Rassa dialogue
-        return null;
     }
 
     public GraphicalResult giftNPC(String npcName, String itemName) {

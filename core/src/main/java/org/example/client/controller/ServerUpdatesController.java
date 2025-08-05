@@ -1,6 +1,12 @@
 package org.example.client.controller;
 
+import com.badlogic.gdx.Gdx;
+import org.example.client.Main;
+import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
+import org.example.client.view.HomeView;
+import org.example.client.view.InteractionMenus.PreTradeMenuView;
+import org.example.client.view.InteractionMenus.StartTradeView;
 import org.example.client.view.InteractionMenus.TradeView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
@@ -22,6 +28,7 @@ import org.example.server.models.enums.Plants.Tree;
 import java.util.ArrayList;
 
 import static java.lang.Math.min;
+import static java.lang.Math.scalb;
 
 public class ServerUpdatesController { // handles updates sent by server
 
@@ -130,11 +137,20 @@ public class ServerUpdatesController { // handles updates sent by server
     public static void handleP2P(Message message) {
         String mode = message.getFromBody("mode");
         if (mode.equals("startTrade")) {
-            // TODO : parsa
+            if( ClientApp.getCurrentMenu() instanceof OutsideView) {
+                String username = message.getFromBody("starter");
+                Gdx.app.postRunnable(() -> {
+                    Main.getMain().getScreen().dispose();
+                    ClientApp.setCurrentMenu(new StartTradeView(username , ClientApp.getCurrentMenu()));
+                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                });
+            } else {
+                // TODO : Auto decline
+            }
         }
         else if (mode.equals("respondToStartTrade")) {
-            if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
-                tradeView.getController().checkRespondToStart(message);
+            if (ClientApp.getCurrentMenu() instanceof PreTradeMenuView preTradeMenuView)
+                preTradeMenuView.getController().checkRespondToStart(message);
         }
         else if (mode.equals("updateSelected")) {
             if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
