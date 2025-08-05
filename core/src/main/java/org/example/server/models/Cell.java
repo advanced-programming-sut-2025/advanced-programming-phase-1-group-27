@@ -188,7 +188,10 @@ public class Cell {
         else if (cellType == CellType.Building && map instanceof FarmMap)
             return GameAssetManager.getGameAssetManager().getFreeCellTexture();
         else if (cellType == CellType.Plowed)
-            return GameAssetManager.getGameAssetManager().getPlowedCellTexture();
+            if (object != null && object instanceof Plant plant && plant.getWateredToday())
+                return GameAssetManager.getGameAssetManager().getHoedAndWateredCellTexture();
+            else
+                return GameAssetManager.getGameAssetManager().getHoedCellTexture();
         else if (cellType == CellType.MapLink)
             return GameAssetManager.getGameAssetManager().getMapLinkCellTexture();
         return null;

@@ -116,7 +116,7 @@ public class OutsideView extends AppMenu {
 
 
 
-        worldController.update();
+        worldController.updateAndRender();
         playerController.update();
         toolController.update();
         toolController.render();

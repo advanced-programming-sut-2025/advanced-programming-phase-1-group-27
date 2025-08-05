@@ -213,10 +213,12 @@ public class ClientGame implements Game {
                     }
                     if (!plant.getWateredYesterday() && !plant.getWateredToday()) {
                         cells[i][j].setObject(null);
+                        System.out.println("shashidam!");
                     } else if (cells[i][j].getBuilding() instanceof GreenHouse) {
                         plant.grow();
-                    } else if (!plant.getType().getSeasons().contains(currentWeather)) {
+                    } else if (!plant.getType().getSeasons().contains(time.getSeason())) {
                         cells[i][j].setObject(null);
+                        System.out.println("shashidam22!");
                     } else {
                         plant.grow();
                     }

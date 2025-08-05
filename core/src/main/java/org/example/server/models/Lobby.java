@@ -139,7 +139,11 @@ public class Lobby {
 
     public void notifyAll(Message message) {
         for (User user : users) {
-            ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
+            try {
+                ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
+            } catch (Exception e) {
+                System.err.println("Error notifying user " + user.getUsername());
+            }
         }
     }
 

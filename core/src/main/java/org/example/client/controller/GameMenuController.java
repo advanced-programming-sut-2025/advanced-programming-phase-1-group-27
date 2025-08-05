@@ -410,20 +410,10 @@ public class GameMenuController extends MenuController {
         return subRectCouldBeGiant(i, j, cell);
     }
 
-    public Result plant(String sourceName, String directionString) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
-        int direction = Integer.parseInt(directionString);
-        PlantSourceType source = SeedType.getItem(sourceName);
-        if (source == null)
-            source = SaplingType.getItem(sourceName);
-        if (source == null)
-            return new Result(false, "invalid Source!");
-        else if (!player.getBackpack().hasEnoughItem((Item) source, 1))
-            return new Result(false, "You don't Have This Seed/Sapling in Your Inventory!");
-
-        Cell cell = player.getCurrentCell().getAdjacentCells().get(direction);
 
 
+    public Result plant(SeedType source, Cell cell) {
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         if (cell.getType() == CellType.Quarry)
             return new Result(false, "This cell is in the quarry!");
         else if (cell.getType() != CellType.Plowed)
@@ -458,8 +448,7 @@ public class GameMenuController extends MenuController {
             cell.setObject(new Tree(treeType));
             return new Result(true, "You planted A Tree. A " + treeType.getName() + ".");
         } else {
-            return new Result(false, "WTF in plant/GameController\n" +
-                    sourceName + " " + direction);
+            return new Result(false, "WTF in plant/GameController\n");
         }
 
     }

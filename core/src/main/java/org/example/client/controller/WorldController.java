@@ -1,7 +1,6 @@
 package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -11,27 +10,21 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
-import org.example.server.models.BuildingTexture;
-import org.example.server.models.Cell;
+import org.example.server.models.*;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.Map;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
-import org.example.server.models.Player;
-import org.example.server.models.Position;
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.Tree;
 import org.example.server.models.enums.items.MineralType;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class WorldController {
@@ -141,9 +134,8 @@ public class WorldController {
                 else {
                     float x = j * tileSize;
                     float y = (height - 1 - i) * tileSize;
-                    Texture texture = (i * i + j * j + j - 1) % 2 < 2?
-                            GameAssetManager.getGameAssetManager().getDarkGrassCellTexture():
-                            GameAssetManager.getGameAssetManager().getDarkGrass2CellTexture();
+                    Texture texture =
+                            GameAssetManager.getGameAssetManager().getDarkGrassCellTexture();
                     Main.getBatch().draw(texture, x, y, tileSize, tileSize);
                 }
             }
@@ -222,7 +214,8 @@ public class WorldController {
         dialogueLabels.removeIf(label -> label.getColor().a <= 0.4f);
     }
 
-    public void update() {
+
+    public void updateAndRender() {
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         if (Gdx.input.justTouched()) {
             dialogueLabels.clear();

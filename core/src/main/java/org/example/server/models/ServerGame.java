@@ -186,7 +186,7 @@ public class ServerGame implements Game {
 //        crowsAttack();
 //        System.out.println("Crows attack checked.");
         updateAnimals();
-        System.out.println("Animals update checked.");
+        System.out.println("Animals updateAndRender checked.");
         updateShippingBin();
         System.out.println("Shipping Bin checked.");
         setNewWeather();

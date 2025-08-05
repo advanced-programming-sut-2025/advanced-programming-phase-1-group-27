@@ -121,19 +121,7 @@ public class Map {
     }
 
     public int getPathEnergy(Cell A, Cell B) {
-        int energy = 0;
-        ArrayList<Cell> path = getPath(A, B);
-        for (int i = 1; i < path.size(); i++) {
-            Cell previous = path.get(i - 1), next = path.get(i);
-
-            if (previous.getPosition().getX() == next.getPosition().getX() ||
-                    previous.getPosition().getY() == next.getPosition().getY()) {
-                energy++;
-            } else {
-                energy += 10;
-            }
-        }
-        return energy / 20;
+        return 1;
     }
 
     public Cell getPlaceInPath(Cell A, Cell B, int energy) {

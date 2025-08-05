@@ -151,7 +151,7 @@ public class GameView extends AppMenu {
         } else if (GameMenuCommands.BuildGreenHouse.getMatcher(input) != null) {
             System.out.println(controller.buildGreenHouse());
         } else if ((matcher = GameMenuCommands.Plant.getMatcher(input)) != null) {
-            System.out.println(controller.plant(matcher.group("seedName"), matcher.group("direction")));
+            //System.out.println(controller.plant(matcher.group("seedName"), matcher.group("direction")));
         } else if ((matcher = GameMenuCommands.Fertilize.getMatcher(input)) != null) {
             System.out.println(controller.fertilize(matcher.group("itemName"), matcher.group("direction")));
 

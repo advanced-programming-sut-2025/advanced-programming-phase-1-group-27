@@ -32,7 +32,7 @@ public abstract class Plant {
     public void grow() {
         cnt++;
         tillNextHarvest = Integer.max(tillNextHarvest - 1, 0);
-        if (currentStage < type.getStages().length - 1 && cnt >= type.getStages()[currentStage]) {
+        if (currentStage < type.getStages().length  && cnt >= type.getStages()[currentStage]) {
             currentStage++;
             cnt = 0;
         }

@@ -91,6 +91,8 @@ public class GameAssetManager {
     private final Texture darkGrassCellTexture = new Texture("assets/Images/Floorings/Flooring_40.png");
     private final Texture darkGrass2CellTexture = new Texture("assets/Images/Floorings/DarkGrass2.png");
     private final Texture mapLinkCellTexture = new Texture("assets/Images/Floorings/Flooring_34.png");
+    private final Texture hoedCellTexture = new Texture("assets/Images/Floorings/Hoed.png");
+    private final Texture hoedAndWateredCellTexture = new Texture("assets/Images/Floorings/Hoed_and_Watered.png");
 
     private final Texture NPCDialogueSign = new Texture("assets/Images/!_Npc_Talking.png");
     private final Texture npcDialogueBox = new Texture("assets/Images/HoveringInfoWindow.png");
@@ -516,6 +518,14 @@ public class GameAssetManager {
 
     public Texture getNpcDialogueBox() {
         return npcDialogueBox;
+    }
+
+    public Texture getHoedCellTexture() {
+        return hoedCellTexture;
+    }
+
+    public Texture getHoedAndWateredCellTexture() {
+        return hoedAndWateredCellTexture;
     }
 
     public Image getCraft_bomb() {
