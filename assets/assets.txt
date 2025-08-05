@@ -329,9 +329,16 @@ Images/Crops/atlas/Crops_sheet.png
 Images/Exit/ExitMenuMan.png
 Images/Exit/ExitMenuMan2.png
 Images/Exit/ExitMenuWoman.png
+Images/Floorings/DarkGrass.png
+Images/Floorings/DarkGrass2.png
+Images/Floorings/Flooring_34.png
+Images/Floorings/Flooring_35.png
+Images/Floorings/Flooring_40.png
+Images/Floorings/Flooring_46.png
 Images/Floorings/Free.png
 Images/Floorings/Free2.png
 Images/Floorings/Free4.png
+Images/Floorings/LightGrass.png
 Images/Floorings/NPCValley.png
 Images/Floorings/Plowed.png
 Images/Floorings/Quarry.png

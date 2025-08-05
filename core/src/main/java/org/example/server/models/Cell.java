@@ -189,6 +189,8 @@ public class Cell {
             return GameAssetManager.getGameAssetManager().getFreeCellTexture();
         else if (cellType == CellType.Plowed)
             return GameAssetManager.getGameAssetManager().getPlowedCellTexture();
+        else if (cellType == CellType.MapLink)
+            return GameAssetManager.getGameAssetManager().getMapLinkCellTexture();
         return null;
     }
 
