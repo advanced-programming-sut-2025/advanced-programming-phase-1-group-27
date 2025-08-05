@@ -80,12 +80,5 @@ public class LoginMenuController extends MenuController {
         Main.getMain().setScreen(new WelcomeMenuView());
         return new Result(true, "Redirecting to welcome menu ...");
     }
-//    // getLobbiesList
-//    ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
-//        for (LinkedTreeMap<String, Object> info : list) {
-//        Lobby lobby = new Lobby(info);
-//        lobby.toString();
-//    }
-//    // createLobby
-//    Lobby lobby = new Lobby(response.getFromBody("lobbyInfo"));
+
 }

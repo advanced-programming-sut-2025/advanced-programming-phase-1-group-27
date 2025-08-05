@@ -62,6 +62,7 @@ public class WelcomeMenuView extends AppMenu {
 
     }
 
+
     private void placeButtons(float delta) {
 
         if (!(textScale < 1.6f) && buttonTransparency < 1.5f) {

@@ -362,7 +362,9 @@ public class GameAssetManager {
     private final Image mapMenuBackground = new Image( new Texture(Gdx.files.internal("Images/Map/MapMenu.png")));
 
     private final Image energyBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/EnergyBar2.png")));
+    private final Image boostBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/EnergyBar2.png")));
     private final Image greenBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/GreenBar.png")));
+    private final Image redBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/RedBar.png")));
 
     private final Sound thorSound = Gdx.audio.newSound(Gdx.files.internal("Thor/ThorSFX.wav"));
 
@@ -372,6 +374,7 @@ public class GameAssetManager {
     private final Texture thor4 = new Texture(Gdx.files.internal("Thor/Lightning4.png"));
 
     private final Animation<Texture> thorAnimationFrames = new Animation<>(0.25f, thor1,thor2,thor3,thor4);
+
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -384,6 +387,14 @@ public class GameAssetManager {
 
     public Animation<Texture> getThorAnimationFrames() {
         return thorAnimationFrames;
+    }
+
+    public Image getRedBar() {
+        return redBar;
+    }
+
+    public Image getBoostBar() {
+        return boostBar;
     }
 
     public Sound getThorSound() {

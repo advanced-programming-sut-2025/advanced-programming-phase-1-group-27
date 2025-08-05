@@ -8,11 +8,8 @@ import org.example.server.models.NPCs.NPC;
 import org.example.server.models.NPCs.Quest;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.ArtisanTypes;
-import org.example.server.models.enums.Features;
 import org.example.server.models.enums.Plants.CropType;
-import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.enums.items.ToolType;
@@ -20,8 +17,6 @@ import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class InteractionsWithNPCController {
     public GraphicalResult meetNPC(String npcName) {
@@ -36,8 +31,8 @@ public class InteractionsWithNPCController {
                 put("username" , ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
                 put("npcName" , npcName);
                 put("XP" , 20);
-            }} , Message.Type.InteractionP2NPC);
-            ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+            }} , Message.Type.interaction_p2npc);
+            ClientApp.getServerConnectionThread().sendMessage(message);
         }
         // TODO : Rassa dialogue
         return null;
@@ -77,8 +72,8 @@ public class InteractionsWithNPCController {
                 put("username" , ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
                 put("npcName" , npcName);
                 put("XP" , finalXp);
-            }} , Message.Type.InteractionP2NPC);
-            ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+            }} , Message.Type.interaction_p2npc);
+            ClientApp.getServerConnectionThread().sendMessage(message);
         }
         // TODO : Rassa dialogue
         return null;

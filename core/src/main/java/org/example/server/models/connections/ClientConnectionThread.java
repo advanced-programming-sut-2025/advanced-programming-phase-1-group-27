@@ -99,8 +99,8 @@ public class ClientConnectionThread extends ConnectionThread {
             GameController.setTomorrowWeather(message);
             return true;
         } else if (message.getType() == Message.Type.enter_npc ||
-                   message.getType() == Message.Type.leave_npc ||
-                   message.getType() == Message.Type.walk_update) {
+                message.getType() == Message.Type.leave_npc ||
+                message.getType() == Message.Type.walk_update) {
             GameController.notifyExcept(message);
             return true;
         } else if (message.getType() == Message.Type.purchase_from_shop) {
@@ -109,8 +109,15 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.get_player_inventory) {
             sendMessage(GameController.getPlayerInventory(message));
             return true;
-        } else if (message.getType() == Message.Type.InteractionP2NPC){
+        } else if (message.getType() == Message.Type.interaction_p2npc) {
             sendMessage(InteractionsWithNPCController.handleMessage(message));
+            return true;
+        } else if (message.getType() == Message.Type.get_player_relation) {
+            sendMessage(GameController.getPlayerRelation(message));
+            return true;
+        } else if (message.getType() == Message.Type.interaction_p2p) {
+            GameController.handleP2P(message);
+            return true;
         }
         return false;
     }

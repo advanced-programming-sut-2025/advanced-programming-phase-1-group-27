@@ -11,7 +11,7 @@ import org.example.server.models.enums.DialogueType;
 import org.example.server.models.enums.Menu;
 import org.example.server.models.enums.StackLevel;
 import org.example.server.models.tools.Backpack;
-import org.example.client.view.TradeView;
+import org.example.client.view.InteractionMenus.TradeView;
 
 
 public class TradeController extends MenuController {

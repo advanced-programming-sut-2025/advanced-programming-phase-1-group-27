@@ -31,6 +31,7 @@ Clock/SunnyWinter.png
 EnergyIcons/EnergyBar.png
 EnergyIcons/EnergyBar2.png
 EnergyIcons/GreenBar.png
+EnergyIcons/RedBar.png
 Fonts/lantern_lightred.fnt
 Fonts/lantern_lightred.png
 Fonts/lantern_white.fnt

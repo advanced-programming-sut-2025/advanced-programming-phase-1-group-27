@@ -74,7 +74,6 @@ public class CheatController {
         int energy = Integer.parseInt(energyString);
 
         ClientApp.getCurrentGame().getCurrentPlayer().setEnergy(energy);
-//        ClientApp.getCurrentGame().getCurrentPlayer().setDayEnergy(energy);
         return new Result(true, "Energy Set to " + energy);
     }
 
@@ -160,7 +159,6 @@ public class CheatController {
     public Result cheatAddLevel(String NPCName, String amountString) {
         int amount = Integer.parseInt(amountString);
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
-        // TODO: rassa, hamahang ba server va parsa shavad
         NPC npc = InteractionsWithNPCController.findNPC(NPCName);
         if (npc == null) {
             return new Result(false, "NPC not found!");
@@ -174,6 +172,7 @@ public class CheatController {
         }
         relation.setLevel(relation.getLevel() + amount);
         int finalAmount = relation.getLevel();
+        // TODO : message server
         return new Result(true, "Level is added! ( " + finalAmount + " )");
     }
 

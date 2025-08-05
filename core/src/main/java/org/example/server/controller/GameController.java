@@ -4,7 +4,9 @@ import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
 import org.example.server.models.*;
+import org.example.server.models.Relations.Relation;
 import org.example.server.models.Shops.Shop;
+import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.HashMap;
@@ -66,5 +68,32 @@ public class GameController {
             if (!user.getUsername().equals(username))
                 lobby.notifyUser(user, message);
         }
+    }
+
+    public static Message getPlayerRelation(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        String username1 = message.getFromBody("username1");
+        String username2 = message.getFromBody("username2");
+        Player currentPLayer = lobby.getGame().getPlayerByUsername(username1);
+        Player otherPLayer = lobby.getGame().getPlayerByUsername(username2);
+        assert currentPLayer != null;
+        assert otherPLayer != null;
+        Relation relation = currentPLayer.getRelations().computeIfAbsent(otherPLayer , k->new Relation());
+        return new Message(new HashMap<>() {{
+            put("Level" , relation.getLevel());
+            put("XP" ,  relation.getXp());
+        }} , Message.Type.response);
+    }
+
+    public static void handleP2P(Message message) {
+        String starter = message.getFromBody("starter");
+        String other = message.getFromBody("other");
+        String self = message.getFromBody("self");
+        ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
+                starter.equals(self)? other : starter
+        );
+        assert connection != null;
+        connection.sendMessage(message);
     }
 }

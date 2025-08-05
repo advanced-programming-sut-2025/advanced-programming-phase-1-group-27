@@ -154,7 +154,7 @@ public class OutsideView extends AppMenu {
                     j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
             Cell cell = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().getCell(i, j);
             if (cell != null && cell.getObject() instanceof NPC npc) {
-                System.out.println(npc.getType().getName() + " WAS CLICKED"); // TODO parsa inja click shode ro in NPC
+                System.out.println(npc.getType().getName() + " WAS CLICKED"); // TODO : parsa inja click shode ro in NPC
             }
         }
     }

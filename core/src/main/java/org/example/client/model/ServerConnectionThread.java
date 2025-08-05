@@ -88,6 +88,10 @@ public class ServerConnectionThread extends ConnectionThread {
             sendMessage(ServerUpdatesController.getInventory());
             return true;
         }
+        else if (message.getType() == Message.Type.interaction_p2p) {
+            ServerUpdatesController.handleP2P(message);
+            return true;
+        }
         return false;
     }
 

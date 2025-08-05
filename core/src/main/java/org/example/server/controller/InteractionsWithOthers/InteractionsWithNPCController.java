@@ -28,11 +28,9 @@ public class InteractionsWithNPCController {
         String npcName = message.getFromBody("npcName");
         if (mode.equals("meet")) {
             meetNPC(npcName, lobbyId, username);
-            return null;
         } else if (mode.equals("gift")) {
             int xp =  message.getIntFromBody("XP");
             giftNPC(npcName , lobbyId , username , xp);
-            return null;
         }
         return null;
     }

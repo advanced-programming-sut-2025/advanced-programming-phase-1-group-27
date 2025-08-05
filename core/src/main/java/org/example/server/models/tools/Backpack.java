@@ -25,6 +25,11 @@ public class Backpack extends Tool {
 
     }
 
+    public Backpack(ToolType backpackType, ArrayList<Stacks> items) {
+        this(backpackType);
+        this.items = items;
+    }
+
     public Backpack(LinkedTreeMap<String, Object> info) {
         super(
                 ToolType.getItem((String) info.get("type")).getLevel(), // level
