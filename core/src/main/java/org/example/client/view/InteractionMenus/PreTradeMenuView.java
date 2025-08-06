@@ -29,7 +29,6 @@ public class PreTradeMenuView extends AppMenu {
     private final Label tradeMenuLabel;
     private final Label targetPlayerLabel;
 
-
     private Stage stage;
 
     public PreTradeMenuView(String username , AppMenu lastView) {
@@ -46,14 +45,7 @@ public class PreTradeMenuView extends AppMenu {
         tradeMenuLabel = new Label("Trade Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
 
-        brownImage = new Image(RoundedRectangleTexture.createBrownRoundedRect(
-                Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight(),
-                30));
 
-        label = new Label(username , skin);
-        label.setColor(Color.BLACK);
-        label.setFontScale(1.5f);
         setListeners();
     }
 
@@ -75,7 +67,7 @@ public class PreTradeMenuView extends AppMenu {
 
         tradeButton.setPosition((Gdx.graphics.getWidth()-tradeButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
         historyButton.setPosition((Gdx.graphics.getWidth()-historyButton.getWidth())/2f, 2 * Gdx.graphics.getHeight() / 6f);
-        backButton.setPosition((Gdx.graphics.getWidth()-backButton.getWidth())/2f, 1 * Gdx.graphics.getHeight() / 6f);
+        backButton.setPosition((Gdx.graphics.getWidth()-backButton.getWidth())/2f, Gdx.graphics.getHeight() / 6f);
 
         stage.addActor(menuBackground);
         stage.addActor(tradeButton);

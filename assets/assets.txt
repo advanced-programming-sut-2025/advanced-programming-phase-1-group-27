@@ -375,6 +375,9 @@ Images/Social/SocialMenuMan.png
 Images/Social/SocialMenuPage1.png
 Images/Social/SocialMenuPage2.png
 Images/Social/SocialMenuPage3.png
+Images/Trade/InventoryBackground.png
+Images/Trade/InventoryBackground2.png
+Images/Trade/SelectedSlot.png
 Images/Trees/Apple/  (1).png
 Images/Trees/Apple/  (2).png
 Images/Trees/Apple/  (3).png

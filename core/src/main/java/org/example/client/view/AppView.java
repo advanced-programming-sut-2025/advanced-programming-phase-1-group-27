@@ -2,10 +2,8 @@ package org.example.client.view;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.InteractionMenus.StartTradeView;
+import org.example.client.view.InteractionMenus.TradeView2;
 import org.example.client.view.menu.*;
-import org.example.client.view.shopview.BlackSmithShop;
-import org.example.client.view.shopview.StardropSaloonShop;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.enums.Gender;
@@ -48,9 +46,10 @@ public class AppView {
 //            return;
 //        }
         Main.getMain().setScreen(new WelcomeMenuView());
+//        Main.getMain().setScreen(new TradeView2("ali","ahmad",new WelcomeMenuView()));
 
         // For Graphics team
-//        cheat();
+        cheat();
 
         // For GigaChads
 //        int clown = 0;

@@ -376,6 +376,9 @@ public class GameAssetManager {
 
     private final Animation<Texture> thorAnimationFrames = new Animation<>(0.25f, thor1,thor2,thor3,thor4);
 
+    private final Image tradeInventoryBackground = new Image( new Texture(Gdx.files.internal("Images/Trade/InventoryBackground2.png")));
+
+    private final Image selectSlot = new Image( new Texture(Gdx.files.internal("Images/Trade/SelectedSlot.png")));
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -384,6 +387,14 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getSelectSlot() {
+        return selectSlot;
+    }
+
+    public Image getTradeInventoryBackground() {
+        return tradeInventoryBackground;
     }
 
     public Animation<Texture> getThorAnimationFrames() {
