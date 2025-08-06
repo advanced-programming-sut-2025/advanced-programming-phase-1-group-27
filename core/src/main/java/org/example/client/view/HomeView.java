@@ -108,6 +108,7 @@ public class HomeView extends AppMenu {
     @Override
     public void hide() {
 
+
     }
 
     @Override

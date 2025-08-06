@@ -340,6 +340,8 @@ Images/Floorings/Flooring_46.png
 Images/Floorings/Free.png
 Images/Floorings/Free2.png
 Images/Floorings/Free4.png
+Images/Floorings/Hoed.png
+Images/Floorings/Hoed_and_Watered.png
 Images/Floorings/LightGrass.png
 Images/Floorings/NPCValley.png
 Images/Floorings/Plowed.png
@@ -373,6 +375,76 @@ Images/Social/SocialMenuMan.png
 Images/Social/SocialMenuPage1.png
 Images/Social/SocialMenuPage2.png
 Images/Social/SocialMenuPage3.png
+Images/Trees/Apple/  (1).png
+Images/Trees/Apple/  (2).png
+Images/Trees/Apple/  (3).png
+Images/Trees/Apple/  (4).png
+Images/Trees/Apple/  (5).png
+Images/Trees/Apricot/  (1).png
+Images/Trees/Apricot/  (2).png
+Images/Trees/Apricot/  (3).png
+Images/Trees/Apricot/  (4).png
+Images/Trees/Apricot/  (5).png
+Images/Trees/Banana/  (1).png
+Images/Trees/Banana/  (2).png
+Images/Trees/Banana/  (3).png
+Images/Trees/Banana/  (4).png
+Images/Trees/Banana/  (5).png
+Images/Trees/Cherry/  (1).png
+Images/Trees/Cherry/  (2).png
+Images/Trees/Cherry/  (3).png
+Images/Trees/Cherry/  (4).png
+Images/Trees/Cherry/  (5).png
+Images/Trees/Mahogany/  (1).png
+Images/Trees/Mahogany/  (2).png
+Images/Trees/Mahogany/  (3).png
+Images/Trees/Mahogany/  (4).png
+Images/Trees/Mahogany/  (5).png
+Images/Trees/Mango/  (1).png
+Images/Trees/Mango/  (2).png
+Images/Trees/Mango/  (3).png
+Images/Trees/Mango/  (4).png
+Images/Trees/Mango/  (5).png
+Images/Trees/Maple/  (1).png
+Images/Trees/Maple/  (2).png
+Images/Trees/Maple/  (3).png
+Images/Trees/Maple/  (4).png
+Images/Trees/Maple/  (5).png
+Images/Trees/Mushroom/  (1).png
+Images/Trees/Mushroom/  (2).png
+Images/Trees/Mushroom/  (3).png
+Images/Trees/Mushroom/  (4).png
+Images/Trees/Mushroom/  (5).png
+Images/Trees/Mystic/  (1).png
+Images/Trees/Mystic/  (2).png
+Images/Trees/Mystic/  (3).png
+Images/Trees/Mystic/  (4).png
+Images/Trees/Mystic/  (5).png
+Images/Trees/Oak/  (1).png
+Images/Trees/Oak/  (2).png
+Images/Trees/Oak/  (3).png
+Images/Trees/Oak/  (4).png
+Images/Trees/Oak/  (5).png
+Images/Trees/Orange/  (1).png
+Images/Trees/Orange/  (2).png
+Images/Trees/Orange/  (3).png
+Images/Trees/Orange/  (4).png
+Images/Trees/Orange/  (5).png
+Images/Trees/Peach/  (1).png
+Images/Trees/Peach/  (2).png
+Images/Trees/Peach/  (3).png
+Images/Trees/Peach/  (4).png
+Images/Trees/Peach/  (5).png
+Images/Trees/Pine/  (1).png
+Images/Trees/Pine/  (2).png
+Images/Trees/Pine/  (3).png
+Images/Trees/Pine/  (4).png
+Images/Trees/Pine/  (5).png
+Images/Trees/Pomegranate/  (1).png
+Images/Trees/Pomegranate/  (2).png
+Images/Trees/Pomegranate/  (3).png
+Images/Trees/Pomegranate/  (4).png
+Images/Trees/Pomegranate/  (5).png
 Images/Trees/Trees.atlas
 Images/Trees/Trees.png
 Images/greenhouse.png

@@ -12,7 +12,7 @@ public class TradeHistoryView extends AppMenu {
     private final TradeController controller;
 
     private final String username;
-    private final ArrayList<Trade> trades;
+//    private final ArrayList<Trade> trades;
 
     public TradeHistoryView(String username) {
         controller = new TradeController();

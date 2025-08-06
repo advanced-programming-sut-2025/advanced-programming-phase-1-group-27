@@ -369,10 +369,16 @@ public class HUDView extends AppMenu {
                 friendButtons.add(giftButton);
                 friendButtons.add(tradeMenuButton);
 
-                nameLabel.setPosition(550,680 - 80 * counter);
-                friendshipInfo.setPosition(700,680 - 80 * counter);
+                nameLabel.setPosition(520,660 - 180 * counter);
+                friendshipInfo.setPosition(670,660 - 180 * counter);
+                giftButton.setPosition(890,660 - 180 * counter - (giftButton.getHeight()-nameLabel.getHeight())/2f);
+                tradeMenuButton.setPosition(1070,660 - 180 * counter -  (tradeMenuButton.getHeight()-nameLabel.getHeight())/2f);
+
+
                 stage.addActor(nameLabel);
                 stage.addActor(friendshipInfo);
+                stage.addActor(giftButton);
+                stage.addActor(tradeMenuButton);
 
                 counter ++;
 
@@ -918,6 +924,8 @@ public class HUDView extends AppMenu {
 
             friendsLabels.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
             friendshipInfos.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
+            friendButtons.get(2 * i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
+            friendButtons.get(2 * i + 1).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
             friendsLabels.get(i).toFront();
             friendshipInfos.get(i).toFront();
 
