@@ -124,7 +124,6 @@ public class WorldController {
                             camera.unproject(touchPos);
                             if (bounds.contains(touchPos.x, touchPos.y)) {
                                 npc.setDialogue(npc.getDialogue().replace('—', ' '));
-
                                 InfoWindow infoWindow = new InfoWindow(
                                         GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
                                         npc.getDialogue(),

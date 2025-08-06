@@ -4,17 +4,29 @@ import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
+import org.example.server.models.Lobby;
 import org.example.server.models.ServerApp;
 import org.example.server.models.User;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
+import java.util.UUID;
 
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class ClientConnectionThread extends ConnectionThread {
+    private static final String directoryPath = "music_uploads/";
+
     private User user = null;
+    private String songId; // the song which is uploading
+    private long songSize;
+    private long bytesUploaded;
 
     public ClientConnectionThread(Socket socket) throws IOException {
         super(socket);
@@ -35,6 +47,7 @@ public class ClientConnectionThread extends ConnectionThread {
         Message message = new Message(new HashMap<>() {{
             put("command", "get_client_address");
         }}, Message.Type.command);
+        System.out.println("YaLLAH");
         Message response = sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) return;
         setOtherSideIP(response.getFromBody("ip"));
@@ -118,8 +131,37 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.interaction_p2p) {
             GameController.handleP2P(message);
             return true;
+        } else if (message.getType() == Message.Type.upload_song_request) {
+            handleUploadRequest(message);
+            return true;
+        } else if (message.getType() == Message.Type.upload_complete) {
+            handleUploadComplete();
+            return true;
+        } else if (message.getType() == Message.Type.play_song_request) {
+            handlePlaySongRequest(message);
+            return true;
+        } else if (message.getType() == Message.Type.get_player_music) {
+            sendMessage(GameController.getPlayerMusicInfo(message));
+            return true;
         }
         return false;
+    }
+
+    @Override
+    protected void handleBinaryPacket(byte[] packet) {
+        if (this.songId == null) {
+            System.err.println("No active song. packet ignored ...");
+            return;
+        }
+        try {
+            Files.write(Paths.get(directoryPath + this.songId + ".mp3"), packet, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            bytesUploaded += packet.length;
+
+        } catch (IOException e) {
+            System.err.println("failed to write chunk for song " + songId);
+            e.printStackTrace();
+            this.songId = null;
+        }
     }
 
     @Override
@@ -128,6 +170,55 @@ public class ClientConnectionThread extends ConnectionThread {
         ServerApp.removeConnection(this);
         // TODO: hazf kon bebin chi mishe
         this.end();
+    }
+
+    private void handleUploadRequest(Message message) {
+        this.songId = UUID.randomUUID().toString();
+        this.songSize = ((Number) message.getFromBody("songSize")).longValue();
+        this.bytesUploaded = 0;
+    }
+
+    private void handleUploadComplete() {
+        sendMessage(new Message(new HashMap<>() {{
+            put("songId", songId);
+        }}, Message.Type.response));
+        songId = null;
+    }
+
+    private void handlePlaySongRequest(Message message) {
+        String songId = message.getFromBody("songId");
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        float offset = ((Number) message.getFromBody("offset")).floatValue();
+        lobby.getGame().setPlayerMusic(
+                message.getFromBody("username"),
+                songId,
+                (long) (System.currentTimeMillis() - 1000 * offset)
+        );
+
+        File file = new File(directoryPath + songId + ".mp3");
+        if (!file.exists()) {
+            System.err.println("song " + songId + " does not exist");
+            return;
+        }
+        new Thread(() -> {
+            sendMessage(new Message(new HashMap<>() {{
+                put("songId", songId);
+            }}, Message.Type.start_download));
+            try (FileInputStream fis = new FileInputStream(file)) {
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                while ((bytesRead = fis.read(buffer)) != -1) {
+                    // We need to handle the case where we read less than the buffer size
+                    byte[] packet = new byte[bytesRead];
+                    System.arraycopy(buffer, 0, packet, 0, bytesRead);
+                    sendBinaryPacket(packet);
+                }
+                sendMessage(new Message(null, Message.Type.download_complete));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     public User getUser() {

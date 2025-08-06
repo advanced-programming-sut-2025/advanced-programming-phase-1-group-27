@@ -3,6 +3,7 @@ package org.example.server.controller;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
+import org.example.common.models.MusicInfo;
 import org.example.server.models.*;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.Relations.Trade;
@@ -106,5 +107,16 @@ public class GameController {
         );
         assert connection != null;
         connection.sendMessage(message);
+    }
+
+    public static Message getPlayerMusicInfo(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        String playerName = message.getFromBody("playerName");
+        MusicInfo musicInfo = lobby.getGame().getPlayerMusicInfo(playerName);
+        return new Message(new HashMap<>() {{
+            put("songId", musicInfo.getSongId());
+            put("startTime", musicInfo.getStartTime());
+        }}, Message.Type.response);
     }
 }

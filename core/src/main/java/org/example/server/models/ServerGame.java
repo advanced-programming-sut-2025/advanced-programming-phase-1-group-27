@@ -1,8 +1,8 @@
 package org.example.server.models;
 
-import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Game;
 import org.example.common.models.Message;
+import org.example.common.models.MusicInfo;
 import org.example.common.models.Time;
 import org.example.server.controller.TimeController;
 import org.example.server.models.AnimalProperty.Animal;
@@ -46,6 +46,7 @@ public class ServerGame implements Game {
     private Shop jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
+    private HashMap<String, MusicInfo> playerToMusicMap = new HashMap<>();
 
     public ServerGame(Lobby lobby, ArrayList<Player> players) {
         this.lobby = lobby;
@@ -179,8 +180,8 @@ public class ServerGame implements Game {
 
     public void passAnHour() {
         TimeController.passAnHour(lobby);
-        updatePlayersBuff();
-        updateArtisans();
+//        updatePlayersBuff();
+//        updateArtisans();
         // player energies will be automatically updated
     }
 
@@ -651,5 +652,13 @@ public class ServerGame implements Game {
 
     public void addTrade(Trade trade) {
         trades.add(trade);
+    }
+
+    public void setPlayerMusic(String playerName, String songId, long startTime) {
+        playerToMusicMap.put(playerName, new MusicInfo(songId, startTime));
+    }
+
+    public MusicInfo getPlayerMusicInfo(String playerName) {
+        return playerToMusicMap.get(playerName);
     }
 }

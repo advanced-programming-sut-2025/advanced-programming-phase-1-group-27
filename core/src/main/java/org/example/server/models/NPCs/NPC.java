@@ -9,6 +9,7 @@ import org.example.server.models.enums.ShopType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NPC {
     private final int daysForThirdQuest;
@@ -22,7 +23,7 @@ public class NPC {
     private Quest[] quests = new Quest[3];
     private Building home;
     private String dialogue = "hello, do you—know the doesn't of isn't? I'm gl'ad to k'now all of them! very very good and thanks ";
-    private boolean isThinking = false;
+    private AtomicBoolean isThinking = new AtomicBoolean(false);
 
     public NPC(NPCType type, int daysForThirdQuest) {
         this.name = type.getName();
@@ -124,10 +125,10 @@ public class NPC {
     }
 
     public boolean isThinking() {
-        return isThinking;
+        return isThinking.get();
     }
 
     public void setThinking(boolean thinking) {
-        isThinking = thinking;
+        isThinking.set(thinking);
     }
 }

@@ -15,9 +15,13 @@ public class NPCDialogueGenerator implements Runnable {
                     "3. **Tone scale**:\n" +
                     "   0=Neutral (stranger) | 1=Polite (acquaintance) | 2=Friendly\n" +
                     "   3=Warm (close friend) | 4=Affectionate (best friend)\n" +
+                    "   but NEVER mention the number/scale.\n" +
                     "4. **NEVER** add:\n" +
                     "   - Explanations, notes, or OOC text\n" +
-                    "   - Dialogue beyond 3 sentences.";
+                    "   - References to 'tone', 'friendship level', or game mechanics\n" +
+                    "   - Dialogue beyond 3 sentences.\n" +
+                    "5. **Word limit:** 25 words max.\n" +
+                    "**Failure to follow these rules breaks immersion!**";
     private final static String[] friendshipTone = {"neutral", "polite", "friendly", "warm", "affectionate"};
 
     private final NPC npc;
@@ -40,10 +44,12 @@ public class NPCDialogueGenerator implements Runnable {
                             "- Season: " + season.name() + " (say '" + season.name() + "')\n" +
                             "- Weather: " + weather.name() + " (say '" + weather.name() + "')\n" +
                             "- Friendship: " + friendshipLevel + "/4 (" + friendshipTone[friendshipLevel] + " tone)\n\n" +
-                            "Reply with 1-3 short sentences IN CHARACTER.\n" +
-                            "NO EXTRA TEXT. JUST THE DIALOGUE\n" +
-                            "Example:\n" +
-                            getDialogueExample(season, weather, friendshipLevel));
+                            "**RULES:**\n" +
+                            "1. STRICTLY 1-3 sentences, 25 words max.\n" +
+                            "2. NO explanations, notes, or tone labels.\n" +
+                            "3. Example for reference:\n" +
+                            "\"" + getDialogueExample(season, weather, friendshipLevel) + "\"\n\n" +
+                            "**JUST THE DIALOGUE. NOTHING ELSE.**");
             npc.setDialogue(dialogue);
             npc.setThinking(false);
         } catch (Exception e) {

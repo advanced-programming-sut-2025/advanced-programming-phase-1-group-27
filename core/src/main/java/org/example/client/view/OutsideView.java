@@ -148,8 +148,8 @@ public class OutsideView extends AppMenu {
             Cell cell = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().getCell(i, j);
             if (cell != null && cell.getObject() instanceof NPC npc) {
                 System.out.println(npc.getType().getName() + " WAS CLICKED"); // TODO : parsa inja click shode ro in NPC
-                InteractionsWithNPCController controller = new InteractionsWithNPCController();
-                controller.meetNPC(npc.getName());
+//                InteractionsWithNPCController controller = new InteractionsWithNPCController();
+//                controller.meetNPC(npc.getName());
             }
         }
 

@@ -1,5 +1,6 @@
 package org.example.client.model;
 
+import com.badlogic.gdx.audio.Music;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.controller.OtherPlayerController;
 import org.example.common.models.Direction;
@@ -39,6 +40,8 @@ public class ClientGame implements Game {
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
     private ArrayList<OtherPlayerController> otherPlayerControllers = new ArrayList<>();
+    private ArrayList<String> songIdList = new ArrayList<>();
+    private Music currentMusic = null;
 
     public ClientGame(Lobby lobby, Player player, ArrayList<MiniPlayer> players) {
         this.lobbyId = lobby.getId();
@@ -85,7 +88,7 @@ public class ClientGame implements Game {
             farmMaps[i].addForaging(info.get(i));
         }
 
-        generateNPCDialouges();
+        generateNPCDialogues();
     }
 
     public Player getCurrentPlayer() {
@@ -154,7 +157,7 @@ public class ClientGame implements Game {
         growPlants();
         initShops();
         refreshRelations(); // refreshing relationships between players and between player and npcs
-        generateNPCDialouges();
+        generateNPCDialogues();
     }
 
     @Override
@@ -166,7 +169,7 @@ public class ClientGame implements Game {
         return currentWeather;
     }
 
-    private void generateNPCDialouges() {
+    private void generateNPCDialogues() {
         for (NPC npc : npcs) {
             if (!npc.isThinking() && npc.getType().getJob() == null) {
                 new Thread(new NPCDialogueGenerator(npc, player)).start();
@@ -259,13 +262,12 @@ public class ClientGame implements Game {
     }
 
     private void updateArtisans() {
-        for (FarmMap map : farmMaps) {
-            for (int i = 0; i < map.getHeight(); i++) {
-                for (int j = 0; j < map.getWidth(); j++) {
-                    Cell cell = map.getCell(i, j);
-                    if (cell.getObject() instanceof Artisan)
-                        ((Artisan) cell.getObject()).passHour();
-                }
+        FarmMap map = player.getFarmMap();
+        for (int i = 0; i < map.getHeight(); i++) {
+            for (int j = 0; j < map.getWidth(); j++) {
+                Cell cell = map.getCell(i, j);
+                if (cell.getObject() instanceof Artisan)
+                    ((Artisan) cell.getObject()).passHour();
             }
         }
     }
@@ -409,4 +411,31 @@ public class ClientGame implements Game {
         return lobbyId;
     }
 
+    public synchronized void addSong(String songId) {
+        songIdList.add(songId);
+    }
+
+    public synchronized void setCurrentMusic(Music music) {
+        if (currentMusic != null) {
+            currentMusic.stop();
+            currentMusic.dispose();
+        }
+        currentMusic = music;
+        currentMusic.play();
+    }
+
+    public void stopMusic() {
+        if (currentMusic != null && currentMusic.isPlaying())
+            currentMusic.stop();
+    }
+
+    public void pauseMusic() {
+        if (currentMusic != null && currentMusic.isPlaying())
+            currentMusic.pause();
+    }
+
+    public void resumeMusic() {
+        if (currentMusic != null && !currentMusic.isPlaying())
+            currentMusic.play();
+    }
 }

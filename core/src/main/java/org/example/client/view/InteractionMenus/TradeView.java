@@ -638,4 +638,7 @@ public class TradeView extends AppMenu {
         this.tradeDoneByStarterSide = tradeDoneByStarterSide;
     }
 
+    public void setSelectedOther(ArrayList<Stacks> selectedOther) {
+        this.selectedOther = selectedOther;
+    }
 }

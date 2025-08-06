@@ -64,5 +64,11 @@ public class Message {
         get_player_inventory,
         interaction_p2npc,
         interaction_p2p,
+        upload_song_request,
+        upload_complete,
+        play_song_request,
+        start_download,
+        download_complete,
+        get_player_music
     }
 }

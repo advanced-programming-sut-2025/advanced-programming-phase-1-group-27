@@ -1,9 +1,11 @@
 package org.example.client.controller.InteractionsWithOthers;
 
+import com.badlogic.gdx.Gdx;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
+import org.example.client.view.HomeView;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.TradeView;
 import org.example.common.models.Message;
@@ -41,30 +43,34 @@ public class TradeController {
             put("answer", answer);
         }}, Message.Type.interaction_p2p);
         ClientApp.getServerConnectionThread().sendMessage(message);
-        if (answer) {
-            Main.getMain().dispose();
-            ClientApp.setCurrentMenu(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername(), lastView));
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        } else {
-            Main.getMain().dispose();
-            ClientApp.setCurrentMenu(lastView);
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        }
+        Gdx.app.postRunnable(() -> {
+            if (answer) {
+                Main.getMain().dispose();
+                ClientApp.setCurrentMenu(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername(), lastView));
+                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            } else {
+                Main.getMain().dispose();
+                ClientApp.setCurrentMenu(lastView);
+                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            }
+        });
     }
 
     public void checkRespondToStart(Message message, AppMenu lastView) {
         boolean answer = message.getFromBody("answer");
         String starter = message.getFromBody("starter");
         String other = message.getFromBody("other");
-        if (answer) {
-            Main.getMain().dispose();
-            ClientApp.setCurrentMenu(new TradeView(starter, other, lastView));
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        } else {
-            Main.getMain().dispose();
-            ClientApp.setCurrentMenu(lastView);
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        }
+        Gdx.app.postRunnable(() -> {
+            if (answer) {
+                Main.getMain().dispose();
+                ClientApp.setCurrentMenu(new TradeView(starter, other, lastView));
+                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            } else {
+                Main.getMain().dispose();
+                ClientApp.setCurrentMenu(lastView);
+                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            }
+        });
     }
 
     public void getSuggestedTrade(Message message) {
@@ -98,9 +104,11 @@ public class TradeController {
             put("otherSelected", new Backpack(ToolType.BasicBackpack, otherSelected).getInfo());
         }}, Message.Type.interaction_p2p));
         // XP
-        Main.getMain().dispose();
-        ClientApp.setCurrentMenu(lastView);
-        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        Gdx.app.postRunnable(() -> {
+            Main.getMain().dispose();
+            ClientApp.setCurrentMenu(lastView);
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        });
     }
 
     public void checkConfirmation(Message message, AppMenu lastView) {
@@ -116,9 +124,11 @@ public class TradeController {
             // trade namovafagh bood
         }
         // XP
-        Main.getMain().dispose();
-        ClientApp.setCurrentMenu(lastView);
-        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        Gdx.app.postRunnable(() -> {
+            Main.getMain().dispose();
+            ClientApp.setCurrentMenu(lastView);
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        });
     }
 
     public void sendSelected(ArrayList<Stacks> selected, String starter, String other) {
