@@ -594,4 +594,8 @@ public class TradeView extends AppMenu {
         targetPlayerInventoryImages.add(itemButton);
 
     }
+
+    public AppMenu getLastView() {
+        return lastView;
+    }
 }
