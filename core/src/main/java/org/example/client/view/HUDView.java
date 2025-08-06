@@ -942,6 +942,7 @@ public class HUDView extends AppMenu {
 
         boostBar.setVisible(player.getBoostEnergy() != 0);
         redBar.setVisible(player.getBoostEnergy() != 0);
+        greenBar.setVisible(player.getEnergy() != 0);
 
         energyBar.setPosition(Gdx.graphics.getWidth()-energyBar.getWidth()-20,20);
         boostBar.setPosition(Gdx.graphics.getWidth()-boostBar.getWidth()-20,20 + boostBar.getHeight() + 20);

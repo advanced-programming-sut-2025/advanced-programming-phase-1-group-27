@@ -17,18 +17,17 @@ import java.util.Scanner;
 public class PreTradeMenuView extends AppMenu {
 
     private final TradeController controller;
-    private final String username;
 
-    private final  AppMenu lastView;
+    private final String targetUsername;
+
+    private final AppMenu lastView;
 
     private final TextButton tradeButton;
     private final TextButton historyButton;
     private final TextButton backButton;
 
-    private final Image creamImage;
-    private final Image brownImage;
-
     private final Label tradeMenuLabel;
+    private final Label targetPlayerLabel;
 
 
     private Stage stage;
@@ -36,48 +35,47 @@ public class PreTradeMenuView extends AppMenu {
     public PreTradeMenuView(String username , AppMenu lastView) {
 
         controller = new TradeController();
+
         this.lastView = lastView;
-        this.username = username;
+        targetUsername = username;
+
         tradeButton = new TextButton("Trade" , skin);
         historyButton = new TextButton("History Trade" , skin);
         backButton = new TextButton("Back" , skin);
 
-        creamImage = new Image(RoundedRectangleTexture.createCreamRoundedRect(
-                Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight(),
-                30));
+        tradeMenuLabel = new Label("Trade Menu", skin);
+        targetPlayerLabel = new Label("Target Player: " + username, skin);
 
-        brownImage = new Image(RoundedRectangleTexture.createBrownRoundedRect(
-                Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight(),
-                30));
-
-        label = new Label(username , skin);
-        label.setColor(Color.BLACK);
-        label.setFontScale(1.5f);
         setListeners();
     }
 
-    private void displayBackground() {
-        creamImage.setPosition(0, 0);
-        brownImage.setPosition(0, 0);
-
-        stage.addActor(brownImage);
-    }
 
     @Override
     public void show() {
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        displayBackground();
-        tradeButton.setWidth(300);
-        historyButton.setWidth(300);
-        label.setPosition(Gdx.graphics.getWidth() / 2 - label.getWidth() + 50,  Gdx.graphics.getHeight() / 2 + label.getHeight() + 50);
-        tradeButton.setPosition(Gdx.graphics.getWidth() / 2 + tradeButton.getWidth() - 150, Gdx.graphics.getHeight() / 2 - tradeButton.getHeight());
-        historyButton.setPosition(Gdx.graphics.getWidth() / 2 - historyButton.getWidth() - 150 , Gdx.graphics.getHeight() / 2 - historyButton.getHeight());
-        stage.addActor(label);
-        stage.addActor(historyButton);
+
+        tradeMenuLabel.setFontScale(3f);
+        tradeMenuLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
+
+        targetPlayerLabel.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 6f);
+
+        backButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        tradeButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        historyButton.setWidth(Gdx.graphics.getWidth() / 4f);
+
+        tradeButton.setPosition((Gdx.graphics.getWidth()-tradeButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
+        historyButton.setPosition((Gdx.graphics.getWidth()-historyButton.getWidth())/2f, 2 * Gdx.graphics.getHeight() / 6f);
+        backButton.setPosition((Gdx.graphics.getWidth()-backButton.getWidth())/2f, 1 * Gdx.graphics.getHeight() / 6f);
+
+        stage.addActor(menuBackground);
         stage.addActor(tradeButton);
+        stage.addActor(historyButton);
+        stage.addActor(backButton);
+        stage.addActor(tradeMenuLabel);
+        stage.addActor(targetPlayerLabel);
+
     }
 
     @Override
@@ -121,14 +119,7 @@ public class PreTradeMenuView extends AppMenu {
         tradeButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.startTrade(username);
-                stage.clear();
-            }
-        });
-
-        historyButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                controller.startTrade(targetUsername);
                 stage.clear();
             }
         });
