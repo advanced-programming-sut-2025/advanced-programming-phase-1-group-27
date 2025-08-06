@@ -762,7 +762,6 @@ public class HUDView extends AppMenu {
             addToScreen(stack);
         }
 
-
     }
 
     private void displayItemQuantity(){

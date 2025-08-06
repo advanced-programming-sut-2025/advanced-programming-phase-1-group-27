@@ -71,6 +71,8 @@ public class TradeController {
         // TODO : bayad begi ke in trade mored ghabool hast ya na
         // other dariaft mikone
         // inja bayad false she
+        TradeView tradeView = (TradeView) ClientApp.getCurrentMenu();
+        tradeView.setTradeDoneByStarterSide(false);
     }
 
     public void sendConfirmation(boolean answer, String starter, String other , ArrayList<Stacks> starterSelected

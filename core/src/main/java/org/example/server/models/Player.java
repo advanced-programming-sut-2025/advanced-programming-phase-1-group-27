@@ -42,6 +42,7 @@ public class Player extends User {
     private Tool currentTool;
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
     private java.util.Map<Player, Relation> relations = new HashMap<>();
+    private ArrayList<Dialogue> inbox = new ArrayList<>();
     //refresh every morning
     private java.util.Map<NPC, Boolean> npcMetToday = new HashMap<>();
     private java.util.Map<NPC, Boolean> npcGiftToday = new HashMap<>();
@@ -672,4 +673,7 @@ public class Player extends User {
         this.currentInventorySlotIndex = currentInventorySlotIndex;
     }
 
+    public ArrayList<Dialogue> getInbox() {
+        return inbox;
+    }
 }
