@@ -110,8 +110,8 @@ public class WorldController {
                                 dialogueLabels.add(dialogueLabel);
                                 npc.setDialogue(null);
                                 // TODO : Sobhan in doroste?
-                                InteractionsWithNPCController controller = new InteractionsWithNPCController();
-                                controller.meetNPC(npc.getName());
+//                                InteractionsWithNPCController controller = new InteractionsWithNPCController();
+//                                controller.meetNPC(npc.getName());
 
 
                             }
