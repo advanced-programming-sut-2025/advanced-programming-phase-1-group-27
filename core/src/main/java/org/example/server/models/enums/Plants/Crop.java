@@ -9,7 +9,4 @@ public class Crop extends Plant {
         super(type);
     }
 
-    public Texture getTexture() {
-        return GameAssetManager.getGameAssetManager().getCropTexture((CropType) type, currentStage);
-    }
 }

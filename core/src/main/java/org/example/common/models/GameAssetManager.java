@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -239,20 +238,6 @@ public class GameAssetManager {
 
     private final TextureAtlas treeAtlas = new TextureAtlas("assets/Images/Trees/Trees.atlas");
 
-    private final HashMap<TreeType, ArrayList<TextureRegion>> treeTextureMap = new HashMap<>() {{
-        for (TreeType treeType : TreeType.values()) {
-            if (treeType.getAddresses() != null) {
-                put(treeType, new ArrayList<TextureRegion>() {{
-                    for (String address : treeType.getAddresses()) {
-                        add(new TextureRegion(treeAtlas.createSprite(address).getTexture(),
-                                treeAtlas.createSprite(address).getRegionX(),
-                                treeAtlas.createSprite(address).getRegionY(),
-                                48, 80));
-                    }
-                }});
-            }
-        }
-    }};
 
     private final HashMap<Item, Image> itemImageMap = new HashMap<>() {{
         for (Entry<Item, Texture> entry : itemTextureMap.entrySet()) {
@@ -260,7 +245,7 @@ public class GameAssetManager {
         }
     }};
 
-    private final HashMap<PlantType, ArrayList<Texture>> cropTextureMap = new HashMap<>() {{
+    private final HashMap<PlantType, ArrayList<Texture>> plantTextureMap = new HashMap<>() {{
         for (CropType cropType : CropType.values()) {
             if (new File(cropType.getAddress()).isDirectory()) {
                 int stageCount = cropType.getStages().length + 1;
@@ -275,7 +260,18 @@ public class GameAssetManager {
                 }});
             }
         }
+        for (TreeType treeType : TreeType.values()) {
+            if (new File(treeType.getAddress()).isDirectory()) {
+                int stageCount = treeType.getStages().length + 1;
+                ArrayList<Texture> arrayList = new ArrayList<Texture>();
+                for (int i = 1; i <= stageCount; i++) {
+                    arrayList.add(new Texture(treeType.getAddress() + "/  (" + i + ").png"));
+                }
+                put(treeType, arrayList);
+            }
+        }
     }};
+
 
     private final Animation<TextureRegion> walkDown = new Animation<>(
             0.1f,
@@ -814,13 +810,16 @@ public class GameAssetManager {
         return redCrossImage;
     }
 
-
-    public Texture getCropTexture(CropType cropType, int index) {
-        return cropTextureMap.get(cropType).get(index);
+    public Texture getPlantTexture(PlantType plantType, int index) {
+        return plantTextureMap.get(plantType).get(index);
     }
 
-    public TextureRegion getTreeTexture(TreeType treeType, int index) {
-        return treeTextureMap.get(treeType).get(index);
+    public Texture getCropTexture(CropType cropType, int index) {
+        return plantTextureMap.get(cropType).get(index);
+    }
+
+    public Texture getTreeTexture(TreeType treeType, int index) {
+        return plantTextureMap.get(treeType).get(index);
     }
 
     public Texture getPierresGeneralTexture() {
@@ -837,10 +836,6 @@ public class GameAssetManager {
 
     public TextureRegion getCabinTextureRegion(int index) {
         return cabinTextures[index];
-    }
-
-    public HashMap<TreeType, ArrayList<TextureRegion>> getTreeTextureMap() {
-        return treeTextureMap;
     }
 
     public Texture getAvatarTexture(int id) {

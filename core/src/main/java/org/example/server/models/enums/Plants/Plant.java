@@ -108,5 +108,7 @@ public abstract class Plant {
         isForaging = foraging;
     }
 
-    public abstract Object getTexture();
+    public Texture getTexture() {
+        return GameAssetManager.getGameAssetManager().getPlantTexture(type, currentStage);
+    }
 }

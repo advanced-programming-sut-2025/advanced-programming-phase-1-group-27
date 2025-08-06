@@ -10,7 +10,5 @@ public class Tree extends Plant {
         super(type);
     }
 
-    public TextureRegion getTexture() {
-        return GameAssetManager.getGameAssetManager().getTreeTexture((TreeType) type, currentStage);
-    }
+
 }

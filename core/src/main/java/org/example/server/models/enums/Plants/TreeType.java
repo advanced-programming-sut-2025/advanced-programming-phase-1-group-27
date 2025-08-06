@@ -11,46 +11,46 @@ import java.util.List;
 public enum TreeType implements PlantType {
     ApricotTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Apricot, new Season[]{Season.Spring}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+            "assets/Images/Trees/Apricot"),
     CherryTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Cherry, new Season[]{Season.Spring}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+            "assets/Images/Trees/Cherry"),
     BananaTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Banana, new Season[]{Season.Summer}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Banana"),
     MangoTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Mango, new Season[]{Season.Summer}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Mango"),
     OrangeTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Orange, new Season[]{Season.Summer}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Orange"),
     PeachTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Peach, new Season[]{Season.Summer}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Peach"),
     AppleTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Apple, new Season[]{Season.Fall}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Apple"),
     PomegranateTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Pomegranate, new Season[]{Season.Fall}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Pomegranate"),
     OakTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.OakResin, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 7,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Oak"),
     MapleTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.MapleSyrup, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 9,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Maple"),
     PineTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.PineTar, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 5,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Pine"),
     MahoganyTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Sap, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Mahogany"),
     MushroomTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.CommonMushroom, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 1,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"}),
+             "assets/Images/Trees/Mushroom"),
     MysticTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.MysticSyrup, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 7,
-            new String[]{"7_1", "7_2", "7_3", "7_4", "7_5", "7_6", "7_7"});
+             "assets/Images/Trees/Mystic");
 
     private static final ArrayList<TreeType> foragings = new ArrayList<>(List.of(OakTree, MapleTree, PineTree, MahoganyTree,
             MushroomTree));
@@ -60,28 +60,19 @@ public enum TreeType implements PlantType {
     private final ArrayList<Season> seasons;
     private final int harvestCycle;
     private PlantSourceType source;
-    private final String[] addresses;
+    private final String address;
 
     TreeType(int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle
-            , String[] addresses) {
+            , String address) {
         this.source = source;
         this.stages = stages;
         this.harvestTime = harvestTime;
         this.fruit = fruit;
         this.seasons = new ArrayList<>(List.of(seasons));
         this.harvestCycle = harvestCycle;
-        this.addresses = addresses;
+        this.address = address;
     }
 
-    TreeType(int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle) {
-        this.source = source;
-        this.stages = stages;
-        this.fruit = fruit;
-        this.seasons = new ArrayList<>(List.of(seasons));
-        this.harvestCycle = harvestCycle;
-        this.addresses = null;
-        this.harvestTime = harvestTime;
-    }
 
     public static TreeType getItem(String itemName) {
         for (TreeType item : values()) {
@@ -134,12 +125,8 @@ public enum TreeType implements PlantType {
         return false;
     }
 
-    public String[] getAddresses() {
-        return addresses;
-    }
-
-    public ArrayList<TextureRegion> getTextures() {
-        return GameAssetManager.getGameAssetManager().getTreeTextureMap().get(this);
+    public String getAddress() {
+        return address;
     }
 
     public String toString() {

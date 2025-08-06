@@ -1,12 +1,11 @@
 package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -15,14 +14,17 @@ import com.badlogic.gdx.utils.Align;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
+import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
+import org.example.common.models.InfoWindow;
 import org.example.server.models.*;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.Map;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.enums.Plants.Crop;
+import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Plants.Tree;
 import org.example.server.models.enums.items.MineralType;
 
@@ -33,7 +35,7 @@ public class WorldController {
     private Camera camera;
     private final OutsideView view;
     private ArrayList<Label> dialogueLabels = new ArrayList<>();
-    private ArrayList<GlyphLayout> glyphLayouts = new ArrayList<>();
+    private ArrayList<InfoWindow> infoWindows = new ArrayList<>();
 
     public WorldController(OutsideView view) {
         this.view = view;
@@ -101,18 +103,25 @@ public class WorldController {
                             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                             camera.unproject(touchPos);
                             if (bounds.contains(touchPos.x, touchPos.y)) {
-                                Label dialogueLabel = new Label(npc.getDialogue(),
-                                        GameAssetManager.getGameAssetManager().getSkin());
-                                dialogueLabel.setWrap(true);
-                                dialogueLabel.setWidth(300);
-                                dialogueLabel.setPosition(x + 32, y + 56);
+                                npc.setDialogue(npc.getDialogue().replace('—', ' '));
 
-                                dialogueLabels.add(dialogueLabel);
+                                InfoWindow infoWindow = new InfoWindow(
+                                        GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
+                                        npc.getDialogue(),
+                                        Color.BLACK,
+                                        200,
+                                        Align.left,
+                                        true
+                                );
+                                infoWindow.setPosition(x + 32, y + 56);
+                                infoWindow.setFontScale(0.85f);
+                                infoWindow.setMaxTime(6.5f);
+                                infoWindows.add(infoWindow);
+
+
                                 npc.setDialogue(null);
-                                // TODO : Sobhan in doroste?
                                 InteractionsWithNPCController controller = new InteractionsWithNPCController();
                                 controller.meetNPC(npc.getName());
-
 
                             }
                         }
@@ -145,7 +154,6 @@ public class WorldController {
             }
         }
         Texture texture;
-        TextureRegion textureRegion;
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 float y = (cells.length - 1 - i) * tileSize;
@@ -165,9 +173,9 @@ public class WorldController {
                         Main.getBatch().draw(texture, x, y, 40, 40);
                 }
                 if (cells[i][j].getObject() instanceof Tree tree) {
-                    textureRegion = tree.getTexture();
-                    if (textureRegion != null)
-                        Main.getBatch().draw(textureRegion, x - 10, y, 60, 100);
+                    texture = tree.getTexture();
+                    if (texture != null)
+                        Main.getBatch().draw(texture, x - 10, y, 60, 100);
                 }
             }
         }
@@ -178,46 +186,44 @@ public class WorldController {
         }
     }
 
-    private void drawLabel(GlyphLayout glyphLayout, float x, float y) {
- //       Color backGroundColor = new Color(0, 0, 0, 0.7f);
-//        Main.getBatch().setColor(backGroundColor);
-        Main.getBatch().draw(/*createColoredTexture(backGroundColor)*/
-                GameAssetManager.getGameAssetManager().getNpcDialogueBox(),
-                x,
-                y,
-                glyphLayout.width + 30,
-                glyphLayout.height + 30);
-
-        Main.getBatch().setColor(Color.WHITE);
-    }
-
     private void renderDialogues() {
-        for (Label label: dialogueLabels) {
-
-            BitmapFont font = GameAssetManager.getGameAssetManager().getSkin().getFont("font");
-            font.getData().setScale(0.85f);
-            GlyphLayout glyphLayout = new GlyphLayout();
-            glyphLayout.setText(
-                    GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
-                    label.getText(),
-                    Color.BLACK,
-                    200,
-                    Align.left,
-                    true
-            );
-            drawLabel(glyphLayout, label.getX(), label.getY());
-
-            GameAssetManager.getGameAssetManager().getSkin().getFont("font").draw(
-                    Main.getBatch(),
-                    glyphLayout,
-                    label.getX() + 15,
-                    label.getY() + glyphLayout.height + 15
-                    );
+        for (InfoWindow dialogueBox : infoWindows) {
+            dialogueBox.draw(Main.getBatch());
         }
 
-        dialogueLabels.removeIf(label -> label.getColor().a <= 0.4f);
+        infoWindows.removeIf(InfoWindow::isFinished);
     }
 
+    private void handlePlantInfo() {
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && player.getCurrentMap() instanceof FarmMap) {
+            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touchPos);
+            int i = OutsideView.getIndices(touchPos.x, touchPos.y).getX(),
+                    j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
+            Cell cell = player.getCurrentMap().getCell(i, j);
+
+            if (cell != null && cell.getObject() instanceof Plant plant) {
+                String info = new String("Plant name: " + plant.getType().getName() + "\n" +
+                        (plant.getWateredToday()? "Watered today": "Not watered today!") + "\n" +
+                        "Current Stage: " + plant.getCurrentStage() + "\n" +
+                        "Seasons: " + plant.getType().getSeasons().toString().replaceAll("\\[|\\]", "") +
+                        "\n");
+                InfoWindow infoWindow = new InfoWindow(
+                        GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
+                        info,
+                        Color.BLACK,
+                        250,
+                        Align.left,
+                        true
+                );
+                infoWindow.setPosition(touchPos.x, touchPos.y);
+                infoWindow.setFontScale(0.7f);
+                infoWindows.add(infoWindow);
+            }
+
+        }
+    }
 
     public void updateAndRender() {
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
@@ -225,6 +231,7 @@ public class WorldController {
             dialogueLabels.clear();
         }
         renderMap(player.getCurrentMap());
+        handlePlantInfo();
         renderDialogues();
     }
 }
