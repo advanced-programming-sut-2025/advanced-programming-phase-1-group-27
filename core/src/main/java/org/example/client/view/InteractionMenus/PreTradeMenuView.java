@@ -15,6 +15,7 @@ import org.example.client.view.AppMenu;
 import java.util.Scanner;
 
 public class PreTradeMenuView extends AppMenu {
+
     private final TradeController controller;
     private final String username;
 
@@ -22,20 +23,24 @@ public class PreTradeMenuView extends AppMenu {
 
     private final TextButton tradeButton;
     private final TextButton historyButton;
+    private final TextButton backButton;
 
     private final Image creamImage;
     private final Image brownImage;
 
-    private final Label label;
+    private final Label tradeMenuLabel;
+
 
     private Stage stage;
 
     public PreTradeMenuView(String username , AppMenu lastView) {
+
         controller = new TradeController();
         this.lastView = lastView;
         this.username = username;
         tradeButton = new TextButton("Trade" , skin);
         historyButton = new TextButton("History Trade" , skin);
+        backButton = new TextButton("Back" , skin);
 
         creamImage = new Image(RoundedRectangleTexture.createCreamRoundedRect(
                 Gdx.graphics.getWidth(),
@@ -112,10 +117,11 @@ public class PreTradeMenuView extends AppMenu {
     }
 
     private void setListeners() {
+
         tradeButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.respondToStartTrade(username , true);
+                controller.startTrade(username);
                 stage.clear();
             }
         });
@@ -123,10 +129,10 @@ public class PreTradeMenuView extends AppMenu {
         historyButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.respondToStartTrade(username , false);
                 stage.clear();
             }
         });
+
     }
 
     public TradeController getController() {

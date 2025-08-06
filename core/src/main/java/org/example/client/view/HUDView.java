@@ -1520,12 +1520,12 @@ public class HUDView extends AppMenu {
                     player.getUsername())){
 
 
-
+                int finalI = i;
                 friendButtons.get(2*i + 1).addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         playClickSound();
-                        System.out.println("-------->Friend button pressed");
+                        controller.openTradeMenu(finalI);
                     }
                 });
 

@@ -3,10 +3,12 @@ package org.example.client.controller;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
 import org.example.client.view.HUDView;
+import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
@@ -292,6 +294,16 @@ public class HUDController extends MenuController {
                 slot.getItem() + " (" + slot.getQuantity() + ")  removed successfully. You earned " + money,
                 false
         );
+    }
+
+    public void openTradeMenu(int target){
+
+        String targetUser = ClientApp.getCurrentGame().getPlayers().get(target).getUsername();
+        Main.getMain().dispose();
+        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+
+
     }
 
     private GraphicalResult handleCheat(String input){

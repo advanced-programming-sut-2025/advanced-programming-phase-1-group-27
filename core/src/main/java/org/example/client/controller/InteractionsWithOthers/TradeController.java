@@ -1,7 +1,11 @@
 package org.example.client.controller.InteractionsWithOthers;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.view.AppMenu;
+import org.example.client.view.InteractionMenus.PreTradeMenuView;
+import org.example.client.view.InteractionMenus.TradeView;
 import org.example.common.models.Message;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.items.ToolType;
@@ -11,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TradeController {
+
     public void startTrade(String username) {
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         Message message = new Message(new HashMap<>() {{
@@ -23,7 +28,7 @@ public class TradeController {
         ClientApp.getServerConnectionThread().sendMessage(message);
     }
 
-    public void respondToStartTrade(String username, boolean answer) {
+    public void respondToStartTrade(String username, boolean answer, AppMenu lastView) {
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         Message message = new Message(new HashMap<>() {{
             put("mode", "respondToStartTrade");
@@ -35,10 +40,16 @@ public class TradeController {
         }}, Message.Type.interaction_p2p);
         ClientApp.getServerConnectionThread().sendMessage(message);
         if (answer) {
-            // TODO : Go to TradeView
+
+            Main.getMain().dispose();
+            ClientApp.setCurrentMenu(new TradeView(username,ClientApp.getCurrentGame().getCurrentPlayer().getUsername(),lastView));
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+
 
         } else {
-            // TODO : Go to last Menu
+            Main.getMain().dispose();
+            ClientApp.setCurrentMenu(lastView);
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
         }
     }
 
