@@ -145,12 +145,13 @@ public class ServerUpdatesController { // handles updates sent by server
                     Main.getMain().setScreen(ClientApp.getCurrentMenu());
                 });
             } else {
-                // TODO : Auto decline
+                TradeController controller = new TradeController();
+                controller.decline(message);
             }
         }
         else if (mode.equals("respondToStartTrade")) {
             if (ClientApp.getCurrentMenu() instanceof PreTradeMenuView preTradeMenuView)
-                preTradeMenuView.getController().checkRespondToStart(message);
+                preTradeMenuView.getController().checkRespondToStart(message , preTradeMenuView.getLastView());
         }
         else if (mode.equals("updateSelected")) {
             if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)

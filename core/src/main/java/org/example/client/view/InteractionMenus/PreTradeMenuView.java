@@ -46,6 +46,14 @@ public class PreTradeMenuView extends AppMenu {
         tradeMenuLabel = new Label("Trade Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
 
+        brownImage = new Image(RoundedRectangleTexture.createBrownRoundedRect(
+                Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight(),
+                30));
+
+        label = new Label(username , skin);
+        label.setColor(Color.BLACK);
+        label.setFontScale(1.5f);
         setListeners();
     }
 
@@ -128,5 +136,9 @@ public class PreTradeMenuView extends AppMenu {
 
     public TradeController getController() {
         return controller;
+    }
+
+    public AppMenu getLastView() {
+        return lastView;
     }
 }

@@ -11,6 +11,7 @@ import org.example.server.models.Stacks;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.tools.Backpack;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -40,12 +41,9 @@ public class TradeController {
         }}, Message.Type.interaction_p2p);
         ClientApp.getServerConnectionThread().sendMessage(message);
         if (answer) {
-
             Main.getMain().dispose();
             ClientApp.setCurrentMenu(new TradeView(username,ClientApp.getCurrentGame().getCurrentPlayer().getUsername(),lastView));
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
-
-
         } else {
             Main.getMain().dispose();
             ClientApp.setCurrentMenu(lastView);
@@ -53,12 +51,18 @@ public class TradeController {
         }
     }
 
-    public void checkRespondToStart(Message message) {
+    public void checkRespondToStart(Message message , AppMenu lastView) {
         boolean answer = message.getFromBody("answer");
+        String starter = message.getFromBody("starter");
+        String other = message.getFromBody("other");
         if (answer) {
-            //TODO : Go to TradeView
+            Main.getMain().dispose();
+            ClientApp.setCurrentMenu(new TradeView(starter, other ,lastView));
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
         } else {
-            // TODO : Go to last Menu
+            Main.getMain().dispose();
+            ClientApp.setCurrentMenu(lastView);
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
         }
     }
 
@@ -116,4 +120,17 @@ public class TradeController {
         }}, Message.Type.interaction_p2p));
     }
 
+    public void decline(Message message){
+        int lobbyId = ClientApp.getCurrentGame().getLobbyId();
+        String username = message.getFromBody("starter");
+        Message decline = new Message(new HashMap<>() {{
+            put("mode", "respondToStartTrade");
+            put("lobbyId", lobbyId);
+            put("starter", username);
+            put("other", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("answer", false);
+        }}, Message.Type.interaction_p2p);
+        ClientApp.getServerConnectionThread().sendMessage(decline);
+    }
 }
