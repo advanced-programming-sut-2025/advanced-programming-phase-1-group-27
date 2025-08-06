@@ -121,7 +121,6 @@ public class HUDView extends AppMenu {
     private final ArrayList<Label> friendshipInfos;
     private final ArrayList<TextButton> friendButtons;
 
-
     public HUDView(Stage stage) {
 
 
@@ -1512,6 +1511,8 @@ public class HUDView extends AppMenu {
             });
 
         }
+
+//        for ( int i = 0 ; i <  )
 
     }
 

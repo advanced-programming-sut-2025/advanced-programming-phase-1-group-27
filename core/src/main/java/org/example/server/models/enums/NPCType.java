@@ -13,8 +13,6 @@ import org.example.server.models.enums.items.products.ProcessedProductType;
 import java.util.ArrayList;
 
 public enum NPCType {
-    Sebastian("Sebastian", SebastianQuests(), Features.Angry, SebastianFavouriteItems(),
-            "NPCs/Other/Sebastian.png"),
     Abigail("Abigail", AbigailQuests(), Features.Sad, AbigailFavouriteItems(),
             "NPCs/Other/Abigail.png"),
     Harvey("Harvey", HarveyQuests(), Features.Happy, HarveyFavouriteItems(),
@@ -23,6 +21,8 @@ public enum NPCType {
             "NPCs/Other/Lia.png"),
     Robbin("Robbin", RobbinQuests(), Features.Scared, RobbinFavouriteItems(),
             "NPCs/Other/Robbin.png"),
+    Sebastian("Sebastian", SebastianQuests(), Features.Angry, SebastianFavouriteItems(),
+            "NPCs/Other/Sebastian.png"),
     Clint("Clint",null, Features.Anxious, ClinicFavouriteItems(),
             "NPCs/Shop/Clint.png"),
     Pierre("Pierre",null, Features.Angry, PierreFavouriteItems(),
