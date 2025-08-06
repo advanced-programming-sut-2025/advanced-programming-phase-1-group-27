@@ -6,6 +6,7 @@ import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.menu.LobbyMenuView;
+import org.example.client.view.shopview.BuildMenuView;
 import org.example.client.view.shopview.PurchaseMenuView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
@@ -13,6 +14,7 @@ import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.NPCType;
+import org.example.server.models.enums.items.BuildingType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.enums.items.products.CookingProduct;
@@ -95,7 +97,11 @@ public class PurchaseMenuController extends MenuController {
                 currentPlayer.getAvailableCraftingRecipes().add(recipe);
             else if (recipe.getFinalProduct() instanceof CookingProduct)
                 currentPlayer.getAvailableCookingRecipes().add(recipe);
-        }else {
+        } else if (stock.getItem() instanceof BuildingType buildingType) {
+            Main.getMain().getScreen().dispose();
+            ClientApp.setCurrentMenu(new BuildMenuView(buildingType));
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        } else {
             currentPlayer.getBackpack().addItems(stock.getItem(), stock.getStackLevel(), num);
         }
         currentPlayer.spendMoney(sum);

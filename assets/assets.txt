@@ -7,8 +7,14 @@ Avatars/stardew_avatar_1_2.png
 Avatars/stardew_avatar_2_0.png
 Avatars/stardew_avatar_2_1.png
 Avatars/stardew_avatar_2_2.png
+Buildings/Barn.png
+Buildings/Big Barn.png
+Buildings/Big Coop.png
 Buildings/Buildings.atlas
 Buildings/Cabins.png
+Buildings/Coop.png
+Buildings/Deluxe Barn.png
+Buildings/Deluxe Coop.png
 Character/Vincent.png
 Character/character.atlas
 Clock/Arrow.png
@@ -340,12 +346,14 @@ Images/Floorings/Flooring_46.png
 Images/Floorings/Free.png
 Images/Floorings/Free2.png
 Images/Floorings/Free4.png
+Images/Floorings/Green_Tile.png
 Images/Floorings/Hoed.png
 Images/Floorings/Hoed_and_Watered.png
 Images/Floorings/LightGrass.png
 Images/Floorings/NPCValley.png
 Images/Floorings/Plowed.png
 Images/Floorings/Quarry.png
+Images/Floorings/Red_Tile.png
 Images/Floorings/Water.png
 Images/Fruits/Eggplant.png
 Images/Fruits/Grape.png
@@ -359,6 +367,7 @@ Images/Inventory/InventoryMenuMan.png
 Images/Inventory/InventoryMenuWoman.png
 Images/Map/MapMenu.png
 Images/PlayerSocial/PlayerSocialBackground.png
+Images/PlayerSocial/PlayerSocialBackground2.png
 Images/PlayerSocial/SocialButton.png
 Images/Shops/JojaMart.png
 Images/Shops/Pierres General Store.png

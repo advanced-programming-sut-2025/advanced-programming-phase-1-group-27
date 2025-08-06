@@ -1,6 +1,7 @@
 package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
@@ -11,11 +12,13 @@ import org.example.client.Main;
 import org.example.client.controller.*;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
+import org.example.client.view.shopview.BuildMenuView;
 import org.example.server.models.Cell;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Position;
 import org.example.server.models.enums.SFX;
+import org.example.server.models.enums.items.BuildingType;
 
 import java.util.Scanner;
 
@@ -148,6 +151,12 @@ public class OutsideView extends AppMenu {
                 InteractionsWithNPCController controller = new InteractionsWithNPCController();
                 controller.meetNPC(npc.getName());
             }
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+            Main.getMain().getScreen().dispose();
+            ClientApp.setCurrentMenu(new BuildMenuView(BuildingType.DeluxeBarn));
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
         }
     }
 

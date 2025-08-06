@@ -16,9 +16,12 @@ import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCC
 import org.example.client.model.ClientApp;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
+import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.InfoWindow;
 import org.example.server.models.*;
+import org.example.server.models.AnimalProperty.Barn;
+import org.example.server.models.AnimalProperty.Coop;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.Map;
 import org.example.server.models.Map.NPCMap;
@@ -45,7 +48,7 @@ public class WorldController {
         this.camera = camera;
     }
 
-    private TextureRegion createColoredTexture(Color color) {
+    public static TextureRegion createColoredTexture(Color color) {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(color);
         pixmap.fill();
@@ -73,6 +76,23 @@ public class WorldController {
         y = OutsideView.getGraphicalPosition(position).getY() - 30;
         Main.getBatch().draw(GameAssetManager.getGameAssetManager().getHutTexture(),
                 x, y - 125, 160, 160);
+
+        for (Barn barn : map.getBarns()) {
+            position = barn.getTopLeftCell().getPosition();
+            x = OutsideView.getGraphicalPosition(position).getX() - 20;
+            y = OutsideView.getGraphicalPosition(position).getY() - 30;
+            Main.getBatch().draw(GameAssetManager.getGameAssetManager().getAnimalEnclosureTexture(barn.getType()),
+                    x, y - (barn.getType().getHeight() - 1) * tileSize,
+                    barn.getType().getWidth() * tileSize, barn.getType().getHeight() * tileSize + tileSize);
+        }
+        for (Coop coop : map.getCoops()) {
+            position = coop.getTopLeftCell().getPosition();
+            x = OutsideView.getGraphicalPosition(position).getX() - 20;
+            y = OutsideView.getGraphicalPosition(position).getY() - 30;
+            Main.getBatch().draw(GameAssetManager.getGameAssetManager().getAnimalEnclosureTexture(coop.getType()),
+                    x, y - (coop.getType().getHeight() - 1) * tileSize,
+                    coop.getType().getWidth() * tileSize, coop.getType().getHeight() * tileSize + tileSize);
+        }
     }
 
     private void renderNpcMap(NPCMap npcMap) {

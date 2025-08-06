@@ -92,9 +92,12 @@ public class GameAssetManager {
     private final Texture mapLinkCellTexture = new Texture("assets/Images/Floorings/Flooring_34.png");
     private final Texture hoedCellTexture = new Texture("assets/Images/Floorings/Hoed.png");
     private final Texture hoedAndWateredCellTexture = new Texture("assets/Images/Floorings/Hoed_and_Watered.png");
+    private final Texture RedTileCellTexture = new Texture("assets/Images/Floorings/Red_Tile.png");
+    private final Texture GreenTileCellTexture = new Texture("assets/Images/Floorings/Green_Tile.png");
 
     private final Texture NPCDialogueSign = new Texture("assets/Images/!_Npc_Talking.png");
     private final Texture npcDialogueBox = new Texture("assets/Images/HoveringInfoWindow.png");
+    private final Texture THEFUCKINGTEXTURE = new Texture("assets/Images/PlayerSocial/PlayerSocialBackground2.png");
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
     private final TextureRegion standingTexture = characterAtlas.createSprite("standing_1");
@@ -161,6 +164,15 @@ public class GameAssetManager {
                     cabinsAtlas.findRegion("cabin_12").getRegionY(),
                     80, 112),
     };
+
+    private final HashMap<BuildingType, Texture> animalEnclosureTextureMap = new HashMap<>(){{
+        put(BuildingType.Coop, new Texture("assets/Buildings/Coop.png"));
+        put(BuildingType.BigCoop, new Texture("assets/Buildings/Big Coop.png"));
+        put(BuildingType.DeluxeCoop, new Texture("assets/Buildings/Deluxe Coop.png"));
+        put(BuildingType.Barn, new Texture("assets/Buildings/Barn.png"));
+        put(BuildingType.BigBarn, new Texture("assets/Buildings/Big Barn.png"));
+        put(BuildingType.DeluxeBarn, new Texture("assets/Buildings/Deluxe Barn.png"));
+    }};
 
     private final TextureAtlas abigailAtlas = new TextureAtlas("assets/NPCs/Other/Abigail.atlas");
     private final TextureRegion abigailTexture = new TextureRegion(abigailAtlas.createSprite("standing_1"),
@@ -437,6 +449,14 @@ public class GameAssetManager {
         return checkBox;
     }
 
+    public Texture getPlayerSocialBackGroundTexture() {
+        return THEFUCKINGTEXTURE;
+    }
+
+    public Texture getAnimalEnclosureTexture(BuildingType buildingType) {
+        return animalEnclosureTextureMap.getOrDefault(buildingType, null);
+    }
+
     public Image getNpc5Avatar() {
         TextureRegion region = new TextureRegion(npc5Avatar);
         region.flip(false, false);
@@ -513,6 +533,14 @@ public class GameAssetManager {
 
     public Texture getDarkGrass2CellTexture() {
         return darkGrass2CellTexture;
+    }
+
+    public Texture getRedTileCellTexture() {
+        return RedTileCellTexture;
+    }
+
+    public Texture getGreenTileCellTexture() {
+        return GreenTileCellTexture;
     }
 
     public Texture getMapLinkCellTexture() {
