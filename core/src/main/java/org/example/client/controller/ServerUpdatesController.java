@@ -159,7 +159,9 @@ public class ServerUpdatesController { // handles updates sent by server
         }
         else if (mode.equals("suggestedTrade")) {
             if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
-                tradeView.getController().getSuggestedTrade(message);
+                //Rassa
+//                tradeView.getController().getSuggestedTrade(message);
+                tradeView.setTradeDoneByStarterSide(true);
         }
         else if (mode.equals("confirmTrade")) {
             if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
