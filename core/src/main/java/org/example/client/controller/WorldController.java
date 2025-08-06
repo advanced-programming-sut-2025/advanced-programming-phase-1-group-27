@@ -120,8 +120,10 @@ public class WorldController {
 
 
                                 npc.setDialogue(null);
-                                InteractionsWithNPCController controller = new InteractionsWithNPCController();
-                                controller.meetNPC(npc.getName());
+
+                                // TODO : Sobhan in doroste?
+//                                InteractionsWithNPCController controller = new InteractionsWithNPCController();
+//                                controller.meetNPC(npc.getName());
 
                             }
                         }
@@ -154,6 +156,7 @@ public class WorldController {
             }
         }
         Texture texture;
+        TextureRegion textureRegion;
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 float y = (cells.length - 1 - i) * tileSize;

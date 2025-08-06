@@ -1512,7 +1512,29 @@ public class HUDView extends AppMenu {
 
         }
 
-//        for ( int i = 0 ; i <  )
+        int counter = 0;
+        for ( int i = 0; i < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()); i++ ){
+
+
+            if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(i).getUsername(),
+                    player.getUsername())){
+
+
+
+                friendButtons.get(2*i + 1).addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        playClickSound();
+                        System.out.println("-------->Friend button pressed");
+                    }
+                });
+
+                counter ++;
+
+
+            }
+
+        }
 
     }
 
