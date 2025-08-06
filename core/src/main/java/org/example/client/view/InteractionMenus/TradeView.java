@@ -1,6 +1,7 @@
 package org.example.client.view.InteractionMenus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -12,7 +13,9 @@ import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GameAssetManager;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Stacks;
+import org.example.server.models.enums.InGameMenuType;
 import org.example.server.models.enums.Plants.FruitType;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.enums.items.products.CraftingProduct;
@@ -417,10 +420,10 @@ public class TradeView extends AppMenu {
         stockTableCurrent = new Table();
         stockTableOther = new Table();
         scrollPaneCurrent = new ScrollPane(stockTableCurrent, skin);
-        scrollPaneCurrent.setFadeScrollBars(false);
+        scrollPaneCurrent.setFadeScrollBars(true);
         scrollPaneCurrent.setScrollingDisabled(true, false);
         scrollPaneOther = new ScrollPane(stockTableOther, skin);
-        scrollPaneOther.setFadeScrollBars(false);
+        scrollPaneOther.setFadeScrollBars(true);
         scrollPaneOther.setScrollingDisabled(true, false);
 
 
@@ -590,6 +593,19 @@ public class TradeView extends AppMenu {
 
         stage.addListener(new InputListener() {
 
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+
+                if ( keycode == Input.Keys.DOWN ){
+                    if ( onScreenItems.size() - ( 12 * rowNum) >48 ){
+                            rowNum ++;
+                        }
+                }
+                else if ( keycode ==  Input.Keys.UP ){
+                        rowNum = Math.max(0,rowNum-1);
+                }
+                return false;
+            }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -617,23 +633,22 @@ public class TradeView extends AppMenu {
                 return true;
             }
 
-            @Override
-            public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
-
-                if ( (495 < x && x < 1295) && (615 < y && y < 912) ) {
-
-                    if ( amountY > 0 ){
-                        if ( onScreenItems.size() - ( 12 * rowNum) >48 ){
-                            rowNum ++;
-                        }
-                    } else if ( amountY < 0 ) {
-                        rowNum = Math.max(0,rowNum-1);
-                    }
-
-                }
-                return false;
-
-            }
+//            @Override
+//            public boolean scrolled(InputEvent event, float x, float y, float amountX, float amountY) {
+//
+//                if ( (495 < x && x < 1295) && (615 < y && y < 912) ) {
+//                    if ( amountY > 0 ){
+//                        if ( onScreenItems.size() - ( 12 * rowNum) >48 ){
+//                            rowNum ++;
+//                        }
+//                    } else if ( amountY < 0 ) {
+//                        rowNum = Math.max(0,rowNum-1);
+//                    }
+//
+//                }
+//                return false;
+//
+//            }
 
         });
 
@@ -696,6 +711,18 @@ public class TradeView extends AppMenu {
 
                 playClickSound();
                 itemCount = Math.max(1, itemCount - 1);
+
+            }
+
+        });
+
+        addButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                playClickSound();
+                selectedCurrent.add(new Stacks(onScreenItems.get(selectItemIndex).getItem(),itemCount));
 
             }
 
