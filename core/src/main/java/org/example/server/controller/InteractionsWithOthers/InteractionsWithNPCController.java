@@ -32,7 +32,7 @@ public class InteractionsWithNPCController {
             int xp =  message.getIntFromBody("XP");
             giftNPC(npcName , lobbyId , username , xp);
         }
-        return null;
+        return new Message();
     }
 
     public static void meetNPC(String npcName, int lobbyId, String username) {
