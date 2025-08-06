@@ -5,6 +5,7 @@ import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.Relations.Relation;
+import org.example.server.models.Relations.Trade;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.enums.Weathers.Weather;
@@ -92,7 +93,13 @@ public class GameController {
         String self = message.getFromBody("self");
         String mode = message.getFromBody("mode");
         if(mode.equals("confirmTrade")) {
-            // Make Trade in server
+            // TODO : Rassa Trade
+            boolean answer = message.getFromBody("answer");
+            int lobbyId = message.getIntFromBody("lobbyId");
+            if(answer){
+                Trade trade = new Trade(message);
+                ServerApp.getLobbies().get(lobbyId).getGame().addTrade(trade);
+            }
         }
         ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
                 starter.equals(self)? other : starter

@@ -163,7 +163,7 @@ public class ServerUpdatesController { // handles updates sent by server
         }
         else if (mode.equals("confirmTrade")) {
             if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
-                tradeView.getController().checkConfirmation(message);
+                tradeView.getController().checkConfirmation(message , tradeView.getLastView());
         }
         else {
             throw new UnsupportedOperationException(mode + " hasn't been handled");

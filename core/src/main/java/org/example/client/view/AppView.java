@@ -2,7 +2,6 @@ package org.example.client.view;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.InteractionMenus.TradeView2;
 import org.example.client.view.menu.*;
 import org.example.common.models.Message;
 import org.example.server.models.*;

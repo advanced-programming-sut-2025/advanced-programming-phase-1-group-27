@@ -7,6 +7,7 @@ import org.example.client.view.AppMenu;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.TradeView;
 import org.example.common.models.Message;
+import org.example.server.models.Relations.Trade;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.tools.Backpack;
@@ -42,7 +43,7 @@ public class TradeController {
         ClientApp.getServerConnectionThread().sendMessage(message);
         if (answer) {
             Main.getMain().dispose();
-            ClientApp.setCurrentMenu(new TradeView(username,ClientApp.getCurrentGame().getCurrentPlayer().getUsername(),lastView));
+            ClientApp.setCurrentMenu(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername(), lastView));
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         } else {
             Main.getMain().dispose();
@@ -51,13 +52,13 @@ public class TradeController {
         }
     }
 
-    public void checkRespondToStart(Message message , AppMenu lastView) {
+    public void checkRespondToStart(Message message, AppMenu lastView) {
         boolean answer = message.getFromBody("answer");
         String starter = message.getFromBody("starter");
         String other = message.getFromBody("other");
         if (answer) {
             Main.getMain().dispose();
-            ClientApp.setCurrentMenu(new TradeView(starter, other ,lastView));
+            ClientApp.setCurrentMenu(new TradeView(starter, other, lastView));
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         } else {
             Main.getMain().dispose();
@@ -68,33 +69,54 @@ public class TradeController {
 
     public void getSuggestedTrade(Message message) {
         // TODO : bayad begi ke in trade mored ghabool hast ya na
+        // other dariaft mikone
+        // inja bayad false she
     }
 
-    public void sendConfirmation(boolean answer, String starter, String other , ArrayList<Stacks> starterInventory,
-                                 ArrayList<Stacks> otherInventory) {
+    public void sendConfirmation(boolean answer, String starter, String other , ArrayList<Stacks> starterSelected
+            , ArrayList<Stacks> otherSelected , AppMenu lastView) {
         // TODO : age okay boodi ba in trade bayad in function seda beshe to nahayee she
-        if(answer){
+        // from other
+        if (answer) {
             // Inventory dorost she
+            addToInventory(starterSelected);
+            reduceFromInventory(otherSelected);
+        } else {
+            // trade namovafagh bood
         }
+        int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "confirmTrade");
+            put("lobbyId", lobbyId);
             put("answer", answer);
             put("starter", starter);
             put("other", other);
             put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
-            put("starterInventory" , new Backpack(ToolType.BasicBackpack , starterInventory).getInfo());
-            put("otherInventory" , new  Backpack(ToolType.BasicBackpack , otherInventory).getInfo());
+            put("starterSelected", new Backpack(ToolType.BasicBackpack, starterSelected).getInfo());
+            put("otherSelected", new Backpack(ToolType.BasicBackpack, otherSelected).getInfo());
         }}, Message.Type.interaction_p2p));
+        // XP
+        Main.getMain().dispose();
+        ClientApp.setCurrentMenu(lastView);
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
-    public void checkConfirmation(Message message) {
+    public void checkConfirmation(Message message, AppMenu lastView) {
+        // check other's check
+        ArrayList<Stacks> starterSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("starterSelected")).getItems();
+        ArrayList<Stacks> otherSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("otherSelected")).getItems();
         boolean answer = message.getFromBody("answer");
         if (answer) {
-            // TODO: trade tamam shod va bayad variz shavad be do traf
+            // Inventory dorost she
+            addToInventory(otherSelected);
+            reduceFromInventory(starterSelected);
+        } else {
+            // trade namovafagh bood
         }
-        else {
-            // TODO : trade namovafagh bood
-        }
+        // XP
+        Main.getMain().dispose();
+        ClientApp.setCurrentMenu(lastView);
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
     public void sendSelected(ArrayList<Stacks> selected, String starter, String other) {
@@ -112,6 +134,8 @@ public class TradeController {
     }
 
     public void suggestTrade(String starter, String other) {
+        // from starter
+        // inja bayad false she
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "suggestTrade");
             put("starter", starter);
@@ -120,7 +144,7 @@ public class TradeController {
         }}, Message.Type.interaction_p2p));
     }
 
-    public void decline(Message message){
+    public void decline(Message message) {
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         String username = message.getFromBody("starter");
         Message decline = new Message(new HashMap<>() {{
@@ -132,5 +156,30 @@ public class TradeController {
             put("answer", false);
         }}, Message.Type.interaction_p2p);
         ClientApp.getServerConnectionThread().sendMessage(decline);
+    }
+
+    private void addToInventory(ArrayList<Stacks> selected) {
+        Backpack backpack = ClientApp.getCurrentGame().getCurrentPlayer().getBackpack();
+        for (Stacks stack : selected) {
+            backpack.addItems(stack.getItem() , stack.getStackLevel() , stack.getQuantity());
+        }
+    }
+
+    private void reduceFromInventory(ArrayList<Stacks> selected) {
+        Backpack backpack = ClientApp.getCurrentGame().getCurrentPlayer().getBackpack();
+        for (Stacks stack : selected) {
+            backpack.reduceItems(stack.getItem() , stack.getStackLevel() , stack.getQuantity());
+        }
+    }
+
+    private ArrayList<Trade> getTradeHistory(String username){
+        Message message = new Message(new HashMap<>() {{
+            put("mode", "getTradeHistory");
+            put("starter", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("other", username);
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+        }} , Message.Type.interaction_p2p);
+        // TODO : incomplete
+        return null;
     }
 }

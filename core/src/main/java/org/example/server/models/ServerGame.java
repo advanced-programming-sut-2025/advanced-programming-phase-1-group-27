@@ -10,6 +10,7 @@ import org.example.server.models.Map.*;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Relation;
+import org.example.server.models.Relations.Trade;
 import org.example.server.models.Shops.BlackSmith;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.enums.NPCType;
@@ -41,6 +42,7 @@ public class ServerGame implements Game {
     private ArrayList<NPC> npcs = new ArrayList<>();
     // all dialogues between players
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
+    private ArrayList<Trade> trades = new ArrayList<>();
     private Shop jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
@@ -641,5 +643,13 @@ public class ServerGame implements Game {
             }
         }
         return null;
+    }
+
+    public ArrayList<Trade> getTrades() {
+        return trades;
+    }
+
+    public void addTrade(Trade trade) {
+        trades.add(trade);
     }
 }

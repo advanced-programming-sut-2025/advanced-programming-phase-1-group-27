@@ -1,6 +1,7 @@
 package org.example.server.models.Relations;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.common.models.Message;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.tools.Backpack;
@@ -40,5 +41,14 @@ public class Trade {
         info.put("otherSelected", new Backpack(ToolType.BasicBackpack, othersSelected).getInfo());
         info.put("id", id);
         return info;
+    }
+
+    public Trade(Message message) {
+        this.starter = message.getFromBody("starter");
+        this.other = message.getFromBody("other");
+        this.starterSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("starterSelected")).getItems();
+        this.othersSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("otherSelected")).getItems();
+        this.id = idCounter;
+        idCounter++;
     }
 }
