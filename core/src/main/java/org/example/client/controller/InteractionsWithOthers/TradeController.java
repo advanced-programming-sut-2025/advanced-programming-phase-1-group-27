@@ -33,7 +33,7 @@ public class TradeController {
         ClientApp.getServerConnectionThread().sendMessage(message);
     }
 
-    public void respondToStartTrade(String username, boolean answer, AppMenu lastView) {
+    public void respondToStartTrade(String username, boolean answer) {
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         Message message = new Message(new HashMap<>() {{
             put("mode", "respondToStartTrade");
@@ -46,29 +46,27 @@ public class TradeController {
         ClientApp.getServerConnectionThread().sendMessage(message);
         Gdx.app.postRunnable(() -> {
             if (answer) {
-                Main.getMain().dispose();
-                ClientApp.setCurrentMenu(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername(), lastView));
-                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername()));
             } else {
-                Main.getMain().dispose();
-                ClientApp.setCurrentMenu(lastView);
+                ClientApp.setTradeMenu(null);
+                Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(ClientApp.getCurrentMenu());
             }
         });
     }
 
-    public void checkRespondToStart(Message message, AppMenu lastView) {
+    public void checkRespondToStart(Message message) {
         boolean answer = message.getFromBody("answer");
         String starter = message.getFromBody("starter");
         String other = message.getFromBody("other");
         Gdx.app.postRunnable(() -> {
             if (answer) {
-                Main.getMain().dispose();
-                ClientApp.setCurrentMenu(new TradeView(starter, other, lastView));
-                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new TradeView(starter, other));
             } else {
-                Main.getMain().dispose();
-                ClientApp.setCurrentMenu(lastView);
+                ClientApp.setTradeMenu(null);
+                Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(ClientApp.getCurrentMenu());
             }
         });
@@ -82,7 +80,7 @@ public class TradeController {
         tradeView.setTradeDoneByStarterSide(false);
     }
     public void sendConfirmation(boolean answer, String starter, String other , ArrayList<Stacks> starterSelected
-            , ArrayList<Stacks> otherSelected , AppMenu lastView) {
+            , ArrayList<Stacks> otherSelected) {
         // TODO : age okay boodi ba in trade bayad in function seda beshe to nahayee she
         // from other
         if (answer) {
@@ -104,14 +102,14 @@ public class TradeController {
             put("otherSelected", new Backpack(ToolType.BasicBackpack, otherSelected).getInfo());
         }}, Message.Type.interaction_p2p));
         // XP
+        ClientApp.setTradeMenu(null);
         Gdx.app.postRunnable(() -> {
-            Main.getMain().dispose();
-            ClientApp.setCurrentMenu(lastView);
+            Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         });
     }
 
-    public void checkConfirmation(Message message, AppMenu lastView) {
+    public void checkConfirmation(Message message) {
         // check other's check
         ArrayList<Stacks> starterSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("starterSelected")).getItems();
         ArrayList<Stacks> otherSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("otherSelected")).getItems();
@@ -124,9 +122,9 @@ public class TradeController {
             // trade namovafagh bood
         }
         // XP
+        ClientApp.setTradeMenu(null);
         Gdx.app.postRunnable(() -> {
-            Main.getMain().dispose();
-            ClientApp.setCurrentMenu(lastView);
+            Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         });
     }

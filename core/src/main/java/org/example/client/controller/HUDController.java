@@ -301,17 +301,16 @@ public class HUDController extends MenuController {
 
         String targetUser = ClientApp.getCurrentGame().getPlayers().get(target).getUsername();
         Main.getMain().dispose();
-        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
-        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-
+//        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
+        Main.getMain().setScreen(new PreTradeMenuView(targetUser));
 
     }
 
     public void openTradeMenu2(String targetUser){
 
         Main.getMain().dispose();
-        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
-        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+//        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
+        Main.getMain().setScreen(new PreTradeMenuView(targetUser));
 
 
     }

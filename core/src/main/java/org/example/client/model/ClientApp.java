@@ -2,6 +2,7 @@ package org.example.client.model;
 
 import org.example.client.view.AppMenu;
 import org.example.common.models.Message;
+import org.example.server.models.App;
 import org.example.server.models.SecurityQuestion;
 import org.example.server.models.User;
 import org.example.server.models.enums.Gender;
@@ -28,6 +29,7 @@ public class ClientApp {
     private static User loggedInUser = null;
     private static ClientGame currentGame = null;
     private static AppMenu currentMenu = null;
+    private static AppMenu TradeMenu = null;
 
     public static boolean loadSavedUser() {
         User savedUser = getSavedUser();
@@ -193,5 +195,13 @@ public class ClientApp {
             password.append(c);
         }
         return password.toString();
+    }
+
+    public static AppMenu getTradeMenu() {
+        return TradeMenu;
+    }
+
+    public static void setTradeMenu(AppMenu tradeMenu) {
+        TradeMenu = tradeMenu;
     }
 }

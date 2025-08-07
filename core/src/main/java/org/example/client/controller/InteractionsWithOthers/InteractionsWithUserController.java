@@ -94,7 +94,7 @@ public class InteractionsWithUserController {
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("username", username);
         }} , Message.Type.get_player_inventory);
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS * 2);
         if (response == null || response.getType() != Message.Type.response) {
             System.out.println("Inventory failed!");
             return new ArrayList<Stacks>();

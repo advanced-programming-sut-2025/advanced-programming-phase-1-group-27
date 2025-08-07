@@ -47,7 +47,6 @@ public class ClientConnectionThread extends ConnectionThread {
         Message message = new Message(new HashMap<>() {{
             put("command", "get_client_address");
         }}, Message.Type.command);
-        System.out.println("YaLLAH");
         Message response = sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) return;
         setOtherSideIP(response.getFromBody("ip"));

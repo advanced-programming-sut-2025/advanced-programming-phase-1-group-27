@@ -44,12 +44,13 @@ public class GameController {
         }}, Message.Type.response);
     }
 
-    public static Message getPlayerInventory(Message message) {
+    public static synchronized Message getPlayerInventory(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
         String playerUsername = message.getFromBody("username");
+        System.out.println("player username: " + playerUsername);
         return ServerApp.getClientConnectionThreadByUsername(playerUsername).sendAndWaitForResponse(
-                new Message(null, Message.Type.get_player_inventory), TIMEOUT_MILLIS
+                new Message(null, Message.Type.get_player_inventory), TIMEOUT_MILLIS*2
         );
     }
 

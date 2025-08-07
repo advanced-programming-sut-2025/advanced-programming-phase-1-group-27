@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
+import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 
@@ -20,8 +21,6 @@ public class PreTradeMenuView extends AppMenu {
 
     private final String targetUsername;
 
-    private final AppMenu lastView;
-
     private final TextButton tradeButton;
     private final TextButton historyButton;
     private final TextButton backButton;
@@ -31,11 +30,10 @@ public class PreTradeMenuView extends AppMenu {
 
     private Stage stage;
 
-    public PreTradeMenuView(String username , AppMenu lastView) {
+    public PreTradeMenuView(String username) {
 
         controller = new TradeController();
-
-        this.lastView = lastView;
+        ClientApp.setTradeMenu(this);
         targetUsername = username;
 
         tradeButton = new TextButton("Trade" , skin);
@@ -120,7 +118,7 @@ public class PreTradeMenuView extends AppMenu {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 controller.startTrade(targetUsername);
-                stage.clear();
+//                stage.clear();
             }
         });
 
@@ -128,9 +126,5 @@ public class PreTradeMenuView extends AppMenu {
 
     public TradeController getController() {
         return controller;
-    }
-
-    public AppMenu getLastView() {
-        return lastView;
     }
 }
