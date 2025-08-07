@@ -363,6 +363,8 @@ Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
 Images/HoveringInfoWindow.png
+Images/Inbox/InboxMessageBackground.png
+Images/Inbox/MessageAlert.png
 Images/Inventory/InventoryMenuMan.png
 Images/Inventory/InventoryMenuWoman.png
 Images/Map/MapMenu.png

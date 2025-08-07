@@ -392,6 +392,9 @@ public class GameAssetManager {
 
     private final Image selectSlot = new Image( new Texture(Gdx.files.internal("Images/Trade/SelectedSlot.png")));
 
+    private final Image messageBackgroundImage = new Image( new Texture(Gdx.files.internal("Images/Inbox/InboxMessageBackground.png")));
+    private final Image messageAlertImage = new Image( new Texture(Gdx.files.internal("Images/Inbox/MessageAlert.png")));
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -399,6 +402,14 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getMessageAlertImage() {
+        return messageAlertImage;
+    }
+
+    public Image getMessageBackgroundImage() {
+        return messageBackgroundImage;
     }
 
     public Image getSelectSlot() {

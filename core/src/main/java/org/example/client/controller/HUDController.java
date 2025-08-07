@@ -7,6 +7,7 @@ import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
+import org.example.client.model.MiniPlayer;
 import org.example.client.view.HUDView;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.common.models.GameAssetManager;
@@ -306,6 +307,15 @@ public class HUDController extends MenuController {
 
     }
 
+    public void openTradeMenu2(String targetUser){
+
+        Main.getMain().dispose();
+        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+
+
+    }
+
     private GraphicalResult handleCheat(String input){
 
         Matcher matcher;
@@ -356,9 +366,38 @@ public class HUDController extends MenuController {
                     matcher.group("name").trim(),
                     matcher.group("level").trim());
         }
+        else if ((matcher = CheatCommands.ToAllChat.getMatcher(input)) != null) {
+            String text = matcher.group("chatText").trim();
+            ///  TODO: PAYAM ALL BERE(result yadet nare)
+        }else if ((matcher = CheatCommands.PrivateChat.getMatcher(input)) != null) {
+            String text = matcher.group("chatText").trim();
+            String targetUsername = matcher.group("targetPlayer").trim();
+            ///  TODO: PAYAM BARA TARGET BERE(result yadet nare)
+        }
 
         return new GraphicalResult(result.message(),result.success()? GameAssetManager.getGameAssetManager().getAcceptColor() : GameAssetManager.getGameAssetManager().getErrorColor(), result.success() );
 
+
+    }
+
+    public void handleTabPressInTextInput(){
+
+        String currentText = view.getTextInputField().getText().trim();
+        if ( currentText.charAt(0) != '@' || currentText.split("\\s").length > 1 ) {
+            return;
+        }
+
+        String currentUsername = currentText.substring(1);
+        for ( MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers() ){
+
+            if ( !ClientApp.getCurrentGame().getCurrentPlayer().getUsername().equals(inGamePlayer.getUsername()) ) {
+                if ( inGamePlayer.getUsername().startsWith(currentUsername) ) {
+                    view.getTextInputField().setText("@" + inGamePlayer.getUsername() + " ");
+                    view.getTextInputField().setCursorPosition(view.getTextInputField().getText().length());
+                }
+            }
+
+        }
 
     }
 

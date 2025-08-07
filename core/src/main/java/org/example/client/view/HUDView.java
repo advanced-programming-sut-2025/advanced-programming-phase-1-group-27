@@ -53,6 +53,7 @@ public class HUDView extends AppMenu {
     private final Label timeInfo;
     private final Label craftingProductNameLabel;
     private final Label craftingProductIngredientsLabel;
+    private final Label messageLabel;
 
     private final Image blackImage;
     private final Image hoveringInfoWindow;
@@ -75,6 +76,8 @@ public class HUDView extends AppMenu {
     private final Image boostBar;
     private final Image greenBar;
     private final Image redBar;
+    private final Image messageBackgroundImage;
+    private final Image messageAlertImage;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -121,6 +124,8 @@ public class HUDView extends AppMenu {
     private final ArrayList<Label> friendshipInfos;
     private final ArrayList<TextButton> friendButtons;
 
+//    private final ArrayList<String>
+
     public HUDView(Stage stage) {
 
 
@@ -163,6 +168,9 @@ public class HUDView extends AppMenu {
         dayInfo = new Label("", skin);
         moneyInfo = new Label("", skin);
         timeInfo = new Label("", skin);
+        messageLabel = new Label("",skin);
+
+
 
         playerSelectBox = new SelectBox<>(skin);
 
@@ -210,6 +218,8 @@ public class HUDView extends AppMenu {
         boostBar = GameAssetManager.getGameAssetManager().getBoostBar();
         greenBar = GameAssetManager.getGameAssetManager().getGreenBar();
         redBar = GameAssetManager.getGameAssetManager().getRedBar();
+        messageAlertImage = GameAssetManager.getGameAssetManager().getMessageAlertImage();
+        messageBackgroundImage = GameAssetManager.getGameAssetManager().getMessageBackgroundImage();
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
         socialButton.setPosition(100,100);
@@ -942,6 +952,7 @@ public class HUDView extends AppMenu {
         boostBar.setVisible(player.getBoostEnergy() != 0);
         redBar.setVisible(player.getBoostEnergy() != 0);
         greenBar.setVisible(player.getEnergy() != 0);
+        greenBar.setColor(1 - ((float) player.getEnergy() / player.getMaxEnergy()),((float) player.getEnergy() / player.getMaxEnergy()),1,1);
 
         energyBar.setPosition(Gdx.graphics.getWidth()-energyBar.getWidth()-20,20);
         boostBar.setPosition(Gdx.graphics.getWidth()-boostBar.getWidth()-20,20 + boostBar.getHeight() + 20);
@@ -1213,9 +1224,15 @@ public class HUDView extends AppMenu {
                     }
 
 
-                } else {
+                }
+                else {
 
-                    if (keycode == Input.Keys.ENTER) {
+                    if ( keycode == Input.Keys.TAB ) {
+
+                        controller.handleTabPressInTextInput();
+
+                    }
+                    else if (keycode == Input.Keys.ENTER) {
                         playClickSound();
                         errorLabel.set(controller.handleTextInput());
                         return true;
@@ -1272,7 +1289,7 @@ public class HUDView extends AppMenu {
                         return true;
                     }
 
-                    System.out.println(x+" "+y);
+//                    System.out.println(x+" "+y);
 
                     for ( int i = 0; i < 12; i++ ){
 
@@ -1512,27 +1529,47 @@ public class HUDView extends AppMenu {
 
         }
 
+//        int counter = 0;
+//        for ( int i = 0; i < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()); i++ ){
+//
+//
+//            if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(i).getUsername(),
+//                    player.getUsername())){
+//
+//
+////                int finalI = i;
+////                friendButtons.get(2*i + 1).addListener(new ClickListener() {
+////                    @Override
+////                    public void clicked(InputEvent event, float x, float y) {
+////                        playClickSound();
+////                        controller.openTradeMenu(finalI);
+////                    }
+////
+////                });
+//
+//                counter ++;
+//
+//
+//            }
+//
+//        }
+
+
         int counter = 0;
-        for ( int i = 0; i < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()); i++ ){
+        for ( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
 
-
-            if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(i).getUsername(),
-                    player.getUsername())){
-
-
-                int finalI = i;
-                friendButtons.get(2*i + 1).addListener(new ClickListener() {
+            if ( !player.getUsername().equals(inGamePlayer.getUsername()) ){
+                friendButtons.get(2*counter + 1).addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         playClickSound();
-                        controller.openTradeMenu(finalI);
+                        controller.openTradeMenu2(inGamePlayer.getUsername());
                     }
+
                 });
-
                 counter ++;
-
-
             }
+
 
         }
 
