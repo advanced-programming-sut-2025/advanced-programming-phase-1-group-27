@@ -69,6 +69,8 @@ public class Message {
         play_song_request,
         start_download,
         download_complete,
-        get_player_music
+        get_player_music,
+        save_and_exit_game,
+        voting,
     }
 }

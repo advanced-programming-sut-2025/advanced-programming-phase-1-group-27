@@ -1,7 +1,6 @@
 package org.example.client.model;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import org.example.client.controller.ServerConnectionController;
 import org.example.client.controller.ServerUpdatesController;
@@ -9,7 +8,6 @@ import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -99,7 +97,7 @@ public class ServerConnectionThread extends ConnectionThread {
             return true;
         }
         else if (message.getType() == Message.Type.get_player_inventory) {
-            sendMessageAndPrint(ServerUpdatesController.getInventory());
+            sendMessage(ServerUpdatesController.getInventory());
             return true;
         }
         else if (message.getType() == Message.Type.interaction_p2p) {
@@ -112,6 +110,14 @@ public class ServerConnectionThread extends ConnectionThread {
         }
         else if (message.getType() == Message.Type.download_complete) {
             completeDownload();
+            return true;
+        }
+        else if (message.getType() == Message.Type.save_and_exit_game) {
+            ClientApp.saveGame();
+            return true;
+        }
+        else if (message.getType() == Message.Type.voting) {
+            ServerUpdatesController.handleVote(message);
             return true;
         }
         return false;

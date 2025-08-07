@@ -1,5 +1,6 @@
 package org.example.server.controller;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
@@ -10,6 +11,8 @@ import org.example.server.models.Relations.Trade;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.enums.Weathers.Weather;
+import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.tools.Backpack;
 
 import java.util.HashMap;
 
@@ -48,9 +51,8 @@ public class GameController {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
         String playerUsername = message.getFromBody("username");
-        System.out.println("player username: " + playerUsername);
         return ServerApp.getClientConnectionThreadByUsername(playerUsername).sendAndWaitForResponse(
-                new Message(null, Message.Type.get_player_inventory), TIMEOUT_MILLIS*2
+                new Message(null, Message.Type.get_player_inventory), TIMEOUT_MILLIS
         );
     }
 
@@ -119,5 +121,72 @@ public class GameController {
             put("songId", musicInfo.getSongId());
             put("startTime", musicInfo.getStartTime());
         }}, Message.Type.response);
+    }
+
+    public static void saveAndExit(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        lobby.notifyAll(new Message(null, Message.Type.save_and_exit_game));
+        lobby.getGame().pause();
+    }
+
+    public static void handleVote(Message message) {
+        String mode = message.getFromBody("mode");
+        if (mode.equals("askToTerminate")) {
+            askToTerminateGame(message);
+        }
+        else if (mode.equals("voteToTerminate")) {
+            checkVoteToTerminate(message);
+        }
+        else if (mode.equals("askToKick")) {
+            askToKick(message);
+        }
+        else if (mode.equals("voteToKick")) {
+            checkVoteToKick(message);
+        }
+    }
+
+    private static void askToTerminateGame(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        lobby.startVote();
+        lobby.notifyAll(new Message(new HashMap<>() {{
+            put("mode", "askToTerminate");
+        }}, Message.Type.voting));
+    }
+
+    private static void checkVoteToTerminate(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        lobby.vote(message.getFromBody("vote"));
+        if (lobby.hasPollWon()) {
+            lobby.getGame().terminate();
+            lobby.notifyAll(new Message(new HashMap<>() {{
+                put("mode", "terminateGame");
+            }}, Message.Type.voting));
+            ServerApp.removeLobby(lobby);
+        }
+    }
+
+    private static void askToKick(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        lobby.startVote();
+        lobby.notifyAll(new Message(new HashMap<>() {{
+            put("mode", "askToKick");
+        }}, Message.Type.voting));
+    }
+
+    private static void checkVoteToKick(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        lobby.vote(message.getFromBody("vote"));
+        if (lobby.hasPollWon()) {
+            lobby.kickPlayer(message.getFromBody("playerName"));
+            lobby.notifyAll(new Message(new HashMap<>() {{
+                put("mode", "kickPlayer");
+                put("playerName", message.getFromBody("playerName"));
+            }}, Message.Type.voting));
+        }
     }
 }

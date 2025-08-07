@@ -131,16 +131,19 @@ public class TradeView extends AppMenu {
         }
         onScreenItemsQuantity = new HashMap<>();
         onScreenItems = new ArrayList<>();
-//        onScreenItems = InteractionsWithUserController.getInventory(target);
+        InteractionsWithUserController.sendInventory(
+                ClientApp.getCurrentGame().getCurrentPlayer().getBackpack(),
+                starter, other
+        );
 //        ///  GET TARGET PLAYER INVENTORY FROM SERVER
-        // TEMP:
-        addToScreen(new Stacks(ToolType.BambooPole,20));
-        for (CraftingProduct cp : CraftingProduct.values()) {
-            addToScreen(new Stacks(cp,10));
-        }
-        for (FruitType cp : FruitType.values()) {
-            addToScreen(new Stacks(cp,10));
-        }
+//        // TEMP:
+//        addToScreen(new Stacks(ToolType.BambooPole,20));
+//        for (CraftingProduct cp : CraftingProduct.values()) {
+//            addToScreen(new Stacks(cp,10));
+//        }
+//        for (FruitType cp : FruitType.values()) {
+//            addToScreen(new Stacks(cp,10));
+//        }
         
 
         itemCountLabel = new Label(Integer.toString(itemCount), skin);
@@ -158,6 +161,13 @@ public class TradeView extends AppMenu {
 
 
         setListeners();
+    }
+
+    public void setOnScreenItems(ArrayList<Stacks> onScreenItems) {
+        synchronized (onScreenItems) {
+            this.onScreenItems.clear();
+            this.onScreenItems.addAll(onScreenItems);
+        }
     }
 
     private void displayInventory(){

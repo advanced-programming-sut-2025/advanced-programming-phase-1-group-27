@@ -111,6 +111,14 @@ public class ClientGame implements Game {
         return players;
     }
 
+    public MiniPlayer getMiniPlayerByUsername(String username) {
+        for (MiniPlayer miniPlayer : players) {
+            if (miniPlayer.getUsername().equals(username))
+                return miniPlayer;
+        }
+        return null;
+    }
+
     @Override
     public ArrayList<NPC> getNPCs() {
         return npcs;
@@ -282,6 +290,14 @@ public class ClientGame implements Game {
         stardropSaloon = new Shop(ShopType.StardropSaloon, time.getSeason());
     }
 
+    public OtherPlayerController getOtherPlayerController(String playerName) {
+        for (OtherPlayerController otherPlayerController : otherPlayerControllers) {
+            if (otherPlayerController.getUsername().equals(playerName))
+                return otherPlayerController;
+        }
+        return null;
+    }
+
     public void addOtherPlayer(String username, int i, int j) {
         otherPlayerControllers.add(new OtherPlayerController(username, i, j));
         System.out.println("Adding " + username + " : " + i + ", " + j);
@@ -437,5 +453,24 @@ public class ClientGame implements Game {
     public void resumeMusic() {
         if (currentMusic != null && !currentMusic.isPlaying())
             currentMusic.play();
+    }
+
+    public void kickPlayer(String playerName) {
+        if (ClientApp.getLoggedInUser().getUsername().equals(playerName)) {
+            ClientApp.setCurrentGame(null);
+            return;
+        }
+        MiniPlayer miniPlayer = getMiniPlayerByUsername(playerName);
+        players.remove(miniPlayer);
+        if (admin.getUsername().equals(playerName)) {
+            MiniPlayer newAdmin = players.getFirst();
+            admin = new User(
+                    newAdmin.getUsername(), newAdmin.getPassword(),
+                    newAdmin.getNickname(), newAdmin.getEmail(),
+                    newAdmin.getGender()
+            );
+        }
+        OtherPlayerController otherPlayerController = getOtherPlayerController(playerName);
+        otherPlayerControllers.remove(otherPlayerController);
     }
 }

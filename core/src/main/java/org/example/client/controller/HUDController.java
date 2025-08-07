@@ -1,6 +1,5 @@
 package org.example.client.controller;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.client.Main;
@@ -10,8 +9,10 @@ import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.HUDView;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
+import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
+import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Relations.Relation;
@@ -21,10 +22,10 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.commands.CheatCommands;
 import org.example.server.models.enums.items.Recipe;
-import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 
 public class HUDController extends MenuController {
@@ -400,13 +401,38 @@ public class HUDController extends MenuController {
 
     }
 
-    public void closeTextInputField(){
+    public void closeTextInputField() {
 
         view.setInputFieldVisible(false);
         view.getTextInputField().setText("");
 
     }
 
+    public GraphicalResult saveAndExit() {
+        if (ClientApp.getCurrentGame().getAdmin().getUsername().equals(ClientApp.getLoggedInUser().getUsername())) {
+            ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            }}, Message.Type.save_and_exit_game));
+            return new GraphicalResult("Redirecting to main menu ...", false);
+        }
+        else
+            return new GraphicalResult("Only the host can exit the game.");
+    }
+
+    public void terminateGame() {
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "askToTerminate");
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+        }}, Message.Type.voting));
+    }
+
+    public void kickPlayer(String playerName) {
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "askToKick");
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("playerName", playerName);
+        }}, Message.Type.voting));
+    }
 
     @Override
     public Result enterMenu(String menuName) {

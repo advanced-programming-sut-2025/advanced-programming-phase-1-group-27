@@ -94,12 +94,21 @@ public class InteractionsWithUserController {
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("username", username);
         }} , Message.Type.get_player_inventory);
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS * 2);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
             System.out.println("Inventory failed!");
-            return new ArrayList<Stacks>();
+            return new ArrayList<>();
         }
         return new Backpack(response.<LinkedTreeMap<String, Object>>getFromBody("inventoryInfo")).getItems();
     }
 
+    public static void sendInventory(Backpack inventory, String starter, String other) {
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "sendInventory");
+            put("inventoryInfo", inventory.getInfo());
+            put("starter", starter);
+            put("other", other);
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+        }}, Message.Type.interaction_p2p));
+    }
 }

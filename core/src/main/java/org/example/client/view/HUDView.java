@@ -3,6 +3,7 @@ package org.example.client.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -17,9 +18,11 @@ import com.badlogic.gdx.utils.Array;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
+import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.controller.HUDController;
+import org.example.common.utils.JSONUtils;
 import org.example.server.models.Item;
 import org.example.server.models.Player;
 import org.example.server.models.Relations.Relation;
@@ -32,7 +35,10 @@ import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.tools.Backpack;
 
+import java.awt.*;
+import java.rmi.ConnectIOException;
 import java.util.*;
+import java.util.List;
 
 public class HUDView extends AppMenu {
 
@@ -110,7 +116,7 @@ public class HUDView extends AppMenu {
     private Item currentStacksHover;
 
     private final TextButton exitGameButton;
-    private final TextButton exitToMainButton;
+    private final TextButton terminateButton;
     private final TextButton kickPlayerButton;
     private final TextButton playButton;
     private final TextButton pauseButton;
@@ -188,17 +194,16 @@ public class HUDView extends AppMenu {
         playerSelectBox = new SelectBox<>(skin);
 
         Array<String> playersUsername = new Array<>();
-        ///  TODO: esm player haye game ezafe shan
-        playersUsername.add("ali");
-        playersUsername.add("mohsen");
-        playersUsername.add("majid");
+        ClientApp.getCurrentGame().getPlayers().forEach(
+                miniPlayer -> playersUsername.add(miniPlayer.getUsername())
+        );
         playerSelectBox.setItems(playersUsername);
         playerSelectBox.setWidth(300);
         playerSelectBox.setPosition(600,380);
         playerSelectBox.setVisible(false);
 
-        exitGameButton = new TextButton("Exit Game",skin);
-        exitToMainButton = new TextButton("Exit to main",skin);
+        exitGameButton = new TextButton("Save and Exit",skin);
+        terminateButton = new TextButton("Terminate Game",skin);
         kickPlayerButton = new TextButton("Kick",skin);
         playButton = new TextButton("Play",skin);
         pauseButton = new TextButton("Pause",skin);
@@ -276,6 +281,7 @@ public class HUDView extends AppMenu {
             i++;
         }
 
+
         i = 0;
         for (CookingProduct cookingProduct : CookingProduct.values()) {
             ImageButton productButton = new ImageButton(new TextureRegionDrawable(cookingProduct.getTexture()));
@@ -285,6 +291,8 @@ public class HUDView extends AppMenu {
             cookingProducts.put(cookingProduct, productButton);
             i++;
         }
+
+
 
         mapMenuBackground.setPosition((Gdx.graphics.getWidth()-mapMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-mapMenuBackground.getHeight())/2f);
         mapMenuBackground.setVisible(false);
@@ -315,10 +323,10 @@ public class HUDView extends AppMenu {
 
         exitGameButton.setPosition((Gdx.graphics.getWidth()-exitGameButton.getWidth())/2f,
                 620);
-        exitToMainButton.setPosition((Gdx.graphics.getWidth()-exitToMainButton.getWidth())/2f,
+        terminateButton.setPosition((Gdx.graphics.getWidth()- terminateButton.getWidth())/2f,
                 500);
 
-        exitToMainButton.setVisible(false);
+        terminateButton.setVisible(false);
         exitGameButton.setVisible(false);
 
         controller.updateClockImage();
@@ -347,7 +355,7 @@ public class HUDView extends AppMenu {
         stage.addActor(craftingProductIngredientsLabel);
         stage.addActor(exitGameButton);
         stage.addActor(kickPlayerButton);
-        stage.addActor(exitToMainButton);
+        stage.addActor(terminateButton);
         stage.addActor(playerSelectBox);
         stage.addActor(exitMenuBackground);
         stage.addActor(clockImage);
@@ -846,7 +854,7 @@ public class HUDView extends AppMenu {
         exitMenuBackground.setPosition((Gdx.graphics.getWidth() - exitMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - exitMenuBackground.getHeight()) / 2f);
 
         exitMenuBackground.setVisible(currentMenu == InGameMenuType.EXIT);
-        exitToMainButton.setVisible(currentMenu == InGameMenuType.EXIT);
+        terminateButton.setVisible(currentMenu == InGameMenuType.EXIT);
         exitGameButton.setVisible(currentMenu == InGameMenuType.EXIT);
         playerSelectBox.setVisible(currentMenu == InGameMenuType.EXIT &&
                 Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
@@ -855,7 +863,7 @@ public class HUDView extends AppMenu {
 
         exitGameButton.toFront();
         kickPlayerButton.toFront();
-        exitToMainButton.toFront();
+        terminateButton.toFront();
         playerSelectBox.toFront();
 
     }
@@ -1729,6 +1737,30 @@ public class HUDView extends AppMenu {
 
 
         }
+
+        exitGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                errorLabel.set(controller.saveAndExit());
+            }
+        });
+
+        terminateButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.terminateGame();
+            }
+        });
+
+        kickPlayerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.kickPlayer(playerSelectBox.getSelected());
+            }
+        });
 
     }
 
