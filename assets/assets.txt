@@ -15,6 +15,7 @@ Buildings/Cabins.png
 Buildings/Coop.png
 Buildings/Deluxe Barn.png
 Buildings/Deluxe Coop.png
+Character/PassOut.png
 Character/Vincent.png
 Character/character.atlas
 Clock/Arrow.png

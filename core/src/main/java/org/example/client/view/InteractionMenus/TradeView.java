@@ -86,8 +86,8 @@ public class TradeView extends AppMenu {
         selectItemIndex = null;
 
         tradeDoneByStarterSide = false;
-//        starterSide = ClientApp.getLoggedInUser().getUsername().equals(starter);
-        starterSide = true;
+        starterSide = ClientApp.getLoggedInUser().getUsername().equals(starter);
+//        starterSide = true;
         targetSide = !starterSide;
 
 
@@ -130,17 +130,17 @@ public class TradeView extends AppMenu {
             target = starter;
         }
         onScreenItemsQuantity = new HashMap<>();
-//        onScreenItems = new ArrayList<>();
-        onScreenItems = InteractionsWithUserController.getInventory(target);
+        onScreenItems = new ArrayList<>();
+//        onScreenItems = InteractionsWithUserController.getInventory(target);
 //        ///  GET TARGET PLAYER INVENTORY FROM SERVER
-//        // TEMP:
-//        addToScreen(new Stacks(ToolType.BambooPole,20));
-//        for (CraftingProduct cp : CraftingProduct.values()) {
-//            addToScreen(new Stacks(cp,10));
-//        }
-//        for (FruitType cp : FruitType.values()) {
-//            addToScreen(new Stacks(cp,10));
-//        }
+        // TEMP:
+        addToScreen(new Stacks(ToolType.BambooPole,20));
+        for (CraftingProduct cp : CraftingProduct.values()) {
+            addToScreen(new Stacks(cp,10));
+        }
+        for (FruitType cp : FruitType.values()) {
+            addToScreen(new Stacks(cp,10));
+        }
         
 
         itemCountLabel = new Label(Integer.toString(itemCount), skin);
@@ -451,8 +451,25 @@ public class TradeView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
+
                 playClickSound();
-                selectedCurrent.add(new Stacks(onScreenItems.get(selectItemIndex).getItem(),itemCount));
+
+                Stacks alreadySelected = null;
+
+                for( Stacks stacks: selectedCurrent ){
+                    if( stacks.getItem().getName().equals(onScreenItems.get(selectItemIndex).getItem().getName()) ){
+                        alreadySelected = stacks;
+                    }
+                }
+
+                if( alreadySelected == null ){
+                    selectedCurrent.add(new Stacks(onScreenItems.get(selectItemIndex).getItem(),itemCount));
+                }
+                else{
+                    alreadySelected.setQuantity(alreadySelected.getQuantity()+itemCount);
+                }
+
+
 
                 if ( (onScreenItems.get(selectItemIndex).getQuantity() - itemCount) > 0 ){
 

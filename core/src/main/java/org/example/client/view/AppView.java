@@ -46,7 +46,7 @@ public class AppView {
 //            return;
 //        }
         Main.getMain().setScreen(new WelcomeMenuView());
-//        Main.getMain().setScreen(new TradeView("ali","ahmad",new WelcomeMenuView()));
+//        Main.getMain().setScreen(new TradeView("ali","ahmad"));
 
         // For Graphics team
 //        cheat();
