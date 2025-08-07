@@ -164,6 +164,7 @@ public class TradeView extends AppMenu {
     }
 
     public void setOnScreenItems(ArrayList<Stacks> onScreenItems) {
+
         synchronized (onScreenItems) {
             this.onScreenItems.clear();
 //            this.onScreenItems.addAll(onScreenItems);
