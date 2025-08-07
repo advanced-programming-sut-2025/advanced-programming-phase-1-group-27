@@ -101,6 +101,7 @@ public class GameAssetManager {
 
     private final TextureAtlas characterAtlas = new TextureAtlas("assets/Character/character.atlas");
     private final TextureRegion standingTexture = characterAtlas.createSprite("standing_1");
+    private final Texture passOutTexture = new Texture("assets/Character/PassOut.png");
 
     private final Texture inventoryHotBar = new Texture(Gdx.files.internal("Inventory/InventoryHotbar.png"));
 
@@ -485,6 +486,10 @@ public class GameAssetManager {
         TextureRegion region = new TextureRegion(npc1Avatar);
         region.flip(true, false);
         return new Image(region);
+    }
+
+    public Texture getPassOutTexture() {
+        return passOutTexture;
     }
 
     public Image getSocialMenuBackgroundImage() {

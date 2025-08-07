@@ -31,7 +31,7 @@ public class OutsidePlayerController {
     private Camera camera;
     private final GameMenuController gameMenuController = new GameMenuController(new GameView());
 
-    private boolean walking = false;
+    private boolean walking = false, passedOut = false;
     private Direction direction = null;
     private final OutsideView view;
 
@@ -65,11 +65,32 @@ public class OutsidePlayerController {
 
     public void update() {
         animationTime += Gdx.graphics.getDeltaTime();
+        if (!ClientApp.getCurrentGame().getCurrentPlayer().hasPassedOut()) {
+            characterSprite.setRegion(GameAssetManager.getGameAssetManager().getStandingSprite());
+            characterSprite.setScale(2f);
+        }
 
-        characterSprite.setRegion(GameAssetManager.getGameAssetManager().getStandingSprite());
-        characterSprite.setScale(2f);
+        if (!passedOut && !walking && ClientApp.getCurrentGame().getCurrentPlayer().hasPassedOut()) {
+            passedOut = true;
+            view.getToolController().turnOff();
+            time = 0f;
+            characterSprite.setRegion(GameAssetManager.getGameAssetManager().getPassOutTexture());
+        }
+        if (passedOut) {
+            if (time <= 1f) {
+                characterSprite.setRotation(90 * time);
+            }
 
-        if (!walking && !view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
+            if (!ClientApp.getCurrentGame().getCurrentPlayer().hasPassedOut()) {
+                passedOut = false;
+                time = 0f;
+                view.getToolController().turnOn();
+                characterSprite.setRotation(0);
+            }
+        }
+
+
+        if (!passedOut && !walking && !view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
         InGameMenuType.NONE) {
             x = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX();
             y = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY();
@@ -152,6 +173,7 @@ public class OutsidePlayerController {
             y = modif * (destY - lastY) + lastY;
             updateAnimation();
         }
+
 
         if (time >= 0.125f)
             walking = false;

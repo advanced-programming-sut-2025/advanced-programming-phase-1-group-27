@@ -153,11 +153,6 @@ public class OutsideView extends AppMenu {
             }
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
-            Main.getMain().getScreen().dispose();
-            ClientApp.setCurrentMenu(new BuildMenuView(BuildingType.DeluxeBarn));
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        }
     }
 
     @Override
@@ -189,4 +184,19 @@ public class OutsideView extends AppMenu {
         return hudView;
     }
 
+    public OutsidePlayerController getPlayerController() {
+        return playerController;
+    }
+
+    public OutsideWorldController getOutsideWorldController() {
+        return outsideWorldController;
+    }
+
+    public ToolGraphicalController getToolController() {
+        return toolController;
+    }
+
+    public WorldController getWorldController() {
+        return worldController;
+    }
 }

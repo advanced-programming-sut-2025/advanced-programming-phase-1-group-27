@@ -17,7 +17,7 @@ public class ServerTimeTracker implements Runnable {
     public void run() {
         while (isRunning) {
             try {
-                Thread.sleep(1_000); // each 30 seconds an hour passes
+                Thread.sleep(2_000); // each 30 seconds an hour passes
                 time.passAnHour();
             }
             catch (InterruptedException e) {

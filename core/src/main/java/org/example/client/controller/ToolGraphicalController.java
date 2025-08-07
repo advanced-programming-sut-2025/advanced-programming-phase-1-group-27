@@ -26,6 +26,7 @@ public class ToolGraphicalController {
     private float x, y;
     private final OutsideView view;
     private Camera camera;
+    private boolean turnOff = false;
 
     private final Sprite toolSprite = new Sprite(GameAssetManager.getGameAssetManager().getItemTexture(
             ToolType.BasicPickaxe
@@ -108,7 +109,18 @@ public class ToolGraphicalController {
 
     }
 
+    public void turnOff() {
+        turnOff = true;
+    }
+
+    public void turnOn() {
+        turnOff = false;
+    }
+
     public void render() {
+        if (turnOff)
+            return;
+
         if (toolSprite.getTexture() != null &&
                 player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem() instanceof ToolType toolType)
             toolSprite.draw(Main.getBatch());
