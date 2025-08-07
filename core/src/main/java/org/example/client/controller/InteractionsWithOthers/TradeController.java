@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 public class TradeController {
 
+
     public void startTrade(String username) {
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         Message message = new Message(new HashMap<>() {{
@@ -80,7 +81,6 @@ public class TradeController {
         TradeView tradeView = (TradeView) ClientApp.getCurrentMenu();
         tradeView.setTradeDoneByStarterSide(false);
     }
-
     public void sendConfirmation(boolean answer, String starter, String other , ArrayList<Stacks> starterSelected
             , ArrayList<Stacks> otherSelected , AppMenu lastView) {
         // TODO : age okay boodi ba in trade bayad in function seda beshe to nahayee she
