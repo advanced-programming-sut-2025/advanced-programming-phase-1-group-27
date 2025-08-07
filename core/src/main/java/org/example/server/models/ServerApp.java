@@ -101,6 +101,10 @@ public class ServerApp {
         lobbies.add(lobby);
     }
 
+    public static void removeLobby(Lobby lobby) {
+        lobbies.remove(lobby);
+    }
+
     public static ArrayList<User> getOnlineUsers() {
         ArrayList<User> onlineUsers = new ArrayList<>();
         for (ClientConnectionThread connection : connections) {

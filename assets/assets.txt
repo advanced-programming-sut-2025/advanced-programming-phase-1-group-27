@@ -15,6 +15,7 @@ Buildings/Cabins.png
 Buildings/Coop.png
 Buildings/Deluxe Barn.png
 Buildings/Deluxe Coop.png
+Character/PassOut.png
 Character/Vincent.png
 Character/character.atlas
 Clock/Arrow.png
@@ -371,6 +372,7 @@ Images/Map/MapMenu.png
 Images/PlayerSocial/PlayerSocialBackground.png
 Images/PlayerSocial/PlayerSocialBackground2.png
 Images/PlayerSocial/SocialButton.png
+Images/RadioBackground.png
 Images/Shops/JojaMart.png
 Images/Shops/Pierres General Store.png
 Images/Shops/The Stardrop Saloon.png

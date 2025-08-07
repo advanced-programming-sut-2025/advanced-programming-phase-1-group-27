@@ -38,7 +38,7 @@ public class ServerGame implements Game {
     private NPCMap npcMap;
     private Weather currentWeather = Weather.Sunny, tomorrowWeather = null; //
     private Time time;
-    Thread timeThread;
+    private ServerTimeTracker timeTracker = null;
     private ArrayList<NPC> npcs = new ArrayList<>();
     // all dialogues between players
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
@@ -53,7 +53,7 @@ public class ServerGame implements Game {
         this.admin = lobby.getAdmin();
         this.players = players;
         this.time = new Time(this);
-        this.timeThread = new Thread(new ServerTimeTracker(this.time));
+        this.timeTracker = new ServerTimeTracker(this.time);
         for (Player player : players) {
             for (Player otherPlayer : players) {
                 if (otherPlayer.getUsername().equals(player.getUsername())) {
@@ -126,8 +126,8 @@ public class ServerGame implements Game {
             farmMaps[i] = builder.getFinalProduct();
         }
 
-        if (timeThread != null)
-            timeThread.start();
+        if (timeTracker != null)
+            new Thread(timeTracker).start();
     }
 
     private void initShops() {
@@ -145,17 +145,7 @@ public class ServerGame implements Game {
     }
 
     public void setAdmin(User user) {
-        for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).getUsername().equals(user.getUsername())) {
-                admin = players.get(i);
-                currentPlayerIndex = i;
-                break;
-            }
-        }
-    }
-
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
+        this.admin = user;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -660,5 +650,23 @@ public class ServerGame implements Game {
 
     public MusicInfo getPlayerMusicInfo(String playerName) {
         return playerToMusicMap.get(playerName);
+    }
+
+    public void pause() {
+        timeTracker.pause();
+    }
+
+    public void resume() {
+        timeTracker.resume();
+    }
+
+    public void terminate() {
+        timeTracker.stop();
+    }
+
+    public void kickPlayer(String playerName) {
+        Player player = getPlayerByUsername(playerName);
+        players.remove(player);
+        playerToMusicMap.remove(playerName);
     }
 }

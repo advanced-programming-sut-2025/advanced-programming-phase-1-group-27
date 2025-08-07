@@ -3,6 +3,7 @@ package org.example.server.models;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
+import org.example.client.model.MiniPlayer;
 import org.example.server.models.enums.Gender;
 
 import java.nio.charset.StandardCharsets;

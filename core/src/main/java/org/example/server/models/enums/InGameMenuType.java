@@ -12,8 +12,9 @@ public enum InGameMenuType {
     COOKING(6),
     SHOP(7),
     PLAYER_SOCIAL(8),
-    ANIMAL_ENCLOSURE(9),
-    ANIMAL(10);
+    RADIO(9),
+    ANIMAL_ENCLOSURE(10),
+    ANIMAL(11);
 
 
     private final Integer menuIndex;

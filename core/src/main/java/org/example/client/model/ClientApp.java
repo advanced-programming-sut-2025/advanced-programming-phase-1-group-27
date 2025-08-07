@@ -1,6 +1,9 @@
 package org.example.client.model;
 
+import com.badlogic.gdx.Gdx;
+import org.example.client.Main;
 import org.example.client.view.AppMenu;
+import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.Message;
 import org.example.server.models.App;
 import org.example.server.models.SecurityQuestion;
@@ -80,7 +83,7 @@ public class ClientApp {
     }
 
     public static void end() {
-        // TODO: parsa, save game
+        saveGame();
         serverConnectionThread.end();
     }
 
@@ -203,5 +206,19 @@ public class ClientApp {
 
     public static void setTradeMenu(AppMenu tradeMenu) {
         TradeMenu = tradeMenu;
+    }
+
+    public static void saveGame() {
+        // TODO : save game
+        terminateGame();
+    }
+
+    public static void terminateGame() {
+        currentGame = null;
+        Gdx.app.postRunnable(() -> {
+            Main.getMain().getScreen().dispose();
+            ClientApp.setCurrentMenu(new MainMenuView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        });
     }
 }

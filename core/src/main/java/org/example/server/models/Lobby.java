@@ -2,12 +2,11 @@ package org.example.server.models;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Message;
-import org.example.server.models.connections.ClientConnectionThread;
-import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Lobby {
@@ -22,6 +21,8 @@ public class Lobby {
     private ServerGame serverGame = null;
     private boolean active;
     private AtomicLong lastChange = new AtomicLong(System.currentTimeMillis());
+    private AtomicInteger votesToTerminate = new AtomicInteger(0);
+    private AtomicInteger numberOfVotes = new AtomicInteger(0);
 
     public Lobby () {
         this.admin = new User();
@@ -131,6 +132,14 @@ public class Lobby {
         return users;
     }
 
+    public User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username))
+                return user;
+        }
+        return null;
+    }
+
     public User getAdmin() {
         return admin;
     }
@@ -157,6 +166,32 @@ public class Lobby {
 
     public AtomicLong getLastChange() {
         return lastChange;
+    }
+
+    public void vote(boolean vote) {
+        if (vote)
+            votesToTerminate.incrementAndGet();
+        numberOfVotes.incrementAndGet();
+    }
+
+    public void startVote() {
+        votesToTerminate.set(0);
+        numberOfVotes.set(0);
+    }
+
+    public boolean hasPollWon() {
+        return numberOfVotes.get() == users.size() && votesToTerminate.get() > numberOfVotes.get() / 2;
+    }
+
+    public void kickPlayer(String playerName) {
+        User user = getUserByUsername(playerName);
+        users.remove(user);
+        usernameToMap.remove(playerName);
+        if (admin.getUsername().equals(playerName)) {
+            admin = users.getFirst();
+            serverGame.setAdmin(admin);
+        }
+        serverGame.kickPlayer(playerName);
     }
 
     public void notifyAll(Message message) {

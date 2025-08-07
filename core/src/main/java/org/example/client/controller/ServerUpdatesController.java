@@ -1,6 +1,7 @@
 package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.Random;
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.Tree;
+import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
 
@@ -164,8 +166,28 @@ public class ServerUpdatesController { // handles updates sent by server
             if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
                 tradeView.getController().checkConfirmation(message);
         }
+        else if (mode.equals("sendInventory")) {
+            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
+                tradeView.setOnScreenItems(new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("inventoryInfo")).getItems());
+        }
         else {
             throw new UnsupportedOperationException(mode + " hasn't been handled");
+        }
+    }
+
+    public static void handleVote(Message message) {
+        String mode = message.getFromBody("mode");
+        if (mode.equals("askToTerminate")) {
+            // TODO : parsa, new window to ask
+        }
+        else if (mode.equals("terminateGame")) {
+            ClientApp.terminateGame();
+        }
+        else if (mode.equals("askToKick")) {
+            // TODO : parsa, new window to ask
+        }
+        else if (mode.equals("kickPlayer")) {
+            ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));
         }
     }
 }

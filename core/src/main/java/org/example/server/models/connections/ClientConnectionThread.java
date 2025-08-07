@@ -142,6 +142,12 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.get_player_music) {
             sendMessage(GameController.getPlayerMusicInfo(message));
             return true;
+        } else if (message.getType() == Message.Type.save_and_exit_game) {
+            GameController.saveAndExit(message);
+            return true;
+        } else if (message.getType() == Message.Type.voting) {
+            GameController.handleVote(message);
+            return true;
         }
         return false;
     }
