@@ -3,7 +3,6 @@ package org.example.client.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -18,11 +17,9 @@ import com.badlogic.gdx.utils.Array;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
-import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.controller.HUDController;
-import org.example.common.utils.JSONUtils;
 import org.example.server.models.Item;
 import org.example.server.models.Player;
 import org.example.server.models.Relations.Relation;
@@ -35,10 +32,7 @@ import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.tools.Backpack;
 
-import java.awt.*;
-import java.rmi.ConnectIOException;
 import java.util.*;
-import java.util.List;
 
 public class HUDView extends AppMenu {
 
@@ -54,6 +48,8 @@ public class HUDView extends AppMenu {
     private final Label craftingProductNameLabel;
     private final Label craftingProductIngredientsLabel;
     private final Label messageLabel;
+    private final Label songNameLabel;
+    private final Label listenTogetherLabel;
 
     private final Image blackImage;
     private final Image hoveringInfoWindow;
@@ -78,6 +74,7 @@ public class HUDView extends AppMenu {
     private final Image redBar;
     private final Image messageBackgroundImage;
     private final Image messageAlertImage;
+    private final Image radioBackgroundImage;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -97,6 +94,7 @@ public class HUDView extends AppMenu {
     private boolean isInputFieldVisible;
     private boolean tJustPressed;
     private boolean ctrlPressed;
+    private boolean yourSongsPage;
 
     private Backpack inventoryItems;
 
@@ -112,6 +110,11 @@ public class HUDView extends AppMenu {
     private final TextButton exitGameButton;
     private final TextButton exitToMainButton;
     private final TextButton kickPlayerButton;
+    private final TextButton playButton;
+    private final TextButton pauseButton;
+    private final TextButton nextPageButton;
+    private final TextButton previousPageButton;
+    private final TextButton uploadSongButton;
 
     private final SelectBox<String> playerSelectBox;
 
@@ -124,7 +127,9 @@ public class HUDView extends AppMenu {
     private final ArrayList<Label> friendshipInfos;
     private final ArrayList<TextButton> friendButtons;
 
-//    private final ArrayList<String>
+
+    private final SelectBox<String> yourSongsSelectBox;
+    private final SelectBox<String> othersSongsSelectBox;
 
     public HUDView(Stage stage) {
 
@@ -132,6 +137,8 @@ public class HUDView extends AppMenu {
         controller = new HUDController(this);
 
         this.stage = stage;
+
+
 
         skillPoints = new ArrayList<>();
         for( int i = 0 ; i < 16; i++ ){
@@ -169,6 +176,8 @@ public class HUDView extends AppMenu {
         moneyInfo = new Label("", skin);
         timeInfo = new Label("", skin);
         messageLabel = new Label("",skin);
+        songNameLabel = new Label("Currently listening to: "+"Song name",skin);
+        listenTogetherLabel = new Label("Listen together with:",skin);
 
 
 
@@ -187,6 +196,11 @@ public class HUDView extends AppMenu {
         exitGameButton = new TextButton("Exit Game",skin);
         exitToMainButton = new TextButton("Exit to main",skin);
         kickPlayerButton = new TextButton("Kick",skin);
+        playButton = new TextButton("Play",skin);
+        pauseButton = new TextButton("Pause",skin);
+        nextPageButton = new TextButton(">",skin);
+        previousPageButton = new TextButton("<",skin);
+        uploadSongButton = new TextButton("Upload",skin);
 
         kickPlayerButton.setPosition(950,380-(kickPlayerButton.getHeight()-playerSelectBox.getHeight())/2f);
         kickPlayerButton.setVisible(false);
@@ -220,6 +234,7 @@ public class HUDView extends AppMenu {
         redBar = GameAssetManager.getGameAssetManager().getRedBar();
         messageAlertImage = GameAssetManager.getGameAssetManager().getMessageAlertImage();
         messageBackgroundImage = GameAssetManager.getGameAssetManager().getMessageBackgroundImage();
+        radioBackgroundImage = GameAssetManager.getGameAssetManager().getRadioBackground();
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
         socialButton.setPosition(100,100);
@@ -259,7 +274,6 @@ public class HUDView extends AppMenu {
             i++;
         }
 
-
         i = 0;
         for (CookingProduct cookingProduct : CookingProduct.values()) {
             ImageButton productButton = new ImageButton(new TextureRegionDrawable(cookingProduct.getTexture()));
@@ -270,8 +284,6 @@ public class HUDView extends AppMenu {
             i++;
         }
 
-
-
         mapMenuBackground.setPosition((Gdx.graphics.getWidth()-mapMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-mapMenuBackground.getHeight())/2f);
         mapMenuBackground.setVisible(false);
 
@@ -280,6 +292,9 @@ public class HUDView extends AppMenu {
 
         cookingMenuBackground.setPosition((Gdx.graphics.getWidth()-cookingMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-cookingMenuBackground.getHeight())/2f);
         cookingMenuBackground.setVisible(false);
+
+        radioBackgroundImage.setPosition((Gdx.graphics.getWidth()- radioBackgroundImage.getWidth())/2f,(Gdx.graphics.getHeight()- radioBackgroundImage.getHeight())/2f);
+        radioBackgroundImage.setVisible(false);
 
         hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-80,
                 20);
@@ -332,6 +347,7 @@ public class HUDView extends AppMenu {
         stage.addActor(timeInfo);
         stage.addActor(inventoryMenuBackground);
         stage.addActor(skillMenuBackground);
+        stage.addActor(radioBackgroundImage);
         stage.addActor(craftingMenuBackground);
         stage.addActor(socialMenuBackground);
         stage.addActor(farmingHoverImage);
@@ -345,7 +361,11 @@ public class HUDView extends AppMenu {
         stage.addActor(boostBar);
         stage.addActor(greenBar);
         stage.addActor(redBar);
+        stage.addActor(listenTogetherLabel);
 
+        listenTogetherLabel.setVisible(false);
+        listenTogetherLabel.setColor(Color.BLACK);
+        listenTogetherLabel.setFontScale(1.5f);
 
         friendsLabels = new ArrayList<>();
         friendshipInfos = new ArrayList<>();
@@ -448,6 +468,41 @@ public class HUDView extends AppMenu {
             infoLabel.setPosition(800,680 - 110 * j - 2 * j+50);
             stage.addActor(infoLabel);
         }
+
+        yourSongsSelectBox = new SelectBox<>(skin);
+        Array<String> songs = new Array<>();
+        songs.add("ahang");
+        songs.add("music");
+        songs.add("test");
+        yourSongsSelectBox.setItems(songs);
+
+        othersSongsSelectBox = new SelectBox<>(skin);
+        Array<String> songs2 = new Array<>();
+        songs2.add("user2");
+        songs2.add("user3");
+        songs2.add("user4");
+        othersSongsSelectBox.setItems(songs2);
+
+        yourSongsSelectBox.setVisible(false);
+        othersSongsSelectBox.setVisible(false);
+
+        playButton.setVisible(false);
+        pauseButton.setVisible(false);
+        nextPageButton.setVisible(false);
+        previousPageButton.setVisible(false);
+        uploadSongButton.setVisible(false);
+        songNameLabel.setVisible(false);
+        songNameLabel.setColor(Color.BLACK);
+
+        stage.addActor(playButton);
+        stage.addActor(pauseButton);
+        stage.addActor(nextPageButton);
+        stage.addActor(previousPageButton);
+        stage.addActor(uploadSongButton);
+        stage.addActor(songNameLabel);
+        stage.addActor(yourSongsSelectBox);
+        stage.addActor(othersSongsSelectBox);
+
 
         stage.addActor(textInputField);
 
@@ -653,6 +708,48 @@ public class HUDView extends AppMenu {
             skillPoints.get(i+12).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
+
+    }
+
+    private void displayRadio(){
+
+        ///  TODO: update song name here
+        songNameLabel.setText("Currently listening to: "+"Song name");
+
+
+
+        radioBackgroundImage.setVisible(currentMenu == InGameMenuType.RADIO);
+        songNameLabel.setVisible(currentMenu == InGameMenuType.RADIO);
+        playButton.setVisible(currentMenu == InGameMenuType.RADIO);
+        pauseButton.setVisible(currentMenu == InGameMenuType.RADIO);
+        nextPageButton.setVisible(currentMenu == InGameMenuType.RADIO);
+        previousPageButton.setVisible(currentMenu == InGameMenuType.RADIO);
+        uploadSongButton.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
+        listenTogetherLabel.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
+
+        previousPageButton.setPosition(radioBackgroundImage.getX()+40, radioBackgroundImage.getY()+40);
+        nextPageButton.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth()-40 - nextPageButton.getWidth(), radioBackgroundImage.getY()+40);
+        nextPageButton.toFront();
+        previousPageButton.toFront();
+
+        yourSongsSelectBox.setWidth(3 * radioBackgroundImage.getWidth() / 5);
+        othersSongsSelectBox.setWidth(3 * radioBackgroundImage.getWidth() / 5);
+
+        yourSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
+        othersSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
+
+        playButton.setWidth(pauseButton.getWidth());
+        playButton.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5 + 40, radioBackgroundImage.getY() + 2 * radioBackgroundImage.getHeight()/3f-100);
+        pauseButton.setPosition(radioBackgroundImage.getX() + 3 * radioBackgroundImage.getWidth() / 5 - 60, radioBackgroundImage.getY() + 2 * radioBackgroundImage.getHeight()/3f-100);
+        uploadSongButton.setWidth(pauseButton.getWidth()+pauseButton.getX()-playButton.getX());
+        uploadSongButton.setPosition(playButton.getX(),playButton.getY() - uploadSongButton.getHeight() - (pauseButton.getX()-playButton.getX()-playButton.getWidth()));
+
+
+        yourSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5,nextPageButton.getY()+20);
+        othersSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5,nextPageButton.getY()+20);
+
+        listenTogetherLabel.setPosition(othersSongsSelectBox.getX()+50, uploadSongButton.getY());
+        songNameLabel.setPosition(radioBackgroundImage.getX() + 40, playButton.getY()+playButton.getHeight() + 40);
 
     }
 
@@ -995,6 +1092,7 @@ public class HUDView extends AppMenu {
         displayMoneyInfo();
         displayTimeInfo();
         displayInventoryMenu();
+        displayRadio();
         displaySkillMenu();
         displaySocialMenu();
         displayCraftingMenu();
@@ -1138,7 +1236,19 @@ public class HUDView extends AppMenu {
                             makeOnScreenItemsInvisible();
                         }
 
-                    } else if ( keycode == Input.Keys.C ) {
+                    }
+                    else if (keycode == Input.Keys.R) {
+
+                        if (currentMenu == InGameMenuType.RADIO) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else {
+                            currentMenu = InGameMenuType.RADIO;
+                            makeOnScreenItemsInvisible();
+                        }
+
+                    }
+                    else if ( keycode == Input.Keys.C ) {
 
                         if ( currentMenu == InGameMenuType.COOKING ) {
                             currentMenu = InGameMenuType.NONE;
@@ -1460,6 +1570,24 @@ public class HUDView extends AppMenu {
 
         });
 
+        nextPageButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                yourSongsPage = !yourSongsPage;
+            }
+
+        });
+
+        previousPageButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                yourSongsPage = !yourSongsPage;
+            }
+
+        });
+
         for (CraftingProduct craftingProduct: craftingProducts.keySet()) {
             ImageButton imageButton = craftingProducts.get(craftingProduct);
             imageButton.addListener(new ClickListener() {
@@ -1528,32 +1656,6 @@ public class HUDView extends AppMenu {
             });
 
         }
-
-//        int counter = 0;
-//        for ( int i = 0; i < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()); i++ ){
-//
-//
-//            if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(i).getUsername(),
-//                    player.getUsername())){
-//
-//
-////                int finalI = i;
-////                friendButtons.get(2*i + 1).addListener(new ClickListener() {
-////                    @Override
-////                    public void clicked(InputEvent event, float x, float y) {
-////                        playClickSound();
-////                        controller.openTradeMenu(finalI);
-////                    }
-////
-////                });
-//
-//                counter ++;
-//
-//
-//            }
-//
-//        }
-
 
         int counter = 0;
         for ( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){

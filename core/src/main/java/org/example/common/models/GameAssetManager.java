@@ -396,6 +396,9 @@ public class GameAssetManager {
     private final Image messageBackgroundImage = new Image( new Texture(Gdx.files.internal("Images/Inbox/InboxMessageBackground.png")));
     private final Image messageAlertImage = new Image( new Texture(Gdx.files.internal("Images/Inbox/MessageAlert.png")));
 
+    private final Image radioBackground = new Image( new Texture(Gdx.files.internal("Images/RadioBackground.png")));
+
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -403,6 +406,10 @@ public class GameAssetManager {
         }
         return gameAssetManager;
 
+    }
+
+    public Image getRadioBackground() {
+        return radioBackground;
     }
 
     public Image getMessageAlertImage() {
