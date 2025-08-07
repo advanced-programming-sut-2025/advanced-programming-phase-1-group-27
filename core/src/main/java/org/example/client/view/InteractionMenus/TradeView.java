@@ -166,7 +166,10 @@ public class TradeView extends AppMenu {
     public void setOnScreenItems(ArrayList<Stacks> onScreenItems) {
         synchronized (onScreenItems) {
             this.onScreenItems.clear();
-            this.onScreenItems.addAll(onScreenItems);
+//            this.onScreenItems.addAll(onScreenItems);
+            for( Stacks s : onScreenItems ) {
+                addToScreen(s);
+            }
         }
     }
 
@@ -197,6 +200,8 @@ public class TradeView extends AppMenu {
     }
 
     private void displayItemQuantity(){
+
+
 
         for ( Stacks stacks: onScreenItems ){
             Label label = onScreenItemsQuantity.get(stacks);
