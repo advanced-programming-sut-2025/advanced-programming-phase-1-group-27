@@ -72,12 +72,13 @@ public class HUDView extends AppMenu {
     private final Image boostBar;
     private final Image greenBar;
     private final Image redBar;
-    private final Image messageBackgroundImage;
-    private final Image messageAlertImage;
     private final Image radioBackgroundImage;
     private Image clockImage;
 
     private final ImageButton socialButton;
+    private final ImageButton messageAlertImage;
+    private final ImageButton messageBackgroundImage;
+
 
     private final ArrayList<Image> skillPoints;
     private final ArrayList<Image> npcAvatars;
@@ -95,6 +96,7 @@ public class HUDView extends AppMenu {
     private boolean tJustPressed;
     private boolean ctrlPressed;
     private boolean yourSongsPage;
+    private boolean readingMessage;
 
     private Backpack inventoryItems;
 
@@ -130,6 +132,8 @@ public class HUDView extends AppMenu {
 
     private final SelectBox<String> yourSongsSelectBox;
     private final SelectBox<String> othersSongsSelectBox;
+
+    private ArrayList<String> inbox;
 
     public HUDView(Stage stage) {
 
@@ -232,8 +236,6 @@ public class HUDView extends AppMenu {
         boostBar = GameAssetManager.getGameAssetManager().getBoostBar();
         greenBar = GameAssetManager.getGameAssetManager().getGreenBar();
         redBar = GameAssetManager.getGameAssetManager().getRedBar();
-        messageAlertImage = GameAssetManager.getGameAssetManager().getMessageAlertImage();
-        messageBackgroundImage = GameAssetManager.getGameAssetManager().getMessageBackgroundImage();
         radioBackgroundImage = GameAssetManager.getGameAssetManager().getRadioBackground();
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
@@ -326,6 +328,17 @@ public class HUDView extends AppMenu {
         miningHoverImage.setVisible(false);
         foragingHoverImage.setVisible(false);
 
+        //  INBOX
+        messageAlertImage = new ImageButton(GameAssetManager.getGameAssetManager().getMessageAlertImage().getDrawable());
+        messageBackgroundImage = new ImageButton(GameAssetManager.getGameAssetManager().getMessageBackgroundImage().getDrawable());
+        readingMessage = false;
+        messageLabel.setColor(Color.BLACK);
+        inbox = new ArrayList<>();
+        inbox.add("message1");
+        inbox.add("message2");
+        inbox.add("message3");
+
+
         // STAGE
         stage.addActor(blackImage);
         stage.addActor(cookingMenuBackground);
@@ -362,6 +375,13 @@ public class HUDView extends AppMenu {
         stage.addActor(greenBar);
         stage.addActor(redBar);
         stage.addActor(listenTogetherLabel);
+        stage.addActor(messageBackgroundImage);
+        stage.addActor(messageAlertImage);
+        stage.addActor(messageLabel);
+
+        messageLabel.setVisible(false);
+        messageAlertImage.setVisible(false);
+        messageBackgroundImage.setVisible(false);
 
         listenTogetherLabel.setVisible(false);
         listenTogetherLabel.setColor(Color.BLACK);
@@ -1066,6 +1086,20 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayInbox(){
+
+        messageAlertImage.setVisible(!inbox.isEmpty() && !readingMessage);
+        messageBackgroundImage.setVisible(readingMessage);
+        messageLabel.setVisible(readingMessage);
+
+
+        messageAlertImage.setPosition(50,Gdx.graphics.getHeight()-50-messageAlertImage.getHeight());
+        messageBackgroundImage.setPosition(50,Gdx.graphics.getHeight()-messageBackgroundImage.getHeight() - 50);
+        messageLabel.setPosition(70, messageBackgroundImage.getY() + messageBackgroundImage.getHeight() - 50 - messageLabel.getHeight());
+
+
+    }
+
     @Override
     public void show() {
 
@@ -1104,6 +1138,7 @@ public class HUDView extends AppMenu {
         displaySkillInfo();
         displayPlayerSocial();
         displayEnergy();
+        displayInbox();
         displayInputField();
 
     }
@@ -1552,6 +1587,26 @@ public class HUDView extends AppMenu {
 
             }
 
+
+        });
+
+        messageAlertImage.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                readingMessage = true;
+                messageLabel.setText(inbox.getFirst());
+                inbox.removeFirst();
+            }
+
+        });
+
+        messageBackgroundImage.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                readingMessage = false;
+            }
 
         });
 
