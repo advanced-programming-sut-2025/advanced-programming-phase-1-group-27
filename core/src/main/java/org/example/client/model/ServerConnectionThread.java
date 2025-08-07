@@ -99,7 +99,7 @@ public class ServerConnectionThread extends ConnectionThread {
             return true;
         }
         else if (message.getType() == Message.Type.get_player_inventory) {
-            sendMessage(ServerUpdatesController.getInventory());
+            sendMessageAndPrint(ServerUpdatesController.getInventory());
             return true;
         }
         else if (message.getType() == Message.Type.interaction_p2p) {

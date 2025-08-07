@@ -141,8 +141,7 @@ public class ServerUpdatesController { // handles updates sent by server
                 String username = message.getFromBody("starter");
                 Gdx.app.postRunnable(() -> {
                     Main.getMain().getScreen().dispose();
-                    ClientApp.setCurrentMenu(new StartTradeView(username , ClientApp.getCurrentMenu()));
-                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                    Main.getMain().setScreen(new StartTradeView(username));
                 });
             } else {
                 TradeController controller = new TradeController();
@@ -150,20 +149,20 @@ public class ServerUpdatesController { // handles updates sent by server
             }
         }
         else if (mode.equals("respondToStartTrade")) {
-            if (ClientApp.getCurrentMenu() instanceof PreTradeMenuView preTradeMenuView)
-                preTradeMenuView.getController().checkRespondToStart(message , preTradeMenuView.getLastView());
+            if (ClientApp.getTradeMenu() instanceof PreTradeMenuView preTradeMenuView)
+                preTradeMenuView.getController().checkRespondToStart(message);
         }
         else if (mode.equals("updateSelected")) {
-            if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
+            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
                 tradeView.setSelectedOther(tradeView.getController().updateSelected(message));
         }
         else if (mode.equals("suggestedTrade")) {
-            if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
+            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
                 tradeView.setTradeDoneByStarterSide(true);
         }
         else if (mode.equals("confirmTrade")) {
-            if (ClientApp.getCurrentMenu() instanceof TradeView tradeView)
-                tradeView.getController().checkConfirmation(message , tradeView.getLastView());
+            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
+                tradeView.getController().checkConfirmation(message);
         }
         else {
             throw new UnsupportedOperationException(mode + " hasn't been handled");

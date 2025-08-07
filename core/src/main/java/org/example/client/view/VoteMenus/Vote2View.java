@@ -1,9 +1,11 @@
-package org.example.client.view.InteractionMenus;
+package org.example.client.view.VoteMenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
@@ -13,7 +15,8 @@ import org.example.client.view.AppMenu;
 
 import java.util.Scanner;
 
-public class StartTradeView extends AppMenu {
+public class Vote2View extends AppMenu {
+    // Rassa Controller
     private final TradeController controller;
     private final String username;
 
@@ -27,7 +30,7 @@ public class StartTradeView extends AppMenu {
 
     private Stage stage;
 
-    public StartTradeView(String username) {
+    public Vote2View(String username) {
         controller = new TradeController();
         ClientApp.setTradeMenu(this);
         this.username = username;
@@ -43,7 +46,7 @@ public class StartTradeView extends AppMenu {
                 Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight(),
                 30));
-
+        //Rassa label har chi mikhai bezan
         label = new Label(username + " wants to trade with you", skin);
         label.setColor(Color.BLACK);
         label.setFontScale(1.5f);
@@ -109,19 +112,20 @@ public class StartTradeView extends AppMenu {
     }
 
     private void setListeners() {
+        // Rassa listener
         yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.respondToStartTrade(username , true);
-                stage.clear();
+//                controller.respondToStartTrade(username , true);
+//                stage.clear();
             }
         });
 
         noButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.respondToStartTrade(username , false);
-                stage.clear();
+//                controller.respondToStartTrade(username , false);
+//                stage.clear();
             }
         });
     }

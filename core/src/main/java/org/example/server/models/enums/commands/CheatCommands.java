@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum CheatCommands {
+
     CheatCode("\\s*cheat\\s+code\\s*"),
     CheatAdvanceTime("\\s*cheat\\s+advance\\s+time\\s+(?<timeString>\\d+)h\\s*"),
     CheatAdvanceDate("\\s*cheat\\s+advance\\s+date\\s+(?<dayString>\\d+)d\\s*"),
@@ -16,7 +17,10 @@ public enum CheatCommands {
     CheatAddLevelNPC("\\s*cheat\\s+add\\s+level\\s+NPC\\s+-n\\s+(?<name>.+)\\s+-l\\s+(?<level>\\d+)\\s*"),
     CheatAddLevelPlayer("\\s*cheat\\s+add\\s+level\\s+player\\s+-n\\s+(?<name>.+)\\s+-l\\s+(?<level>\\d+)\\s*"),
     CheatAddMoney("\\s*cheat\\s+add\\s+(?<amount>\\d+)\\s+dollars\\s*"),
-    CheatSetAbility("cheat\\s+set\\s+ability\\s+-n\\s+(?<abilityName>.+)\\s+-l\\s+(?<level>\\d+)");
+    CheatSetAbility("cheat\\s+set\\s+ability\\s+-n\\s+(?<abilityName>.+)\\s+-l\\s+(?<level>\\d+)"),
+    ToAllChat("\\s*!(?<chatText>.+)\\s*"),
+    PrivateChat("\\s*@(?<targetPlayer>\\S+)\\s(?<chatText>.+)\\s*");
+
 
     private final String pattern;
 

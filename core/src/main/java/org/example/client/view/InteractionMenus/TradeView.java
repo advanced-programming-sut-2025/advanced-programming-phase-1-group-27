@@ -10,7 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
+import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
@@ -35,8 +37,6 @@ public class TradeView extends AppMenu {
 
     private ArrayList<Stacks> selectedCurrent;
     private ArrayList<Stacks> selectedOther;
-
-    private final AppMenu lastView;
 
     private final String starter;
     private final String other;
@@ -74,9 +74,10 @@ public class TradeView extends AppMenu {
 
     private final Stage stage;
 
-    public TradeView(String starter, String other , AppMenu lastView) {
+    public TradeView(String starter, String other) {
 
         controller = new TradeController();
+        ClientApp.setTradeMenu(this);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
@@ -108,9 +109,6 @@ public class TradeView extends AppMenu {
 //        selectedOther.add(new Stacks(FruitType.Apple,20));
 //        selectedOther.add(new Stacks(FruitType.Apple,20));
 
-
-
-        this.lastView = lastView;
         this.starter = starter;
         this.other = other;
 
@@ -125,18 +123,24 @@ public class TradeView extends AppMenu {
         inventoryBackground = GameAssetManager.getGameAssetManager().getTradeInventoryBackground();
         selectBox = GameAssetManager.getGameAssetManager().getSelectSlot();
 
-
+        String target;
+        if(ClientApp.getCurrentGame().getCurrentPlayer().getUsername().equals(starter)) {
+            target = other;
+        }else {
+            target = starter;
+        }
         onScreenItemsQuantity = new HashMap<>();
-        onScreenItems = new ArrayList<>();
-        ///  GET TARGET PLAYER INVENTORY FROM SERVER
-        // TEMP:
-        addToScreen(new Stacks(ToolType.BambooPole,20));
-        for (CraftingProduct cp : CraftingProduct.values()) {
-            addToScreen(new Stacks(cp,10));
-        }
-        for (FruitType cp : FruitType.values()) {
-            addToScreen(new Stacks(cp,10));
-        }
+//        onScreenItems = new ArrayList<>();
+        onScreenItems = InteractionsWithUserController.getInventory(target);
+//        ///  GET TARGET PLAYER INVENTORY FROM SERVER
+//        // TEMP:
+//        addToScreen(new Stacks(ToolType.BambooPole,20));
+//        for (CraftingProduct cp : CraftingProduct.values()) {
+//            addToScreen(new Stacks(cp,10));
+//        }
+//        for (FruitType cp : FruitType.values()) {
+//            addToScreen(new Stacks(cp,10));
+//        }
         
 
         itemCountLabel = new Label(Integer.toString(itemCount), skin);
@@ -399,7 +403,7 @@ public class TradeView extends AppMenu {
 
                 playClickSound();
                 ///  TODO
-                controller.sendConfirmation(true , starter , other , selectedOther , selectedCurrent , lastView);
+                controller.sendConfirmation(true , starter , other , selectedOther , selectedCurrent);
 
             }
 
@@ -412,7 +416,7 @@ public class TradeView extends AppMenu {
 
                 playClickSound();
                 ///  TODO
-                controller.sendConfirmation(false , starter , other , selectedOther , selectedCurrent , lastView);
+                controller.sendConfirmation(false , starter , other , selectedOther , selectedCurrent);
 
             }
 
@@ -503,9 +507,6 @@ public class TradeView extends AppMenu {
 
     }
 
-    public AppMenu getLastView() {
-        return lastView;
-    }
 
     private void displayCurrentItems() {
         stockTableCurrent.clear();
@@ -530,9 +531,7 @@ public class TradeView extends AppMenu {
         stockTableCurrent.row();
 
         Iterator<Stacks> iterator = selectedCurrent.iterator();
-
         while ( iterator.hasNext() ){
-
             Stacks stacks = iterator.next();
             Table row = new Table();
             Label nameLabel1 = new Label(stacks.getItem().getName(), skin);
@@ -571,7 +570,6 @@ public class TradeView extends AppMenu {
 
                     addToScreen(stacks);
                     controller.sendSelected(selectedCurrent,starter,other);
-
                 }
 
             });
