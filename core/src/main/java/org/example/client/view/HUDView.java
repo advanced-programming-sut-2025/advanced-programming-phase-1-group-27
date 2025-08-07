@@ -12,9 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import org.example.client.controller.GameMenuController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
@@ -23,6 +25,8 @@ import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.controller.HUDController;
 import org.example.common.utils.JSONUtils;
+import org.example.server.models.AnimalProperty.Animal;
+import org.example.server.models.AnimalProperty.AnimalEnclosure;
 import org.example.server.models.Item;
 import org.example.server.models.Player;
 import org.example.server.models.Relations.Relation;
@@ -54,6 +58,8 @@ public class HUDView extends AppMenu {
     private final Label craftingProductNameLabel;
     private final Label craftingProductIngredientsLabel;
     private final Label messageLabel;
+    private ArrayList<Label> enclosureLabels = new ArrayList<>();
+    private Label animalInfoLabel;
 
     private final Image blackImage;
     private final Image hoveringInfoWindow;
@@ -78,6 +84,8 @@ public class HUDView extends AppMenu {
     private final Image redBar;
     private final Image messageBackgroundImage;
     private final Image messageAlertImage;
+    private final Image enclosureBackground;
+    private final Image animalBackground;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -109,9 +117,19 @@ public class HUDView extends AppMenu {
 
     private Item currentStacksHover;
 
+    private AnimalEnclosure animalEnclosure;
+    private Animal animal;
+
     private final TextButton exitGameButton;
     private final TextButton exitToMainButton;
     private final TextButton kickPlayerButton;
+    private final TextButton enclosureMenuExitButton;
+    private final TextButton animalSellButton;
+    private final TextButton animalFeedButton;
+    private final TextButton animalPetButton;
+    private final TextButton animalCollectButton;
+    private final TextButton animalExitButton;
+
 
     private final SelectBox<String> playerSelectBox;
 
@@ -123,6 +141,7 @@ public class HUDView extends AppMenu {
     private final ArrayList<Label> friendsLabels;
     private final ArrayList<Label> friendshipInfos;
     private final ArrayList<TextButton> friendButtons;
+    private ArrayList<TextButton> enclosureButtons = new ArrayList<>();
 
 //    private final ArrayList<String>
 
@@ -191,6 +210,37 @@ public class HUDView extends AppMenu {
         kickPlayerButton.setPosition(950,380-(kickPlayerButton.getHeight()-playerSelectBox.getHeight())/2f);
         kickPlayerButton.setVisible(false);
 
+        enclosureMenuExitButton = new TextButton("Close",skin);
+        enclosureMenuExitButton.setWidth(500);
+        enclosureMenuExitButton.setPosition((Gdx.graphics.getWidth() - enclosureMenuExitButton.getWidth()) / 2f,
+                100);
+        enclosureMenuExitButton.setVisible(false);
+
+        animalExitButton = new TextButton("Close",skin);
+        animalExitButton.setWidth(500);
+        animalExitButton.setPosition((Gdx.graphics.getWidth() - animalExitButton.getWidth()) / 2f,
+                100);
+        animalExitButton.setVisible(false);
+
+        animalSellButton = new TextButton("Sell",skin);
+        animalSellButton.setWidth(600);
+        animalSellButton.setPosition(Gdx.graphics.getWidth() / 2f - 610, 100 + animalSellButton.getHeight() + 20);
+        animalSellButton.setVisible(false);
+
+        animalFeedButton = new TextButton("Feed",skin);
+        animalFeedButton.setWidth(600);
+        animalFeedButton.setPosition(Gdx.graphics.getWidth() / 2f + 10, 100 + animalSellButton.getHeight() + 20);
+        animalFeedButton.setVisible(false);
+
+        animalPetButton = new TextButton("Pet",skin);
+        animalPetButton.setWidth(600);
+        animalPetButton.setPosition(Gdx.graphics.getWidth() / 2f - 610, 100 + 2 * animalSellButton.getHeight() + 40);
+        animalPetButton.setVisible(false);
+
+        animalCollectButton = new TextButton("Collect Product",skin);
+        animalCollectButton.setWidth(600);
+        animalCollectButton.setPosition(Gdx.graphics.getWidth() / 2f + 10, 100 + 2 * animalSellButton.getHeight() + 40);
+        animalCollectButton.setVisible(false);
 
         rowCoEfficient = 1;
         currentSlotInInventory = null;
@@ -213,6 +263,8 @@ public class HUDView extends AppMenu {
         fishingHoverImage = GameAssetManager.getGameAssetManager().getHoveringFishingWindow();
         socialMenuBackground = GameAssetManager.getGameAssetManager().getSocialMenuBackgroundImage();
         playerSocialMenuBackground = GameAssetManager.getGameAssetManager().getPlayerSocialBackground();
+        enclosureBackground = new Image(GameAssetManager.getGameAssetManager().getPlayerSocialBackGroundTexture());
+        animalBackground = new Image(GameAssetManager.getGameAssetManager().getPlayerSocialBackGroundTexture());
         mapMenuBackground = GameAssetManager.getGameAssetManager().getMapMenuBackground();
         energyBar = GameAssetManager.getGameAssetManager().getEnergyBar();
         boostBar = GameAssetManager.getGameAssetManager().getBoostBar();
@@ -311,6 +363,14 @@ public class HUDView extends AppMenu {
         miningHoverImage.setVisible(false);
         foragingHoverImage.setVisible(false);
 
+        enclosureBackground.setSize(1400, 1000);
+        enclosureBackground.setPosition((Gdx.graphics.getWidth() - 1400) / 2f, (Gdx.graphics.getHeight() - 1000) / 2f);
+        enclosureBackground.setVisible(false);
+
+        animalBackground.setSize(1400, 1000);
+        animalBackground.setPosition((Gdx.graphics.getWidth() - 1400) / 2f, (Gdx.graphics.getHeight() - 1000) / 2f);
+        animalBackground.setVisible(false);
+
         // STAGE
         stage.addActor(blackImage);
         stage.addActor(cookingMenuBackground);
@@ -345,6 +405,14 @@ public class HUDView extends AppMenu {
         stage.addActor(boostBar);
         stage.addActor(greenBar);
         stage.addActor(redBar);
+        stage.addActor(enclosureBackground);
+        stage.addActor(enclosureMenuExitButton);
+        stage.addActor(animalBackground);
+        stage.addActor(animalFeedButton);
+        stage.addActor(animalCollectButton);
+        stage.addActor(animalPetButton);
+        stage.addActor(animalSellButton);
+        stage.addActor(animalExitButton);
 
 
         friendsLabels = new ArrayList<>();
@@ -941,6 +1009,101 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayAnimal() {
+        animalBackground.setVisible(currentMenu == InGameMenuType.ANIMAL);
+        animalCollectButton.setVisible(currentMenu == InGameMenuType.ANIMAL);
+        animalFeedButton.setVisible(currentMenu == InGameMenuType.ANIMAL);
+        if (animalInfoLabel != null)
+            animalInfoLabel.setVisible(currentMenu == InGameMenuType.ANIMAL);
+        animalPetButton.setVisible(currentMenu == InGameMenuType.ANIMAL);
+        animalSellButton.setVisible(currentMenu == InGameMenuType.ANIMAL);
+        animalExitButton.setVisible(currentMenu == InGameMenuType.ANIMAL);
+    }
+
+    private void setupAnimalData() {
+        if (animalInfoLabel != null)
+            animalInfoLabel.remove();
+        animalInfoLabel = new Label("Animal Name:     " + animal.getName() + "\n" +
+                "Animal Type:     " + animal.getType().getName() + "\n" +
+                "Base SellPrice:     " + animal.getPrice() + "\n" +
+                "Till next product:     " + animal.getTillNextProduction() + "\n" +
+                "FriendShip pts:    " + animal.getFriendship(),
+                skin);
+        animalInfoLabel.setColor(Color.BLACK);
+        animalInfoLabel.setFontScale(2f);
+        animalInfoLabel.setPosition(Gdx.graphics.getWidth() / 2f - 600, 700);
+        animalInfoLabel.setVisible(false);
+        stage.addActor(animalInfoLabel);
+
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+        setupAnimalData();
+        currentMenu = InGameMenuType.ANIMAL;
+    }
+
+    private void displayEnclosure() {
+        if (animalEnclosure == null)
+            return;
+        enclosureBackground.setVisible(currentMenu == InGameMenuType.ANIMAL_ENCLOSURE);
+        enclosureButtons.forEach(enclosureButton -> {
+            enclosureButton.setVisible(currentMenu == InGameMenuType.ANIMAL_ENCLOSURE);
+        });
+        enclosureLabels.forEach(enclosureLabel -> {
+            enclosureLabel.setVisible(currentMenu == InGameMenuType.ANIMAL_ENCLOSURE);
+        });
+        enclosureMenuExitButton.setVisible(currentMenu == InGameMenuType.ANIMAL_ENCLOSURE);
+    }
+
+    private void setupEnclosureData() {
+        enclosureButtons.forEach(Actor::remove);
+        enclosureLabels.forEach(Actor::remove);
+        enclosureLabels.clear();
+        enclosureButtons.clear();
+        float x1 = (Gdx.graphics.getWidth() - 1200) / 2f, x2 = (Gdx.graphics.getWidth() + 400) / 2f,
+                y = Gdx.graphics.getHeight() / 2f + 300;
+        for (Animal a : animalEnclosure.getAnimals()) {
+            Label label = new Label(a.getName() + " " + a.getType().getName(), skin);
+            label.setColor(Color.BLACK);
+            label.setPosition(x1, y + 40);
+            label.setFontScale(2f);
+            label.setVisible(false);
+            enclosureLabels.add(label);
+            stage.addActor(label);
+
+            TextButton textButton = new TextButton("Shepard in/out", skin);
+            textButton.setPosition(x2, y);
+            textButton.setWidth(450);
+            textButton.setVisible(false);
+            enclosureButtons.add(textButton);
+            textButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    playClickSound();
+                    if (a.isOut()) {
+                        a.getCurrentCell().setObject(null);
+                        a.setOut(false);
+                    } else {
+                        ClientApp.getCurrentGame().getCurrentPlayer().getCurrentCell().setObject(a);
+                        a.setOut(true);
+                        a.setWasFeed(true);
+                        a.addFriendShip(8);
+                        a.setCurrentCell(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentCell());
+                    }
+                }
+            });
+            stage.addActor(textButton);
+            y -= 160;
+        }
+    }
+
+    public void setAnimalEnclosure(AnimalEnclosure animalEnclosure) {
+        this.animalEnclosure = animalEnclosure;
+        setupEnclosureData();
+        currentMenu = InGameMenuType.ANIMAL_ENCLOSURE;
+    }
+
     private void displayMapMenu(){
 
         mapMenuBackground.setVisible(currentMenu == InGameMenuType.MAP);
@@ -1007,6 +1170,8 @@ public class HUDView extends AppMenu {
         displayPlayerSocial();
         displayEnergy();
         displayInputField();
+        displayEnclosure();
+        displayAnimal();
 
     }
 
@@ -1573,6 +1738,57 @@ public class HUDView extends AppMenu {
 
         }
 
+        enclosureMenuExitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                currentMenu = InGameMenuType.NONE;
+            }
+        });
+
+        animalExitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                currentMenu = InGameMenuType.NONE;
+            }
+        });
+
+        animalCollectButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                currentMenu = InGameMenuType.NONE;
+                new GameMenuController(new GameView()).collectProduct(animal.getName());
+            }
+        });
+
+        animalFeedButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                currentMenu = InGameMenuType.NONE;
+                new GameMenuController(new GameView()).feedHay(animal.getName());
+            }
+        });
+
+        animalPetButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                currentMenu = InGameMenuType.NONE;
+                new GameMenuController(new GameView()).pet(animal.getName());
+            }
+        });
+
+        animalSellButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                currentMenu = InGameMenuType.NONE;
+                new GameMenuController(new GameView()).sellAnimal(animal.getName());
+            }
+        });
     }
 
 

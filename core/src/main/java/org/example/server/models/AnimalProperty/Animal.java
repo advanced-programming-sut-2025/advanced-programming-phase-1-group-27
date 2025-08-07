@@ -1,5 +1,6 @@
 package org.example.server.models.AnimalProperty;
 
+import org.example.server.models.Cell;
 import org.example.server.models.Position;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.StackLevel;
@@ -16,6 +17,7 @@ public class Animal {
     private int friendship = 0, tillNextProduction;
     private boolean wasFeed = false, wasPet = false, isOut = false;
     private AnimalEnclosure enclosure;
+    private Cell currentCell;
 
     public Animal(AnimalType type, String name) {
         this.type = type;
@@ -111,6 +113,14 @@ public class Animal {
         isOut = out;
     }
 
+    public Cell getCurrentCell() {
+        return currentCell;
+    }
+
+    public void setCurrentCell(Cell currentCell) {
+        this.currentCell = currentCell;
+    }
+
     public int getTillNextProduction() {
         return tillNextProduction;
     }
@@ -121,5 +131,9 @@ public class Animal {
 
     public void setEnclosure(AnimalEnclosure enclosure) {
         this.enclosure = enclosure;
+    }
+
+    public int getFriendship() {
+        return friendship;
     }
 }

@@ -285,6 +285,12 @@ public class GameAssetManager {
         }
     }};
 
+    private final HashMap<AnimalType, Texture> animalTextureMap = new HashMap<>(){{
+        for (AnimalType animalType : AnimalType.values()) {
+            put(animalType, new Texture("assets/Images/Animals/" + animalType.getName() + ".png"));
+        }
+    }};
+
 
     private final Animation<TextureRegion> walkDown = new Animation<>(
             0.1f,
@@ -863,6 +869,10 @@ public class GameAssetManager {
         if (itemImageMap.containsKey(item))
             return itemImageMap.get(item);
         return redCrossImage;
+    }
+
+    public Texture getAnimalTexture(AnimalType animalType) {
+        return animalTextureMap.getOrDefault(animalType, null);
     }
 
     public Texture getPlantTexture(PlantType plantType, int index) {

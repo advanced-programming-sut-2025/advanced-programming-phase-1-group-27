@@ -5,11 +5,19 @@ import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.OutsideView;
+import org.example.client.view.shopview.AnimalPurchaseView;
 import org.example.client.view.shopview.PurchaseMenuView;
 import org.example.client.view.shopview.UpgradeMenuView;
+import org.example.server.models.AnimalProperty.Animal;
+import org.example.server.models.AnimalProperty.Barn;
+import org.example.server.models.AnimalProperty.Coop;
+import org.example.server.models.App;
+import org.example.server.models.Player;
 import org.example.server.models.Result;
+import org.example.server.models.Shops.Shop;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
+import org.example.server.models.enums.items.AnimalType;
 
 public class ShopController extends MenuController {
     private final AppMenu shopMenu;
@@ -25,16 +33,9 @@ public class ShopController extends MenuController {
         Main.getMain().setScreen(new PurchaseMenuView(stock , npc , shopMenu));
     }
 
-    public void buyAnimal(Stock stock) {
+    public void purchaseAnimal(Stock stock) {
         Main.getMain().getScreen().dispose();
-        //TODO : Sobhan!
-//        Main.getMain().setScreen(new PurchaseMenuView(stock , npc , shopMenu));
-    }
-
-    public void build(Stock stock) {
-        Main.getMain().getScreen().dispose();
-        //TODO : Sobhan!
-//        Main.getMain().setScreen(new PurchaseMenuView(stock , npc , shopMenu));
+        Main.getMain().setScreen(new AnimalPurchaseView(stock , npc , shopMenu));
     }
 
     public void upgrade() {

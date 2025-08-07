@@ -18,6 +18,7 @@ import org.example.common.models.GameAssetManager;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
 import org.example.client.view.AppMenu;
+import org.example.server.models.enums.items.AnimalType;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -141,13 +142,23 @@ public class MarnieRanch extends AppMenu {
             stockTable.row();
             row.setTouchable(Touchable.enabled);
 
-            row.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    playClickSound();
-                    controller.purchase(stock);
-                }
-            });
+            if (stock.getItem() instanceof AnimalType) {
+                row.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        playClickSound();
+                        controller.purchaseAnimal(stock);
+                    }
+                });
+            } else {
+                row.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        playClickSound();
+                        controller.purchase(stock);
+                    }
+                });
+            }
         }
 
         scrollPane.setSize(redAreaWidth, 600);

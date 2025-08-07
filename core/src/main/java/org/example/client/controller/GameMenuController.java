@@ -469,7 +469,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result pet(String animalName) {
-        for (Cell cell : App.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells()) {
+        for (Cell cell : ClientApp.getCurrentGame().getCurrentPlayer().getCurrentCell().getAdjacentCells()) {
             if (cell != null && cell.getObject() instanceof Animal animal && animal.getName().equals(animalName)) {
                 animal.addFriendShip(15);
                 animal.setWasPet(true);
@@ -524,7 +524,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result feedHay(String name) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         Animal animal = null;
         if (!(player.getCurrentMap() instanceof FarmMap))
             return new Result(false, "You are not in a Farm!");
@@ -560,7 +560,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result collectProduct(String name) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         Animal animal = null;
         if (!(player.getCurrentMap() instanceof FarmMap))
             return new Result(false, "You are not in a Farm!");
@@ -587,7 +587,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result sellAnimal(String name) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         Animal animal = null;
         if (!(player.getCurrentMap() instanceof FarmMap))
             return new Result(false, "You are not in a Farm!");

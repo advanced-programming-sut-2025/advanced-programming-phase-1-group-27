@@ -20,6 +20,8 @@ import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.InfoWindow;
 import org.example.server.models.*;
+import org.example.server.models.AnimalProperty.Animal;
+import org.example.server.models.AnimalProperty.AnimalEnclosure;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;
 import org.example.server.models.Map.FarmMap;
@@ -140,7 +142,6 @@ public class WorldController {
 
                                 npc.setDialogue(null);
 
-                                // TODO : Sobhan in doroste?
                                 InteractionsWithNPCController controller = new InteractionsWithNPCController();
                                 controller.meetNPC(npc.getName());
                             }
@@ -198,6 +199,12 @@ public class WorldController {
                     if (texture != null)
                         Main.getBatch().draw(texture, x - 10, y, 60, 100);
                 }
+                if (cells[i][j].getObject() instanceof Animal animal) {
+                    texture = GameAssetManager.getGameAssetManager().getAnimalTexture(animal.getType());
+                    if (texture != null)
+                        Main.getBatch().draw(texture, x + 20 - (texture.getWidth() / 2f), y);
+
+                }
             }
         }
         if (map instanceof NPCMap) {
@@ -215,7 +222,7 @@ public class WorldController {
         infoWindows.removeIf(InfoWindow::isFinished);
     }
 
-    private void handlePlantInfo() {
+    private void handleClicks() {
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && player.getCurrentMap() instanceof FarmMap) {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -224,7 +231,9 @@ public class WorldController {
                     j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
             Cell cell = player.getCurrentMap().getCell(i, j);
 
-            if (cell != null && cell.getObject() instanceof Plant plant) {
+            if (cell == null)
+                return;
+            if (cell.getObject() instanceof Plant plant) {
                 String info = new String("Plant name: " + plant.getType().getName() + "\n" +
                         (plant.getWateredToday()? "Watered today": "Not watered today!") + "\n" +
                         "Current Stage: " + plant.getCurrentStage() + "\n" +
@@ -241,8 +250,11 @@ public class WorldController {
                 infoWindow.setPosition(touchPos.x, touchPos.y);
                 infoWindow.setFontScale(0.7f);
                 infoWindows.add(infoWindow);
+            } else if (cell.getBuilding() instanceof AnimalEnclosure) {
+                view.getHudView().setAnimalEnclosure((AnimalEnclosure) cell.getBuilding());
+            } else if (cell.getObject() instanceof Animal animal) {
+                view.getHudView().setAnimal(animal);
             }
-
         }
     }
 
@@ -252,7 +264,7 @@ public class WorldController {
             dialogueLabels.clear();
         }
         renderMap(player.getCurrentMap());
-        handlePlantInfo();
+        handleClicks();
         renderDialogues();
     }
 }
