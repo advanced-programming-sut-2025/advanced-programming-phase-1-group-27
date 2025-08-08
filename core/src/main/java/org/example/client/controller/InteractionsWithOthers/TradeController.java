@@ -5,6 +5,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
+import org.example.client.view.InteractionMenus.TradeHistoryView;
 import org.example.client.view.InteractionMenus.TradeView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Message;
@@ -16,8 +17,14 @@ import org.example.server.models.tools.Backpack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+
 public class TradeController {
 
+    public void goToTradeHistory(String username){
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new TradeHistoryView(username));
+    }
 
     public void startTrade(String username) {
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
@@ -187,14 +194,30 @@ public class TradeController {
         }
     }
 
-    private ArrayList<Trade> getTradeHistory(String username) {
+    public ArrayList<Trade> getTradeHistory(String username) {
+        int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         Message message = new Message(new HashMap<>() {{
             put("mode", "getTradeHistory");
+            put("lobbyId", lobbyId);
             put("starter", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
             put("other", username);
             put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
-        }}, Message.Type.interaction_p2p);
-        // TODO : incomplete
-        return null;
+        }} , Message.Type.get_trade_history);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response) {
+            return new ArrayList<>();
+        }
+        ArrayList<Trade> trades = new ArrayList<>();
+        for(LinkedTreeMap<String ,Object> ti : response.<ArrayList<LinkedTreeMap<String,Object>>>getFromBody("trades")){
+            trades.add(new Trade(ti));
+        }
+        return trades;
+    }
+
+    public void exit(){
+        Main.getMain().getScreen().dispose();
+        OutsideView outsideView = new OutsideView();
+        ClientApp.setCurrentMenu(outsideView);
+        Main.getMain().setScreen(outsideView);
     }
 }

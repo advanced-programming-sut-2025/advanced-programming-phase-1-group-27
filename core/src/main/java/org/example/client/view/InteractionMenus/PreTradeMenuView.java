@@ -126,7 +126,13 @@ public class PreTradeMenuView extends AppMenu {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 controller.startTrade(targetUsername);
-//                stage.clear();
+            }
+        });
+
+        historyButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                controller.goToTradeHistory(targetUsername);
             }
         });
 
