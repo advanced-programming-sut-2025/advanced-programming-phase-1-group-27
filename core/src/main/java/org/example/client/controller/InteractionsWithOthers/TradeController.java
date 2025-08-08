@@ -92,8 +92,8 @@ public class TradeController {
         // from other
         if (answer) {
             // Inventory dorost she
-            addToInventory(starterSelected);
-            reduceFromInventory(otherSelected);
+            addToInventory(otherSelected);
+            reduceFromInventory(starterSelected);
         } else {
             // trade namovafagh bood
         }
@@ -123,8 +123,8 @@ public class TradeController {
         boolean answer = message.getFromBody("answer");
         if (answer) {
             // Inventory dorost she
-            addToInventory(otherSelected);
-            reduceFromInventory(starterSelected);
+            addToInventory(starterSelected);
+            reduceFromInventory(otherSelected);
         } else {
             // trade namovafagh bood
         }
