@@ -158,7 +158,7 @@ public class ServerUpdatesController { // handles updates sent by server
             if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
                 tradeView.setSelectedOther(tradeView.getController().updateSelected(message));
         }
-        else if (mode.equals("suggestedTrade")) {
+        else if (mode.equals("suggestTrade")) {
             if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
                 tradeView.setTradeDoneByStarterSide(true);
         }

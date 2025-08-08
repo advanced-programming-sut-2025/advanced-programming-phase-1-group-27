@@ -107,10 +107,12 @@ public class TradeController {
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         });
+        System.out.println("be payan amad in tabe hekayat hamchenan baghi ast");
     }
 
     public void checkConfirmation(Message message) {
         // check other's check
+        System.out.println("rassa oomad");
         ArrayList<Stacks> starterSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("starterSelected")).getItems();
         ArrayList<Stacks> otherSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("otherSelected")).getItems();
         boolean answer = message.getFromBody("answer");

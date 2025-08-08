@@ -175,29 +175,25 @@ public class TradeView extends AppMenu {
     }
 
     private void displayInventory(){
+        synchronized (onScreenItems) {
+            for (Stacks image : onScreenItems) {
+                image.getItem().getItemImage().toFront();
+                image.getItem().getItemImage().setVisible(false);
+            }
 
-        for( Stacks image: onScreenItems ){
-            image.getItem().getItemImage().toFront();
-            image.getItem().getItemImage().setVisible(false);
+            for (int i = 0; i < Math.min(onScreenItems.size() - 12 * rowNum, 48); i++) {
+                onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setPosition(520 + 64 * (i % 12), 840 - 67 * ((int) (i / 12)));
+                onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setVisible(true);
+            }
+
+            if (selectItemIndex != null && 12 * rowNum < selectItemIndex && selectItemIndex < 12 * (rowNum + 4)) {
+                selectBox.setVisible(true);
+                selectBox.setPosition(onScreenItems.get(selectItemIndex).getItem().getItemImage().getX() - 5,
+                        onScreenItems.get(selectItemIndex).getItem().getItemImage().getY() - 10);
+            } else {
+                selectBox.setVisible(false);
+            }
         }
-
-        for ( int i = 0 ; i < Math.min(onScreenItems.size() - 12 * rowNum,48)  ; i++ ){
-            onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setPosition(520 + 64*(i % 12),840 - 67 * ((int)(i / 12)));
-            onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setVisible(true);
-        }
-
-        if ( selectItemIndex != null && 12 * rowNum < selectItemIndex && selectItemIndex < 12 * (rowNum+4) ){
-            selectBox.setVisible(true);
-            selectBox.setPosition(onScreenItems.get(selectItemIndex).getItem().getItemImage().getX()-5,
-                    onScreenItems.get(selectItemIndex).getItem().getItemImage().getY()-10);
-        }
-        else{
-            selectBox.setVisible(false);
-        }
-
-
-
-
     }
 
     private void displayItemQuantity(){
