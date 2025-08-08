@@ -4,22 +4,27 @@ import com.badlogic.gdx.Gdx;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.AppMenu;
-import org.example.client.view.HomeView;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
+import org.example.client.view.InteractionMenus.TradeHistoryView;
 import org.example.client.view.InteractionMenus.TradeView;
+import org.example.client.view.OutsideView;
 import org.example.common.models.Message;
 import org.example.server.models.Relations.Trade;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.tools.Backpack;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+
 public class TradeController {
 
+    public void goToTradeHistory(String username){
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new TradeHistoryView(username));
+    }
 
     public void startTrade(String username) {
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
@@ -44,12 +49,13 @@ public class TradeController {
             put("answer", answer);
         }}, Message.Type.interaction_p2p);
         ClientApp.getServerConnectionThread().sendMessage(message);
+        ArrayList<Stacks> targetInventory = answer ? InteractionsWithUserController.getInventory(username) : new ArrayList<>();
         Gdx.app.postRunnable(() -> {
             if (answer) {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername()));
+                Main.getMain().setScreen(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername(), targetInventory));
             } else {
-                ClientApp.setTradeMenu(null);
+                ClientApp.setNonMainMenu(null);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(ClientApp.getCurrentMenu());
             }
@@ -60,12 +66,13 @@ public class TradeController {
         boolean answer = message.getFromBody("answer");
         String starter = message.getFromBody("starter");
         String other = message.getFromBody("other");
+        System.out.println("answer: " + answer);
         Gdx.app.postRunnable(() -> {
-            if (answer) {
+            if (answer && ClientApp.getNonMainMenu() instanceof PreTradeMenuView preTradeMenuView) {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new TradeView(starter, other));
+                Main.getMain().setScreen(new TradeView(starter, other, preTradeMenuView.getTargetInventory()));
             } else {
-                ClientApp.setTradeMenu(null);
+                ClientApp.setNonMainMenu(null);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(ClientApp.getCurrentMenu());
             }
@@ -79,14 +86,14 @@ public class TradeController {
         TradeView tradeView = (TradeView) ClientApp.getCurrentMenu();
         tradeView.setTradeDoneByStarterSide(false);
     }
-    public void sendConfirmation(boolean answer, String starter, String other , ArrayList<Stacks> starterSelected
-            , ArrayList<Stacks> otherSelected) {
+
+    public void sendConfirmation(boolean answer, String starter, String other, ArrayList<Stacks> starterSelected, ArrayList<Stacks> otherSelected) {
         // TODO : age okay boodi ba in trade bayad in function seda beshe to nahayee she
         // from other
         if (answer) {
             // Inventory dorost she
-            addToInventory(starterSelected);
-            reduceFromInventory(otherSelected);
+            addToInventory(otherSelected);
+            reduceFromInventory(starterSelected);
         } else {
             // trade namovafagh bood
         }
@@ -102,32 +109,35 @@ public class TradeController {
             put("otherSelected", new Backpack(ToolType.BasicBackpack, otherSelected).getInfo());
         }}, Message.Type.interaction_p2p));
         // XP
-        ClientApp.setTradeMenu(null);
+        ClientApp.setNonMainMenu(null);
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            OutsideView newOutsideView = new OutsideView();
+            ClientApp.setNonMainMenu(newOutsideView);
+            Main.getMain().setScreen(newOutsideView);
         });
-        System.out.println("be payan amad in tabe hekayat hamchenan baghi ast");
     }
 
     public void checkConfirmation(Message message) {
         // check other's check
-        System.out.println("rassa oomad");
         ArrayList<Stacks> starterSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("starterSelected")).getItems();
         ArrayList<Stacks> otherSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("otherSelected")).getItems();
         boolean answer = message.getFromBody("answer");
         if (answer) {
             // Inventory dorost she
-            addToInventory(otherSelected);
-            reduceFromInventory(starterSelected);
+            addToInventory(starterSelected);
+            reduceFromInventory(otherSelected);
         } else {
             // trade namovafagh bood
         }
         // XP
-        ClientApp.setTradeMenu(null);
+        ClientApp.setNonMainMenu(null);
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            OutsideView newOutsideView = new OutsideView();
+            ClientApp.setNonMainMenu(newOutsideView);
+            Main.getMain().setScreen(newOutsideView);
+
         });
     }
 
@@ -173,25 +183,41 @@ public class TradeController {
     private void addToInventory(ArrayList<Stacks> selected) {
         Backpack backpack = ClientApp.getCurrentGame().getCurrentPlayer().getBackpack();
         for (Stacks stack : selected) {
-            backpack.addItems(stack.getItem() , stack.getStackLevel() , stack.getQuantity());
+            backpack.addItems(stack.getItem(), stack.getStackLevel(), stack.getQuantity());
         }
     }
 
     private void reduceFromInventory(ArrayList<Stacks> selected) {
         Backpack backpack = ClientApp.getCurrentGame().getCurrentPlayer().getBackpack();
         for (Stacks stack : selected) {
-            backpack.reduceItems(stack.getItem() , stack.getStackLevel() , stack.getQuantity());
+            backpack.reduceItems(stack.getItem(), stack.getStackLevel(), stack.getQuantity());
         }
     }
 
-    private ArrayList<Trade> getTradeHistory(String username){
+    public ArrayList<Trade> getTradeHistory(String username) {
+        int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         Message message = new Message(new HashMap<>() {{
             put("mode", "getTradeHistory");
+            put("lobbyId", lobbyId);
             put("starter", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
             put("other", username);
             put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
-        }} , Message.Type.interaction_p2p);
-        // TODO : incomplete
-        return null;
+        }} , Message.Type.get_trade_history);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response) {
+            return new ArrayList<>();
+        }
+        ArrayList<Trade> trades = new ArrayList<>();
+        for(LinkedTreeMap<String ,Object> ti : response.<ArrayList<LinkedTreeMap<String,Object>>>getFromBody("trades")){
+            trades.add(new Trade(ti));
+        }
+        return trades;
+    }
+
+    public void exit(){
+        Main.getMain().getScreen().dispose();
+        OutsideView outsideView = new OutsideView();
+        ClientApp.setCurrentMenu(outsideView);
+        Main.getMain().setScreen(outsideView);
     }
 }

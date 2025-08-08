@@ -51,4 +51,24 @@ public class Trade {
         this.id = idCounter;
         idCounter++;
     }
+
+    public String getStarter() {
+        return starter;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public ArrayList<Stacks> getStarterSelected() {
+        return starterSelected;
+    }
+
+    public ArrayList<Stacks> getOthersSelected() {
+        return othersSelected;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

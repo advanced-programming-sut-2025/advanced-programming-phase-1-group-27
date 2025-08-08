@@ -5,11 +5,11 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
-import org.example.client.view.HomeView;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.StartTradeView;
 import org.example.client.view.InteractionMenus.TradeView;
 import org.example.client.view.OutsideView;
+import org.example.client.view.VoteView;
 import org.example.common.models.Direction;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
@@ -52,7 +52,8 @@ public class ServerUpdatesController { // handles updates sent by server
             int y = (new Random()).nextInt(cells[0].length);
             cells[x][y].thor();
             if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView
-                    && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap npcMap)) {
+                    && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
+                    && ClientApp.getNonMainMenu() == null) {
 
                 outsideView.displayThorAnimation(x,y);
 
@@ -138,6 +139,7 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void handleP2P(Message message) {
         String mode = message.getFromBody("mode");
+        System.out.println("MODE: " + mode);
         if (mode.equals("startTrade")) {
             if( ClientApp.getCurrentMenu() instanceof OutsideView) {
                 String username = message.getFromBody("starter");
@@ -151,24 +153,26 @@ public class ServerUpdatesController { // handles updates sent by server
             }
         }
         else if (mode.equals("respondToStartTrade")) {
-            if (ClientApp.getTradeMenu() instanceof PreTradeMenuView preTradeMenuView)
+            if (ClientApp.getNonMainMenu() instanceof PreTradeMenuView preTradeMenuView)
                 preTradeMenuView.getController().checkRespondToStart(message);
         }
         else if (mode.equals("updateSelected")) {
-            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
+            if (ClientApp.getNonMainMenu() instanceof TradeView tradeView)
                 tradeView.setSelectedOther(tradeView.getController().updateSelected(message));
         }
         else if (mode.equals("suggestTrade")) {
-            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
+            if (ClientApp.getNonMainMenu() instanceof TradeView tradeView)
                 tradeView.setTradeDoneByStarterSide(true);
         }
         else if (mode.equals("confirmTrade")) {
-            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
+            if (ClientApp.getNonMainMenu() instanceof TradeView tradeView) {
                 tradeView.getController().checkConfirmation(message);
+            }
         }
         else if (mode.equals("sendInventory")) {
-            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
+            if (ClientApp.getNonMainMenu() instanceof TradeView tradeView) {
                 tradeView.setOnScreenItems(new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("inventoryInfo")).getItems());
+            }
         }
         else {
             throw new UnsupportedOperationException(mode + " hasn't been handled");
@@ -177,14 +181,21 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void handleVote(Message message) {
         String mode = message.getFromBody("mode");
+        System.out.println("MODE: " + mode);
         if (mode.equals("askToTerminate")) {
-            // TODO : parsa, new window to ask
+            Gdx.app.postRunnable(() -> {
+               Main.getMain().getScreen().dispose();
+               Main.getMain().setScreen(new VoteView(mode, ""));
+            });
         }
         else if (mode.equals("terminateGame")) {
             ClientApp.terminateGame();
         }
         else if (mode.equals("askToKick")) {
-            // TODO : parsa, new window to ask
+            Gdx.app.postRunnable(() -> {
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new VoteView(mode, message.getFromBody("playerName")));
+            });
         }
         else if (mode.equals("kickPlayer")) {
             ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));

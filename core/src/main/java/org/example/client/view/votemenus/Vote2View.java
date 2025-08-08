@@ -1,4 +1,4 @@
-package org.example.client.view.VoteMenus;
+package org.example.client.view.votemenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,7 +15,7 @@ import org.example.client.view.AppMenu;
 
 import java.util.Scanner;
 
-public class VoteView extends AppMenu {
+public class Vote2View extends AppMenu {
     // Rassa Controller
     private final TradeController controller;
     private final String username;
@@ -30,9 +30,9 @@ public class VoteView extends AppMenu {
 
     private Stage stage;
 
-    public VoteView(String username) {
+    public Vote2View(String username) {
         controller = new TradeController();
-        ClientApp.setTradeMenu(this);
+        ClientApp.setNonMainMenu(this);
         this.username = username;
         yesButton = new TextButton("Yes" , skin);
         noButton = new TextButton("No" , skin);

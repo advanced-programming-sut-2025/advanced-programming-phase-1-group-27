@@ -40,6 +40,9 @@ public class PurchaseMenuController extends MenuController {
     public GraphicalResult purchase(Stock stock, int num, NPCType npc) {
         int sum = stock.getSalePrice() * num;
         Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
+        if (num > stock.getQuantity() && stock.getQuantity() != -1) {
+            return new GraphicalResult("Sorry, we are out of stock");
+        }
         if (sum > currentPlayer.getMoney()) {
             return new GraphicalResult("Sorry, you don't have enough money!",
                     GameAssetManager.getGameAssetManager().getErrorColor());
@@ -80,7 +83,7 @@ public class PurchaseMenuController extends MenuController {
                 put("lobbyId", lobbyId);
                 put("shopName", shopName);
                 put("itemName", itemName);
-                put("quantity", quantity);
+                put("quantity", num);
             }}, Message.Type.purchase_from_shop),
             TIMEOUT_MILLIS
         );

@@ -513,32 +513,27 @@ public class HUDView extends AppMenu {
 
                 Label nameLabel = new Label(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),skin);
                 Label friendshipInfo = new Label("Level: "+relation.getLevel()+"    XP: "+relation.getXp(),skin); /// TODO: PARSA XP/LVL por kon pls
-                TextButton giftButton = new TextButton("Gift",skin);
-                TextButton tradeMenuButton = new TextButton("Trade",skin);
+                TextButton interactButton = new TextButton("Interact",skin);
 
                 nameLabel.setColor(Color.BLACK);
                 friendshipInfo.setColor(Color.BLACK);
 
                 nameLabel.setVisible(false);
                 friendshipInfo.setVisible(false);
-                giftButton.setVisible(false);
-                tradeMenuButton.setVisible(false);
+                interactButton.setVisible(false);
 
                 friendsLabels.add(nameLabel);
                 friendshipInfos.add(friendshipInfo);
-                friendButtons.add(giftButton);
-                friendButtons.add(tradeMenuButton);
+                friendButtons.add(interactButton);
 
                 nameLabel.setPosition(520,660 - 180 * counter);
                 friendshipInfo.setPosition(670,660 - 180 * counter);
-                giftButton.setPosition(890,660 - 180 * counter - (giftButton.getHeight()-nameLabel.getHeight())/2f);
-                tradeMenuButton.setPosition(1070,660 - 180 * counter -  (tradeMenuButton.getHeight()-nameLabel.getHeight())/2f);
+                interactButton.setPosition(950,660 - 180 * counter - (interactButton.getHeight()-nameLabel.getHeight())/2f);
 
 
                 stage.addActor(nameLabel);
                 stage.addActor(friendshipInfo);
-                stage.addActor(giftButton);
-                stage.addActor(tradeMenuButton);
+                stage.addActor(interactButton);
 
                 counter ++;
 
@@ -954,15 +949,19 @@ public class HUDView extends AppMenu {
 
     private void displayExitMenu() {
 
+        Array<String> playersUsername = new Array<>();
+        ClientApp.getCurrentGame().getPlayers().forEach(
+                miniPlayer -> playersUsername.add(miniPlayer.getUsername())
+        );
+        playerSelectBox.setItems(playersUsername);
+
         exitMenuBackground.setPosition((Gdx.graphics.getWidth() - exitMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - exitMenuBackground.getHeight()) / 2f);
 
         exitMenuBackground.setVisible(currentMenu == InGameMenuType.EXIT);
         terminateButton.setVisible(currentMenu == InGameMenuType.EXIT);
         exitGameButton.setVisible(currentMenu == InGameMenuType.EXIT);
-        playerSelectBox.setVisible(currentMenu == InGameMenuType.EXIT &&
-                Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
-        kickPlayerButton.setVisible(currentMenu == InGameMenuType.EXIT &&
-                Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
+        playerSelectBox.setVisible(currentMenu == InGameMenuType.EXIT);
+        kickPlayerButton.setVisible(currentMenu == InGameMenuType.EXIT);
 
         exitGameButton.toFront();
         kickPlayerButton.toFront();
@@ -1160,8 +1159,7 @@ public class HUDView extends AppMenu {
 
             friendsLabels.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
             friendshipInfos.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
-            friendButtons.get(2 * i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
-            friendButtons.get(2 * i + 1).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
+            friendButtons.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
             friendsLabels.get(i).toFront();
             friendshipInfos.get(i).toFront();
 
@@ -1374,7 +1372,6 @@ public class HUDView extends AppMenu {
 
     }
 
-
     private void displayMapMenu(){
 
         mapMenuBackground.setVisible(currentMenu == InGameMenuType.MAP);
@@ -1389,8 +1386,6 @@ public class HUDView extends AppMenu {
         updatePlayerPositionsInMap();
 
     }
-
-
 
     private void displayEnergy(){
 
@@ -2046,11 +2041,11 @@ public class HUDView extends AppMenu {
         for ( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
 
             if ( !player.getUsername().equals(inGamePlayer.getUsername()) ){
-                friendButtons.get(2*counter + 1).addListener(new ClickListener() {
+                friendButtons.get(counter).addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         playClickSound();
-                        controller.openTradeMenu2(inGamePlayer.getUsername());
+                        controller.openInteractionMenu(inGamePlayer.getUsername());
                     }
 
                 });

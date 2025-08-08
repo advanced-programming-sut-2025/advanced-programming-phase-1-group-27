@@ -624,7 +624,7 @@ public class GameAssetManager {
 
     private final Image mapImage = new Image( new Texture(Gdx.files.internal("Images/Map/MapImage.png")));
 
-    private final Texture playerIcon = new Texture(Gdx.files.internal("Images/Map/icon.png"));
+    private final Texture playerIcon = new Texture(Gdx.files.internal("Images/Map/Icon.png"));
 
     private final Array<Texture> crows = new Array<>();
     private Animation<Texture> crowAnimationFrames;

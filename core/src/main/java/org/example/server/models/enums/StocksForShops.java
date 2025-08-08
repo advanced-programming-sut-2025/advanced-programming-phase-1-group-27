@@ -51,7 +51,6 @@ public enum StocksForShops {
         blacksmithStore.add(new Stock(MineralType.IronOre, -1, 150));
         blacksmithStore.add(new Stock(MineralType.GoldOre, -1, 400));
         blacksmithStore.add(new Stock(MineralType.Coal, -1, 150));
-        blacksmithStore.add(new Stock(FruitType.Carrot, 0, 150));
         return blacksmithStore;
     }
 

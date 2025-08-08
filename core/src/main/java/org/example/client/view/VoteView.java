@@ -1,20 +1,23 @@
-package org.example.client.view.InteractionMenus;
+package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
+import org.example.client.controller.VoteController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
-import org.example.client.view.AppMenu;
 
 import java.util.Scanner;
 
-public class StartTradeView extends AppMenu {
-    private final TradeController controller;
+public class VoteView extends AppMenu {
+    private final VoteController controller;
+    private final String voteMode;
     private final String username;
 
     private final TextButton yesButton;
@@ -27,10 +30,12 @@ public class StartTradeView extends AppMenu {
 
     private Stage stage;
 
-    public StartTradeView(String username) {
-        controller = new TradeController();
-        ClientApp.setNonMainMenu(this);
+    public VoteView(String voteMode, String username) {
+        this.voteMode = voteMode;
         this.username = username;
+
+        controller = new VoteController();
+
         yesButton = new TextButton("Yes" , skin);
         noButton = new TextButton("No" , skin);
 
@@ -43,11 +48,34 @@ public class StartTradeView extends AppMenu {
                 Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight(),
                 30));
-
-        label = new Label(username + " wants to trade with you", skin);
+        if (voteMode.equals("askToTerminate")) {
+            label = new Label("Do you want to terminate the game?", skin);
+        }
+        else {
+            label = new Label("Do you want to kick " + username + "?", skin);
+        }
         label.setColor(Color.BLACK);
         label.setFontScale(1.5f);
+
         setListeners();
+    }
+
+    private void setListeners() {
+        yesButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
+                controller.vote(voteMode, username, true);
+            }
+        });
+
+        noButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
+                controller.vote(voteMode, username, false);
+            }
+        });
     }
 
     private void displayBackground() {
@@ -73,13 +101,13 @@ public class StartTradeView extends AppMenu {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float v) {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int i, int i1) {
 
     }
 
@@ -106,23 +134,5 @@ public class StartTradeView extends AppMenu {
     @Override
     public void executeCommands(Scanner scanner) {
 
-    }
-
-    private void setListeners() {
-        yesButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.respondToStartTrade(username , true);
-                stage.clear();
-            }
-        });
-
-        noButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.respondToStartTrade(username , false);
-                stage.clear();
-            }
-        });
     }
 }

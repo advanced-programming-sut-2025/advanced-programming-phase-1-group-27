@@ -74,5 +74,6 @@ public class Message {
         voting,
         chat,
         get_player_position,
+        get_trade_history,
     }
 }

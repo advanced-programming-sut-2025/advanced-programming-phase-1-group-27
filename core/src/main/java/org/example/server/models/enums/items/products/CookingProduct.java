@@ -4,11 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.graphics.Texture;
 import org.example.server.models.Buff;
+import org.example.server.models.Edible;
 import org.example.server.models.Item;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.items.Recipe;
 
-public enum CookingProduct implements Item {
+public enum CookingProduct implements Item, Edible {
     FriedEgg(35, null, 50 , "Items/Cooking_products/Fried_Egg.png"),
     BakedFish(100, null, 75 , "Items/Cooking_products/Baked_Fish.png"),
     Salad(110, null, 113 , "Items/Cooking_products/Salad.png"),
@@ -94,5 +95,8 @@ public enum CookingProduct implements Item {
     }
 
 
-
+    @Override
+    public boolean isEdible() {
+        return true;
+    }
 }

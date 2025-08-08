@@ -8,6 +8,7 @@ import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.HUDView;
+import org.example.client.view.InteractionMenus.InteractionMenu;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.GameAssetManager;
@@ -301,7 +302,7 @@ public class HUDController extends MenuController {
     public void openTradeMenu(int target){
 
         String targetUser = ClientApp.getCurrentGame().getPlayers().get(target).getUsername();
-        Main.getMain().dispose();
+        Main.getMain().getScreen().dispose();
 //        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
         Main.getMain().setScreen(new PreTradeMenuView(targetUser));
 
@@ -309,11 +310,16 @@ public class HUDController extends MenuController {
 
     public void openTradeMenu2(String targetUser){
 
-        Main.getMain().dispose();
+        Main.getMain().getScreen().dispose();
 //        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
         Main.getMain().setScreen(new PreTradeMenuView(targetUser));
 
 
+    }
+
+    public void openInteractionMenu(String targetUser){
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new InteractionMenu(targetUser));
     }
 
     private GraphicalResult handleCheat(String input){

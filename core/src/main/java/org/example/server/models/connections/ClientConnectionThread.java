@@ -4,6 +4,7 @@ import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
+import org.example.server.controller.InteractionsWithOthers.TradeController;
 import org.example.server.models.Lobby;
 import org.example.server.models.ServerApp;
 import org.example.server.models.User;
@@ -153,6 +154,9 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         } else if (message.getType() == Message.Type.get_player_position) {
             sendMessage(GameController.getPlayerPosition(message));
+            return true;
+        } else if(message.getType() == Message.Type.get_trade_history){
+            sendMessage(TradeController.getTradesBetweenUsers(message));
             return true;
         }
         return false;

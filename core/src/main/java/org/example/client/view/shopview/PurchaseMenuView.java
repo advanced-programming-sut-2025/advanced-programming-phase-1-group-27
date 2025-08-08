@@ -18,6 +18,7 @@ import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
 
@@ -45,6 +46,9 @@ public class PurchaseMenuView extends AppMenu {
     private final Label image;
     private Label numberLabel;
     private Label sumLabel;
+
+    private GraphicalResult errorLabel;
+
     private int number;
 
     private final HUDView hudView;
@@ -101,6 +105,8 @@ public class PurchaseMenuView extends AppMenu {
         level.setFontScale(1.5f);
         price.setFontScale(1.5f);
         quantity.setFontScale(1.5f);
+
+        errorLabel = new GraphicalResult();
 
         nameLabel.setColor(Color.BLACK);
         levelLabel.setColor(Color.BLACK);
@@ -191,7 +197,7 @@ public class PurchaseMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.purchase(stock , number , npc);
+                errorLabel.set(controller.purchase(stock , number , npc));
             }
         });
     }
@@ -216,10 +222,13 @@ public class PurchaseMenuView extends AppMenu {
         quantityLabel.setPosition(Gdx.graphics.getWidth()/4f + width2 + 200 , Gdx.graphics.getHeight() - 230);
         priceLabel.setPosition(Gdx.graphics.getWidth()/4f + width3 + 450, Gdx.graphics.getHeight() - 250);
 
+        errorLabel.setPosition(20,200);
+
         stage.addActor(itemImage);
         stage.addActor(priceLabel);
         stage.addActor(quantityLabel);
         stage.addActor(nameLabel);
+        stage.addActor(errorLabel.getMessage());
         stage.addActor(levelLabel);
         stage.addActor(image);
         stage.addActor(name);
@@ -257,12 +266,13 @@ public class PurchaseMenuView extends AppMenu {
 
     @Override
     public void render(float v) {
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
+        errorLabel.update(v);
         displayButtons();
         Main.getBatch().begin();
         hudView.displayOnlyClock();
         Main.getBatch().end();
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
     }
 
     @Override
