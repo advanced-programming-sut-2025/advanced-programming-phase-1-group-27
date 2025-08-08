@@ -13,11 +13,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.view.AppMenu;
-import org.example.client.view.HUDView;
 import org.example.server.models.Relations.Trade;
 import org.example.server.models.Stacks;
-import org.example.server.models.enums.Plants.FruitType;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,22 +35,6 @@ public class TradeHistoryView extends AppMenu {
         controller = new TradeController();
         this.username = username;
         trades = controller.getTradeHistory(username);
-//        trades = new ArrayList<>();
-//        ArrayList<Stacks> item1 = new ArrayList<>();
-//        item1.add(new Stacks(FruitType.Carrot , 5));
-//        item1.add(new Stacks(FruitType.Carrot , 5));
-//        item1.add(new Stacks(FruitType.Carrot , 5));
-//        item1.add(new Stacks(FruitType.Carrot , 5));
-//
-//        trades.add(new Trade("a" , "b" , item1 , item1));
-//        trades.add(new Trade("a" , "b" , item1 , item1));
-//        trades.add(new Trade("a" , "b" , item1 , item1));
-//        trades.add(new Trade("a" , "b" , item1 , item1));
-//        trades.add(new Trade("a" , "b" , item1 , item1));
-//        trades.add(new Trade("a" , "b" , item1 , item1));
-//        trades.add(new Trade("a" , "b" , item1 , item1));
-//        trades.add(new Trade("a" , "b" , item1 , item1));
-//        trades.add(new Trade("a" , "b" , item1 , item1));
 
         exitButton = new TextButton("Exit" , skin);
         table = new Table();
