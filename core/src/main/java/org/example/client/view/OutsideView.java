@@ -36,6 +36,7 @@ public class OutsideView extends AppMenu {
     private final OutsideWorldController outsideWorldController = new OutsideWorldController(this);
     private final ToolGraphicalController toolController = new ToolGraphicalController(this);
     private final WorldController worldController = new WorldController(this);
+    private final ArrayList<AnimalController> animalControllers = new ArrayList<>();
     private Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     private final int tileSize = 40;
@@ -120,6 +121,9 @@ public class OutsideView extends AppMenu {
         playerController.setCamera(camera);
         toolController.setCamera(camera);
         worldController.setCamera(camera);
+
+        for (Animal animal : ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals())
+            animalControllers.add(new AnimalController(animal, this, camera));
     }
 
     @Override
@@ -137,6 +141,13 @@ public class OutsideView extends AppMenu {
         ClientApp.getCurrentGame().updateOtherPlayers();
         if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
             ClientApp.getCurrentGame().renderOtherPlayers();
+
+        for (AnimalController animalController : animalControllers) {
+            animalController.update();
+            animalController.render();
+        }
+        animalControllers.removeIf(AnimalController::sold);
+
         camera.update();
         outsideWorldController.update(delta);
 
@@ -151,13 +162,11 @@ public class OutsideView extends AppMenu {
         if (Gdx.input.justTouched()) {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
-            System.out.println("World coordinates: " + touchPos.x + ", " + touchPos.y);
 
             int i = OutsideView.getIndices(touchPos.x, touchPos.y).getX(),
                     j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
             Cell cell = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().getCell(i, j);
             if (cell != null && cell.getObject() instanceof NPC npc) {
-                System.out.println(npc.getType().getName() + " WAS CLICKED"); // TODO : parsa inja click shode ro in NPC
 //                InteractionsWithNPCController controller = new InteractionsWithNPCController();
 //                controller.meetNPC(npc.getName());
             }

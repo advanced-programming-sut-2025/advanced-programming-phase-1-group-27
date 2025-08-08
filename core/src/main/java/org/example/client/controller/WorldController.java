@@ -199,12 +199,12 @@ public class WorldController {
                     if (texture != null)
                         Main.getBatch().draw(texture, x - 10, y, 60, 100);
                 }
-                if (cells[i][j].getObject() instanceof Animal animal) {
-                    texture = GameAssetManager.getGameAssetManager().getAnimalTexture(animal.getType());
-                    if (texture != null)
-                        Main.getBatch().draw(texture, x + 20 - (texture.getWidth() / 2f), y);
-
-                }
+//                if (cells[i][j].getObject() instanceof Animal animal) {
+//                    texture = GameAssetManager.getGameAssetManager().getAnimalTexture(animal.getType());
+//                    if (texture != null)
+//                        Main.getBatch().draw(texture, x + 20 - (texture.getWidth() / 2f), y);
+//
+//                }
             }
         }
         if (map instanceof NPCMap) {
@@ -252,9 +252,10 @@ public class WorldController {
                 infoWindows.add(infoWindow);
             } else if (cell.getBuilding() instanceof AnimalEnclosure) {
                 view.getHudView().setAnimalEnclosure((AnimalEnclosure) cell.getBuilding());
-            } else if (cell.getObject() instanceof Animal animal) {
-                view.getHudView().setAnimal(animal);
             }
+//            else if (cell.getObject() instanceof Animal animal) {
+//                view.getHudView().setAnimal(animal);
+//            }
         }
     }
 

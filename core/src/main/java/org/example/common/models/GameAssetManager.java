@@ -19,6 +19,7 @@ import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 import org.example.server.models.utils.MusicPlayer;
 
+import javax.swing.plaf.TextUI;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -175,6 +176,214 @@ public class GameAssetManager {
         put(BuildingType.Barn, new Texture("assets/Buildings/Barn.png"));
         put(BuildingType.BigBarn, new Texture("assets/Buildings/Big Barn.png"));
         put(BuildingType.DeluxeBarn, new Texture("assets/Buildings/Deluxe Barn.png"));
+    }};
+
+    private final HashMap<AnimalType, Animation<Texture>> animalLeftWalkAnimation = new HashMap<>(){{
+        put(AnimalType.Chicken,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Chicken/03.png"),
+                        new Texture("assets/Images/Animals/Chicken/13.png"),
+                        new Texture("assets/Images/Animals/Chicken/23.png"),
+                        new Texture("assets/Images/Animals/Chicken/33.png")
+                        ));
+        put(AnimalType.Dinosaur,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Dinosaur/03.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/13.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/23.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/33.png")
+                        ));
+        put(AnimalType.Duck,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Duck/03.png"),
+                        new Texture("assets/Images/Animals/Duck/13.png"),
+                        new Texture("assets/Images/Animals/Duck/23.png"),
+                        new Texture("assets/Images/Animals/Duck/33.png")
+                        ));
+        put(AnimalType.Rabbit,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Rabbit/03.png"),
+                        new Texture("assets/Images/Animals/Rabbit/13.png"),
+                        new Texture("assets/Images/Animals/Rabbit/23.png"),
+                        new Texture("assets/Images/Animals/Rabbit/33.png")
+                        ));
+    }};
+
+    private final HashMap<AnimalType, Animation<Texture>> animalRightWalkAnimation = new HashMap<>(){{
+        put(AnimalType.Chicken,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Chicken/01.png"),
+                        new Texture("assets/Images/Animals/Chicken/11.png"),
+                        new Texture("assets/Images/Animals/Chicken/21.png"),
+                        new Texture("assets/Images/Animals/Chicken/31.png")
+                ));
+        put(AnimalType.Dinosaur,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Dinosaur/01.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/11.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/21.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/31.png")
+                ));
+        put(AnimalType.Duck,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Duck/01.png"),
+                        new Texture("assets/Images/Animals/Duck/11.png"),
+                        new Texture("assets/Images/Animals/Duck/21.png"),
+                        new Texture("assets/Images/Animals/Duck/31.png")
+                        ));
+        put(AnimalType.Rabbit,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Rabbit/01.png"),
+                        new Texture("assets/Images/Animals/Rabbit/11.png"),
+                        new Texture("assets/Images/Animals/Rabbit/21.png"),
+                        new Texture("assets/Images/Animals/Rabbit/31.png")
+                        ));
+        put(AnimalType.Cow,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Cow/01.png"),
+                        new Texture("assets/Images/Animals/Cow/11.png"),
+                        new Texture("assets/Images/Animals/Cow/21.png"),
+                        new Texture("assets/Images/Animals/Cow/31.png")
+                        ));
+        put(AnimalType.Goat,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Goat/01.png"),
+                        new Texture("assets/Images/Animals/Goat/11.png"),
+                        new Texture("assets/Images/Animals/Goat/21.png"),
+                        new Texture("assets/Images/Animals/Goat/31.png")
+                        ));
+        put(AnimalType.Pig,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Pig/01.png"),
+                        new Texture("assets/Images/Animals/Pig/11.png"),
+                        new Texture("assets/Images/Animals/Pig/21.png"),
+                        new Texture("assets/Images/Animals/Pig/31.png")
+                        ));
+        put(AnimalType.Sheep,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Sheep/01.png"),
+                        new Texture("assets/Images/Animals/Sheep/11.png"),
+                        new Texture("assets/Images/Animals/Sheep/21.png"),
+                        new Texture("assets/Images/Animals/Sheep/31.png")
+                ));
+    }};
+
+    private final HashMap<AnimalType, Animation<Texture>> animalUpWalkAnimation = new HashMap<>(){{
+        put(AnimalType.Chicken,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Chicken/02.png"),
+                        new Texture("assets/Images/Animals/Chicken/12.png"),
+                        new Texture("assets/Images/Animals/Chicken/22.png"),
+                        new Texture("assets/Images/Animals/Chicken/32.png")
+                ));
+        put(AnimalType.Dinosaur,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Dinosaur/02.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/12.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/22.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/32.png")
+                ));
+        put(AnimalType.Duck,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Duck/01.png"),
+                        new Texture("assets/Images/Animals/Duck/11.png"),
+                        new Texture("assets/Images/Animals/Duck/21.png"),
+                        new Texture("assets/Images/Animals/Duck/31.png")
+                ));
+        put(AnimalType.Rabbit,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Rabbit/02.png"),
+                        new Texture("assets/Images/Animals/Rabbit/12.png"),
+                        new Texture("assets/Images/Animals/Rabbit/22.png"),
+                        new Texture("assets/Images/Animals/Rabbit/32.png")
+                ));
+        put(AnimalType.Cow,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Cow/02.png"),
+                        new Texture("assets/Images/Animals/Cow/12.png"),
+                        new Texture("assets/Images/Animals/Cow/22.png"),
+                        new Texture("assets/Images/Animals/Cow/32.png")
+                ));
+        put(AnimalType.Goat,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Goat/02.png"),
+                        new Texture("assets/Images/Animals/Goat/12.png"),
+                        new Texture("assets/Images/Animals/Goat/22.png"),
+                        new Texture("assets/Images/Animals/Goat/32.png")
+                ));
+        put(AnimalType.Pig,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Pig/02.png"),
+                        new Texture("assets/Images/Animals/Pig/12.png"),
+                        new Texture("assets/Images/Animals/Pig/22.png"),
+                        new Texture("assets/Images/Animals/Pig/32.png")
+                ));
+        put(AnimalType.Sheep,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Sheep/02.png"),
+                        new Texture("assets/Images/Animals/Sheep/12.png"),
+                        new Texture("assets/Images/Animals/Sheep/22.png"),
+                        new Texture("assets/Images/Animals/Sheep/32.png")
+                ));
+    }};
+
+    private final HashMap<AnimalType, Animation<Texture>> animalDownWalkAnimation = new HashMap<>(){{
+        put(AnimalType.Chicken,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Chicken/00.png"),
+                        new Texture("assets/Images/Animals/Chicken/10.png"),
+                        new Texture("assets/Images/Animals/Chicken/20.png"),
+                        new Texture("assets/Images/Animals/Chicken/30.png")
+                ));
+        put(AnimalType.Dinosaur,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Dinosaur/00.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/10.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/20.png"),
+                        new Texture("assets/Images/Animals/Dinosaur/30.png")
+                ));
+        put(AnimalType.Duck,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Duck/00.png"),
+                        new Texture("assets/Images/Animals/Duck/10.png"),
+                        new Texture("assets/Images/Animals/Duck/20.png"),
+                        new Texture("assets/Images/Animals/Duck/30.png")
+                ));
+        put(AnimalType.Rabbit,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Rabbit/00.png"),
+                        new Texture("assets/Images/Animals/Rabbit/10.png"),
+                        new Texture("assets/Images/Animals/Rabbit/20.png"),
+                        new Texture("assets/Images/Animals/Rabbit/30.png")
+                ));
+        put(AnimalType.Cow,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Cow/00.png"),
+                        new Texture("assets/Images/Animals/Cow/10.png"),
+                        new Texture("assets/Images/Animals/Cow/20.png"),
+                        new Texture("assets/Images/Animals/Cow/30.png")
+                ));
+        put(AnimalType.Goat,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Goat/00.png"),
+                        new Texture("assets/Images/Animals/Goat/10.png"),
+                        new Texture("assets/Images/Animals/Goat/20.png"),
+                        new Texture("assets/Images/Animals/Goat/30.png")
+                ));
+        put(AnimalType.Pig,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Pig/00.png"),
+                        new Texture("assets/Images/Animals/Pig/10.png"),
+                        new Texture("assets/Images/Animals/Pig/20.png"),
+                        new Texture("assets/Images/Animals/Pig/30.png")
+                ));
+        put(AnimalType.Sheep,
+                new Animation<>(0.1f,
+                        new Texture("assets/Images/Animals/Sheep/00.png"),
+                        new Texture("assets/Images/Animals/Sheep/10.png"),
+                        new Texture("assets/Images/Animals/Sheep/20.png"),
+                        new Texture("assets/Images/Animals/Sheep/30.png")
+                ));
     }};
 
     private final TextureAtlas abigailAtlas = new TextureAtlas("assets/NPCs/Other/Abigail.atlas");
@@ -571,6 +780,19 @@ public class GameAssetManager {
     public Image getBlackImage() {
         return blackImage;
     }
+
+    public Animation<Texture> getAnimalUpAnimation(AnimalType animalType) {
+        return animalUpWalkAnimation.get(animalType);
+    }
+
+    public Animation<Texture> getAnimalDownAnimation(AnimalType animalType) {
+        return animalDownWalkAnimation.get(animalType);
+    }
+
+    public Animation<Texture> getAnimalRightAnimation(AnimalType animalType) {
+        return animalRightWalkAnimation.get(animalType);
+    }
+
 
     public Texture getLightGrassCellTexture() {
         return lightGrassCellTexture;

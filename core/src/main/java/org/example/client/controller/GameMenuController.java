@@ -605,6 +605,8 @@ public class GameMenuController extends MenuController {
         player.addMoney(animal.getPrice());
         map.removeAnimal(animal);
         animal.getEnclosure().removeAnimal(animal);
+        if (animal.isOut())
+            animal.getCurrentCell().setObject(null);
         return new Result(true, "You Sold " + animal.getName() + " " +
                 animal.getType().getName() + " for " + animal.getPrice() + " Coins!");
     }

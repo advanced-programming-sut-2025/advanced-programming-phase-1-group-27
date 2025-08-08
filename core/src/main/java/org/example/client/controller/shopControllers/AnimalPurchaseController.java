@@ -80,10 +80,8 @@ public class AnimalPurchaseController extends MenuController {
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
         if(result.hasError())
             return result;
-
-        buyAnimal((AnimalType) stock.getItem(), name);
-
-        currentPlayer.spendMoney(sum);
+        if (buyAnimal((AnimalType) stock.getItem(), name).success())
+            currentPlayer.spendMoney(sum);
         return result;
     }
 

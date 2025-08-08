@@ -1166,6 +1166,7 @@ public class HUDView extends AppMenu {
         this.animal = animal;
         setupAnimalData();
         currentMenu = InGameMenuType.ANIMAL;
+        makeOnScreenItemsInvisible();
     }
 
     private void displayEnclosure() {
@@ -1227,6 +1228,7 @@ public class HUDView extends AppMenu {
         this.animalEnclosure = animalEnclosure;
         setupEnclosureData();
         currentMenu = InGameMenuType.ANIMAL_ENCLOSURE;
+        makeOnScreenItemsInvisible();
     }
 
     private void displayMapMenu(){
