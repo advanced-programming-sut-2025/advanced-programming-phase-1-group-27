@@ -1248,8 +1248,9 @@ public class HUDView extends AppMenu {
 
         for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
 
-            inGamePlayer.updateMiniPlayer();
-//            System.out.println(" xration: " + inGamePlayer.getXRatio() + " yration: " + inGamePlayer.getYRatio());
+            if ( currentMenu == InGameMenuType.MAP ){
+                inGamePlayer.updateMiniPlayer();
+            }
 
             int xInitial = 764;
             int yInitial = 448;
@@ -1261,7 +1262,7 @@ public class HUDView extends AppMenu {
                 xInitial = 560;
                 yInitial = 564;
             }
-            else if ( inGamePlayer.getYRatio() == 1 ){
+            else if ( inGamePlayer.getMapIndex() == 1 ){
                 xInitial = 1022;
                 yInitial = 564;
             }
@@ -1269,7 +1270,7 @@ public class HUDView extends AppMenu {
                 xInitial = 566;
                 yInitial = 271;
             }
-            else if ( inGamePlayer.getXRatio() == 3 ){
+            else if ( inGamePlayer.getMapIndex() == 3 ){
                 xInitial = 1018;
                 yInitial = 271;
             }
@@ -1277,7 +1278,7 @@ public class HUDView extends AppMenu {
 
             Image playerIcon = playerIconsInMap.get(inGamePlayer);
             playerIcon.setPosition(xInitial + xCoEfficient * inGamePlayer.getXRatio() - playerIcon.getWidth()/2f,
-                    yInitial + yCoEfficient * inGamePlayer.getYRatio() - playerIcon.getWidth()/2f);
+                    yInitial + yCoEfficient * inGamePlayer.getYRatio() - playerIcon.getHeight()/2f);
             playerIcon.toFront();
 
         }

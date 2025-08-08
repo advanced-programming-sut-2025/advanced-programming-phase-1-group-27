@@ -27,12 +27,12 @@ public class MiniPlayer extends User {
             mapIndex = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(getUsername());
             return;
         }
-//        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new HashMap<>() {{
-//            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
-//            put("username", getUsername());
-//        }}, Message.Type.get_player_position), TIMEOUT_MILLIS);
-//        position = new Position(response.<LinkedTreeMap<String, Object>>getFromBody("position"));
-//        mapIndex = response.getIntFromBody("mapIndex");
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("username", getUsername());
+        }}, Message.Type.get_player_position), TIMEOUT_MILLIS);
+        position = new Position(response.<LinkedTreeMap<String, Object>>getFromBody("position"));
+        mapIndex = response.getIntFromBody("mapIndex");
     }
 
     public float getXRatio(){
