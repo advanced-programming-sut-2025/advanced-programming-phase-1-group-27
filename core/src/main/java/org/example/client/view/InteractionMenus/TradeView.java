@@ -10,272 +10,49 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GameAssetManager;
-import org.example.common.models.GraphicalResult;
 import org.example.server.models.Stacks;
-import org.example.server.models.enums.InGameMenuType;
-import org.example.server.models.enums.Plants.FruitType;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.enums.items.products.CraftingProduct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TradeView extends AppMenu {
-
-
-    /*
-
-
-
-
-
-
-
-
-
-
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-    عاقبت گنده گوزی
-
-
-
-
-
-
-
-
-
-
-
-     */
-
     private final TradeController controller;
-
-    private boolean tradeDoneByStarterSide;
     private final boolean starterSide;
     private final boolean targetSide;
-
-    private ArrayList<Stacks> selectedCurrent;
-    private ArrayList<Stacks> selectedOther;
-
     private final String starter;
     private final String other;
-
-    private float timer = 0f;
-
-    private ArrayList<Stacks> onScreenItems = new ArrayList<>();
-
-    private final HashMap<Stacks,Label> onScreenItemsQuantity;
-
+    private final HashMap<Stacks, Label> onScreenItemsQuantity;
     private final Label itemCountLabel;
     private final Label starterWaitForResponse;
     private final Label acceptOrDeclineTradeLabel;
-
     private final Image inventoryBackground;
     private final Image selectBox;
-
     private final TextButton increaseAmountButton;
     private final TextButton decreaseAmountButton;
     private final TextButton finishTrade;
     private final TextButton acceptTrade;
     private final TextButton declineTrade;
     private final TextButton addButton;
-
+    private final Stage stage;
+    private boolean tradeDoneByStarterSide;
+    private final ArrayList<Stacks> selectedCurrent;
+    private ArrayList<Stacks> selectedOther;
+    private float timer = 0f;
+    private final ArrayList<Stacks> onScreenItems = new ArrayList<>();
     private int itemCount;
     private int rowNum;
     private Integer selectItemIndex;
-
     //Scroll planes
-    private Table stockTableCurrent;
-    private ScrollPane scrollPaneCurrent;
-
-    private Table stockTableOther;
-    private ScrollPane scrollPaneOther;
-
-    private final Stage stage;
-
-    private final AtomicBoolean isInitialized = new AtomicBoolean(false);
+    private final Table stockTableCurrent;
+    private final ScrollPane scrollPaneCurrent;
+    private final Table stockTableOther;
+    private final ScrollPane scrollPaneOther;
 
     public TradeView(String starter, String other, ArrayList<Stacks> targetInventory) {
 
@@ -299,12 +76,12 @@ public class TradeView extends AppMenu {
         this.starter = starter;
         this.other = other;
 
-        increaseAmountButton = new TextButton("+",skin);
-        decreaseAmountButton = new TextButton("-",skin);
-        finishTrade = new TextButton("Finish",skin);
-        acceptTrade = new TextButton("Accept",skin);
-        declineTrade = new TextButton("Decline",skin);
-        addButton = new TextButton("Add",skin);
+        increaseAmountButton = new TextButton("+", skin);
+        decreaseAmountButton = new TextButton("-", skin);
+        finishTrade = new TextButton("Finish", skin);
+        acceptTrade = new TextButton("Accept", skin);
+        declineTrade = new TextButton("Decline", skin);
+        addButton = new TextButton("Add", skin);
 
 
         inventoryBackground = GameAssetManager.getGameAssetManager().getTradeInventoryBackground();
@@ -312,9 +89,9 @@ public class TradeView extends AppMenu {
         selectBox.setVisible(false);
 
         String target;
-        if(ClientApp.getCurrentGame().getCurrentPlayer().getUsername().equals(starter)) {
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getUsername().equals(starter)) {
             target = other;
-        }else {
+        } else {
             target = starter;
         }
         onScreenItemsQuantity = new HashMap<>();
@@ -323,8 +100,8 @@ public class TradeView extends AppMenu {
         }
 
         itemCountLabel = new Label(Integer.toString(itemCount), skin);
-        starterWaitForResponse = new Label("Dear " + starter +" please wait for " + other +"s response.", skin);
-        acceptOrDeclineTradeLabel = new Label("Dear " + other + " please accept or decline " + starter +"s offer", skin);
+        starterWaitForResponse = new Label("Dear " + starter + " please wait for " + other + "s response.", skin);
+        acceptOrDeclineTradeLabel = new Label("Dear " + other + " please accept or decline " + starter + "s offer", skin);
 
         stockTableCurrent = new Table();
         stockTableOther = new Table();
@@ -343,12 +120,11 @@ public class TradeView extends AppMenu {
         for (Stacks s : onScreenItems) {
             addToScreen(s);
         }
-        isInitialized.set(true);
         System.out.println("Inventory Received");
     }
 
 
-    private void displayInventory(){
+    private void displayInventory() {
         synchronized (onScreenItems) {
             for (Stacks image : onScreenItems) {
                 image.getItem().getItemImage().toFront();
@@ -357,14 +133,13 @@ public class TradeView extends AppMenu {
 
             for (int i = 0; i < Math.min(onScreenItems.size() - 12 * rowNum, 48); i++) {
                 System.out.println("im innnnnn");
-                onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setPosition(520 + 64 * (i % 12), 840 - 67 * ((int) (i / 12)));
+                onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setPosition(520 + 64 * (i % 12), 840 - 67 * (i / 12));
                 onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setVisible(true);
             }
 
             if (selectItemIndex != null && 12 * rowNum < selectItemIndex && selectItemIndex < 12 * (rowNum + 4)) {
                 selectBox.setVisible(true);
-                selectBox.setPosition(onScreenItems.get(selectItemIndex).getItem().getItemImage().getX() - 5,
-                        onScreenItems.get(selectItemIndex).getItem().getItemImage().getY() - 10);
+                selectBox.setPosition(onScreenItems.get(selectItemIndex).getItem().getItemImage().getX() - 5, onScreenItems.get(selectItemIndex).getItem().getItemImage().getY() - 10);
             } else {
                 selectBox.setVisible(false);
             }
@@ -377,8 +152,7 @@ public class TradeView extends AppMenu {
                 Label label = onScreenItemsQuantity.get(stacks);
                 if (stacks.getItem().getItemImage().isVisible()) {
                     label.setVisible(true);
-                    label.setPosition(stacks.getItem().getItemImage().getX() + stacks.getItem().getItemImage().getWidth() - 15,
-                            stacks.getItem().getItemImage().getY() + stacks.getItem().getItemImage().getHeight() - 25);
+                    label.setPosition(stacks.getItem().getItemImage().getX() + stacks.getItem().getItemImage().getWidth() - 15, stacks.getItem().getItemImage().getY() + stacks.getItem().getItemImage().getHeight() - 25);
                     label.toFront();
                 } else {
                     label.setVisible(false);
@@ -388,7 +162,7 @@ public class TradeView extends AppMenu {
         }
     }
 
-    private void displayButtons(){
+    private void displayButtons() {
 
         finishTrade.setVisible(starterSide && !tradeDoneByStarterSide);
         acceptTrade.setVisible(targetSide && tradeDoneByStarterSide);
@@ -398,25 +172,23 @@ public class TradeView extends AppMenu {
         decreaseAmountButton.setVisible(!tradeDoneByStarterSide && selectItemIndex != null);
 
 
-        finishTrade.setWidth(Gdx.graphics.getWidth()/5f);
-        finishTrade.setPosition((Gdx.graphics.getWidth()-finishTrade.getWidth())/2f,inventoryBackground.getY()-finishTrade.getHeight()-20);
+        finishTrade.setWidth(Gdx.graphics.getWidth() / 5f);
+        finishTrade.setPosition((Gdx.graphics.getWidth() - finishTrade.getWidth()) / 2f, inventoryBackground.getY() - finishTrade.getHeight() - 20);
 
-        acceptTrade.setWidth(Gdx.graphics.getWidth()/5f);
-        declineTrade.setWidth(Gdx.graphics.getWidth()/5f);
+        acceptTrade.setWidth(Gdx.graphics.getWidth() / 5f);
+        declineTrade.setWidth(Gdx.graphics.getWidth() / 5f);
 
-        acceptTrade.setPosition((Gdx.graphics.getWidth()-(acceptTrade.getWidth() + declineTrade.getWidth() + Gdx.graphics.getWidth()/20f))/2f,
-                inventoryBackground.getY()-finishTrade.getHeight()-20);
+        acceptTrade.setPosition((Gdx.graphics.getWidth() - (acceptTrade.getWidth() + declineTrade.getWidth() + Gdx.graphics.getWidth() / 20f)) / 2f, inventoryBackground.getY() - finishTrade.getHeight() - 20);
 
-        declineTrade.setPosition(acceptTrade.getX() + acceptTrade.getWidth() + Gdx.graphics.getWidth()/20f,
-                inventoryBackground.getY()-finishTrade.getHeight()-20);
+        declineTrade.setPosition(acceptTrade.getX() + acceptTrade.getWidth() + Gdx.graphics.getWidth() / 20f, inventoryBackground.getY() - finishTrade.getHeight() - 20);
 
-        increaseAmountButton.setPosition(inventoryBackground.getX()+inventoryBackground.getWidth()+40, itemCountLabel.getY() + itemCountLabel.getHeight()+20);
-        decreaseAmountButton.setPosition(inventoryBackground.getX()+inventoryBackground.getWidth()+40, itemCountLabel.getY() - decreaseAmountButton.getHeight() - 20);
-        addButton.setPosition(inventoryBackground.getX()+inventoryBackground.getWidth()+20, decreaseAmountButton.getY()-addButton.getHeight()-20);
+        increaseAmountButton.setPosition(inventoryBackground.getX() + inventoryBackground.getWidth() + 40, itemCountLabel.getY() + itemCountLabel.getHeight() + 20);
+        decreaseAmountButton.setPosition(inventoryBackground.getX() + inventoryBackground.getWidth() + 40, itemCountLabel.getY() - decreaseAmountButton.getHeight() - 20);
+        addButton.setPosition(inventoryBackground.getX() + inventoryBackground.getWidth() + 20, decreaseAmountButton.getY() - addButton.getHeight() - 20);
 
     }
 
-    private void displayLabels(){
+    private void displayLabels() {
 
         itemCountLabel.setText(Integer.toString(itemCount));
 
@@ -424,17 +196,16 @@ public class TradeView extends AppMenu {
         acceptOrDeclineTradeLabel.setVisible(tradeDoneByStarterSide && targetSide);
         itemCountLabel.setVisible(!tradeDoneByStarterSide && selectItemIndex != null);
 
-        starterWaitForResponse.setPosition((Gdx.graphics.getWidth()-starterWaitForResponse.getWidth())/2f,inventoryBackground.getY()-starterWaitForResponse.getHeight()-20);
-        acceptOrDeclineTradeLabel.setPosition((Gdx.graphics.getWidth()-acceptOrDeclineTradeLabel.getWidth())/2f,inventoryBackground.getY()+inventoryBackground.getHeight()+20);
-        itemCountLabel.setPosition(inventoryBackground.getX()+inventoryBackground.getWidth()+80,inventoryBackground.getY()+inventoryBackground.getHeight()/2f-itemCountLabel.getHeight()/2f);
+        starterWaitForResponse.setPosition((Gdx.graphics.getWidth() - starterWaitForResponse.getWidth()) / 2f, inventoryBackground.getY() - starterWaitForResponse.getHeight() - 20);
+        acceptOrDeclineTradeLabel.setPosition((Gdx.graphics.getWidth() - acceptOrDeclineTradeLabel.getWidth()) / 2f, inventoryBackground.getY() + inventoryBackground.getHeight() + 20);
+        itemCountLabel.setPosition(inventoryBackground.getX() + inventoryBackground.getWidth() + 80, inventoryBackground.getY() + inventoryBackground.getHeight() / 2f - itemCountLabel.getHeight() / 2f);
 
     }
 
     @Override
     public void show() {
 
-        inventoryBackground.setPosition((Gdx.graphics.getWidth()-inventoryBackground.getWidth())/2f,
-                2 * (Gdx.graphics.getHeight()-inventoryBackground.getHeight())/3f);
+        inventoryBackground.setPosition((Gdx.graphics.getWidth() - inventoryBackground.getWidth()) / 2f, 2 * (Gdx.graphics.getHeight() - inventoryBackground.getHeight()) / 3f);
 
 
         stage.addActor(menuBackground);
@@ -462,10 +233,8 @@ public class TradeView extends AppMenu {
         Main.getBatch().end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        if (isInitialized.get()) {
-            displayInventory();
-            displayItemQuantity();
-        }
+        displayInventory();
+        displayItemQuantity();
         displayLabels();
         displayButtons();
         stage.draw();
@@ -504,7 +273,7 @@ public class TradeView extends AppMenu {
 
     }
 
-    private void setListeners(){
+    private void setListeners() {
 
 
         stage.addListener(new InputListener() {
@@ -512,13 +281,12 @@ public class TradeView extends AppMenu {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
 
-                if ( keycode == Input.Keys.DOWN ){
-                    if ( onScreenItems.size() - ( 12 * rowNum) >48 ){
-                            rowNum ++;
-                        }
-                }
-                else if ( keycode ==  Input.Keys.UP ){
-                        rowNum = Math.max(0,rowNum-1);
+                if (keycode == Input.Keys.DOWN) {
+                    if (onScreenItems.size() - (12 * rowNum) > 48) {
+                        rowNum++;
+                    }
+                } else if (keycode == Input.Keys.UP) {
+                    rowNum = Math.max(0, rowNum - 1);
                 }
                 return false;
             }
@@ -526,14 +294,13 @@ public class TradeView extends AppMenu {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                for ( int i = 0 ; i < 48  ; i++ ){
-                    if ( 520 + (i%12) * 64 < x && x < 520 + (i%12) * 64 + 64 ){
-                        if ( 840 - (int)(i/12) * 66 < y && y < 840 - (int)(i/12) * 66 + 66 ){
+                for (int i = 0; i < 48; i++) {
+                    if (520 + (i % 12) * 64 < x && x < 520 + (i % 12) * 64 + 64) {
+                        if (840 - (i / 12) * 66 < y && y < 840 - (i / 12) * 66 + 66) {
 
-                            if ( selectItemIndex != null && selectItemIndex == (rowNum * 12 + i) ){
+                            if (selectItemIndex != null && selectItemIndex == (rowNum * 12 + i)) {
                                 selectItemIndex = null;
-                            }
-                            else{
+                            } else {
                                 selectItemIndex = rowNum * 12 + i;
                                 itemCount = 1;
                             }
@@ -560,7 +327,7 @@ public class TradeView extends AppMenu {
                 selectItemIndex = null;
                 tradeDoneByStarterSide = true;
                 ///  TODO: bara target ham in field true she!!!
-                controller.suggestTrade(starter , other);
+                controller.suggestTrade(starter, other);
             }
 
         });
@@ -572,7 +339,7 @@ public class TradeView extends AppMenu {
 
                 playClickSound();
                 ///  TODO
-                controller.sendConfirmation(true , starter , other , selectedOther , selectedCurrent);
+                controller.sendConfirmation(true, starter, other, selectedOther, selectedCurrent);
 
             }
 
@@ -585,7 +352,7 @@ public class TradeView extends AppMenu {
 
                 playClickSound();
                 ///  TODO
-                controller.sendConfirmation(false , starter , other , selectedOther , selectedCurrent);
+                controller.sendConfirmation(false, starter, other, selectedOther, selectedCurrent);
 
             }
 
@@ -597,7 +364,7 @@ public class TradeView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
 
                 playClickSound();
-                itemCount = Math.min(onScreenItems.get(selectItemIndex).getQuantity(),itemCount+1);
+                itemCount = Math.min(onScreenItems.get(selectItemIndex).getQuantity(), itemCount + 1);
 
             }
 
@@ -625,28 +392,25 @@ public class TradeView extends AppMenu {
 
                 Stacks alreadySelected = null;
 
-                for( Stacks stacks: selectedCurrent ){
-                    if( stacks.getItem().getName().equals(onScreenItems.get(selectItemIndex).getItem().getName()) ){
+                for (Stacks stacks : selectedCurrent) {
+                    if (stacks.getItem().getName().equals(onScreenItems.get(selectItemIndex).getItem().getName())) {
                         alreadySelected = stacks;
                     }
                 }
 
-                if( alreadySelected == null ){
-                    selectedCurrent.add(new Stacks(onScreenItems.get(selectItemIndex).getItem(),itemCount));
+                if (alreadySelected == null) {
+                    selectedCurrent.add(new Stacks(onScreenItems.get(selectItemIndex).getItem(), itemCount));
+                } else {
+                    alreadySelected.setQuantity(alreadySelected.getQuantity() + itemCount);
                 }
-                else{
-                    alreadySelected.setQuantity(alreadySelected.getQuantity()+itemCount);
-                }
 
 
-
-                if ( (onScreenItems.get(selectItemIndex).getQuantity() - itemCount) > 0 ){
+                if ((onScreenItems.get(selectItemIndex).getQuantity() - itemCount) > 0) {
 
                     onScreenItems.get(selectItemIndex).setQuantity(onScreenItems.get(selectItemIndex).getQuantity() - itemCount);
                     onScreenItemsQuantity.get(onScreenItems.get(selectItemIndex)).setText(String.valueOf(onScreenItems.get(selectItemIndex).getQuantity()));
 
-                }
-                else{
+                } else {
 
                     Stacks item = onScreenItems.get(selectItemIndex);
                     onScreenItemsQuantity.get(item).remove();
@@ -657,13 +421,12 @@ public class TradeView extends AppMenu {
 
                 }
 
-                controller.sendSelected(selectedCurrent,starter,other);
+                controller.sendSelected(selectedCurrent, starter, other);
 
 
             }
 
         });
-
 
 
     }
@@ -680,16 +443,16 @@ public class TradeView extends AppMenu {
     private void addToScreen(Stacks item) {
 
         Image itemImage = item.getItem().getItemImage();
-        itemImage.setSize(48,48);
+        itemImage.setSize(48, 48);
         stage.addActor(itemImage);
         onScreenItems.add(item);
 
-        Label quantityLabel = new Label(Integer.toString(item.getQuantity()),skin);
+        Label quantityLabel = new Label(Integer.toString(item.getQuantity()), skin);
         quantityLabel.setVisible(false);
         quantityLabel.setColor(Color.RED);
         quantityLabel.setFontScale(0.7f);
         stage.addActor(quantityLabel);
-        onScreenItemsQuantity.put(item,quantityLabel);
+        onScreenItemsQuantity.put(item, quantityLabel);
 
     }
 
@@ -717,7 +480,7 @@ public class TradeView extends AppMenu {
         stockTableCurrent.row();
 
         Iterator<Stacks> iterator = selectedCurrent.iterator();
-        while ( iterator.hasNext() ){
+        while (iterator.hasNext()) {
             Stacks stacks = iterator.next();
             Table row = new Table();
             Label nameLabel1 = new Label(stacks.getItem().getName(), skin);
@@ -745,8 +508,8 @@ public class TradeView extends AppMenu {
                 public void clicked(InputEvent event, float x, float y) {
                     playClickSound();
                     iterator.remove();
-                    for ( Stacks st : onScreenItems ){
-                        if ( st.getItem().getName().equals(stacks.getItem().getName()) ){
+                    for (Stacks st : onScreenItems) {
+                        if (st.getItem().getName().equals(stacks.getItem().getName())) {
                             st.setQuantity(st.getQuantity() + Integer.parseInt(String.valueOf(countLabel1.getText())));
                             onScreenItemsQuantity.get(st).setText(st.getQuantity());
                             return;
@@ -755,7 +518,7 @@ public class TradeView extends AppMenu {
                     }
 
                     addToScreen(stacks);
-                    controller.sendSelected(selectedCurrent,starter,other);
+                    controller.sendSelected(selectedCurrent, starter, other);
                 }
 
             });
