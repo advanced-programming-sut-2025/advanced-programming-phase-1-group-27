@@ -7,6 +7,7 @@ import org.example.client.view.AppMenu;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
 import org.example.common.models.Game;
+import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
@@ -24,12 +25,14 @@ import org.example.server.models.enums.ShopType;
 import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import static java.lang.Math.min;
 
 public class ClientGame implements Game {
     private final int lobbyId;
+    private final HashMap<String, Integer> usernameToMap;
     private User admin;
     private Player player;
     private final FarmMap[] farmMaps = new FarmMap[4];
@@ -47,6 +50,7 @@ public class ClientGame implements Game {
 
     public ClientGame(Lobby lobby, Player player, ArrayList<MiniPlayer> players) {
         this.lobbyId = lobby.getId();
+        this.usernameToMap = lobby.getUsernameToMap();
         this.admin = lobby.getAdmin();
         this.player = player;
         this.players = players;
@@ -481,5 +485,16 @@ public class ClientGame implements Game {
         }
         OtherPlayerController otherPlayerController = getOtherPlayerController(playerName);
         otherPlayerControllers.remove(otherPlayerController);
+    }
+
+    public int getPlayerMapIndex(String playerName) {
+        return usernameToMap.get(playerName);
+    }
+
+    public Message getPlayerPosition() {
+        return new Message(new HashMap<>() {{
+            put("position", player.getPosition().getInfo());
+            put("isInNPCMap", player.getCurrentMap() instanceof NPCMap);
+        }}, Message.Type.response);
     }
 }

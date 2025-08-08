@@ -158,7 +158,7 @@ public class ServerUpdatesController { // handles updates sent by server
             if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
                 tradeView.setSelectedOther(tradeView.getController().updateSelected(message));
         }
-        else if (mode.equals("suggestedTrade")) {
+        else if (mode.equals("suggestTrade")) {
             if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
                 tradeView.setTradeDoneByStarterSide(true);
         }
@@ -189,5 +189,10 @@ public class ServerUpdatesController { // handles updates sent by server
         else if (mode.equals("kickPlayer")) {
             ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));
         }
+    }
+
+    public static void handleChat(Message message) {
+        String messageText = message.getFromBody("message");
+        ClientApp.getCurrentGame().getCurrentPlayer().addToChatInbox(messageText);
     }
 }

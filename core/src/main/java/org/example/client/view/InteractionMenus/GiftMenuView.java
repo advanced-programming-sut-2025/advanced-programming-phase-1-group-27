@@ -14,10 +14,12 @@ import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GameAssetManager;
+import org.example.server.models.Stacks;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class GiftMenuView extends AppMenu {
@@ -54,7 +56,6 @@ public class GiftMenuView extends AppMenu {
         exitButton = new TextButton("Exit", skin);
 
         stage = new Stage(new ScreenViewport());
-
         setListeners();
     }
 

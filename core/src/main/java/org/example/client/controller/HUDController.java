@@ -367,17 +367,56 @@ public class HUDController extends MenuController {
                     matcher.group("level").trim());
         }
         else if ((matcher = CheatCommands.ToAllChat.getMatcher(input)) != null) {
-            String text = matcher.group("chatText").trim();
-            ///  TODO: PAYAM ALL BERE(result yadet nare)
+            String text = trimMessage(matcher.group("chatText").trim());
+            text = ClientApp.getLoggedInUser().getUsername() + ":\n" + text;
+            result = sendToAll(text);
         }else if ((matcher = CheatCommands.PrivateChat.getMatcher(input)) != null) {
-            String text = matcher.group("chatText").trim();
+            String text = trimMessage(matcher.group("chatText").trim());
+            text = ClientApp.getLoggedInUser().getUsername() + ":\n" + text;
             String targetUsername = matcher.group("targetPlayer").trim();
-            ///  TODO: PAYAM BARA TARGET BERE(result yadet nare)
+            result = sendToPerson(text, targetUsername);
         }
-
         return new GraphicalResult(result.message(),result.success()? GameAssetManager.getGameAssetManager().getAcceptColor() : GameAssetManager.getGameAssetManager().getErrorColor(), result.success() );
+    }
 
+    public Result sendToAll(String text) {
+        if (calcMessageLines(text) > 6)
+            return new Result(false, "Message too long!");
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "sendToAll");
+            put("sender", ClientApp.getLoggedInUser().getUsername());
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("message", text);
+        }}, Message.Type.chat));
+        return new Result(true, "Message sent successfully");
+    }
 
+    public Result sendToPerson(String text, String username) {
+        if (calcMessageLines(text) > 6)
+            return new Result(false, "Message too long!");
+        if (ClientApp.getCurrentGame().getMiniPlayerByUsername(username) == null)
+            return new Result(false, "Username not found");
+        if (ClientApp.getLoggedInUser().getUsername().equals(username))
+            return new Result(false, "You can't message to yourself");
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "sendToPerson");
+            put("username", username);
+            put("message", text);
+        }}, Message.Type.chat));
+        return new Result(true, "Message sent successfully");
+    }
+
+    private String trimMessage(String text) {
+        return text.replaceAll("(.{18})", "$1-\n").trim();
+    }
+
+    private int calcMessageLines(String text) {
+        int numberOfLines = 0;
+        for (char c : text.toCharArray()) {
+            if (c == '\n')
+                ++numberOfLines;
+        }
+        return numberOfLines;
     }
 
     public void handleTabPressInTextInput(){

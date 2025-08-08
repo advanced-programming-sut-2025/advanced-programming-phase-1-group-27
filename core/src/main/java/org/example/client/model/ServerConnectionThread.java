@@ -120,6 +120,14 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.handleVote(message);
             return true;
         }
+        else if (message.getType() == Message.Type.chat) {
+            ServerUpdatesController.handleChat(message);
+            return true;
+        }
+        else if (message.getType() == Message.Type.get_player_position) {
+            sendMessage(ClientApp.getCurrentGame().getPlayerPosition());
+            return true;
+        }
         return false;
     }
 
