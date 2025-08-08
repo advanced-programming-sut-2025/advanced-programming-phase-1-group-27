@@ -41,15 +41,15 @@ public class AppView {
 
     public void runViaGraphics() {
         // ------REGULAR------
-//        if (ClientApp.loadSavedUser()) {
-//            Main.getMain().setScreen(new MainMenuView());
-//        }
-//        else {
-//            Main.getMain().setScreen(new WelcomeMenuView());
-//        }
+        if (ClientApp.loadSavedUser()) {
+            Main.getMain().setScreen(new MainMenuView());
+        }
+        else {
+            Main.getMain().setScreen(new WelcomeMenuView());
+        }
 
         // ------CHEAT------
-        Main.getMain().setScreen(new WelcomeMenuView());
+//        Main.getMain().setScreen(new WelcomeMenuView());
 //        cheat();
     }
 

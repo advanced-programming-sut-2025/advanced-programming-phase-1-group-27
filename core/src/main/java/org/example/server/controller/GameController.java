@@ -174,6 +174,7 @@ public class GameController {
         lobby.startVote();
         lobby.notifyAll(new Message(new HashMap<>() {{
             put("mode", "askToKick");
+            put("playerName", message.getFromBody("playerName"));
         }}, Message.Type.voting));
     }
 
@@ -182,11 +183,11 @@ public class GameController {
         assert lobby != null;
         lobby.vote(message.getFromBody("vote"));
         if (lobby.hasPollWon()) {
-            lobby.kickPlayer(message.getFromBody("playerName"));
             lobby.notifyAll(new Message(new HashMap<>() {{
                 put("mode", "kickPlayer");
                 put("playerName", message.getFromBody("playerName"));
             }}, Message.Type.voting));
+            lobby.kickPlayer(message.getFromBody("playerName"));
         }
     }
 
