@@ -84,8 +84,6 @@ public class HUDView extends AppMenu {
     private final Image boostBar;
     private final Image greenBar;
     private final Image redBar;
-    private final Image messageBackgroundImage;
-    private final Image messageAlertImage;
     private final Image enclosureBackground;
     private final Image animalBackground;
     private final Image radioBackgroundImage;

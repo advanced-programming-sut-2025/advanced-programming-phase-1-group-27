@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import org.example.server.models.Item;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.Plants.*;
@@ -21,6 +22,7 @@ import org.example.server.models.utils.MusicPlayer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class GameAssetManager {
@@ -404,14 +406,32 @@ public class GameAssetManager {
 
     private final Image radioBackground = new Image( new Texture(Gdx.files.internal("Images/RadioBackground.png")));
 
+    private final Array<Texture> crows = new Array<>();
+    private Animation<Texture> crowAnimationFrames;
 
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
             gameAssetManager = new GameAssetManager();
         }
+
         return gameAssetManager;
 
+    }
+
+    private void setUpImageArray(){
+
+        for( int i = 18; i < 94; i++ ){
+            crows.add(new Texture(Gdx.files.internal("CrowAttack/unscreen-0"+i+".png")));
+        }
+
+        crowAnimationFrames = new Animation<>(0.05f, crows);
+
+    }
+
+    public Animation<Texture> getCrowAnimationFrames() {
+        setUpImageArray();
+        return crowAnimationFrames;
     }
 
     public Image getRadioBackground() {

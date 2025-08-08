@@ -98,6 +98,12 @@ public class OutsideView extends AppMenu {
 
     }
 
+    public void displayCrowAttack(int i, int j){
+
+        outsideWorldController.setCrowAttack(3.35f,i,j);
+
+    }
+
     @Override
     public void executeCommands(Scanner scanner) {
 
