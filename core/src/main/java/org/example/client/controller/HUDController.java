@@ -301,7 +301,7 @@ public class HUDController extends MenuController {
     public void openTradeMenu(int target){
 
         String targetUser = ClientApp.getCurrentGame().getPlayers().get(target).getUsername();
-        Main.getMain().dispose();
+        Main.getMain().getScreen().dispose();
 //        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
         Main.getMain().setScreen(new PreTradeMenuView(targetUser));
 
@@ -309,7 +309,7 @@ public class HUDController extends MenuController {
 
     public void openTradeMenu2(String targetUser){
 
-        Main.getMain().dispose();
+        Main.getMain().getScreen().dispose();
 //        ClientApp.setCurrentMenu(new PreTradeMenuView(targetUser,ClientApp.getCurrentMenu()));
         Main.getMain().setScreen(new PreTradeMenuView(targetUser));
 

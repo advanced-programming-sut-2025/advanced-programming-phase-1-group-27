@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
@@ -32,6 +33,8 @@ public class PreTradeMenuView extends AppMenu {
     private final Label tradeMenuLabel;
     private final Label targetPlayerLabel;
 
+    private final ArrayList<Stacks> targetInventory;
+
     private Stage stage;
 
     public PreTradeMenuView(String username) {
@@ -47,6 +50,7 @@ public class PreTradeMenuView extends AppMenu {
         tradeMenuLabel = new Label("Trade Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
 
+        targetInventory = InteractionsWithUserController.getInventory(username);
 
         setListeners();
     }
@@ -130,5 +134,9 @@ public class PreTradeMenuView extends AppMenu {
 
     public TradeController getController() {
         return controller;
+    }
+
+    public ArrayList<Stacks> getTargetInventory() {
+        return targetInventory;
     }
 }

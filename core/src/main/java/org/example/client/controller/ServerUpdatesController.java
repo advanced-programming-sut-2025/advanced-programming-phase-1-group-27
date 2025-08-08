@@ -52,7 +52,8 @@ public class ServerUpdatesController { // handles updates sent by server
             int y = (new Random()).nextInt(cells[0].length);
             cells[x][y].thor();
             if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView
-                    && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap npcMap)) {
+                    && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
+                    && ClientApp.getTradeMenu() == null) {
 
                 outsideView.displayThorAnimation(x,y);
 
@@ -138,6 +139,7 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void handleP2P(Message message) {
         String mode = message.getFromBody("mode");
+        System.out.println("MODE: " + mode);
         if (mode.equals("startTrade")) {
             if( ClientApp.getCurrentMenu() instanceof OutsideView) {
                 String username = message.getFromBody("starter");
@@ -163,12 +165,14 @@ public class ServerUpdatesController { // handles updates sent by server
                 tradeView.setTradeDoneByStarterSide(true);
         }
         else if (mode.equals("confirmTrade")) {
-            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
+            if (ClientApp.getTradeMenu() instanceof TradeView tradeView) {
                 tradeView.getController().checkConfirmation(message);
+            }
         }
         else if (mode.equals("sendInventory")) {
-            if (ClientApp.getTradeMenu() instanceof TradeView tradeView)
+            if (ClientApp.getTradeMenu() instanceof TradeView tradeView) {
                 tradeView.setOnScreenItems(new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("inventoryInfo")).getItems());
+            }
         }
         else {
             throw new UnsupportedOperationException(mode + " hasn't been handled");

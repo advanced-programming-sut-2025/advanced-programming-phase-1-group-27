@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TradeView extends AppMenu {
 
@@ -43,7 +44,7 @@ public class TradeView extends AppMenu {
 
     private float timer = 0f;
 
-    private final ArrayList<Stacks> onScreenItems;
+    private ArrayList<Stacks> onScreenItems = new ArrayList<>();
 
     private final HashMap<Stacks,Label> onScreenItemsQuantity;
 
@@ -74,7 +75,9 @@ public class TradeView extends AppMenu {
 
     private final Stage stage;
 
-    public TradeView(String starter, String other) {
+    private final AtomicBoolean isInitialized = new AtomicBoolean(false);
+
+    public TradeView(String starter, String other, ArrayList<Stacks> targetInventory) {
 
         controller = new TradeController();
         ClientApp.setTradeMenu(this);
@@ -93,21 +96,6 @@ public class TradeView extends AppMenu {
 
         selectedCurrent = new ArrayList<>();
         selectedOther = new ArrayList<>();
-
-//        selectedCurrent.add(new Stacks(FruitType.Apple,20));
-//        selectedCurrent.add(new Stacks(FruitType.Apple,20));
-//        selectedCurrent.add(new Stacks(FruitType.Apple,20));
-//        selectedCurrent.add(new Stacks(FruitType.Apple,20));
-//        selectedCurrent.add(new Stacks(FruitType.Apple,20));
-//        selectedCurrent.add(new Stacks(FruitType.Apple,20));
-//        selectedCurrent.add(new Stacks(FruitType.Apple,20));
-//
-//        selectedOther.add(new Stacks(FruitType.Apple,20));
-//        selectedOther.add(new Stacks(FruitType.Apple,20));
-//        selectedOther.add(new Stacks(FruitType.Apple,20));
-//        selectedOther.add(new Stacks(FruitType.Apple,20));
-//        selectedOther.add(new Stacks(FruitType.Apple,20));
-//        selectedOther.add(new Stacks(FruitType.Apple,20));
 
         this.starter = starter;
         this.other = other;
@@ -130,21 +118,9 @@ public class TradeView extends AppMenu {
             target = starter;
         }
         onScreenItemsQuantity = new HashMap<>();
-        onScreenItems = new ArrayList<>();
-        InteractionsWithUserController.sendInventory(
-                ClientApp.getCurrentGame().getCurrentPlayer().getBackpack(),
-                starter, other
-        );
-//        ///  GET TARGET PLAYER INVENTORY FROM SERVER
-//        // TEMP:
-//        addToScreen(new Stacks(ToolType.BambooPole,20));
-//        for (CraftingProduct cp : CraftingProduct.values()) {
-//            addToScreen(new Stacks(cp,10));
-//        }
-//        for (FruitType cp : FruitType.values()) {
-//            addToScreen(new Stacks(cp,10));
-//        }
-        
+        for (Stacks slot : targetInventory) {
+            addToScreen(slot);
+        }
 
         itemCountLabel = new Label(Integer.toString(itemCount), skin);
         starterWaitForResponse = new Label("Dear " + starter +" please wait for " + other +"s response.", skin);
@@ -164,14 +140,11 @@ public class TradeView extends AppMenu {
     }
 
     public void setOnScreenItems(ArrayList<Stacks> onScreenItems) {
-
-        synchronized (onScreenItems) {
-            this.onScreenItems.clear();
-//            this.onScreenItems.addAll(onScreenItems);
-            for( Stacks s : onScreenItems ) {
-                addToScreen(s);
-            }
+        for (Stacks s : onScreenItems) {
+            addToScreen(s);
         }
+        isInitialized.set(true);
+        System.out.println("Inventory Received");
     }
 
     private void displayInventory(){
@@ -196,24 +169,21 @@ public class TradeView extends AppMenu {
         }
     }
 
-    private void displayItemQuantity(){
+    private void displayItemQuantity() {
+        synchronized (onScreenItems) {
+            for (Stacks stacks : onScreenItems) {
+                Label label = onScreenItemsQuantity.get(stacks);
+                if (stacks.getItem().getItemImage().isVisible()) {
+                    label.setVisible(true);
+                    label.setPosition(stacks.getItem().getItemImage().getX() + stacks.getItem().getItemImage().getWidth() - 15,
+                            stacks.getItem().getItemImage().getY() + stacks.getItem().getItemImage().getHeight() - 25);
+                    label.toFront();
+                } else {
+                    label.setVisible(false);
+                }
 
-
-
-        for ( Stacks stacks: onScreenItems ){
-            Label label = onScreenItemsQuantity.get(stacks);
-            if ( stacks.getItem().getItemImage().isVisible() ){
-                label.setVisible(true);
-                label.setPosition(stacks.getItem().getItemImage().getX()+stacks.getItem().getItemImage().getWidth()-15,
-                        stacks.getItem().getItemImage().getY()+stacks.getItem().getItemImage().getHeight()-25);
-                label.toFront();
             }
-            else{
-                label.setVisible(false);
-            }
-
         }
-
     }
 
     private void displayButtons(){
@@ -290,8 +260,10 @@ public class TradeView extends AppMenu {
         Main.getBatch().end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        displayInventory();
-        displayItemQuantity();
+        if (isInitialized.get()) {
+            displayInventory();
+            displayItemQuantity();
+        }
         displayLabels();
         displayButtons();
         stage.draw();

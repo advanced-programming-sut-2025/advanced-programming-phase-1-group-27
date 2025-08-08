@@ -207,7 +207,7 @@ public class ClientGame implements Game {
                 if (plant.getCell().isProtected())
                     continue;
 
-                if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView ){
+                if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView && ClientApp.getTradeMenu() == null){
                     outsideView.displayCrowAttack(plant.getCell().getPosition().getX(),plant.getCell().getPosition().getY());
                 }
 

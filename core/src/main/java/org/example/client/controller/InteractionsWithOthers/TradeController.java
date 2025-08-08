@@ -8,6 +8,7 @@ import org.example.client.view.AppMenu;
 import org.example.client.view.HomeView;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.TradeView;
+import org.example.client.view.OutsideView;
 import org.example.common.models.Message;
 import org.example.server.models.Relations.Trade;
 import org.example.server.models.Stacks;
@@ -44,10 +45,15 @@ public class TradeController {
             put("answer", answer);
         }}, Message.Type.interaction_p2p);
         ClientApp.getServerConnectionThread().sendMessage(message);
+        ArrayList<Stacks> targetInventory = answer? InteractionsWithUserController.getInventory(username) : new ArrayList<>();
         Gdx.app.postRunnable(() -> {
             if (answer) {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername()));
+                Main.getMain().setScreen(new TradeView(
+                        username,
+                        ClientApp.getCurrentGame().getCurrentPlayer().getUsername(),
+                        targetInventory
+                ));
             } else {
                 ClientApp.setTradeMenu(null);
                 Main.getMain().getScreen().dispose();
@@ -60,10 +66,11 @@ public class TradeController {
         boolean answer = message.getFromBody("answer");
         String starter = message.getFromBody("starter");
         String other = message.getFromBody("other");
+        System.out.println("answer: " + answer);
         Gdx.app.postRunnable(() -> {
-            if (answer) {
+            if (answer && ClientApp.getTradeMenu() instanceof PreTradeMenuView preTradeMenuView) {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new TradeView(starter, other));
+                Main.getMain().setScreen(new TradeView(starter, other, preTradeMenuView.getTargetInventory()));
             } else {
                 ClientApp.setTradeMenu(null);
                 Main.getMain().getScreen().dispose();
@@ -107,12 +114,10 @@ public class TradeController {
             Main.getMain().getScreen().dispose();
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         });
-        System.out.println("be payan amad in tabe hekayat hamchenan baghi ast");
     }
 
     public void checkConfirmation(Message message) {
         // check other's check
-        System.out.println("rassa oomad");
         ArrayList<Stacks> starterSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("starterSelected")).getItems();
         ArrayList<Stacks> otherSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("otherSelected")).getItems();
         boolean answer = message.getFromBody("answer");

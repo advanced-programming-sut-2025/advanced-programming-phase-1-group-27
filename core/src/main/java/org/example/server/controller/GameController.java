@@ -102,7 +102,7 @@ public class GameController {
             int lobbyId = message.getIntFromBody("lobbyId");
             if(answer){
                 Trade trade = new Trade(message);
-                ServerApp.getLobbies().get(lobbyId).getGame().addTrade(trade);
+                ServerApp.getLobbyById(lobbyId).getGame().addTrade(trade);
             }
         }
         ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(

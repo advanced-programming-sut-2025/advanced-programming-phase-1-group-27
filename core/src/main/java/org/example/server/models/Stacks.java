@@ -32,6 +32,9 @@ public class Stacks {
     public HashMap<String, Object> getInfo() {
         HashMap<String, Object> info = new HashMap<>();
         info.put("item", item.getName());
+        if (stackLevel == null) {
+            System.out.println("item : " + item.getName());
+        }
         info.put("stackLevel", stackLevel.name());
         info.put("quantity", quantity);
         return info;
