@@ -512,6 +512,7 @@ public class TradeView extends AppMenu {
                         if (st.getItem().getName().equals(stacks.getItem().getName())) {
                             st.setQuantity(st.getQuantity() + Integer.parseInt(String.valueOf(countLabel1.getText())));
                             onScreenItemsQuantity.get(st).setText(st.getQuantity());
+                            controller.sendSelected(selectedCurrent, starter, other);
                             return;
                         }
 

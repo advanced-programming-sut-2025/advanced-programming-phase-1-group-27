@@ -6,6 +6,7 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.TradeView;
+import org.example.client.view.OutsideView;
 import org.example.common.models.Message;
 import org.example.server.models.Relations.Trade;
 import org.example.server.models.Stacks;
@@ -104,7 +105,9 @@ public class TradeController {
         ClientApp.setTradeMenu(null);
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            OutsideView newOutsideView = new OutsideView();
+            ClientApp.setTradeMenu(newOutsideView);
+            Main.getMain().setScreen(newOutsideView);
         });
     }
 
@@ -124,7 +127,10 @@ public class TradeController {
         ClientApp.setTradeMenu(null);
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            OutsideView newOutsideView = new OutsideView();
+            ClientApp.setTradeMenu(newOutsideView);
+            Main.getMain().setScreen(newOutsideView);
+
         });
     }
 
