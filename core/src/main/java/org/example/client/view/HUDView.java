@@ -1287,7 +1287,6 @@ public class HUDView extends AppMenu {
 
     }
 
-
     private void displayMapMenu(){
 
         mapMenuBackground.setVisible(currentMenu == InGameMenuType.MAP);
@@ -1302,8 +1301,6 @@ public class HUDView extends AppMenu {
         updatePlayerPositionsInMap();
 
     }
-
-
 
     private void displayEnergy(){
 

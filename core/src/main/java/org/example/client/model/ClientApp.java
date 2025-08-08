@@ -33,6 +33,7 @@ public class ClientApp {
     private static ClientGame currentGame = null;
     private static AppMenu currentMenu = null;
     private static AppMenu TradeMenu = null;
+    private static AppMenu GiftMenu = null;
 
     public static boolean loadSavedUser() {
         User savedUser = getSavedUser();
@@ -206,6 +207,10 @@ public class ClientApp {
 
     public static void setTradeMenu(AppMenu tradeMenu) {
         TradeMenu = tradeMenu;
+    }
+
+    public static void setGiftMenu(AppMenu giftMenu) {
+        GiftMenu = giftMenu;
     }
 
     public static void saveGame() {
