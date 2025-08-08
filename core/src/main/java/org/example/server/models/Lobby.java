@@ -205,6 +205,13 @@ public class Lobby {
         }
     }
 
+    public void notifyExcept(String username, Message message) {
+        for (User user : users) {
+            if (!user.getUsername().equals(username))
+                ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
+        }
+    }
+
     public void notifyUser(User user, Message message) {
         ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
     }

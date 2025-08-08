@@ -157,16 +157,6 @@ public class OutsideView extends AppMenu {
             }
         }
 
-        sobhan();
-
-    }
-
-    public void sobhan() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
-
-            Animal animal = new Animal(AnimalType.Dinosaur, "SOBI MOBI");
-            hudView.setAnimal(animal);
-        }
     }
 
 

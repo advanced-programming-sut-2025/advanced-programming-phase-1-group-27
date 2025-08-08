@@ -84,8 +84,6 @@ public class HUDView extends AppMenu {
     private final Image boostBar;
     private final Image greenBar;
     private final Image redBar;
-    private final Image messageBackgroundImage;
-    private final Image messageAlertImage;
     private final Image enclosureBackground;
     private final Image animalBackground;
     private final Image radioBackgroundImage;
@@ -395,10 +393,7 @@ public class HUDView extends AppMenu {
         messageBackgroundImage = new ImageButton(GameAssetManager.getGameAssetManager().getMessageBackgroundImage().getDrawable());
         readingMessage = false;
         messageLabel.setColor(Color.BLACK);
-        inbox = new ArrayList<>();
-        inbox.add("message1");
-        inbox.add("message2");
-        inbox.add("message3");
+        inbox = ClientApp.getCurrentGame().getCurrentPlayer().getChatInbox();
 
 
         enclosureBackground.setSize(1400, 1000);
@@ -1482,7 +1477,6 @@ public class HUDView extends AppMenu {
                                     errorLabel.set(new GraphicalResult("Selected slot is empty!"));
                                 }
                                 else{
-                                    ///  TODO: RASSA MOVE KON TO TRASH CAN
                                     errorLabel.set(controller.removeFromInventory(onScreenItems.get(itemNumber)));
                                 }
                             }

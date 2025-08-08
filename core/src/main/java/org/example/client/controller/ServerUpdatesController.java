@@ -190,4 +190,9 @@ public class ServerUpdatesController { // handles updates sent by server
             ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));
         }
     }
+
+    public static void handleChat(Message message) {
+        String messageText = message.getFromBody("message");
+        ClientApp.getCurrentGame().getCurrentPlayer().addToChatInbox(messageText);
+    }
 }

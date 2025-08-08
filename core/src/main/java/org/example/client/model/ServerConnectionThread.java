@@ -120,6 +120,10 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.handleVote(message);
             return true;
         }
+        else if (message.getType() == Message.Type.chat) {
+            ServerUpdatesController.handleChat(message);
+            return true;
+        }
         return false;
     }
 

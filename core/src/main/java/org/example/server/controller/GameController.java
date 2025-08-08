@@ -189,4 +189,23 @@ public class GameController {
             }}, Message.Type.voting));
         }
     }
+
+    public static void handleChat(Message message) {
+        String mode = message.getFromBody("mode");
+        if (mode.equals("sendToAll"))
+            sendToAll(message);
+        else if (mode.equals("sendToPerson"))
+            sendToPerson(message);
+    }
+
+    private static void sendToAll(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        String sender = message.getFromBody("sender");
+        lobby.notifyExcept(sender, message);
+    }
+
+    private static void sendToPerson(Message message) {
+        ServerApp.getClientConnectionThreadByUsername(message.getFromBody("username")).sendMessage(message);
+    }
 }

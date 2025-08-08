@@ -72,5 +72,6 @@ public class Message {
         get_player_music,
         save_and_exit_game,
         voting,
+        chat,
     }
 }

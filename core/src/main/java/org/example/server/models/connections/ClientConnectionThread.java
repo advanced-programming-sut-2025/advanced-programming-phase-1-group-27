@@ -148,6 +148,9 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.voting) {
             GameController.handleVote(message);
             return true;
+        } else if (message.getType() == Message.Type.chat) {
+            GameController.handleChat(message);
+            return true;
         }
         return false;
     }

@@ -47,6 +47,14 @@ Fonts/stardew-font.fnt
 Fonts/stardew-font.png
 Fonts/stardew-valley.ttf
 Images/!_Npc_Talking.png
+Images/Animals/Chicken.png
+Images/Animals/Cow.png
+Images/Animals/Dinosaur.png
+Images/Animals/Duck.png
+Images/Animals/Goat.png
+Images/Animals/Pig.png
+Images/Animals/Rabbit.png
+Images/Animals/Sheep.png
 Images/Cooking/CookingMenu.png
 Images/Crafting/Bee_House.png
 Images/Crafting/Bomb.png

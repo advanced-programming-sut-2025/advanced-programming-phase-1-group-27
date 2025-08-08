@@ -8,18 +8,15 @@ import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.*;
 import org.example.server.models.enums.Plants.FruitType;
-import org.example.server.models.enums.items.MineralType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
-import org.example.server.models.tools.Axe;
 import org.example.server.models.tools.Backpack;
 import org.example.server.models.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class Player extends User {
     private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>();
@@ -43,6 +40,7 @@ public class Player extends User {
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
     private java.util.Map<Player, Relation> relations = new HashMap<>();
     private ArrayList<Dialogue> inbox = new ArrayList<>();
+    private ArrayList<String> chatInbox = new ArrayList<>();
     //refresh every morning
     private java.util.Map<NPC, Boolean> npcMetToday = new HashMap<>();
     private java.util.Map<NPC, Boolean> npcGiftToday = new HashMap<>();
@@ -675,5 +673,15 @@ public class Player extends User {
 
     public ArrayList<Dialogue> getInbox() {
         return inbox;
+    }
+
+    public void addToChatInbox(String message) {
+        synchronized (chatInbox) {
+            chatInbox.add(message);
+        }
+    }
+
+    public ArrayList<String> getChatInbox() {
+        return chatInbox;
     }
 }
