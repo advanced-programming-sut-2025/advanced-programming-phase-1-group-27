@@ -69,7 +69,7 @@ public class PregameMenuController extends MenuController {
     public void startGame(Message message) {
         ArrayList<MiniPlayer> miniPlayers = new ArrayList<>();
         for (User user : view.getLobby().getUsers()) {
-            miniPlayers.add(new MiniPlayer(user));
+            miniPlayers.add(new MiniPlayer(user, view.getLobby().getUsernameToMap().get(user.getUsername())));
         }
         ClientGame clientGame;
         Player currentPlayer = new Player(ClientApp.getLoggedInUser());

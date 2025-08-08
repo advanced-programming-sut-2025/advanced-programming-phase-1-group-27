@@ -73,5 +73,6 @@ public class Message {
         save_and_exit_game,
         voting,
         chat,
+        get_player_position,
     }
 }

@@ -208,4 +208,22 @@ public class GameController {
     private static void sendToPerson(Message message) {
         ServerApp.getClientConnectionThreadByUsername(message.getFromBody("username")).sendMessage(message);
     }
+
+    public static synchronized Message getPlayerPosition(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        String playerName = message.getFromBody("username");
+        Message response = ServerApp.getClientConnectionThreadByUsername(playerName).sendAndWaitForResponse(
+                new Message(null, Message.Type.get_player_position), TIMEOUT_MILLIS
+        );
+        int mapIndex = lobby.getUsernameToMap().get(playerName);
+        if (response.getFromBody("isInNPCMap")) {
+            mapIndex = 4;
+        }
+        int finalMapIndex = mapIndex;
+        return new Message(new HashMap<>() {{
+            put("position", response.getFromBody("position"));
+            put("mapIndex", finalMapIndex);
+        }}, Message.Type.response);
+    }
 }
