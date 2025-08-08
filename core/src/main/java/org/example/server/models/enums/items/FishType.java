@@ -2,6 +2,7 @@ package org.example.server.models.enums.items;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import org.example.server.models.Edible;
 import org.example.server.models.Item;
 import org.example.server.models.enums.Seasons.Season;
 import org.w3c.dom.Text;
@@ -9,7 +10,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public enum FishType implements Item {
+public enum FishType implements Item, Edible {
     Salmon(75, Season.Fall, false, 75,"Items/FishType/Salmon.png"),
     Sardine(40, Season.Fall, false, 40, "Items/FishType/Sardine.png"),
     Shad(60, Season.Fall, false, 60, "Items/FishType/Shad.png"),
@@ -95,5 +96,10 @@ public enum FishType implements Item {
 
     public int getEnergy() {
         return energy;
+    }
+
+    @Override
+    public boolean isEdible() {
+        return true;
     }
 }
