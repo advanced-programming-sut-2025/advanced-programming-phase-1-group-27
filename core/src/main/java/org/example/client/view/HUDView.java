@@ -932,15 +932,19 @@ public class HUDView extends AppMenu {
 
     private void displayExitMenu() {
 
+        Array<String> playersUsername = new Array<>();
+        ClientApp.getCurrentGame().getPlayers().forEach(
+                miniPlayer -> playersUsername.add(miniPlayer.getUsername())
+        );
+        playerSelectBox.setItems(playersUsername);
+
         exitMenuBackground.setPosition((Gdx.graphics.getWidth() - exitMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - exitMenuBackground.getHeight()) / 2f);
 
         exitMenuBackground.setVisible(currentMenu == InGameMenuType.EXIT);
         terminateButton.setVisible(currentMenu == InGameMenuType.EXIT);
         exitGameButton.setVisible(currentMenu == InGameMenuType.EXIT);
-        playerSelectBox.setVisible(currentMenu == InGameMenuType.EXIT &&
-                Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
-        kickPlayerButton.setVisible(currentMenu == InGameMenuType.EXIT &&
-                Objects.equals(player.getUsername(), ClientApp.getCurrentGame().getAdmin().getUsername()));
+        playerSelectBox.setVisible(currentMenu == InGameMenuType.EXIT);
+        kickPlayerButton.setVisible(currentMenu == InGameMenuType.EXIT);
 
         exitGameButton.toFront();
         kickPlayerButton.toFront();

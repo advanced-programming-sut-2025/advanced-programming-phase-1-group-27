@@ -219,11 +219,11 @@ public class ClientApp {
     }
 
     public static void terminateGame() {
-        currentGame = null;
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
             ClientApp.setCurrentMenu(new MainMenuView());
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            currentGame = null;
         });
     }
 }

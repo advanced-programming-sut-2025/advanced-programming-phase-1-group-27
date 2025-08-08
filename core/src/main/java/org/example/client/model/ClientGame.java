@@ -1,10 +1,13 @@
 package org.example.client.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.Main;
 import org.example.client.controller.OtherPlayerController;
 import org.example.client.view.AppMenu;
 import org.example.client.view.OutsideView;
+import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.Direction;
 import org.example.common.models.Game;
 import org.example.common.models.Message;
@@ -469,8 +472,15 @@ public class ClientGame implements Game {
     }
 
     public void kickPlayer(String playerName) {
+        System.out.println("player to kick: " + playerName);
         if (ClientApp.getLoggedInUser().getUsername().equals(playerName)) {
-            ClientApp.setCurrentGame(null);
+            System.out.println("khodamam");
+            Gdx.app.postRunnable(() -> {
+                Main.getMain().getScreen().dispose();
+                ClientApp.setCurrentMenu(new MainMenuView());
+                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                ClientApp.setCurrentGame(null);
+            });
             return;
         }
         MiniPlayer miniPlayer = getMiniPlayerByUsername(playerName);

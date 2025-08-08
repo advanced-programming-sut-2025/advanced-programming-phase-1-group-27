@@ -10,6 +10,7 @@ import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.StartTradeView;
 import org.example.client.view.InteractionMenus.TradeView;
 import org.example.client.view.OutsideView;
+import org.example.client.view.VoteView;
 import org.example.common.models.Direction;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
@@ -181,14 +182,21 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void handleVote(Message message) {
         String mode = message.getFromBody("mode");
+        System.out.println("MODE: " + mode);
         if (mode.equals("askToTerminate")) {
-            // TODO : parsa, new window to ask
+            Gdx.app.postRunnable(() -> {
+               Main.getMain().getScreen().dispose();
+               Main.getMain().setScreen(new VoteView(mode, ""));
+            });
         }
         else if (mode.equals("terminateGame")) {
             ClientApp.terminateGame();
         }
         else if (mode.equals("askToKick")) {
-            // TODO : parsa, new window to ask
+            Gdx.app.postRunnable(() -> {
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new VoteView(mode, message.getFromBody("playerName")));
+            });
         }
         else if (mode.equals("kickPlayer")) {
             ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));

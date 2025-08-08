@@ -1,5 +1,6 @@
 package org.example.client.controller;
 
+import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.common.models.Message;
 
@@ -22,5 +23,7 @@ public class VoteController {
                 put("playerName", username);
             }}, Message.Type.voting));
         }
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 }

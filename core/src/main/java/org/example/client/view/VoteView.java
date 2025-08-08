@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.controller.VoteController;
 import org.example.client.model.ClientApp;
@@ -48,10 +49,10 @@ public class VoteView extends AppMenu {
                 Gdx.graphics.getHeight(),
                 30));
         if (voteMode.equals("askToTerminate")) {
-            label = new Label("Do You want to terminate the game?", skin);
+            label = new Label("Do you want to terminate the game?", skin);
         }
         else {
-            label = new Label("Do you want to kick " + username, skin);
+            label = new Label("Do you want to kick " + username + "?", skin);
         }
         label.setColor(Color.BLACK);
         label.setFontScale(1.5f);
@@ -63,6 +64,7 @@ public class VoteView extends AppMenu {
         yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
                 controller.vote(voteMode, username, true);
             }
         });
@@ -70,24 +72,38 @@ public class VoteView extends AppMenu {
         noButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
                 controller.vote(voteMode, username, false);
             }
         });
     }
 
-    @Override
-    public void executeCommands(Scanner scanner) {
+    private void displayBackground() {
+        creamImage.setPosition(0, 0);
+        brownImage.setPosition(0, 0);
 
+        stage.addActor(brownImage);
     }
 
     @Override
     public void show() {
-
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        displayBackground();
+        yesButton.setWidth(300);
+        noButton.setWidth(300);
+        label.setPosition(Gdx.graphics.getWidth() / 2f - label.getWidth() + 50,  Gdx.graphics.getHeight() / 2f + label.getHeight() + 50);
+        yesButton.setPosition(Gdx.graphics.getWidth() / 2f + yesButton.getWidth() - 150, Gdx.graphics.getHeight() / 2f - yesButton.getHeight());
+        noButton.setPosition(Gdx.graphics.getWidth() / 2f - noButton.getWidth() - 150 , Gdx.graphics.getHeight() / 2f - noButton.getHeight());
+        stage.addActor(label);
+        stage.addActor(noButton);
+        stage.addActor(yesButton);
     }
 
     @Override
     public void render(float v) {
-
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
     }
 
     @Override
@@ -112,6 +128,11 @@ public class VoteView extends AppMenu {
 
     @Override
     public void dispose() {
+
+    }
+
+    @Override
+    public void executeCommands(Scanner scanner) {
 
     }
 }
