@@ -3,6 +3,8 @@ package org.example.client.model;
 import com.badlogic.gdx.audio.Music;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.controller.OtherPlayerController;
+import org.example.client.view.AppMenu;
+import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
 import org.example.common.models.Game;
 import org.example.server.models.*;
@@ -200,6 +202,11 @@ public class ClientGame implements Game {
                 Plant plant = allPlants.get(plantIndex);
                 if (plant.getCell().isProtected())
                     continue;
+
+                if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView ){
+                    outsideView.displayCrowAttack(plant.getCell().getPosition().getX(),plant.getCell().getPosition().getY());
+                }
+
                 if (plant instanceof Crop crop) {
                     crop.getCell().setObject(null);
                 } else if (plant instanceof Tree tree) {
@@ -207,6 +214,8 @@ public class ClientGame implements Game {
                 }
             }
         }
+
+
     }
 
     private void growPlants() {
