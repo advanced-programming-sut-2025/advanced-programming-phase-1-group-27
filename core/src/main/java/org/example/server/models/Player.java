@@ -22,10 +22,10 @@ public class Player extends User {
     private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>();
     private ArrayList<Recipe> availableCookingRecipes = new ArrayList<>();
     // player's inventory
-    private Backpack backpack = new Backpack(ToolType.DeluxeBackpack); // TODO: ba parsa check shavad
+    private Backpack backpack = new Backpack(ToolType.DeluxeBackpack);
     // maps ability type to user's ability
     private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>();
-    private int energy, maxEnergy = 200, boostEnergy = 10;
+    private int energy, maxEnergy = 200, boostEnergy = 0;
     private boolean cheater = false;
     private Ability farming = new Ability(),
             mining = new Ability(),
