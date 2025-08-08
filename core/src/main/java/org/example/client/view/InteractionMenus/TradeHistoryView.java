@@ -59,8 +59,8 @@ public class TradeHistoryView extends AppMenu {
         Table firstRow = new Table();
         Label fromLabel = new Label("From:", skin);
         Label toLabel = new Label("To:", skin);
-        Label items1 = new Label("Items1", skin);
-        Label items2 = new Label("Items2", skin);
+        Label items1 = new Label("Sent:", skin);
+        Label items2 = new Label("Received:", skin);
 
         fromLabel.setColor(Color.BLACK);
         toLabel.setColor(Color.BLACK);
