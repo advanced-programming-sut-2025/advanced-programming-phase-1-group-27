@@ -8,6 +8,7 @@ import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;
 import org.example.server.models.Map.*;
 import org.example.server.models.NPCs.NPC;
+import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.*;
 import org.example.server.models.enums.Seasons.Season;
@@ -49,7 +50,8 @@ public class Cell {
 //                return false;
 //        }
 
-        if (object instanceof Plant || object instanceof Animal || object instanceof MineralType)
+        if (object instanceof Plant || object instanceof Animal || object instanceof MineralType
+        || object instanceof Artisan)
             return false;
         return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View ||
                 cellType == CellType.Door || cellType == CellType.MapLink || cellType == CellType.Quarry;

@@ -46,7 +46,7 @@ public class Pickaxe extends Tool {
         if (ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Mining).getLevel() == 4) {
             energy--;
         }
-        return Math.min(energy, 0);
+        return Math.max(energy, 0);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class Pickaxe extends Tool {
                             " Mineral!!");
 
                 } else {
-                    player.consumeEnergy(Math.min(this.getEnergyUsage() - 1, 0));
+                    player.consumeEnergy(Math.max(this.getEnergyUsage() - 1, 0));
                     return new Result(false, "Your Tool is not Strong Enough for This Mineral!");
                 }
             } else if (MineralType.getJewels().contains(mineralType)) {
@@ -87,7 +87,7 @@ public class Pickaxe extends Tool {
                     return new Result(true, "You Extracted A " + mineralType.getName() +
                             " Jewel!!");
                 } else {
-                    player.consumeEnergy(Math.min(this.getEnergyUsage() - 1, 0));
+                    player.consumeEnergy(Math.max(this.getEnergyUsage() - 1, 0));
                     return new Result(false, "Your Tool is not Strong Enough for This Jewel!");
                 }
             } else {
@@ -105,7 +105,7 @@ public class Pickaxe extends Tool {
             player.getBackpack().addItems(CraftingProduct.getItem(artisan.getType().toString()), null, 1);
             return new Result(false, "You Removed And Claimed The Artisan!");
         } else {
-            player.consumeEnergy(Math.min(this.getEnergyUsage() - 1, 0));
+            player.consumeEnergy(Math.max(this.getEnergyUsage() - 1, 0));
             return new Result(false, "Cannot Use A Pickaxe Here !");
         }
     }

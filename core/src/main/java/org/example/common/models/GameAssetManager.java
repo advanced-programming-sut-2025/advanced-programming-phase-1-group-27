@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import org.example.server.models.Item;
+import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.Plants.*;
 import org.example.server.models.enums.items.*;
@@ -207,6 +208,12 @@ public class GameAssetManager {
                         new Texture("assets/Images/Animals/Rabbit/23.png"),
                         new Texture("assets/Images/Animals/Rabbit/33.png")
                         ));
+    }};
+
+    private final HashMap<ArtisanTypes, Texture> artisanTextureMap = new HashMap<>(){{
+        for (ArtisanTypes value : ArtisanTypes.values()) {
+            put(value, new Texture("assets/Images/Artisans/" + value.name() + ".png"));
+        }
     }};
 
     private final HashMap<AnimalType, Animation<Texture>> animalRightWalkAnimation = new HashMap<>(){{
@@ -1102,6 +1109,10 @@ public class GameAssetManager {
 
     public Texture getHutTexture() {
         return hutTexture;
+    }
+
+    public Texture getArtisanTexture(ArtisanTypes type) {
+        return artisanTextureMap.get(type);
     }
 
     public Texture getInventoryHotBar() {

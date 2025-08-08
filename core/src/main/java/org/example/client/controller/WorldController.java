@@ -25,9 +25,11 @@ import org.example.server.models.AnimalProperty.AnimalEnclosure;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;
 import org.example.server.models.Map.FarmMap;
+import org.example.server.models.Map.GreenHouse;
 import org.example.server.models.Map.Map;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
+import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Plants.Tree;
@@ -126,6 +128,7 @@ public class WorldController {
                             camera.unproject(touchPos);
                             if (bounds.contains(touchPos.x, touchPos.y)) {
                                 npc.setDialogue(npc.getDialogue().replace('—', ' '));
+                                npc.setDialogue(npc.getDialogue().replace('’', '\''));
                                 InfoWindow infoWindow = new InfoWindow(
                                         GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
                                         npc.getDialogue(),
@@ -205,6 +208,12 @@ public class WorldController {
 //                        Main.getBatch().draw(texture, x + 20 - (texture.getWidth() / 2f), y);
 //
 //                }
+                if (cells[i][j].getObject() instanceof Artisan artisan) {
+                    texture = GameAssetManager.getGameAssetManager().getArtisanTexture(artisan.getType());
+                    if (texture != null) {
+                        Main.getBatch().draw(texture, x, y, 40, 65);
+                    }
+                }
             }
         }
         if (map instanceof NPCMap) {
@@ -252,6 +261,10 @@ public class WorldController {
                 infoWindows.add(infoWindow);
             } else if (cell.getBuilding() instanceof AnimalEnclosure) {
                 view.getHudView().setAnimalEnclosure((AnimalEnclosure) cell.getBuilding());
+            } else if (cell.getBuilding() instanceof GreenHouse) {
+
+            } else if (cell.getObject() instanceof Artisan artisan) {
+                view.getHudView().setArtisanMini(artisan, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
             }
 //            else if (cell.getObject() instanceof Animal animal) {
 //                view.getHudView().setAnimal(animal);

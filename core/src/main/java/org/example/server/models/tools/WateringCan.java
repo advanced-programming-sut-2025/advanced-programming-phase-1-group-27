@@ -51,7 +51,7 @@ public class WateringCan extends Tool {
         if (ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Farming).getLevel() == 4) {
             energy--;
         }
-        return Math.min(energy, 0);
+        return Math.max(energy, 0);
     }
 
     @Override

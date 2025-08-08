@@ -51,7 +51,7 @@ public class Axe extends Tool {
             energy--;
         }
 
-        return Math.min(energy, 0);
+        return Math.max(energy, 0);
     }
 
     @Override

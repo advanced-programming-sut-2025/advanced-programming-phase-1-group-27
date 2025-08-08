@@ -612,7 +612,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result placeItem(String itemName, int direction) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         Item item = player.getItemFromBackpack(itemName);
         if (item == null)
             return new Result(false, "Item not found in backpack!");

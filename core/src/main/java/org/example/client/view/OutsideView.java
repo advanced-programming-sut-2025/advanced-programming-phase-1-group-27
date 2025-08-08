@@ -15,10 +15,12 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.shopview.BuildMenuView;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.Barn;
+import org.example.server.models.Artisan;
 import org.example.server.models.Cell;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Position;
+import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.SFX;
 import org.example.server.models.enums.items.AnimalType;
 import org.example.server.models.enums.items.BuildingType;
@@ -172,6 +174,16 @@ public class OutsideView extends AppMenu {
             }
         }
 
+        sobhan();
+
+    }
+
+    public void sobhan() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+            Main.getMain().getScreen().dispose();
+            ClientApp.setCurrentMenu(new BuildMenuView(new Artisan(ArtisanTypes.Keg)));
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        }
     }
 
 

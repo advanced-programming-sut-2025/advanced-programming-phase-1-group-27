@@ -7,20 +7,25 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.example.client.Main;
+import org.example.client.controller.GameMenuController;
 import org.example.client.controller.WorldController;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
+import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;
+import org.example.server.models.Artisan;
 import org.example.server.models.Cell;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Player;
+import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.items.BuildingType;
+import org.example.server.models.enums.items.products.ProcessedProductType;
 
 import java.util.Scanner;
 
@@ -28,6 +33,7 @@ import static java.lang.Math.floor;
 
 public class BuildMenuView extends AppMenu {
     private final BuildingType buildingType;
+    private final Artisan artisan;
     private final Player player = ClientApp.getCurrentGame().getCurrentPlayer();
 
 
@@ -38,6 +44,12 @@ public class BuildMenuView extends AppMenu {
 
     public BuildMenuView(BuildingType buildingType) {
         this.buildingType = buildingType;
+        artisan = null;
+    }
+
+    public BuildMenuView(Artisan artisan) {
+        this.artisan = artisan;
+        buildingType = BuildingType.ShippingBin;
     }
 
     @Override
@@ -83,8 +95,16 @@ public class BuildMenuView extends AppMenu {
             )) {
                 if (buildingType.isBarn())
                     player.getFarmMap().placeBarn(i, j, new Barn(buildingType, player.getFarmMap().getCell(i, j)));
-                else
+                else if (buildingType.isCoop())
                     player.getFarmMap().placeCoop(i, j, new Coop(buildingType, player.getFarmMap().getCell(i, j)));
+                if (artisan != null) {
+                    Cell cell = player.getFarmMap().getCell(i, j);
+                    cell.setObject(artisan);
+                    if (artisan.getType() == ArtisanTypes.BeeHouse) {
+                        artisan.setFinalProduct(ProcessedProductType.Honey);
+                        artisan.setTimeLeft(ProcessedProductType.Honey.getProcessingTime());
+                    }
+                }
                 exit();
             }
         }
