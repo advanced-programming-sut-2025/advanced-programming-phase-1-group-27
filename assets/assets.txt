@@ -452,6 +452,8 @@ Images/Inbox/InboxMessageBackground.png
 Images/Inbox/MessageAlert.png
 Images/Inventory/InventoryMenuMan.png
 Images/Inventory/InventoryMenuWoman.png
+Images/Map/Icon.png
+Images/Map/MapImage.png
 Images/Map/MapMenu.png
 Images/PlayerSocial/PlayerSocialBackground.png
 Images/PlayerSocial/PlayerSocialBackground2.png

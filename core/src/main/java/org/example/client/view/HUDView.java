@@ -87,6 +87,7 @@ public class HUDView extends AppMenu {
     private final Image enclosureBackground;
     private final Image animalBackground;
     private final Image radioBackgroundImage;
+    private final Image mapImage;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -97,6 +98,7 @@ public class HUDView extends AppMenu {
     private final ArrayList<Image> skillPoints;
     private final ArrayList<Image> npcAvatars;
     private final ArrayList<Image> checkBoxes;
+    private final HashMap<MiniPlayer,Image> playerIconsInMap;
 
     private final HashMap<CraftingProduct, ImageButton> craftingProducts;
     private final HashMap<CookingProduct, ImageButton> cookingProducts;
@@ -167,7 +169,15 @@ public class HUDView extends AppMenu {
 
         this.stage = stage;
 
+        playerIconsInMap = new HashMap<>();
+        for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
+            Image playerIconImage = new Image(GameAssetManager.getGameAssetManager().getPlayerIcon());
+            playerIconImage.setVisible(false);
+            playerIconsInMap.put(inGamePlayer,
+                    playerIconImage);
 
+            stage.addActor(playerIconImage);
+        }
 
         skillPoints = new ArrayList<>();
         for( int i = 0 ; i < 16; i++ ){
@@ -294,6 +304,8 @@ public class HUDView extends AppMenu {
         greenBar = GameAssetManager.getGameAssetManager().getGreenBar();
         redBar = GameAssetManager.getGameAssetManager().getRedBar();
         radioBackgroundImage = GameAssetManager.getGameAssetManager().getRadioBackground();
+        mapImage = GameAssetManager.getGameAssetManager().getMapImage();
+
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
         socialButton.setPosition(100,100);
@@ -388,6 +400,9 @@ public class HUDView extends AppMenu {
         miningHoverImage.setVisible(false);
         foragingHoverImage.setVisible(false);
 
+        mapImage.setVisible(false);
+        mapImage.setSize(720,530);
+
         //  INBOX
         messageAlertImage = new ImageButton(GameAssetManager.getGameAssetManager().getMessageAlertImage().getDrawable());
         messageBackgroundImage = new ImageButton(GameAssetManager.getGameAssetManager().getMessageBackgroundImage().getDrawable());
@@ -435,6 +450,7 @@ public class HUDView extends AppMenu {
         stage.addActor(socialButton);
         stage.addActor(playerSocialMenuBackground);
         stage.addActor(mapMenuBackground);
+        stage.addActor(mapImage);
         stage.addActor(energyBar);
         stage.addActor(boostBar);
         stage.addActor(greenBar);
@@ -1226,11 +1242,65 @@ public class HUDView extends AppMenu {
         currentMenu = InGameMenuType.ANIMAL_ENCLOSURE;
     }
 
+    private void updatePlayerPositionsInMap(){
+
+
+
+        for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
+
+            inGamePlayer.updateMiniPlayer();
+//            System.out.println(" xration: " + inGamePlayer.getXRatio() + " yration: " + inGamePlayer.getYRatio());
+
+            int xInitial = 764;
+            int yInitial = 448;
+
+            int xCoEfficient = (inGamePlayer.getMapIndex()==4)? 265:210;
+            int yCoEfficient = (inGamePlayer.getMapIndex()==4)? 130:184;
+
+            if ( inGamePlayer.getMapIndex() == 0 ){
+                xInitial = 560;
+                yInitial = 564;
+            }
+            else if ( inGamePlayer.getYRatio() == 1 ){
+                xInitial = 1022;
+                yInitial = 564;
+            }
+            else if ( inGamePlayer.getMapIndex() == 2 ){
+                xInitial = 566;
+                yInitial = 271;
+            }
+            else if ( inGamePlayer.getXRatio() == 3 ){
+                xInitial = 1018;
+                yInitial = 271;
+            }
+
+
+            Image playerIcon = playerIconsInMap.get(inGamePlayer);
+            playerIcon.setPosition(xInitial + xCoEfficient * inGamePlayer.getXRatio() - playerIcon.getWidth()/2f,
+                    yInitial + yCoEfficient * inGamePlayer.getYRatio() - playerIcon.getWidth()/2f);
+            playerIcon.toFront();
+
+        }
+
+    }
+
+
     private void displayMapMenu(){
 
         mapMenuBackground.setVisible(currentMenu == InGameMenuType.MAP);
+        mapImage.setVisible(currentMenu == InGameMenuType.MAP);
+        for( MiniPlayer player : playerIconsInMap.keySet() ){
+            playerIconsInMap.get(player).setVisible(currentMenu == InGameMenuType.MAP);
+        }
+
+        mapImage.setPosition(mapMenuBackground.getX()+(mapMenuBackground.getWidth()-mapImage.getWidth())/2f,
+                mapMenuBackground.getY()+(mapMenuBackground.getHeight()-mapImage.getHeight())/2f-30);
+
+        updatePlayerPositionsInMap();
 
     }
+
+
 
     private void displayEnergy(){
 
@@ -1603,7 +1673,7 @@ public class HUDView extends AppMenu {
                         return true;
                     }
 
-//                    System.out.println(x+" "+y);
+                    System.out.println(x+" ---- "+y);
 
                     for ( int i = 0; i < 12; i++ ){
 

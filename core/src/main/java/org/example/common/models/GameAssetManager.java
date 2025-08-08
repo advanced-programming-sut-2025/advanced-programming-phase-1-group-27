@@ -406,6 +406,10 @@ public class GameAssetManager {
 
     private final Image radioBackground = new Image( new Texture(Gdx.files.internal("Images/RadioBackground.png")));
 
+    private final Image mapImage = new Image( new Texture(Gdx.files.internal("Images/Map/MapImage.png")));
+
+    private final Texture playerIcon = new Texture(Gdx.files.internal("Images/Map/icon.png"));
+
     private final Array<Texture> crows = new Array<>();
     private Animation<Texture> crowAnimationFrames;
 
@@ -417,6 +421,14 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Texture getPlayerIcon() {
+        return playerIcon;
+    }
+
+    public Image getMapImage() {
+        return mapImage;
     }
 
     private void setUpImageArray(){

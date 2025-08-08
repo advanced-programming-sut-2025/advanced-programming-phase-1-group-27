@@ -21,18 +21,32 @@ public class MiniPlayer extends User {
         position = new Position(8, 70);
     }
 
-    public void updatePosition() {
+    public void updateMiniPlayer() {
         if (ClientApp.getLoggedInUser().getUsername().equals(getUsername())) {
-            position = ClientApp.getCurrentGame().getCurrentPlayer().getPosition();
+            position = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentCell().getPosition();
             mapIndex = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(getUsername());
             return;
         }
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new HashMap<>() {{
-            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
-            put("username", getUsername());
-        }}, Message.Type.get_player_position), TIMEOUT_MILLIS);
-        position = new Position(response.<LinkedTreeMap<String, Object>>getFromBody("position"));
-        mapIndex = response.getIntFromBody("mapIndex");
+//        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new HashMap<>() {{
+//            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+//            put("username", getUsername());
+//        }}, Message.Type.get_player_position), TIMEOUT_MILLIS);
+//        position = new Position(response.<LinkedTreeMap<String, Object>>getFromBody("position"));
+//        mapIndex = response.getIntFromBody("mapIndex");
+    }
+
+    public float getXRatio(){
+
+        return ( float )( position.getY() /
+                ( (mapIndex == 4) ? 34f : 75f ) );
+
+    }
+
+    public float getYRatio(){
+
+        return 1 - ( float )( position.getX() /
+                ( (mapIndex == 4) ? 16f : 55f ) );
+
     }
 
     public Position getPosition() {
