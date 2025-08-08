@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Music;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.OtherPlayerController;
-import org.example.client.view.AppMenu;
 import org.example.client.view.OutsideView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.Direction;
@@ -210,7 +209,7 @@ public class ClientGame implements Game {
                 if (plant.getCell().isProtected())
                     continue;
 
-                if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView && ClientApp.getTradeMenu() == null){
+                if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView && ClientApp.getNonMainMenu() == null){
                     outsideView.displayCrowAttack(plant.getCell().getPosition().getX(),plant.getCell().getPosition().getY());
                 }
 

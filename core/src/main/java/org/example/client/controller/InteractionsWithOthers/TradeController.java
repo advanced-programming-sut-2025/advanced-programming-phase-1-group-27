@@ -55,7 +55,7 @@ public class TradeController {
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new TradeView(username, ClientApp.getCurrentGame().getCurrentPlayer().getUsername(), targetInventory));
             } else {
-                ClientApp.setTradeMenu(null);
+                ClientApp.setNonMainMenu(null);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(ClientApp.getCurrentMenu());
             }
@@ -68,11 +68,11 @@ public class TradeController {
         String other = message.getFromBody("other");
         System.out.println("answer: " + answer);
         Gdx.app.postRunnable(() -> {
-            if (answer && ClientApp.getTradeMenu() instanceof PreTradeMenuView preTradeMenuView) {
+            if (answer && ClientApp.getNonMainMenu() instanceof PreTradeMenuView preTradeMenuView) {
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new TradeView(starter, other, preTradeMenuView.getTargetInventory()));
             } else {
-                ClientApp.setTradeMenu(null);
+                ClientApp.setNonMainMenu(null);
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(ClientApp.getCurrentMenu());
             }
@@ -109,11 +109,11 @@ public class TradeController {
             put("otherSelected", new Backpack(ToolType.BasicBackpack, otherSelected).getInfo());
         }}, Message.Type.interaction_p2p));
         // XP
-        ClientApp.setTradeMenu(null);
+        ClientApp.setNonMainMenu(null);
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
             OutsideView newOutsideView = new OutsideView();
-            ClientApp.setTradeMenu(newOutsideView);
+            ClientApp.setNonMainMenu(newOutsideView);
             Main.getMain().setScreen(newOutsideView);
         });
     }
@@ -131,11 +131,11 @@ public class TradeController {
             // trade namovafagh bood
         }
         // XP
-        ClientApp.setTradeMenu(null);
+        ClientApp.setNonMainMenu(null);
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
             OutsideView newOutsideView = new OutsideView();
-            ClientApp.setTradeMenu(newOutsideView);
+            ClientApp.setNonMainMenu(newOutsideView);
             Main.getMain().setScreen(newOutsideView);
 
         });

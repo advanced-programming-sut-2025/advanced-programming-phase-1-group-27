@@ -32,7 +32,7 @@ public class Vote2View extends AppMenu {
 
     public Vote2View(String username) {
         controller = new TradeController();
-        ClientApp.setTradeMenu(this);
+        ClientApp.setNonMainMenu(this);
         this.username = username;
         yesButton = new TextButton("Yes" , skin);
         noButton = new TextButton("No" , skin);

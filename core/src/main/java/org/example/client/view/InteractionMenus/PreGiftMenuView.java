@@ -38,7 +38,7 @@ public class PreGiftMenuView extends AppMenu {
     public PreGiftMenuView(String username) {
 
         controller = new GiftController();
-        ClientApp.setGiftMenu(this);
+        ClientApp.setNonMainMenu(this);
         targetUsername = username;
 
         giftButton = new TextButton("Gift" , skin);

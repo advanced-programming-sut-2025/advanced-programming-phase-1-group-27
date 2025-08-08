@@ -6,46 +6,49 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.client.Main;
+import org.example.client.controller.InteractionsWithOthers.InteractionController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
+import org.example.client.view.OutsideView;
 import org.example.server.models.Stacks;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PreTradeMenuView extends AppMenu {
+public class InteractionMenu extends AppMenu {
 
-    private final TradeController controller;
+    private final InteractionController controller;
 
     private final String targetUsername;
 
     private final TextButton tradeButton;
-    private final TextButton historyButton;
+    private final TextButton giftButton;
+    private final TextButton flowerButton;
+    private final TextButton marriageButton;
     private final TextButton backButton;
 
-    private final Label tradeMenuLabel;
+    private final Label menuLabel;
     private final Label targetPlayerLabel;
-
-    private final ArrayList<Stacks> targetInventory;
 
     private Stage stage;
 
-    public PreTradeMenuView(String username) {
+    public InteractionMenu(String username) {
 
-        controller = new TradeController();
+        controller = new InteractionController();
         ClientApp.setNonMainMenu(this);
         targetUsername = username;
 
         tradeButton = new TextButton("Trade" , skin);
-        historyButton = new TextButton("History Trade" , skin);
+        giftButton = new TextButton("Gift" , skin);
+        flowerButton = new TextButton("Flower" , skin);
+        marriageButton = new TextButton("Marriage" , skin);
         backButton = new TextButton("Back" , skin);
 
-        tradeMenuLabel = new Label("Trade Menu", skin);
+        menuLabel = new Label("Interaction Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
-
-        targetInventory = InteractionsWithUserController.getInventory(username);
 
         setListeners();
     }
@@ -57,24 +60,31 @@ public class PreTradeMenuView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        tradeMenuLabel.setFontScale(3f);
-        tradeMenuLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
+        menuLabel.setFontScale(3f);
+        menuLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
 
         targetPlayerLabel.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 6f);
 
         backButton.setWidth(Gdx.graphics.getWidth() / 4f);
         tradeButton.setWidth(Gdx.graphics.getWidth() / 4f);
-        historyButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        giftButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        flowerButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        marriageButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        tradeButton.setPosition((Gdx.graphics.getWidth()-tradeButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
-        historyButton.setPosition((Gdx.graphics.getWidth()-historyButton.getWidth())/2f, 2 * Gdx.graphics.getHeight() / 6f);
-        backButton.setPosition((Gdx.graphics.getWidth()-backButton.getWidth())/2f, Gdx.graphics.getHeight() / 6f);
+
+        tradeButton.setPosition(4*(Gdx.graphics.getWidth()-tradeButton.getWidth())/5f, 5 * Gdx.graphics.getHeight() / 6f - tradeButton.getHeight()/2f);
+        giftButton.setPosition(4*(Gdx.graphics.getWidth()-giftButton.getWidth())/5f, 4 * Gdx.graphics.getHeight() / 6f - tradeButton.getHeight()/2f);
+        flowerButton.setPosition(4*(Gdx.graphics.getWidth()-flowerButton.getWidth())/5f, 3 * Gdx.graphics.getHeight() / 6f - tradeButton.getHeight()/2f);
+        marriageButton.setPosition(4*(Gdx.graphics.getWidth()-marriageButton.getWidth())/5f, 2 * Gdx.graphics.getHeight() / 6f - tradeButton.getHeight()/2f);
+        backButton.setPosition(4*(Gdx.graphics.getWidth()-backButton.getWidth())/5f, Gdx.graphics.getHeight() / 6f - tradeButton.getHeight()/2f);
 
         stage.addActor(menuBackground);
         stage.addActor(tradeButton);
-        stage.addActor(historyButton);
+        stage.addActor(giftButton);
+        stage.addActor(flowerButton);
+        stage.addActor(marriageButton);
         stage.addActor(backButton);
-        stage.addActor(tradeMenuLabel);
+        stage.addActor(menuLabel);
         stage.addActor(targetPlayerLabel);
 
     }
@@ -117,27 +127,32 @@ public class PreTradeMenuView extends AppMenu {
 
     private void setListeners() {
 
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
+                Main.getMain().getScreen().dispose();
+                OutsideView newOutsideView = new OutsideView();
+                ClientApp.setCurrentMenu(newOutsideView);
+                Main.getMain().setScreen(newOutsideView);
+                ClientApp.setNonMainMenu(null);
+            }
+        });
+
         tradeButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.startTrade(targetUsername);
+                playClickSound();
+                controller.openTradeMenu2(targetUsername);
+
             }
         });
 
-        historyButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.goToTradeHistory(targetUsername);
-            }
-        });
 
     }
 
-    public TradeController getController() {
+    public InteractionController getController() {
         return controller;
     }
 
-    public ArrayList<Stacks> getTargetInventory() {
-        return targetInventory;
-    }
 }

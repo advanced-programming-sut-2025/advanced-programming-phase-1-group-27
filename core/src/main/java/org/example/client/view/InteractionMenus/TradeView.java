@@ -57,7 +57,7 @@ public class TradeView extends AppMenu {
     public TradeView(String starter, String other, ArrayList<Stacks> targetInventory) {
 
         controller = new TradeController();
-        ClientApp.setTradeMenu(this);
+        ClientApp.setNonMainMenu(this);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 

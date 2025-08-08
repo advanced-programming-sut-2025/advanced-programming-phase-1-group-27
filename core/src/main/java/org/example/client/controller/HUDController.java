@@ -8,6 +8,7 @@ import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.HUDView;
+import org.example.client.view.InteractionMenus.InteractionMenu;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.GameAssetManager;
@@ -314,6 +315,11 @@ public class HUDController extends MenuController {
         Main.getMain().setScreen(new PreTradeMenuView(targetUser));
 
 
+    }
+
+    public void openInteractionMenu(String targetUser){
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new InteractionMenu(targetUser));
     }
 
     private GraphicalResult handleCheat(String input){

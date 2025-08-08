@@ -5,7 +5,6 @@ import org.example.client.Main;
 import org.example.client.view.AppMenu;
 import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.Message;
-import org.example.server.models.App;
 import org.example.server.models.SecurityQuestion;
 import org.example.server.models.User;
 import org.example.server.models.enums.Gender;
@@ -32,8 +31,7 @@ public class ClientApp {
     private static User loggedInUser = null;
     private static ClientGame currentGame = null;
     private static AppMenu currentMenu = null;
-    private static AppMenu TradeMenu = null;
-    private static AppMenu GiftMenu = null;
+    private static AppMenu nonMainMenu = null;
 
     public static boolean loadSavedUser() {
         User savedUser = getSavedUser();
@@ -201,17 +199,14 @@ public class ClientApp {
         return password.toString();
     }
 
-    public static AppMenu getTradeMenu() {
-        return TradeMenu;
+    public static AppMenu getNonMainMenu() {
+        return nonMainMenu;
     }
 
-    public static void setTradeMenu(AppMenu tradeMenu) {
-        TradeMenu = tradeMenu;
+    public static void setNonMainMenu(AppMenu menu) {
+        nonMainMenu = menu;
     }
 
-    public static void setGiftMenu(AppMenu giftMenu) {
-        GiftMenu = giftMenu;
-    }
 
     public static void saveGame() {
         // TODO : save game
