@@ -87,42 +87,6 @@ public class Player extends User {
         }
     }
 
-    public void refreshPlayerThings() {
-        HashMap<Player, Boolean> players = new HashMap<>();
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            if (player.getUsername().equals(this.getUsername())) {
-                continue;
-            }
-            if (playerMetToday.get(player) == Boolean.TRUE
-                    || playerGiftToday.get(player) == Boolean.TRUE
-                    || playerHuggedToday.get(player) == Boolean.TRUE
-                    || playerTradeToday.get(player) == Boolean.TRUE) {
-                players.put(player, Boolean.TRUE);
-            } else {
-                players.put(player, Boolean.FALSE);
-            }
-        }
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            if (player.getUsername().equals(this.getUsername())) {
-                continue;
-            } else {
-                if (players.get(player) == Boolean.FALSE) {
-                    decreaseXP(player, 10);
-                }
-            }
-        }
-        playerMetToday.clear();
-        playerGiftToday.clear();
-        playerHuggedToday.clear();
-        playerTradeToday.clear();
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            playerMetToday.put(player, false);
-            playerGiftToday.put(player, false);
-            playerHuggedToday.put(player, false);
-            playerTradeToday.put(player, false);
-        }
-    }
-
     private void initFields() {
         this.energy = 200;
         this.farming = new Ability();

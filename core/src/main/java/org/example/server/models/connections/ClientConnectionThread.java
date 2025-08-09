@@ -4,6 +4,7 @@ import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
+import org.example.server.controller.InteractionsWithOthers.MarriageController;
 import org.example.server.controller.InteractionsWithOthers.TradeController;
 import org.example.server.models.Lobby;
 import org.example.server.models.ServerApp;
@@ -26,7 +27,6 @@ public class ClientConnectionThread extends ConnectionThread {
 
     private User user = null;
     private String songId; // the song which is uploading
-    private long songSize;
     private long bytesUploaded;
 
     public ClientConnectionThread(Socket socket) throws IOException {
@@ -158,6 +158,15 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if(message.getType() == Message.Type.get_trade_history){
             sendMessage(TradeController.getTradesBetweenUsers(message));
             return true;
+        } else if(message.getType() == Message.Type.can_marry){
+            sendMessage(MarriageController.canMarry(message));
+            return true;
+        } else if (message.getType() == Message.Type.marriage_request) {
+            MarriageController.sendMarriageRequest(message);
+            return true;
+        } else if (message.getType() == Message.Type.marriage_response) {
+            MarriageController.sendMarriageResponse(message);
+            return true;
         }
         return false;
     }
@@ -169,7 +178,7 @@ public class ClientConnectionThread extends ConnectionThread {
             return;
         }
         try {
-            Files.write(Paths.get(directoryPath + this.songId + ".mp3"), packet, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.write(Paths.get(directoryPath + this.songId + ".ogg"), packet, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             bytesUploaded += packet.length;
 
         } catch (IOException e) {
@@ -189,7 +198,6 @@ public class ClientConnectionThread extends ConnectionThread {
 
     private void handleUploadRequest(Message message) {
         this.songId = UUID.randomUUID().toString();
-        this.songSize = ((Number) message.getFromBody("songSize")).longValue();
         this.bytesUploaded = 0;
     }
 
@@ -202,16 +210,12 @@ public class ClientConnectionThread extends ConnectionThread {
 
     private void handlePlaySongRequest(Message message) {
         String songId = message.getFromBody("songId");
+        String songName = message.getFromBody("songName");
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
-        float offset = ((Number) message.getFromBody("offset")).floatValue();
-        lobby.getGame().setPlayerMusic(
-                message.getFromBody("username"),
-                songId,
-                (long) (System.currentTimeMillis() - 1000 * offset)
-        );
+        lobby.getGame().setPlayerMusic(message.getFromBody("username"), songId, songName);
 
-        File file = new File(directoryPath + songId + ".mp3");
+        File file = new File(directoryPath + songId + ".ogg");
         if (!file.exists()) {
             System.err.println("song " + songId + " does not exist");
             return;
@@ -224,7 +228,6 @@ public class ClientConnectionThread extends ConnectionThread {
                 byte[] buffer = new byte[8192];
                 int bytesRead;
                 while ((bytesRead = fis.read(buffer)) != -1) {
-                    // We need to handle the case where we read less than the buffer size
                     byte[] packet = new byte[bytesRead];
                     System.arraycopy(buffer, 0, packet, 0, bytesRead);
                     sendBinaryPacket(packet);

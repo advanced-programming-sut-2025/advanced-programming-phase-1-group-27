@@ -359,6 +359,17 @@ Images/Animals/Sheep/31.png
 Images/Animals/Sheep/32.png
 Images/Animals/Sheep/33.png
 Images/Animals/Sheep/34.png
+Images/Artisans/BeeHouse.png
+Images/Artisans/CharcoalKiln.png
+Images/Artisans/CheesePress.png
+Images/Artisans/Dehydrator.png
+Images/Artisans/FishSmoker.png
+Images/Artisans/Furnace.png
+Images/Artisans/Keg.png
+Images/Artisans/Loom.png
+Images/Artisans/MayonnaiseMachine.png
+Images/Artisans/OilMaker.png
+Images/Artisans/PreservesJar.png
 Images/Cooking/CookingMenu.png
 Images/Crafting/Bee_House.png
 Images/Crafting/Bomb.png
@@ -647,6 +658,22 @@ Images/Crops/Yam/  (3).png
 Images/Crops/Yam/  (4).png
 Images/Crops/Yam/  (5).png
 Images/Crops/atlas/Crops_sheet.png
+Images/Emoji/AWWW.png
+Images/Emoji/AmoAbbas.png
+Images/Emoji/Bone.png
+Images/Emoji/Crab.png
+Images/Emoji/Cry.png
+Images/Emoji/Galb.png
+Images/Emoji/Kado.png
+Images/Emoji/Khis.png
+Images/Emoji/King.png
+Images/Emoji/Love.png
+Images/Emoji/Music.png
+Images/Emoji/Pashm.png
+Images/Emoji/ReactionBackground.png
+Images/Emoji/Shalvar.png
+Images/Emoji/Skull.png
+Images/Emoji/Smile.png
 Images/Exit/ExitMenuMan.png
 Images/Exit/ExitMenuMan2.png
 Images/Exit/ExitMenuWoman.png

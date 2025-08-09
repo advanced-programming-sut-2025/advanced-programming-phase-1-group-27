@@ -70,10 +70,15 @@ public class Message {
         start_download,
         download_complete,
         get_player_music,
+        get_music_offset,
         save_and_exit_game,
         voting,
         chat,
         get_player_position,
         get_trade_history,
+        can_marry,
+        marriage_request,
+        marriage_response,
+        reaction,
     }
 }

@@ -97,13 +97,21 @@ public class GameController {
         String self = message.getFromBody("self");
         String mode = message.getFromBody("mode");
         if(mode.equals("confirmTrade")) {
-            // TODO : Rassa Trade
             boolean answer = message.getFromBody("answer");
             int lobbyId = message.getIntFromBody("lobbyId");
+            Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
+            Player player2 =  ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
             if(answer){
                 Trade trade = new Trade(message);
                 ServerApp.getLobbyById(lobbyId).getGame().addTrade(trade);
+                player1.addXP(player2, 50);
+                player2.addXP(player1, 50);
+            }else {
+                player1.decreaseXP(player2, 30);
+                player2.decreaseXP(player1, 30);
             }
+            player1.getPlayerTradeToday().put(player2 , Boolean.TRUE);
+            player2.getPlayerTradeToday().put(player1, Boolean.TRUE);
         }
         ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
                 starter.equals(self)? other : starter
@@ -117,9 +125,15 @@ public class GameController {
         assert lobby != null;
         String playerName = message.getFromBody("playerName");
         MusicInfo musicInfo = lobby.getGame().getPlayerMusicInfo(playerName);
+        Message response = ServerApp.getClientConnectionThreadByUsername(playerName).sendAndWaitForResponse(
+                new Message(null, Message.Type.get_music_offset),
+                TIMEOUT_MILLIS
+        );
+        float offset = ((Number) response.getFromBody("offset")).floatValue();
         return new Message(new HashMap<>() {{
-            put("songId", musicInfo.getSongId());
-            put("startTime", musicInfo.getStartTime());
+            put("songId", musicInfo == null? null : musicInfo.getSongId());
+            put("songName", musicInfo == null? null : musicInfo.getSongName());
+            put("offset", offset);
         }}, Message.Type.response);
     }
 

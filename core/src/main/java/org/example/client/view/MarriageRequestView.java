@@ -1,4 +1,4 @@
-package org.example.client.view.votemenus;
+package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -8,17 +8,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.example.client.controller.InteractionsWithOthers.TradeController;
+import org.example.client.Main;
+import org.example.client.controller.VoteController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
-import org.example.client.view.AppMenu;
+import org.example.common.models.Message;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
-public class VoteView extends AppMenu {
-    // Rassa Controller
-    private final TradeController controller;
-    private final String username;
+public class MarriageRequestView extends AppMenu {
+    private final VoteController controller;
+    private final String proposer;
 
     private final TextButton yesButton;
     private final TextButton noButton;
@@ -30,10 +31,11 @@ public class VoteView extends AppMenu {
 
     private Stage stage;
 
-    public VoteView(String username) {
-        controller = new TradeController();
-        ClientApp.setNonMainMenu(this);
-        this.username = username;
+    public MarriageRequestView(String proposer) {
+        this.proposer = proposer;
+
+        controller = new VoteController();
+
         yesButton = new TextButton("Yes" , skin);
         noButton = new TextButton("No" , skin);
 
@@ -46,11 +48,39 @@ public class VoteView extends AppMenu {
                 Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight(),
                 30));
-        //Rassa label har chi mikhai bezan
-        label = new Label(username + " wants to trade with you", skin);
+        label = new Label("Do you want to marry " + proposer + "?", skin);
         label.setColor(Color.BLACK);
         label.setFontScale(1.5f);
+
         setListeners();
+    }
+
+    private void setListeners() {
+        yesButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
+                ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                    put("proposer", proposer);
+                    put("answer", true);
+                }}, Message.Type.marriage_response));
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            }
+        });
+
+        noButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
+                ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                    put("proposer", proposer);
+                    put("answer", false);
+                }}, Message.Type.marriage_response));
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            }
+        });
     }
 
     private void displayBackground() {
@@ -76,13 +106,13 @@ public class VoteView extends AppMenu {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float v) {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int i, int i1) {
 
     }
 
@@ -109,24 +139,5 @@ public class VoteView extends AppMenu {
     @Override
     public void executeCommands(Scanner scanner) {
 
-    }
-
-    private void setListeners() {
-        // Rassa listener
-        yesButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-//                controller.respondToStartTrade(username , true);
-//                stage.clear();
-            }
-        });
-
-        noButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-//                controller.respondToStartTrade(username , false);
-//                stage.clear();
-            }
-        });
     }
 }

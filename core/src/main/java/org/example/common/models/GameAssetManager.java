@@ -633,6 +633,27 @@ public class GameAssetManager {
     private final Array<Texture> crows = new Array<>();
     private Animation<Texture> crowAnimationFrames;
 
+    private final Image cryEmoji =  new Image(new Texture(Gdx.files.internal("Images/Emoji/Cry.png")));
+    private final Image loveEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Love.png")));
+    private final Image pashmEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Pashm.png")));
+    private final Image skullEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Skull.png")));
+    private final Image smileEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Smile.png")));
+    private final Image galbEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Galb.png")));
+    private final Image musicEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Music.png")));
+    private final Image boneEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Bone.png")));
+    private final Image amoAbbasEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/AmoAbbas.png")));
+    private final Image kadoEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Kado.png")));
+    private final Image awwwEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/AWWW.png")));
+    private final Image kingEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/King.png")));
+    private final Image khisEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Khis.png")));
+    private final Image crabEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Crab.png")));
+    private final Image shalvarEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Shalvar.png")));
+
+
+
+    private final Image reactionMenuBackground = new Image( new Texture(Gdx.files.internal("Images/Emoji/ReactionBackground.png")));
+
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -641,6 +662,70 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Image getShalvarEmoji() {
+        return shalvarEmoji;
+    }
+
+    public Image getCrabEmoji() {
+        return crabEmoji;
+    }
+
+    public Image getKhisEmoji() {
+        return khisEmoji;
+    }
+
+    public Image getKingEmoji() {
+        return kingEmoji;
+    }
+
+    public Image getAwwwEmoji() {
+        return awwwEmoji;
+    }
+
+    public Image getKadoEmoji() {
+        return kadoEmoji;
+    }
+
+    public Image getAmoAbbasEmoji() {
+        return amoAbbasEmoji;
+    }
+
+    public Image getBoneEmoji() {
+        return boneEmoji;
+    }
+
+    public Image getMusicEmoji() {
+        return musicEmoji;
+    }
+
+    public Image getGalbEmoji() {
+        return galbEmoji;
+    }
+
+    public Image getReactionMenuBackground() {
+        return reactionMenuBackground;
+    }
+
+    public Image getSmileEmoji() {
+        return smileEmoji;
+    }
+
+    public Image getSkullEmoji() {
+        return skullEmoji;
+    }
+
+    public Image getPashmEmoji() {
+        return pashmEmoji;
+    }
+
+    public Image getLoveEmoji() {
+        return loveEmoji;
+    }
+
+    public Image getCryEmoji() {
+        return cryEmoji;
     }
 
     public Texture getPlayerIcon() {

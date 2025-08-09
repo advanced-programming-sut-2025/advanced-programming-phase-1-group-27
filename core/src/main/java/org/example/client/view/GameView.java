@@ -246,16 +246,15 @@ public class GameView extends AppMenu {
             System.out.println(interactionsWithUserController.flower(
                     matcher.group("username").trim()
             ));
-        } else if ((matcher = InteractionsWithUserCommands.AskMarriage.getMatcher(input)) != null) {
-            System.out.println(marriageController.askMarriage(
-                    matcher.group("username").trim(),
-                    matcher.group("ring").trim()
-            ));
-        } else if ((matcher = InteractionsWithUserCommands.Respond.getMatcher(input)) != null) {
-            System.out.println(marriageController.respond(
-                    matcher.group("respond").trim(),
-                    matcher.group("username").trim()
-            ));
+//        } else if ((matcher = InteractionsWithUserCommands.AskMarriage.getMatcher(input)) != null) {
+//            System.out.println(marriageController.askMarriage(
+//                    matcher.group("username").trim()
+//            ));
+//        } else if ((matcher = InteractionsWithUserCommands.Respond.getMatcher(input)) != null) {
+//            System.out.println(marriageController.respond(
+//                    matcher.group("respond").trim(),
+//                    matcher.group("username").trim()
+//            ));
         } else if ((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
             System.out.println(controller.showMoney());
         } else if ((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {

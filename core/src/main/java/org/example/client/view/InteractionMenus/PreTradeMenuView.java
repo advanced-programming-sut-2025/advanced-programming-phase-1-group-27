@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
@@ -128,6 +129,14 @@ public class PreTradeMenuView extends AppMenu {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 controller.goToTradeHistory(targetUsername);
+            }
+        });
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new InteractionMenu(targetUsername));
             }
         });
 
