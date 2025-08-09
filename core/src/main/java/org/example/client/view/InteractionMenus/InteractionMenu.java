@@ -2,25 +2,26 @@ package org.example.client.view.InteractionMenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionController;
-import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
-import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.OutsideView;
-import org.example.server.models.Stacks;
+import org.example.common.models.GameAssetManager;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InteractionMenu extends AppMenu {
 
     private final InteractionController controller;
+
+    private final Image decoration1;
+    private final Image decoration2;
 
     private final String targetUsername;
 
@@ -33,6 +34,7 @@ public class InteractionMenu extends AppMenu {
     private final Label menuLabel;
     private final Label targetPlayerLabel;
 
+
     private Stage stage;
 
     public InteractionMenu(String username) {
@@ -40,6 +42,9 @@ public class InteractionMenu extends AppMenu {
         controller = new InteractionController();
         ClientApp.setNonMainMenu(this);
         targetUsername = username;
+
+        decoration1 = GameAssetManager.getGameAssetManager().getInteractionMenuDecoration1();
+        decoration2 = GameAssetManager.getGameAssetManager().getInteractionMenuDecoration2();
 
         tradeButton = new TextButton("Trade" , skin);
         giftButton = new TextButton("Gift" , skin);
@@ -78,6 +83,12 @@ public class InteractionMenu extends AppMenu {
         marriageButton.setPosition(4*(Gdx.graphics.getWidth()-marriageButton.getWidth())/5f, 2 * Gdx.graphics.getHeight() / 6f - tradeButton.getHeight()/2f);
         backButton.setPosition(4*(Gdx.graphics.getWidth()-backButton.getWidth())/5f, Gdx.graphics.getHeight() / 6f - tradeButton.getHeight()/2f);
 
+        decoration1.setSize(252,252);
+        decoration2.setSize(252,252);
+        decoration1.setPosition(200,250);
+        decoration2.setPosition(500,300);
+
+
         stage.addActor(menuBackground);
         stage.addActor(tradeButton);
         stage.addActor(giftButton);
@@ -86,6 +97,8 @@ public class InteractionMenu extends AppMenu {
         stage.addActor(backButton);
         stage.addActor(menuLabel);
         stage.addActor(targetPlayerLabel);
+        stage.addActor(decoration1);
+        stage.addActor(decoration2);
 
     }
 
