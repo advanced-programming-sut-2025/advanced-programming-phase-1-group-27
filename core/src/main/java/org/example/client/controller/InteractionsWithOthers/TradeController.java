@@ -79,14 +79,6 @@ public class TradeController {
         });
     }
 
-    public void getSuggestedTrade(Message message) {
-        // TODO : bayad begi ke in trade mored ghabool hast ya na
-        // other dariaft mikone
-        // inja bayad false she
-        TradeView tradeView = (TradeView) ClientApp.getCurrentMenu();
-        tradeView.setTradeDoneByStarterSide(false);
-    }
-
     public void sendConfirmation(boolean answer, String starter, String other, ArrayList<Stacks> starterSelected, ArrayList<Stacks> otherSelected) {
         // TODO : age okay boodi ba in trade bayad in function seda beshe to nahayee she
         // from other
@@ -108,7 +100,6 @@ public class TradeController {
             put("starterSelected", new Backpack(ToolType.BasicBackpack, starterSelected).getInfo());
             put("otherSelected", new Backpack(ToolType.BasicBackpack, otherSelected).getInfo());
         }}, Message.Type.interaction_p2p));
-        // XP
         ClientApp.setNonMainMenu(null);
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
@@ -127,10 +118,7 @@ public class TradeController {
             // Inventory dorost she
             addToInventory(starterSelected);
             reduceFromInventory(otherSelected);
-        } else {
-            // trade namovafagh bood
         }
-        // XP
         ClientApp.setNonMainMenu(null);
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();

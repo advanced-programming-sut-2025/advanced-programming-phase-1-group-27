@@ -76,5 +76,7 @@ public class Message {
         chat,
         get_player_position,
         get_trade_history,
+        can_marry,
+        marriage_request,
     }
 }

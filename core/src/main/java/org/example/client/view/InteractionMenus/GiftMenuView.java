@@ -52,7 +52,7 @@ public class GiftMenuView extends AppMenu {
                 (int) npcImage.getHeight(),
                 30));
 
-        GiftButton = new TextButton("Upgrade", skin);
+        GiftButton = new TextButton("Gift", skin);
         exitButton = new TextButton("Exit", skin);
 
         stage = new Stage(new ScreenViewport());

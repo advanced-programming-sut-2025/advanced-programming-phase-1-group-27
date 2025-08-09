@@ -4,6 +4,7 @@ import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
+import org.example.server.controller.InteractionsWithOthers.MarriageController;
 import org.example.server.controller.InteractionsWithOthers.TradeController;
 import org.example.server.models.Lobby;
 import org.example.server.models.ServerApp;
@@ -156,6 +157,9 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         } else if(message.getType() == Message.Type.get_trade_history){
             sendMessage(TradeController.getTradesBetweenUsers(message));
+            return true;
+        } else if(message.getType() == Message.Type.can_marry){
+            sendMessage(MarriageController.canMarry(message));
             return true;
         }
         return false;
