@@ -16,7 +16,7 @@ public class Reaction {
     public Reaction(Emoji emoji) {
 
         this.isEmoji = true;
-        this.emojiImage = new Image(emoji.getEmojiTexture());
+        this.emojiImage = emoji.getEmojiImage();
 
     }
 

@@ -9,6 +9,7 @@ import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
+import org.example.client.model.enums.Emoji;
 import org.example.client.view.HUDView;
 import org.example.client.view.InteractionMenus.InteractionMenu;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
@@ -43,6 +44,18 @@ public class HUDController extends MenuController {
 
     public HUDController(HUDView view) {
         this.view = view;
+    }
+
+    public void reactWithText(String reaction){
+
+        ///  TODO: RASSA
+
+    }
+
+    public void reactWithEmoji(Emoji emoji){
+
+        ///  TODO: RASSA
+
     }
 
     public boolean gotGiftedToday(NPCType type){
