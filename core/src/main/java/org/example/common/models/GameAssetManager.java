@@ -649,9 +649,9 @@ public class GameAssetManager {
     private final Image crabEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Crab.png")));
     private final Image shalvarEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Shalvar.png")));
 
-
-
     private final Image reactionMenuBackground = new Image( new Texture(Gdx.files.internal("Images/Emoji/ReactionBackground.png")));
+
+    private final Image giftPlayerMenuBackground = new Image( new Texture(Gdx.files.internal("Images/GiftPlayerMenuBackground.png")));
 
 
     public static GameAssetManager getGameAssetManager() {
@@ -662,6 +662,10 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Image getGiftPlayerMenuBackground() {
+        return giftPlayerMenuBackground;
     }
 
     public Image getShalvarEmoji() {

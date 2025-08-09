@@ -143,7 +143,15 @@ public class InteractionMenu extends AppMenu {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 playClickSound();
-                controller.openTradeMenu2(targetUsername);
+                controller.openTradeMenu(targetUsername);
+            }
+        });
+
+        giftButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
+                controller.openGiftMenu(targetUsername);
             }
         });
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.GiftController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
@@ -122,9 +123,15 @@ public class PreGiftMenuView extends AppMenu {
         giftButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                ///  TODO: PARSA
-//                controller.startTrade(targetUsername);
-//                stage.clear();
+                controller.openGiftMenu(targetUsername);
+            }
+        });
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new InteractionMenu(targetUsername));
             }
         });
 

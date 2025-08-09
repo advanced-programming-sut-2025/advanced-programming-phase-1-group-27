@@ -137,7 +137,7 @@ public class TradeView extends AppMenu {
                 onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setVisible(true);
             }
 
-            if (selectItemIndex != null && 12 * rowNum < selectItemIndex && selectItemIndex < 12 * (rowNum + 4)) {
+            if (selectItemIndex != null && 12 * rowNum <= selectItemIndex && selectItemIndex < 12 * (rowNum + 4)) {
                 selectBox.setVisible(true);
                 selectBox.setPosition(onScreenItems.get(selectItemIndex).getItem().getItemImage().getX() - 5, onScreenItems.get(selectItemIndex).getItem().getItemImage().getY() - 10);
             } else {

@@ -359,6 +359,9 @@ Images/Animals/Sheep/31.png
 Images/Animals/Sheep/32.png
 Images/Animals/Sheep/33.png
 Images/Animals/Sheep/34.png
+Images/Artisans/ArtisanBarBack.png
+Images/Artisans/ArtisanBarFront.png
+Images/Artisans/ArtisanMenu.png
 Images/Artisans/BeeHouse.png
 Images/Artisans/CharcoalKiln.png
 Images/Artisans/CheesePress.png
@@ -702,6 +705,7 @@ Images/Fruits/Hot_Pepper.png
 Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
+Images/GiftPlayerMenuBackground.png
 Images/HoveringInfoWindow.png
 Images/Inbox/InboxMessageBackground.png
 Images/Inbox/MessageAlert.png
