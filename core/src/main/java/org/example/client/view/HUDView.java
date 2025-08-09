@@ -150,8 +150,6 @@ public class HUDView extends AppMenu {
     private final TextButton animalExitButton;
 
 
-    private final TextButton artisanCancelButton;
-    private final TextButton artisanCheatButton;
     private final TextButton randomizeEmojis;
     private final TextButton sendReaction;
 
@@ -499,9 +497,6 @@ public class HUDView extends AppMenu {
         stage.addActor(animalPetButton);
         stage.addActor(animalSellButton);
         stage.addActor(animalExitButton);
-        stage.addActor(artisanMiniBackground);
-        stage.addActor(artisanCancelButton);
-        stage.addActor(artisanCheatButton);
         stage.addActor(reactionTextField);
         stage.addActor(randomizeEmojis);
         stage.addActor(sendReaction);
@@ -2220,23 +2215,6 @@ public class HUDView extends AppMenu {
            }
         });
 
-        artisanCancelButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                playClickSound();
-                currentMenu = InGameMenuType.NONE;
-                //TODO
-            }
-        });
-
-        artisanCheatButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                playClickSound();
-                currentMenu = InGameMenuType.NONE;
-                //TODO
-            }
-        });
 
     }
 
