@@ -1,6 +1,7 @@
 package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
@@ -205,5 +206,18 @@ public class ServerUpdatesController { // handles updates sent by server
     public static void handleChat(Message message) {
         String messageText = message.getFromBody("message");
         ClientApp.getCurrentGame().getCurrentPlayer().addToChatInbox(messageText);
+    }
+
+    public static Message getMusicOffset() {
+        Music music = ClientApp.getCurrentGame().getCurrentMusic();
+        float offset = 0f;
+        if (music == null)
+            offset = Float.MAX_VALUE;
+        else
+            offset = music.getPosition();
+        float finalOffset = offset;
+        return new Message(new HashMap<>() {{
+            put("offset", finalOffset);
+        }}, Message.Type.response);
     }
 }

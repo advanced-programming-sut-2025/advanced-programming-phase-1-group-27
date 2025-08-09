@@ -644,8 +644,8 @@ public class ServerGame implements Game {
         trades.add(trade);
     }
 
-    public void setPlayerMusic(String playerName, String songId, long startTime) {
-        playerToMusicMap.put(playerName, new MusicInfo(songId, startTime));
+    public void setPlayerMusic(String playerName, String songId, String songName) {
+        playerToMusicMap.put(playerName, new MusicInfo(songId, songName));
     }
 
     public MusicInfo getPlayerMusicInfo(String playerName) {

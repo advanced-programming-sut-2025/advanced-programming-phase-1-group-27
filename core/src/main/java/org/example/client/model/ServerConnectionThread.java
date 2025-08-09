@@ -112,6 +112,10 @@ public class ServerConnectionThread extends ConnectionThread {
             completeDownload();
             return true;
         }
+        else if (message.getType() == Message.Type.get_music_offset) {
+            sendMessage(ServerUpdatesController.getMusicOffset());
+            return true;
+        }
         else if (message.getType() == Message.Type.save_and_exit_game) {
             ClientApp.saveGame();
             return true;
@@ -154,10 +158,11 @@ public class ServerConnectionThread extends ConnectionThread {
     private void handleStartDownload(Message message) {
         String songId = message.getFromBody("songId");
         try {
-            fileHandle = Gdx.files.internal("musics/" + songId + ".mp3");
+            fileHandle = Gdx.files.local("musics/" + songId + ".ogg");
             fileHandle.parent().mkdirs();
             fileOutputStream = new FileOutputStream(fileHandle.file(), false);
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("failed to start download!");
         }
     }
@@ -174,7 +179,6 @@ public class ServerConnectionThread extends ConnectionThread {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            fileHandle = null;
             fileOutputStream = null;
         }
     }

@@ -46,3 +46,6 @@ Item's
 users.db
 
 data/login_user.json
+
+music_uploads/*
+musics/*

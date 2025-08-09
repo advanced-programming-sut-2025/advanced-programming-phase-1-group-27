@@ -359,6 +359,17 @@ Images/Animals/Sheep/31.png
 Images/Animals/Sheep/32.png
 Images/Animals/Sheep/33.png
 Images/Animals/Sheep/34.png
+Images/Artisans/BeeHouse.png
+Images/Artisans/CharcoalKiln.png
+Images/Artisans/CheesePress.png
+Images/Artisans/Dehydrator.png
+Images/Artisans/FishSmoker.png
+Images/Artisans/Furnace.png
+Images/Artisans/Keg.png
+Images/Artisans/Loom.png
+Images/Artisans/MayonnaiseMachine.png
+Images/Artisans/OilMaker.png
+Images/Artisans/PreservesJar.png
 Images/Cooking/CookingMenu.png
 Images/Crafting/Bee_House.png
 Images/Crafting/Bomb.png

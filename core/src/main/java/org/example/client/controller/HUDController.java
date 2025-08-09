@@ -1,5 +1,7 @@
 package org.example.client.controller;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.client.Main;
@@ -10,10 +12,10 @@ import org.example.client.model.MiniPlayer;
 import org.example.client.view.HUDView;
 import org.example.client.view.InteractionMenus.InteractionMenu;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
-import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
+import org.example.common.models.MusicInfo;
 import org.example.server.models.*;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Relations.Relation;
@@ -26,8 +28,14 @@ import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
+
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class HUDController extends MenuController {
 
@@ -477,6 +485,94 @@ public class HUDController extends MenuController {
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("playerName", playerName);
         }}, Message.Type.voting));
+    }
+
+    public void openFileChooser() {
+        SwingUtilities.invokeLater(() -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                    "OGG Files", "ogg"
+            ));
+
+            int result = fileChooser.showOpenDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                uploadSong(file);
+            }
+        });
+    }
+
+    private void uploadSong(File file) {
+        new Thread(() -> {
+            ClientApp.getServerConnectionThread().sendMessage(new Message(null, Message.Type.upload_song_request));
+            try (FileInputStream fis = new FileInputStream(file)) {
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                while ((bytesRead = fis.read(buffer)) != -1) {
+                    byte[] chunk = new byte[bytesRead];
+                    System.arraycopy(buffer, 0, chunk, 0, bytesRead);
+                    ClientApp.getServerConnectionThread().sendBinaryPacket(chunk);
+                }
+
+                Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(
+                        new Message(null, Message.Type.upload_complete),
+                        TIMEOUT_MILLIS
+                );
+                String songId = response.getFromBody("songId");
+                ClientApp.getCurrentGame().addSong(file.getName(), songId);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    public void playSong(String songId, String songName) {
+        MusicInfo musicInfo = new MusicInfo(songId, songName);
+        playSongFromServer(musicInfo);
+    }
+
+    public GraphicalResult listenWith(String playerName) {
+        if (playerName == null)
+            return new GraphicalResult("Please select a player to listen.");
+        MusicInfo musicInfo = getPlayerMusicInfo(playerName);
+        if (musicInfo == null)
+            return new GraphicalResult("This player is not currently listening to any song!");
+        playSongFromServer(musicInfo);
+        return new GraphicalResult("");
+    }
+
+    private MusicInfo getPlayerMusicInfo(String playerName) {
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(
+                new Message(new HashMap<>() {{
+                    put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+                    put("playerName", playerName);
+                }}, Message.Type.get_player_music),
+                TIMEOUT_MILLIS
+        );
+        String songId = response.getFromBody("songId");
+        if (songId == null)
+            return null;
+        String songName = response.getFromBody("songName");
+        float offset = ((Number) response.getFromBody("offset")).floatValue();
+        return new MusicInfo(songId, songName, offset);
+    }
+
+    private void playSongFromServer(MusicInfo musicInfo) {
+        ClientApp.getCurrentGame().setCurrentMusicName(musicInfo.getSongName());
+        ClientApp.getServerConnectionThread().setOnDownloadComplete(fileHandle -> {
+            Music music = Gdx.audio.newMusic(fileHandle);
+            ClientApp.getCurrentGame().setCurrentMusic(music, musicInfo.getOffset());
+        });
+        ClientApp.getServerConnectionThread().sendMessage(
+                new Message(new HashMap<>() {{
+                    put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+                    put("username", ClientApp.getLoggedInUser().getUsername());
+                    put("songId", musicInfo.getSongId());
+                    put("songName", musicInfo.getSongName());
+                }}, Message.Type.play_song_request)
+        );
     }
 
     @Override

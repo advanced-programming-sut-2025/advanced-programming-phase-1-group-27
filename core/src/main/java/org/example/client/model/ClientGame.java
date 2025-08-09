@@ -7,9 +7,7 @@ import org.example.client.Main;
 import org.example.client.controller.OtherPlayerController;
 import org.example.client.view.OutsideView;
 import org.example.client.view.menu.MainMenuView;
-import org.example.common.models.Direction;
-import org.example.common.models.Game;
-import org.example.common.models.Message;
+import org.example.common.models.*;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
@@ -17,7 +15,6 @@ import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Player;
 import org.example.server.models.Shops.BlackSmith;
 import org.example.server.models.Shops.Shop;
-import org.example.common.models.Time;
 import org.example.server.models.User;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.Plants.Crop;
@@ -47,8 +44,9 @@ public class ClientGame implements Game {
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
     private ArrayList<OtherPlayerController> otherPlayerControllers = new ArrayList<>();
-    private ArrayList<String> songIdList = new ArrayList<>();
+    private HashMap<String, String> songNameToId = new HashMap<>();
     private Music currentMusic = null;
+    private String currentMusicName = null;
 
     public ClientGame(Lobby lobby, Player player, ArrayList<MiniPlayer> players) {
         this.lobbyId = lobby.getId();
@@ -442,22 +440,35 @@ public class ClientGame implements Game {
         return lobbyId;
     }
 
-    public synchronized void addSong(String songId) {
-        songIdList.add(songId);
+    public synchronized void addSong(String songName, String songId) {
+        songNameToId.put(songName, songId);
     }
 
-    public synchronized void setCurrentMusic(Music music) {
+    public HashMap<String, String> getSongList() {
+        return songNameToId;
+    }
+
+    public String getSongIdByName(String songName) {
+        return songNameToId.get(songName);
+    }
+
+    public synchronized void setCurrentMusic(Music music, float offset) {
         if (currentMusic != null) {
             currentMusic.stop();
             currentMusic.dispose();
         }
         currentMusic = music;
-        currentMusic.play();
+        Gdx.app.postRunnable(() -> {
+            currentMusic.play();
+            currentMusic.setPosition(offset);
+        });
     }
 
     public void stopMusic() {
-        if (currentMusic != null && currentMusic.isPlaying())
+        if (currentMusic != null && currentMusic.isPlaying()) {
             currentMusic.stop();
+            currentMusic.dispose();
+        }
     }
 
     public void pauseMusic() {
@@ -468,6 +479,18 @@ public class ClientGame implements Game {
     public void resumeMusic() {
         if (currentMusic != null && !currentMusic.isPlaying())
             currentMusic.play();
+    }
+
+    public Music getCurrentMusic() {
+        return currentMusic;
+    }
+
+    public String getCurrentMusicName() {
+        return currentMusicName;
+    }
+
+    public void setCurrentMusicName(String currentMusicName) {
+        this.currentMusicName = currentMusicName;
     }
 
     public void kickPlayer(String playerName) {

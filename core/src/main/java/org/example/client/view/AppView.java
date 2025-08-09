@@ -41,29 +41,16 @@ public class AppView {
 
     public void runViaGraphics() {
         // ------REGULAR------
-        if (ClientApp.loadSavedUser()) {
-            Main.getMain().setScreen(new MainMenuView());
-        }
-        else {
-            Main.getMain().setScreen(new WelcomeMenuView());
-        }
+//        if (ClientApp.loadSavedUser()) {
+//            Main.getMain().setScreen(new MainMenuView());
+//        }
+//        else {
+//            Main.getMain().setScreen(new WelcomeMenuView());
+//        }
 
         // ------CHEAT------
-//        Main.getMain().setScreen(new WelcomeMenuView());
-//        cheat();
-        // For Graphics team
+        Main.getMain().setScreen(new WelcomeMenuView());
         cheat();
-
-        // For GigaChads
-//        int clown = 0;
-//        int rassa = clown;
-//        if (rassa == clown) {
-//            Main.getMain().getScreen().dispose();
-//            Main.getMain().setScreen(new HomeView());
-//
-//            Main.getMain().getScreen().dispose();
-//            Main.getMain().setScreen(new LobbyMenuView());
-//        }
     }
 
 }

@@ -117,9 +117,15 @@ public class GameController {
         assert lobby != null;
         String playerName = message.getFromBody("playerName");
         MusicInfo musicInfo = lobby.getGame().getPlayerMusicInfo(playerName);
+        Message response = ServerApp.getClientConnectionThreadByUsername(playerName).sendAndWaitForResponse(
+                new Message(null, Message.Type.get_music_offset),
+                TIMEOUT_MILLIS
+        );
+        float offset = ((Number) response.getFromBody("offset")).floatValue();
         return new Message(new HashMap<>() {{
-            put("songId", musicInfo.getSongId());
-            put("startTime", musicInfo.getStartTime());
+            put("songId", musicInfo == null? null : musicInfo.getSongId());
+            put("songName", musicInfo == null? null : musicInfo.getSongName());
+            put("offset", offset);
         }}, Message.Type.response);
     }
 

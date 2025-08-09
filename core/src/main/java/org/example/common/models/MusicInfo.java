@@ -1,19 +1,30 @@
 package org.example.common.models;
 
 public class MusicInfo {
-    String songId;
-    long startTime;
+    private String songId;
+    private String songName;
+    private float offset = 0f;
 
-    public MusicInfo(String songId, long startTime) {
+    public MusicInfo(String songId, String songName) {
         this.songId = songId;
-        this.startTime = startTime;
+        this.songName = songName;
+    }
+
+    public MusicInfo(String songId, String songName, float offset) {
+        this.songId = songId;
+        this.songName = songName;
+        this.offset = offset;
     }
 
     public String getSongId() {
         return songId;
     }
 
-    public long getStartTime() {
-        return startTime;
+    public String getSongName() {
+        return songName;
+    }
+
+    public float getOffset() {
+        return offset;
     }
 }

@@ -84,6 +84,8 @@ public class ClientApp {
     public static void end() {
         saveGame();
         serverConnectionThread.end();
+        Gdx.app.exit();
+        System.exit(0);
     }
 
     public static User getUserByUsername(String username) {
