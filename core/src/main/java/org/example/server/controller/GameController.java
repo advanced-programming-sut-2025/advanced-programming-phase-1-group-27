@@ -241,4 +241,10 @@ public class GameController {
             put("mapIndex", finalMapIndex);
         }}, Message.Type.response);
     }
+
+    public static synchronized void handleReaction(Message message) {
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
+        lobby.notifyAll(message);
+    }
 }

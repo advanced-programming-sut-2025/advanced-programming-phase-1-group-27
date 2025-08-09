@@ -140,6 +140,10 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.handleMarriageResponse(message);
             return true;
         }
+        else if (message.getType() == Message.Type.reaction) {
+            ServerUpdatesController.handleReaction(message);
+            return true;
+        }
         return false;
     }
 

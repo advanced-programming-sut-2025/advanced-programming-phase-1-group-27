@@ -9,6 +9,7 @@ import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
 import org.example.client.model.MiniPlayer;
+import org.example.client.model.Reaction;
 import org.example.client.model.enums.Emoji;
 import org.example.client.view.HUDView;
 import org.example.client.view.InteractionMenus.InteractionMenu;
@@ -46,16 +47,20 @@ public class HUDController extends MenuController {
         this.view = view;
     }
 
-    public void reactWithText(String reaction){
-//        ClientApp.getServerConnectionThread().sendMessage();
-        ///  TODO: RASSA
-
+    public void reactWithText(String reactionText){
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("username", ClientApp.getLoggedInUser().getUsername());
+            put("reaction", new Reaction(reactionText).getInfo());
+        }}, Message.Type.reaction));
     }
 
     public void reactWithEmoji(Emoji emoji){
-
-        ///  TODO: RASSA
-
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("username", ClientApp.getLoggedInUser().getUsername());
+            put("reaction", new Reaction(emoji).getInfo());
+        }}, Message.Type.reaction));
     }
 
     public boolean gotGiftedToday(NPCType type){

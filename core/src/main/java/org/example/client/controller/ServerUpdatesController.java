@@ -6,6 +6,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.Reaction;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.StartTradeView;
 import org.example.client.view.InteractionMenus.TradeView;
@@ -233,5 +234,11 @@ public class ServerUpdatesController { // handles updates sent by server
     public static void handleMarriageResponse(Message message) {
         boolean answer = message.getFromBody("answer");
         // TODO: parsa, inja javab behet mirese
+    }
+
+    public static void handleReaction(Message message) {
+        String playerName = message.getFromBody("username");
+        Reaction reaction = new Reaction(message.<LinkedTreeMap<String, Object>>getFromBody("reaction"));
+        // TODO : sobhan, in gooy o in meydan
     }
 }

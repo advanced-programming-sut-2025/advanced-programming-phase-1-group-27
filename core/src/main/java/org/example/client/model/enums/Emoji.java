@@ -54,4 +54,12 @@ public enum Emoji {
     public ImageButton getEmojiButton() {
         return emojiButton;
     }
+
+    public static Emoji getEmoji(String emojiName) {
+        for (Emoji emoji : values()) {
+            if (emoji.name().equalsIgnoreCase(emojiName))
+                return emoji;
+        }
+        return null;
+    }
 }
