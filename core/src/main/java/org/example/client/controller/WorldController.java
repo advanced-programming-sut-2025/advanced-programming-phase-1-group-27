@@ -31,6 +31,7 @@ import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.Plants.Crop;
+import org.example.server.models.enums.Plants.CropType;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Plants.Tree;
 import org.example.server.models.enums.items.MineralType;
@@ -188,9 +189,18 @@ public class WorldController {
                 if (texture == null) continue;
 
                 if (cells[i][j].getObject() instanceof Crop crop) {
-                    texture = crop.getTexture();
-                    if (texture != null)
-                        Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                    if (crop.isGiant()) {
+                        System.out.println("ASDFASDDFASDFASFASDF");
+                        texture = GameAssetManager.getGameAssetManager().getGiantCropTexture((CropType) crop.getType());
+                        if (texture != null && crop.getCell() == cells[i][j]) {
+                            Main.getBatch().draw(texture, x, y, 80, 80);
+                            System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+                        }
+                    } else {
+                        texture = crop.getTexture();
+                        if (texture != null)
+                            Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                    }
                 }
                 if (cells[i][j].getObject() instanceof MineralType mineral) {
                     texture = mineral.getTexture();

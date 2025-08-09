@@ -103,6 +103,12 @@ public class GameAssetManager {
     private final Texture RedTileCellTexture = new Texture("assets/Images/Floorings/Red_Tile.png");
     private final Texture GreenTileCellTexture = new Texture("assets/Images/Floorings/Green_Tile.png");
 
+    private final HashMap<CropType, Texture> giantCropTextureMap = new HashMap<>() {{
+        put(CropType.Cauliflower, new Texture("assets/Images/Crops/Giant_Cauliflower.png"));
+        put(CropType.Melon, new Texture("assets/Images/Crops/Giant_Melon.png"));
+        put(CropType.Pumpkin, new Texture("assets/Images/Crops/Giant_Pumpkin.png"));
+    }};
+
     private final Texture NPCDialogueSign = new Texture("assets/Images/!_Npc_Talking.png");
     private final Texture npcDialogueBox = new Texture("assets/Images/HoveringInfoWindow.png");
     private final Texture THEFUCKINGTEXTURE = new Texture("assets/Images/PlayerSocial/PlayerSocialBackground2.png");
@@ -1265,6 +1271,10 @@ public class GameAssetManager {
 
     public Texture getPlantTexture(PlantType plantType, int index) {
         return plantTextureMap.get(plantType).get(index);
+    }
+
+    public Texture getGiantCropTexture(CropType cropType) {
+        return giantCropTextureMap.getOrDefault(cropType, null);
     }
 
     public Texture getCropTexture(CropType cropType, int index) {

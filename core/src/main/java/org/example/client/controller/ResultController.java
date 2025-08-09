@@ -59,5 +59,7 @@ public class ResultController {
             result.setPosition(position.x, position.y);
             result.getMessage().draw(Main.getBatch(), 1);
         }
+
+        results.removeIf(GraphicalResult::finished);
     }
 }

@@ -1740,34 +1740,31 @@ public class HUDView extends AppMenu {
 
                 if (!isInputFieldVisible) {
 
-                    if ( (525 < x && x < 580) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.INVENTORY;
-                        return true;
-                    }
-                    else if ( (590 < x && x < 645) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.SKILL;
-                        makeOnScreenItemsInvisible();
-                        return true;
-                    }
-                    else if ( (650 < x && x < 715) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.SOCIAL;
-                        makeOnScreenItemsInvisible();
-                        return true;
-                    }
-                    else if ( (715 < x && x < 780) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.MAP;
-                        makeOnScreenItemsInvisible();
-                        return true;
-                    }
-                    else if ( (785 < x && x < 836) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.CRAFTING;
-                        makeOnScreenItemsInvisible();
-                        return true;
-                    }
-                    else if ( (850 < x && x < 900) && ( 800 < y && y < 860 )){
-                        currentMenu = InGameMenuType.EXIT;
-                        makeOnScreenItemsInvisible();
-                        return true;
+                    if (currentMenu != InGameMenuType.ARTISAN) {
+                        if ((525 < x && x < 580) && (800 < y && y < 860)) {
+                            currentMenu = InGameMenuType.INVENTORY;
+                            return true;
+                        } else if ((590 < x && x < 645) && (800 < y && y < 860)) {
+                            currentMenu = InGameMenuType.SKILL;
+                            makeOnScreenItemsInvisible();
+                            return true;
+                        } else if ((650 < x && x < 715) && (800 < y && y < 860)) {
+                            currentMenu = InGameMenuType.SOCIAL;
+                            makeOnScreenItemsInvisible();
+                            return true;
+                        } else if ((715 < x && x < 780) && (800 < y && y < 860)) {
+                            currentMenu = InGameMenuType.MAP;
+                            makeOnScreenItemsInvisible();
+                            return true;
+                        } else if ((785 < x && x < 836) && (800 < y && y < 860)) {
+                            currentMenu = InGameMenuType.CRAFTING;
+                            makeOnScreenItemsInvisible();
+                            return true;
+                        } else if ((850 < x && x < 900) && (800 < y && y < 860)) {
+                            currentMenu = InGameMenuType.EXIT;
+                            makeOnScreenItemsInvisible();
+                            return true;
+                        }
                     }
 
                     for ( int i = 0; i < 12; i++ ){

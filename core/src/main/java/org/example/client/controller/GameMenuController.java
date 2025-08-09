@@ -380,12 +380,15 @@ public class GameMenuController extends MenuController {
         CropType type = (CropType) crop.getType();
         cell = cells[i][j];
 
+        if (i == cells.length - 1 || j == cells[0].length - 1)
+            return false;
 
         if (cells[i][j + 1].getObject() instanceof Crop crop1 && crop1.getType() == type &&
                 cells[i + 1][j].getObject() instanceof Crop crop2 && crop2.getType() == type &&
                 cells[i + 1][j + 1].getObject() instanceof Crop crop3 && crop3.getType() == type &&
                 cells[i][j].getObject() instanceof Crop crop4 && crop4.getType() == type) {
             crop.setGiant(true);
+            crop.setCell(cells[i + 1][j]);
             cells[i + 1][j + 1].setObject(crop);
             cells[i][j + 1].setObject(crop);
             cells[i + 1][j].setObject(crop);
@@ -426,7 +429,7 @@ public class GameMenuController extends MenuController {
             ArrayList<CropType> cropTypes = CropType.getMixedSeedPossibilitiesBySeason().get(season);
             CropType cropType = cropTypes.get((new Random()).nextInt(cropTypes.size()));
 
-            cell.setObject(new Crop(cropType));
+            cell.plant(new Crop(cropType));
             if (checkForGiantCrop(cell))
                 return new Result(true, "You planted A Mixed Seed and it became A " +
                         cropType.getName() + ". And It also Became GIANT!!!!");
@@ -436,7 +439,7 @@ public class GameMenuController extends MenuController {
         } else if (source.getPlant() instanceof CropType cropType) {
             player.getBackpack().reduceItems((Item) source, 1);
 
-            cell.setObject(new Crop(cropType));
+            cell.plant(new Crop(cropType));
             if (checkForGiantCrop(cell))
                 return new Result(true, "You planted A Crop. A " + cropType.getName() +
                         ". And It Became GIANT!!!!");
@@ -445,7 +448,7 @@ public class GameMenuController extends MenuController {
         } else if (source.getPlant() instanceof TreeType treeType) {
             player.getBackpack().reduceItems((Item) source, 1);
 
-            cell.setObject(new Tree(treeType));
+            cell.plant(new Tree(treeType));
             return new Result(true, "You planted A Tree. A " + treeType.getName() + ".");
         } else {
             return new Result(false, "WTF in plant/GameController\n");

@@ -70,6 +70,10 @@ public class GraphicalResult {
         }
     }
 
+    public boolean finished() {
+        return displayTime <= 0.01f;
+    }
+
     public Label getMessage() {
         return message;
     }

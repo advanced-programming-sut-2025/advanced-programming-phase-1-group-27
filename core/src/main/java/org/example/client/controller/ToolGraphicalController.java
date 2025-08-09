@@ -96,7 +96,8 @@ public class ToolGraphicalController {
                     j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
             Cell cell = player.getCurrentMap().getCell(i, j);
 
-            if (player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem() instanceof SeedType seedType) {
+            if (cell != null &&
+                    player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem() instanceof SeedType seedType) {
                 Result res = new GameMenuController(new GameView()).plant(seedType, cell);
                 handleError(res);
             }
