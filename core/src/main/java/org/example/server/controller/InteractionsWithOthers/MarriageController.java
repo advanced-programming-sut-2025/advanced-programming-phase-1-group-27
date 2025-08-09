@@ -49,6 +49,15 @@ public class MarriageController {
         }}, Message.Type.response);
     }
 
+    public static void sendMarriageRequest(Message message) {
+        ServerApp.getClientConnectionThreadByUsername(message.getFromBody("other")).sendMessage(message);
+    }
+
+    public static void sendMarriageResponse(Message message) {
+        String proposer = message.getFromBody("proposer");
+        ServerApp.getClientConnectionThreadByUsername(proposer).sendMessage(message);
+    }
+
     public Result showCouple() {
         if (App.getCurrentGame().getCurrentPlayer().getSpouse() == null) {
             return new Result(false, "You are not married");

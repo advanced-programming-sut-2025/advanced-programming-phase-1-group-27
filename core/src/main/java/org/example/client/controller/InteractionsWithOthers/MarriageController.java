@@ -51,11 +51,11 @@ public class MarriageController {
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
-        Message message = new Message(new HashMap<>() {{
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("lobbyId" , ClientApp.getCurrentGame().getLobbyId());
             put("self" , currentPlayer.getUsername());
             put("other" , username);
-        }} , Message.Type.marriage_request);
+        }} , Message.Type.marriage_request));
 
         return null;
     }

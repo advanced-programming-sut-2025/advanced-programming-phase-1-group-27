@@ -9,6 +9,7 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.StartTradeView;
 import org.example.client.view.InteractionMenus.TradeView;
+import org.example.client.view.MarriageRequestView;
 import org.example.client.view.OutsideView;
 import org.example.client.view.VoteView;
 import org.example.common.models.Direction;
@@ -219,5 +220,18 @@ public class ServerUpdatesController { // handles updates sent by server
         return new Message(new HashMap<>() {{
             put("offset", finalOffset);
         }}, Message.Type.response);
+    }
+
+    public static void handleMarriageRequest(Message message) {
+        String proposer = message.getFromBody("self");
+        Gdx.app.postRunnable(() -> {
+            Main.getMain().getScreen().dispose();
+            Main.getMain().setScreen(new MarriageRequestView(proposer));
+        });
+    }
+
+    public static void handleMarriageResponse(Message message) {
+        boolean answer = message.getFromBody("answer");
+        // TODO: parsa, inja javab behet mirese
     }
 }

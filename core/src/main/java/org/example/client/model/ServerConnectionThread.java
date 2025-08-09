@@ -132,6 +132,14 @@ public class ServerConnectionThread extends ConnectionThread {
             sendMessage(ClientApp.getCurrentGame().getPlayerPosition());
             return true;
         }
+        else if (message.getType() == Message.Type.marriage_request) {
+            ServerUpdatesController.handleMarriageRequest(message);
+            return true;
+        }
+        else if (message.getType() == Message.Type.marriage_response) {
+            ServerUpdatesController.handleMarriageResponse(message);
+            return true;
+        }
         return false;
     }
 

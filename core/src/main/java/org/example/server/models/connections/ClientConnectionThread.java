@@ -161,6 +161,12 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if(message.getType() == Message.Type.can_marry){
             sendMessage(MarriageController.canMarry(message));
             return true;
+        } else if (message.getType() == Message.Type.marriage_request) {
+            MarriageController.sendMarriageRequest(message);
+            return true;
+        } else if (message.getType() == Message.Type.marriage_response) {
+            MarriageController.sendMarriageResponse(message);
+            return true;
         }
         return false;
     }

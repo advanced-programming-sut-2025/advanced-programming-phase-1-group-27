@@ -47,7 +47,7 @@ public class HUDController extends MenuController {
     }
 
     public void reactWithText(String reaction){
-
+//        ClientApp.getServerConnectionThread().sendMessage();
         ///  TODO: RASSA
 
     }

@@ -78,5 +78,7 @@ public class Message {
         get_trade_history,
         can_marry,
         marriage_request,
+        marriage_response,
+        reaction,
     }
 }
