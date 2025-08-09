@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.view.InteractionMenus.InteractionMenu;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.TradeHistoryView;
 import org.example.client.view.InteractionMenus.TradeView;
@@ -202,10 +203,9 @@ public class TradeController {
         return trades;
     }
 
-    public void exit(){
+    public void exit(String username){
         Main.getMain().getScreen().dispose();
-        OutsideView outsideView = new OutsideView();
-        ClientApp.setCurrentMenu(outsideView);
-        Main.getMain().setScreen(outsideView);
+        InteractionMenu interactionMenu = new InteractionMenu(username);
+        Main.getMain().setScreen(interactionMenu);
     }
 }

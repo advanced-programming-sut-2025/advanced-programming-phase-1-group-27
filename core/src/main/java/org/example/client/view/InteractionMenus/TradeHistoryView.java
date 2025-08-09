@@ -170,7 +170,7 @@ public class TradeHistoryView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.exit();
+                controller.exit(username);
             }
         });
     }

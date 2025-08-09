@@ -26,6 +26,7 @@ import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.HashMap;
 import java.util.Random;
+
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.Tree;
 import org.example.server.models.tools.Backpack;
@@ -54,11 +55,11 @@ public class ServerUpdatesController { // handles updates sent by server
             int x = (new Random()).nextInt(cells.length);
             int y = (new Random()).nextInt(cells[0].length);
             cells[x][y].thor();
-            if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView
+            if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView
                     && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
                     && ClientApp.getNonMainMenu() == null) {
 
-                outsideView.displayThorAnimation(x,y);
+                outsideView.displayThorAnimation(x, y);
 
             }
         }
@@ -144,7 +145,7 @@ public class ServerUpdatesController { // handles updates sent by server
         String mode = message.getFromBody("mode");
         System.out.println("MODE: " + mode);
         if (mode.equals("startTrade")) {
-            if( ClientApp.getCurrentMenu() instanceof OutsideView) {
+            if (ClientApp.getCurrentMenu() instanceof OutsideView) {
                 String username = message.getFromBody("starter");
                 Gdx.app.postRunnable(() -> {
                     Main.getMain().getScreen().dispose();
@@ -154,30 +155,24 @@ public class ServerUpdatesController { // handles updates sent by server
                 TradeController controller = new TradeController();
                 controller.decline(message);
             }
-        }
-        else if (mode.equals("respondToStartTrade")) {
+        } else if (mode.equals("respondToStartTrade")) {
             if (ClientApp.getNonMainMenu() instanceof PreTradeMenuView preTradeMenuView)
                 preTradeMenuView.getController().checkRespondToStart(message);
-        }
-        else if (mode.equals("updateSelected")) {
+        } else if (mode.equals("updateSelected")) {
             if (ClientApp.getNonMainMenu() instanceof TradeView tradeView)
                 tradeView.setSelectedOther(tradeView.getController().updateSelected(message));
-        }
-        else if (mode.equals("suggestTrade")) {
+        } else if (mode.equals("suggestTrade")) {
             if (ClientApp.getNonMainMenu() instanceof TradeView tradeView)
                 tradeView.setTradeDoneByStarterSide(true);
-        }
-        else if (mode.equals("confirmTrade")) {
+        } else if (mode.equals("confirmTrade")) {
             if (ClientApp.getNonMainMenu() instanceof TradeView tradeView) {
                 tradeView.getController().checkConfirmation(message);
             }
-        }
-        else if (mode.equals("sendInventory")) {
+        } else if (mode.equals("sendInventory")) {
             if (ClientApp.getNonMainMenu() instanceof TradeView tradeView) {
                 tradeView.setOnScreenItems(new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("inventoryInfo")).getItems());
             }
-        }
-        else {
+        } else {
             throw new UnsupportedOperationException(mode + " hasn't been handled");
         }
     }
@@ -187,20 +182,17 @@ public class ServerUpdatesController { // handles updates sent by server
         System.out.println("MODE: " + mode);
         if (mode.equals("askToTerminate")) {
             Gdx.app.postRunnable(() -> {
-               Main.getMain().getScreen().dispose();
-               Main.getMain().setScreen(new VoteView(mode, ""));
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new VoteView(mode, ""));
             });
-        }
-        else if (mode.equals("terminateGame")) {
+        } else if (mode.equals("terminateGame")) {
             ClientApp.terminateGame();
-        }
-        else if (mode.equals("askToKick")) {
+        } else if (mode.equals("askToKick")) {
             Gdx.app.postRunnable(() -> {
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new VoteView(mode, message.getFromBody("playerName")));
             });
-        }
-        else if (mode.equals("kickPlayer")) {
+        } else if (mode.equals("kickPlayer")) {
             ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));
         }
     }
@@ -234,6 +226,17 @@ public class ServerUpdatesController { // handles updates sent by server
     public static void handleMarriageResponse(Message message) {
         boolean answer = message.getFromBody("answer");
         // TODO: parsa, inja javab behet mirese
+        if (answer) {
+            //animation for marriage
+        } else {
+            //animation for reject
+        }
+        Gdx.app.postRunnable(() -> {
+            Main.getMain().getScreen().dispose();
+            OutsideView newOutsideView = new OutsideView();
+            ClientApp.setNonMainMenu(newOutsideView);
+            Main.getMain().setScreen(newOutsideView);
+        });
     }
 
     public static void handleReaction(Message message) {

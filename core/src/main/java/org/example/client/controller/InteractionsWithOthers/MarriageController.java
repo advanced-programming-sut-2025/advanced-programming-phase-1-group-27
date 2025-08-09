@@ -69,57 +69,48 @@ public class MarriageController {
         }
     }
 
-    public Result respond(String response, String username) {
-        // TODO: function incomplete
-        Player player = getPlayerWithUsername(username);
-        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
-        if (player == null) {
-            return new Result(false, "Player not found!");
-        }
-        Dialogue dialogue1 = null;
-        for (Dialogue dialogue : currentPlayer.getDialogues()) {
-            if (dialogue.getType() == DialogueType.Marriage) {
-                if (dialogue.getSender().getUsername().equals(username)) {
-                    dialogue1 = dialogue;
-                }
-            }
-        }
-        if (dialogue1 == null) {
-            return new Result(false, "You don't have marriage request from " + player.getUsername());
-        }
-        if (response.equals("accept")) {
-            if (!player.getBackpack().hasEnoughItem(ShopItems.WeddingRing, 2)) {
-                return new Result(false, username + " doesn't have 2 wedding rings!");
-            }
-            player.setSpouse(currentPlayer);
-            currentPlayer.setSpouse(player);
-            currentPlayer.deleteMarriage();
-            player.getBackpack().reduceItems(ShopItems.WeddingRing, 1);
-            StackLevel stackLevel = player.getBackpack().getStackLevel(ShopItems.WeddingRing);
-            currentPlayer.getBackpack().addItems(ShopItems.WeddingRing, stackLevel, 1);
-            player.goNextLevel(currentPlayer);
-            currentPlayer.goNextLevel(player);
-            int newMoney = player.getMoney() + currentPlayer.getMoney();
-            player.setMoney(newMoney);
-            currentPlayer.setMoney(newMoney);
-            return new Result(true, "Congratulations!");
-        } else if (response.equals("reject")) {
-            player.getRelations().put(currentPlayer, new Relation());
-            currentPlayer.getRelations().put(player, new Relation());
-            currentPlayer.deleteDialogue(dialogue1);
-            //TODO : sobhan. Energy player bayad ta 7 rooz nesf she!
-            return new Result(true, "Unfortunately!");
-        } else {
-            return new Result(false, "Invalid response!");
-        }
-    }
-
-    private Player getPlayerWithUsername(String username) {
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            if (player.getUsername().equalsIgnoreCase(username)) {
-                return player;
-            }
-        }
-        return null;
-    }
+//    public Result respond(String response, String username) {
+    ////        // TODO: function incomplete
+    ////        Player player = getPlayerWithUsername(username);
+    ////        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
+    ////        if (player == null) {
+    ////            return new Result(false, "Player not found!");
+    ////        }
+    ////        Dialogue dialogue1 = null;
+    ////        for (Dialogue dialogue : currentPlayer.getDialogues()) {
+    ////            if (dialogue.getType() == DialogueType.Marriage) {
+    ////                if (dialogue.getSender().getUsername().equals(username)) {
+    ////                    dialogue1 = dialogue;
+    ////                }
+    ////            }
+    ////        }
+    ////        if (dialogue1 == null) {
+    ////            return new Result(false, "You don't have marriage request from " + player.getUsername());
+    ////        }
+    ////        if (response.equals("accept")) {
+    ////            if (!player.getBackpack().hasEnoughItem(ShopItems.WeddingRing, 2)) {
+    ////                return new Result(false, username + " doesn't have 2 wedding rings!");
+    ////            }
+    ////            player.setSpouse(currentPlayer);
+    ////            currentPlayer.setSpouse(player);
+    ////            currentPlayer.deleteMarriage();
+    ////            player.getBackpack().reduceItems(ShopItems.WeddingRing, 1);
+    ////            StackLevel stackLevel = player.getBackpack().getStackLevel(ShopItems.WeddingRing);
+    ////            currentPlayer.getBackpack().addItems(ShopItems.WeddingRing, stackLevel, 1);
+    ////            player.goNextLevel(currentPlayer);
+    ////            currentPlayer.goNextLevel(player);
+    ////            int newMoney = player.getMoney() + currentPlayer.getMoney();
+    ////            player.setMoney(newMoney);
+    ////            currentPlayer.setMoney(newMoney);
+    ////            return new Result(true, "Congratulations!");
+    ////        } else if (response.equals("reject")) {
+    ////            player.getRelations().put(currentPlayer, new Relation());
+    ////            currentPlayer.getRelations().put(player, new Relation());
+    ////            currentPlayer.deleteDialogue(dialogue1);
+    ////            //TODO : sobhan. Energy player bayad ta 7 rooz nesf she!
+    ////            return new Result(true, "Unfortunately!");
+    ////        } else {
+    ////            return new Result(false, "Invalid response!");
+    ////        }
+    ////    }
 }

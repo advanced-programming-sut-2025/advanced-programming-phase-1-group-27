@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.controller.InteractionsWithOthers.MarriageController;
 import org.example.client.controller.VoteController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
@@ -18,7 +19,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class MarriageRequestView extends AppMenu {
-    private final VoteController controller;
     private final String proposer;
 
     private final TextButton yesButton;
@@ -33,8 +33,6 @@ public class MarriageRequestView extends AppMenu {
 
     public MarriageRequestView(String proposer) {
         this.proposer = proposer;
-
-        controller = new VoteController();
 
         yesButton = new TextButton("Yes" , skin);
         noButton = new TextButton("No" , skin);
@@ -61,11 +59,15 @@ public class MarriageRequestView extends AppMenu {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 playClickSound();
                 ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                    put("lobbyId" , ClientApp.getCurrentGame().getLobbyId());
+                    put("self" , ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
                     put("proposer", proposer);
                     put("answer", true);
                 }}, Message.Type.marriage_response));
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                OutsideView newOutsideView = new OutsideView();
+                ClientApp.setNonMainMenu(newOutsideView);
+                Main.getMain().setScreen(newOutsideView);
             }
         });
 
@@ -74,11 +76,15 @@ public class MarriageRequestView extends AppMenu {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 playClickSound();
                 ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                    put("lobbyId" , ClientApp.getCurrentGame().getLobbyId());
+                    put("self" , ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
                     put("proposer", proposer);
                     put("answer", false);
                 }}, Message.Type.marriage_response));
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                OutsideView newOutsideView = new OutsideView();
+                ClientApp.setNonMainMenu(newOutsideView);
+                Main.getMain().setScreen(newOutsideView);
             }
         });
     }
