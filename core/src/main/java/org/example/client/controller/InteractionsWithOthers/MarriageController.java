@@ -52,8 +52,11 @@ public class MarriageController {
             );
         }
         Message message = new Message(new HashMap<>() {{
-
+            put("lobbyId" , ClientApp.getCurrentGame().getLobbyId());
+            put("self" , currentPlayer.getUsername());
+            put("other" , username);
         }} , Message.Type.marriage_request);
+
         return null;
     }
 
