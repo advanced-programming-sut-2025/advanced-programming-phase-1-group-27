@@ -137,7 +137,6 @@ public class HUDView extends AppMenu {
     private final TextButton terminateButton;
     private final TextButton kickPlayerButton;
     private final TextButton playButton;
-    private final TextButton pauseButton;
     private final TextButton listenButton;
     private final TextButton nextPageButton;
     private final TextButton previousPageButton;
@@ -246,7 +245,6 @@ public class HUDView extends AppMenu {
         terminateButton = new TextButton("Terminate Game",skin);
         kickPlayerButton = new TextButton("Kick",skin);
         playButton = new TextButton("Play",skin);
-        pauseButton = new TextButton("Pause",skin);
         listenButton = new TextButton("Listen", skin);
         nextPageButton = new TextButton(">",skin);
         previousPageButton = new TextButton("<",skin);
@@ -624,7 +622,6 @@ public class HUDView extends AppMenu {
         othersSongsSelectBox.setVisible(false);
 
         playButton.setVisible(false);
-        pauseButton.setVisible(false);
         listenButton.setVisible(false);
         nextPageButton.setVisible(false);
         previousPageButton.setVisible(false);
@@ -633,7 +630,6 @@ public class HUDView extends AppMenu {
         songNameLabel.setColor(Color.BLACK);
 
         stage.addActor(playButton);
-        stage.addActor(pauseButton);
         stage.addActor(listenButton);
         stage.addActor(nextPageButton);
         stage.addActor(previousPageButton);
@@ -879,7 +875,6 @@ public class HUDView extends AppMenu {
         radioBackgroundImage.setVisible(currentMenu == InGameMenuType.RADIO);
         songNameLabel.setVisible(currentMenu == InGameMenuType.RADIO);
         playButton.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
-        pauseButton.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
         listenButton.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
         nextPageButton.setVisible(currentMenu == InGameMenuType.RADIO);
         previousPageButton.setVisible(currentMenu == InGameMenuType.RADIO);
@@ -897,13 +892,10 @@ public class HUDView extends AppMenu {
         yourSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
         othersSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
 
-        playButton.setWidth(pauseButton.getWidth());
         playButton.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5 + 40, radioBackgroundImage.getY() + 2 * radioBackgroundImage.getHeight()/3f-100);
-        listenButton.setWidth(pauseButton.getWidth());
         listenButton.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5 + 40, radioBackgroundImage.getY() + 2 * radioBackgroundImage.getHeight()/3f-100);
-        pauseButton.setPosition(radioBackgroundImage.getX() + 3 * radioBackgroundImage.getWidth() / 5 - 60, radioBackgroundImage.getY() + 2 * radioBackgroundImage.getHeight()/3f-100);
-        uploadSongButton.setWidth(pauseButton.getWidth()+pauseButton.getX()-playButton.getX());
-        uploadSongButton.setPosition(playButton.getX(),playButton.getY() - uploadSongButton.getHeight() - (pauseButton.getX()-playButton.getX()-playButton.getWidth()));
+        uploadSongButton.setWidth(playButton.getWidth()+playButton.getX());
+        uploadSongButton.setPosition(playButton.getX(),playButton.getY() - uploadSongButton.getHeight() - (playButton.getX()-playButton.getX()-playButton.getWidth()));
 
         yourSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5,nextPageButton.getY()+20);
         othersSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5,nextPageButton.getY()+20);

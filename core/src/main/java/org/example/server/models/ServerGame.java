@@ -237,8 +237,8 @@ public class ServerGame implements Game {
 
         //refresh relations :
         for (Player player : players) {
-            player.refreshNPCThings(this);
-            player.refreshPlayerThings();
+//            player.refreshNPCThings(this);
+            refreshPlayerThings(player);
         }
         // refresh shop stock
         initShops();
@@ -249,6 +249,42 @@ public class ServerGame implements Game {
 
     public void newSeason() {
         initShops();
+    }
+
+    private void refreshPlayerThings(Player currentPlayer) {
+        HashMap<Player, Boolean> hasInteracted = new HashMap<>();
+        for (Player player : players) {
+            if (player.getUsername().equals(currentPlayer.getUsername())) {
+                continue;
+            }
+            if (currentPlayer.getPlayerMetToday().get(player) == Boolean.TRUE
+                    || currentPlayer.getPlayerGiftToday().get(player) == Boolean.TRUE
+                    || currentPlayer.getPlayerHuggedToday().get(player) == Boolean.TRUE
+                    || currentPlayer.getPlayerTradeToday().get(player) == Boolean.TRUE) {
+                hasInteracted.put(player, Boolean.TRUE);
+            } else {
+                hasInteracted.put(player, Boolean.FALSE);
+            }
+        }
+        for (Player player : players) {
+            if (player.getUsername().equals(currentPlayer.getUsername())) {
+                continue;
+            } else {
+                if (hasInteracted.get(player) == Boolean.FALSE) {
+                    currentPlayer.decreaseXP(player, 10);
+                }
+            }
+        }
+        currentPlayer.getPlayerMetToday().clear();
+        currentPlayer.getNpcGiftToday().clear();
+        currentPlayer.getPlayerHuggedToday().clear();
+        currentPlayer.getPlayerTradeToday().clear();
+        for (Player player : App.getCurrentGame().getPlayers()) {
+            currentPlayer.getPlayerMetToday().put(player, false);
+            currentPlayer.getPlayerGiftToday().put(player, false);
+            currentPlayer.getPlayerHuggedToday().put(player, false);
+            currentPlayer.getPlayerTradeToday().put(player, false);
+        }
     }
 
     private void applyRain() {
@@ -499,106 +535,6 @@ public class ServerGame implements Game {
                 }
             }
         }
-    }
-
-    public String NPCGiftingLevel3() {
-        Random rand = new Random();
-        StringBuilder result = new StringBuilder();
-        result.append("NPC Gifts : \n");
-        for (Player player : players) {
-            for (NPC npc : npcs) {
-                if (!npc.getRelations().containsKey(player)) {
-                    npc.getRelations().put(player, new Relation());
-                }
-                Relation relation = npc.getRelations().get(player);
-                if (relation.getLevel() >= 3) {
-                    if (Math.random() < 0.5) {
-                        int choice = rand.nextInt(3);
-                        if (npc.getName().equals("Sebastian")) {
-                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
-                                    .append(" : ");
-                            if (choice == 0) {
-                                result.append("1 * Pizza");
-                                player.getBackpack().addItems(CookingProduct.Pizza, StackLevel.Basic, 1);
-                            } else if (choice == 1) {
-                                result.append("1 * Pumpkin pie");
-                                player.getBackpack().addItems(CookingProduct.PumpkinPie, StackLevel.Basic, 1);
-                            } else if (choice == 2) {
-                                result.append("1 * Wool");
-                                player.getBackpack().addItems(AnimalProduct.Wool, StackLevel.Basic, 1);
-                            }
-                            result.append("\n");
-                        } else if (npc.getName().equals("Abigail")) {
-                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
-                                    .append(" : ");
-                            if (choice == 0) {
-                                result.append("1 * Coffee");
-                                player.getBackpack().addItems(ProcessedProductType.Coffee, StackLevel.Basic, 1);
-                            } else if (choice == 1) {
-                                result.append("1 * Iron ore");
-                                player.getBackpack().addItems(MineralType.IronOre, StackLevel.Basic, 1);
-                            } else if (choice == 2) {
-                                result.append("1 * Stone");
-                                player.getBackpack().addItems(MineralType.Stone, StackLevel.Basic, 1);
-                            }
-                            result.append("\n");
-                        } else if (npc.getName().equals("Harvey")) {
-                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
-                                    .append(" : ");
-                            if (choice == 0) {
-                                result.append("1 * Wine");
-                                int energy = (int) (1.75 * FruitType.Grape.getEnergy());
-                                int price = 3 * FruitType.Grape.getPrice();
-                                player.getBackpack().addItems(new ProcessedProduct(ProcessedProductType.Wine,
-                                        price, energy), StackLevel.Basic, 1);
-                            } else if (choice == 1) {
-                                result.append("1 * Pickle");
-                                int energy = (int) (1.75 * FruitType.Carrot.getEnergy());
-                                int price = 2 * FruitType.Carrot.getPrice() + 50;
-                                player.getBackpack().addItems(new ProcessedProduct(ProcessedProductType.Pickle, price
-                                        , energy), StackLevel.Basic, 1);
-                            } else if (choice == 2) {
-                                result.append("1 * Coffee");
-                            }
-                            result.append("\n");
-                        } else if (npc.getName().equals("Lia")) {
-                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
-                                    .append(" : ");
-                            if (choice == 0) {
-                                result.append("1 * Wine");
-                                int energy = (int) (1.75 * FruitType.Blueberry.getEnergy());
-                                int price = 3 * FruitType.Blueberry.getPrice();
-                                player.getBackpack().addItems(new ProcessedProduct(ProcessedProductType.Wine,
-                                        price, energy), StackLevel.Basic, 1);
-                            } else if (choice == 1) {
-                                result.append("1 * Grape");
-                                player.getBackpack().addItems(FruitType.Grape, StackLevel.Basic, 1);
-                            } else if (choice == 2) {
-                                result.append("1 * Salad");
-                                player.getBackpack().addItems(CookingProduct.Salad, StackLevel.Basic, 1);
-                            }
-                            result.append("\n");
-                        } else if (npc.getName().equals("Robbin")) {
-                            result.append(npc.getName()).append(" gifts to ").append(player.getUsername())
-                                    .append(" : ");
-                            if (choice == 0) {
-                                result.append("1 * Iron metal bar");
-                                player.getBackpack().addItems(ProcessedProductType.IronMetalBar,
-                                        StackLevel.Basic, 1);
-                            } else if (choice == 1) {
-                                result.append("1 * Wood");
-                                player.getBackpack().addItems(MineralType.Wood, StackLevel.Basic, 1);
-                            } else if (choice == 2) {
-                                result.append("1 * Spaghetti");
-                                player.getBackpack().canAdd(CookingProduct.Spaghetti, StackLevel.Basic, 1);
-                            }
-                            result.append("\n");
-                        }
-                    }
-                }
-            }
-        }
-        return result.toString();
     }
 
     public ArrayList getFarmInfo() {
