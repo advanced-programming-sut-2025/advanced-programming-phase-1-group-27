@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import org.example.common.models.GameAssetManager;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class AppMenu implements Screen {
@@ -37,7 +38,7 @@ public abstract class AppMenu implements Screen {
         return skin;
     }
 
-    protected void playClickSound() {
+    public void playClickSound() {
 
         if (true) {                    ///  TODO: age sfx on bood play beshe
             clickSound.play();

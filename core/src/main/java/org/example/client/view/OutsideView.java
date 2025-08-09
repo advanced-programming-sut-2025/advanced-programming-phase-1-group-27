@@ -123,6 +123,7 @@ public class OutsideView extends AppMenu {
         playerController.setCamera(camera);
         toolController.setCamera(camera);
         worldController.setCamera(camera);
+        ResultController.setCamera(camera);
 
         for (Animal animal : ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals())
             animalControllers.add(new AnimalController(animal, this, camera));
@@ -140,6 +141,7 @@ public class OutsideView extends AppMenu {
         playerController.update();
         toolController.update();
         toolController.render();
+        ResultController.render();
         ClientApp.getCurrentGame().updateOtherPlayers();
         if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
             ClientApp.getCurrentGame().renderOtherPlayers();

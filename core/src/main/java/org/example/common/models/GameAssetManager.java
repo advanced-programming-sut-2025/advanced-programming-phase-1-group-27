@@ -81,6 +81,10 @@ public class GameAssetManager {
     private final Image sunnySummer = new Image(new Texture(Gdx.files.internal("Clock/SunnySummer.png")));
     private final Image snowySummer = new Image(new Texture(Gdx.files.internal("Clock/SnowySummer.png")));
 
+    private final Image artisanBackground = new Image(new Texture("assets/Images/Artisans/ArtisanMenu.png"));
+    private final Texture artisanBarBlack = new Texture("assets/Images/Artisans/ArtisanBarBack.png");
+    private final Texture artisanBarFront = new Texture("assets/Images/Artisans/ArtisanBarFront.png");
+
     private final Texture homeTexture = new Texture("assets/Images/home_cropped.png");
     private final Texture greenHouseTexture = new Texture("assets/Images/greenhouse2.1.png");
     private final Texture hutTexture = new Texture("assets/Images/hut.png");
@@ -1115,6 +1119,14 @@ public class GameAssetManager {
         return artisanTextureMap.get(type);
     }
 
+    public Texture getArtisanBarBlack() {
+        return artisanBarBlack;
+    }
+
+    public Texture getArtisanBarFront() {
+        return artisanBarFront;
+    }
+
     public Texture getInventoryHotBar() {
         return inventoryHotBar;
     }
@@ -1141,6 +1153,10 @@ public class GameAssetManager {
         if (itemImageMap.containsKey(item))
             return itemImageMap.get(item);
         return redCrossImage;
+    }
+
+    public Image getArtisanBackground() {
+        return artisanBackground;
     }
 
     public Texture getAnimalTexture(AnimalType animalType) {

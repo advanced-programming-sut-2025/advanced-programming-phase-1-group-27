@@ -95,4 +95,5 @@ public enum ArtisanTypes {
         }
         return null;
     }
+
 }

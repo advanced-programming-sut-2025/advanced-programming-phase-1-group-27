@@ -213,6 +213,17 @@ public class WorldController {
                     if (texture != null) {
                         Main.getBatch().draw(texture, x, y, 40, 65);
                     }
+                    if (artisan.getFinalProduct() != null) {
+                        float maxLen = 50;
+                        float len = (1 - (float) artisan.getTimeLeft() / (float) artisan.getFinalProduct().getType().getProcessingTime())
+                                 * maxLen;
+                        Main.getBatch().draw(GameAssetManager.getGameAssetManager().getArtisanBarBlack(),
+                                x + 20 - maxLen / 2f, y + 72,
+                                maxLen, 4);
+                        Main.getBatch().draw(GameAssetManager.getGameAssetManager().getArtisanBarFront(),
+                                x + 20 - maxLen / 2f, y + 72,
+                                len, 4);
+                    }
                 }
             }
         }
@@ -233,13 +244,13 @@ public class WorldController {
 
     private void handleClicks() {
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && player.getCurrentMap() instanceof FarmMap) {
-            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-            int i = OutsideView.getIndices(touchPos.x, touchPos.y).getX(),
-                    j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
-            Cell cell = player.getCurrentMap().getCell(i, j);
+        Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPos);
+        int i = OutsideView.getIndices(touchPos.x, touchPos.y).getX(),
+                j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
+        Cell cell = player.getCurrentMap().getCell(i, j);
 
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT) && player.getCurrentMap() instanceof FarmMap) {
             if (cell == null)
                 return;
             if (cell.getObject() instanceof Plant plant) {
@@ -264,11 +275,20 @@ public class WorldController {
             } else if (cell.getBuilding() instanceof GreenHouse) {
 
             } else if (cell.getObject() instanceof Artisan artisan) {
-                view.getHudView().setArtisanMini(artisan, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+                view.getHudView().getArtisanController().setArtisanMini(
+                        artisan, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
             }
 //            else if (cell.getObject() instanceof Animal animal) {
 //                view.getHudView().setAnimal(animal);
 //            }
+        }
+        else if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if (cell == null)
+                return;
+            if (cell.getObject() instanceof Artisan artisan) {
+                view.getHudView().getArtisanController().setArtisan(
+                        artisan);
+            }
         }
     }
 

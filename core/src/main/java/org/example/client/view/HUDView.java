@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import org.example.client.controller.ArtisanController;
 import org.example.client.controller.GameMenuController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.ClientApp;
@@ -54,6 +55,8 @@ public class HUDView extends AppMenu {
 
     private final Player player;
 
+    private final ArtisanController artisanController;
+
     private final Label dayInfo;
     private final Label moneyInfo;
     private final Label timeInfo;
@@ -64,7 +67,6 @@ public class HUDView extends AppMenu {
     private Label animalInfoLabel;
     private final Label songNameLabel;
     private final Label listenTogetherLabel;
-    private ArrayList<Label> artisanRecipe;
 
     private final Image blackImage;
     private final Image hoveringInfoWindow;
@@ -89,7 +91,6 @@ public class HUDView extends AppMenu {
     private final Image redBar;
     private final Image enclosureBackground;
     private final Image animalBackground;
-    private final Image artisanMiniBackground;
     private final Image radioBackgroundImage;
     private final Image mapImage;
     private Image clockImage;
@@ -132,7 +133,7 @@ public class HUDView extends AppMenu {
     private AnimalEnclosure animalEnclosure;
     private Animal animal;
 
-    private Artisan artisan;
+
 
     private final TextButton exitGameButton;
     private final TextButton terminateButton;
@@ -148,8 +149,7 @@ public class HUDView extends AppMenu {
     private final TextButton animalPetButton;
     private final TextButton animalCollectButton;
     private final TextButton animalExitButton;
-    private final TextButton artisanCancelButton;
-    private final TextButton artisanCheatButton;
+
 
 
     private final SelectBox<String> playerSelectBox;
@@ -176,6 +176,8 @@ public class HUDView extends AppMenu {
         controller = new HUDController(this);
 
         this.stage = stage;
+
+        artisanController = new ArtisanController(this, stage);
 
         playerIconsInMap = new HashMap<>();
         for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
@@ -283,11 +285,7 @@ public class HUDView extends AppMenu {
         animalCollectButton.setPosition(Gdx.graphics.getWidth() / 2f + 10, 100 + 2 * animalSellButton.getHeight() + 40);
         animalCollectButton.setVisible(false);
 
-        artisanCancelButton = new TextButton("Cancel", skin);
-        artisanCancelButton.setVisible(false);
 
-        artisanCheatButton = new TextButton("Cheat", skin);
-        artisanCheatButton.setVisible(false);
 
         rowCoEfficient = 1;
         currentSlotInInventory = null;
@@ -312,7 +310,6 @@ public class HUDView extends AppMenu {
         playerSocialMenuBackground = GameAssetManager.getGameAssetManager().getPlayerSocialBackground();
         enclosureBackground = new Image(GameAssetManager.getGameAssetManager().getPlayerSocialBackGroundTexture());
         animalBackground = new Image(GameAssetManager.getGameAssetManager().getPlayerSocialBackGroundTexture());
-        artisanMiniBackground = new Image(GameAssetManager.getGameAssetManager().getPlayerSocialBackGroundTexture());
         mapMenuBackground = GameAssetManager.getGameAssetManager().getMapMenuBackground();
         energyBar = GameAssetManager.getGameAssetManager().getEnergyBar();
         boostBar = GameAssetManager.getGameAssetManager().getBoostBar();
@@ -434,9 +431,6 @@ public class HUDView extends AppMenu {
         animalBackground.setPosition((Gdx.graphics.getWidth() - 1400) / 2f, (Gdx.graphics.getHeight() - 1000) / 2f);
         animalBackground.setVisible(false);
 
-        artisanRecipe = new ArrayList<>();
-
-        artisanMiniBackground.setVisible(false);
 
         // STAGE
         stage.addActor(blackImage);
@@ -486,9 +480,7 @@ public class HUDView extends AppMenu {
         stage.addActor(animalPetButton);
         stage.addActor(animalSellButton);
         stage.addActor(animalExitButton);
-        stage.addActor(artisanMiniBackground);
-        stage.addActor(artisanCancelButton);
-        stage.addActor(artisanCheatButton);
+
 
         messageLabel.setVisible(false);
         messageAlertImage.setVisible(false);
@@ -1167,71 +1159,6 @@ public class HUDView extends AppMenu {
 
     }
 
-    public void displayArtisanMini() {
-        artisanMiniBackground.setVisible(currentMenu == InGameMenuType.ARTISAN_MINI);
-        artisanRecipe.forEach(label -> {
-            label.setVisible(currentMenu == InGameMenuType.ARTISAN_MINI);
-        });
-        artisanCancelButton.setVisible(currentMenu == InGameMenuType.ARTISAN_MINI);
-        artisanCheatButton.setVisible(currentMenu == InGameMenuType.ARTISAN_MINI);
-    }
-
-    private void setupArtisanMini(float x, float y) {
-        artisanRecipe.forEach(recipe -> {recipe.remove();});
-        artisanRecipe.clear();
-
-        float x2 = x + 30, y2 = y - 30;
-        Label label = new Label("Recipes: ", skin);
-        label.setColor(Color.BLACK);
-        label.setPosition(x2, y2 - label.getHeight());
-        label.setVisible(false);
-        y2 -= label.getHeight();
-        stage.addActor(label);
-        artisanRecipe.add(label);
-        int i = 1;
-        for (ProcessedProductType product : artisan.getType().getProducts()) {
-            label = new Label(i + ". " + product.getName(), skin);
-            label.setColor(Color.BLACK);
-            label.setFontScale(0.9f);
-            label.setPosition(x2 + 5, y2 - label.getHeight());
-            label.setVisible(false);
-            y2 -= label.getHeight();
-            stage.addActor(label);
-            artisanRecipe.add(label);
-            for (Ingredient ingredient : product.getRecipe().getIngredients()) {
-                label = new Label(ingredient.getQuantity() + "*" + ingredient.getPossibleIngredients().get(0).getName(),
-                    skin);
-                label.setColor(Color.BLACK);
-                label.setFontScale(0.7f);
-                label.setPosition(x2 + 15, y2 - label.getHeight());
-                label.setVisible(false);
-                y2 -= label.getHeight();
-                stage.addActor(label);
-                artisanRecipe.add(label);
-            }
-            i++;
-        }
-
-        artisanCheatButton.setSize(210, 90);
-        artisanCheatButton.setPosition(x2, y2 - 100);
-
-        artisanCancelButton.setSize(210, 90);
-        artisanCancelButton.setPosition(x2 + 220 + 20, y2 - 100);
-
-        artisanMiniBackground.setWidth(500);
-        artisanMiniBackground.setHeight(y - y2 + 120);
-        artisanMiniBackground.setPosition(x, y2 - 120);
-        artisanMiniBackground.setVisible(false);
-
-    }
-
-    public void setArtisanMini(Artisan artisan , float x, float y) {
-        this.artisan = artisan;
-        setupArtisanMini(x, y);
-        currentMenu = InGameMenuType.ARTISAN_MINI;
-        makeOnScreenItemsInvisible();
-    }
-
     private void displayAnimal() {
         animalBackground.setVisible(currentMenu == InGameMenuType.ANIMAL);
         animalCollectButton.setVisible(currentMenu == InGameMenuType.ANIMAL);
@@ -1465,7 +1392,7 @@ public class HUDView extends AppMenu {
         displayInputField();
         displayEnclosure();
         displayAnimal();
-        displayArtisanMini();
+        artisanController.update();
 
     }
 
@@ -2129,25 +2056,6 @@ public class HUDView extends AppMenu {
                 controller.kickPlayer(playerSelectBox.getSelected());
             }
         });
-
-        artisanCancelButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                playClickSound();
-                currentMenu = InGameMenuType.NONE;
-                //TODO
-            }
-        });
-
-        artisanCheatButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                playClickSound();
-                currentMenu = InGameMenuType.NONE;
-                //TODO
-            }
-        });
-
     }
 
 
@@ -2201,7 +2109,7 @@ public class HUDView extends AppMenu {
 
     }
 
-    private void makeOnScreenItemsInvisible(){
+    public void makeOnScreenItemsInvisible(){
 
         for (Stacks onScreenItem : onScreenItems) {
             onScreenItem.getItem().getItemImage().setVisible(false);
@@ -2213,8 +2121,15 @@ public class HUDView extends AppMenu {
         return currentMenu;
     }
 
+    public void setCurrentMenu(InGameMenuType currentMenu) {
+        this.currentMenu = currentMenu;
+    }
+
     public HUDController getController() {
         return controller;
     }
 
+    public ArtisanController getArtisanController() {
+        return artisanController;
+    }
 }

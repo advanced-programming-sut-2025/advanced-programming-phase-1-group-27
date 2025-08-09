@@ -23,7 +23,10 @@ public class Artisan {
     }
 
     public void setFinalProduct(ProcessedProductType finalProduct) {
-        this.finalProduct = new ProcessedProduct(finalProduct, finalProduct.getPrice(), finalProduct.getEnergy());
+        if (finalProduct.getPrice() != null)
+            this.finalProduct = new ProcessedProduct(finalProduct, finalProduct.getPrice(), finalProduct.getEnergy());
+        else
+            this.finalProduct = new ProcessedProduct(finalProduct);
     }
 
     public int getTimeLeft() {
