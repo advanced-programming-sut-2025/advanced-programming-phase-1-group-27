@@ -629,6 +629,21 @@ public class GameAssetManager {
     private final Array<Texture> crows = new Array<>();
     private Animation<Texture> crowAnimationFrames;
 
+    private final Texture cryEmoji = new Texture(Gdx.files.internal("Images/Emoji/Cry.png"));
+    private final Texture loveEmoji = new Texture(Gdx.files.internal("Images/Emoji/Love.png"));
+    private final Texture pashmEmoji = new Texture(Gdx.files.internal("Images/Emoji/Pashm.png"));
+    private final Texture skullEmoji = new Texture(Gdx.files.internal("Images/Emoji/Skull.png"));
+    private final Texture smileEmoji = new Texture(Gdx.files.internal("Images/Emoji/Smile.png"));
+//    private final Texture cryEmoji = new Texture(Gdx.files.internal("Images/Emoji/Cry.png"));
+//    private final Texture loveEmoji = new Texture(Gdx.files.internal("Images/Emoji/Love.png"));
+//    private final Texture pashmEmoji = new Texture(Gdx.files.internal("Images/Emoji/Pashm.png"));
+//    private final Texture skullEmoji = new Texture(Gdx.files.internal("Images/Emoji/Skull.png"));
+//    private final Texture smileEmoji = new Texture(Gdx.files.internal("Images/Emoji/Smile.png"));
+
+
+    private final Image reactionMenuBackground = new Image( new Texture(Gdx.files.internal("Images/Emoji/ReactionBackground.png")));
+
+
     public static GameAssetManager getGameAssetManager() {
 
         if (gameAssetManager == null) {
@@ -637,6 +652,30 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Image getReactionMenuBackground() {
+        return reactionMenuBackground;
+    }
+
+    public Texture getSmileEmoji() {
+        return smileEmoji;
+    }
+
+    public Texture getSkullEmoji() {
+        return skullEmoji;
+    }
+
+    public Texture getPashmEmoji() {
+        return pashmEmoji;
+    }
+
+    public Texture getLoveEmoji() {
+        return loveEmoji;
+    }
+
+    public Texture getCryEmoji() {
+        return cryEmoji;
     }
 
     public Texture getPlayerIcon() {

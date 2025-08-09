@@ -658,6 +658,17 @@ Images/Crops/Yam/  (3).png
 Images/Crops/Yam/  (4).png
 Images/Crops/Yam/  (5).png
 Images/Crops/atlas/Crops_sheet.png
+Images/Emoji/AmoAbbas.png
+Images/Emoji/Bone.png
+Images/Emoji/Cry.png
+Images/Emoji/Galb.png
+Images/Emoji/Kado.png
+Images/Emoji/Love.png
+Images/Emoji/Music.png
+Images/Emoji/Pashm.png
+Images/Emoji/ReactionBackground.png
+Images/Emoji/Skull.png
+Images/Emoji/Smile.png
 Images/Exit/ExitMenuMan.png
 Images/Exit/ExitMenuMan2.png
 Images/Exit/ExitMenuWoman.png

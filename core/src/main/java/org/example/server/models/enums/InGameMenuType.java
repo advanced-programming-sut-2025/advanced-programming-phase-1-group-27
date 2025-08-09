@@ -15,7 +15,8 @@ public enum InGameMenuType {
     RADIO(9),
     ANIMAL_ENCLOSURE(10),
     ANIMAL(11),
-    ARTISAN_MINI(12);
+    ARTISAN_MINI(12),
+    REACTION(13);
 
 
     private final Integer menuIndex;

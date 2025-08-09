@@ -12,12 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import org.example.client.controller.GameMenuController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
+import org.example.client.model.enums.Emoji;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.controller.HUDController;
@@ -84,6 +86,7 @@ public class HUDView extends AppMenu {
     private final Image artisanMiniBackground;
     private final Image radioBackgroundImage;
     private final Image mapImage;
+    private final Image reactionMenuBackground;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -162,6 +165,8 @@ public class HUDView extends AppMenu {
     private final SelectBox<String> othersSongsSelectBox;
 
     private ArrayList<String> inbox;
+
+    private final ArrayList<ImageButton> emojiImageButtons;
 
     public HUDView(Stage stage) {
 
@@ -314,6 +319,7 @@ public class HUDView extends AppMenu {
         redBar = GameAssetManager.getGameAssetManager().getRedBar();
         radioBackgroundImage = GameAssetManager.getGameAssetManager().getRadioBackground();
         mapImage = GameAssetManager.getGameAssetManager().getMapImage();
+        reactionMenuBackground = GameAssetManager.getGameAssetManager().getReactionMenuBackground();
 
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
@@ -378,6 +384,9 @@ public class HUDView extends AppMenu {
 
         radioBackgroundImage.setPosition((Gdx.graphics.getWidth()- radioBackgroundImage.getWidth())/2f,(Gdx.graphics.getHeight()- radioBackgroundImage.getHeight())/2f);
         radioBackgroundImage.setVisible(false);
+
+        reactionMenuBackground.setPosition((Gdx.graphics.getWidth()- reactionMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()- reactionMenuBackground.getHeight())/2f);
+        reactionMenuBackground.setVisible(false);
 
         hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-80,
                 20);
@@ -454,6 +463,7 @@ public class HUDView extends AppMenu {
         stage.addActor(inventoryMenuBackground);
         stage.addActor(skillMenuBackground);
         stage.addActor(radioBackgroundImage);
+        stage.addActor(reactionMenuBackground);
         stage.addActor(craftingMenuBackground);
         stage.addActor(socialMenuBackground);
         stage.addActor(farmingHoverImage);
@@ -618,6 +628,19 @@ public class HUDView extends AppMenu {
 
         stage.addActor(textInputField);
 
+
+        emojiImageButtons = new ArrayList<>();
+        int num = 0;
+        for(Emoji emoji : Emoji.values()) {
+            Image emojiImage = new Image(emoji.getEmojiTexture());
+            ImageButton emojiButton = new ImageButton(emojiImage.getDrawable());
+            emojiButton.setSize(96,96);
+            emojiButton.setVisible(false);
+            emojiButton.setPosition(reactionMenuBackground.getX() + 150 * num + 70, reactionMenuBackground.getY() + reactionMenuBackground.getHeight() - emojiButton.getHeight() - 100);
+            stage.addActor(emojiButton);
+            emojiImageButtons.add(emojiButton);
+            num++;
+        }
 
         setListeners();
 
@@ -1418,6 +1441,17 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayReactionMenu(){
+
+        reactionMenuBackground.setVisible(currentMenu == InGameMenuType.REACTION);
+
+        for( ImageButton emojiButton: emojiImageButtons ){
+            emojiButton.setVisible(currentMenu == InGameMenuType.REACTION);
+            emojiButton.toFront();
+        }
+
+    }
+
     @Override
     public void show() {
 
@@ -1461,6 +1495,7 @@ public class HUDView extends AppMenu {
         displayEnclosure();
         displayAnimal();
         displayArtisanMini();
+        displayReactionMenu();
 
     }
 
@@ -1600,6 +1635,17 @@ public class HUDView extends AppMenu {
                         }
                         else {
                             currentMenu = InGameMenuType.RADIO;
+                            makeOnScreenItemsInvisible();
+                        }
+
+                    }
+                    else if (keycode == Input.Keys.G) {
+
+                        if (currentMenu == InGameMenuType.REACTION) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else {
+                            currentMenu = InGameMenuType.REACTION;
                             makeOnScreenItemsInvisible();
                         }
 
