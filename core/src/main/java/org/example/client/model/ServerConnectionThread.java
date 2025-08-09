@@ -128,8 +128,8 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.handleChat(message);
             return true;
         }
-        else if (message.getType() == Message.Type.get_player_position) {
-            sendMessage(ClientApp.getCurrentGame().getPlayerPosition());
+        else if (message.getType() == Message.Type.update_mini_player) {
+            sendMessage(ClientApp.getCurrentGame().getPlayerInfo());
             return true;
         }
         else if (message.getType() == Message.Type.marriage_request) {
