@@ -63,14 +63,8 @@ public class MarriageController {
         if (answer) {
             player1.setSpouse(player2);
             player2.setSpouse(player1);
-            player2.getBackpack().reduceItems(ShopItems.WeddingRing, 1);
-            StackLevel stackLevel = player2.getBackpack().getStackLevel(ShopItems.WeddingRing);
-            player1.getBackpack().addItems(ShopItems.WeddingRing, stackLevel, 1);
             player1.goNextLevel(player2);
             player2.goNextLevel(player1);
-            int newMoney = player1.getMoney() + player2.getMoney();
-            player1.setMoney(newMoney);
-            player2.setMoney(newMoney);
         } else {
             player1.getRelations().put(player2, new Relation());
             player2.getRelations().put(player1, new Relation());

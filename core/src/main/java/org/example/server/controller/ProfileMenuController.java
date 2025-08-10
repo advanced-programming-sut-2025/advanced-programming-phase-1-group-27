@@ -66,12 +66,12 @@ public class ProfileMenuController{
             res.append("password changed successfully!\n");
         }
         if(!Objects.equals(nickname, "")){
-            DataBaseHelper.changeNickname(currentUser.getNickname() , nickname);
+            DataBaseHelper.changeNickname(currentUser.getUsername() , nickname);
             currentUser.setNickname(nickname);
             res.append("nickname changed successfully!\n");
         }
         if(!Objects.equals(email, "")){
-            DataBaseHelper.changeEmail(currentUser.getEmail() , email);
+            DataBaseHelper.changeEmail(currentUser.getUsername() , email);
             currentUser.setEmail(email);
             res.append("email changed successfully!\n");
         }

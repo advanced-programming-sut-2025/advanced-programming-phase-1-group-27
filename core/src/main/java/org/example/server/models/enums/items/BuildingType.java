@@ -77,6 +77,10 @@ public enum BuildingType implements Item {
         return price;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public boolean isBarn() {
         return this == Barn || this == BigBarn || this == DeluxeBarn;
     }

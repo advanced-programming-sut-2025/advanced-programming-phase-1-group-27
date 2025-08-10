@@ -18,6 +18,7 @@ import org.example.server.models.enums.items.*;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
+import org.example.server.models.enums.items.products.ProcessedProductType;
 import org.example.server.models.utils.MusicPlayer;
 
 import javax.swing.plaf.TextUI;
@@ -474,6 +475,19 @@ public class GameAssetManager {
 
         for (FishType fishType : FishType.values())
             put(fishType, new Texture(Gdx.files.internal(fishType.getAddress())));
+
+        for (ProcessedProductType processedProductType : ProcessedProductType.values())
+            put(processedProductType, new Texture(Gdx.files.internal(processedProductType.getAddress())));
+
+        for (BuildingType buildingType : BuildingType.values())
+            put(buildingType, new Texture(Gdx.files.internal(buildingType.getAddress())));
+
+        for (AnimalType animalType : AnimalType.values()) {
+            put(animalType, new Texture("assets/Images/Animals/" + animalType.getName() + ".png"));
+        }
+
+        for (Recipe recipe : Recipe.values())
+            put(recipe, new Texture(Gdx.files.internal("assets/Images/recipe.png")));
     }};
 
     private final Texture redCrossTexture = new Texture(Gdx.files.internal("Images/red-cross.png"));

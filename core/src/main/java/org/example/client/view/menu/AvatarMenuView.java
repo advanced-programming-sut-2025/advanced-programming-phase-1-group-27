@@ -118,6 +118,7 @@ public class AvatarMenuView extends AppMenu {
                    public void clicked(InputEvent event, float x, float y) {
                        playClickSound();
                        ClientApp.getLoggedInUser().setAvatarId(finalI * 3 + finalJ);
+                       ClientApp.updateFile(ClientApp.getLoggedInUser());
                        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
                            put("avatarId", finalI * 3 + finalJ);
                        }}, Message.Type.update_avatar));

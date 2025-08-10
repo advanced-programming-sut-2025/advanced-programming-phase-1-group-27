@@ -1,7 +1,9 @@
 package org.example.client.controller.InteractionsWithOthers;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
@@ -33,10 +35,10 @@ public class MarriageController {
                     GameAssetManager.getGameAssetManager().getErrorColor());
         }
         Message canMarriedMessage = new Message(new HashMap<>() {{
-            put("lobbyId" , ClientApp.getCurrentGame().getLobbyId());
-            put("self" , currentPlayer.getUsername());
-            put("other" , username);
-        }} , Message.Type.can_marry);
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self", currentPlayer.getUsername());
+            put("other", username);
+        }}, Message.Type.can_marry);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(canMarriedMessage, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
             return new GraphicalResult(
@@ -45,17 +47,17 @@ public class MarriageController {
             );
         }
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
-        if(result.hasError()){
+        if (result.hasError()) {
             return new GraphicalResult(
                     result.getMessage().toString(),
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
-            put("lobbyId" , ClientApp.getCurrentGame().getLobbyId());
-            put("self" , currentPlayer.getUsername());
-            put("other" , username);
-        }} , Message.Type.marriage_request));
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self", currentPlayer.getUsername());
+            put("other", username);
+        }}, Message.Type.marriage_request));
 
         return null;
     }
@@ -69,48 +71,31 @@ public class MarriageController {
         }
     }
 
-//    public Result respond(String response, String username) {
-    ////        // TODO: function incomplete
-    ////        Player player = getPlayerWithUsername(username);
-    ////        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
-    ////        if (player == null) {
-    ////            return new Result(false, "Player not found!");
-    ////        }
-    ////        Dialogue dialogue1 = null;
-    ////        for (Dialogue dialogue : currentPlayer.getDialogues()) {
-    ////            if (dialogue.getType() == DialogueType.Marriage) {
-    ////                if (dialogue.getSender().getUsername().equals(username)) {
-    ////                    dialogue1 = dialogue;
-    ////                }
-    ////            }
-    ////        }
-    ////        if (dialogue1 == null) {
-    ////            return new Result(false, "You don't have marriage request from " + player.getUsername());
-    ////        }
-    ////        if (response.equals("accept")) {
-    ////            if (!player.getBackpack().hasEnoughItem(ShopItems.WeddingRing, 2)) {
-    ////                return new Result(false, username + " doesn't have 2 wedding rings!");
-    ////            }
-    ////            player.setSpouse(currentPlayer);
-    ////            currentPlayer.setSpouse(player);
-    ////            currentPlayer.deleteMarriage();
-    ////            player.getBackpack().reduceItems(ShopItems.WeddingRing, 1);
-    ////            StackLevel stackLevel = player.getBackpack().getStackLevel(ShopItems.WeddingRing);
-    ////            currentPlayer.getBackpack().addItems(ShopItems.WeddingRing, stackLevel, 1);
-    ////            player.goNextLevel(currentPlayer);
-    ////            currentPlayer.goNextLevel(player);
-    ////            int newMoney = player.getMoney() + currentPlayer.getMoney();
-    ////            player.setMoney(newMoney);
-    ////            currentPlayer.setMoney(newMoney);
-    ////            return new Result(true, "Congratulations!");
-    ////        } else if (response.equals("reject")) {
-    ////            player.getRelations().put(currentPlayer, new Relation());
-    ////            currentPlayer.getRelations().put(player, new Relation());
-    ////            currentPlayer.deleteDialogue(dialogue1);
-    ////            //TODO : sobhan. Energy player bayad ta 7 rooz nesf she!
-    ////            return new Result(true, "Unfortunately!");
-    ////        } else {
-    ////            return new Result(false, "Invalid response!");
-    ////        }
-    ////    }
+    public void accept(String proposer) {
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("proposer", proposer);
+            put("answer", true);
+        }}, Message.Type.marriage_response));
+        ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(ShopItems.WeddingRing, StackLevel.Basic, 1);
+        Main.getMain().getScreen().dispose();
+        OutsideView newOutsideView = new OutsideView();
+        ClientApp.setNonMainMenu(newOutsideView);
+        Main.getMain().setScreen(newOutsideView);
+    }
+
+    public void decline(String proposer) {
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("proposer", proposer);
+            put("answer", false);
+        }}, Message.Type.marriage_response));
+        Main.getMain().getScreen().dispose();
+        OutsideView newOutsideView = new OutsideView();
+        ClientApp.setNonMainMenu(newOutsideView);
+        Main.getMain().setScreen(newOutsideView);
+    }
+
 }

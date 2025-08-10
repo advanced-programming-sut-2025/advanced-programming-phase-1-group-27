@@ -138,6 +138,7 @@ public class ClientApp {
         jsonObject.put("recoveryAnswer", user.getRecoveryQuestion().getAnswer());
         jsonObject.put("maxMoneyEarned", user.getMaxMoneyEarned());
         jsonObject.put("numberOfGamesPlayed", user.getNumberOfGamesPlayed());
+        jsonObject.put("avatarId", user.getAvatarId());
 
         File file = new File(loggedInUserFilePath);
         file.getParentFile().mkdirs();
@@ -168,6 +169,7 @@ public class ClientApp {
             result.setGender(Gender.getGender(json.optString("gender")));
             result.setMaxMoneyEarned(json.optInt("maxMoneyEarned"));
             result.setNumberOfGamesPlayed(json.optInt("numberOfGamesPlayed"));
+            result.setAvatarId(json.optInt("avatarId"));
             return result;
         } catch (Exception e) {
             return null;

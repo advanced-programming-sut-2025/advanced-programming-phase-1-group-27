@@ -7,6 +7,7 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.menu.AvatarMenuView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.ProfileMenuView;
+import org.example.client.view.menu.UserInfoView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.common.models.GameAssetManager;
@@ -57,7 +58,7 @@ public class ProfileMenuController extends MenuController {
         ClientApp.setLoggedInUser(newUser);
         ClientApp.updateFile(newUser);
 
-        return new GraphicalResult(String.valueOf(changeAttempt.getMessage()), Color.GREEN);
+        return new GraphicalResult(changeAttempt.getMessage().getText().toString(), false);
     }
 
     private static GraphicalResult changeAttempt(String username , String password , String nickname , String email) {
@@ -113,10 +114,17 @@ public class ProfileMenuController extends MenuController {
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
+    public void goToUserInfoMenu() {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new UserInfoView(ClientApp.getCurrentMenu()));
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+    }
+
     @Override
     public Result exitMenu() {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new MainMenuView());
+        ClientApp.setCurrentMenu(new MainMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new Result(true, "Redirecting to Main menu ...");
     }
 }

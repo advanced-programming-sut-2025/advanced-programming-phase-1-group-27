@@ -42,18 +42,20 @@ public class AppView {
 
 
     public void runViaGraphics() {
-
         // ------REGULAR------
-//        if (ClientApp.loadSavedUser()) {
-//            Main.getMain().setScreen(new MainMenuView());
-//        }
-//        else {
-//            Main.getMain().setScreen(new WelcomeMenuView());
-//        }
+        if (ClientApp.loadSavedUser()) {
+            ClientApp.setCurrentMenu(new MainMenuView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        }
+        else {
+            ClientApp.setCurrentMenu(new WelcomeMenuView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        }
 
         // ------CHEAT------
-        Main.getMain().setScreen(new WelcomeMenuView());
-        cheat();
+//        Main.getMain().setScreen(new WelcomeMenuView());
+////        Main.getMain().setScreen(new GiftMenuView(NPCType.Sebastian.getName()));
+//        cheat();
     }
 
 }

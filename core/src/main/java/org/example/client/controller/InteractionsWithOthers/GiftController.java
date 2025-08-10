@@ -35,6 +35,7 @@ public class GiftController {
             put("other", username);
             put("self", ClientApp.getLoggedInUser().getUsername());
             put("gift", new Stacks(slot.getItem(), slot.getStackLevel(), amount).getInfo());
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
         }} , Message.Type.interaction_p2p));
         Main.getMain().getScreen().dispose();
         OutsideView newOutsideView = new OutsideView();

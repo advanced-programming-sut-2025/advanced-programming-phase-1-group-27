@@ -74,6 +74,7 @@ public class HostMenuController extends MenuController{
     @Override
     public Result exitMenu() {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new LobbyMenuView());
+        ClientApp.setCurrentMenu(new LobbyMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new Result(true, "Redirecting to Lobby Menu ...");    }
 }

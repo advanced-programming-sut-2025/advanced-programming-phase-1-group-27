@@ -36,6 +36,7 @@ public class ProfileMenuView extends AppMenu {
 
     private final TextButton changeButton;
     private final TextButton avatarMenuButton;
+    private final TextButton userInfoMenuButton;
     private final TextButton backButton;
 
     private final GraphicalResult errorLabel;
@@ -61,6 +62,7 @@ public class ProfileMenuView extends AppMenu {
 
         changeButton = new TextButton("Change", skin);
         avatarMenuButton = new TextButton("Avatar Menu", skin);
+        userInfoMenuButton = new TextButton("User Info", skin);
         backButton = new TextButton("Back", skin);
 
         errorLabel = new GraphicalResult();
@@ -127,21 +129,28 @@ public class ProfileMenuView extends AppMenu {
 
         backButton.setWidth(Gdx.graphics.getWidth() / 5f);
         avatarMenuButton.setWidth(Gdx.graphics.getWidth() / 5f);
+        userInfoMenuButton.setWidth(Gdx.graphics.getWidth() / 5f);
         changeButton.setWidth(Gdx.graphics.getWidth() / 5f);
 
         backButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-backButton.getWidth())/2,
-                 Gdx.graphics.getHeight()/3f - 100);
+                 Gdx.graphics.getHeight()/3f - 50);
 
         avatarMenuButton.setPosition(
                 Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-avatarMenuButton.getWidth())/2,
-                Gdx.graphics.getHeight()/3f + 100
+                Gdx.graphics.getHeight()/3f + 50
+        );
+
+        userInfoMenuButton.setPosition(
+                Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth()/2f-avatarMenuButton.getWidth()) / 2,
+                Gdx.graphics.getHeight()/3f + 150
         );
 
         changeButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-changeButton.getWidth())/2,
-                Gdx.graphics.getHeight()/3f + 300);
+                Gdx.graphics.getHeight()/3f + 250);
 
         stage.addActor(backButton);
         stage.addActor(avatarMenuButton);
+        stage.addActor(userInfoMenuButton);
         stage.addActor(changeButton);
 
     }
@@ -230,6 +239,14 @@ public class ProfileMenuView extends AppMenu {
                 playClickSound();
                 controller.goToAvatarMenu();
             }
+        });
+
+        userInfoMenuButton.addListener(new ClickListener() {
+           @Override
+           public void clicked(InputEvent event, float x, float y) {
+               playClickSound();
+               controller.goToUserInfoMenu();
+           }
         });
 
         backButton.addListener(new ClickListener() {

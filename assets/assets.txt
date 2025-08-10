@@ -827,6 +827,7 @@ Images/home3.png
 Images/home_cropped.png
 Images/hut.png
 Images/menu_background.png
+Images/recipe.png
 Images/red-cross.png
 Images/stardew_valley_text.png
 Inventory/InventoryHotbar.png

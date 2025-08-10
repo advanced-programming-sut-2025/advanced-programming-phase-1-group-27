@@ -19,6 +19,7 @@ public class MainMenuView extends AppMenu {
     private final Label menuTitleLabel;
     private final TextButton lobbyMenuButton;
     private final TextButton profileMenuButton;
+    private final TextButton userInfoMenuButton;
     private final TextButton logoutButton;
     private Stage stage;
     private float fadeInTimer = 0f;
@@ -31,6 +32,7 @@ public class MainMenuView extends AppMenu {
 
         lobbyMenuButton = new TextButton("Lobby Menu", skin);
         profileMenuButton = new TextButton("Profile Menu", skin);
+        userInfoMenuButton = new TextButton("User Info", skin);
         logoutButton = new TextButton("Logout", skin);
 
         setListeners();
@@ -61,14 +63,17 @@ public class MainMenuView extends AppMenu {
 
         lobbyMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
         profileMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        userInfoMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
         logoutButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
 
         lobbyMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 7f);
         profileMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 7f);
-        logoutButton.setPosition(Gdx.graphics.getWidth() / 8f, 2 * Gdx.graphics.getHeight() / 7f);
+        userInfoMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 2 * Gdx.graphics.getHeight() / 7f);
+        logoutButton.setPosition(Gdx.graphics.getWidth() / 8f, 1 * Gdx.graphics.getHeight() / 7f);
 
         stage.addActor(lobbyMenuButton);
         stage.addActor(profileMenuButton);
+        stage.addActor(userInfoMenuButton);
         stage.addActor(logoutButton);
     }
 
@@ -140,6 +145,14 @@ public class MainMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 controller.goToProfileMenu();
+            }
+        });
+
+        userInfoMenuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.goToUserInfoMenu();
             }
         });
 
