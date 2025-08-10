@@ -213,6 +213,8 @@ public class ClientApp {
 
 
     public static void saveGame() {
+        if (currentGame == null)
+            return;
         // TODO : save game
         terminateGame();
     }

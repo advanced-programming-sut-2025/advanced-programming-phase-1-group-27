@@ -1,6 +1,9 @@
 package org.example.server.models;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.enums.AbilityType;
+
+import java.util.HashMap;
 
 public class Buff {
     private final AbilityType ability;
@@ -14,6 +17,18 @@ public class Buff {
     public Buff(Buff buff) {
         this.ability = buff.ability;
         this.remainingTime = buff.remainingTime;
+    }
+
+    public Buff(LinkedTreeMap<String, Object> info) {
+        this.ability = AbilityType.getAbilityType((String) info.get("ability"));
+        this.remainingTime = ((Number) info.get("remainingTime")).intValue();
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("remainingTime", remainingTime);
+        info.put("ability", ability.name());
+        return info;
     }
 
     public AbilityType getAbility() {

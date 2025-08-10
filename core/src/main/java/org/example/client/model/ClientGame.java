@@ -628,7 +628,7 @@ public class ClientGame implements Game {
         return usernameToMap.get(playerName);
     }
 
-    public Message getPlayerInfo() {
+    public Message getPlayerMiniInfo() {
         return new Message(new HashMap<>() {{
             put("position", player.getPosition().getInfo());
             put("isInNPCMap", player.getCurrentMap() instanceof NPCMap);

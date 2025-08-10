@@ -9,12 +9,10 @@ public enum AbilityType {
     Mining;
 
     public static AbilityType getAbilityType(String abilityName) {
-        return switch (abilityName) {
-            case "farming" -> Farming;
-            case "foraging" -> Foraging;
-            case "fishing" -> Fishing;
-            case "mining" -> Mining;
-            default -> null;
-        };
+        for (AbilityType abilityType : values()) {
+            if (abilityType.name().equalsIgnoreCase(abilityName))
+                return abilityType;
+        }
+        return null;
     }
 }

@@ -1,9 +1,11 @@
 package org.example.server.models;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.items.Recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Ability {
@@ -99,6 +101,20 @@ public class Ability {
             case Mining -> miningRecipes.get(level - 1);
             default -> new ArrayList<>();
         };
+    }
+
+    public Ability() {}
+
+    public Ability(LinkedTreeMap<String, Object> info) {
+        this.xp = ((Number) info.get("xp")).intValue();
+        this.level = ((Number) info.get("level")).intValue();
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("xp", xp);
+        info.put("level", level);
+        return info;
     }
 
     public void addXp(int xp) {
