@@ -9,6 +9,7 @@ import org.example.common.models.Message;
 import org.example.server.models.Item;
 import org.example.server.models.Player;
 import org.example.server.models.Relations.Relation;
+import org.example.server.models.Stacks;
 
 import java.util.HashMap;
 
@@ -25,18 +26,16 @@ public class GiftController {
         return null;
     }
 
-    public void gift(String username, String stringItem, int amount) {
-        Item item = ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getItemWithName(stringItem);
+    public void gift(String username, Stacks slot, int amount) {
         Player player =  ClientApp.getCurrentGame().getCurrentPlayer();
-        player.getBackpack().reduceItems(item, amount);
-        // TODO : Rassa in bayad bere be dast other berese
+        player.getBackpack().reduceItems(slot.getItem(), amount);
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
-            put("self", ClientApp.getLoggedInUser().getUsername());
+            put("mode", "gift");
+            put("starter", ClientApp.getLoggedInUser().getUsername());
             put("other", username);
-            put("item", stringItem);
-            put("amount", amount);
-            put("level" , ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().getStackLevel(item));
-        }} , Message.Type.gift_to_player));
+            put("self", ClientApp.getLoggedInUser().getUsername());
+            put("gift", new Stacks(slot.getItem(), slot.getStackLevel(), amount).getInfo());
+        }} , Message.Type.interaction_p2p));
         Main.getMain().getScreen().dispose();
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);

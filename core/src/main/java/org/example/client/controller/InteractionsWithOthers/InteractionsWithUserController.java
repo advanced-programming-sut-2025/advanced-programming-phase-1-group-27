@@ -111,4 +111,22 @@ public class InteractionsWithUserController {
             put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
         }}, Message.Type.interaction_p2p));
     }
+
+    public static void flower(String username) {
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "flower");
+            put("starter", ClientApp.getLoggedInUser().getUsername());
+            put("other", username);
+            put("self", ClientApp.getLoggedInUser().getUsername());
+        }}, Message.Type.interaction_p2p));
+    }
+
+    public static void hug(String username) {
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "hug");
+            put("starter", ClientApp.getLoggedInUser().getUsername());
+            put("other", username);
+            put("self", ClientApp.getLoggedInUser().getUsername());
+        }}, Message.Type.interaction_p2p));
+    }
 }

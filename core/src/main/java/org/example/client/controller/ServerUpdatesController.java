@@ -21,6 +21,7 @@ import org.example.server.models.Item;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Shops.Shop;
+import org.example.server.models.Stacks;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Weathers.Weather;
 
@@ -143,7 +144,6 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void handleP2P(Message message) {
         String mode = message.getFromBody("mode");
-        System.out.println("MODE: " + mode);
         if (mode.equals("startTrade")) {
             if (ClientApp.getCurrentMenu() instanceof OutsideView) {
                 String username = message.getFromBody("starter");
@@ -172,14 +172,35 @@ public class ServerUpdatesController { // handles updates sent by server
             if (ClientApp.getNonMainMenu() instanceof TradeView tradeView) {
                 tradeView.setOnScreenItems(new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("inventoryInfo")).getItems());
             }
+        } else if (mode.equals("gift")) {
+            handleGift(message);
+        } else if (mode.equals("flower")) {
+            handleFlower(message);
+        } else if (mode.equals("hug")) {
+            handleHug(message);
         } else {
             throw new UnsupportedOperationException(mode + " hasn't been handled");
         }
     }
 
+    private static void handleGift(Message message) {
+        String giver = message.getFromBody("starter");
+        Stacks gift = new Stacks(message.getFromBody("gift"));
+        // TODO : sobhan ya parsa, gift ro handle konid
+    }
+
+    private static void handleFlower(Message message) {
+        String giver = message.getFromBody("starter");
+        // TODO : sobhan ya parsa, gol bedahid
+    }
+
+    private static void handleHug(Message message) {
+        String giver = message.getFromBody("starter");
+        // TODO : sobhan ya parsa, hug konid
+    }
+
     public static void handleVote(Message message) {
         String mode = message.getFromBody("mode");
-        System.out.println("MODE: " + mode);
         if (mode.equals("askToTerminate")) {
             Gdx.app.postRunnable(() -> {
                 Main.getMain().getScreen().dispose();

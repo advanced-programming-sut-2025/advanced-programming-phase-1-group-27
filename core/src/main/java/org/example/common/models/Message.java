@@ -80,6 +80,5 @@ public class Message {
         marriage_request,
         marriage_response,
         reaction,
-        gift_to_player,
     }
 }
