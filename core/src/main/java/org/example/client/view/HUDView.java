@@ -954,7 +954,6 @@ public class HUDView extends AppMenu {
         yourSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
         othersSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
 
-
         songNameLabel.setPosition(radioBackgroundImage.getX() + 40, radioBackgroundImage.getY() + radioBackgroundImage.getHeight() - songNameLabel.getHeight() - 100);
 
         uploadSongButton.setWidth(yourSongsSelectBox.getWidth());
@@ -1358,10 +1357,6 @@ public class HUDView extends AppMenu {
 
         for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
 
-            if ( currentMenu == InGameMenuType.MAP && miniPlayerUpdateTimer > 1f){
-                inGamePlayer.updateMiniPlayer();
-            }
-
             int xInitial = 764;
             int yInitial = 448;
 
@@ -1487,15 +1482,6 @@ public class HUDView extends AppMenu {
 
     private void displayLeaderBoard(){
 
-        if ( currentMenu == InGameMenuType.LEADERBOARD && miniPlayerUpdateTimer > 1f){
-            for ( MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers() ){
-                inGamePlayer.updateMiniPlayer();
-            }
-            playersInLeaderBoard.clear();
-            playersInLeaderBoard.addAll( ClientApp.getCurrentGame().getPlayers() );
-            sortPlayersList();
-        }
-
         leaderBoardMenuBackground.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
         leaderBoardUsernameLabel.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
         leaderBoardEarningsLabel.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
@@ -1536,6 +1522,23 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void updatePlayers(){
+
+        if ( miniPlayerUpdateTimer > 1f){
+            for ( MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers() ){
+                inGamePlayer.updateMiniPlayer();
+            }
+            playersInLeaderBoard.clear();
+            playersInLeaderBoard.addAll( ClientApp.getCurrentGame().getPlayers() );
+            sortPlayersList();
+        }
+
+        if ( miniPlayerUpdateTimer > 1f ){
+            miniPlayerUpdateTimer = 0f;
+        }
+
+    }
+
     @Override
     public void show() {
 
@@ -1550,6 +1553,7 @@ public class HUDView extends AppMenu {
     public void displayHUD(float delta) {
 
         miniPlayerUpdateTimer += delta;
+        updatePlayers();
 
         errorLabel.update(delta);
         inventoryItems = player.getBackpack();
@@ -1583,10 +1587,6 @@ public class HUDView extends AppMenu {
         displayAnimal();
         artisanController.update();
         displayReactionMenu();
-
-        if ( miniPlayerUpdateTimer > 1f ){
-            miniPlayerUpdateTimer = 0f;
-        }
 
     }
 

@@ -473,6 +473,7 @@ Images/Crops/Cranberry/  (4).png
 Images/Crops/Cranberry/  (5).png
 Images/Crops/Cranberry/  (6).png
 Images/Crops/Cranberry/  (7).png
+Images/Crops/Deluxe_Retaining_Soil.png
 Images/Crops/Eggplant/  (1).png
 Images/Crops/Eggplant/  (2).png
 Images/Crops/Eggplant/  (3).png
@@ -602,6 +603,7 @@ Images/Crops/Rhubarb/  (3).png
 Images/Crops/Rhubarb/  (4).png
 Images/Crops/Rhubarb/  (5).png
 Images/Crops/Rhubarb/  (6).png
+Images/Crops/Speed-Gro.png
 Images/Crops/Starfruit/  (1).png
 Images/Crops/Starfruit/  (2).png
 Images/Crops/Starfruit/  (3).png
@@ -719,6 +721,7 @@ Images/Inventory/InventoryMenuWoman.png
 Images/Map/Icon.png
 Images/Map/MapImage.png
 Images/Map/MapMenu.png
+Images/Mini-Fridge.png
 Images/PlayerSocial/InteractionEmoji1.png
 Images/PlayerSocial/InteractionEmoji2.png
 Images/PlayerSocial/InteractionEmoji3.png

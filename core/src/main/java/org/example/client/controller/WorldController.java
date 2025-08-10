@@ -16,6 +16,8 @@ import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.GameView;
+import org.example.client.view.InteractionMenus.GiftMenuView;
+import org.example.client.view.InteractionMenus.NpcMenuView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
@@ -158,7 +160,11 @@ public class WorldController {
                         Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                         camera.unproject(touchPos);
                         if (bounds.contains(touchPos.x, touchPos.y)) {
-                            //TODO Agha Abdi
+
+                            //  OPENING NPC MENU
+                            Main.getMain().getScreen().dispose();
+                            Main.getMain().setScreen(new NpcMenuView(npc.getName()));
+
                         }
                     }
                 }

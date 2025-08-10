@@ -1,6 +1,14 @@
 package org.example.client.controller.InteractionsWithOthers;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import org.example.client.Main;
+import org.example.client.controller.PopUpController;
+import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.PopUpTexture;
+import org.example.client.view.OutsideView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
@@ -19,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InteractionsWithNPCController {
+
     public void meetNPC(String npcName) {
         NPC npc = InteractionsWithNPCController.findNPC(npcName);
         if (firstTimeMet(npc, ClientApp.getCurrentGame().getCurrentPlayer())) {
@@ -40,12 +49,10 @@ public class InteractionsWithNPCController {
         Stacks stack = findItem(itemName);
         NPC npc = findNPC(npcName);
         if (stack.getItem() instanceof ToolType) {
-            return null;
-//            return new Result(false, "You can't gift any tool!");
+            return new GraphicalResult("You can't gift any tool!");
         }
         if (ArtisanTypes.getArtisan(stack.getItem().getName()) != null) {
-            return null;
-//            return new Result(false, "You can't gift any artisan!");
+            return new GraphicalResult("You can't gift any artisan!");
         }
         ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(stack.getItem(), 1);
         int xp = 0;
@@ -74,8 +81,25 @@ public class InteractionsWithNPCController {
             ClientApp.getServerConnectionThread().sendMessage(message);
         }
         // TODO : Rassa dialogue
-        return null;
-//        return new Result(true, npcName + " : Thank you! (You get " + xp + " xp)");
+        OutsideView newOutsideView = new OutsideView();
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(newOutsideView);
+        ResultController.addSuccess(npcName + " : Thank you! (You get " + xp + " xp)");
+
+        float x = OutsideView.getGraphicalPositionInNPCMap(npc.getCurrentCell().getPosition().getX(),
+                npc.getCurrentCell().getPosition().getY()).getX();
+        float y = OutsideView.getGraphicalPositionInNPCMap(npc.getCurrentCell().getPosition().getX(),
+                npc.getCurrentCell().getPosition().getY()).getY();
+
+        Sprite itemSprite = new Sprite(stack.getItem().getTexture());
+        itemSprite.setSize(72,62);
+
+        PopUpController.addPopUp(new PopUpTexture(itemSprite
+                ,x,y+70,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),4
+        ));
+
+
+        return new GraphicalResult(npcName + " : Thank you! (You get " + xp + " xp)",false);
     }
 
     public Result questList() {

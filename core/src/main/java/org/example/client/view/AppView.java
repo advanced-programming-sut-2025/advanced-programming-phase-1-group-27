@@ -42,6 +42,7 @@ public class AppView {
 
 
     public void runViaGraphics() {
+
         // ------REGULAR------
 //        if (ClientApp.loadSavedUser()) {
 //            Main.getMain().setScreen(new MainMenuView());
@@ -52,7 +53,6 @@ public class AppView {
 
         // ------CHEAT------
         Main.getMain().setScreen(new WelcomeMenuView());
-//        Main.getMain().setScreen(new GiftMenuView(NPCType.Sebastian.getName()));
         cheat();
     }
 
