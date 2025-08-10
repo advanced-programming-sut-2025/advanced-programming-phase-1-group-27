@@ -1,28 +1,24 @@
 package org.example.client.controller;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.ScreenUtils;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.model.PopUpTexture;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.Cell;
-import org.example.server.models.Player;
-import org.example.server.models.Result;
+import org.example.server.models.*;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Plants.SeedType;
 import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.tools.Tool;
 
 import java.util.ArrayList;
-import java.util.Spliterator;
 
 import static java.lang.Math.max;
 
@@ -146,10 +142,29 @@ public class ToolGraphicalController {
         }
     }
 
+    public void handleEating() {
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+
+            Item item = player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem();
+            Result result = new GameMenuController(new GameView()).eatFood(item.getName());
+            ResultController.addResult(result);
+            if (result.success()) {
+                PopUpController.addPopUp(new PopUpTexture(
+                        item.getTexture(),
+                        view.getPlayerController().getX(), view.getPlayerController().getY() + 40,
+                        view.getPlayerController().getX(), view.getPlayerController().getY() + 20,
+                        1f
+                ));
+            }
+        }
+    }
+
     public void update() {
         handlePlanting();
         handleToolUse();
         handleFertilization();
+        handleEating();
     }
 
     public void turnOff() {

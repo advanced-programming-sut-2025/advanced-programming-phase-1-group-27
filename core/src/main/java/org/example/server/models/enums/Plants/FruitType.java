@@ -1,9 +1,10 @@
 package org.example.server.models.enums.Plants;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.example.server.models.Edible;
 import org.example.server.models.Item;
 
-public enum FruitType implements Item {
+public enum FruitType implements Item, Edible {
     //Grass :
     Fiber(50, false, 0,"Items/Fruit/Fiber.png"),
     //Trees :
@@ -123,6 +124,11 @@ public enum FruitType implements Item {
 
     public Integer getPrice() {
         return price;
+    }
+
+    @Override
+    public boolean isEdible() {
+        return isFruitEdible;
     }
 
     public String getName() {

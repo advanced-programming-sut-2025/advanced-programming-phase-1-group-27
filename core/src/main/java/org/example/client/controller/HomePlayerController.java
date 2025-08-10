@@ -15,7 +15,7 @@ import org.example.server.models.enums.InGameMenuType;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class HomePlayerController {
+public class    HomePlayerController {
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f;
     private final float speed = 3f;
     private Sprite characterSprite = new Sprite(GameAssetManager.getGameAssetManager().getStandingSprite());
@@ -89,4 +89,11 @@ public class HomePlayerController {
     }
 
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
 }

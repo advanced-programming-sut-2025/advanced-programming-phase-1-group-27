@@ -6,9 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.controller.HomeGraphicalController;
+import org.example.client.controller.PopUpController;
+import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
 import org.example.server.controller.HomeController;
 import org.example.client.controller.HomePlayerController;
@@ -21,6 +25,8 @@ import org.example.server.models.enums.commands.GameMenuCommands;
 import org.example.server.models.enums.commands.HomeCommands;
 import org.example.server.models.enums.commands.MainMenuCommands;
 
+import java.awt.*;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -28,6 +34,7 @@ public class HomeView extends AppMenu {
 
     private final HUDView hudView;
 
+    private final HomeGraphicalController homeGraphicalController;
     private final HomeController controller;
     private final HomePlayerController playerController;
 
@@ -37,11 +44,14 @@ public class HomeView extends AppMenu {
 
 
     private final Sprite homeSprite = new Sprite(GameAssetManager.getGameAssetManager().getHomeTexture());
+    private final Sprite fridgeSprite = new Sprite(GameAssetManager.getGameAssetManager().getFridgeTexture());
+
 
     public HomeView() {
 
         stage = new Stage(new ScreenViewport());
         hudView = new HUDView(stage);
+        homeGraphicalController = new HomeGraphicalController(this);
         controller = new HomeController(this);
         playerController = new HomePlayerController(this);
         advanceTimeButton = new TextButton("advance",skin);
@@ -70,6 +80,11 @@ public class HomeView extends AppMenu {
         homeSprite.setCenter(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f);
         homeSprite.setScale(0.2f);
 
+        fridgeSprite.setScale(0.7f);
+        fridgeSprite.setPosition(Gdx.graphics.getWidth()/2f + 75, Gdx.graphics.getHeight()/2f + 20);
+
+
+
     }
 
     @Override
@@ -79,9 +94,14 @@ public class HomeView extends AppMenu {
 
 
         Main.getBatch().begin();
+        homeGraphicalController.update();
+
         homeSprite.draw(Main.getBatch());
         playerController.update();
         hudView.displayHUD(delta);
+        ResultController.render();
+        PopUpController.renderPopUps();
+        PopUpController.renderInfoWindows();
         Main.getBatch().end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -204,5 +224,9 @@ public class HomeView extends AppMenu {
         } else {
             System.out.println(new Result(false, "invalid command!"));
         }
+    }
+
+    public HomePlayerController getPlayerController() {
+        return playerController;
     }
 }

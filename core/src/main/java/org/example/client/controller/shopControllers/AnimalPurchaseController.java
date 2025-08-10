@@ -3,6 +3,7 @@ package org.example.client.controller.shopControllers;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.GameMenuController;
+import org.example.client.controller.ResultController;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
@@ -80,7 +81,11 @@ public class AnimalPurchaseController extends MenuController {
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
         if(result.hasError())
             return result;
-        if (buyAnimal((AnimalType) stock.getItem(), name).success())
+
+
+        Result res = buyAnimal((AnimalType) stock.getItem(), name);
+        result = new GraphicalResult(res.message(), !res.success());
+        if (res.success())
             currentPlayer.spendMoney(sum);
         return result;
     }

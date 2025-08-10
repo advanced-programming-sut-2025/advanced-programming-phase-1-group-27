@@ -25,7 +25,8 @@ public class PopUpTexture {
         sprite.setCenter(originX, originY);
     }
 
-    public PopUpTexture(Texture texture, float originX, float originY, float destinationX, float destinationY, float time) {
+    public PopUpTexture(Texture texture, float destinationX, float destinationY,
+                        float originX, float originY, float time) {
         this.sprite = new Sprite(texture);
         this.originX = originX;
         this.originY = originY;

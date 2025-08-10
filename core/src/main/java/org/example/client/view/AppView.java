@@ -55,7 +55,7 @@ public class AppView {
         // ------CHEAT------
 //        Main.getMain().setScreen(new WelcomeMenuView());
 ////        Main.getMain().setScreen(new GiftMenuView(NPCType.Sebastian.getName()));
-//        cheat();
+      cheat();
     }
 
 }

@@ -145,6 +145,7 @@ public class OutsideView extends AppMenu {
         PopUpController.renderInfoWindows();
         PopUpController.renderPopUps();
         ClientApp.getCurrentGame().updateOtherPlayers();
+
         if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
             ClientApp.getCurrentGame().renderOtherPlayers();
 

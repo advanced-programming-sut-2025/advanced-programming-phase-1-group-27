@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.controller.ResultController;
 import org.example.client.controller.shopControllers.AnimalPurchaseController;
 import org.example.client.controller.shopControllers.PurchaseMenuController;
 import org.example.client.model.ClientApp;
@@ -20,6 +21,7 @@ import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 import org.example.client.view.HUDView;
 import org.example.common.models.GameAssetManager;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.NPCType;
 
@@ -49,6 +51,8 @@ public class AnimalPurchaseView extends AppMenu {
     private Label numberLabel;
     private Label sumLabel;
     private int number;
+
+    private GraphicalResult error;
 
     private final HUDView hudView;
 
@@ -95,6 +99,8 @@ public class AnimalPurchaseView extends AppMenu {
         level = new Label("Level" , skin);
         price = new Label("Price" , skin);
         quantity = new Label("Quantity" , skin);
+
+        error = new GraphicalResult();
 
         priceLabel.setFontScale(1.5f);
         quantityLabel.setFontScale(1.5f);
@@ -196,7 +202,7 @@ public class AnimalPurchaseView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.purchaseAnimal(stock , number , npc, nameField.getText());
+                error.set(controller.purchaseAnimal(stock , number , npc, nameField.getText()));
             }
         });
     }
@@ -221,12 +227,15 @@ public class AnimalPurchaseView extends AppMenu {
         quantityLabel.setPosition(Gdx.graphics.getWidth()/4f + width2 + 200 , Gdx.graphics.getHeight() - 230);
         priceLabel.setPosition(Gdx.graphics.getWidth()/4f + width3 + 450, Gdx.graphics.getHeight() - 250);
 
+        error.setPosition(20, 200);
+
         nameField.setPosition(Gdx.graphics.getWidth() / 4f + width1 + 100 , Gdx.graphics.getHeight() / 2f);
         nameField.setWidth(700);
 
         stage.addActor(itemImage);
         stage.addActor(priceLabel);
         stage.addActor(quantityLabel);
+        stage.addActor(error.getMessage());
         stage.addActor(nameLabel);
         stage.addActor(levelLabel);
         stage.addActor(image);
@@ -266,6 +275,7 @@ public class AnimalPurchaseView extends AppMenu {
 
     @Override
     public void render(float v) {
+        error.update(v);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
         displayButtons();

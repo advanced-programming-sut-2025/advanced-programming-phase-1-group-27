@@ -12,6 +12,7 @@ import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.PopUpTexture;
 import org.example.client.model.Reaction;
+import org.example.client.view.HomeView;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.StartTradeView;
 import org.example.client.view.InteractionMenus.TradeView;
@@ -272,7 +273,7 @@ public class ServerUpdatesController { // handles updates sent by server
     public static void handleReaction(Message message) {
         String playerName = message.getFromBody("username");
         Reaction reaction = new Reaction(message.<LinkedTreeMap<String, Object>>getFromBody("reaction"));
-        // TODO : sobhan, in gooy o in meydan
+
 
         Gdx.app.postRunnable(() -> {
             for (OtherPlayerController otherPlayerController : ClientApp.getCurrentGame().getOtherPlayerControllers()) {
@@ -302,31 +303,38 @@ public class ServerUpdatesController { // handles updates sent by server
                 }
             }
             if (ClientApp.getCurrentGame().getCurrentPlayer().getUsername().equals(playerName)) {
+                float playerX = 0, playerY = 0;
                 if (ClientApp.getCurrentMenu() instanceof OutsideView view) {
-                    if (reaction.isEmoji()) {
-                        PopUpController.addPopUp(
-                                new PopUpTexture(
-                                        ((TextureRegionDrawable) reaction.getEmoji().getEmojiImage().getDrawable())
-                                                .getRegion().getTexture(),
-                                        view.getPlayerController().getX(), view.getPlayerController().getY() + 70,
-                                        view.getPlayerController().getX(), view.getPlayerController().getY() + 70,
-                                        2
-                                ));
-                    }
-                    else {
-                        InfoWindow infoWindow = new InfoWindow(
-                                GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
-                                reaction.getText(),
-                                Color.BLACK,
-                                200,
-                                Align.left,
-                                true
-                        );
-                        infoWindow.setPosition(view.getPlayerController().getX(), view.getPlayerController().getY() + 30);
-                        infoWindow.setFontScale(0.7f);
-                        PopUpController.addInfoWindow(infoWindow);
-                    }
+                    playerX = view.getPlayerController().getX();
+                    playerY = view.getPlayerController().getY();
+                } else if (ClientApp.getCurrentMenu() instanceof HomeView view) {
+                    playerX = view.getPlayerController().getX();
+                    playerY = view.getPlayerController().getY();
                 }
+                if (reaction.isEmoji()) {
+                    PopUpController.addPopUp(
+                            new PopUpTexture(
+                                    ((TextureRegionDrawable) reaction.getEmoji().getEmojiImage().getDrawable())
+                                            .getRegion().getTexture(),
+                                    playerX, playerY + 70,
+                                    playerX, playerY + 70,
+                                    2
+                            ));
+                }
+                else {
+                    InfoWindow infoWindow = new InfoWindow(
+                            GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
+                            reaction.getText(),
+                            Color.BLACK,
+                            200,
+                            Align.left,
+                            true
+                    );
+                    infoWindow.setPosition(playerX, playerY + 30);
+                    infoWindow.setFontScale(0.7f);
+                    PopUpController.addInfoWindow(infoWindow);
+                }
+
             }
         });
     }

@@ -13,18 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import org.example.client.controller.ArtisanController;
-import org.example.client.controller.GameMenuController;
+import org.example.client.controller.*;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
+import org.example.client.model.PopUpTexture;
 import org.example.client.model.enums.Emoji;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.client.controller.HUDController;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.AnimalEnclosure;
@@ -33,13 +31,12 @@ import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.InGameMenuType;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.enums.items.products.CraftingProduct;
-import org.example.server.models.enums.items.products.ProcessedProductType;
 import org.example.server.models.tools.Backpack;
 
 import java.util.*;
-import java.util.List;
 
 import static java.lang.Math.max;
 
@@ -52,6 +49,7 @@ public class HUDView extends AppMenu {
     private final Player player;
 
     private final ArtisanController artisanController;
+    private final FridgeController fridgeController;
 
     private final Label dayInfo;
     private final Label moneyInfo;
@@ -194,6 +192,7 @@ public class HUDView extends AppMenu {
         this.stage = stage;
         sortType = 0;
         artisanController = new ArtisanController(this, stage);
+        fridgeController = new FridgeController(this, stage);
 
         playerIconsInMap = new HashMap<>();
         for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
@@ -1586,6 +1585,7 @@ public class HUDView extends AppMenu {
         displayEnclosure();
         displayAnimal();
         artisanController.update();
+        fridgeController.update();
         displayReactionMenu();
 
     }
@@ -1880,7 +1880,7 @@ public class HUDView extends AppMenu {
 
                 if (!isInputFieldVisible) {
 
-                    if (currentMenu != InGameMenuType.ARTISAN) {
+                    if (currentMenu != InGameMenuType.ARTISAN && currentMenu != InGameMenuType.FRIDGE) {
                         if ((525 < x && x < 580) && (800 < y && y < 860)) {
                             currentMenu = InGameMenuType.INVENTORY;
                             return true;
@@ -2304,7 +2304,7 @@ public class HUDView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 currentMenu = InGameMenuType.NONE;
-                new GameMenuController(new GameView()).collectProduct(animal.getName());
+                ResultController.addResult(new GameMenuController(new GameView()).collectProduct(animal.getName()));
             }
         });
 
@@ -2313,7 +2313,17 @@ public class HUDView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 currentMenu = InGameMenuType.NONE;
-                new GameMenuController(new GameView()).feedHay(animal.getName());
+                ResultController.addResult(new GameMenuController(new GameView()).feedHay(animal.getName()));
+                float animalX = OutsideView.getGraphicalPositionInFarmMap(animal.getCurrentCell().getPosition().getX(),
+                        animal.getCurrentCell().getPosition().getY()).getX();
+                float animalY = OutsideView.getGraphicalPositionInFarmMap(animal.getCurrentCell().getPosition().getX(),
+                        animal.getCurrentCell().getPosition().getY()).getY();
+                PopUpController.addPopUp(new PopUpTexture(
+                        ShopItems.Hay.getTexture(),
+                        animalX + 20, animalY + 90,
+                        animalX + 20, animalY + 50,
+                        2
+                ));
             }
         });
 
@@ -2322,7 +2332,18 @@ public class HUDView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 currentMenu = InGameMenuType.NONE;
-                new GameMenuController(new GameView()).pet(animal.getName());
+                ResultController.addResult(new GameMenuController(new GameView()).pet(animal.getName()));
+                float animalX = OutsideView.getGraphicalPositionInFarmMap(animal.getCurrentCell().getPosition().getX(),
+                animal.getCurrentCell().getPosition().getY()).getX();
+                float animalY = OutsideView.getGraphicalPositionInFarmMap(animal.getCurrentCell().getPosition().getX(),
+                        animal.getCurrentCell().getPosition().getY()).getY();
+                PopUpController.addPopUp(new PopUpTexture(
+                        ((TextureRegionDrawable) Emoji.GALB.getEmojiImage().getDrawable())
+                                .getRegion().getTexture(),
+                        animalX + 20, animalY + 90,
+                        animalX + 20, animalY + 50,
+                        2
+                ));
             }
         });
 
@@ -2331,7 +2352,7 @@ public class HUDView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 currentMenu = InGameMenuType.NONE;
-                new GameMenuController(new GameView()).sellAnimal(animal.getName());
+                ResultController.addResult(new GameMenuController(new GameView()).sellAnimal(animal.getName()));
             }
         });
         exitGameButton.addListener(new ClickListener() {
@@ -2461,6 +2482,10 @@ public class HUDView extends AppMenu {
 
     public ArtisanController getArtisanController() {
         return artisanController;
+    }
+
+    public FridgeController getFridgeController() {
+        return fridgeController;
     }
 
     private void sortPlayersList(){

@@ -751,7 +751,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result eatFood(String foodName) {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         Stacks slot = player.getBackpack().getSlotByItemName(foodName);
         if (slot == null)
             return new Result(false, "This item doesn't exist in your inventory!");

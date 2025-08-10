@@ -186,7 +186,7 @@ public class Backpack extends Tool {
         return cnt;
     }
 
-    private boolean isFull() {
+    public boolean isFull() {
         return items.size() == capacity;
     }
 
@@ -309,4 +309,6 @@ public class Backpack extends Tool {
     public void switchItem(int index1, int index2){
         Collections.swap(items, index1, index2);
     }
+
+
 }

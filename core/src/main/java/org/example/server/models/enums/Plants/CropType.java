@@ -1,13 +1,14 @@
 package org.example.server.models.enums.Plants;
 
 import com.badlogic.gdx.graphics.Texture;
+import org.example.server.models.Edible;
 import org.example.server.models.enums.Seasons.Season;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public enum CropType implements PlantType {
+public enum CropType implements PlantType, Edible {
     Grass(FruitType.Fiber, new int[]{1}, 50, 0, -1, 0, true,
             false, false, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}),
 
