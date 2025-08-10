@@ -114,7 +114,14 @@ public class OtherPlayerController {
 
         characterSprite.setCenter(x, y);
 
-//        System.out.println("MANAMAMAM " + x + " , " + y);
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
     }
 
     public void render() {

@@ -2,10 +2,14 @@ package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.PopUpTexture;
 import org.example.client.model.Reaction;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.StartTradeView;
@@ -13,9 +17,7 @@ import org.example.client.view.InteractionMenus.TradeView;
 import org.example.client.view.MarriageRequestView;
 import org.example.client.view.OutsideView;
 import org.example.client.view.VoteView;
-import org.example.common.models.Direction;
-import org.example.common.models.ItemManager;
-import org.example.common.models.Message;
+import org.example.common.models.*;
 import org.example.server.models.Cell;
 import org.example.server.models.Item;
 import org.example.server.models.Map.FarmMap;
@@ -264,5 +266,61 @@ public class ServerUpdatesController { // handles updates sent by server
         String playerName = message.getFromBody("username");
         Reaction reaction = new Reaction(message.<LinkedTreeMap<String, Object>>getFromBody("reaction"));
         // TODO : sobhan, in gooy o in meydan
+
+        Gdx.app.postRunnable(() -> {
+            for (OtherPlayerController otherPlayerController : ClientApp.getCurrentGame().getOtherPlayerControllers()) {
+                if (otherPlayerController.getUsername().equals(playerName)) {
+                    if (reaction.isEmoji()) {
+                        PopUpController.addPopUp(
+                                new PopUpTexture(
+                                        ((TextureRegionDrawable) reaction.getEmoji().getEmojiImage().getDrawable())
+                                                .getRegion().getTexture(),
+                                        otherPlayerController.getX(), otherPlayerController.getY() + 70,
+                                        otherPlayerController.getX(), otherPlayerController.getY() + 70,
+                                        2
+                                ));
+                    } else {
+                        InfoWindow infoWindow = new InfoWindow(
+                                GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
+                                reaction.getText(),
+                                Color.BLACK,
+                                200,
+                                Align.center,
+                                true
+                        );
+                        infoWindow.setPosition(otherPlayerController.getX(), otherPlayerController.getY() + 70);
+                        infoWindow.setFontScale(0.7f);
+                        PopUpController.addInfoWindow(infoWindow);
+                    }
+                }
+            }
+            if (ClientApp.getCurrentGame().getCurrentPlayer().getUsername().equals(playerName)) {
+                if (ClientApp.getCurrentMenu() instanceof OutsideView view) {
+                    if (reaction.isEmoji()) {
+                        PopUpController.addPopUp(
+                                new PopUpTexture(
+                                        ((TextureRegionDrawable) reaction.getEmoji().getEmojiImage().getDrawable())
+                                                .getRegion().getTexture(),
+                                        view.getPlayerController().getX(), view.getPlayerController().getY() + 70,
+                                        view.getPlayerController().getX(), view.getPlayerController().getY() + 70,
+                                        2
+                                ));
+                    }
+                    else {
+                        InfoWindow infoWindow = new InfoWindow(
+                                GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
+                                reaction.getText(),
+                                Color.BLACK,
+                                200,
+                                Align.left,
+                                true
+                        );
+                        infoWindow.setPosition(view.getPlayerController().getX(), view.getPlayerController().getY() + 30);
+                        infoWindow.setFontScale(0.7f);
+                        PopUpController.addInfoWindow(infoWindow);
+                    }
+                }
+            }
+        });
     }
 }

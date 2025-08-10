@@ -3,17 +3,29 @@ package org.example.client.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import org.example.client.Main;
 
-public class popUpTexture {
+import java.awt.*;
+
+public class PopUpTexture {
     private final Sprite sprite;
     private float originX, originY, time;
     private final float destinationX, destinationY,
             deltaX, deltaY;
 
-    public popUpTexture(Texture texture, float originX, float originY, float destinationX, float destinationY, float time) {
+    public PopUpTexture(Sprite sprite, float originX, float originY, float destinationX, float destinationY, float time) {
+        this.sprite = sprite;
+        this.originX = originX;
+        this.originY = originY;
+        this.destinationX = destinationX;
+        this.destinationY = destinationY;
+        this.time = time;
+        deltaX = (originX - destinationX) / time;
+        deltaY = (originY - destinationY) / time;
+        sprite.setCenter(originX, originY);
+    }
+
+    public PopUpTexture(Texture texture, float originX, float originY, float destinationX, float destinationY, float time) {
         this.sprite = new Sprite(texture);
         this.originX = originX;
         this.originY = originY;

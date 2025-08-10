@@ -1,22 +1,41 @@
 package org.example.client.controller;
 
-import org.example.client.model.popUpTexture;
+import com.badlogic.gdx.graphics.Camera;
+import org.example.client.Main;
+import org.example.client.model.PopUpTexture;
+import org.example.common.models.InfoWindow;
 
 import java.util.ArrayList;
 
 public class PopUpController {
-    private static ArrayList<popUpTexture> popUps = new ArrayList<>();
+    private static ArrayList<PopUpTexture> popUps = new ArrayList<>();
+    private static ArrayList<InfoWindow> infoWindows = new ArrayList<>();
+    private static Camera camera;
 
 
-    public static void addPopUp(popUpTexture popUp) {
+    public static void addPopUp(PopUpTexture popUp) {
         popUps.add(popUp);
     }
 
-    public static void render() {
-        for (popUpTexture popUp : popUps) {
+    public static void addInfoWindow(InfoWindow infoWindow) {
+        infoWindows.add(infoWindow);
+    }
+
+    public void setcamera(Camera c) {
+        camera = c;
+    }
+
+    public static void renderPopUps() {
+        for (PopUpTexture popUp : popUps) {
             popUp.update();
             popUp.render();
         }
-        popUps.removeIf(popUpTexture::finished);
+        popUps.removeIf(PopUpTexture::finished);
+    }
+
+    public static void renderInfoWindows() {
+        for (InfoWindow infoWindow : infoWindows) {
+            infoWindow.draw(Main.getBatch());
+        }
     }
 }

@@ -183,6 +183,14 @@ public class OutsidePlayerController {
         characterSprite.draw(Main.getBatch());
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
     public void render() {
 
     }

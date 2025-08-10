@@ -1,5 +1,6 @@
 package org.example.client.model;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -40,6 +41,22 @@ public class Reaction {
         info.put("emoji", emoji == null? null : emoji.name());
         info.put("text", text);
         return info;
+    }
+
+    public boolean isEmoji() {
+        return isEmoji;
+    }
+
+    public Emoji getEmoji() {
+        return emoji;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public float getReactionTimer() {
+        return reactionTimer;
     }
 
     public void updateReaction(float delta){
