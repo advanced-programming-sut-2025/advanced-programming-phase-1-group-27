@@ -177,8 +177,9 @@ public class PurchaseMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 number++;
-                if(stock.getQuantity() <= number && stock.getQuantity() != -1){
+                if(stock.getQuantity() < number && stock.getQuantity() != -1){
                     number = stock.getQuantity();
+                    errorLabel.set(new GraphicalResult("Sorry! we are out of stock!"));
                 }
             }
         });

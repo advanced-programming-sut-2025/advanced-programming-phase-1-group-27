@@ -40,7 +40,8 @@ public class RegisterMenuController extends MenuController {
             return registerAttemptResult;
 
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new SecurityQuestionMenuView(new User(username, User.hashPassword(password), nickname, email, Gender.values()[view.getGenderBox().getSelectedIndex()])));
+        ClientApp.setCurrentMenu(new SecurityQuestionMenuView(new User(username, User.hashPassword(password), nickname, email, Gender.values()[view.getGenderBox().getSelectedIndex()])));
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new GraphicalResult("Successful registration!", Color.GREEN);
     }
 
@@ -109,7 +110,8 @@ public class RegisterMenuController extends MenuController {
     public Result exitMenu() {
         playClickSound();
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new WelcomeMenuView());
+        ClientApp.setCurrentMenu(new WelcomeMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new Result(true, "Redirecting to welcome menu ...");
     }
 }

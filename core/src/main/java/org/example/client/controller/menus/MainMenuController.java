@@ -2,10 +2,7 @@ package org.example.client.controller.menus;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.menu.LobbyMenuView;
-import org.example.client.view.menu.MainMenuView;
-import org.example.client.view.menu.ProfileMenuView;
-import org.example.client.view.menu.WelcomeMenuView;
+import org.example.client.view.menu.*;
 import org.example.server.models.Result;
 
 public class MainMenuController extends MenuController {
@@ -18,17 +15,26 @@ public class MainMenuController extends MenuController {
         ClientApp.setLoggedInUser(null);
         ClientApp.deleteLoginUserFile();
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new WelcomeMenuView());
+        ClientApp.setCurrentMenu(new WelcomeMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
     public void goToLobbyMenu(){
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new LobbyMenuView());
+        ClientApp.setCurrentMenu(new LobbyMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
     public void goToProfileMenu(){
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new ProfileMenuView());
+        ClientApp.setCurrentMenu(new ProfileMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+    }
+
+    public void goToUserInfoMenu() {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new UserInfoView(ClientApp.getCurrentMenu()));
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
     @Override

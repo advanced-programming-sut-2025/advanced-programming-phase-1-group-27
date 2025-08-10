@@ -2,6 +2,7 @@ package org.example.client.controller.menus;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.view.menu.LobbyMenuView;
 import org.example.client.view.menu.LoginMenuView;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.SecurityQuestionMenuView;
@@ -28,7 +29,8 @@ public class SecurityQuestionMenuController extends MenuController {
                 put("userInfo", view.getUser().getInfo());
             }}, Message.Type.add_user));
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new LoginMenuView());
+            ClientApp.setCurrentMenu(new LobbyMenuView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
         }
         else {
             view.setErrorPhase(true);
@@ -44,7 +46,8 @@ public class SecurityQuestionMenuController extends MenuController {
     public Result exitMenu() {
         playClickSound();
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new RegisterMenuView());
+        ClientApp.setCurrentMenu(new RegisterMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new Result(true, "Redirecting to registerViaGraphics menu ...");
     }
 }

@@ -601,9 +601,7 @@ public class ClientGame implements Game {
     }
 
     public void kickPlayer(String playerName) {
-        System.out.println("player to kick: " + playerName);
         if (ClientApp.getLoggedInUser().getUsername().equals(playerName)) {
-            System.out.println("khodamam");
             Gdx.app.postRunnable(() -> {
                 Main.getMain().getScreen().dispose();
                 ClientApp.setCurrentMenu(new MainMenuView());

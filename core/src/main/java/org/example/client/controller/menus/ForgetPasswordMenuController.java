@@ -81,7 +81,8 @@ public class ForgetPasswordMenuController extends MenuController {
     @Override
     public Result exitMenu() {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new LoginMenuView());
+        ClientApp.setCurrentMenu(new LoginMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new Result(true, "Redirecting to login menu ...");
     }
 }

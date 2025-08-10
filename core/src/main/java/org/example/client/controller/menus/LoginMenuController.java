@@ -39,7 +39,8 @@ public class LoginMenuController extends MenuController {
         ClientApp.setLoggedInUser(ClientApp.getUserByUsername(view.getUsernameField().getText()));
 
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new MainMenuView());
+        ClientApp.setCurrentMenu(new MainMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
 
         return new GraphicalResult(String.valueOf(loginAttempt.getMessage()), Color.GREEN);
     }

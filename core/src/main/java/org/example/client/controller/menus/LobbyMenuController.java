@@ -69,12 +69,14 @@ public class LobbyMenuController extends MenuController {
 
     public void host() {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new HostMenuView());
+        ClientApp.setCurrentMenu(new HostMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
     public void goToPlayersMenu() {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new OnlinePlayersMenuView());
+        ClientApp.setCurrentMenu(new OnlinePlayersMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
     private static GraphicalResult find(int id) {
@@ -147,7 +149,8 @@ public class LobbyMenuController extends MenuController {
     @Override
     public Result exitMenu() {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new MainMenuView());
+        ClientApp.setCurrentMenu(new MainMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new Result(true, "Redirecting to Main Menu ...");
     }
 }
