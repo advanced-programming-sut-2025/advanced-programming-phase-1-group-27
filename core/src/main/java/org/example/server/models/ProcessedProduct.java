@@ -1,10 +1,12 @@
 package org.example.server.models;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import org.example.server.models.enums.items.products.ProcessedProductType;
 
 import java.util.Objects;
 
-public class ProcessedProduct implements Item { // for all processed products
+public class ProcessedProduct implements Item, Edible { // for all processed products
     private ProcessedProductType type;
     private int price;
     private int energy;
@@ -40,11 +42,24 @@ public class ProcessedProduct implements Item { // for all processed products
         this.energy = energy;
     }
 
+    @Override
     public boolean isEdible() {
-        return type != ProcessedProductType.IronMetalBar &&
-                type != ProcessedProductType.CopperMetalBar &&
-                type != ProcessedProductType.GoldMetalBar &&
-                type != ProcessedProductType.IridiumMetalBar;
+        return type.isEdible();
+    }
+
+    @Override
+    public Texture getTexture() {
+        return type.getTexture();
+    }
+
+    @Override
+    public Image getItemImage() {
+        return type.getItemImage();
+    }
+
+    @Override
+    public String getName() {
+        return type.getName();
     }
 
     @Override
