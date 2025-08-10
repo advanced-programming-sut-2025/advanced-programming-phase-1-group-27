@@ -401,6 +401,9 @@ public class GameMenuController extends MenuController {
         if (cell.getBuilding() != null && cell.getBuilding() instanceof GreenHouse)
             return false;
         Crop crop = (Crop) cell.getObject();
+        if (!crop.getType().canBecomeGiant()) {
+            return false;
+        }
         CropType type = (CropType) crop.getType();
         int i = cell.getPosition().getX(), j = cell.getPosition().getY();
         Cell[][] cells = cell.getMap().getCells();

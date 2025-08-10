@@ -102,6 +102,8 @@ public class GameAssetManager {
     private final Texture hoedAndWateredCellTexture = new Texture("assets/Images/Floorings/Hoed_and_Watered.png");
     private final Texture RedTileCellTexture = new Texture("assets/Images/Floorings/Red_Tile.png");
     private final Texture GreenTileCellTexture = new Texture("assets/Images/Floorings/Green_Tile.png");
+    private final Texture speedGroTexture = new Texture("assets/Images/Crops/Speed-Gro.png");
+    private final Texture deluxeRetainingSoilTexture = new Texture("assets/Images/Crops/Deluxe_Retaining_Soil.png");
 
     private final HashMap<CropType, Texture> giantCropTextureMap = new HashMap<>() {{
         put(CropType.Cauliflower, new Texture("assets/Images/Crops/Giant_Cauliflower.png"));
@@ -1263,6 +1265,14 @@ public class GameAssetManager {
 
     public Image getArtisanBackground() {
         return artisanBackground;
+    }
+
+    public Texture getSpeedGroTexture() {
+        return speedGroTexture;
+    }
+
+    public Texture getDeluxeRetainingSoilTexture() {
+        return deluxeRetainingSoilTexture;
     }
 
     public Texture getAnimalTexture(AnimalType animalType) {

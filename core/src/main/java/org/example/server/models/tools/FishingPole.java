@@ -2,7 +2,10 @@ package org.example.server.models.tools;
 
 import org.example.client.model.ClientApp;
 import org.example.server.models.App;
+import org.example.server.models.Cell;
+import org.example.server.models.Result;
 import org.example.server.models.enums.AbilityType;
+import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.items.ToolType;
 
@@ -80,5 +83,11 @@ public class FishingPole extends Tool {
 
     }
 
-
+    @Override
+    public Result use(Cell cell) {
+        if (cell.getType() == CellType.Water) {
+            //TODO Agha Abdi
+        }
+        return null;
+    }
 }

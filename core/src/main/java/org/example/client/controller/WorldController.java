@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import org.example.client.Main;
@@ -122,8 +123,8 @@ public class WorldController {
                                 GameAssetManager.getGameAssetManager().getNPCDialogueSign(),
                                 x + 32, y + 64, 32, 32
                         );
-                        Rectangle bounds = new Rectangle(x + 32, y + 56, 32, 32);
 
+                        Rectangle bounds = new Rectangle(x + 32, y + 56, 32, 32);
                         if (Gdx.input.justTouched()) {
                             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                             camera.unproject(touchPos);
@@ -149,6 +150,15 @@ public class WorldController {
                                 InteractionsWithNPCController controller = new InteractionsWithNPCController();
                                 controller.meetNPC(npc.getName());
                             }
+                        }
+                    }
+
+                    Rectangle bounds = new Rectangle(x + 4, y, 32, 64);
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
+                        Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                        camera.unproject(touchPos);
+                        if (bounds.contains(touchPos.x, touchPos.y)) {
+                            //TODO Agha Abdi
                         }
                     }
                 }
@@ -190,16 +200,22 @@ public class WorldController {
 
                 if (cells[i][j].getObject() instanceof Crop crop) {
                     if (crop.isGiant()) {
-                        System.out.println("ASDFASDDFASDFASFASDF");
                         texture = GameAssetManager.getGameAssetManager().getGiantCropTexture((CropType) crop.getType());
                         if (texture != null && crop.getCell() == cells[i][j]) {
                             Main.getBatch().draw(texture, x, y, 80, 80);
-                            System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
                         }
                     } else {
                         texture = crop.getTexture();
                         if (texture != null)
                             Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                    }
+                    if (crop.isAlwaysWatered()) {
+                        texture = GameAssetManager.getGameAssetManager().getDeluxeRetainingSoilTexture();
+                        Main.getBatch().draw(texture, x + 30, y + 30, 10, 10);
+                    }
+                    else if (crop.isFertilized()) {
+                        texture = GameAssetManager.getGameAssetManager().getSpeedGroTexture();
+                        Main.getBatch().draw(texture, x + 30, y + 30, 10, 10);
                     }
                 }
                 if (cells[i][j].getObject() instanceof MineralType mineral) {

@@ -14,6 +14,7 @@ public abstract class Plant {
     protected int cnt = 0, currentStage = 0, tillNextHarvest;
     protected Cell cell;
     protected boolean wateredYesterday = true, wateredToday = false, isForaging = false, alwaysWatered = false;
+    protected boolean fertilized = false;
     //...
 
     protected Plant(PlantType type) {
@@ -90,6 +91,18 @@ public abstract class Plant {
 
     public void setAlwaysWatered(boolean alwaysWatered) {
         this.alwaysWatered = alwaysWatered;
+    }
+
+    public boolean isAlwaysWatered() {
+        return alwaysWatered;
+    }
+
+    public void setFertilized(boolean fertilized) {
+        this.fertilized = fertilized;
+    }
+
+    public boolean isFertilized() {
+        return fertilized;
     }
 
     public boolean isGiant() {

@@ -132,4 +132,8 @@ public enum TreeType implements PlantType {
     public String toString() {
         return this.name();
     }
+
+    public boolean canBecomeGiant() {
+        return false;
+    }
 }

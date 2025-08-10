@@ -15,12 +15,16 @@ import org.example.common.models.GraphicalResult;
 import org.example.server.models.Cell;
 import org.example.server.models.Player;
 import org.example.server.models.Result;
+import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Plants.SeedType;
+import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.enums.items.ToolType;
 import org.example.server.models.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.Spliterator;
+
+import static java.lang.Math.max;
 
 public class ToolGraphicalController {
     private float x, y;
@@ -75,11 +79,10 @@ public class ToolGraphicalController {
                 Cell cell = player.getCurrentMap().getCell(i, j);
                 if (cell == null)
                     return;
-                System.out.println("you clicked the cell " + i + " " + j);
                 if (cell.getAdjacentCells().contains(player.getCurrentCell())) {
                     Result res = toolType.getTheFuckingTool().use(cell);
-
-                    handleError(res);
+                    if (res != null)
+                        handleError(res);
                 }
             }
         }
@@ -104,10 +107,49 @@ public class ToolGraphicalController {
         }
     }
 
+    private void handleFertilization() {
+        if (!player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem()
+                .equals(ShopItems.DeluxeRetainingSoil) &&
+                        !player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem()
+                                .equals(ShopItems.SpeedGro)) {
+            return;
+        }
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        if (Gdx.input.justTouched()) {
+            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+
+            camera.unproject(touchPos);
+
+            int i = OutsideView.getIndices(touchPos.x, touchPos.y).getX(),
+                    j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
+            Cell cell = player.getCurrentMap().getCell(i, j);
+
+            if (cell == null)
+                return;
+            if (!(cell.getObject() instanceof Plant)) {
+                ResultController.addError("There is No Plant Here!");
+                return;
+            }
+
+            Plant plant = (Plant) cell.getObject();
+            if (player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem().equals(
+                    ShopItems.SpeedGro)) {
+                plant.setTillNextHarvest(max(plant.getTillNextHarvest() - 1, 0));
+                ResultController.addSuccess("The selected plant will bear fruit sooner!");
+                plant.setFertilized(true);
+            }
+            if (player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem().equals(
+                    ShopItems.DeluxeRetainingSoil)){
+                plant.setAlwaysWatered(true);
+                ResultController.addSuccess("The selected plant will never need water!");
+            }
+        }
+    }
+
     public void update() {
         handlePlanting();
         handleToolUse();
-
+        handleFertilization();
     }
 
     public void turnOff() {
