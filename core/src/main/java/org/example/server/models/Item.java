@@ -15,6 +15,12 @@ public interface Item {
         return GameAssetManager.getGameAssetManager().getItemImage(this);
     }
 
+    default boolean isEdible() {
+        if (this instanceof Edible edible)
+            return edible.isEdible();
+        return false;
+    }
+
     default String getName() {
 //        return this.toString().replaceAll("([A-Z])", " $1").trim();
         return this.toString();
