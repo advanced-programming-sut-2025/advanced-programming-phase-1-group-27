@@ -6,4 +6,5 @@ public class Gift {
     private String from;
     private String to;
     private Stacks stack;
+    private int rate;
 }
