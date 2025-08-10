@@ -17,7 +17,8 @@ public enum InGameMenuType {
     ANIMAL(11),
     ARTISAN_MINI(12),
     ARTISAN(13),
-    REACTION(14);
+    REACTION(14),
+    LEADERBOARD(15);
 
 
     private final Integer menuIndex;
