@@ -104,6 +104,7 @@ public class InteractionsWithUserController {
     }
 
     public static void sendInventory(Backpack inventory, String starter, String other) {
+        // Rassa Karet Tamoome
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "sendInventory");
             put("inventoryInfo", inventory.getInfo());
@@ -130,17 +131,24 @@ public class InteractionsWithUserController {
             put("starter", ClientApp.getLoggedInUser().getUsername());
             put("other", username);
             put("self", ClientApp.getLoggedInUser().getUsername());
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
         }}, Message.Type.interaction_p2p));
         return new GraphicalResult("You have give your friend flower!" , false);
     }
 
-    public static void hug(String username) {
+    public static GraphicalResult hug(String username) {
+        Relation relation = getRelation(username);
+        if (relation.getLevel() < 2) {
+            return new GraphicalResult("Your level is too low");
+        }
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "hug");
             put("starter", ClientApp.getLoggedInUser().getUsername());
             put("other", username);
             put("self", ClientApp.getLoggedInUser().getUsername());
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
         }}, Message.Type.interaction_p2p));
+        return new GraphicalResult("You hugged your friend!" , false);
     }
 
     private static boolean canFlowered(Relation relation) {

@@ -93,11 +93,12 @@ public class GameController {
         String other = message.getFromBody("other");
         String self = message.getFromBody("self");
         String mode = message.getFromBody("mode");
+        int lobbyId = message.getIntFromBody("lobbyId");
+        Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
+        Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
+        // TODO : Khodam
         if (mode.equals("confirmTrade")) {
             boolean answer = message.getFromBody("answer");
-            int lobbyId = message.getIntFromBody("lobbyId");
-            Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
-            Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
             if (answer) {
                 Trade trade = new Trade(message);
                 ServerApp.getLobbyById(lobbyId).getGame().addTrade(trade);
