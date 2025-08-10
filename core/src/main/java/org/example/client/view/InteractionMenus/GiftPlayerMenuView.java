@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
+import org.example.client.controller.InteractionsWithOthers.GiftController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
@@ -26,7 +27,7 @@ import static java.lang.Math.max;
 
 public class GiftPlayerMenuView extends AppMenu {
 
-    private final TradeController controller;
+    private final GiftController controller;
 
     private final String starter;
     private final String other;
@@ -54,7 +55,7 @@ public class GiftPlayerMenuView extends AppMenu {
 
     public GiftPlayerMenuView(String starter, String other) {
 
-        controller = new TradeController();
+        controller = new GiftController();
         ClientApp.setNonMainMenu(this);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -136,8 +137,8 @@ public class GiftPlayerMenuView extends AppMenu {
 
         backButton.setWidth(sendGiftButton.getWidth());
 
-        sendGiftButton.setPosition(inventoryBackground.getX()+100, inventoryBackground.getY() - sendGiftButton.getHeight() - 50);
-        backButton.setPosition(sendGiftButton.getX()+sendGiftButton.getWidth() + 100, inventoryBackground.getY() - backButton.getHeight() - 50);
+        sendGiftButton.setPosition(inventoryBackground.getX() + 100, inventoryBackground.getY() - sendGiftButton.getHeight() - 50);
+        backButton.setPosition(sendGiftButton.getX() + sendGiftButton.getWidth() + 100, inventoryBackground.getY() - backButton.getHeight() - 50);
 
 
         increaseAmountButton.setPosition(inventoryBackground.getX() + inventoryBackground.getWidth() + 40, itemCountLabel.getY() + itemCountLabel.getHeight() + 20);
@@ -265,8 +266,7 @@ public class GiftPlayerMenuView extends AppMenu {
                         rowNum++;
                         return true;
                     }
-                }
-                else{
+                } else {
                     rowNum = Math.max(0, rowNum - 1);
                     return true;
                 }
@@ -276,7 +276,6 @@ public class GiftPlayerMenuView extends AppMenu {
             }
 
         });
-
 
 
         increaseAmountButton.addListener(new ClickListener() {
@@ -307,14 +306,10 @@ public class GiftPlayerMenuView extends AppMenu {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 playClickSound();
                 ///  TODO PARSA: starter - other - onScreenItems.get(selectItemIndex) - itemCount
-
-
-
+                controller.gift(starter , onScreenItems.get(selectItemIndex), itemCount);
             }
-
         });
 
         backButton.addListener(new ClickListener() {
@@ -332,17 +327,12 @@ public class GiftPlayerMenuView extends AppMenu {
 
     }
 
-    public TradeController getController() {
-        return controller;
-    }
-
     @Override
     public void executeCommands(Scanner scanner) {
 
     }
 
     private void addToScreen(Stacks item) {
-
         Image itemImage = item.getItem().getItemImage();
         itemImage.setSize(48, 48);
         stage.addActor(itemImage);
@@ -354,8 +344,7 @@ public class GiftPlayerMenuView extends AppMenu {
         quantityLabel.setFontScale(0.7f);
         stage.addActor(quantityLabel);
         onScreenItemsQuantity.put(item, quantityLabel);
-
     }
 
 
-    }
+}

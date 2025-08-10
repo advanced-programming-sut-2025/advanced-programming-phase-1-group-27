@@ -63,6 +63,11 @@ public class HUDView extends AppMenu {
     private Label animalInfoLabel;
     private final Label songNameLabel;
     private final Label listenTogetherLabel;
+    private final Label leaderBoardUsernameLabel;
+    private final Label leaderBoardEarningsLabel;
+    private final Label leaderBoardSkillsLabel;
+    private final Label leaderBoardNumberOfQuestsLabel;
+    private final Label sortByLabel;
 
     private final Image blackImage;
     private final Image hoveringInfoWindow;
@@ -90,6 +95,7 @@ public class HUDView extends AppMenu {
     private final Image radioBackgroundImage;
     private final Image mapImage;
     private final Image reactionMenuBackground;
+    private final Image leaderBoardMenuBackground;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -132,7 +138,7 @@ public class HUDView extends AppMenu {
     private AnimalEnclosure animalEnclosure;
     private Animal animal;
 
-
+    private float miniPlayerUpdateTimer = 0f;
 
     private final TextButton exitGameButton;
     private final TextButton terminateButton;
@@ -148,6 +154,9 @@ public class HUDView extends AppMenu {
     private final TextButton animalPetButton;
     private final TextButton animalCollectButton;
     private final TextButton animalExitButton;
+    private final TextButton earningsSortButton;
+    private final TextButton numberOfQuestsSortButton;
+    private final TextButton skillSortButton;
 
 
     private final TextButton randomizeEmojis;
@@ -173,13 +182,17 @@ public class HUDView extends AppMenu {
 
     private ArrayList<Emoji> emojiButtons;
 
+    private ArrayList<MiniPlayer> playersInLeaderBoard;
+
+    private int sortType;       // 0 for earnings, 1 for skills, 2 for quests
+
     public HUDView(Stage stage) {
 
 
         controller = new HUDController(this);
 
         this.stage = stage;
-
+        sortType = 0;
         artisanController = new ArtisanController(this, stage);
 
         playerIconsInMap = new HashMap<>();
@@ -230,6 +243,23 @@ public class HUDView extends AppMenu {
         messageLabel = new Label("",skin);
         songNameLabel = new Label("Currently listening to: "+"Song name",skin);
         listenTogetherLabel = new Label("Listen together with:",skin);
+        leaderBoardUsernameLabel = new Label("Username",skin);
+        leaderBoardEarningsLabel = new Label("Earnings",skin);
+        leaderBoardSkillsLabel = new Label("Skills",skin);
+        leaderBoardNumberOfQuestsLabel = new Label("Number of\n  Quests",skin);
+        sortByLabel = new Label("Sort by:",skin);
+
+        leaderBoardUsernameLabel.setColor(Color.BLACK);
+        leaderBoardNumberOfQuestsLabel.setColor(Color.BLACK);
+        leaderBoardSkillsLabel.setColor(Color.BLACK);
+        leaderBoardEarningsLabel.setColor(Color.BLACK);
+        sortByLabel.setColor(Color.BLACK);
+
+        leaderBoardUsernameLabel.setVisible(false);
+        leaderBoardNumberOfQuestsLabel.setVisible(false);
+        leaderBoardSkillsLabel.setVisible(false);
+        leaderBoardEarningsLabel.setVisible(false);
+        sortByLabel.setVisible(false);
 
 
 
@@ -254,6 +284,13 @@ public class HUDView extends AppMenu {
         uploadSongButton = new TextButton("Upload",skin);
         randomizeEmojis = new TextButton("New Emojis",skin);
         sendReaction = new TextButton("Send!",skin);
+        earningsSortButton = new TextButton("Earnings",skin);
+        numberOfQuestsSortButton = new TextButton("Number Of Quests",skin);
+        skillSortButton = new TextButton("Skills",skin);
+
+        earningsSortButton.setVisible(false);
+        numberOfQuestsSortButton.setVisible(false);
+        skillSortButton.setVisible(false);
 
         reactionTyping = false;
         reactionTextField = new TextField("", skin);
@@ -330,7 +367,7 @@ public class HUDView extends AppMenu {
         radioBackgroundImage = GameAssetManager.getGameAssetManager().getRadioBackground();
         mapImage = GameAssetManager.getGameAssetManager().getMapImage();
         reactionMenuBackground = GameAssetManager.getGameAssetManager().getReactionMenuBackground();
-
+        leaderBoardMenuBackground = GameAssetManager.getGameAssetManager().getLeaderBoardBackground();
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
         socialButton.setPosition(100,100);
@@ -398,6 +435,9 @@ public class HUDView extends AppMenu {
         reactionMenuBackground.setPosition((Gdx.graphics.getWidth()- reactionMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()- reactionMenuBackground.getHeight())/2f);
         reactionMenuBackground.setVisible(false);
 
+        leaderBoardMenuBackground.setPosition((Gdx.graphics.getWidth()- leaderBoardMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()- leaderBoardMenuBackground.getHeight())/2f);
+        leaderBoardMenuBackground.setVisible(false);
+
         hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-80,
                 20);
 
@@ -448,6 +488,12 @@ public class HUDView extends AppMenu {
         animalBackground.setVisible(false);
 
 
+        // LEADERBOARD
+
+        playersInLeaderBoard = new ArrayList<>();
+
+        playersInLeaderBoard.addAll(ClientApp.getCurrentGame().getPlayers());
+
         // STAGE
         stage.addActor(blackImage);
         stage.addActor(cookingMenuBackground);
@@ -471,6 +517,7 @@ public class HUDView extends AppMenu {
         stage.addActor(skillMenuBackground);
         stage.addActor(radioBackgroundImage);
         stage.addActor(reactionMenuBackground);
+        stage.addActor(leaderBoardMenuBackground);
         stage.addActor(craftingMenuBackground);
         stage.addActor(socialMenuBackground);
         stage.addActor(farmingHoverImage);
@@ -500,6 +547,14 @@ public class HUDView extends AppMenu {
         stage.addActor(reactionTextField);
         stage.addActor(randomizeEmojis);
         stage.addActor(sendReaction);
+        stage.addActor(leaderBoardEarningsLabel);
+        stage.addActor(leaderBoardNumberOfQuestsLabel);
+        stage.addActor(leaderBoardSkillsLabel);
+        stage.addActor(leaderBoardUsernameLabel);
+        stage.addActor(earningsSortButton);
+        stage.addActor(skillSortButton);
+        stage.addActor(numberOfQuestsSortButton);
+        stage.addActor(sortByLabel);
 
 
         messageLabel.setVisible(false);
@@ -645,6 +700,17 @@ public class HUDView extends AppMenu {
             stage.addActor(emoji.getEmojiButton());
             emojiButtons.add(emoji);
 
+        }
+
+        for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
+            inGamePlayer.getUsernameLabel().setVisible(false);
+            inGamePlayer.getEarningsLabel().setVisible(false);
+            inGamePlayer.getSkillLabel().setVisible(false);
+            inGamePlayer.getNumberOfQuestsLabel().setVisible(false);
+            stage.addActor(inGamePlayer.getUsernameLabel());
+            stage.addActor(inGamePlayer.getEarningsLabel());
+            stage.addActor(inGamePlayer.getSkillLabel());
+            stage.addActor(inGamePlayer.getNumberOfQuestsLabel());
         }
 
         setListeners();
@@ -832,19 +898,19 @@ public class HUDView extends AppMenu {
         skillMenuBackground.setPosition((Gdx.graphics.getWidth() - skillMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - skillMenuBackground.getHeight()) / 2f);
         skillMenuBackground.setVisible(currentMenu == InGameMenuType.SKILL);
 
-        for( int i = 0; i < Math.min(3,player.getAbility(AbilityType.Farming).getLevel()); i++ ){
+        for( int i = 0; i < Math.min(4,player.getAbility(AbilityType.Farming).getLevel()); i++ ){
             skillPoints.get(i).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
-        for( int i = 0; i < Math.min(3,player.getAbility(AbilityType.Mining).getLevel()); i++ ){
+        for( int i = 0; i < Math.min(4,player.getAbility(AbilityType.Mining).getLevel()); i++ ){
             skillPoints.get(i+4).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
-        for( int i = 0; i < Math.min(3,player.getAbility(AbilityType.Foraging).getLevel()); i++ ){
+        for( int i = 0; i < Math.min(4,player.getAbility(AbilityType.Foraging).getLevel()); i++ ){
             skillPoints.get(i+8).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
-        for( int i = 0; i < Math.min(3,player.getAbility(AbilityType.Fishing).getLevel()); i++ ){
+        for( int i = 0; i < Math.min(4,player.getAbility(AbilityType.Fishing).getLevel()); i++ ){
             skillPoints.get(i+12).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
@@ -863,7 +929,7 @@ public class HUDView extends AppMenu {
         });
         othersSongsSelectBox.setItems(otherPlayerUsernames);
 
-        songNameLabel.setText("Currently listening to: " + ClientApp.getCurrentGame().getCurrentMusicName());
+        songNameLabel.setText("Currently listening to: " + ((ClientApp.getCurrentGame().getCurrentMusicName() == null)? "Nothing":ClientApp.getCurrentGame().getCurrentMusicName()));
 
         radioBackgroundImage.setVisible(currentMenu == InGameMenuType.RADIO);
         songNameLabel.setVisible(currentMenu == InGameMenuType.RADIO);
@@ -882,19 +948,24 @@ public class HUDView extends AppMenu {
         yourSongsSelectBox.setWidth(3 * radioBackgroundImage.getWidth() / 5);
         othersSongsSelectBox.setWidth(3 * radioBackgroundImage.getWidth() / 5);
 
-        yourSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
-        othersSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
-
-        playButton.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5 + 40, radioBackgroundImage.getY() + 2 * radioBackgroundImage.getHeight()/3f-100);
-        listenButton.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5 + 40, radioBackgroundImage.getY() + 2 * radioBackgroundImage.getHeight()/3f-100);
-        uploadSongButton.setWidth(playButton.getWidth()+playButton.getX());
-        uploadSongButton.setPosition(playButton.getX(),playButton.getY() - uploadSongButton.getHeight() - (playButton.getX()-playButton.getX()-playButton.getWidth()));
-
         yourSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5,nextPageButton.getY()+20);
         othersSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5,nextPageButton.getY()+20);
 
-        listenTogetherLabel.setPosition(othersSongsSelectBox.getX()+50, uploadSongButton.getY());
-        songNameLabel.setPosition(radioBackgroundImage.getX() + 40, playButton.getY()+playButton.getHeight() + 40);
+        yourSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
+        othersSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
+
+
+        songNameLabel.setPosition(radioBackgroundImage.getX() + 40, radioBackgroundImage.getY() + radioBackgroundImage.getHeight() - songNameLabel.getHeight() - 100);
+
+        uploadSongButton.setWidth(yourSongsSelectBox.getWidth());
+        playButton.setWidth(yourSongsSelectBox.getWidth());
+        uploadSongButton.setPosition(yourSongsSelectBox.getX(),songNameLabel.getY()- uploadSongButton.getHeight()- 50);
+        playButton.setPosition(yourSongsSelectBox.getX(),songNameLabel.getY()- uploadSongButton.getHeight()- 100 - playButton.getHeight());
+
+
+        listenTogetherLabel.setPosition(othersSongsSelectBox.getX()+50, playButton.getY());
+        listenButton.setWidth(othersSongsSelectBox.getWidth());
+        listenButton.setPosition(othersSongsSelectBox.getX(), uploadSongButton.getY()-50);
 
     }
 
@@ -1285,11 +1356,9 @@ public class HUDView extends AppMenu {
 
     private void updatePlayerPositionsInMap(){
 
-
-
         for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
 
-            if ( currentMenu == InGameMenuType.MAP ){
+            if ( currentMenu == InGameMenuType.MAP && miniPlayerUpdateTimer > 1f){
                 inGamePlayer.updateMiniPlayer();
             }
 
@@ -1416,6 +1485,57 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayLeaderBoard(){
+
+        if ( currentMenu == InGameMenuType.LEADERBOARD && miniPlayerUpdateTimer > 1f){
+            for ( MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers() ){
+                inGamePlayer.updateMiniPlayer();
+            }
+            playersInLeaderBoard.clear();
+            playersInLeaderBoard.addAll( ClientApp.getCurrentGame().getPlayers() );
+            sortPlayersList();
+        }
+
+        leaderBoardMenuBackground.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+        leaderBoardUsernameLabel.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+        leaderBoardEarningsLabel.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+        leaderBoardSkillsLabel.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+        leaderBoardNumberOfQuestsLabel.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+        numberOfQuestsSortButton.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+        earningsSortButton.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+        skillSortButton.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+        sortByLabel.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+
+        float topY = leaderBoardMenuBackground.getY() + leaderBoardMenuBackground.getHeight();
+
+        skillSortButton.setWidth(earningsSortButton.getWidth());
+
+        leaderBoardUsernameLabel.setPosition(leaderBoardMenuBackground.getX()+50 + 25,topY - 115  - leaderBoardUsernameLabel.getHeight());
+        leaderBoardEarningsLabel.setPosition(leaderBoardMenuBackground.getX()+250 + 25,topY - 115 - leaderBoardEarningsLabel.getHeight());
+        leaderBoardSkillsLabel.setPosition(leaderBoardMenuBackground.getX()+425 + 25 ,topY - 115 - leaderBoardSkillsLabel.getHeight());
+        leaderBoardNumberOfQuestsLabel.setPosition(leaderBoardMenuBackground.getX()+550 + 25,topY - 100 - leaderBoardNumberOfQuestsLabel.getHeight());
+        skillSortButton.setPosition(leaderBoardMenuBackground.getX()+150+10,leaderBoardMenuBackground.getY()+25);
+        earningsSortButton.setPosition(skillSortButton.getX()+skillSortButton.getWidth()+50+10,leaderBoardMenuBackground.getY()+25);
+        sortByLabel.setPosition(leaderBoardMenuBackground.getX()+50,skillSortButton.getY()+skillSortButton.getHeight()+15 + (numberOfQuestsSortButton.getHeight()-sortByLabel.getHeight())/2f);
+        numberOfQuestsSortButton.setPosition(sortByLabel.getX()+sortByLabel.getWidth()+50,skillSortButton.getY()+skillSortButton.getHeight()+15);
+
+        for ( int i = 0; i < playersInLeaderBoard.size(); i++ ){
+
+            MiniPlayer miniPlayer = playersInLeaderBoard.get(i);
+            miniPlayer.getUsernameLabel().setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+            miniPlayer.getEarningsLabel().setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+            miniPlayer.getSkillLabel().setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+            miniPlayer.getNumberOfQuestsLabel().setVisible(currentMenu == InGameMenuType.LEADERBOARD);
+
+            miniPlayer.getUsernameLabel().setPosition(leaderBoardUsernameLabel.getX(),645- 50 * i);
+            miniPlayer.getEarningsLabel().setPosition(leaderBoardEarningsLabel.getX(),665- 50 * i);
+            miniPlayer.getSkillLabel().setPosition(leaderBoardSkillsLabel.getX(),665- 50 * i);
+            miniPlayer.getNumberOfQuestsLabel().setPosition(leaderBoardNumberOfQuestsLabel.getX(),665- 50 * i);
+
+        }
+
+    }
+
     @Override
     public void show() {
 
@@ -1428,6 +1548,8 @@ public class HUDView extends AppMenu {
     }
 
     public void displayHUD(float delta) {
+
+        miniPlayerUpdateTimer += delta;
 
         errorLabel.update(delta);
         inventoryItems = player.getBackpack();
@@ -1453,6 +1575,7 @@ public class HUDView extends AppMenu {
         displayHoveringItemInfo();
         displaySkillInfo();
         displayPlayerSocial();
+        displayLeaderBoard();
         displayEnergy();
         displayInbox();
         displayInputField();
@@ -1460,6 +1583,10 @@ public class HUDView extends AppMenu {
         displayAnimal();
         artisanController.update();
         displayReactionMenu();
+
+        if ( miniPlayerUpdateTimer > 1f ){
+            miniPlayerUpdateTimer = 0f;
+        }
 
     }
 
@@ -1579,6 +1706,17 @@ public class HUDView extends AppMenu {
                         }
                         else{
                             currentMenu = InGameMenuType.PLAYER_SOCIAL;
+                            makeOnScreenItemsInvisible();
+                        }
+
+                    }
+                    else if (keycode == Input.Keys.L) {
+
+                        if ( currentMenu == InGameMenuType.LEADERBOARD ) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.LEADERBOARD;
                             makeOnScreenItemsInvisible();
                         }
 
@@ -1737,6 +1875,8 @@ public class HUDView extends AppMenu {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+//                System.out.println(x + " " + y);
 
                 if (!isInputFieldVisible) {
 
@@ -1947,6 +2087,39 @@ public class HUDView extends AppMenu {
 
             });
         }
+
+        earningsSortButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                sortType = 0;
+                sortPlayersList();
+            }
+
+        });
+
+        skillSortButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                sortType = 1;
+                sortPlayersList();
+            }
+
+        });
+
+        numberOfQuestsSortButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                sortType = 2;
+                sortPlayersList();
+            }
+
+        });
 
         sendReaction.addListener(new ClickListener() {
 
@@ -2289,8 +2462,18 @@ public class HUDView extends AppMenu {
     public ArtisanController getArtisanController() {
         return artisanController;
     }
-    private void randomizeDefaultEmoji(){
 
+    private void sortPlayersList(){
+
+        if ( sortType == 0 ){
+            playersInLeaderBoard.sort(Comparator.comparingDouble(MiniPlayer::getMoney).reversed());
+        }
+        else if ( sortType == 1 ){
+            playersInLeaderBoard.sort(Comparator.comparingDouble(MiniPlayer::getTotalAbility).reversed());
+        }
+        else if ( sortType == 2 ){
+            playersInLeaderBoard.sort(Comparator.comparingDouble(MiniPlayer::getNumberOfQuestsCompleted).reversed());
+        }
 
 
     }

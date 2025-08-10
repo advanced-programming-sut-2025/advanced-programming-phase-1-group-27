@@ -37,8 +37,8 @@ public class GiftMenuView extends AppMenu {
 
     public GiftMenuView(String npcName) {
         controller = new InteractionsWithNPCController();
-        npc = InteractionsWithNPCController.findNPC(npcName).getType();
-
+//        npc = InteractionsWithNPCController.findNPC(npcName).getType();
+        npc = NPCType.Sebastian;
         npcImage = new Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
 

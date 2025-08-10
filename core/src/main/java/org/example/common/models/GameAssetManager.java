@@ -664,6 +664,8 @@ public class GameAssetManager {
     private final Image interactionMenuDecoration1 = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/InteractionEmoji1.png")));
     private final Image interactionMenuDecoration2 = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/InteractionEmoji2.png")));
 
+    private final Image leaderBoardBackground = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
+
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -673,6 +675,10 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Image getLeaderBoardBackground() {
+        return leaderBoardBackground;
     }
 
     public Image getInteractionMenuDecoration2() {

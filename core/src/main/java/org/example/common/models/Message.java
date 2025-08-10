@@ -74,7 +74,7 @@ public class Message {
         save_and_exit_game,
         voting,
         chat,
-        get_player_position,
+        update_mini_player,
         get_trade_history,
         can_marry,
         marriage_request,

@@ -513,6 +513,11 @@ Images/Crops/Garlic/  (2).png
 Images/Crops/Garlic/  (3).png
 Images/Crops/Garlic/  (4).png
 Images/Crops/Garlic/  (5).png
+Images/Crops/Giant_Cauliflower.png
+Images/Crops/Giant_Melon.png
+Images/Crops/Giant_Powdermelon.png
+Images/Crops/Giant_Pumpkin.png
+Images/Crops/Giant_Qi_Fruit.png
 Images/Crops/Grape/  (1).png
 Images/Crops/Grape/  (2).png
 Images/Crops/Grape/  (3).png

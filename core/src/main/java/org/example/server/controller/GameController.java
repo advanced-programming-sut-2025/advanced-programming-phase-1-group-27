@@ -1,6 +1,5 @@
 package org.example.server.controller;
 
-import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
@@ -11,8 +10,6 @@ import org.example.server.models.Relations.Trade;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.enums.Weathers.Weather;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.tools.Backpack;
 
 import java.util.HashMap;
 
@@ -224,12 +221,12 @@ public class GameController {
         ServerApp.getClientConnectionThreadByUsername(message.getFromBody("username")).sendMessage(message);
     }
 
-    public static synchronized Message getPlayerPosition(Message message) {
+    public static synchronized Message getMiniPlayerInfo(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
         String playerName = message.getFromBody("username");
         Message response = ServerApp.getClientConnectionThreadByUsername(playerName).sendAndWaitForResponse(
-                new Message(null, Message.Type.get_player_position), TIMEOUT_MILLIS
+                new Message(null, Message.Type.update_mini_player), TIMEOUT_MILLIS
         );
         int mapIndex = lobby.getUsernameToMap().get(playerName);
         if (response.getFromBody("isInNPCMap")) {
@@ -239,6 +236,9 @@ public class GameController {
         return new Message(new HashMap<>() {{
             put("position", response.getFromBody("position"));
             put("mapIndex", finalMapIndex);
+            put("money", response.getIntFromBody("money"));
+            put("numberOfQuestsCompleted", response.getIntFromBody("numberOfQuestsCompleted"));
+            put("totalAbility", response.getIntFromBody("totalAbility"));
         }}, Message.Type.response);
     }
 

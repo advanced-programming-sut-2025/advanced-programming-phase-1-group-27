@@ -152,8 +152,8 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.chat) {
             GameController.handleChat(message);
             return true;
-        } else if (message.getType() == Message.Type.get_player_position) {
-            sendMessage(GameController.getPlayerPosition(message));
+        } else if (message.getType() == Message.Type.update_mini_player) {
+            sendMessage(GameController.getMiniPlayerInfo(message));
             return true;
         } else if(message.getType() == Message.Type.get_trade_history){
             sendMessage(TradeController.getTradesBetweenUsers(message));

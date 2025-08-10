@@ -123,6 +123,7 @@ public class PreGiftMenuView extends AppMenu {
         giftButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                // TODO : Abdi momkene eror bede
                 controller.openGiftMenu(targetUsername);
             }
         });
