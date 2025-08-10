@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.fasterxml.jackson.databind.type.ClassKey;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
@@ -14,7 +15,7 @@ import org.example.client.model.Reaction;
 import org.example.client.view.InteractionMenus.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.StartTradeView;
 import org.example.client.view.InteractionMenus.TradeView;
-import org.example.client.view.MarriageRequestView;
+import org.example.client.view.InteractionMenus.MarriageRequestView;
 import org.example.client.view.OutsideView;
 import org.example.client.view.VoteView;
 import org.example.common.models.*;
@@ -25,6 +26,8 @@ import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.Plants.Plant;
+import org.example.server.models.enums.ShopType;
+import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
 
 import java.util.HashMap;
@@ -32,6 +35,7 @@ import java.util.Random;
 
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.Tree;
+import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
@@ -188,11 +192,13 @@ public class ServerUpdatesController { // handles updates sent by server
     private static void handleGift(Message message) {
         String giver = message.getFromBody("starter");
         Stacks gift = new Stacks(message.getFromBody("gift"));
+        ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(gift.getItem(), gift.getStackLevel(), gift.getQuantity());
         // TODO : sobhan ya parsa, gift ro handle konid
     }
 
     private static void handleFlower(Message message) {
         String giver = message.getFromBody("starter");
+        ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(ShopItems.Bouquet , StackLevel.Basic , 1);
         // TODO : sobhan ya parsa, gol bedahid
     }
 
@@ -251,6 +257,7 @@ public class ServerUpdatesController { // handles updates sent by server
         // TODO: parsa, inja javab behet mirese
         if (answer) {
             //animation for marriage
+            ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(ShopItems.WeddingRing, 1);
         } else {
             //animation for reject
         }

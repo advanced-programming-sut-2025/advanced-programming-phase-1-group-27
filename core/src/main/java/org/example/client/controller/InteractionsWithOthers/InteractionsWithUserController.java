@@ -2,6 +2,7 @@ package org.example.client.controller.InteractionsWithOthers;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.model.ClientApp;
+import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.Relations.Dialogue;
@@ -112,13 +113,25 @@ public class InteractionsWithUserController {
         }}, Message.Type.interaction_p2p));
     }
 
-    public static void flower(String username) {
+    public static GraphicalResult flower(String username) {
+        Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
+        Relation relation = getRelation(username);
+        Backpack backpack = currentPlayer.getBackpack();
+        //TODO : faghat zamani gol mishe dad ke level 2 max bashe!
+        if (!backpack.hasEnoughItem(ShopItems.Bouquet, 1)) {
+            return new GraphicalResult("You don't have any Bouquet!");
+        }
+        if (canFlowered(relation)) {
+            return new GraphicalResult("You can't give flower");
+        }
+        backpack.reduceItems(ShopItems.Bouquet, 1);
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "flower");
             put("starter", ClientApp.getLoggedInUser().getUsername());
             put("other", username);
             put("self", ClientApp.getLoggedInUser().getUsername());
         }}, Message.Type.interaction_p2p));
+        return new GraphicalResult("You have give your friend flower!" , false);
     }
 
     public static void hug(String username) {
@@ -128,5 +141,16 @@ public class InteractionsWithUserController {
             put("other", username);
             put("self", ClientApp.getLoggedInUser().getUsername());
         }}, Message.Type.interaction_p2p));
+    }
+
+    private static boolean canFlowered(Relation relation) {
+        int level = relation.getLevel();
+        int xp = relation.getXp();
+        int max = (level + 1) * 100;
+        if (level == 2
+                && xp == max) {
+            return true;
+        }
+        return false;
     }
 }

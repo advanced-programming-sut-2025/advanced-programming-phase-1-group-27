@@ -81,11 +81,11 @@ public class GameController {
         Player otherPLayer = lobby.getGame().getPlayerByUsername(username2);
         assert currentPLayer != null;
         assert otherPLayer != null;
-        Relation relation = currentPLayer.getRelations().computeIfAbsent(otherPLayer , k->new Relation());
+        Relation relation = currentPLayer.getRelations().computeIfAbsent(otherPLayer, k -> new Relation());
         return new Message(new HashMap<>() {{
-            put("Level" , relation.getLevel());
-            put("XP" ,  relation.getXp());
-        }} , Message.Type.response);
+            put("Level", relation.getLevel());
+            put("XP", relation.getXp());
+        }}, Message.Type.response);
     }
 
     public static void handleP2P(Message message) {
@@ -93,25 +93,31 @@ public class GameController {
         String other = message.getFromBody("other");
         String self = message.getFromBody("self");
         String mode = message.getFromBody("mode");
-        if(mode.equals("confirmTrade")) {
+        if (mode.equals("confirmTrade")) {
             boolean answer = message.getFromBody("answer");
             int lobbyId = message.getIntFromBody("lobbyId");
             Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
-            Player player2 =  ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
-            if(answer){
+            Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
+            if (answer) {
                 Trade trade = new Trade(message);
                 ServerApp.getLobbyById(lobbyId).getGame().addTrade(trade);
                 player1.addXP(player2, 50);
                 player2.addXP(player1, 50);
-            }else {
+            } else {
                 player1.decreaseXP(player2, 30);
                 player2.decreaseXP(player1, 30);
             }
-            player1.getPlayerTradeToday().put(player2 , Boolean.TRUE);
+            player1.getPlayerTradeToday().put(player2, Boolean.TRUE);
             player2.getPlayerTradeToday().put(player1, Boolean.TRUE);
+        } else if (mode.equals("flower")) {
+
+        }else  if (mode.equals("hug")) {
+
+        }else if (mode.equals("gift")) {
+
         }
         ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
-                starter.equals(self)? other : starter
+                starter.equals(self) ? other : starter
         );
         assert connection != null;
         connection.sendMessage(message);
@@ -128,8 +134,8 @@ public class GameController {
         );
         float offset = ((Number) response.getFromBody("offset")).floatValue();
         return new Message(new HashMap<>() {{
-            put("songId", musicInfo == null? null : musicInfo.getSongId());
-            put("songName", musicInfo == null? null : musicInfo.getSongName());
+            put("songId", musicInfo == null ? null : musicInfo.getSongId());
+            put("songName", musicInfo == null ? null : musicInfo.getSongName());
             put("offset", offset);
         }}, Message.Type.response);
     }
@@ -145,14 +151,11 @@ public class GameController {
         String mode = message.getFromBody("mode");
         if (mode.equals("askToTerminate")) {
             askToTerminateGame(message);
-        }
-        else if (mode.equals("voteToTerminate")) {
+        } else if (mode.equals("voteToTerminate")) {
             checkVoteToTerminate(message);
-        }
-        else if (mode.equals("askToKick")) {
+        } else if (mode.equals("askToKick")) {
             askToKick(message);
-        }
-        else if (mode.equals("voteToKick")) {
+        } else if (mode.equals("voteToKick")) {
             checkVoteToKick(message);
         }
     }
