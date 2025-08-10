@@ -755,7 +755,7 @@ public class GameMenuController extends MenuController {
         Stacks slot = player.getBackpack().getSlotByItemName(foodName);
         if (slot == null)
             return new Result(false, "This item doesn't exist in your inventory!");
-        if (!isEdible(slot.getItem()))
+        if (!slot.getItem().isEdible())
             return new Result(false, "This item is not edible!");
         player.getBackpack().reduceItems(slot.getItem(), slot.getStackLevel(), 1);
         if (slot.getItem() instanceof CookingProduct cookingProduct) {
@@ -1146,18 +1146,5 @@ public class GameMenuController extends MenuController {
             }
         }
         return new Result(true, "BOOOOOM!");
-    }
-
-    private boolean isEdible(Item item) {
-        if (!(item instanceof CookingProduct) &&
-                !(item instanceof ProcessedProduct) &&
-                !(item instanceof FruitType)) {
-            return false;
-        }
-        if (item instanceof FruitType fruit && !fruit.isFruitEdible())
-            return false;
-        if (item instanceof ProcessedProduct processedProduct && !processedProduct.isEdible())
-            return false;
-        return true;
     }
 }
