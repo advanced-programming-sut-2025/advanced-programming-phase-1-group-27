@@ -1,14 +1,18 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.server.models.App;
-import org.example.server.models.Item;
-import org.example.server.models.Player;
+import org.example.client.controller.InteractionsWithOthers.MarriageController;
+import org.example.common.models.Message;
+import org.example.server.models.*;
 import org.example.server.models.Relations.Dialogue;
+import org.example.server.models.Relations.Gift;
 import org.example.server.models.Relations.Relation;
-import org.example.server.models.Result;
+import org.example.server.models.Relations.Trade;
 import org.example.server.models.enums.DialogueType;
 import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.tools.Backpack;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class InteractionsWithUserController {
@@ -321,4 +325,39 @@ public class InteractionsWithUserController {
         return new Result(true, "Level has been added successfully (" + relation.getLevel() + ")");
     }
 
+    public static Message getGiftHistory(Message message){
+        int lobbyId = message.getIntFromBody("lobbyId");
+        String starter = message.getFromBody("starter");
+        String other = message.getFromBody("other");
+        ArrayList<HashMap<String , Object>> selected = new ArrayList<>();
+        for (Gift gift : ServerApp.getLobbyById(lobbyId).getGame().getGifts()) {
+            if(starter.equals(gift.getTo()) &&
+                    other.equals(gift.getFrom())){
+                selected.add(gift.getInfo());
+            }
+        }
+        return new Message(new HashMap<>() {{
+            put("gifts", selected);
+        }}, Message.Type.response);
+    }
+
+    public static void rate(Message message){
+        int rate =  message.getIntFromBody("rate");
+        int id = message.getIntFromBody("id");
+        Lobby lobby =  ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        Gift gift = lobby.getGame().getGiftWithId(id);
+        assert gift != null;
+        gift.setRate(rate);
+        Player player1 = lobby.getGame().getPlayerByUsername(gift.getTo());
+        Player player2 = lobby.getGame().getPlayerByUsername(gift.getFrom());
+        int xp = (rate - 3) * 30 + 15;
+        if (xp < 0) {
+            xp *= -1;
+            player1.decreaseXP(player2, xp);
+            player2.decreaseXP(player1, xp);
+        } else {
+            player1.addXP(player2, xp);
+            player2.addXP(player1, xp);
+        }
+    }
 }

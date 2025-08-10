@@ -4,6 +4,7 @@ import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
+import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.controller.InteractionsWithOthers.MarriageController;
 import org.example.server.controller.InteractionsWithOthers.TradeController;
 import org.example.server.models.Lobby;
@@ -155,10 +156,10 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.update_mini_player) {
             sendMessage(GameController.getMiniPlayerInfo(message));
             return true;
-        } else if(message.getType() == Message.Type.get_trade_history){
+        } else if (message.getType() == Message.Type.get_trade_history) {
             sendMessage(TradeController.getTradesBetweenUsers(message));
             return true;
-        } else if(message.getType() == Message.Type.can_marry){
+        } else if (message.getType() == Message.Type.can_marry) {
             sendMessage(MarriageController.canMarry(message));
             return true;
         } else if (message.getType() == Message.Type.marriage_request) {
@@ -169,6 +170,12 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         } else if (message.getType() == Message.Type.reaction) {
             GameController.handleReaction(message);
+            return true;
+        } else if (message.getType() == Message.Type.get_gift_history) {
+            sendMessage(InteractionsWithUserController.getGiftHistory(message));
+            return true;
+        } else if (message.getType() == Message.Type.rate_gift) {
+            InteractionsWithUserController.rate(message);
             return true;
         }
         return false;

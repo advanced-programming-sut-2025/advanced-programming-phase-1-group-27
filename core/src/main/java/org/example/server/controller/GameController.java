@@ -5,6 +5,7 @@ import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
 import org.example.common.models.MusicInfo;
 import org.example.server.models.*;
+import org.example.server.models.Relations.Gift;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.Relations.Trade;
 import org.example.server.models.Shops.Shop;
@@ -96,7 +97,6 @@ public class GameController {
         int lobbyId = message.getIntFromBody("lobbyId");
         Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
         Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
-        // TODO : Khodam
         if (mode.equals("confirmTrade")) {
             boolean answer = message.getFromBody("answer");
             if (answer) {
@@ -111,11 +111,26 @@ public class GameController {
             player1.getPlayerTradeToday().put(player2, Boolean.TRUE);
             player2.getPlayerTradeToday().put(player1, Boolean.TRUE);
         } else if (mode.equals("flower")) {
-
+            player1.getPlayerMetToday().put(player2, Boolean.TRUE);
+            player2.getPlayerMetToday().put(player1, Boolean.TRUE);
+            player1.goNextLevel(player2);
+            player2.goNextLevel(player1);
         }else  if (mode.equals("hug")) {
-
+            if (player1.getPlayerHuggedToday().get(player2) == null
+                    || player1.getPlayerHuggedToday().get(player2) == Boolean.FALSE) {
+                player1.getPlayerHuggedToday().put(player2, Boolean.TRUE);
+                player2.getPlayerHuggedToday().put(player1, Boolean.TRUE);
+                player2.addXP(player1, 60);
+                player1.addXP(player2, 60);
+            }
         }else if (mode.equals("gift")) {
-
+            if (player1.getPlayerGiftToday().get(player2) == Boolean.FALSE
+                    || player1.getPlayerGiftToday().get(player2) == null) {
+                player1.getPlayerGiftToday().put(player2, Boolean.TRUE);
+                player2.getPlayerGiftToday().put(player1, Boolean.TRUE);
+            }
+            Gift gift = new Gift(message);
+            ServerApp.getLobbyById(lobbyId).getGame().addGifts(gift);
         }
         ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
                 starter.equals(self) ? other : starter

@@ -9,6 +9,7 @@ import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.Map.*;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.Relations.Dialogue;
+import org.example.server.models.Relations.Gift;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.Relations.Trade;
 import org.example.server.models.Shops.BlackSmith;
@@ -43,6 +44,7 @@ public class ServerGame implements Game {
     // all dialogues between players
     private ArrayList<Dialogue> dialogues = new ArrayList<>();
     private ArrayList<Trade> trades = new ArrayList<>();
+    private ArrayList<Gift> gifts = new ArrayList<>();
     private Shop jojaMart, pierreGeneralStore, carpenterShop, fishShop, marnieRanch, stardropSaloon;
     private BlackSmith blackSmith;
     private NPC Sebastian, Abigail, Harvey, Lia, Robbin, Clint, Pierre, Robin, Willy, Marnie, Morris, Gus;
@@ -580,6 +582,14 @@ public class ServerGame implements Game {
         trades.add(trade);
     }
 
+    public ArrayList<Gift> getGifts() {
+        return gifts;
+    }
+
+    public void addGifts(Gift gift) {
+        gifts.add(gift);
+    }
+
     public void setPlayerMusic(String playerName, String songId, String songName) {
         playerToMusicMap.put(playerName, new MusicInfo(songId, songName));
     }
@@ -604,5 +614,14 @@ public class ServerGame implements Game {
         Player player = getPlayerByUsername(playerName);
         players.remove(player);
         playerToMusicMap.remove(playerName);
+    }
+
+    public Gift getGiftWithId(int id){
+        for(Gift gift : gifts){
+            if(gift.getId() == id){
+                return gift;
+            }
+        }
+        return null;
     }
 }

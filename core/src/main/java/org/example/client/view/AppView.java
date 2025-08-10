@@ -2,6 +2,7 @@ package org.example.client.view;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.view.InteractionMenus.GiftHistoryView;
 import org.example.client.view.InteractionMenus.GiftMenuView;
 import org.example.client.view.InteractionMenus.TradeHistoryView;
 import org.example.client.view.InteractionMenus.TradeView;
@@ -43,18 +44,18 @@ public class AppView {
 
     public void runViaGraphics() {
         // ------REGULAR------
-        if (ClientApp.loadSavedUser()) {
-            ClientApp.setCurrentMenu(new MainMenuView());
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        }
-        else {
-            ClientApp.setCurrentMenu(new WelcomeMenuView());
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        }
+//        if (ClientApp.loadSavedUser()) {
+//            ClientApp.setCurrentMenu(new MainMenuView());
+//            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+//        }
+//        else {
+//            ClientApp.setCurrentMenu(new WelcomeMenuView());
+//            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+//        }
 
         // ------CHEAT------
 //        Main.getMain().setScreen(new WelcomeMenuView());
-////        Main.getMain().setScreen(new GiftMenuView(NPCType.Sebastian.getName()));
+        Main.getMain().setScreen(new GiftHistoryView("a"));
       cheat();
     }
 

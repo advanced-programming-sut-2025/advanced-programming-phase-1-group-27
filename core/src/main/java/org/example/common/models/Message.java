@@ -80,5 +80,7 @@ public class Message {
         marriage_request,
         marriage_response,
         reaction,
+        get_gift_history,
+        rate_gift,
     }
 }
