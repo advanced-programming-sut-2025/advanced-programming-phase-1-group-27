@@ -6,6 +6,13 @@ import org.example.client.view.InteractionMenus.PreTradeMenuView;
 
 public class InteractionController {
 
+    public boolean checkIfPlayersAreClose(){
+
+        ///  TODO PARSA
+        return false;
+
+    }
+
     public void openTradeMenu(String targetUser){
 
         Main.getMain().getScreen().dispose();

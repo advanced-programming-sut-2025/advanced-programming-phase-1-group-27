@@ -16,6 +16,7 @@ import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Stacks;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class PreGiftMenuView extends AppMenu {
     private final Label giftMenuLabel;
     private final Label targetPlayerLabel;
 
+    private final GraphicalResult errorLabel;
+
     private Stage stage;
 
     public PreGiftMenuView(String username) {
@@ -41,7 +44,7 @@ public class PreGiftMenuView extends AppMenu {
         controller = new GiftController();
         ClientApp.setNonMainMenu(this);
         targetUsername = username;
-
+        errorLabel = new GraphicalResult();
         giftButton = new TextButton("Gift" , skin);
         historyButton = new TextButton("History Gift" , skin);
         backButton = new TextButton("Back" , skin);
@@ -51,6 +54,10 @@ public class PreGiftMenuView extends AppMenu {
 
 
         setListeners();
+    }
+
+    private void showErrorMessage() {
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
     }
 
 
@@ -79,12 +86,15 @@ public class PreGiftMenuView extends AppMenu {
         stage.addActor(backButton);
         stage.addActor(giftMenuLabel);
         stage.addActor(targetPlayerLabel);
+        stage.addActor(errorLabel.getMessage());
 
     }
 
     @Override
     public void render(float delta) {
+        errorLabel.update(delta);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        showErrorMessage();
         stage.draw();
     }
 
@@ -123,14 +133,27 @@ public class PreGiftMenuView extends AppMenu {
         giftButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                // TODO : Abdi momkene eror bede
+                playClickSound();
                 controller.openGiftMenu(targetUsername);
+                GraphicalResult openGiftMenuResult = controller.openGiftMenu(targetUsername);
+                if (openGiftMenuResult.hasError() ){
+                    errorLabel.set(openGiftMenuResult);
+                }
+            }
+        });
+
+        historyButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
+                controller.openGiftHistoryMenu(targetUsername);
             }
         });
 
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new InteractionMenu(targetUsername));
             }

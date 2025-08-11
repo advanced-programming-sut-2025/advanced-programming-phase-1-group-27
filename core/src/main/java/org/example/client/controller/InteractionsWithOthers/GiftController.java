@@ -3,6 +3,7 @@ package org.example.client.controller.InteractionsWithOthers;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.view.InteractionMenus.GiftHistoryView;
 import org.example.client.view.InteractionMenus.GiftPlayerMenuView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GraphicalResult;
@@ -30,7 +31,14 @@ public class GiftController {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new GiftPlayerMenuView(ClientApp.getLoggedInUser().getUsername(),
                 targetUsername));
-        return null;
+        return new GraphicalResult("done",false);
+    }
+
+    public void openGiftHistoryMenu(String targetUsername) {
+
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new GiftHistoryView(targetUsername));
+
     }
 
     public void gift(String username, Stacks slot, int amount) {
