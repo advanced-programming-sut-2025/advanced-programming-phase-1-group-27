@@ -308,7 +308,7 @@ public class GiftPlayerMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 ///  TODO PARSA: starter - other - onScreenItems.get(selectItemIndex) - itemCount
-                controller.gift(starter , onScreenItems.get(selectItemIndex), itemCount);
+                controller.gift(other , onScreenItems.get(selectItemIndex), itemCount);
             }
         });
 
