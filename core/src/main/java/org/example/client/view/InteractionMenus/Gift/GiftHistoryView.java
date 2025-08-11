@@ -1,4 +1,4 @@
-package org.example.client.view.InteractionMenus;
+package org.example.client.view.InteractionMenus.Gift;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

@@ -1,4 +1,4 @@
-package org.example.client.view.InteractionMenus;
+package org.example.client.view.InteractionMenus.Gift;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,66 +10,57 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.InteractionsWithOthers.GiftController;
-import org.example.client.controller.InteractionsWithOthers.TradeController;
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
+import org.example.client.view.InteractionMenus.NpcMenuView;
 import org.example.common.models.GameAssetManager;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Stacks;
-import org.example.server.models.enums.InGameMenuType;
+import org.example.server.models.enums.NPCType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import static java.lang.Math.max;
 
-public class GiftPlayerMenuView extends AppMenu {
+public class GiftNpcMenuView extends AppMenu {
 
-    private final GiftController controller;
+    private final InteractionsWithNPCController controller;
 
-    private final String starter;
-    private final String other;
+    private final NPCType npc;
 
     private final HashMap<Stacks, Label> onScreenItemsQuantity;
-    private final Label itemCountLabel;
 
     private final Image inventoryBackground;
     private final Image selectBox;
-    private final TextButton increaseAmountButton;
-    private final TextButton decreaseAmountButton;
 
     private final TextButton backButton;
     private final TextButton sendGiftButton;
 
     private final Stage stage;
 
+    private final GraphicalResult errorLabel;
 
     private final ArrayList<Stacks> onScreenItems = new ArrayList<>();
 
-    private int itemCount;
     private int rowNum;
 
     private Integer selectItemIndex;
 
-    public GiftPlayerMenuView(String starter, String other) {
+    public GiftNpcMenuView(NPCType npc) {
 
-        controller = new GiftController();
+        controller = new InteractionsWithNPCController();
         ClientApp.setNonMainMenu(this);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
-        itemCount = 1;
+        this.npc = npc;
+        errorLabel = new GraphicalResult();
         rowNum = 0;
         selectItemIndex = null;
 
 
-        this.starter = starter;
-        this.other = other;
-
-        increaseAmountButton = new TextButton("+", skin);
-        decreaseAmountButton = new TextButton("-", skin);
 
 
         backButton = new TextButton("Back", skin);
@@ -86,8 +77,11 @@ public class GiftPlayerMenuView extends AppMenu {
             addToScreen(slot);
         }
 
-        itemCountLabel = new Label(Integer.toString(itemCount), skin);
         setListeners();
+    }
+
+    private void showErrorMessage() {
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
     }
 
     private void displayInventory() {
@@ -131,31 +125,14 @@ public class GiftPlayerMenuView extends AppMenu {
 
         backButton.setVisible(true);
         sendGiftButton.setVisible(selectItemIndex != null);
-        increaseAmountButton.setVisible(selectItemIndex != null);
-        decreaseAmountButton.setVisible(selectItemIndex != null);
-
 
         backButton.setWidth(sendGiftButton.getWidth());
 
         sendGiftButton.setPosition(inventoryBackground.getX() + 100, inventoryBackground.getY() - sendGiftButton.getHeight() - 50);
         backButton.setPosition(sendGiftButton.getX() + sendGiftButton.getWidth() + 100, inventoryBackground.getY() - backButton.getHeight() - 50);
 
-
-        increaseAmountButton.setPosition(inventoryBackground.getX() + inventoryBackground.getWidth() + 40, itemCountLabel.getY() + itemCountLabel.getHeight() + 20);
-        decreaseAmountButton.setPosition(inventoryBackground.getX() + inventoryBackground.getWidth() + 40, itemCountLabel.getY() - decreaseAmountButton.getHeight() - 20);
-
     }
 
-    private void displayLabels() {
-
-        itemCountLabel.setText(Integer.toString(itemCount));
-
-
-        itemCountLabel.setVisible(selectItemIndex != null);
-
-        itemCountLabel.setPosition(inventoryBackground.getX() + inventoryBackground.getWidth() + 80, inventoryBackground.getY() + inventoryBackground.getHeight() / 2f - itemCountLabel.getHeight() / 2f);
-
-    }
 
     @Override
     public void show() {
@@ -164,27 +141,25 @@ public class GiftPlayerMenuView extends AppMenu {
 
 
         stage.addActor(menuBackground);
-        stage.addActor(increaseAmountButton);
-        stage.addActor(decreaseAmountButton);
         stage.addActor(backButton);
         stage.addActor(sendGiftButton);
-        stage.addActor(itemCountLabel);
         stage.addActor(inventoryBackground);
         stage.addActor(selectBox);
+        stage.addActor(errorLabel.getMessage());
 
     }
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
 
         Main.getBatch().begin();
         Main.getBatch().end();
-
+        errorLabel.update(delta);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         displayInventory();
         displayItemQuantity();
-        displayLabels();
         displayButtons();
+        showErrorMessage();
         stage.draw();
 
     }
@@ -243,7 +218,6 @@ public class GiftPlayerMenuView extends AppMenu {
                                 selectItemIndex = null;
                             } else {
                                 selectItemIndex = rowNum * 12 + i;
-                                itemCount = 1;
                             }
 
                             return true;
@@ -275,40 +249,16 @@ public class GiftPlayerMenuView extends AppMenu {
 
             }
 
-        });
-
-
-        increaseAmountButton.addListener(new ClickListener() {
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-                playClickSound();
-                itemCount = Math.min(onScreenItems.get(selectItemIndex).getQuantity(), itemCount + 1);
-
-            }
 
         });
 
-        decreaseAmountButton.addListener(new ClickListener() {
 
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-                playClickSound();
-                itemCount = Math.max(1, itemCount - 1);
-
-            }
-
-        });
-
-        sendGiftButton.addListener(new ClickListener() {
+       sendGiftButton.addListener(new ClickListener() {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                ///  TODO PARSA: starter - other - onScreenItems.get(selectItemIndex) - itemCount
-                controller.gift(other , onScreenItems.get(selectItemIndex), itemCount);
+                errorLabel.set(controller.giftNPC(npc.getName(),onScreenItems.get(selectItemIndex).getItem().getName()));
             }
         });
 
@@ -319,7 +269,7 @@ public class GiftPlayerMenuView extends AppMenu {
 
                 playClickSound();
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new PreGiftMenuView(other));
+                Main.getMain().setScreen(new NpcMenuView(npc.getName()));
 
             }
 

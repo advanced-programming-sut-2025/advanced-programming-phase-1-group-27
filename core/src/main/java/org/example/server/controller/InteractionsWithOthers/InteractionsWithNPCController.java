@@ -29,8 +29,8 @@ public class InteractionsWithNPCController {
         if (mode.equals("meet")) {
             meetNPC(npcName, lobbyId, username);
         } else if (mode.equals("gift")) {
-            int xp =  message.getIntFromBody("XP");
-            giftNPC(npcName , lobbyId , username , xp);
+            int xp = message.getIntFromBody("XP");
+            giftNPC(npcName, lobbyId, username, xp);
         }
         return new Message();
     }
@@ -42,7 +42,7 @@ public class InteractionsWithNPCController {
         npc.addXP(App.getCurrentGame().getCurrentPlayer(), 20);
     }
 
-    public static void giftNPC(String npcName, int lobbyId , String username , int amount) {
+    public static void giftNPC(String npcName, int lobbyId, String username, int amount) {
         NPC npc = findNPC(npcName, lobbyId);
         Player player = findPlayer(username, lobbyId);
         npc.getRelations().computeIfAbsent(player, k -> new Relation());
@@ -213,23 +213,12 @@ public class InteractionsWithNPCController {
         return npc.getDaysForThirdQuest() <= daysPassed;
     }
 
-    public Result cheatAddLevel(String NPCName, String amountString) {
-//        int amount = Integer.parseInt(amountString);
-//        Player player = App.getCurrentGame().getCurrentPlayer();
-//        NPC npc = findNPC(NPCName);
-//        if (npc == null) {
-//            return new Result(false, "NPC not found!");
-//        }
-//        if (!npc.getRelations().containsKey(player)) {
-//            npc.getRelations().put(player, new Relation());
-//        }
-//        Relation relation = npc.getRelations().get(player);
-//        if (relation.getLevel() + amount > 799) {
-//            return new Result(false, "Level is too high!");
-//        }
-//        relation.setLevel(relation.getLevel() + amount);
-//        int finalAmount = relation.getLevel();
-//        return new Result(true, "Level is added! ( " + finalAmount + " )");
-        return null;
+    public static void cheatAddLevel(Message message) {
+        int lobbyId = message.getIntFromBody("lobbyId");
+        Player player = findPlayer(message.getFromBody("self"), lobbyId);
+        NPC npc = findNPC(message.getFromBody("other"), lobbyId);
+        npc.getRelations().computeIfAbsent(player, k -> new Relation());
+        npc.addLevel(player, message.getIntFromBody("amount"));
     }
+
 }

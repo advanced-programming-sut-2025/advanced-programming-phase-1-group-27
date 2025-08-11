@@ -108,6 +108,16 @@ public class NPC {
         relation.setXp(currentXp);
     }
 
+    public void addLevel(Player player, int level) {
+        if (!relations.containsKey(player)) {
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int currentLevel = relation.getLevel();
+        currentLevel += level;
+        relation.setLevel(currentLevel);
+    }
+
     public Building getHome() {
         return home;
     }

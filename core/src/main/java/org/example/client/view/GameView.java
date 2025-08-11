@@ -257,11 +257,11 @@ public class GameView extends AppMenu {
 //            ));
         } else if ((matcher = GameMenuCommands.ShowMoney.getMatcher(input)) != null) {
             System.out.println(controller.showMoney());
-        } else if ((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
-            System.out.println(interactionsWithNPCController.cheatAddLevel(
-                    matcher.group("name").trim(),
-                    matcher.group("level").trim()
-            ));
+//        } else if ((matcher = CheatCommands.CheatAddLevelNPC.getMatcher(input)) != null) {
+//            System.out.println(interactionsWithNPCController.cheatAddLevel(
+//                    matcher.group("name").trim(),
+//                    matcher.group("level").trim()
+//            ));
         } else if ((matcher = InteractionsWithUserCommands.ShowCouple.getMatcher(input)) != null) {
             System.out.println(marriageController.showCouple());
 //        } else if ((matcher = CheatCommands.CheatAddLevelPlayer.getMatcher(input)) != null) {

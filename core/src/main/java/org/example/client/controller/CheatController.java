@@ -176,7 +176,12 @@ public class CheatController {
         }
         relation.setLevel(relation.getLevel() + amount);
         int finalAmount = relation.getLevel();
-        // TODO : message server
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new  HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self" , ClientApp.getLoggedInUser().getUsername());
+            put("other", npc.getName());
+            put("amount" , amount);
+        }} , Message.Type.add_npc_level));
         return new Result(true, "Level is added! ( " + finalAmount + " )");
     }
 

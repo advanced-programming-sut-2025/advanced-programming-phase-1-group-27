@@ -1,63 +1,55 @@
-package org.example.client.view.InteractionMenus;
+package org.example.client.view.InteractionMenus.Trade;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.InteractionsWithOthers.GiftController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
-import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
-import org.example.common.models.GraphicalResult;
+import org.example.client.view.InteractionMenus.InteractionMenu;
 import org.example.server.models.Stacks;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PreGiftMenuView extends AppMenu {
+public class PreTradeMenuView extends AppMenu {
 
-    private final GiftController controller;
+    private final TradeController controller;
 
     private final String targetUsername;
 
-    private final TextButton giftButton;
+    private final TextButton tradeButton;
     private final TextButton historyButton;
     private final TextButton backButton;
 
-    private final Label giftMenuLabel;
+    private final Label tradeMenuLabel;
     private final Label targetPlayerLabel;
 
-    private final GraphicalResult errorLabel;
+    private final ArrayList<Stacks> targetInventory;
 
     private Stage stage;
 
-    public PreGiftMenuView(String username) {
+    public PreTradeMenuView(String username) {
 
-        controller = new GiftController();
+        controller = new TradeController();
         ClientApp.setNonMainMenu(this);
         targetUsername = username;
-        errorLabel = new GraphicalResult();
-        giftButton = new TextButton("Gift" , skin);
-        historyButton = new TextButton("History Gift" , skin);
+
+        tradeButton = new TextButton("Trade" , skin);
+        historyButton = new TextButton("History Trade" , skin);
         backButton = new TextButton("Back" , skin);
 
-        giftMenuLabel = new Label("Gift Menu", skin);
+        tradeMenuLabel = new Label("Trade Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
 
+        targetInventory = InteractionsWithUserController.getInventory(username);
 
         setListeners();
-    }
-
-    private void showErrorMessage() {
-        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
     }
 
 
@@ -67,34 +59,31 @@ public class PreGiftMenuView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        giftMenuLabel.setFontScale(3f);
-        giftMenuLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
+        tradeMenuLabel.setFontScale(3f);
+        tradeMenuLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
 
         targetPlayerLabel.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 6f);
 
         backButton.setWidth(Gdx.graphics.getWidth() / 4f);
-        giftButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        tradeButton.setWidth(Gdx.graphics.getWidth() / 4f);
         historyButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        giftButton.setPosition((Gdx.graphics.getWidth()-giftButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
+        tradeButton.setPosition((Gdx.graphics.getWidth()-tradeButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
         historyButton.setPosition((Gdx.graphics.getWidth()-historyButton.getWidth())/2f, 2 * Gdx.graphics.getHeight() / 6f);
         backButton.setPosition((Gdx.graphics.getWidth()-backButton.getWidth())/2f, Gdx.graphics.getHeight() / 6f);
 
         stage.addActor(menuBackground);
-        stage.addActor(giftButton);
+        stage.addActor(tradeButton);
         stage.addActor(historyButton);
         stage.addActor(backButton);
-        stage.addActor(giftMenuLabel);
+        stage.addActor(tradeMenuLabel);
         stage.addActor(targetPlayerLabel);
-        stage.addActor(errorLabel.getMessage());
 
     }
 
     @Override
     public void render(float delta) {
-        errorLabel.update(delta);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        showErrorMessage();
         stage.draw();
     }
 
@@ -130,30 +119,23 @@ public class PreGiftMenuView extends AppMenu {
 
     private void setListeners() {
 
-        giftButton.addListener(new ClickListener() {
+        tradeButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                playClickSound();
-                controller.openGiftMenu(targetUsername);
-                GraphicalResult openGiftMenuResult = controller.openGiftMenu(targetUsername);
-                if (openGiftMenuResult.hasError() ){
-                    errorLabel.set(openGiftMenuResult);
-                }
+                controller.startTrade(targetUsername);
             }
         });
 
         historyButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                playClickSound();
-                controller.openGiftHistoryMenu(targetUsername);
+                controller.goToTradeHistory(targetUsername);
             }
         });
 
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                playClickSound();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new InteractionMenu(targetUsername));
             }
@@ -161,8 +143,11 @@ public class PreGiftMenuView extends AppMenu {
 
     }
 
-    public GiftController getController() {
+    public TradeController getController() {
         return controller;
     }
 
+    public ArrayList<Stacks> getTargetInventory() {
+        return targetInventory;
+    }
 }

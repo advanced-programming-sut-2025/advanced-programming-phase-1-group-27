@@ -1,8 +1,8 @@
 package org.example.client.controller.InteractionsWithOthers;
 
 import org.example.client.Main;
-import org.example.client.view.InteractionMenus.PreGiftMenuView;
-import org.example.client.view.InteractionMenus.PreTradeMenuView;
+import org.example.client.view.InteractionMenus.Gift.PreGiftMenuView;
+import org.example.client.view.InteractionMenus.Trade.PreTradeMenuView;
 
 public class InteractionController {
 

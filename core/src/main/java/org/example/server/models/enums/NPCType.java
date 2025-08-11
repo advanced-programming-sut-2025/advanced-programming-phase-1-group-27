@@ -23,9 +23,9 @@ public enum NPCType {
             "NPCs/Other/Robbin.png"),
     Sebastian("Sebastian", SebastianQuests(), Features.Angry, SebastianFavouriteItems(),
             "NPCs/Other/Sebastian.png"),
-    Clint("Clint",null, Features.Anxious, ClinicFavouriteItems(),
+    Clint("Clint", null, Features.Anxious, ClinicFavouriteItems(),
             "NPCs/Shop/Clint.png"),
-    Pierre("Pierre",null, Features.Angry, PierreFavouriteItems(),
+    Pierre("Pierre", null, Features.Angry, PierreFavouriteItems(),
             "NPCs/Shop/Pierre.png"),
     Robin("Robin", null, Features.Happy, RobinFavouriteItems(),
             "NPCs/Shop/Robin.png"),
@@ -57,55 +57,55 @@ public enum NPCType {
     private static Quest[] AbigailQuests() {
         Quest[] quests = new Quest[3];
         quests[0] = new Quest(QuestsForNPCs.AbigailFirstQuest.getRequest()
-                , QuestsForNPCs.AbigailFirstQuest.getReward());
+                , QuestsForNPCs.AbigailFirstQuest.getReward(), 0);
         quests[1] = new Quest(QuestsForNPCs.AbigailSecondQuest.getRequest()
-                , QuestsForNPCs.AbigailSecondQuest.getReward());
+                , QuestsForNPCs.AbigailSecondQuest.getReward(), 1);
         quests[2] = new Quest(QuestsForNPCs.AbigailThirdQuest.getRequest()
-                , QuestsForNPCs.AbigailThirdQuest.getReward());
+                , QuestsForNPCs.AbigailThirdQuest.getReward(), 2);
         return quests;
     }
 
     private static Quest[] HarveyQuests() {
         Quest[] quests = new Quest[3];
         quests[0] = new Quest(QuestsForNPCs.HarveyFirstQuest.getRequest()
-                , QuestsForNPCs.HarveyFirstQuest.getReward());
+                , QuestsForNPCs.HarveyFirstQuest.getReward(), 0);
         quests[1] = new Quest(QuestsForNPCs.HarveySecondQuest.getRequest()
-                , QuestsForNPCs.HarveySecondQuest.getReward());
+                , QuestsForNPCs.HarveySecondQuest.getReward(), 1);
         quests[2] = new Quest(QuestsForNPCs.HarveyThirdQuest.getRequest()
-                , QuestsForNPCs.HarveyThirdQuest.getReward());
+                , QuestsForNPCs.HarveyThirdQuest.getReward() , 2);
         return quests;
     }
 
     private static Quest[] LiaQuests() {
         Quest[] quests = new Quest[3];
         quests[0] = new Quest(QuestsForNPCs.LiaFirstQuest.getRequest()
-                , QuestsForNPCs.LiaFirstQuest.getReward());
+                , QuestsForNPCs.LiaFirstQuest.getReward() , 0);
         quests[1] = new Quest(QuestsForNPCs.LiaSecondQuest.getRequest()
-                , QuestsForNPCs.LiaSecondQuest.getReward());
+                , QuestsForNPCs.LiaSecondQuest.getReward() , 1);
         quests[2] = new Quest(QuestsForNPCs.LiaThirdQuest.getRequest()
-                , QuestsForNPCs.LiaThirdQuest.getReward());
+                , QuestsForNPCs.LiaThirdQuest.getReward() , 2);
         return quests;
     }
 
     private static Quest[] RobbinQuests() {
         Quest[] quests = new Quest[3];
         quests[0] = new Quest(QuestsForNPCs.RobbinFirstQuest.getRequest()
-                , QuestsForNPCs.RobbinFirstQuest.getReward());
+                , QuestsForNPCs.RobbinFirstQuest.getReward() , 0);
         quests[1] = new Quest(QuestsForNPCs.RobbinSecondQuest.getRequest()
-                , QuestsForNPCs.RobbinSecondQuest.getReward());
+                , QuestsForNPCs.RobbinSecondQuest.getReward() , 1);
         quests[2] = new Quest(QuestsForNPCs.RobbinThirdQuest.getRequest()
-                , QuestsForNPCs.RobbinThirdQuest.getReward());
+                , QuestsForNPCs.RobbinThirdQuest.getReward() , 2);
         return quests;
     }
 
     private static Quest[] SebastianQuests() {
         Quest[] quests = new Quest[3];
         quests[0] = new Quest(QuestsForNPCs.SebastianFirstQuest.getRequest()
-                , QuestsForNPCs.SebastianFirstQuest.getReward());
+                , QuestsForNPCs.SebastianFirstQuest.getReward() , 0);
         quests[1] = new Quest(QuestsForNPCs.SebastianSecondQuest.getRequest()
-                , QuestsForNPCs.SebastianSecondQuest.getReward());
+                , QuestsForNPCs.SebastianSecondQuest.getReward() , 1);
         quests[2] = new Quest(QuestsForNPCs.SebastianThirdQuest.getRequest()
-                , QuestsForNPCs.SebastianThirdQuest.getReward());
+                , QuestsForNPCs.SebastianThirdQuest.getReward() , 2);
         return quests;
     }
 
@@ -210,8 +210,8 @@ public enum NPCType {
     }
 
     public ShopType getJob() {
-        for(ShopType shopType : ShopType.values()){
-            if(shopType.getManager() == this){
+        for (ShopType shopType : ShopType.values()) {
+            if (shopType.getManager() == this) {
                 return shopType;
             }
         }
@@ -238,7 +238,7 @@ public enum NPCType {
         StandingCell = standingCell;
     }
 
-    public String getAddress(){
+    public String getAddress() {
         return address;
     }
 }

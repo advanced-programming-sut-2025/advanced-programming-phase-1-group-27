@@ -1,4 +1,4 @@
-package org.example.client.view.InteractionMenus;
+package org.example.client.view.InteractionMenus.Gift;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -7,48 +7,50 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
-import org.example.client.controller.InteractionsWithOthers.TradeController;
+import org.example.client.controller.InteractionsWithOthers.GiftController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
-import org.example.server.models.Stacks;
+import org.example.client.view.InteractionMenus.InteractionMenu;
+import org.example.common.models.GraphicalResult;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PreTradeMenuView extends AppMenu {
+public class PreGiftMenuView extends AppMenu {
 
-    private final TradeController controller;
+    private final GiftController controller;
 
     private final String targetUsername;
 
-    private final TextButton tradeButton;
+    private final TextButton giftButton;
     private final TextButton historyButton;
     private final TextButton backButton;
 
-    private final Label tradeMenuLabel;
+    private final Label giftMenuLabel;
     private final Label targetPlayerLabel;
 
-    private final ArrayList<Stacks> targetInventory;
+    private final GraphicalResult errorLabel;
 
     private Stage stage;
 
-    public PreTradeMenuView(String username) {
+    public PreGiftMenuView(String username) {
 
-        controller = new TradeController();
+        controller = new GiftController();
         ClientApp.setNonMainMenu(this);
         targetUsername = username;
-
-        tradeButton = new TextButton("Trade" , skin);
-        historyButton = new TextButton("History Trade" , skin);
+        errorLabel = new GraphicalResult();
+        giftButton = new TextButton("Gift" , skin);
+        historyButton = new TextButton("History Gift" , skin);
         backButton = new TextButton("Back" , skin);
 
-        tradeMenuLabel = new Label("Trade Menu", skin);
+        giftMenuLabel = new Label("Gift Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
 
-        targetInventory = InteractionsWithUserController.getInventory(username);
 
         setListeners();
+    }
+
+    private void showErrorMessage() {
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
     }
 
 
@@ -58,31 +60,34 @@ public class PreTradeMenuView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        tradeMenuLabel.setFontScale(3f);
-        tradeMenuLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
+        giftMenuLabel.setFontScale(3f);
+        giftMenuLabel.setPosition(Gdx.graphics.getWidth() / 8f, 5 * Gdx.graphics.getHeight() / 6f);
 
         targetPlayerLabel.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 6f);
 
         backButton.setWidth(Gdx.graphics.getWidth() / 4f);
-        tradeButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        giftButton.setWidth(Gdx.graphics.getWidth() / 4f);
         historyButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        tradeButton.setPosition((Gdx.graphics.getWidth()-tradeButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
+        giftButton.setPosition((Gdx.graphics.getWidth()-giftButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
         historyButton.setPosition((Gdx.graphics.getWidth()-historyButton.getWidth())/2f, 2 * Gdx.graphics.getHeight() / 6f);
         backButton.setPosition((Gdx.graphics.getWidth()-backButton.getWidth())/2f, Gdx.graphics.getHeight() / 6f);
 
         stage.addActor(menuBackground);
-        stage.addActor(tradeButton);
+        stage.addActor(giftButton);
         stage.addActor(historyButton);
         stage.addActor(backButton);
-        stage.addActor(tradeMenuLabel);
+        stage.addActor(giftMenuLabel);
         stage.addActor(targetPlayerLabel);
+        stage.addActor(errorLabel.getMessage());
 
     }
 
     @Override
     public void render(float delta) {
+        errorLabel.update(delta);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        showErrorMessage();
         stage.draw();
     }
 
@@ -118,23 +123,30 @@ public class PreTradeMenuView extends AppMenu {
 
     private void setListeners() {
 
-        tradeButton.addListener(new ClickListener() {
+        giftButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.startTrade(targetUsername);
+                playClickSound();
+                controller.openGiftMenu(targetUsername);
+                GraphicalResult openGiftMenuResult = controller.openGiftMenu(targetUsername);
+                if (openGiftMenuResult.hasError() ){
+                    errorLabel.set(openGiftMenuResult);
+                }
             }
         });
 
         historyButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.goToTradeHistory(targetUsername);
+                playClickSound();
+                controller.openGiftHistoryMenu(targetUsername);
             }
         });
 
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                playClickSound();
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new InteractionMenu(targetUsername));
             }
@@ -142,11 +154,8 @@ public class PreTradeMenuView extends AppMenu {
 
     }
 
-    public TradeController getController() {
+    public GiftController getController() {
         return controller;
     }
 
-    public ArrayList<Stacks> getTargetInventory() {
-        return targetInventory;
-    }
 }

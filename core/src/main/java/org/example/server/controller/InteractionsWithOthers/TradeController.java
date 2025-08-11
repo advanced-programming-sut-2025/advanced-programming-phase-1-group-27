@@ -1,23 +1,11 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.client.controller.menus.MenuController;
-import org.example.client.model.ClientApp;
 import org.example.common.models.Message;
 import org.example.server.models.*;
-import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Trade;
-import org.example.server.models.enums.DialogueType;
-import org.example.server.models.enums.Menu;
-import org.example.server.models.enums.Seasons.Season;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.tools.Backpack;
-import org.example.client.view.InteractionMenus.TradeView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import static javax.swing.UIManager.put;
 
 
 public class TradeController {

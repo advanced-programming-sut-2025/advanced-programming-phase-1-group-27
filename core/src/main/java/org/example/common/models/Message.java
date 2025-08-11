@@ -84,5 +84,6 @@ public class Message {
         rate_gift,
         client_game_info,
         add_player_level,
+        add_npc_level,
     }
 }
