@@ -314,6 +314,11 @@ public class InteractionsWithUserController {
                 put("GraphicalResult", GraphicalResult.getInfo("Player not found"));
             }}, Message.Type.response);
         }
+        if(player.getUsername().equals(currentPlayer.getUsername())) {
+            return new Message(new HashMap<>() {{
+                put("GraphicalResult", GraphicalResult.getInfo("You can't add level to yourself!"));
+            }}, Message.Type.response);
+        }
         if (!currentPlayer.getRelations().containsKey(player)) {
             currentPlayer.getRelations().put(player, new Relation());
         }
