@@ -44,18 +44,18 @@ public class AppView {
 
     public void runViaGraphics() {
         // ------REGULAR------
-//        if (ClientApp.loadSavedUser()) {
-//            ClientApp.setCurrentMenu(new MainMenuView());
-//            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-//        }
-//        else {
-//            ClientApp.setCurrentMenu(new WelcomeMenuView());
-//            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-//        }
+        if (ClientApp.loadSavedUser()) {
+            ClientApp.setCurrentMenu(new MainMenuView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        }
+        else {
+            ClientApp.setCurrentMenu(new WelcomeMenuView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        }
 
 
         // ------CHEAT------
-        Main.getMain().setScreen(new WelcomeMenuView());
+//        Main.getMain().setScreen(new WelcomeMenuView());
 //        cheat();
     }
 

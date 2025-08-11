@@ -681,6 +681,8 @@ public class GameAssetManager {
 
     private final Image leaderBoardBackground = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
 
+    private final Image journalMenuBackground = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
+
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -690,6 +692,10 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Image getJournalMenuBackground() {
+        return journalMenuBackground;
     }
 
     public Image getLeaderBoardBackground() {
