@@ -143,7 +143,7 @@ public class NpcMenuView extends AppMenu {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new QuestMenuView());
+                Main.getMain().setScreen(new QuestNPCMenuView(npc.getType().getName()));
             }
         });
 

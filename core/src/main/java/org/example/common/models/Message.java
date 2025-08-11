@@ -85,5 +85,9 @@ public class Message {
         client_game_info,
         add_player_level,
         add_npc_level,
+        get_npc_quests,
+        do_i_have_quest,
+        finish_quest,
+        get_quests_journal,
     }
 }

@@ -186,6 +186,18 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.add_npc_level) {
             InteractionsWithNPCController.cheatAddLevel(message);
             return true;
+        } else if (message.getType() == Message.Type.get_npc_quests){
+            sendMessage(InteractionsWithNPCController.getQuests(message));
+            return true;
+        } else if (message.getType() == Message.Type.do_i_have_quest){
+            sendMessage(InteractionsWithNPCController.doIHaveThisQuest(message));
+            return true;
+        } else if (message.getType() == Message.Type.finish_quest){
+            InteractionsWithNPCController.finishQuest(message);
+            return true;
+        } else if(message.getType() == Message.Type.get_quests_journal){
+            sendMessage(InteractionsWithNPCController.getQuestsJournal(message));
+            return true;
         }
         return false;
     }

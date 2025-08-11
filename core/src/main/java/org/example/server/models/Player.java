@@ -4,6 +4,7 @@ import org.example.common.models.Game;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.Map;
 import org.example.server.models.NPCs.NPC;
+import org.example.server.models.NPCs.Quest;
 import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.*;
@@ -41,6 +42,7 @@ public class Player extends User {
     private java.util.Map<Player, Relation> relations = new HashMap<>();
     private ArrayList<Dialogue> inbox = new ArrayList<>();
     private ArrayList<String> chatInbox = new ArrayList<>();
+    private ArrayList<Quest> activeQuests = new ArrayList<>();
     //refresh every morning
     private java.util.Map<NPC, Boolean> npcMetToday = new HashMap<>();
     private java.util.Map<NPC, Boolean> npcGiftToday = new HashMap<>();
@@ -675,5 +677,13 @@ public class Player extends User {
 
     public ArrayList<String> getChatInbox() {
         return chatInbox;
+    }
+
+    public ArrayList<Quest> getActiveQuests() {
+        return activeQuests;
+    }
+
+    public void addActiveQuests(Quest quest) {
+        activeQuests.add(quest);
     }
 }

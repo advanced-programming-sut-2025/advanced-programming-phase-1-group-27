@@ -221,4 +221,68 @@ public class InteractionsWithNPCController {
         npc.addLevel(player, message.getIntFromBody("amount"));
     }
 
+    public static Message getQuests(Message message){
+        int lobbyId = message.getIntFromBody("lobbyId");
+        String npcName = message.getFromBody("npcName");
+        NPC npc = findNPC(npcName, lobbyId);
+        ArrayList<HashMap<String , Object>> selected = new ArrayList<>();
+        for(Quest quest : npc.getQuests()){
+            selected.add(quest.getInfo());
+        }
+        return new Message(new HashMap<>() {{
+            put("quests", selected);
+        }} , Message.Type.response);
+    }
+
+    public static Message doIHaveThisQuest(Message message) {
+        int lobbyId = message.getIntFromBody("lobbyId");
+        Quest quest = new Quest(message.getFromBody("quest"));
+        String self =  message.getFromBody("self");
+        Player player =  findPlayer(self, lobbyId);
+        boolean found = false;
+        for(Quest quests : player.getActiveQuests()){
+            if(quests.getReward().getItem() == quest.getReward().getItem()){
+                if(quests.getRequest().getItem() == quest.getRequest().getItem()){
+                    found = true;
+                }
+            }
+        }
+        boolean finalFound = found;
+        return new Message(new HashMap<>() {{
+            put("answer" , finalFound);
+        }} , Message.Type.response);
+    }
+
+    public static void finishQuest(Message message) {
+        int lobbyId = message.getIntFromBody("lobbyId");
+        Quest quest =  new Quest(message.getFromBody("quest"));
+        String npcName = message.getFromBody("npcName");
+        String playerName = message.getFromBody("self");
+        NPC npc = findNPC(npcName, lobbyId);
+        for(Quest quests : npc.getQuests()){
+            if(quests.getReward().getItem() == quest.getReward().getItem()){
+                if(quests.getRequest().getItem() == quest.getRequest().getItem()){
+                    quests.setDone(true);
+                    quests.setPlayerName(playerName);
+                    System.out.println(quests.getRequest().getItem().getName() + " has been finished");
+                }
+            }
+        }
+    }
+
+    public static Message getQuestsJournal(Message message){
+        int lobbyId = message.getIntFromBody("lobbyId");
+        ArrayList<HashMap<String , Object>> selected = new ArrayList<>();
+        for(NPC npc : ServerApp.getLobbyById(lobbyId).getGame().getNPCs()){
+            if(npc.getQuests() != null){
+                for(Quest quest : npc.getQuests()){
+                    selected.add(quest.getInfo());
+                }
+            }
+        }
+        return new Message(new HashMap<>() {{
+            put("quests", selected);
+        }} , Message.Type.response);
+    }
+
 }

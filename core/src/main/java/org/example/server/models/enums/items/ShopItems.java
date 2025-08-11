@@ -2,6 +2,7 @@ package org.example.server.models.enums.items;
 
 import org.example.server.models.Edible;
 import org.example.server.models.Item;
+import org.example.server.models.Relations.Relation;
 
 public enum ShopItems implements Item, Edible {
     Bouquet(1000, null , "Items/Shop_Items/Bouquet.png", false),
@@ -16,7 +17,8 @@ public enum ShopItems implements Item, Edible {
     Hay(50, null , "Items/Shop_Items/Hay.png", false),
     TroutSoup(250, null , "Items/Shop_Items/Trout_Soup.png", true),
     Coin(1, null , "Items/Shop_Items/Coin.png", false),
-    Rice(250, null , "Items/Shop_Items/Rice.png", true),;
+    Rice(250, null , "Items/Shop_Items/Rice.png", true),
+    RelationLevel(0 , null , "Items/Shop_Items/Coin.png" , false);
 
     private final int price;
     private final Recipe recipe;
