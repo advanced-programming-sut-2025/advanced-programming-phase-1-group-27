@@ -1,6 +1,8 @@
 package org.example.server.controller.InteractionsWithOthers;
 
 import org.example.client.controller.InteractionsWithOthers.MarriageController;
+import org.example.client.model.ClientApp;
+import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.Relations.Dialogue;
@@ -11,6 +13,7 @@ import org.example.server.models.enums.DialogueType;
 import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.tools.Backpack;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -301,12 +304,15 @@ public class InteractionsWithUserController {
         return null;
     }
 
-    public Result cheatAddPlayerLevel(String playerName, String quantityString) {
-        int quantity = Integer.parseInt(quantityString);
-        Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
-        Player player = getPlayerWithUsername(playerName);
+    public static Message cheatAddPlayerLevel(Message message) {
+        int lobbyId = message.getIntFromBody("lobbyId");
+        int quantity = message.getIntFromBody("quantity");
+        Player currentPlayer = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("self"));
+        Player player = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("other"));
         if (player == null) {
-            return new Result(false, "Player not found");
+            return new Message(new HashMap<>() {{
+                put("GraphicalResult", new GraphicalResult("Player not found"));
+            }}, Message.Type.response);
         }
         if (!currentPlayer.getRelations().containsKey(player)) {
             currentPlayer.getRelations().put(player, new Relation());
@@ -316,23 +322,27 @@ public class InteractionsWithUserController {
         }
         Relation relation = currentPlayer.getRelations().get(player);
         if (relation.getLevel() + quantity > 4) {
-            return new Result(false, "Level is too high");
+            return new Message(new HashMap<>() {{
+                put("GraphicalResult", new GraphicalResult("Level is too high"));
+            }}, Message.Type.response);
         }
         int amount = relation.getLevel() + quantity;
         Relation relation2 = player.getRelations().get(currentPlayer);
         relation.setLevel(amount);
         relation2.setLevel(amount);
-        return new Result(true, "Level has been added successfully (" + relation.getLevel() + ")");
+        return new Message(new HashMap<>() {{
+            put("GraphicalResult", new GraphicalResult("Level has been added successfully (" + relation.getLevel() + ")", false));
+        }}, Message.Type.response);
     }
 
-    public static Message getGiftHistory(Message message){
+    public static Message getGiftHistory(Message message) {
         int lobbyId = message.getIntFromBody("lobbyId");
         String starter = message.getFromBody("starter");
         String other = message.getFromBody("other");
-        ArrayList<HashMap<String , Object>> selected = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> selected = new ArrayList<>();
         for (Gift gift : ServerApp.getLobbyById(lobbyId).getGame().getGifts()) {
-            if(starter.equals(gift.getTo()) &&
-                    other.equals(gift.getFrom())){
+            if (starter.equals(gift.getTo()) &&
+                    other.equals(gift.getFrom())) {
                 selected.add(gift.getInfo());
             }
         }
@@ -341,10 +351,10 @@ public class InteractionsWithUserController {
         }}, Message.Type.response);
     }
 
-    public static void rate(Message message){
-        int rate =  message.getIntFromBody("rate");
+    public static void rate(Message message) {
+        int rate = message.getIntFromBody("rate");
         int id = message.getIntFromBody("id");
-        Lobby lobby =  ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         Gift gift = lobby.getGame().getGiftWithId(id);
         assert gift != null;
         gift.setRate(rate);
@@ -360,4 +370,5 @@ public class InteractionsWithUserController {
             player2.addXP(player1, xp);
         }
     }
+
 }

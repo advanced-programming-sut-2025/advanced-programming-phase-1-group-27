@@ -264,11 +264,11 @@ public class GameView extends AppMenu {
             ));
         } else if ((matcher = InteractionsWithUserCommands.ShowCouple.getMatcher(input)) != null) {
             System.out.println(marriageController.showCouple());
-        } else if ((matcher = CheatCommands.CheatAddLevelPlayer.getMatcher(input)) != null) {
-            System.out.println(interactionsWithUserController.cheatAddPlayerLevel(
-                    matcher.group("name").trim(),
-                    matcher.group("level").trim()
-            ));
+//        } else if ((matcher = CheatCommands.CheatAddLevelPlayer.getMatcher(input)) != null) {
+//            System.out.println(interactionsWithUserController.cheatAddPlayerLevel(
+//                    matcher.group("name").trim(),
+//                    matcher.group("level").trim()
+//            ));
         } else if ((matcher = InteractionsWithUserCommands.StartTrade.getMatcher(input)) != null) {
             System.out.println(controller.startTrade());
         } else if ((matcher = ToolCommands.ToolsEquip.getMatcher(input)) != null) {

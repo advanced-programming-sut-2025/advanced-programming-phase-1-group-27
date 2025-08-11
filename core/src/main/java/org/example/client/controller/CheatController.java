@@ -1,8 +1,11 @@
 package org.example.client.controller;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
+import org.example.common.models.GameAssetManager;
+import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
@@ -20,6 +23,7 @@ import org.example.server.models.enums.items.ToolType;
 import java.util.HashMap;
 
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.server.models.ServerApp.startListening;
 
 public class CheatController {
 
@@ -177,28 +181,39 @@ public class CheatController {
     }
 
     public Result cheatAddPlayerLevel(String playerName, String quantityString) {
+//        int quantity = Integer.parseInt(quantityString);
+//        Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
+//        // TODO: rassa, hamahang ba server va parsa shavad
+//        Player player = InteractionsWithUserController.getPlayerByUsername(playerName);
+//        if (player == null) {
+//            return new Result(false, "Player not found");
+//        }
+//        if (!currentPlayer.getRelations().containsKey(player)) {
+//            currentPlayer.getRelations().put(player, new Relation());
+//        }
+//        if (!player.getRelations().containsKey(currentPlayer)) {
+//            player.getRelations().put(currentPlayer, new Relation());
+//        }
+//        Relation relation = currentPlayer.getRelations().get(player);
+//        if (relation.getLevel() + quantity > 4) {
+//            return new Result(false, "Level is too high");
+//        }
+//        int amount = relation.getLevel() + quantity;
+//        Relation relation2 = player.getRelations().get(currentPlayer);
+//        relation.setLevel(amount);
+//        relation2.setLevel(amount);
+//        return new Result(true, "Level has been added successfully (" + relation.getLevel() + ")");
         int quantity = Integer.parseInt(quantityString);
-        Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
-        // TODO: rassa, hamahang ba server va parsa shavad
-        Player player = InteractionsWithUserController.getPlayerByUsername(playerName);
-        if (player == null) {
-            return new Result(false, "Player not found");
-        }
-        if (!currentPlayer.getRelations().containsKey(player)) {
-            currentPlayer.getRelations().put(player, new Relation());
-        }
-        if (!player.getRelations().containsKey(currentPlayer)) {
-            player.getRelations().put(currentPlayer, new Relation());
-        }
-        Relation relation = currentPlayer.getRelations().get(player);
-        if (relation.getLevel() + quantity > 4) {
-            return new Result(false, "Level is too high");
-        }
-        int amount = relation.getLevel() + quantity;
-        Relation relation2 = player.getRelations().get(currentPlayer);
-        relation.setLevel(amount);
-        relation2.setLevel(amount);
-        return new Result(true, "Level has been added successfully (" + relation.getLevel() + ")");
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new  HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self" , ClientApp.getLoggedInUser().getUsername());
+            put("other", playerName);
+            put("amount" , quantity);
+        }} , Message.Type.add_player_level) ,  TIMEOUT_MILLIS);
+        if(response == null || response.getType() != Message.Type.response)
+            return new Result(false, "can't add level!");
+        GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
+        return new Result(!result.hasError() , result.getMessage().toString());
     }
 
 }
