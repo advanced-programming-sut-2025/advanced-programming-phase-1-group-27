@@ -59,7 +59,7 @@ public class MarriageController {
             put("other", username);
         }}, Message.Type.marriage_request));
 
-        return null;
+        return new GraphicalResult("You have sent your request successfully!");
     }
 
     public Result showCouple() {
