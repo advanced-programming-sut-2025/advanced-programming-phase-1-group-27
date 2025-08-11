@@ -37,7 +37,7 @@ public class User {
         this.password = password;
         this.nickname = nickname;
         this.email = email;
-        if(gender.equals("male")){
+        if(gender.equalsIgnoreCase("male")){
             this.gender =  Gender.Male;
         }else {
             this.gender =  Gender.Female;

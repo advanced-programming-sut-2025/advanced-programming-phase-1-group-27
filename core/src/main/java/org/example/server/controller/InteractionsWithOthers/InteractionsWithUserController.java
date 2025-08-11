@@ -306,12 +306,12 @@ public class InteractionsWithUserController {
 
     public static Message cheatAddPlayerLevel(Message message) {
         int lobbyId = message.getIntFromBody("lobbyId");
-        int quantity = message.getIntFromBody("quantity");
+        int quantity = message.getIntFromBody("amount");
         Player currentPlayer = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("self"));
         Player player = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("other"));
         if (player == null) {
             return new Message(new HashMap<>() {{
-                put("GraphicalResult", new GraphicalResult("Player not found"));
+                put("GraphicalResult", GraphicalResult.getInfo("Player not found"));
             }}, Message.Type.response);
         }
         if (!currentPlayer.getRelations().containsKey(player)) {
@@ -323,7 +323,7 @@ public class InteractionsWithUserController {
         Relation relation = currentPlayer.getRelations().get(player);
         if (relation.getLevel() + quantity > 4) {
             return new Message(new HashMap<>() {{
-                put("GraphicalResult", new GraphicalResult("Level is too high"));
+                put("GraphicalResult", GraphicalResult.getInfo("Level is too high"));
             }}, Message.Type.response);
         }
         int amount = relation.getLevel() + quantity;
@@ -331,7 +331,7 @@ public class InteractionsWithUserController {
         relation.setLevel(amount);
         relation2.setLevel(amount);
         return new Message(new HashMap<>() {{
-            put("GraphicalResult", new GraphicalResult("Level has been added successfully (" + relation.getLevel() + ")", false));
+            put("GraphicalResult", GraphicalResult.getInfo("Level has been added successfully (" + relation.getLevel() + ")", false));
         }}, Message.Type.response);
     }
 

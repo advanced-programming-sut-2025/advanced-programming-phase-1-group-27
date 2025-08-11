@@ -56,7 +56,7 @@ public class AppView {
 
         // ------CHEAT------
         Main.getMain().setScreen(new WelcomeMenuView());
-        cheat();
+//        cheat();
     }
 
 }

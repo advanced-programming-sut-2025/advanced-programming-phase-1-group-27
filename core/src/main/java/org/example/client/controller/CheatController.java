@@ -181,28 +181,6 @@ public class CheatController {
     }
 
     public Result cheatAddPlayerLevel(String playerName, String quantityString) {
-//        int quantity = Integer.parseInt(quantityString);
-//        Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
-//        // TODO: rassa, hamahang ba server va parsa shavad
-//        Player player = InteractionsWithUserController.getPlayerByUsername(playerName);
-//        if (player == null) {
-//            return new Result(false, "Player not found");
-//        }
-//        if (!currentPlayer.getRelations().containsKey(player)) {
-//            currentPlayer.getRelations().put(player, new Relation());
-//        }
-//        if (!player.getRelations().containsKey(currentPlayer)) {
-//            player.getRelations().put(currentPlayer, new Relation());
-//        }
-//        Relation relation = currentPlayer.getRelations().get(player);
-//        if (relation.getLevel() + quantity > 4) {
-//            return new Result(false, "Level is too high");
-//        }
-//        int amount = relation.getLevel() + quantity;
-//        Relation relation2 = player.getRelations().get(currentPlayer);
-//        relation.setLevel(amount);
-//        relation2.setLevel(amount);
-//        return new Result(true, "Level has been added successfully (" + relation.getLevel() + ")");
         int quantity = Integer.parseInt(quantityString);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new  HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
