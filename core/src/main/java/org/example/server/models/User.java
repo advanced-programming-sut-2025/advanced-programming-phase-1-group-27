@@ -68,7 +68,7 @@ public class User {
         info.put("password", password);
         info.put("nickname", nickname);
         info.put("email", email);
-        info.put("gender", gender);
+        info.put("gender", gender.name());
         info.put("question", recoveryQuestion.getQuestion());
         info.put("answer", recoveryQuestion.getAnswer());
         info.put("maxMoneyEarned", maxMoneyEarned);
