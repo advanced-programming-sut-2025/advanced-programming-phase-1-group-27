@@ -1,5 +1,6 @@
 package org.example.client.controller;
 
+import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Player;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.items.Recipe;
@@ -11,8 +12,8 @@ public class SaveController {
     public static HashMap<String, Object> getPlayerInfo(Player player) {
         HashMap<String, Object> info = new HashMap<>();
         // RECIPES
-        info.put("availableCraftingProducts", getRecipesInfo(player.getAvailableCraftingRecipes()));
-        info.put("availableCookingProducts", getRecipesInfo(player.getAvailableCookingRecipes()));
+        info.put("availableCraftingRecipes", getRecipesInfo(player.getAvailableCraftingRecipes()));
+        info.put("availableCookingRecipes", getRecipesInfo(player.getAvailableCookingRecipes()));
         // INVENTORY
         info.put("inventoryInfo", player.getBackpack().getInfo());
         // ENERGY
@@ -25,7 +26,7 @@ public class SaveController {
         info.put("mining", player.getAbility(AbilityType.Mining).getInfo());
         info.put("foraging", player.getAbility(AbilityType.Foraging).getInfo());
         // Map
-        // TODO
+        info.put("isInNPCMap", player.getCurrentMap() instanceof NPCMap);
         // POSITION (cell not needed)
         info.put("position", player.getPosition().getInfo());
         // MONEY

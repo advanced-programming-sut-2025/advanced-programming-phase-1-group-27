@@ -10,18 +10,11 @@ Avatars/stardew_avatar_2_2.png
 Buildings/Barn.png
 Buildings/Big Barn.png
 Buildings/Big Coop.png
-Buildings/Blacksmith.png
 Buildings/Buildings.atlas
 Buildings/Cabins.png
-Buildings/Carpenter's_Shop.png
 Buildings/Coop.png
 Buildings/Deluxe Barn.png
 Buildings/Deluxe Coop.png
-Buildings/Fish_Shop.png
-Buildings/Jojamart.png
-Buildings/Pierres_shop.png
-Buildings/marine_ranch.png
-Buildings/stardrop_saloon.png
 Character/PassOut.png
 Character/Vincent.png
 Character/character.atlas

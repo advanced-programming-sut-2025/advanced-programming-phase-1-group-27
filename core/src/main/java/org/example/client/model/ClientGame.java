@@ -42,7 +42,7 @@ public class ClientGame implements Game {
     private final HashMap<String, Integer> usernameToMap;
     private User admin;
     private Player player;
-    private final FarmMap[] farmMaps = new FarmMap[4];
+    private FarmMap farmMap;
     private ArrayList<MiniPlayer> players;
     private NPCMap npcMap;
     private Weather currentWeather = Weather.Sunny;
@@ -65,7 +65,7 @@ public class ClientGame implements Game {
         this.time = new Time(this);
     }
 
-    public void init(ArrayList<ArrayList<LinkedTreeMap<String, Object>>> info) {
+    public void init(ArrayList<ArrayList<LinkedTreeMap<String, Object>>> info, int farmId) {
         initShops();
         Sebastian = new NPC(NPCType.Sebastian, 10);
         Abigail = new NPC(NPCType.Abigail, 20);
@@ -94,13 +94,14 @@ public class ClientGame implements Game {
         npcs.add(Gus);
 
         npcMap = new NPCMap(this);
-        for (int i = 0; i < 4; i++) {
-            FarmMapBuilder builder = new FarmMapBuilder();
-            FarmMapDirector director = new FarmMapDirector();
-            director.buildMapWithoutForaging(builder, i, this);
-            farmMaps[i] = builder.getFinalProduct();
-            farmMaps[i].addForaging(info.get(i));
-        }
+
+        FarmMapBuilder builder = new FarmMapBuilder();
+        FarmMapDirector director = new FarmMapDirector();
+        director.buildMapWithoutForaging(builder, farmId, this);
+        farmMap = builder.getFinalProduct();
+        farmMap.addForaging(info.get(farmId));
+
+        player.setFarmMap(farmMap);
 
         generateNPCDialogues();
     }
@@ -111,10 +112,6 @@ public class ClientGame implements Game {
 
     public User getAdmin() {
         return admin;
-    }
-
-    public FarmMap getFarmMap(int mapIndex) {
-        return farmMaps[mapIndex];
     }
 
     public NPCMap getNpcMap() {
@@ -201,8 +198,9 @@ public class ClientGame implements Game {
 
     private void refreshRelations() {
         player.refreshNPCThings(this);
-        // TODO: parsa, check kon
-        player.addToChatInbox(npcGiftingLevel3());
+        String npcGift = npcGiftingLevel3();
+        if (!npcGift.equals("NPC Gifts : \n"))
+            player.addToChatInbox(npcGift);
     }
 
     private void crowsAttack() {

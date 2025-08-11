@@ -762,7 +762,7 @@ public class GameMenuController extends MenuController {
             player.addEnergy(cookingProduct.getEnergy());
             if (cookingProduct.getBuff() != null) {
                 player.removeBuff();
-                player.setBuff(cookingProduct.getBuff());
+                player.addBuff(cookingProduct.getBuff());
             }
         } else if (slot.getItem() instanceof ProcessedProduct) {
             player.addEnergy(((ProcessedProduct) slot.getItem()).getEnergy());
