@@ -177,6 +177,9 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.rate_gift) {
             InteractionsWithUserController.rate(message);
             return true;
+        } else if (message.getType() == Message.Type.client_game_info) {
+            SaveController.handleInfo(message);
+            return true;
         } else if (message.getType() == Message.Type.add_player_level) {
             sendMessage(InteractionsWithUserController.cheatAddPlayerLevel(message));
             return true;

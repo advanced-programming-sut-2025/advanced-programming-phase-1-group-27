@@ -78,11 +78,11 @@ public class PregameMenuController extends MenuController {
                 currentPlayer,
                 miniPlayers
         ));
-        clientGame.init(message.getFromBody("farmInfo"));
-        System.out.println("FARM ID: " + view.getLobby().getUsernameToMap().get(currentPlayer.getUsername()));
-        currentPlayer.setFarmMap(clientGame.getFarmMap(
+        clientGame.init(
+                message.getFromBody("farmInfo"),
                 view.getLobby().getUsernameToMap().get(currentPlayer.getUsername())
-        ));
+        );
+        System.out.println("FARM ID: " + view.getLobby().getUsernameToMap().get(currentPlayer.getUsername()));
 
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();

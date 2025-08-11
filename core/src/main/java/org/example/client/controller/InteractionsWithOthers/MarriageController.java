@@ -23,8 +23,10 @@ import java.util.HashMap;
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class MarriageController {
+
     public GraphicalResult askMarriage(String username) {
         Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
+        System.out.println(currentPlayer.getGender());
         Backpack backpack = currentPlayer.getBackpack();
         if (currentPlayer.getGender() == Gender.Female) {
             return new GraphicalResult("You are not male!!",

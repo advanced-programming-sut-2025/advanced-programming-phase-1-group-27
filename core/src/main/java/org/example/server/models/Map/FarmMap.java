@@ -41,6 +41,16 @@ public class FarmMap extends Map {
     }
 
 
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("height", height);
+        info.put("width", width);
+
+        return info;
+    }
+
+
     public Hut getHut() {
         return hut;
     }

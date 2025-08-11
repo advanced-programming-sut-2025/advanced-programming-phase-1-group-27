@@ -82,6 +82,7 @@ public class Message {
         reaction,
         get_gift_history,
         rate_gift,
+        client_game_info,
         add_player_level,
     }
 }

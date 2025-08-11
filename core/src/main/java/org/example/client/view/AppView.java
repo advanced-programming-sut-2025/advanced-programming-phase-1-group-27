@@ -53,10 +53,10 @@ public class AppView {
 //            Main.getMain().setScreen(ClientApp.getCurrentMenu());
 //        }
 
+
         // ------CHEAT------
         Main.getMain().setScreen(new WelcomeMenuView());
-//        Main.getMain().setScreen(new GiftHistoryView("a"));
-      cheat();
+        cheat();
     }
 
 }
