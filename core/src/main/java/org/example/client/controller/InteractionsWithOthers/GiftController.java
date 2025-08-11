@@ -52,6 +52,8 @@ public class GiftController {
             put("gift", new Stacks(slot.getItem(), slot.getStackLevel(), amount).getInfo());
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
         }} , Message.Type.interaction_p2p));
+        player.getBackpack().reduceItems(slot.getItem(), amount);
+        System.out.println("dadam");
         Main.getMain().getScreen().dispose();
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);
