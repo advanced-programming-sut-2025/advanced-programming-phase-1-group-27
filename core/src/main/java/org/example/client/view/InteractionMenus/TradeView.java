@@ -132,7 +132,6 @@ public class TradeView extends AppMenu {
             }
 
             for (int i = 0; i < Math.min(onScreenItems.size() - 12 * rowNum, 48); i++) {
-                System.out.println("im innnnnn");
                 onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setPosition(520 + 64 * (i % 12), 840 - 67 * (i / 12));
                 onScreenItems.get(i + 12 * rowNum).getItem().getItemImage().setVisible(true);
             }

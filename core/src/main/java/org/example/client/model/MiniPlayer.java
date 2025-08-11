@@ -60,6 +60,9 @@ public class MiniPlayer extends User {
                 put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
                 put("username", getUsername());
             }}, Message.Type.update_mini_player), TIMEOUT_MILLIS);
+            if(response == null){
+                return;
+            }
             position = new Position(response.<LinkedTreeMap<String, Object>>getFromBody("position"));
             mapIndex = response.getIntFromBody("mapIndex");
             numberOfQuestsCompleted = response.getIntFromBody("numberOfQuestsCompleted");

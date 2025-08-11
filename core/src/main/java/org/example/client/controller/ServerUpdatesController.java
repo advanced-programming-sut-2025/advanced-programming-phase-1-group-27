@@ -24,6 +24,7 @@ import org.example.server.models.Cell;
 import org.example.server.models.Item;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.NPCMap;
+import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.Plants.Plant;
@@ -195,12 +196,14 @@ public class ServerUpdatesController { // handles updates sent by server
         Stacks gift = new Stacks(message.getFromBody("gift"));
         ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(gift.getItem(), gift.getStackLevel(), gift.getQuantity());
         // TODO : sobhan ya parsa, gift ro handle konid
+        ClientApp.getCurrentGame().getCurrentPlayer().addToChatInbox("You have a new gift \n from " + giver);
     }
 
     private static void handleFlower(Message message) {
         String giver = message.getFromBody("starter");
         ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(ShopItems.Bouquet , StackLevel.Basic , 1);
         // TODO : sobhan ya parsa, gol bedahid
+
     }
 
     private static void handleHug(Message message) {

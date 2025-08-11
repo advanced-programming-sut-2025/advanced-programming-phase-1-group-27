@@ -14,11 +14,8 @@ import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.GiftController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
+import org.example.common.models.GraphicalResult;
 import org.example.server.models.Relations.Gift;
-import org.example.server.models.Stacks;
-import org.example.server.models.connections.ClientConnectionThread;
-import org.example.server.models.enums.Features;
-import org.example.server.models.enums.Plants.FruitType;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -30,6 +27,8 @@ public class GiftHistoryView extends AppMenu {
 
     private final String username;
     private final ArrayList<Gift> gifts;
+
+    private final GraphicalResult errorLabel;
 
     private Table table;
     private ScrollPane scrollPane;
@@ -64,6 +63,8 @@ public class GiftHistoryView extends AppMenu {
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
 
+        errorLabel = new GraphicalResult("");
+
         stage = new Stage(new ScreenViewport());
 
         setListeners();
@@ -73,6 +74,11 @@ public class GiftHistoryView extends AppMenu {
         exitButton.setPosition(0, 0);
         stage.addActor(exitButton);
     }
+
+    private void showErrorMessage() {
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
+    }
+
 
     private void displayItems() {
         table.clear();
@@ -163,12 +169,14 @@ public class GiftHistoryView extends AppMenu {
         stage.addActor(decreaseAmountButton);
         stage.addActor(rateButton);
         stage.addActor(countLabel);
+        stage.addActor(errorLabel.getMessage());
         stage.addActor(scrollPane);
         displayItems();
     }
 
     @Override
     public void render(float delta) {
+        showErrorMessage();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
         displayThings();
@@ -235,7 +243,7 @@ public class GiftHistoryView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.rateGift(selectedGift, rateNumber);
+                errorLabel.set(controller.rateGift(selectedGift, rateNumber));
             }
         });
     }

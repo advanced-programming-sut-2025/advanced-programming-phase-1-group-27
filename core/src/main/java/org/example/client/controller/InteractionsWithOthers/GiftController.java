@@ -52,8 +52,6 @@ public class GiftController {
             put("gift", new Stacks(slot.getItem(), slot.getStackLevel(), amount).getInfo());
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
         }} , Message.Type.interaction_p2p));
-        player.getBackpack().reduceItems(slot.getItem(), amount);
-        System.out.println("dadam");
         Main.getMain().getScreen().dispose();
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);
@@ -81,6 +79,9 @@ public class GiftController {
     public GraphicalResult rateGift(Gift gift , int rate) {
         int id = gift.getId();
         int giftsRate = gift.getRate();
+        if(gift.getFrom().equals(ClientApp.getCurrentGame().getCurrentPlayer().getUsername())) {
+            return new GraphicalResult("You can't rate your gifts!");
+        }
         if(giftsRate != -1){
             return new GraphicalResult("You can't rate this gift twice!!");
         }

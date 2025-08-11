@@ -349,6 +349,9 @@ public class InteractionsWithUserController {
             if (starter.equals(gift.getTo()) &&
                     other.equals(gift.getFrom())) {
                 selected.add(gift.getInfo());
+            }else if(starter.equals(gift.getFrom()) &&
+                    other.equals(gift.getTo())) {
+                selected.add(gift.getInfo());
             }
         }
         return new Message(new HashMap<>() {{
@@ -358,7 +361,7 @@ public class InteractionsWithUserController {
 
     public static void rate(Message message) {
         int rate = message.getIntFromBody("rate");
-        int id = message.getIntFromBody("id");
+        int id = message.getIntFromBody("giftId");
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         Gift gift = lobby.getGame().getGiftWithId(id);
         assert gift != null;
