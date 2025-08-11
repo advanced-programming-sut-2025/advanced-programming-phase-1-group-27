@@ -240,25 +240,16 @@ public class GameController {
         ServerApp.getClientConnectionThreadByUsername(message.getFromBody("username")).sendMessage(message);
     }
 
-    public static synchronized Message getMiniPlayerInfo(Message message) {
-        Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
-        assert lobby != null;
-        String playerName = message.getFromBody("username");
-        Message response = ServerApp.getClientConnectionThreadByUsername(playerName).sendAndWaitForResponse(
-                new Message(null, Message.Type.update_mini_player), TIMEOUT_MILLIS
+    public static synchronized void handleMiniPlayerUpdate(Message message) {
+        String starter = message.getFromBody("starter");
+        String other = message.getFromBody("other");
+        String self = message.getFromBody("self");
+        String mode = message.getFromBody("mode");
+        ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
+                starter.equals(self) ? other : starter
         );
-        int mapIndex = lobby.getUsernameToMap().get(playerName);
-        if (response.getFromBody("isInNPCMap")) {
-            mapIndex = 4;
-        }
-        int finalMapIndex = mapIndex;
-        return new Message(new HashMap<>() {{
-            put("position", response.getFromBody("position"));
-            put("mapIndex", finalMapIndex);
-            put("money", response.getIntFromBody("money"));
-            put("numberOfQuestsCompleted", response.getIntFromBody("numberOfQuestsCompleted"));
-            put("totalAbility", response.getIntFromBody("totalAbility"));
-        }}, Message.Type.response);
+        assert connection != null;
+        connection.sendMessage(message);
     }
 
     public static synchronized void handleReaction(Message message) {

@@ -129,7 +129,7 @@ public class ServerConnectionThread extends ConnectionThread {
             return true;
         }
         else if (message.getType() == Message.Type.update_mini_player) {
-            sendMessage(ClientApp.getCurrentGame().getPlayerMiniInfo());
+            ServerUpdatesController.handleMiniPlayerUpdate(message);
             return true;
         }
         else if (message.getType() == Message.Type.marriage_request) {

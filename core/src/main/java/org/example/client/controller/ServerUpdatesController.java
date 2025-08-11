@@ -10,6 +10,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.MiniPlayer;
 import org.example.client.model.PopUpTexture;
 import org.example.client.model.Reaction;
 import org.example.client.view.HomeView;
@@ -24,9 +25,11 @@ import org.example.server.models.Cell;
 import org.example.server.models.Item;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.NPCMap;
+import org.example.server.models.Player;
 import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Shops.Shop;
 import org.example.server.models.Stacks;
+import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.ShopType;
 import org.example.server.models.enums.StackLevel;
@@ -340,5 +343,39 @@ public class ServerUpdatesController { // handles updates sent by server
 
             }
         });
+    }
+
+    public static void handleMiniPlayerUpdate(Message message) {
+        String mode = message.getFromBody("mode");
+        if (mode.equals("ask")) {
+            sendPlayerMiniInfo(message);
+        }
+        else if (mode.equals("response")) {
+            updateMiniPlayerInfo(message);
+        }
+    }
+
+    private static void updateMiniPlayerInfo(Message message) {
+        MiniPlayer miniPlayer = ClientApp.getCurrentGame().getMiniPlayerByUsername(message.getFromBody("other"));
+        miniPlayer.update(message);
+    }
+
+    private static void sendPlayerMiniInfo(Message message) {
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "response");
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("starter", message.getFromBody("starter"));
+            put("other", message.getFromBody("other"));
+            put("self", ClientApp.getLoggedInUser().getUsername());
+            put("position", player.getPosition().getInfo());
+            put("mapIndex", player.getCurrentMap() instanceof NPCMap? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(player.getUsername()));
+            put("money", player.getMoney());
+            put("numberOfQuestsCompleted", 0); // TODO: rassa, dorostesh kon
+            put("totalAbility", player.getAbility(AbilityType.Farming).getLevel() +
+                    player.getAbility(AbilityType.Fishing).getLevel() +
+                    player.getAbility(AbilityType.Foraging).getLevel() +
+                    player.getAbility(AbilityType.Mining).getLevel());
+        }}, Message.Type.update_mini_player));
     }
 }

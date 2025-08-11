@@ -191,7 +191,7 @@ public class CheatController {
         if(response == null || response.getType() != Message.Type.response)
             return new Result(false, "can't add level!");
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
-        return new Result(!result.hasError() , result.getMessage().toString());
+        return new Result(!result.hasError() , result.getMessage().getText().toString());
     }
 
 }

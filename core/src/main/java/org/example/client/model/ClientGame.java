@@ -625,17 +625,4 @@ public class ClientGame implements Game {
     public int getPlayerMapIndex(String playerName) {
         return usernameToMap.get(playerName);
     }
-
-    public Message getPlayerMiniInfo() {
-        return new Message(new HashMap<>() {{
-            put("position", player.getPosition().getInfo());
-            put("isInNPCMap", player.getCurrentMap() instanceof NPCMap);
-            put("money", player.getMoney());
-            put("numberOfQuestsCompleted", 0); // TODO: rassa, dorostesh kon
-            put("totalAbility", player.getAbility(AbilityType.Farming).getLevel() +
-                                player.getAbility(AbilityType.Fishing).getLevel() +
-                                player.getAbility(AbilityType.Foraging).getLevel() +
-                                player.getAbility(AbilityType.Mining).getLevel());
-        }}, Message.Type.response);
-    }
 }

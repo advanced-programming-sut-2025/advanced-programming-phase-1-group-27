@@ -54,27 +54,31 @@ public class MiniPlayer extends User {
                            player.getAbility(AbilityType.Mining).getLevel() +
                            player.getAbility(AbilityType.Foraging).getLevel() +
                            player.getAbility(AbilityType.Fishing).getLevel();
+            numberOfQuestsLabel.setText(numberOfQuestsCompleted);
+            earningsLabel.setText(money);
+            skillLabel.setText(totalAbility);
         }
         else{
-            Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new HashMap<>() {{
+            ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                put("mode", "ask");
                 put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
-                put("username", getUsername());
-            }}, Message.Type.update_mini_player), TIMEOUT_MILLIS);
-            if(response == null){
-                return;
-            }
-            position = new Position(response.<LinkedTreeMap<String, Object>>getFromBody("position"));
-            mapIndex = response.getIntFromBody("mapIndex");
-            numberOfQuestsCompleted = response.getIntFromBody("numberOfQuestsCompleted");
-            money = response.getIntFromBody("money");
-            totalAbility = response.getIntFromBody("totalAbility");
+                put("starter", ClientApp.getLoggedInUser().getUsername());
+                put("other", getUsername());
+                put("self", ClientApp.getLoggedInUser().getUsername());
+            }}, Message.Type.update_mini_player));
         }
+    }
+
+    public void update(Message message) {
+        position = new Position(message.<LinkedTreeMap<String, Object>>getFromBody("position"));
+        mapIndex = message.getIntFromBody("mapIndex");
+        numberOfQuestsCompleted = message.getIntFromBody("numberOfQuestsCompleted");
+        money = message.getIntFromBody("money");
+        totalAbility = message.getIntFromBody("totalAbility");
 
         numberOfQuestsLabel.setText(numberOfQuestsCompleted);
         earningsLabel.setText(money);
         skillLabel.setText(totalAbility);
-
-
     }
 
     public float getXRatio(){

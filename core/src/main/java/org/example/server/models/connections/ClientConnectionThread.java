@@ -154,7 +154,7 @@ public class ClientConnectionThread extends ConnectionThread {
             GameController.handleChat(message);
             return true;
         } else if (message.getType() == Message.Type.update_mini_player) {
-            sendMessage(GameController.getMiniPlayerInfo(message));
+            GameController.handleMiniPlayerUpdate(message);
             return true;
         } else if (message.getType() == Message.Type.get_trade_history) {
             sendMessage(TradeController.getTradesBetweenUsers(message));
