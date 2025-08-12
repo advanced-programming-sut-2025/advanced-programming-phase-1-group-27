@@ -1,13 +1,5 @@
 package org.example.server.models.enums.Weathers;
 
-import org.example.server.models.App;
-import org.example.server.models.Cell;
-import org.example.server.models.Map.FarmMap;
-import org.example.server.models.Player;
-import org.example.server.models.enums.Plants.Plant;
-
-import java.util.Random;
-
 public enum Weather {
     Sunny(1, 1.5),
     Rainy(1.5, 1.2),

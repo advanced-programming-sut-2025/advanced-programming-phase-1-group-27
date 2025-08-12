@@ -66,7 +66,7 @@ public class ForgetPasswordMenuController extends MenuController {
     }
 
     public void setRandomPassword() {
-        view.getNewPasswordField().setText(App.generatePassword());
+        view.getNewPasswordField().setText(ClientApp.generatePassword());
     }
 
     public User getAttemptingUser() {

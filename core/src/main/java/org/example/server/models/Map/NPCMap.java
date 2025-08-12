@@ -11,7 +11,6 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
-import org.example.server.models.App;
 import org.example.server.models.BuildingTexture;
 import org.example.server.models.Cell;
 import org.example.server.models.NPCs.NPC;

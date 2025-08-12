@@ -112,7 +112,7 @@ public class PierreGeneralShop extends AppMenu {
 
             Table row = new Table();
             Label nameLabel1 = new Label(stock.getItem().getName(), skin);
-            Label priceLabel1 = new Label(stock.getSalePrice() + " G", skin);
+            Label priceLabel1 = new Label(stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()) + " G", skin);
             Label countLabel1 = new Label("", skin);
 
             if(stock.getQuantity() == -1){

@@ -60,4 +60,8 @@ public class ServerTimeTracker implements Runnable {
             pauseLock.notifyAll();
         }
     }
+
+    public boolean isRunning() {
+        return isRunning.get() && !isPaused.get();
+    }
 }
