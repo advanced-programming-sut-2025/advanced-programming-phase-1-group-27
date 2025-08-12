@@ -8,7 +8,7 @@ import org.example.server.models.tools.Backpack;
 
 public class Hut extends Building {
     // items which are place in the fridge
-    private final Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
+    private Backpack refrigerator = new Backpack(ToolType.LargeBackpack);
     private Cell door;
     private Player owner;
 
@@ -19,6 +19,10 @@ public class Hut extends Building {
 
     public Backpack getRefrigerator() {
         return refrigerator;
+    }
+
+    public void setRefrigerator(Backpack refrigerator) {
+        this.refrigerator = refrigerator;
     }
 
     public Player getOwner() {

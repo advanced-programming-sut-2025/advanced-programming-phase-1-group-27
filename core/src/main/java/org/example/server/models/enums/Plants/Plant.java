@@ -3,10 +3,14 @@ package org.example.server.models.enums.Plants;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.controller.menus.OnlinePlayersMenuController;
 import org.example.common.models.GameAssetManager;
+import org.example.common.models.ItemManager;
 import org.example.server.models.Cell;
 import org.example.server.models.Stacks;
+
+import java.util.HashMap;
 
 public abstract class Plant {
     protected boolean isGiant = false;
@@ -20,6 +24,36 @@ public abstract class Plant {
     protected Plant(PlantType type) {
         this.type = type;
         tillNextHarvest = type.getTotalHarvestTime();
+    }
+
+    public static Plant handleInfo(LinkedTreeMap<String, Object> info) {
+        Plant plant = ItemManager.getPlant((String) info.get("type"));
+        assert plant != null;
+        plant.isGiant = (boolean) info.get("isGiant");
+        plant.cnt = ((Number) info.get("cnt")).intValue();
+        plant.currentStage = ((Number) info.get("currentStage")).intValue();
+        plant.tillNextHarvest = ((Number) info.get("tillNextHarvest")).intValue();
+        plant.wateredYesterday = ((boolean) info.get("wateredYesterday"));
+        plant.wateredToday = (boolean) info.get("wateredToday");
+        plant.isForaging = ((boolean) info.get("isForaging"));
+        plant.alwaysWatered = ((boolean) info.get("alwaysWatered"));
+        plant.fertilized = ((boolean) info.get("fertilized"));
+        return plant;
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("isGiant", isGiant);
+        info.put("type", type.toString());
+        info.put("cnt", cnt);
+        info.put("currentStage", currentStage);
+        info.put("tillNextHarvest", tillNextHarvest);
+        info.put("wateredYesterday", wateredYesterday);
+        info.put("wateredToday", wateredToday);
+        info.put("isForaging", isForaging);
+        info.put("alwaysWatered", alwaysWatered);
+        info.put("fertilized", fertilized);
+        return info;
     }
 
     public Cell getCell() {

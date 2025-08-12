@@ -1,9 +1,13 @@
 package org.example.server.models;
 
+import com.google.gson.internal.LinkedTreeMap;
+import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.Plants.FruitType;
 import org.example.server.models.enums.items.FishType;
 import org.example.server.models.enums.items.products.ProcessedProductType;
+
+import java.util.HashMap;
 
 public class Artisan {
     private final ArtisanTypes type;
@@ -12,6 +16,20 @@ public class Artisan {
 
     public Artisan(ArtisanTypes type) {
         this.type = type;
+    }
+
+    public Artisan(LinkedTreeMap<String, Object> info) {
+        this.type = ArtisanTypes.getArtisan((String) info.get("type"));
+        this.finalProduct = new ProcessedProduct((LinkedTreeMap<String, Object>) info.get("processedProduct"));
+        this.timeLeft = ((Number) info.get("timeLeft")).intValue();
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("type", type.name());
+        info.put("processedProduct", finalProduct.getInfo());
+        info.put("timeLeft", timeLeft);
+        return info;
     }
 
     public ArtisanTypes getType() {

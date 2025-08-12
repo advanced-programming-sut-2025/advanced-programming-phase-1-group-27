@@ -9,4 +9,12 @@ public enum CellType {
     View,
     MapLink,
     Quarry;
+
+    public static CellType getCellType(String type) {
+        for (CellType cellType : values()) {
+            if (cellType.toString().equalsIgnoreCase(type))
+                return cellType;
+        }
+        return null;
+    }
 }

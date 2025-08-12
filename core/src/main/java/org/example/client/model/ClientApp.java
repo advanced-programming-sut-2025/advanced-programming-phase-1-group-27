@@ -6,6 +6,7 @@ import org.example.client.controller.SaveController;
 import org.example.client.view.AppMenu;
 import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.Message;
+import org.example.server.models.Player;
 import org.example.server.models.SecurityQuestion;
 import org.example.server.models.User;
 import org.example.server.models.enums.Gender;
@@ -216,11 +217,7 @@ public class ClientApp {
     public static void saveGame() {
         if (currentGame == null)
             return;
-        serverConnectionThread.sendMessage(new Message(new HashMap<>() {{
-            put("lobbyId", currentGame.getLobbyId());
-            put("playerName", currentGame.getCurrentPlayer().getUsername());
-            put("playerInfo", SaveController.getPlayerInfo(currentGame.getCurrentPlayer()));
-        }}, Message.Type.client_game_info));
+        SaveController.sendInfo();
         terminateGame();
     }
 

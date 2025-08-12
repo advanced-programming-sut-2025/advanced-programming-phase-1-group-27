@@ -309,9 +309,9 @@ public class InteractionsWithNPCController {
             put("npcName", npcName);
         }}, Message.Type.get_npc_quests);
 
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, 2 * TIMEOUT_MILLIS);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, 4 * TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
-            System.out.println("quests response is null");
+            System.out.println(response == null? "null" : response.getType());
             return new ArrayList<>();
         }
         ArrayList<Quest> quests = new ArrayList<>();

@@ -20,6 +20,7 @@ Buildings/Deluxe Coop.png
 Buildings/Fish_Shop.png
 Buildings/Jojamart.png
 Buildings/Pierres_shop.png
+Buildings/Shipping Bin.png
 Buildings/marine_ranch.png
 Buildings/stardrop_saloon.png
 Character/PassOut.png
@@ -380,6 +381,11 @@ Images/Artisans/Loom.png
 Images/Artisans/MayonnaiseMachine.png
 Images/Artisans/OilMaker.png
 Images/Artisans/PreservesJar.png
+Images/Buffs/Farming_Skill_Icon.png
+Images/Buffs/Fishing_Skill_Icon.png
+Images/Buffs/Foraging_Skill_Icon.png
+Images/Buffs/Max_Energy_Buff.png
+Images/Buffs/Mining_Skill_Icon.png
 Images/Cooking/CookingMenu.png
 Images/Crafting/Bee_House.png
 Images/Crafting/Bomb.png

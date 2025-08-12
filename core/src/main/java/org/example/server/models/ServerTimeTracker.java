@@ -2,31 +2,33 @@ package org.example.server.models;
 
 import org.example.common.models.Time;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class ServerTimeTracker implements Runnable {
     private Time time;
     private long startTime;
-    private boolean isRunning;
-    private boolean isPaused;
+    private AtomicBoolean isRunning;
+    private AtomicBoolean isPaused;
     private final Object pauseLock = new Object();
 
     public ServerTimeTracker(Time time) {
         this.time = time;
         this.startTime = System.currentTimeMillis();
-        this.isRunning = true;
-        this.isPaused = false;
+        this.isRunning = new AtomicBoolean(true);
+        this.isPaused = new AtomicBoolean(false);
     }
 
     @Override
     public void run() {
-        while (isRunning) {
+        while (isRunning.get()) {
             synchronized (pauseLock) {
-                if (isPaused) {
+                if (isPaused.get()) {
                     try {
                         pauseLock.wait();
                     } catch (InterruptedException e) {
                         break;
                     }
-                    if (!isRunning) {
+                    if (!isRunning.get()) {
                         break;
                     }
                 }
@@ -34,7 +36,8 @@ public class ServerTimeTracker implements Runnable {
 
             try {
                 Thread.sleep(2_000);
-                time.passAnHour();
+                if (isRunning.get() && !isPaused.get())
+                    time.passAnHour();
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
@@ -43,17 +46,17 @@ public class ServerTimeTracker implements Runnable {
     }
 
     public void stop() {
-        isRunning = false;
+        isRunning.set(false);
         resume();
     }
 
     public void pause() {
-        isPaused = true;
+        isPaused.set(true);
     }
 
     public void resume() {
         synchronized (pauseLock) {
-            isPaused = false;
+            isPaused.set(false);
             pauseLock.notifyAll();
         }
     }
