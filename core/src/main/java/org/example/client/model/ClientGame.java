@@ -143,13 +143,6 @@ public class ClientGame implements Game {
         return time;
     }
 
-    public void updateTime(LinkedTreeMap<String, Object> timeInfo) {
-        time.setDaysPassed(((Number) timeInfo.get("daysPassed")).intValue());
-        time.setHour(((Number) timeInfo.get("hour")).intValue());
-        time.setDay(((Number) timeInfo.get("day")).intValue());
-        time.setSeason(Season.getSeason((String) timeInfo.get("season")));
-    }
-
     public Shop getShop(String shopName) {
         if (shopName.equalsIgnoreCase(ShopType.Blacksmith.name()))
             return blackSmith;
