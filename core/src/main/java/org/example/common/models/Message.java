@@ -34,6 +34,7 @@ public class Message {
         response,
         register_request,
         login_request,
+        update_user_info,
         get_user,
         add_user,
         set_password,
@@ -89,5 +90,6 @@ public class Message {
         do_i_have_quest,
         finish_quest,
         get_quests_journal,
+        meetP2P,
     }
 }

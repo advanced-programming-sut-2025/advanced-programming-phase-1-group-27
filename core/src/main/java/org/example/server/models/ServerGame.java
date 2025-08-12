@@ -281,7 +281,7 @@ public class ServerGame implements Game {
         currentPlayer.getNpcGiftToday().clear();
         currentPlayer.getPlayerHuggedToday().clear();
         currentPlayer.getPlayerTradeToday().clear();
-        for (Player player : App.getCurrentGame().getPlayers()) {
+        for (Player player : players) {
             currentPlayer.getPlayerMetToday().put(player, false);
             currentPlayer.getPlayerGiftToday().put(player, false);
             currentPlayer.getPlayerHuggedToday().put(player, false);
@@ -608,6 +608,12 @@ public class ServerGame implements Game {
 
     public void terminate() {
         timeTracker.stop();
+    }
+
+    public boolean isGameRunning() {
+        if (timeTracker == null)
+            return false;
+        return timeTracker.isRunning();
     }
 
     public void kickPlayer(String playerName) {

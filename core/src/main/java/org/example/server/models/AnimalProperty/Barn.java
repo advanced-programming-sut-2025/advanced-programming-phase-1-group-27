@@ -1,7 +1,11 @@
 package org.example.server.models.AnimalProperty;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.Cell;
 import org.example.server.models.enums.items.BuildingType;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Barn extends AnimalEnclosure {
     private Cell topLeftCell;

@@ -38,7 +38,7 @@ public class PurchaseMenuController extends MenuController {
     }
 
     public GraphicalResult purchase(Stock stock, int num, NPCType npc) {
-        int sum = stock.getSalePrice() * num;
+        int sum = stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()) * num;
         Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
         if (num > stock.getQuantity() && stock.getQuantity() != -1) {
             return new GraphicalResult("Sorry, we are out of stock");

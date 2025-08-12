@@ -63,6 +63,9 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.login_request) {
             sendMessage(LoginMenuController.login(message, this));
             return true;
+        } else if (message.getType() == Message.Type.update_user_info) {
+            ServerApp.updateUser(message);
+            return true;
         } else if (message.getType() == Message.Type.add_user) {
             RegisterMenuController.addUser(message);
             return true;
@@ -198,7 +201,11 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if(message.getType() == Message.Type.get_quests_journal){
             sendMessage(InteractionsWithNPCController.getQuestsJournal(message));
             return true;
+        } else if (message.getType() == Message.Type.meetP2P){
+            InteractionsWithUserController.meet(message);
+            return true;
         }
+        System.out.println("not handled message: " + (message == null ? "null" : message.getType()));
         return false;
     }
 

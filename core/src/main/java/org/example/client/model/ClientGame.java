@@ -625,4 +625,8 @@ public class ClientGame implements Game {
     public int getPlayerMapIndex(String playerName) {
         return usernameToMap.get(playerName);
     }
+
+    public FarmMap getFarmMap() {
+        return farmMap;
+    }
 }

@@ -3,21 +3,79 @@ package org.example.server.controller;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Message;
 import org.example.server.models.*;
+import org.example.server.models.AnimalProperty.Animal;
+import org.example.server.models.AnimalProperty.AnimalEnclosure;
+import org.example.server.models.AnimalProperty.Barn;
+import org.example.server.models.AnimalProperty.Coop;
+import org.example.server.models.Map.FarmMap;
 import org.example.server.models.enums.AbilityType;
+import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
 
 public class SaveController {
+    public static void sendInfo(String username, Message message) {
+        
+    }
+
     public static void handleInfo(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
         ServerGame game = lobby.getGame();
         Player player = game.getPlayerByUsername(message.getFromBody("playerName"));
-        // TODO : handle map
+        handleFarmInfo(game, message.getFromBody("farmMapInfo"));
         handlePlayerInfo(lobby, player, message.getFromBody("playerInfo"));
-        // TODO
+    }
+
+    private static void handleFarmInfo(ServerGame game, LinkedTreeMap<String, Object> info) {
+        FarmMap farmMap = game.getFarmMap(((Number) info.get("farmId")).intValue());
+        farmMap.getCoops().clear();
+        farmMap.getBarns().clear();
+        farmMap.getAnimals().clear();
+        farmMap.getShippingBins().clear();
+
+        // handling cells info
+        ArrayList cellsInfo = (ArrayList) info.get("cellsInfo");
+        for (int i = 0; i < farmMap.getHeight(); i++)
+            for (int j = 0; j < farmMap.getWidth(); j++) {
+                farmMap.getCell(i, j).handleInfo((LinkedTreeMap<String, Object>) cellsInfo.get(i * farmMap.getWidth() + j));
+            }
+
+        // handling refrigerator
+        farmMap.getHut().setRefrigerator(new Backpack((LinkedTreeMap<String, Object>) info.get("refrigerator")));
+
+        // handling animal enclosures
+        ArrayList<LinkedTreeMap<String, Object>> animalEnclosuresInfo =
+                (ArrayList<LinkedTreeMap<String, Object>>) info.get("animalEnclosures");
+        for (LinkedTreeMap<String, Object> enclosureInfo : animalEnclosuresInfo) {
+            handleEnclosureInfo(farmMap, enclosureInfo);
+        }
+
+        // handling green house
+        boolean isGreenHouseRepaired = (boolean) info.get("isGreenHouseRepaired");
+        if (!farmMap.getGreenHouse().isRepaired() && isGreenHouseRepaired)
+            farmMap.getGreenHouse().repair();
+    }
+
+    private static void handleEnclosureInfo(FarmMap farmMap, LinkedTreeMap<String, Object> info) {
+        Position topLeftPosition = new Position((LinkedTreeMap<String, Object>) info.get("position"));
+        Cell topLeftCell = farmMap.getCell(topLeftPosition.getX(), topLeftPosition.getY());
+        AnimalEnclosure enclosure = AnimalEnclosure.handleInfo(topLeftCell, info);
+        for (int i = 0; i < enclosure.getType().getHeight(); i++)
+            for (int j = 0; j < enclosure.getType().getWidth(); j++) {
+                Cell cell = farmMap.getCell(topLeftPosition.getX() + i, topLeftPosition.getY() + j);
+                cell.setBuilding(enclosure);
+                cell.setType(CellType.Building);
+            }
+        for (Animal animal : enclosure.getAnimals()) {
+            farmMap.addAnimal(animal);
+        }
+        if (enclosure instanceof Coop coop)
+            farmMap.getCoops().add(coop);
+        else if (enclosure instanceof Barn barn)
+            farmMap.getBarns().add(barn);
     }
 
     private static void handlePlayerInfo(Lobby lobby, Player player, LinkedTreeMap<String, Object> info) {

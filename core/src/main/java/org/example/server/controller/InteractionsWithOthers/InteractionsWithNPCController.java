@@ -229,6 +229,7 @@ public class InteractionsWithNPCController {
         for(Quest quest : npc.getQuests()){
             selected.add(quest.getInfo());
         }
+        System.out.println("selected.size() : " + selected.size());
         return new Message(new HashMap<>() {{
             put("quests", selected);
         }} , Message.Type.response);

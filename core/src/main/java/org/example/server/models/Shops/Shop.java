@@ -1,6 +1,5 @@
 package org.example.server.models.Shops;
 
-import org.example.server.models.App;
 import org.example.server.models.Item;
 import org.example.server.models.Stock;
 import org.example.server.models.enums.Seasons.Season;

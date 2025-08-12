@@ -11,6 +11,8 @@ import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.PopUpTexture;
 import org.example.client.view.OutsideView;
+import org.example.common.models.Game;
+import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
@@ -101,10 +103,6 @@ public class InteractionsWithNPCController {
 
         Sprite itemSprite = new Sprite(stack.getItem().getTexture());
         itemSprite.setSize(72, 62);
-
-        System.out.println(x + " " + y);
-        System.out.println(newOutsideView.getPlayerController().getX() + " " +
-                newOutsideView.getPlayerController().getY());
 
         PopUpController.addPopUp(new PopUpTexture(itemSprite
                 ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),
@@ -309,9 +307,9 @@ public class InteractionsWithNPCController {
             put("npcName", npcName);
         }}, Message.Type.get_npc_quests);
 
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, 2 * TIMEOUT_MILLIS);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, 4 * TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
-            System.out.println("quests response is null");
+            System.out.println(response == null? "null" : response.getType());
             return new ArrayList<>();
         }
         ArrayList<Quest> quests = new ArrayList<>();
@@ -366,14 +364,24 @@ public class InteractionsWithNPCController {
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);
         Main.getMain().setScreen(newOutsideView);
+
+        Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getQuestStar());
+        itemSprite.setSize(72, 62);
+        PopUpController.addPopUp(new PopUpTexture(itemSprite
+                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+70,
+                newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(), 4
+        ));
+
         return new GraphicalResult("");
     }
 
     public static GraphicalResult addQuest(Quest quest) {
-        if (ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().contains(quest)) {
+        if ( doIHaveThisQuest(quest) ) {
             return new GraphicalResult("You already have this quest!");
         } else if (quest.isDone()) {
             return new GraphicalResult("Quest has been finished");
+        } else if(ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().size() + 1 > 3) {
+            return new GraphicalResult("You can't add more quests!");
         }
         ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().add(quest);
         Main.getMain().getScreen().dispose();
@@ -401,7 +409,7 @@ public class InteractionsWithNPCController {
                 for (Quest quest1 : ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests()) {
                     if (Objects.equals(quest.getRequest().getItem().getName(), quest1.getRequest().getItem().getName())) {
                         if (Objects.equals(quest1.getReward().getItem().getName(), quest.getReward().getItem().getName())) {
-                            deleted.add(quest);
+                            deleted.add(quest1);
                         }
                     }
                 }

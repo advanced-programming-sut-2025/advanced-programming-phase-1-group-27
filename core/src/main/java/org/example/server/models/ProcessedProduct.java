@@ -2,8 +2,10 @@ package org.example.server.models;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.enums.items.products.ProcessedProductType;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ProcessedProduct implements Item, Edible { // for all processed products
@@ -15,6 +17,20 @@ public class ProcessedProduct implements Item, Edible { // for all processed pro
         this.type = type;
         this.price = price;
         this.energy = energy;
+    }
+
+    public ProcessedProduct(LinkedTreeMap<String, Object> info) {
+        this.type = ProcessedProductType.getItem((String) info.get("type"));
+        this.price = ((Number) info.get("price")).intValue();
+        this.energy = ((Number) info.get("energy")).intValue();
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("type", type.name());
+        info.put("price", price);
+        info.put("energy", energy);
+        return info;
     }
 
     public ProcessedProduct(ProcessedProductType type) {

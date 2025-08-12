@@ -3,6 +3,7 @@ package org.example.client.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.google.gson.internal.LinkedTreeMap;
@@ -20,13 +21,10 @@ import org.example.client.view.InteractionMenus.MarriageRequestView;
 import org.example.client.view.OutsideView;
 import org.example.client.view.VoteView;
 import org.example.common.models.*;
-import org.example.server.models.Cell;
-import org.example.server.models.Item;
+import org.example.server.models.*;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.NPCMap;
-import org.example.server.models.Player;
 import org.example.server.models.Shops.Shop;
-import org.example.server.models.Stacks;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.StackLevel;
@@ -196,6 +194,19 @@ public class ServerUpdatesController { // handles updates sent by server
         Stacks gift = new Stacks(message.getFromBody("gift"));
         ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(gift.getItem(), gift.getStackLevel(), gift.getQuantity());
         // TODO : sobhan ya parsa, gift ro handle konid
+
+        if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+
+            Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getGiftIcon());
+            itemSprite.setSize(72, 62);
+
+            PopUpController.addPopUp(new PopUpTexture(itemSprite
+                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+80,
+                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+20, 4
+            ));
+
+        }
+
         ClientApp.getCurrentGame().getCurrentPlayer().addToChatInbox("You have a new gift \n from " + giver);
     }
 
@@ -204,11 +215,47 @@ public class ServerUpdatesController { // handles updates sent by server
         ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(ShopItems.Bouquet , StackLevel.Basic , 1);
         // TODO : sobhan ya parsa, gol bedahid
 
+        if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+
+            Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getBouquet());
+            itemSprite.setSize(72, 62);
+
+            PopUpController.addPopUp(new PopUpTexture(itemSprite
+                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+80,
+                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+20, 4
+            ));
+
+        }
+
     }
 
     private static void handleHug(Message message) {
         String giver = message.getFromBody("starter");
         // TODO : sobhan ya parsa, hug konid
+
+        if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+
+            Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getHugIcon());
+            itemSprite.setSize(72, 62);
+
+            float giverX = 0, giverY = 0;
+
+            for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+
+                if ( miniPlayer.getUsername().equals(giver) ) {
+                    giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                    giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
+                }
+
+            }
+
+            PopUpController.addPopUp(new PopUpTexture(itemSprite
+                    ,(outsideView.getPlayerController().getX()+giverX)/2f,(outsideView.getPlayerController().getY()+giverY)/2f,
+                    (outsideView.getPlayerController().getX()+giverX)/2f, (outsideView.getPlayerController().getY()+giverY)/2f, 4
+            ));
+
+        }
+
     }
 
     public static void handleVote(Message message) {
@@ -219,7 +266,7 @@ public class ServerUpdatesController { // handles updates sent by server
                 Main.getMain().setScreen(new VoteView(mode, ""));
             });
         } else if (mode.equals("terminateGame")) {
-            ClientApp.terminateGame();
+            handleTerminate();
         } else if (mode.equals("askToKick")) {
             Gdx.app.postRunnable(() -> {
                 Main.getMain().getScreen().dispose();
@@ -228,6 +275,16 @@ public class ServerUpdatesController { // handles updates sent by server
         } else if (mode.equals("kickPlayer")) {
             ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));
         }
+    }
+
+    private static void handleTerminate() {
+        User user = ClientApp.getLoggedInUser();
+        user.setMaxMoneyEarned(Math.max(user.getMaxMoneyEarned(), ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
+        user.setNumberOfGamesPlayed(user.getNumberOfGamesPlayed() + 1);
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("userInfo", user.getInfo());
+        }}, Message.Type.update_user_info));
+        ClientApp.terminateGame();
     }
 
     public static void handleChat(Message message) {
@@ -252,25 +309,39 @@ public class ServerUpdatesController { // handles updates sent by server
         String proposer = message.getFromBody("self");
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new MarriageRequestView(proposer));
+            MarriageRequestView marriageRequestView = new MarriageRequestView(proposer);
+            ClientApp.setNonMainMenu(marriageRequestView);
+            Main.getMain().setScreen(marriageRequestView);
         });
     }
 
     public static void handleMarriageResponse(Message message) {
         boolean answer = message.getFromBody("answer");
+        Sprite itemSprite;
         // TODO: parsa, inja javab behet mirese
         if (answer) {
-            //animation for marriage
+//            itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
             ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(ShopItems.WeddingRing, 1);
         } else {
             //animation for reject
         }
+        OutsideView newOutsideView = new OutsideView();
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
-            OutsideView newOutsideView = new OutsideView();
             ClientApp.setNonMainMenu(newOutsideView);
             Main.getMain().setScreen(newOutsideView);
         });
+
+
+//
+//            itemSprite.setSize(72, 62);
+//
+//            PopUpController.addPopUp(new PopUpTexture(itemSprite
+//                    ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+20,
+//                    newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+80, 4
+//            ));
+
+
     }
 
     public static void handleReaction(Message message) {

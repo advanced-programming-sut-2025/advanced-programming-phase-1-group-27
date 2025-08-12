@@ -1,9 +1,11 @@
 package org.example.server.models;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Game;
 import org.example.common.models.GameAssetManager;
 import org.example.server.models.AnimalProperty.Animal;
+import org.example.server.models.AnimalProperty.AnimalEnclosure;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;
 import org.example.server.models.Map.*;
@@ -15,6 +17,7 @@ import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.items.MineralType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Cell {
@@ -38,6 +41,86 @@ public class Cell {
         cellType = CellType.Free;
         this.position = position;
         this.map = map;
+    }
+
+    public void handleInfo(LinkedTreeMap<String, Object> info) {
+        this.cellType = CellType.getCellType((String) info.get("cellType"));
+        this.isProtected = (boolean) info.get("isProtected");
+        handleObjectInfo((LinkedTreeMap<String, Object>) info.get("object"));
+        handleBuildingInfo((LinkedTreeMap<String, Object>) info.get("building"));
+    }
+
+    private void handleBuildingInfo(LinkedTreeMap<String, Object> info) {
+        String type = (String) info.get("type");
+        if (type.equals("shippingBin")) {
+            ShippingBin shippingBin = new ShippingBin(this, (LinkedTreeMap<String, Object>) info.get("shippingBin"));
+            building = shippingBin;
+            setType(CellType.Building);
+            if (map instanceof FarmMap farmMap)
+                farmMap.addShippingBin(shippingBin);
+        }
+        else { // type == none
+            if (building instanceof ShippingBin || building instanceof AnimalEnclosure)
+                building = null;
+        }
+    }
+
+    private void handleObjectInfo(LinkedTreeMap<String, Object> info) {
+        String type = (String) info.get("type");
+        if (type.equals("plant")) {
+            object = Plant.handleInfo((LinkedTreeMap<String, Object>) info.get("plant"));
+        }
+        else if (type.equals("mineral")) {
+            object = MineralType.getItem((String) info.get("mineral"));
+        }
+        else if (type.equals("artisan")) {
+            object = new Artisan((LinkedTreeMap<String, Object>) info.get("artisan"));
+        }
+        else { // type == none
+            if (object instanceof Plant || object instanceof MineralType || object instanceof Artisan) {
+                object = null;
+            }
+        }
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("cellType", cellType.toString());
+        info.put("isProtected", isProtected);
+        info.put("object", getObjectInfo());
+        info.put("building", getBuildingInfo());
+        return info;
+    }
+
+    private HashMap<String, Object> getObjectInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        if (object instanceof Plant plant) {
+            info.put("type", "plant");
+            info.put("plant", plant.getInfo());
+        }
+        else if (object instanceof MineralType mineralType) {
+            info.put("type", "mineral");
+            info.put("mineral", mineralType.name());
+        }
+        else if (object instanceof Artisan artisan) {
+            info.put("type", "artisan");
+            info.put("artisan", artisan.getInfo());
+        }
+        else
+            info.put("type", "none");
+        return info;
+    }
+
+    private HashMap<String, Object> getBuildingInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        if (building instanceof ShippingBin shippingBin) {
+            info.put("type", "shippingBin");
+            info.put("shippingBin", shippingBin.getInfo());
+        }
+        else {
+            info.put("type", "none");
+        }
+        return info;
     }
 
     public void addAdjacentCell(Cell cell) {

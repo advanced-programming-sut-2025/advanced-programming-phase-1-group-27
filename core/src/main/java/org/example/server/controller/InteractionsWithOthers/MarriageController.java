@@ -17,7 +17,7 @@ public class MarriageController {
     public static Message canMarry(Message message) {
         String self = message.getFromBody("self");
         String other = message.getFromBody("other");
-        int lobbyId = Integer.parseInt(message.getFromBody("lobbyId"));
+        int lobbyId = message.getIntFromBody("lobbyId");
         Lobby lobby = ServerApp.getLobbyById(lobbyId);
         Player currentPlayer = lobby.getGame().getPlayerByUsername(self);
         Player otherPlayer = lobby.getGame().getPlayerByUsername(other);
@@ -54,7 +54,7 @@ public class MarriageController {
     }
 
     public static void sendMarriageResponse(Message message) {
-        int lobbyId = Integer.parseInt(message.getFromBody("lobbyId"));
+        int lobbyId = message.getIntFromBody("lobbyId");
         String proposer = message.getFromBody("proposer");
         String self = message.getFromBody("self");
         boolean answer = message.getFromBody("answer");

@@ -1,7 +1,6 @@
 package org.example.server.models.tools;
 
 import org.example.client.model.ClientApp;
-import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Player;
 import org.example.server.models.Result;
@@ -12,9 +11,9 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.items.ToolType;
 
 public class WateringCan extends Tool {
-    //Water: 40 - 55 - 70 - 85 - 100
-    //EnergyUsage : 5 - 4 - 3 - 2 - 1;
-    //If farming talent is max -1
+    // Water: 40 - 55 - 70 - 85 - 100
+    // EnergyUsage : 5 - 4 - 3 - 2 - 1;
+    // If farming talent is max -1
     private int maxCapacity;
     private int waterCapacity;
 

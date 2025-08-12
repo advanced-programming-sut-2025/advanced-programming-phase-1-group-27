@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import org.example.client.controller.*;
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
@@ -26,6 +27,7 @@ import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
 import org.example.server.models.AnimalProperty.AnimalEnclosure;
+import org.example.server.models.NPCs.Quest;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.InGameMenuType;
@@ -67,6 +69,11 @@ public class HUDView extends AppMenu {
     private final Label leaderBoardSkillsLabel;
     private final Label leaderBoardNumberOfQuestsLabel;
     private final Label sortByLabel;
+    private final Label requestLabel;
+    private final Label rewardLabel;
+    private final Label journalLabel;
+
+    private ArrayList<Label> questLabels = new ArrayList<>();
 
     private final Image blackImage;
     private final Image hoveringInfoWindow;
@@ -252,13 +259,23 @@ public class HUDView extends AppMenu {
         leaderBoardSkillsLabel = new Label("Skills",skin);
         leaderBoardNumberOfQuestsLabel = new Label("Number of\n  Quests",skin);
         sortByLabel = new Label("Sort by:",skin);
+        journalLabel = new Label("Journal",skin);
+        requestLabel = new Label("Request",skin);
+        rewardLabel = new Label("Reward",skin);
 
+        requestLabel.setColor(Color.BLACK);
+        rewardLabel.setColor(Color.BLACK);
+        journalLabel.setColor(Color.BLACK);
+        journalLabel.setFontScale(2f);
         leaderBoardUsernameLabel.setColor(Color.BLACK);
         leaderBoardNumberOfQuestsLabel.setColor(Color.BLACK);
         leaderBoardSkillsLabel.setColor(Color.BLACK);
         leaderBoardEarningsLabel.setColor(Color.BLACK);
         sortByLabel.setColor(Color.BLACK);
 
+        journalLabel.setVisible(false);
+        requestLabel.setVisible(false);
+        rewardLabel.setVisible(false);
         leaderBoardUsernameLabel.setVisible(false);
         leaderBoardNumberOfQuestsLabel.setVisible(false);
         leaderBoardSkillsLabel.setVisible(false);
@@ -569,6 +586,9 @@ public class HUDView extends AppMenu {
         stage.addActor(skillSortButton);
         stage.addActor(numberOfQuestsSortButton);
         stage.addActor(sortByLabel);
+        stage.addActor(journalLabel);
+        stage.addActor(requestLabel);
+        stage.addActor(rewardLabel);
 
 
         messageLabel.setVisible(false);
@@ -1584,6 +1604,21 @@ public class HUDView extends AppMenu {
     private void displayJournal(){
 
         journalMenuBackground.setVisible(currentMenu == InGameMenuType.JOURNAL);
+        journalLabel.setVisible(currentMenu == InGameMenuType.JOURNAL);
+        requestLabel.setVisible(currentMenu == InGameMenuType.JOURNAL);
+        rewardLabel.setVisible(currentMenu == InGameMenuType.JOURNAL);
+
+        journalLabel.setPosition(journalMenuBackground.getX()+50,
+                journalMenuBackground.getY()+journalMenuBackground.getHeight()-journalLabel.getHeight()-100);
+
+        requestLabel.setPosition(journalMenuBackground.getX()+50,journalLabel.getY()-requestLabel.getHeight()-20);
+        rewardLabel.setPosition(journalMenuBackground.getX() + journalMenuBackground.getWidth()/2f,journalLabel.getY()-rewardLabel.getHeight()-20);
+
+        if ( currentMenu != InGameMenuType.JOURNAL ){
+
+            makeQuestsInvisible();
+
+        }
 
     }
 
@@ -1599,6 +1634,8 @@ public class HUDView extends AppMenu {
     }
 
     public void displayHUD(float delta) {
+
+
 
         miniPlayerUpdateTimer += delta;
         updatePlayers();
@@ -1757,6 +1794,38 @@ public class HUDView extends AppMenu {
                             currentMenu = InGameMenuType.NONE;
                         }
                         else{
+
+                            int counter = 0;
+
+                            for ( Quest quest: InteractionsWithNPCController.getQuestsForJournal() ){
+
+                                Label requestLabelQuest = new Label(quest.getRequest().getItem().getName()+"\nx" + quest.getRequest().getQuantity(),skin);
+                                questLabels.add(requestLabelQuest);
+
+                                Label rewardLabelQuest;
+
+                                if ( quest.getReward().getItem() == ShopItems.RelationLevel ){
+                                    rewardLabelQuest = new Label("+1 Relation!!!",skin);
+                                }
+                                else{
+                                    rewardLabelQuest = new Label(quest.getReward().getItem().getName()+"\nx" + quest.getReward().getQuantity(),skin);
+                                }
+
+                                questLabels.add(rewardLabelQuest);
+
+                                requestLabelQuest.setColor(Color.BLACK);
+                                rewardLabelQuest.setColor(Color.BLACK);
+
+                                requestLabelQuest.setPosition(requestLabel.getX(), requestLabel.getY() - 70 * counter - requestLabelQuest.getHeight());
+                                rewardLabelQuest.setPosition(rewardLabel.getX(), rewardLabel.getY() - 70 * counter - rewardLabelQuest.getHeight());
+
+                                stage.addActor(requestLabelQuest);
+                                stage.addActor(rewardLabelQuest);
+
+                                counter ++;
+
+                            }
+
                             currentMenu = InGameMenuType.JOURNAL;
                             makeOnScreenItemsInvisible();
                         }
@@ -2567,6 +2636,16 @@ public class HUDView extends AppMenu {
             playersInLeaderBoard.sort(Comparator.comparingDouble(MiniPlayer::getNumberOfQuestsCompleted).reversed());
         }
 
+
+    }
+
+    private void makeQuestsInvisible(){
+
+        for( Label quest: questLabels ){
+            quest.remove();
+        }
+
+        questLabels.clear();
 
     }
 

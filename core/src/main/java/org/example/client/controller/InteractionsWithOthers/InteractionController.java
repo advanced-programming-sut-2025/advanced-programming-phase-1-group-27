@@ -5,6 +5,7 @@ import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.InteractionMenus.Gift.PreGiftMenuView;
 import org.example.client.view.InteractionMenus.Trade.PreTradeMenuView;
+import org.example.server.models.Map.NPCMap;
 import org.example.server.models.Player;
 
 import java.util.Vector;
@@ -13,6 +14,9 @@ public class InteractionController {
 
     public boolean checkIfPlayersAreClose(String username){
         ///  TODO PARSA
+        if(!(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)){
+            return false;
+        }
         Player currentPLayer = ClientApp.getCurrentGame().getCurrentPlayer();
         MiniPlayer otherPlayer = null;
         for(MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers()){

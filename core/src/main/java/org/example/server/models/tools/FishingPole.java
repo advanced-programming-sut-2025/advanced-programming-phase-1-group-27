@@ -4,7 +4,6 @@ import org.example.client.Main;
 import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.MiniGame.PreMiniGameMenuView;
-import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Result;
 import org.example.server.models.enums.AbilityType;

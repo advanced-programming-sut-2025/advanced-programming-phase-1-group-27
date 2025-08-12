@@ -144,6 +144,7 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.handleReaction(message);
             return true;
         }
+        System.out.println("not handled message: " + (message == null? "null" : message.getType()));
         return false;
     }
 

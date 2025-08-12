@@ -44,7 +44,7 @@ public class AnimalPurchaseController extends MenuController {
     }
 
     public GraphicalResult purchaseAnimal(Stock stock, int num, NPCType npc, String name) {
-        int sum = stock.getSalePrice() * num;
+        int sum = stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()) * num;
         Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
         if (sum > currentPlayer.getMoney()) {
             return new GraphicalResult("Sorry, you don't have enough money!",

@@ -20,6 +20,7 @@ Buildings/Deluxe Coop.png
 Buildings/Fish_Shop.png
 Buildings/Jojamart.png
 Buildings/Pierres_shop.png
+Buildings/Shipping Bin.png
 Buildings/marine_ranch.png
 Buildings/stardrop_saloon.png
 Character/PassOut.png
@@ -380,6 +381,13 @@ Images/Artisans/Loom.png
 Images/Artisans/MayonnaiseMachine.png
 Images/Artisans/OilMaker.png
 Images/Artisans/PreservesJar.png
+Images/Bouquet.png
+Images/BrokenHeart.png
+Images/Buffs/Farming_Skill_Icon.png
+Images/Buffs/Fishing_Skill_Icon.png
+Images/Buffs/Foraging_Skill_Icon.png
+Images/Buffs/Max_Energy_Buff.png
+Images/Buffs/Mining_Skill_Icon.png
 Images/Cooking/CookingMenu.png
 Images/Crafting/Bee_House.png
 Images/Crafting/Bomb.png
@@ -730,8 +738,10 @@ Images/Fruits/Hot_Pepper.png
 Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
+Images/GiftIcon.png
 Images/GiftPlayerMenuBackground.png
 Images/HoveringInfoWindow.png
+Images/HugIcon.png
 Images/Inbox/InboxMessageBackground.png
 Images/Inbox/MessageAlert.png
 Images/Inventory/InventoryMenuMan.png
@@ -746,6 +756,7 @@ Images/PlayerSocial/InteractionEmoji3.png
 Images/PlayerSocial/PlayerSocialBackground.png
 Images/PlayerSocial/PlayerSocialBackground2.png
 Images/PlayerSocial/SocialButton.png
+Images/QuestStar.png
 Images/RadioBackground.png
 Images/Shops/JojaMart.png
 Images/Shops/Pierres General Store.png
@@ -837,6 +848,7 @@ Images/Trees/Pomegranate/  (4).png
 Images/Trees/Pomegranate/  (5).png
 Images/Trees/Trees.atlas
 Images/Trees/Trees.png
+Images/WeddingRing.png
 Images/Wrecked_Greenhouse.png
 Images/greenhouse.png
 Images/greenhouse2.1.png

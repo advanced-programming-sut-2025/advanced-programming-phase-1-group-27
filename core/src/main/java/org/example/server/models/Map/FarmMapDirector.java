@@ -1,9 +1,6 @@
 package org.example.server.models.Map;
 
-import org.example.client.model.ClientApp;
 import org.example.common.models.Game;
-import org.example.server.models.App;
-import org.example.server.models.enums.Seasons.Season;
 
 public class FarmMapDirector {
     public void buildMapWithoutForaging(FarmMapBuilder builder, int index, Game game) {

@@ -1,7 +1,6 @@
 package org.example.server.models.tools;
 
 import org.example.client.model.ClientApp;
-import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Player;
 import org.example.server.models.Result;

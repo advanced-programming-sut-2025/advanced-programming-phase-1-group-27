@@ -1,5 +1,6 @@
 package org.example.server.models.AnimalProperty;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.Cell;
 import org.example.server.models.Position;
 import org.example.server.models.Stacks;
@@ -7,6 +8,7 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.items.AnimalType;
 import org.example.server.models.enums.items.products.AnimalProduct;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
@@ -23,6 +25,30 @@ public class Animal {
         this.type = type;
         this.name = name;
         tillNextProduction = type.getYieldRate();
+    }
+
+    public Animal(AnimalEnclosure enclosure, LinkedTreeMap<String, Object> info) {
+        this.enclosure = enclosure;
+        this.type = AnimalType.getItem((String) info.get("type"));
+        this.name = (String) info.get("name");
+        this.friendship = ((Number) info.get("friendship")).intValue();
+        this.tillNextProduction = ((Number) info.get("tillNextProduction")).intValue();
+        this.wasFeed = (Boolean) info.get("wasFeed");
+        this.wasPet = (Boolean) info.get("wasPet");
+        // isOut = false;
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("type", type.name());
+        info.put("name", name);
+        info.put("friendship", friendship);
+        info.put("tillNextProduction", tillNextProduction);
+        info.put("wasFeed", wasFeed);
+        info.put("wasPet", wasPet);
+        info.put("isOut", isOut);
+
+        return info;
     }
 
     public void passADay() {

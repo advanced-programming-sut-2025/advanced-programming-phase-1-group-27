@@ -836,6 +836,13 @@ public class GameAssetManager {
     private final Image fishingBar = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/Bar2.png")));
     private final Image fishingProgressBar = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/GreenBar2.png")));
 
+    private final Texture questStar = new Texture(Gdx.files.internal("Images/QuestStar.png"));
+    private final Texture giftIcon = new Texture(Gdx.files.internal("Images/GiftIcon.png"));
+    private final Texture hugIcon = new Texture(Gdx.files.internal("Images/HugIcon.png"));
+    private final Texture weddingRing = new Texture(Gdx.files.internal("Images/WeddingRing.png"));
+    private final Texture bouquet = new Texture(Gdx.files.internal("Images/Bouquet.png"));
+    private final Texture brokenHeart = new Texture(Gdx.files.internal("Images/BrokenHeart.png"));
+
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -845,6 +852,30 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Texture getBrokenHeart() {
+        return brokenHeart;
+    }
+
+    public Texture getBouquet() {
+        return bouquet;
+    }
+
+    public Texture getWeddingRing() {
+        return weddingRing;
+    }
+
+    public Texture getHugIcon() {
+        return hugIcon;
+    }
+
+    public Texture getGiftIcon() {
+        return giftIcon;
+    }
+
+    public Texture getQuestStar() {
+        return questStar;
     }
 
     public Image getFishingProgressBar() {

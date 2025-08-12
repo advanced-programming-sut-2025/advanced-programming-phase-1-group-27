@@ -40,8 +40,7 @@ public class Stock {
         return price;
     }
 
-    public int getSalePrice() {
-        Season currentSeason = App.getCurrentGame().getTime().getSeason();
+    public int getSalePrice(Season currentSeason) {
         if (currentSeason == this.saleSeason)
             return 2 * price / 3;
         return price;

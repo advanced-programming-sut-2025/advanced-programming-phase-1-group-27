@@ -58,7 +58,9 @@ public class TradeController {
             } else {
                 ClientApp.setNonMainMenu(null);
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                OutsideView newOutsideView = new OutsideView();
+                ClientApp.setNonMainMenu(newOutsideView);
+                Main.getMain().setScreen(newOutsideView);
             }
         });
     }
@@ -75,7 +77,9 @@ public class TradeController {
             } else {
                 ClientApp.setNonMainMenu(null);
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                OutsideView newOutsideView = new OutsideView();
+                ClientApp.setNonMainMenu(newOutsideView);
+                Main.getMain().setScreen(newOutsideView);
             }
         });
     }
@@ -91,6 +95,7 @@ public class TradeController {
             // trade namovafagh bood
         }
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
+        System.out.println("injam " + lobbyId);
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "confirmTrade");
             put("lobbyId", lobbyId);

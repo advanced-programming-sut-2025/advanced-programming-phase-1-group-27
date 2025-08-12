@@ -140,4 +140,9 @@ public class ServerApp {
     public static ArrayList<ClientConnectionThread> getClientConnectionThreads() {
             return connections;
     }
+
+    public static void updateUser(Message message) {
+        User user = new User(message.getFromBody("userInfo"));
+        // TODO : parsa bebar tooye paygah dade
+    }
 }

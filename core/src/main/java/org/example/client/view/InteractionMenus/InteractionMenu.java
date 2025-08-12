@@ -82,8 +82,12 @@ public class InteractionMenu extends AppMenu {
         flowerButton.setColor(flowerButton.getColor().r,flowerButton.getColor().g,flowerButton.getColor().b,
                 (playersAreClose ? 1.0f : 0.3f));
 
+        marriageButton.setColor(marriageButton.getColor().r,marriageButton.getColor().g,marriageButton.getColor().b,
+                (playersAreClose ? 1.0f : 0.3f));
+
         hugButton.setDisabled(!playersAreClose);
         flowerButton.setDisabled(!playersAreClose);
+        marriageButton.setDisabled(!playersAreClose);
 
     }
 

@@ -1,18 +1,8 @@
 package org.example.server.models.Map;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import org.example.client.Main;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Position;
 import org.example.server.models.enums.CellType;
-import org.example.server.models.enums.Plants.Crop;
-import org.example.server.models.enums.Plants.CropType;
-import org.example.server.models.enums.Plants.Tree;
-import org.example.server.models.enums.Plants.TreeType;
-import org.example.server.models.enums.items.MineralType;
 
 import java.util.*;
 

@@ -3,6 +3,8 @@ package org.example.client.view.MiniGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -29,7 +31,6 @@ public class MiniGameView extends AppMenu {
     private final Image miniGameBackground;
     private final Image greenBar;
     private Image fishIcon;
-    private final Image actualFishIcon;
     private final Image bar;
     private final Image progressBar;
     private final Image crownImage;
@@ -54,16 +55,16 @@ public class MiniGameView extends AppMenu {
         caughtFish = controller.getCaughtFish();
         stage = new Stage(new ScreenViewport());
 
+        controller.setMiniGameView(this);
+
         menuTitleLabel = new Label("Fishing Mini-Game!", skin);
         miniGameBackground = GameAssetManager.getGameAssetManager().getFishingMiniGameBackground();
         greenBar = GameAssetManager.getGameAssetManager().getFishingGreenBar();
         fishIcon = GameAssetManager.getGameAssetManager().getFishIcon();
-        actualFishIcon = caughtFish.getItemImage();
         bar = GameAssetManager.getGameAssetManager().getFishingBar();
         progressBar = GameAssetManager.getGameAssetManager().getFishingProgressBar();
         crownImage = GameAssetManager.getGameAssetManager().getCrown();
         sonarImage = GameAssetManager.getGameAssetManager().getSonarBobberWindow();
-
         barY = 126 + new Random().nextInt(0,979-(int)greenBar.getHeight()-126);
         fishY = barY +  (greenBar.getHeight()-fishIcon.getHeight())/2f;
         fishDY = 0;
@@ -129,6 +130,7 @@ public class MiniGameView extends AppMenu {
         }
 
         fishIcon.setY(fishY);
+        fishIcon.toFront();
 
 
     }
@@ -258,7 +260,7 @@ public class MiniGameView extends AppMenu {
                 else if ( keycode == Input.Keys.S ) {
                     sonarActivated = true;
                     fishIcon.remove();
-                    fishIcon = caughtFish.getItemImage();
+                    fishIcon = new Image(caughtFish.getItemImage().getDrawable());
                     displayFishIcon();
                     return true;
                 }
@@ -302,5 +304,14 @@ public class MiniGameView extends AppMenu {
     public void executeCommands(Scanner scanner) {
 
     }
+
+    public Image getFishIcon() {
+        return fishIcon;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
 
 }
