@@ -61,7 +61,7 @@ public class InteractionsWithUserController {
         }}, Message.Type.interaction_p2p));
     }
 
-    public static GraphicalResult flower(String username) {
+    public GraphicalResult flower(String username) {
         Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
         Relation relation = getRelation(username);
         Backpack backpack = currentPlayer.getBackpack();
@@ -83,7 +83,7 @@ public class InteractionsWithUserController {
         return new GraphicalResult("You have give your friend flower!" , false);
     }
 
-    public static GraphicalResult hug(String username) {
+    public GraphicalResult hug(String username) {
         Relation relation = getRelation(username);
         if (relation.getLevel() < 2) {
             return new GraphicalResult("Your level is too low");
@@ -98,7 +98,7 @@ public class InteractionsWithUserController {
         return new GraphicalResult("You hugged your friend!" , false);
     }
 
-    private static boolean canFlowered(Relation relation) {
+    private boolean canFlowered(Relation relation) {
         int level = relation.getLevel();
         int xp = relation.getXp();
         int max = (level + 1) * 100;

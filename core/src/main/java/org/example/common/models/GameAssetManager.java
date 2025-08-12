@@ -695,6 +695,15 @@ public class GameAssetManager {
 
     private final Image journalMenuBackground = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
 
+    private final Texture fishingMiniGameBackground = new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingMiniGameWindow2.png"));
+    private final Image sonarBobber = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobber.png")));
+    private final Image sonarBobberWindow = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobberWindow.png")));
+    private final Image crown = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/Crown.png")));
+    private final Image fishIcon = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/FishIcon.png")));
+    private final Image fishingGreenBar = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingGreenBar.png")));
+    private final Image fishingBar = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/Bar2.png")));
+    private final Image fishingProgressBar = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/GreenBar2.png")));
+
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -704,6 +713,38 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Image getFishingProgressBar() {
+        return fishingProgressBar;
+    }
+
+    public Image getFishingBar() {
+        return fishingBar;
+    }
+
+    public Image getFishingGreenBar() {
+        return fishingGreenBar;
+    }
+
+    public Image getFishIcon() {
+        return fishIcon;
+    }
+
+    public Image getCrown() {
+        return crown;
+    }
+
+    public Image getSonarBobberWindow() {
+        return sonarBobberWindow;
+    }
+
+    public Image getSonarBobber() {
+        return sonarBobber;
+    }
+
+    public Image getFishingMiniGameBackground() {
+        return new Image(fishingMiniGameBackground);
     }
 
     public Image getJournalMenuBackground() {

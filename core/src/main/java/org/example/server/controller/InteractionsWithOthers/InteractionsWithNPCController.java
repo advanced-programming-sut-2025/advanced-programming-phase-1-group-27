@@ -19,9 +19,10 @@ import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class InteractionsWithNPCController {
-    public static Message handleMessage(Message message) {
+    public static void handleMessage(Message message) {
         String mode = message.getFromBody("mode");
         int lobbyId = message.getIntFromBody("lobbyId");
         String username = message.getFromBody("username");
@@ -32,7 +33,6 @@ public class InteractionsWithNPCController {
             int xp = message.getIntFromBody("XP");
             giftNPC(npcName, lobbyId, username, xp);
         }
-        return new Message();
     }
 
     public static void meetNPC(String npcName, int lobbyId, String username) {
@@ -241,8 +241,8 @@ public class InteractionsWithNPCController {
         Player player =  findPlayer(self, lobbyId);
         boolean found = false;
         for(Quest quests : player.getActiveQuests()){
-            if(quests.getReward().getItem() == quest.getReward().getItem()){
-                if(quests.getRequest().getItem() == quest.getRequest().getItem()){
+            if(Objects.equals(quests.getReward().getItem().getName(), quest.getReward().getItem().getName())){
+                if(Objects.equals(quests.getRequest().getItem().getName(), quest.getRequest().getItem().getName())){
                     found = true;
                 }
             }
@@ -260,8 +260,8 @@ public class InteractionsWithNPCController {
         String playerName = message.getFromBody("self");
         NPC npc = findNPC(npcName, lobbyId);
         for(Quest quests : npc.getQuests()){
-            if(quests.getReward().getItem() == quest.getReward().getItem()){
-                if(quests.getRequest().getItem() == quest.getRequest().getItem()){
+            if(quests.getReward().getItem().getName().equals(quest.getReward().getItem().getName())){
+                if(Objects.equals(quests.getRequest().getItem().getName(), quest.getRequest().getItem().getName())){
                     quests.setDone(true);
                     quests.setPlayerName(playerName);
                     System.out.println(quests.getRequest().getItem().getName() + " has been finished");

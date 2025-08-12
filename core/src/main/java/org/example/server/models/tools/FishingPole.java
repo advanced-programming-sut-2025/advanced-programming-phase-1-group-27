@@ -1,6 +1,9 @@
 package org.example.server.models.tools;
 
+import org.example.client.Main;
+import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
+import org.example.client.view.MiniGame.PreMiniGameMenuView;
 import org.example.server.models.App;
 import org.example.server.models.Cell;
 import org.example.server.models.Result;
@@ -86,7 +89,16 @@ public class FishingPole extends Tool {
     @Override
     public Result use(Cell cell) {
         if (cell.getType() == CellType.Water) {
-            //TODO Agha Abdi
+
+            if ( ClientApp.getCurrentGame().getCurrentPlayer().getEnergy() < ToolType.getFishPoleEnergy(this.getToolType()) ) {
+                ResultController.addError("Fishing failed! You don't have enough energy!");
+                ClientApp.getCurrentGame().getCurrentPlayer().setEnergy(0);
+            }
+            else{
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new PreMiniGameMenuView(this.getToolType()));
+            }
+
         }
         return new Result(false, "YOOO");
     }

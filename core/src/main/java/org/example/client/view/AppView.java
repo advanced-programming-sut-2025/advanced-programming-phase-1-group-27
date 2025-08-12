@@ -38,7 +38,7 @@ public class AppView {
 
 
     public void runViaGraphics() {
-        // ------REGULAR------
+//         ------REGULAR------
 //        if (ClientApp.loadSavedUser()) {
 //            ClientApp.setCurrentMenu(new MainMenuView());
 //            Main.getMain().setScreen(ClientApp.getCurrentMenu());
@@ -50,8 +50,10 @@ public class AppView {
 
 
         // ------CHEAT------
+
         Main.getMain().setScreen(new WelcomeMenuView());
         cheat();
+
     }
 
 }

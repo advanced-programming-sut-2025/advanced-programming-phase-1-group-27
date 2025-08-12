@@ -372,9 +372,10 @@ public class InteractionsWithNPCController {
     public static GraphicalResult addQuest(Quest quest) {
         if (ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().contains(quest)) {
             return new GraphicalResult("You already have this quest!");
+        } else if (quest.isDone()) {
+            return new GraphicalResult("Quest has been finished");
         }
         ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().add(quest);
-        System.out.println("anjam shod");
         Main.getMain().getScreen().dispose();
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);
@@ -388,7 +389,6 @@ public class InteractionsWithNPCController {
         }}, Message.Type.get_quests_journal);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
-            System.out.println("quests journal response is null");
             return new ArrayList<>();
         }
         ArrayList<Quest> quests = new ArrayList<>();
@@ -399,8 +399,8 @@ public class InteractionsWithNPCController {
         for (Quest quest : quests) {
             if (quest.isDone()) {
                 for (Quest quest1 : ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests()) {
-                    if (quest.getRequest().getItem() == quest1.getRequest().getItem()) {
-                        if (quest1.getReward().getItem() == quest.getReward().getItem()) {
+                    if (Objects.equals(quest.getRequest().getItem().getName(), quest1.getRequest().getItem().getName())) {
+                        if (Objects.equals(quest1.getReward().getItem().getName(), quest.getReward().getItem().getName())) {
                             deleted.add(quest);
                         }
                     }

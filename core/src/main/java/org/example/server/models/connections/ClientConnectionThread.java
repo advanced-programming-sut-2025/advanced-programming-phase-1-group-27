@@ -124,7 +124,7 @@ public class ClientConnectionThread extends ConnectionThread {
             sendMessage(GameController.getPlayerInventory(message));
             return true;
         } else if (message.getType() == Message.Type.interaction_p2npc) {
-            sendMessage(InteractionsWithNPCController.handleMessage(message));
+            InteractionsWithNPCController.handleMessage(message);
             return true;
         } else if (message.getType() == Message.Type.get_player_relation) {
             sendMessage(GameController.getPlayerRelation(message));
