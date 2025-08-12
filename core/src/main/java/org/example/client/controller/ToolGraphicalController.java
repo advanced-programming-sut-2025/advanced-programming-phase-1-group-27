@@ -13,10 +13,12 @@ import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
+import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Plants.SeedType;
 import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.tools.FishingPole;
 
 import java.util.ArrayList;
 
@@ -76,6 +78,17 @@ public class ToolGraphicalController {
                 if (cell == null)
                     return;
                 if (cell.getAdjacentCells().contains(player.getCurrentCell())) {
+                    Result res = toolType.getTheFuckingTool().use(cell);
+                    if (res != null)
+                        handleError(res);
+                } else if (cell.getType() == CellType.Water &&
+                toolType.getTheFuckingTool() instanceof FishingPole) {
+                    boolean flag = false;
+                    for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
+                        flag |= adjacentCell.getType() == CellType.Water;
+                    }
+                    if (!flag)
+                        return;
                     Result res = toolType.getTheFuckingTool().use(cell);
                     if (res != null)
                         handleError(res);

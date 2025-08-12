@@ -88,6 +88,6 @@ public class FishingPole extends Tool {
         if (cell.getType() == CellType.Water) {
             //TODO Agha Abdi
         }
-        return null;
+        return new Result(false, "YOOO");
     }
 }

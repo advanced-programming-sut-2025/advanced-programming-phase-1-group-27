@@ -20,27 +20,28 @@ public class PopUpTexture {
         this.destinationX = destinationX;
         this.destinationY = destinationY;
         this.time = time;
-        deltaX = (originX - destinationX) / time;
-        deltaY = (originY - destinationY) / time;
+        deltaX = (destinationX - originX) / time;
+        deltaY = (destinationY - originY) / time;
         sprite.setCenter(originX, originY);
     }
 
-    public PopUpTexture(Texture texture, float destinationX, float destinationY,
-                        float originX, float originY, float time) {
+    public PopUpTexture(Texture texture, float originX, float originY,
+                        float destinationX, float destinationY, float time) {
         this.sprite = new Sprite(texture);
         this.originX = originX;
         this.originY = originY;
         this.destinationX = destinationX;
         this.destinationY = destinationY;
         this.time = time;
-        deltaX = (originX - destinationX) / time;
-        deltaY = (originY - destinationY) / time;
+        deltaX = (destinationX - originX) / time;
+        deltaY = (destinationY - originY) / time;
         sprite.setCenter(originX, originY);
     }
 
     private void updatePosition() {
         originX += deltaX * Gdx.graphics.getDeltaTime();
         originY += deltaY * Gdx.graphics.getDeltaTime();
+        System.out.println("updated: " + originX + " " + originY);
         sprite.setCenter(originX, originY);
     }
 

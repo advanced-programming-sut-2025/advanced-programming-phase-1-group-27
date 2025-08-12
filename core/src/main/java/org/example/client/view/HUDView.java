@@ -2320,8 +2320,8 @@ public class HUDView extends AppMenu {
                         animal.getCurrentCell().getPosition().getY()).getY();
                 PopUpController.addPopUp(new PopUpTexture(
                         ShopItems.Hay.getTexture(),
-                        animalX + 20, animalY + 90,
-                        animalX + 20, animalY + 50,
+                        animalX + 20, animalY + 60,
+                        animalX + 20, animalY + 20,
                         2
                 ));
             }
@@ -2340,8 +2340,8 @@ public class HUDView extends AppMenu {
                 PopUpController.addPopUp(new PopUpTexture(
                         ((TextureRegionDrawable) Emoji.GALB.getEmojiImage().getDrawable())
                                 .getRegion().getTexture(),
-                        animalX + 20, animalY + 90,
-                        animalX + 20, animalY + 50,
+                        animalX + 20, animalY + 40,
+                        animalX + 20, animalY + 70,
                         2
                 ));
             }

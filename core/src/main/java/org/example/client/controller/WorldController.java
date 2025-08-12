@@ -33,6 +33,7 @@ import org.example.server.models.Map.Map;
 import org.example.server.models.Map.NPCMap;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.enums.ArtisanTypes;
+import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.CropType;
 import org.example.server.models.enums.Plants.Plant;
@@ -72,12 +73,49 @@ public class WorldController {
         Main.getBatch().draw(textureRegion, x, y - 160, 164, 224);
     }
 
+    public void renderGreenhouseInterior(FarmMap map) {
+        GreenHouse greenHouse = map.getGreenHouse();
+        int height = map.getHeight(), width = map.getWidth();
+        Cell[][] cells = map.getCells();
+        for (int i = 4; i < 11; i++)
+            for (int j = 20; j < 28; j++) {
+                float y = (height - 1 - i) * tileSize;
+                float x = j * tileSize;
+                if (cells[i][j].getType() != CellType.Building) {
+                    Texture texture;
+                    if (cells[i][j].getType() == CellType.Plowed) {
+                        texture = cells[i][j].getTexture();
+                        Main.getBatch().draw(texture, x, y, tileSize, tileSize);
+                    }
+                    if (cells[i][j].getObject() instanceof Crop crop) {
+                        texture = crop.getTexture();
+                        if (texture != null)
+                            Main.getBatch().draw(texture, x + 4, y + 4, 32, 32);
+                        if (crop.isAlwaysWatered()) {
+                            texture = GameAssetManager.getGameAssetManager().getDeluxeRetainingSoilTexture();
+                            Main.getBatch().draw(texture, x + 30, y + 30, 10, 10);
+                        }
+                        else if (crop.isFertilized()) {
+                            texture = GameAssetManager.getGameAssetManager().getSpeedGroTexture();
+                            Main.getBatch().draw(texture, x + 30, y + 30, 10, 10);
+                        }
+                    }
+                }
+            }
+    }
+
     private void renderFarmMap(FarmMap map) {
         Position position = map.getGreenHouse().getTopLeftCell().getPosition();
         int x = OutsideView.getGraphicalPosition(position).getX() - 20,
                 y = OutsideView.getGraphicalPosition(position).getY() - 30;
-        Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
-                x, y - 240, 320, 280);
+        if (map.getGreenHouse().isRepaired()) {
+            Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
+                    x, y - 240, 320, 280);
+            renderGreenhouseInterior(map);
+        }
+        else
+            Main.getBatch().draw(GameAssetManager.getGameAssetManager().getWreckedGreenHouseTexture(),
+                    x, y - 240, 320, 380);
 
         position = map.getHut().getTopLeftCell().getPosition();
         x = OutsideView.getGraphicalPosition(position).getX() - 20;
@@ -320,6 +358,9 @@ public class WorldController {
             if (cell.getObject() instanceof Artisan artisan) {
                 view.getHudView().getArtisanController().setArtisan(
                         artisan);
+            }
+            if (cell.getBuilding() instanceof GreenHouse greenHouse && !greenHouse.isRepaired()) {
+                ResultController.addResult(new GameMenuController(new GameView()).buildGreenHouse());
             }
         }
     }

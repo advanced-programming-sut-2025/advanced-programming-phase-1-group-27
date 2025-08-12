@@ -22,7 +22,9 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class OutsidePlayerController {
-    private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f,
+    private float x = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX();
+    private float y = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY();
+    private float
     lastX, lastY, destX, destY;
     private Animation<TextureRegion> currentAnimation;
     private final float speed = 160f;

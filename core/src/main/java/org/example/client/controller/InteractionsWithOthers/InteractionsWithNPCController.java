@@ -84,6 +84,7 @@ public class InteractionsWithNPCController {
         OutsideView newOutsideView = new OutsideView();
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(newOutsideView);
+        ClientApp.setCurrentMenu(newOutsideView);
         ResultController.addSuccess(npcName + " : Thank you! (You get " + xp + " xp)");
 
         float x = OutsideView.getGraphicalPositionInNPCMap(npc.getCurrentCell().getPosition().getX(),
@@ -94,9 +95,18 @@ public class InteractionsWithNPCController {
         Sprite itemSprite = new Sprite(stack.getItem().getTexture());
         itemSprite.setSize(72,62);
 
+        System.out.println(x + " " + y);
+        System.out.println(newOutsideView.getPlayerController().getX() + " " +
+                newOutsideView.getPlayerController().getY());
+
         PopUpController.addPopUp(new PopUpTexture(itemSprite
-                ,x,y+70,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),4
+                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),
+                x, y, 4
         ));
+//        PopUpController.addPopUp(new PopUpTexture(itemSprite,
+//                newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY(),
+//                0, 0,
+//                4));
 
 
         return new GraphicalResult(npcName + " : Thank you! (You get " + xp + " xp)",false);

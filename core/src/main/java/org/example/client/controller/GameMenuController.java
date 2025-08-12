@@ -335,7 +335,7 @@ public class GameMenuController extends MenuController {
     }
 
     public Result buildGreenHouse() {
-        Player player = App.getCurrentGame().getCurrentPlayer();
+        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
 
         if (player.getMoney() < 1000) {
             return new Result(false, "Not Enough Money, 1000 coins needed but you only have " +

@@ -48,6 +48,17 @@ public class OutsideView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         hudView = new HUDView(stage);
 
+        camera.position.set(getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX(),
+                getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY(), 0);
+
+        playerController.setCamera(camera);
+        toolController.setCamera(camera);
+        worldController.setCamera(camera);
+        ResultController.setCamera(camera);
+
+        for (Animal animal : ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals())
+            animalControllers.add(new AnimalController(animal, this, camera));
+
     }
 
     /// ---> Gives the Player Position <---
@@ -117,16 +128,7 @@ public class OutsideView extends AppMenu {
 
         Gdx.input.setInputProcessor(stage);
 
-        camera.position.set(getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX(),
-                getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY(), 0);
 
-        playerController.setCamera(camera);
-        toolController.setCamera(camera);
-        worldController.setCamera(camera);
-        ResultController.setCamera(camera);
-
-        for (Animal animal : ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals())
-            animalControllers.add(new AnimalController(animal, this, camera));
     }
 
     @Override

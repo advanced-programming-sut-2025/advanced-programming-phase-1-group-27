@@ -88,6 +88,7 @@ public class GameAssetManager {
 
     private final Texture homeTexture = new Texture("assets/Images/home_cropped.png");
     private final Texture greenHouseTexture = new Texture("assets/Images/greenhouse2.1.png");
+    private final Texture wreckedGreenHouseTexture = new Texture("assets/Images/Wrecked_Greenhouse.png");
     private final Texture hutTexture = new Texture("assets/Images/hut.png");
     private final Texture fridgeTexture = new Texture("assets/Images/Mini-Fridge.png");
 
@@ -1226,6 +1227,10 @@ public class GameAssetManager {
 
     public Texture getGreenHouseTexture() {
         return greenHouseTexture;
+    }
+
+    public Texture getWreckedGreenHouseTexture() {
+        return wreckedGreenHouseTexture;
     }
 
     public Texture getFridgeTexture() {

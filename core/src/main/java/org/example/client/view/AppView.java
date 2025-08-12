@@ -54,8 +54,10 @@ public class AppView {
 //        }
 
         // ------CHEAT------
-//        Main.getMain().setScreen(new WelcomeMenuView());
-        Main.getMain().setScreen(new GiftHistoryView("a"));
+        Main.getMain().setScreen(new WelcomeMenuView());
+
+        //Main.getMain().setScreen(new GiftHistoryView("a"));
+
       cheat();
     }
 
