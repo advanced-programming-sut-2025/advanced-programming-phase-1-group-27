@@ -28,13 +28,6 @@ public class Time {
         return timeInfo;
     }
 
-    public Time(LinkedTreeMap<String , Object> timeInfo){
-        this.daysPassed = ((Number) timeInfo.get("daysPassed")).intValue();
-        this.hour = ((Number) timeInfo.get("hour")).intValue();
-        this.day = ((Number) timeInfo.get("day")).intValue();
-        this.season = Season.valueOf((String) timeInfo.get("season"));
-    }
-
     public int getHour() {
         return this.hour;
     }
@@ -50,6 +43,22 @@ public class Time {
     public String getDateTime() {
         return new String(getDayOfWeek() + ", " + getSeason() + " " + getDate() + "\n" +
                 getHour() + ":00\n");
+    }
+
+    public void setDaysPassed(int daysPassed) {
+        this.daysPassed = daysPassed;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
     }
 
     public void passAnHour() {

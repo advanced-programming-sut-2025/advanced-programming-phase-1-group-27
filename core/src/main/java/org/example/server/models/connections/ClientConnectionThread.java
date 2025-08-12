@@ -205,7 +205,6 @@ public class ClientConnectionThread extends ConnectionThread {
             InteractionsWithUserController.meet(message);
             return true;
         }
-        System.out.println("not handled message: " + (message == null ? "null" : message.getType()));
         return false;
     }
 

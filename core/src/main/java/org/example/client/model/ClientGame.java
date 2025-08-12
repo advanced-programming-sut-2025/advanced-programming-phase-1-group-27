@@ -23,6 +23,7 @@ import org.example.server.models.enums.Plants.Crop;
 import org.example.server.models.enums.Plants.FruitType;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.Plants.Tree;
+import org.example.server.models.enums.Seasons.Season;
 import org.example.server.models.enums.ShopType;
 import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.Weathers.Weather;
@@ -65,7 +66,7 @@ public class ClientGame implements Game {
         this.time = new Time(this);
     }
 
-    public void init(ArrayList<ArrayList<LinkedTreeMap<String, Object>>> info, int farmId) {
+    public void init(int farmId) {
         initShops();
         Sebastian = new NPC(NPCType.Sebastian, 10);
         Abigail = new NPC(NPCType.Abigail, 20);
@@ -97,9 +98,8 @@ public class ClientGame implements Game {
 
         FarmMapBuilder builder = new FarmMapBuilder();
         FarmMapDirector director = new FarmMapDirector();
-        director.buildMapWithoutForaging(builder, farmId, this);
+        director.buildMap(builder, farmId, this);
         farmMap = builder.getFinalProduct();
-        farmMap.addForaging(info.get(farmId));
 
         player.setFarmMap(farmMap);
 
@@ -141,6 +141,13 @@ public class ClientGame implements Game {
 
     public Time getTime() {
         return time;
+    }
+
+    public void updateTime(LinkedTreeMap<String, Object> timeInfo) {
+        time.setDaysPassed(((Number) timeInfo.get("daysPassed")).intValue());
+        time.setHour(((Number) timeInfo.get("hour")).intValue());
+        time.setDay(((Number) timeInfo.get("day")).intValue());
+        time.setSeason(Season.getSeason((String) timeInfo.get("season")));
     }
 
     public Shop getShop(String shopName) {

@@ -26,4 +26,13 @@ public enum Season {
     public Season getNextSeason() {
         return Season.values()[(this.index + 1) % 4];
     }
+
+    public static Season getSeason(String seasonName) {
+        for (Season season : values()) {
+            if (season.name().equalsIgnoreCase(seasonName)) {
+                return season;
+            }
+        }
+        return null;
+    }
 }

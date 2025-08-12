@@ -1,32 +1,163 @@
 package org.example.client.controller;
 
+import com.badlogic.gdx.Gdx;
+import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.model.ClientGame;
+import org.example.client.model.MiniPlayer;
+import org.example.client.view.HomeView;
 import org.example.common.models.Message;
+import org.example.common.models.Time;
+import org.example.server.models.*;
+import org.example.server.models.AnimalProperty.Animal;
+import org.example.server.models.AnimalProperty.AnimalEnclosure;
 import org.example.server.models.AnimalProperty.Barn;
 import org.example.server.models.AnimalProperty.Coop;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.NPCMap;
-import org.example.server.models.Player;
 import org.example.server.models.enums.AbilityType;
+import org.example.server.models.enums.CellType;
+import org.example.server.models.enums.Weathers.Weather;
 import org.example.server.models.enums.items.Recipe;
+import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SaveController {
+    public static void handleInfo(Message message) {
+        Lobby lobby = new Lobby(message.getFromBody("lobbyInfo"));
+        createBasicClientGame(lobby);
+
+        ClientGame game = ClientApp.getCurrentGame();
+        Player player = game.getCurrentPlayer();
+
+        handleFarmInfo(game, message.getFromBody("farmMapInfo"));
+        handlePlayerInfo(game, player, message.getFromBody("playerInfo"));
+        game.setWeather(Weather.getWeather(message.getFromBody("weather")));
+        game.updateTime(message.getFromBody("time"));
+
+        Gdx.app.postRunnable(() -> {
+            Main.getMain().getScreen().dispose();
+            ClientApp.setCurrentMenu(new HomeView());
+            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+        });
+    }
+
+    private static void handlePlayerInfo(ClientGame game, Player player, LinkedTreeMap<String, Object> info) {
+        // RECIPES
+        player.setAvailableCraftingRecipes(handleRecipeInfo((ArrayList<String>) info.get("availableCraftingRecipes")));
+        player.setAvailableCookingRecipes(handleRecipeInfo((ArrayList<String>) info.get("availableCookingRecipes")));
+        // INVENTORY
+        player.setBackpack(new Backpack((LinkedTreeMap<String, Object>) info.get("inventoryInfo")));
+        // ENERGY
+        player.setEnergy(((Number) info.get("energy")).intValue());
+        player.setMaxEnergy(((Number) info.get("maxEnergy")).intValue());
+        player.setBoostEnergy(((Number) info.get("boostEnergy")).intValue());
+        // ABILITY
+        player.setAbility(AbilityType.Farming, new Ability((LinkedTreeMap<String, Object>) info.get("farming")));
+        player.setAbility(AbilityType.Fishing, new Ability((LinkedTreeMap<String, Object>) info.get("fishing")));
+        player.setAbility(AbilityType.Mining, new Ability((LinkedTreeMap<String, Object>) info.get("mining")));
+        player.setAbility(AbilityType.Foraging, new Ability((LinkedTreeMap<String, Object>) info.get("foraging")));
+        // MAP
+        if ((boolean) info.get("isInNPCMap"))
+            player.setCurrentMap(game.getNpcMap());
+        else
+            player.setCurrentMap(game.getFarmMap());
+        // MONEY
+        player.setMoney(((Number) info.get("money")).intValue());
+        // BUFF
+        if (info.get("buff") == null)
+            player.setBuff(null);
+        else
+            player.setBuff(new Buff((LinkedTreeMap<String, Object>) info.get("buff")));
+    }
+
+    private static ArrayList<Recipe> handleRecipeInfo(ArrayList<String> info) {
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        for (String recipeName : info) {
+            recipes.add(Recipe.getItem(recipeName));
+        }
+        return recipes;
+    }
+
+    private static void handleFarmInfo(ClientGame game, LinkedTreeMap<String, Object> info) {
+        FarmMap farmMap = game.getFarmMap();
+        farmMap.getCoops().clear();
+        farmMap.getBarns().clear();
+        farmMap.getAnimals().clear();
+        farmMap.getShippingBins().clear();
+
+        // handling cells info
+        ArrayList cellsInfo = (ArrayList) info.get("cellsInfo");
+        for (int i = 0; i < farmMap.getHeight(); i++)
+            for (int j = 0; j < farmMap.getWidth(); j++) {
+                farmMap.getCell(i, j).handleInfo((LinkedTreeMap<String, Object>) cellsInfo.get(i * farmMap.getWidth() + j));
+            }
+
+        // handling refrigerator
+        farmMap.getHut().setRefrigerator(new Backpack((LinkedTreeMap<String, Object>) info.get("refrigerator")));
+
+        // handling animal enclosures
+        ArrayList<LinkedTreeMap<String, Object>> animalEnclosuresInfo =
+                (ArrayList<LinkedTreeMap<String, Object>>) info.get("animalEnclosures");
+        for (LinkedTreeMap<String, Object> enclosureInfo : animalEnclosuresInfo) {
+            handleEnclosureInfo(farmMap, enclosureInfo);
+        }
+
+        // handling green house
+        boolean isGreenHouseRepaired = (boolean) info.get("isGreenHouseRepaired");
+        if (!farmMap.getGreenHouse().isRepaired() && isGreenHouseRepaired)
+            farmMap.getGreenHouse().repair();
+    }
+
+    private static void handleEnclosureInfo(FarmMap farmMap, LinkedTreeMap<String, Object> info) {
+        Position topLeftPosition = new Position((LinkedTreeMap<String, Object>) info.get("position"));
+        Cell topLeftCell = farmMap.getCell(topLeftPosition.getX(), topLeftPosition.getY());
+        AnimalEnclosure enclosure = AnimalEnclosure.handleInfo(topLeftCell, info);
+        for (int i = 0; i < enclosure.getType().getHeight(); i++)
+            for (int j = 0; j < enclosure.getType().getWidth(); j++) {
+                Cell cell = farmMap.getCell(topLeftPosition.getX() + i, topLeftPosition.getY() + j);
+                cell.setBuilding(enclosure);
+                cell.setType(CellType.Building);
+            }
+        for (Animal animal : enclosure.getAnimals()) {
+            farmMap.addAnimal(animal);
+        }
+        if (enclosure instanceof Coop coop)
+            farmMap.getCoops().add(coop);
+        else if (enclosure instanceof Barn barn)
+            farmMap.getBarns().add(barn);
+    }
+    
+    private static void createBasicClientGame(Lobby lobby) {
+        ArrayList<MiniPlayer> miniPlayers = new ArrayList<>();
+        for (User user : lobby.getUsers()) {
+            miniPlayers.add(new MiniPlayer(user, lobby.getUsernameToMap().get(user.getUsername())));
+        }
+        ClientGame clientGame;
+        Player currentPlayer = new Player(ClientApp.getLoggedInUser());
+        ClientApp.setCurrentGame(clientGame = new ClientGame(
+                lobby,
+                currentPlayer,
+                miniPlayers
+        ));
+        clientGame.init(lobby.getUsernameToMap().get(currentPlayer.getUsername()));
+    }
+    
     public static void sendInfo() {
         ClientGame currentGame = ClientApp.getCurrentGame();
         Player player = currentGame.getCurrentPlayer();
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("lobbyId", currentGame.getLobbyId());
             put("playerName", player.getUsername());
-            put("farmMapInfo", SaveController.getFarmMapInfo(currentGame.getFarmMap(), currentGame.getPlayerMapIndex(player.getUsername())));
-            put("playerInfo", SaveController.getPlayerInfo(player));
+            put("farmMapInfo", getFarmMapInfo(currentGame.getFarmMap(), currentGame.getPlayerMapIndex(player.getUsername())));
+            put("playerInfo", getPlayerInfo(player));
         }}, Message.Type.client_game_info));
     }
 
-    public static HashMap<String, Object> getPlayerInfo(Player player) {
+    private static HashMap<String, Object> getPlayerInfo(Player player) {
         HashMap<String, Object> info = new HashMap<>();
         // RECIPES
         info.put("availableCraftingRecipes", getRecipesInfo(player.getAvailableCraftingRecipes()));
@@ -61,7 +192,7 @@ public class SaveController {
         return result;
     }
 
-    public static HashMap<String, Object> getFarmMapInfo(FarmMap farmMap, int farmId) {
+    private static HashMap<String, Object> getFarmMapInfo(FarmMap farmMap, int farmId) {
         HashMap<String, Object> info = new HashMap<>();
         info.put("farmId", farmId);
         info.put("cellsInfo", getCellsInfo(farmMap));
