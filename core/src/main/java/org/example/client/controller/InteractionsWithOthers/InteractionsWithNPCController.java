@@ -374,6 +374,8 @@ public class InteractionsWithNPCController {
             return new GraphicalResult("You already have this quest!");
         } else if (quest.isDone()) {
             return new GraphicalResult("Quest has been finished");
+        } else if(ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().size() + 1 > 3) {
+            return new GraphicalResult("You can't add more quests!");
         }
         ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().add(quest);
         Main.getMain().getScreen().dispose();
@@ -401,7 +403,7 @@ public class InteractionsWithNPCController {
                 for (Quest quest1 : ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests()) {
                     if (Objects.equals(quest.getRequest().getItem().getName(), quest1.getRequest().getItem().getName())) {
                         if (Objects.equals(quest1.getReward().getItem().getName(), quest.getReward().getItem().getName())) {
-                            deleted.add(quest);
+                            deleted.add(quest1);
                         }
                     }
                 }

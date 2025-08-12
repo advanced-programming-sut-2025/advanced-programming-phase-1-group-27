@@ -16,9 +16,20 @@ public class DataBaseHelper {
                     createUserTable();
                 }
             }
+
+            try (ResultSet tables = meta.getTables(null, null, "saves", null)) {
+                if (!tables.next()) {
+                    createSaveTable();
+                }
+            }
         } catch (SQLException e) {
             System.err.println("Error initializing database: " + e.getMessage());
         }
+    }
+
+
+    public static void createSaveTable() {
+
     }
 
     public static void createUserTable() {
