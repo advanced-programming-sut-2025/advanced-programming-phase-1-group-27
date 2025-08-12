@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Align;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
+import org.example.client.view.GameView;
 import org.example.client.view.InteractionMenus.NpcMenuView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GameAssetManager;
