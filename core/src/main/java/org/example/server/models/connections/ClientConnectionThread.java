@@ -198,6 +198,9 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if(message.getType() == Message.Type.get_quests_journal){
             sendMessage(InteractionsWithNPCController.getQuestsJournal(message));
             return true;
+        } else if (message.getType() == Message.Type.meetP2P){
+            InteractionsWithUserController.meet(message);
+            return true;
         }
         System.out.println("not handled message: " + (message == null ? "null" : message.getType()));
         return false;

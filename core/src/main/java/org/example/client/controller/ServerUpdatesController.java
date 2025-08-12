@@ -204,8 +204,8 @@ public class ServerUpdatesController { // handles updates sent by server
             itemSprite.setSize(72, 62);
 
             PopUpController.addPopUp(new PopUpTexture(itemSprite
-                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+20,
-                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+80, 4
+                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+80,
+                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+20, 4
             ));
 
         }
@@ -224,8 +224,8 @@ public class ServerUpdatesController { // handles updates sent by server
             itemSprite.setSize(72, 62);
 
             PopUpController.addPopUp(new PopUpTexture(itemSprite
-                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+20,
-                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+80, 4
+                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+80,
+                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+20, 4
             ));
 
         }
@@ -246,8 +246,8 @@ public class ServerUpdatesController { // handles updates sent by server
             for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
 
                 if ( miniPlayer.getUsername().equals(giver) ) {
-                    giverX = miniPlayer.getPosition().getX();
-                    giverY = miniPlayer.getPosition().getY();
+                    giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                    giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
                 }
 
             }

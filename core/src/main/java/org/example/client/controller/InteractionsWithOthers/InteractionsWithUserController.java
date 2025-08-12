@@ -26,6 +26,14 @@ import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 
 public class InteractionsWithUserController {
+    public static void meet(String username){
+        Message message = new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("other", username);
+        }}, Message.Type.meetP2P);
+    }
+
     public static Relation getRelation(String username) {
         Message message = new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
@@ -76,9 +84,9 @@ public class InteractionsWithUserController {
         if (!backpack.hasEnoughItem(ShopItems.Bouquet, 1)) {
             return new GraphicalResult("You don't have any Bouquet!");
         }
-        if (!canFlowered(relation)) {
-            return new GraphicalResult("You can't give flower");
-        }
+//        if (!canFlowered(relation)) {
+//            return new GraphicalResult("You can't give flower");
+//        }
         backpack.reduceItems(ShopItems.Bouquet, 1);
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "flower");
@@ -117,8 +125,8 @@ public class InteractionsWithUserController {
         for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
 
             if ( miniPlayer.getUsername().equals(username) ) {
-                giverX = miniPlayer.getPosition().getX();
-                giverY = miniPlayer.getPosition().getY();
+                giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
             }
 
         }

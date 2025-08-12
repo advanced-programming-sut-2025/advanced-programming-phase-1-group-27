@@ -116,7 +116,7 @@ public class GameController {
             Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
             player1.getPlayerMetToday().put(player2, Boolean.TRUE);
             player2.getPlayerMetToday().put(player1, Boolean.TRUE);
-            Relation relation = player1.getRelations().computeIfAbsent(player1, k -> new Relation());
+            Relation relation = player1.getRelations().computeIfAbsent(player2, k -> new Relation());
             if(relation.getLevel() == 2
                     &&  relation.getXp() == 300){
                 player1.goNextLevel(player2);

@@ -89,5 +89,6 @@ public class Message {
         do_i_have_quest,
         finish_quest,
         get_quests_journal,
+        meetP2P,
     }
 }

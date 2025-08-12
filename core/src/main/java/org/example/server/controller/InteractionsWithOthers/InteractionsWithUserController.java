@@ -19,6 +19,13 @@ import java.util.HashMap;
 
 
 public class InteractionsWithUserController {
+    public static void meet(Message message){
+        int lobbyId = message.getIntFromBody("lobbyId");
+        Player player = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("self"));
+        Player other = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("other"));
+        other.getPlayerMetToday().put(player, Boolean.TRUE);
+        player.getPlayerMetToday().put(other, Boolean.TRUE);
+    }
 
     public Result friendship() {
         Player currentPlayer = App.getCurrentGame().getCurrentPlayer();
