@@ -272,7 +272,7 @@ public class ServerGame implements Game {
             if (player.getUsername().equals(currentPlayer.getUsername())) {
                 continue;
             } else {
-                if (hasInteracted.get(player) == Boolean.FALSE) {
+                if (hasInteracted.get(player) == Boolean.FALSE || hasInteracted.get(player) == null) {
                     currentPlayer.decreaseXP(player, 10);
                 }
             }

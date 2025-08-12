@@ -69,7 +69,7 @@ public class InteractionsWithUserController {
         if (!backpack.hasEnoughItem(ShopItems.Bouquet, 1)) {
             return new GraphicalResult("You don't have any Bouquet!");
         }
-        if (canFlowered(relation)) {
+        if (!canFlowered(relation)) {
             return new GraphicalResult("You can't give flower");
         }
         backpack.reduceItems(ShopItems.Bouquet, 1);

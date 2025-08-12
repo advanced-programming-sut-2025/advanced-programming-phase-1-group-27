@@ -94,11 +94,11 @@ public class GameController {
         String other = message.getFromBody("other");
         String self = message.getFromBody("self");
         String mode = message.getFromBody("mode");
-        int lobbyId = message.getIntFromBody("lobbyId");
-        Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
-        Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
         if (mode.equals("confirmTrade")) {
+            int lobbyId = message.getIntFromBody("lobbyId");
             boolean answer = message.getFromBody("answer");
+            Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
+            Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
             if (answer) {
                 Trade trade = new Trade(message);
                 ServerApp.getLobbyById(lobbyId).getGame().addTrade(trade);
@@ -111,6 +111,9 @@ public class GameController {
             player1.getPlayerTradeToday().put(player2, Boolean.TRUE);
             player2.getPlayerTradeToday().put(player1, Boolean.TRUE);
         } else if (mode.equals("flower")) {
+            int lobbyId = message.getIntFromBody("lobbyId");
+            Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
+            Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
             player1.getPlayerMetToday().put(player2, Boolean.TRUE);
             player2.getPlayerMetToday().put(player1, Boolean.TRUE);
             Relation relation = player1.getRelations().computeIfAbsent(player1, k -> new Relation());
@@ -120,6 +123,11 @@ public class GameController {
                 player2.goNextLevel(player1);
             }
         }else  if (mode.equals("hug")) {
+            int lobbyId = message.getIntFromBody("lobbyId");
+            Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
+            Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
+            player1.getPlayerMetToday().put(player2, Boolean.TRUE);
+            player2.getPlayerMetToday().put(player1, Boolean.TRUE);
             if (player1.getPlayerHuggedToday().get(player2) == null
                     || player1.getPlayerHuggedToday().get(player2) == Boolean.FALSE) {
                 player1.getPlayerHuggedToday().put(player2, Boolean.TRUE);
@@ -128,6 +136,11 @@ public class GameController {
                 player1.addXP(player2, 60);
             }
         }else if (mode.equals("gift")) {
+            int lobbyId = message.getIntFromBody("lobbyId");
+            Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
+            Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
+            player1.getPlayerMetToday().put(player2, Boolean.TRUE);
+            player2.getPlayerMetToday().put(player1, Boolean.TRUE);
             if (player1.getPlayerGiftToday().get(player2) == Boolean.FALSE
                     || player1.getPlayerGiftToday().get(player2) == null) {
                 player1.getPlayerGiftToday().put(player2, Boolean.TRUE);

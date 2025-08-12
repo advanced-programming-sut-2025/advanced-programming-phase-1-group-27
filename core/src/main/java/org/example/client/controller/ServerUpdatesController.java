@@ -252,7 +252,9 @@ public class ServerUpdatesController { // handles updates sent by server
         String proposer = message.getFromBody("self");
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new MarriageRequestView(proposer));
+            MarriageRequestView marriageRequestView = new MarriageRequestView(proposer);
+            ClientApp.setNonMainMenu(marriageRequestView);
+            Main.getMain().setScreen(marriageRequestView);
         });
     }
 
