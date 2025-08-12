@@ -98,6 +98,10 @@ public enum FishType implements Item, Edible {
         return energy;
     }
 
+    public boolean isLegendary() {
+        return isLegendary;
+    }
+
     @Override
     public boolean isEdible() {
         return true;

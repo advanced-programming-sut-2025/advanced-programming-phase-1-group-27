@@ -10,18 +10,11 @@ Avatars/stardew_avatar_2_2.png
 Buildings/Barn.png
 Buildings/Big Barn.png
 Buildings/Big Coop.png
-Buildings/Blacksmith.png
 Buildings/Buildings.atlas
 Buildings/Cabins.png
-Buildings/Carpenter's_Shop.png
 Buildings/Coop.png
 Buildings/Deluxe Barn.png
 Buildings/Deluxe Coop.png
-Buildings/Fish_Shop.png
-Buildings/Jojamart.png
-Buildings/Pierres_shop.png
-Buildings/marine_ranch.png
-Buildings/stardrop_saloon.png
 Character/PassOut.png
 Character/Vincent.png
 Character/character.atlas
@@ -694,6 +687,17 @@ Images/Emoji/Smile.png
 Images/Exit/ExitMenuMan.png
 Images/Exit/ExitMenuMan2.png
 Images/Exit/ExitMenuWoman.png
+Images/FishingMiniGame/Bar.png
+Images/FishingMiniGame/Bar2.png
+Images/FishingMiniGame/Crown.png
+Images/FishingMiniGame/FishIcon.png
+Images/FishingMiniGame/FishingGreenBar.png
+Images/FishingMiniGame/FishingMiniGameWindow.png
+Images/FishingMiniGame/FishingMiniGameWindow2.png
+Images/FishingMiniGame/GreenBar.png
+Images/FishingMiniGame/GreenBar2.png
+Images/FishingMiniGame/SonarBobber.png
+Images/FishingMiniGame/SonarBobberWindow.png
 Images/Floorings/DarkGrass.png
 Images/Floorings/DarkGrass2.png
 Images/Floorings/Flooring_34.png
@@ -826,6 +830,7 @@ Images/Trees/Pomegranate/  (4).png
 Images/Trees/Pomegranate/  (5).png
 Images/Trees/Trees.atlas
 Images/Trees/Trees.png
+Images/Wrecked_Greenhouse.png
 Images/greenhouse.png
 Images/greenhouse2.1.png
 Images/home2.png

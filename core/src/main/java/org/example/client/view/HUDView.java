@@ -1562,6 +1562,8 @@ public class HUDView extends AppMenu {
 
     private void displayJournal(){
 
+        journalMenuBackground.setVisible(currentMenu == InGameMenuType.JOURNAL);
+
     }
 
     @Override

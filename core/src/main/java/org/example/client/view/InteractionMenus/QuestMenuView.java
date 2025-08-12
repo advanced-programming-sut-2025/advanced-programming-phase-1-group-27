@@ -74,31 +74,6 @@ public class QuestMenuView extends AppMenu {
 
     private void setListeners() {
 
-
-//
-//        sendGiftButton.addListener(new ClickListener() {
-//
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                playClickSound();
-//                ///  TODO PARSA: starter - other - onScreenItems.get(selectItemIndex) - itemCount
-//                controller.gift(starter , onScreenItems.get(selectItemIndex), itemCount);
-//            }
-//        });
-//
-//        backButton.addListener(new ClickListener() {
-//
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//
-//                playClickSound();
-//                Main.getMain().getScreen().dispose();
-//                Main.getMain().setScreen(new PreGiftMenuView(other));
-//
-//            }
-//
-//        });
-
     }
 
     @Override
