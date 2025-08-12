@@ -35,7 +35,13 @@ public class LobbyMenuController extends MenuController {
             Lobby lobby = new Lobby(info);
             lobbies.add(lobby);
         }
-        return lobbies;
+        ArrayList<Lobby> selectedLobbies = new ArrayList<>();
+        for(Lobby lobby : lobbies){
+            if(lobby.getGame() == null){
+                selectedLobbies.add(lobby);
+            }
+        }
+        return selectedLobbies;
     }
 
     public GraphicalResult findViaGraphicalResult() {

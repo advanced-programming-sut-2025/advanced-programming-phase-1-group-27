@@ -1,5 +1,6 @@
 package org.example.server.models.NPCs;
 
+import org.example.client.model.ClientApp;
 import org.example.server.models.*;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.Features;
@@ -19,7 +20,7 @@ public class NPC {
     private Features features;
     private ArrayList<Item> favorites;
     private ShopType shop;
-    private Map<Player, Relation> relations = new HashMap<>();
+    private Map<Player, Relation> relations;
     private Quest[] quests = new Quest[3];
     private Building home;
     private String dialogue = "Salam Chettori?";
@@ -33,7 +34,8 @@ public class NPC {
         this.favorites = type.getFavorite();
         this.daysForThirdQuest = daysForThirdQuest;
         this.shop = type.getJob();
-        this.relations = relationMap();
+//        this.relations = relationMap();
+        this.relations = new HashMap<>();
         this.quests = type.getQuests();
     }
 
@@ -81,13 +83,13 @@ public class NPC {
         return features;
     }
 
-    private Map<Player, Relation> relationMap() {
-        Map<Player, Relation> map = new HashMap<>();
-        for (Player player : App.getCurrentGame().getPlayers()) {
-            map.put(player, new Relation());
-        }
-        return map;
-    }
+//    private Map<Player, Relation> relationMap() {
+//        Map<Player, Relation> map = new HashMap<>();
+//        for (Player player : ClientApp.getCurrentGame().getPlayers()) {
+//            map.put(player, new Relation());
+//        }
+//        return map;
+//    }
 
     public void addXP(Player player, int xp) {
         if (!relations.containsKey(player)) {

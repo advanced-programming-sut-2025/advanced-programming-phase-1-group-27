@@ -70,12 +70,14 @@ public class InteractionsWithNPCController {
             int lobbyId = ClientApp.getCurrentGame().getLobbyId();
             for (Item item : npc.getFavorites()) {
                 if (item.getName().equalsIgnoreCase(stack.getItem().getName())) {
+                    npc.getRelations().computeIfAbsent(ClientApp.getCurrentGame().getCurrentPlayer(), k -> new Relation());
                     npc.addXP(ClientApp.getCurrentGame().getCurrentPlayer(), 200);
                     xp = 200;
                     addItem = true;
                 }
             }
             if (!addItem) {
+                npc.getRelations().computeIfAbsent(ClientApp.getCurrentGame().getCurrentPlayer(), k -> new Relation());
                 npc.addXP(ClientApp.getCurrentGame().getCurrentPlayer(), 50);
                 xp = 50;
             }

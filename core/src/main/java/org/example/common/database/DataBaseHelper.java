@@ -1,14 +1,21 @@
 package org.example.common.database;
 
+import org.example.common.models.Message;
+import org.example.common.models.Time;
+import org.example.common.utils.JSONUtils;
+import org.example.server.models.Lobby;
 import org.example.server.models.User;
+import org.example.server.models.enums.Weathers.Weather;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DataBaseHelper {
     private static final String DB_URL = "jdbc:sqlite:users.db";
+    private static final String DB_SAVE = "jdbc:sqlite:saves.db";
 
-    public static void createDatabase() {
+    public static void createDatabaseForUser() {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             DatabaseMetaData meta = conn.getMetaData();
             try (ResultSet tables = meta.getTables(null, null, "users", null)) {
@@ -16,6 +23,15 @@ public class DataBaseHelper {
                     createUserTable();
                 }
             }
+
+        } catch (SQLException e) {
+            System.err.println("Error initializing database: " + e.getMessage());
+        }
+    }
+
+    public static void createDatabaseForSave() {
+        try (Connection conn = DriverManager.getConnection(DB_SAVE)) {
+            DatabaseMetaData meta = conn.getMetaData();
 
             try (ResultSet tables = meta.getTables(null, null, "saves", null)) {
                 if (!tables.next()) {
@@ -27,9 +43,27 @@ public class DataBaseHelper {
         }
     }
 
-
     public static void createSaveTable() {
-
+        String sql = "CREATE TABLE IF NOT EXISTS saves (" +
+                "lobbyId INTEGER DEFAULT 0," +
+                "lobby TEXT NOT NULL," +
+                "Time TEXT DEFAULT NULL," +
+                "Weather TEXT DEFAULT NULL," +
+                "Trades TEXT DEFAULT NULL," +
+                "Gifts TEXT DEFAULT NULL," +
+                "NumberOfUsers INTEGER DEFAULT 0," +
+                "User1 TEXT DEFAULT NULL," +
+                "User2 TEXT DEFAULT NULL," +
+                "User3 TEXT DEFAULT NULL," +
+                "User4 TEXT DEFAULT NULL" +
+                ")";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Save table created or already exists.");
+        } catch (SQLException e) {
+            System.err.println("Error creating saves table: " + e.getMessage());
+        }
     }
 
     public static void createUserTable() {
@@ -109,6 +143,7 @@ public class DataBaseHelper {
             e.printStackTrace();
         }
     }
+
 
     public static void changePassword(String username, String newPassword) {
         String sql = "UPDATE users SET password = ? WHERE username = ?";
@@ -255,5 +290,53 @@ public class DataBaseHelper {
         }
         return users;
     }
+
+    // Save
+
+    public static void saveLobby(Lobby lobby) {
+        String sql = "INSERT INTO saves(lobbyId, lobby) VALUES(?, ?)";
+        int lobbyId = lobby.getId();
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            String lobbyGson = JSONUtils.toJson(new Message(new HashMap<>(){{
+                put("lobby", lobby.getInfo());
+            }} , Message.Type.save));
+
+            pstmt.setInt(1, lobbyId);
+            pstmt.setString(2, lobbyGson);
+
+            pstmt.executeUpdate();
+            System.out.println("Lobby " + lobbyId + " saved successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error saving lobby " + lobbyId + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveTimeAndWeather(Lobby lobby, Time time, Weather weather) {
+        String sql = "UPDATE saves SET Time = ?, Weather = ? WHERE lobbyId = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, time.toString());
+            pstmt.setString(2, weather.toString());
+            pstmt.setInt(3, lobby.getId());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Time and weather for lobbyId '" + lobby.getId() +
+                        "' updated successfully.");
+            } else {
+                System.out.println("LobbyId '" + lobby.getId() + "' not found, update skipped.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error updating time and weather for lobbyId '" +
+                    lobby.getId() + "': " + e.getMessage());
+        }
+    }
+
+
 }
 

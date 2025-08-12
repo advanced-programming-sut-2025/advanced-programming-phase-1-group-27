@@ -1,6 +1,10 @@
 package org.example.common.models;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.enums.Seasons.Season;
+
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Time {
     private Game game;
@@ -13,6 +17,22 @@ public class Time {
 
     public Time(Game game) {
         this.game = game;
+    }
+
+    public HashMap<String , Object> getInfo(){
+        HashMap<String, Object> timeInfo = new HashMap<>();
+        timeInfo.put("daysPassed", daysPassed);
+        timeInfo.put("hour", hour);
+        timeInfo.put("day", day);
+        timeInfo.put("season", season.name());
+        return timeInfo;
+    }
+
+    public Time(LinkedTreeMap<String , Object> timeInfo){
+        this.daysPassed = ((Number) timeInfo.get("daysPassed")).intValue();
+        this.hour = ((Number) timeInfo.get("hour")).intValue();
+        this.day = ((Number) timeInfo.get("day")).intValue();
+        this.season = Season.valueOf((String) timeInfo.get("season"));
     }
 
     public int getHour() {

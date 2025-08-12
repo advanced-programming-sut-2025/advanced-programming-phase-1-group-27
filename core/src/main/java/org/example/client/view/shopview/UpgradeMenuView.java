@@ -86,7 +86,7 @@ public class UpgradeMenuView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         hudView = new HUDView(stage);
 
-        upgradeLimit = App.getCurrentGame().getBlacksmith().getUpgradeLimit();
+        upgradeLimit = ClientApp.getCurrentGame().getBlacksmith().getUpgradeLimit();
 
         setListeners();
     }

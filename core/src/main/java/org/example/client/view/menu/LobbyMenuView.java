@@ -45,7 +45,6 @@ public class LobbyMenuView extends AppMenu {
 
 
     public LobbyMenuView() {
-
         controller = new LobbyMenuController(this);
 
         errorLabel = new GraphicalResult();

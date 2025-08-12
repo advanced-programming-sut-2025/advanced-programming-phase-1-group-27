@@ -95,7 +95,6 @@ public class TradeController {
             // trade namovafagh bood
         }
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
-        System.out.println("injam " + lobbyId);
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "confirmTrade");
             put("lobbyId", lobbyId);

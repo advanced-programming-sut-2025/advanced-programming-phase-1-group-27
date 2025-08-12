@@ -91,5 +91,6 @@ public class Message {
         finish_quest,
         get_quests_journal,
         meetP2P,
+        save,
     }
 }
