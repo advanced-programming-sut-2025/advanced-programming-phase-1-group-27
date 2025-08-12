@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import org.example.server.models.Item;
+import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.NPCType;
 import org.example.server.models.enums.Plants.*;
@@ -107,6 +108,7 @@ public class GameAssetManager {
     private final Texture GreenTileCellTexture = new Texture("assets/Images/Floorings/Green_Tile.png");
     private final Texture speedGroTexture = new Texture("assets/Images/Crops/Speed-Gro.png");
     private final Texture deluxeRetainingSoilTexture = new Texture("assets/Images/Crops/Deluxe_Retaining_Soil.png");
+    private final Texture shippingBinTexture = new Texture("assets/Buildings/Shipping Bin.png");
 
     private final HashMap<CropType, Texture> giantCropTextureMap = new HashMap<>() {{
         put(CropType.Cauliflower, new Texture("assets/Images/Crops/Giant_Cauliflower.png"));
@@ -445,6 +447,15 @@ public class GameAssetManager {
         put(NPCType.Robbin, robbinTexture);
         put(NPCType.Sebastian, sebastianTexture);
 
+    }};
+
+    private final HashMap<AbilityType, Texture> abilityTextureMap = new HashMap<>(){{
+        put(AbilityType.Farming, new Texture("assets/Images/Buffs/Farming_Skill_Icon.png"));
+        put(AbilityType.Fishing, new Texture("assets/Images/Buffs/Fishing_Skill_Icon.png"));
+        put(AbilityType.Foraging, new Texture("assets/Images/Buffs/Foraging_Skill_Icon.png"));
+        put(AbilityType.Mining, new Texture("assets/Images/Buffs/Mining_Skill_Icon.png"));
+        put(AbilityType.MaxEnergyCommunity, new Texture("assets/Images/Buffs/Max_Energy_Buff.png"));
+        put(AbilityType.MaxEnergyUltimate, new Texture("assets/Images/Buffs/Max_Energy_Buff.png"));
     }};
 
     private final HashMap<Item, Texture> itemTextureMap = new HashMap<>() {{
@@ -1283,6 +1294,10 @@ public class GameAssetManager {
         return inventorySelectSlot;
     }
 
+    public Texture getAbilityTexture(AbilityType abilityType) {
+        return abilityTextureMap.get(abilityType);
+    }
+
     public Texture getCoinTexture() {
         return coinTexture;
     }
@@ -1305,6 +1320,10 @@ public class GameAssetManager {
 
     public Texture getSpeedGroTexture() {
         return speedGroTexture;
+    }
+
+    public Texture getShippingBinTexture() {
+        return shippingBinTexture;
     }
 
     public Texture getDeluxeRetainingSoilTexture() {

@@ -20,7 +20,8 @@ public enum InGameMenuType {
     REACTION(14),
     LEADERBOARD(15),
     FRIDGE(16),
-    JOURNAL(17);
+    JOURNAL(17),
+    SHBIN(18);
 
 
     private final Integer menuIndex;

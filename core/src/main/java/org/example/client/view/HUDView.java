@@ -50,6 +50,7 @@ public class HUDView extends AppMenu {
 
     private final ArtisanController artisanController;
     private final FridgeController fridgeController;
+    private final ShippingBinController shippingBinController;
 
     private final Label dayInfo;
     private final Label moneyInfo;
@@ -96,6 +97,7 @@ public class HUDView extends AppMenu {
     private final Image leaderBoardMenuBackground;
     private final Image journalMenuBackground;
     private Image clockImage;
+    private Image buffImage;
 
     private final ImageButton socialButton;
     private final ImageButton messageAlertImage;
@@ -194,6 +196,8 @@ public class HUDView extends AppMenu {
         sortType = 0;
         artisanController = new ArtisanController(this, stage);
         fridgeController = new FridgeController(this, stage);
+        shippingBinController = new ShippingBinController(this, stage);
+
 
         playerIconsInMap = new HashMap<>();
         for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
@@ -307,6 +311,9 @@ public class HUDView extends AppMenu {
         enclosureMenuExitButton.setPosition((Gdx.graphics.getWidth() - enclosureMenuExitButton.getWidth()) / 2f,
                 100);
         enclosureMenuExitButton.setVisible(false);
+
+        buffImage = new Image();
+        buffImage.setPosition(1800, 100);
 
         animalExitButton = new TextButton("Close",skin);
         animalExitButton.setWidth(500);
@@ -552,6 +559,7 @@ public class HUDView extends AppMenu {
         stage.addActor(animalExitButton);
         stage.addActor(reactionTextField);
         stage.addActor(randomizeEmojis);
+        stage.addActor(buffImage);
         stage.addActor(sendReaction);
         stage.addActor(leaderBoardEarningsLabel);
         stage.addActor(leaderBoardNumberOfQuestsLabel);
@@ -1486,6 +1494,19 @@ public class HUDView extends AppMenu {
 
     }
 
+    private void displayBuff() {
+        if (player.getCurrentBuff() != null) {
+            buffImage.remove();
+            buffImage = new Image(
+                    GameAssetManager.getGameAssetManager().getAbilityTexture(player.getCurrentBuff().getAbility()));
+            buffImage.setPosition(1650, 30);
+            stage.addActor(buffImage);
+            buffImage.toFront();
+        }
+
+        buffImage.setVisible(player.getCurrentBuff() != null);
+    }
+
     private void displayLeaderBoard(){
 
         leaderBoardMenuBackground.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
@@ -1611,8 +1632,10 @@ public class HUDView extends AppMenu {
         displayInputField();
         displayEnclosure();
         displayAnimal();
+        displayBuff();
         artisanController.update();
         fridgeController.update();
+        shippingBinController.update();
         displayReactionMenu();
 
     }
@@ -2524,6 +2547,10 @@ public class HUDView extends AppMenu {
 
     public FridgeController getFridgeController() {
         return fridgeController;
+    }
+
+    public ShippingBinController getShippingBinController() {
+        return shippingBinController;
     }
 
     private void sortPlayersList(){

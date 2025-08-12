@@ -390,12 +390,12 @@ public class ServerGame implements Game {
 
     private void updateShippingBin() {
         // Emptying shipping bin
-        for (Player player : players) {
-            for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
-                shippingBin.refresh();
-                // money will automatically be updated when player.addMoney() is called in client
-            }
-        }
+//        for (Player player : players) {
+//            for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
+//                shippingBin.refresh();
+//                // money will automatically be updated when player.addMoney() is called in client
+//            }
+//        }
     }
 
     private void setNewWeather() {

@@ -22,6 +22,7 @@ import org.example.server.models.Artisan;
 import org.example.server.models.Cell;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Player;
+import org.example.server.models.ShippingBin;
 import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.items.BuildingType;
@@ -97,6 +98,13 @@ public class BuildMenuView extends AppMenu {
                     player.getFarmMap().placeBarn(i, j, new Barn(buildingType, player.getFarmMap().getCell(i, j)));
                 else if (buildingType.isCoop())
                     player.getFarmMap().placeCoop(i, j, new Coop(buildingType, player.getFarmMap().getCell(i, j)));
+                else if (buildingType == BuildingType.ShippingBin){
+                    Cell cell = player.getFarmMap().getCell(i, j);
+                    ShippingBin shippingBin = new ShippingBin(cell);
+                    cell.setBuilding(shippingBin);
+                    player.getFarmMap().addShippingBin(shippingBin);
+                    cell.setType(CellType.Building);
+                }
                 if (artisan != null) {
                     Cell cell = player.getFarmMap().getCell(i, j);
                     cell.setObject(artisan);

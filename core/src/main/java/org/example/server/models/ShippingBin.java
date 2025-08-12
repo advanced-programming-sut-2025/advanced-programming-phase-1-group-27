@@ -22,4 +22,8 @@ public class ShippingBin extends Building {
         items.clear();
         return totalMoney;
     }
+
+    public ArrayList<Stacks> getItems() {
+        return items;
+    }
 }

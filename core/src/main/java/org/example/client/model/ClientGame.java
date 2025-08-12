@@ -269,9 +269,9 @@ public class ClientGame implements Game {
 
     private void updateShippingBin() {
         // Emptying shipping bin
-        for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
-            player.addMoney(shippingBin.refresh());
-        }
+//        for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
+//            player.addMoney(shippingBin.refresh());
+//        }
     }
 
     private void updateAnimals() {

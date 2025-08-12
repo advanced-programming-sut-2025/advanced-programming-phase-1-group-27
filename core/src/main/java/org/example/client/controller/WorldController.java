@@ -135,6 +135,13 @@ public class WorldController {
                     x, y - (coop.getType().getHeight() - 1) * tileSize,
                     coop.getType().getWidth() * tileSize, coop.getType().getHeight() * tileSize + tileSize);
         }
+        for (ShippingBin shippingBin : map.getShippingBins()) {
+            position = shippingBin.getTopLeftCell().getPosition();
+            x = OutsideView.getGraphicalPosition(position).getX() - 20;
+            y = OutsideView.getGraphicalPosition(position).getY() - 30;
+            Main.getBatch().draw(GameAssetManager.getGameAssetManager().getShippingBinTexture(),
+                    x, y, tileSize, tileSize);
+        }
     }
 
     private void renderNpcMap(NPCMap npcMap) {
@@ -357,6 +364,9 @@ public class WorldController {
             }
             if (cell.getBuilding() instanceof GreenHouse greenHouse && !greenHouse.isRepaired()) {
                 ResultController.addResult(new GameMenuController(new GameView()).buildGreenHouse());
+            }
+            if (cell.getBuilding() instanceof ShippingBin shippingBin) {
+                view.getHudView().getShippingBinController().setShippingBin(shippingBin);
             }
         }
     }
