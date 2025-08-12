@@ -12,6 +12,7 @@ import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
+import org.example.client.view.InteractionMenus.Gift.GiftNpcMenuView;
 import org.example.client.view.OutsideView;
 import org.example.server.models.NPCs.NPC;
 
@@ -142,7 +143,7 @@ public class NpcMenuView extends AppMenu {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new QuestMenuView());
+                Main.getMain().setScreen(new QuestNPCMenuView(npc.getType().getName()));
             }
         });
 

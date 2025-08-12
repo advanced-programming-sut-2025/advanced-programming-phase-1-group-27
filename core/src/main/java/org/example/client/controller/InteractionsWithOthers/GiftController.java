@@ -3,16 +3,14 @@ package org.example.client.controller.InteractionsWithOthers;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.InteractionMenus.GiftPlayerMenuView;
+import org.example.client.view.InteractionMenus.Gift.GiftHistoryView;
+import org.example.client.view.InteractionMenus.Gift.GiftPlayerMenuView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.Item;
 import org.example.server.models.Player;
 import org.example.server.models.Relations.Gift;
 import org.example.server.models.Relations.Relation;
-import org.example.server.models.Relations.Trade;
-import org.example.server.models.Result;
 import org.example.server.models.Stacks;
 
 import java.util.ArrayList;
@@ -30,7 +28,14 @@ public class GiftController {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new GiftPlayerMenuView(ClientApp.getLoggedInUser().getUsername(),
                 targetUsername));
-        return null;
+        return new GraphicalResult("done",false);
+    }
+
+    public void openGiftHistoryMenu(String targetUsername) {
+
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(new GiftHistoryView(targetUsername));
+
     }
 
     public void gift(String username, Stacks slot, int amount) {
@@ -71,6 +76,9 @@ public class GiftController {
     public GraphicalResult rateGift(Gift gift , int rate) {
         int id = gift.getId();
         int giftsRate = gift.getRate();
+        if(gift.getFrom().equals(ClientApp.getCurrentGame().getCurrentPlayer().getUsername())) {
+            return new GraphicalResult("You can't rate your gifts!");
+        }
         if(giftsRate != -1){
             return new GraphicalResult("You can't rate this gift twice!!");
         }

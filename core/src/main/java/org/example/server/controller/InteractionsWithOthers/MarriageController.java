@@ -23,28 +23,28 @@ public class MarriageController {
         Player otherPlayer = lobby.getGame().getPlayerByUsername(other);
         if (currentPlayer.isMarried()) {
             return new Message(new HashMap<>() {{
-                put("GraphicalResult", new GraphicalResult("You are married!", true));
+                put("GraphicalResult", GraphicalResult.getInfo("You are married!", true));
             }}, Message.Type.response);
         }
         if (otherPlayer.getGender() == Gender.Male) {
             return new Message(new HashMap<>() {{
-                put("GraphicalResult", new GraphicalResult("Why are u gay?", true));
+                put("GraphicalResult", GraphicalResult.getInfo("Why are u gay?", true));
             }}, Message.Type.response);
         }
         if (otherPlayer.isMarried()) {
             return new Message(new HashMap<>() {{
-                put("GraphicalResult", new GraphicalResult(otherPlayer.getUsername() + " is married!",
+                put("GraphicalResult", GraphicalResult.getInfo(otherPlayer.getUsername() + " is married!",
                         true));
             }}, Message.Type.response);
         }
         if (!currentPlayer.canMarried(otherPlayer)) {
             return new Message(new HashMap<>() {{
-                put("GraphicalResult", new GraphicalResult("Your relation level is too low!",
+                put("GraphicalResult", GraphicalResult.getInfo("Your relation level is too low!",
                         true));
             }}, Message.Type.response);
         }
         return new Message(new HashMap<>() {{
-            put("GraphicalResult", new GraphicalResult("Everything is ok!",
+            put("GraphicalResult", GraphicalResult.getInfo("Everything is ok!",
                     false));
         }}, Message.Type.response);
     }

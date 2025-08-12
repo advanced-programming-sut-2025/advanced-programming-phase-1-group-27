@@ -2,6 +2,7 @@ package org.example.client.model;
 
 import com.badlogic.gdx.Gdx;
 import org.example.client.Main;
+import org.example.client.controller.SaveController;
 import org.example.client.view.AppMenu;
 import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.Message;
@@ -215,7 +216,11 @@ public class ClientApp {
     public static void saveGame() {
         if (currentGame == null)
             return;
-        // TODO : save game
+        serverConnectionThread.sendMessage(new Message(new HashMap<>() {{
+            put("lobbyId", currentGame.getLobbyId());
+            put("playerName", currentGame.getCurrentPlayer().getUsername());
+            put("playerInfo", SaveController.getPlayerInfo(currentGame.getCurrentPlayer()));
+        }}, Message.Type.client_game_info));
         terminateGame();
     }
 

@@ -94,6 +94,7 @@ public class HUDView extends AppMenu {
     private final Image mapImage;
     private final Image reactionMenuBackground;
     private final Image leaderBoardMenuBackground;
+    private final Image journalMenuBackground;
     private Image clockImage;
 
     private final ImageButton socialButton;
@@ -367,6 +368,8 @@ public class HUDView extends AppMenu {
         mapImage = GameAssetManager.getGameAssetManager().getMapImage();
         reactionMenuBackground = GameAssetManager.getGameAssetManager().getReactionMenuBackground();
         leaderBoardMenuBackground = GameAssetManager.getGameAssetManager().getLeaderBoardBackground();
+        journalMenuBackground = GameAssetManager.getGameAssetManager().getJournalMenuBackground();
+
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
         socialButton.setPosition(100,100);
@@ -436,6 +439,9 @@ public class HUDView extends AppMenu {
 
         leaderBoardMenuBackground.setPosition((Gdx.graphics.getWidth()- leaderBoardMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()- leaderBoardMenuBackground.getHeight())/2f);
         leaderBoardMenuBackground.setVisible(false);
+
+        journalMenuBackground.setPosition((Gdx.graphics.getWidth()- journalMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()- journalMenuBackground.getHeight())/2f);
+        journalMenuBackground.setVisible(false);
 
         hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-80,
                 20);
@@ -517,6 +523,7 @@ public class HUDView extends AppMenu {
         stage.addActor(radioBackgroundImage);
         stage.addActor(reactionMenuBackground);
         stage.addActor(leaderBoardMenuBackground);
+        stage.addActor(journalMenuBackground);
         stage.addActor(craftingMenuBackground);
         stage.addActor(socialMenuBackground);
         stage.addActor(farmingHoverImage);
@@ -578,7 +585,7 @@ public class HUDView extends AppMenu {
                 Relation relation = InteractionsWithUserController.getRelation(ClientApp.getCurrentGame().getPlayers().get(z).getUsername());
 
                 Label nameLabel = new Label(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),skin);
-                Label friendshipInfo = new Label("Level: "+relation.getLevel()+"    XP: "+relation.getXp(),skin); /// TODO: PARSA XP/LVL por kon pls
+                Label friendshipInfo = new Label("Level: "+relation.getLevel()+"    XP: "+relation.getXp(),skin);
                 TextButton interactButton = new TextButton("Interact",skin);
 
                 nameLabel.setColor(Color.BLACK);
@@ -1523,18 +1530,37 @@ public class HUDView extends AppMenu {
 
     private void updatePlayers(){
 
-        if ( miniPlayerUpdateTimer > 1f){
+        if ( miniPlayerUpdateTimer > 1f ){
+
             for ( MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers() ){
                 inGamePlayer.updateMiniPlayer();
             }
             playersInLeaderBoard.clear();
             playersInLeaderBoard.addAll( ClientApp.getCurrentGame().getPlayers() );
             sortPlayersList();
+
+            int counter = 0;
+            for ( int z = 0; z < Math.min(4,ClientApp.getCurrentGame().getPlayers().size()); z++ ){
+
+                if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),
+                        player.getUsername())){
+
+                    Relation relation = InteractionsWithUserController.getRelation(ClientApp.getCurrentGame().getPlayers().get(z).getUsername());
+
+                    friendshipInfos.get(counter).setText("Level: "+relation.getLevel()+"    XP: "+relation.getXp());
+                    counter ++;
+                }
+            }
+
         }
 
         if ( miniPlayerUpdateTimer > 1f ){
             miniPlayerUpdateTimer = 0f;
         }
+
+    }
+
+    private void displayJournal(){
 
     }
 
@@ -1570,6 +1596,7 @@ public class HUDView extends AppMenu {
         displayRadio();
         displaySkillMenu();
         displaySocialMenu();
+        displayJournal();
         displayCraftingMenu();
         displayExitMenu();
         displayMapMenu();
@@ -1695,6 +1722,17 @@ public class HUDView extends AppMenu {
                         }
                         else{
                             currentMenu = InGameMenuType.SOCIAL;
+                            makeOnScreenItemsInvisible();
+                        }
+
+                    }
+                    else if (keycode == Input.Keys.F) {
+
+                        if ( currentMenu == InGameMenuType.JOURNAL ) {
+                            currentMenu = InGameMenuType.NONE;
+                        }
+                        else{
+                            currentMenu = InGameMenuType.JOURNAL;
                             makeOnScreenItemsInvisible();
                         }
 

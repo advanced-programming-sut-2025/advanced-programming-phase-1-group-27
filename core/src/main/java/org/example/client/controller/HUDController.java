@@ -13,7 +13,7 @@ import org.example.client.model.Reaction;
 import org.example.client.model.enums.Emoji;
 import org.example.client.view.HUDView;
 import org.example.client.view.InteractionMenus.InteractionMenu;
-import org.example.client.view.InteractionMenus.PreTradeMenuView;
+import org.example.client.view.InteractionMenus.Trade.PreTradeMenuView;
 import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;

@@ -133,20 +133,20 @@ public class ProfileMenuView extends AppMenu {
         changeButton.setWidth(Gdx.graphics.getWidth() / 5f);
 
         backButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-backButton.getWidth())/2,
-                 Gdx.graphics.getHeight()/3f - 50);
+                 Gdx.graphics.getHeight()/3f - 75);
 
         avatarMenuButton.setPosition(
                 Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-avatarMenuButton.getWidth())/2,
-                Gdx.graphics.getHeight()/3f + 50
+                Gdx.graphics.getHeight()/3f + 75
         );
 
         userInfoMenuButton.setPosition(
                 Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth()/2f-avatarMenuButton.getWidth()) / 2,
-                Gdx.graphics.getHeight()/3f + 150
+                Gdx.graphics.getHeight()/3f + 225
         );
 
         changeButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-changeButton.getWidth())/2,
-                Gdx.graphics.getHeight()/3f + 250);
+                Gdx.graphics.getHeight()/3f + 375);
 
         stage.addActor(backButton);
         stage.addActor(avatarMenuButton);

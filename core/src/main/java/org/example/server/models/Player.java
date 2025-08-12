@@ -4,6 +4,7 @@ import org.example.common.models.Game;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.Map;
 import org.example.server.models.NPCs.NPC;
+import org.example.server.models.NPCs.Quest;
 import org.example.server.models.Relations.Dialogue;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.*;
@@ -41,6 +42,7 @@ public class Player extends User {
     private java.util.Map<Player, Relation> relations = new HashMap<>();
     private ArrayList<Dialogue> inbox = new ArrayList<>();
     private ArrayList<String> chatInbox = new ArrayList<>();
+    private ArrayList<Quest> activeQuests = new ArrayList<>();
     //refresh every morning
     private java.util.Map<NPC, Boolean> npcMetToday = new HashMap<>();
     private java.util.Map<NPC, Boolean> npcGiftToday = new HashMap<>();
@@ -147,6 +149,10 @@ public class Player extends User {
         return backpack;
     }
 
+    public void setBackpack(Backpack backpack) {
+        this.backpack = backpack;
+    }
+
     public void setBackpack(ToolType backpack) {
         Backpack backpack1 = new Backpack(backpack);
         for (Stacks stack : this.backpack.getItems()) {
@@ -184,7 +190,7 @@ public class Player extends User {
         currentBuff = null;
     }
 
-    public void setBuff(Buff buff) {
+    public void addBuff(Buff buff) {
         currentBuff = new Buff(buff);
         if (currentBuff.getAbility() == AbilityType.MaxEnergyUltimate) {
             boostEnergy = 100;
@@ -196,6 +202,13 @@ public class Player extends User {
         }
     }
 
+    public void setBuff(Buff buff) {
+        if (buff == null)
+            currentBuff = null;
+        else
+            currentBuff.set(buff);
+    }
+
     public Buff getCurrentBuff() {
         return currentBuff;
     }
@@ -204,8 +217,16 @@ public class Player extends User {
         return availableCraftingRecipes;
     }
 
+    public void setAvailableCraftingRecipes(ArrayList<Recipe> availableCraftingRecipes) {
+        this.availableCraftingRecipes = availableCraftingRecipes;
+    }
+
     public ArrayList<Recipe> getAvailableCookingRecipes() {
         return availableCookingRecipes;
+    }
+
+    public void setAvailableCookingRecipes(ArrayList<Recipe> availableCookingRecipes) {
+        this.availableCookingRecipes = availableCookingRecipes;
     }
 
     public void consumeEnergy(int amount) {
@@ -230,6 +251,14 @@ public class Player extends User {
         this.energy = energy;
     }
 
+    public void setMaxEnergy(int maxEnergy) {
+        this.maxEnergy = maxEnergy;
+    }
+
+    public void setBoostEnergy(int boostEnergy) {
+        this.boostEnergy = boostEnergy;
+    }
+
     public void addEnergy(int amount) {
         int val = Math.min(maxEnergy - energy, amount);
         energy += val;
@@ -245,10 +274,6 @@ public class Player extends User {
 
     public int getMaxEnergy() {
         return maxEnergy;
-    }
-
-    public void setMaxEnergy(int maxEnergy) {
-        this.maxEnergy = maxEnergy;
     }
 
     public boolean hasPassedOut() {
@@ -360,6 +385,11 @@ public class Player extends User {
         if (fishing.getLevel() > level) {
             addRecipes(AbilityType.Fishing, level + 1);
         }
+    }
+
+    public void setAbility(AbilityType abilityType, Ability newAbility) {
+        Ability ability = abilityFinder.get(abilityType);
+        ability.set(newAbility);
     }
 
     public boolean isByWater() {
@@ -647,5 +677,13 @@ public class Player extends User {
 
     public ArrayList<String> getChatInbox() {
         return chatInbox;
+    }
+
+    public ArrayList<Quest> getActiveQuests() {
+        return activeQuests;
+    }
+
+    public void addActiveQuests(Quest quest) {
+        activeQuests.add(quest);
     }
 }

@@ -154,7 +154,7 @@ public class ClientConnectionThread extends ConnectionThread {
             GameController.handleChat(message);
             return true;
         } else if (message.getType() == Message.Type.update_mini_player) {
-            sendMessage(GameController.getMiniPlayerInfo(message));
+            GameController.handleMiniPlayerUpdate(message);
             return true;
         } else if (message.getType() == Message.Type.get_trade_history) {
             sendMessage(TradeController.getTradesBetweenUsers(message));
@@ -176,6 +176,27 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         } else if (message.getType() == Message.Type.rate_gift) {
             InteractionsWithUserController.rate(message);
+            return true;
+        } else if (message.getType() == Message.Type.client_game_info) {
+            SaveController.handleInfo(message);
+            return true;
+        } else if (message.getType() == Message.Type.add_player_level) {
+            sendMessage(InteractionsWithUserController.cheatAddPlayerLevel(message));
+            return true;
+        } else if (message.getType() == Message.Type.add_npc_level) {
+            InteractionsWithNPCController.cheatAddLevel(message);
+            return true;
+        } else if (message.getType() == Message.Type.get_npc_quests){
+            sendMessage(InteractionsWithNPCController.getQuests(message));
+            return true;
+        } else if (message.getType() == Message.Type.do_i_have_quest){
+            sendMessage(InteractionsWithNPCController.doIHaveThisQuest(message));
+            return true;
+        } else if (message.getType() == Message.Type.finish_quest){
+            InteractionsWithNPCController.finishQuest(message);
+            return true;
+        } else if(message.getType() == Message.Type.get_quests_journal){
+            sendMessage(InteractionsWithNPCController.getQuestsJournal(message));
             return true;
         }
         return false;

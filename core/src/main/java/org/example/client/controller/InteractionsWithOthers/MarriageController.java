@@ -23,6 +23,7 @@ import java.util.HashMap;
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class MarriageController {
+
     public GraphicalResult askMarriage(String username) {
         Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
         Backpack backpack = currentPlayer.getBackpack();
@@ -59,7 +60,7 @@ public class MarriageController {
             put("other", username);
         }}, Message.Type.marriage_request));
 
-        return null;
+        return new GraphicalResult("You have sent your request successfully!");
     }
 
     public Result showCouple() {

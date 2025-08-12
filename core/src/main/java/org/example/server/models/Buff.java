@@ -6,7 +6,7 @@ import org.example.server.models.enums.AbilityType;
 import java.util.HashMap;
 
 public class Buff {
-    private final AbilityType ability;
+    private AbilityType ability;
     private int remainingTime;
 
     public Buff(AbilityType ability, int remainingTime) {
@@ -29,6 +29,11 @@ public class Buff {
         info.put("remainingTime", remainingTime);
         info.put("ability", ability.name());
         return info;
+    }
+
+    public void set(Buff buff) {
+        ability = buff.ability;
+        remainingTime = buff.remainingTime;
     }
 
     public AbilityType getAbility() {

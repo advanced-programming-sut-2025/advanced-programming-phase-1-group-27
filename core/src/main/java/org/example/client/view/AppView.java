@@ -2,15 +2,10 @@ package org.example.client.view;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.InteractionMenus.GiftHistoryView;
-import org.example.client.view.InteractionMenus.GiftMenuView;
-import org.example.client.view.InteractionMenus.TradeHistoryView;
-import org.example.client.view.InteractionMenus.TradeView;
 import org.example.client.view.menu.*;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.enums.Gender;
-import org.example.server.models.enums.NPCType;
 
 import java.util.HashMap;
 
@@ -53,12 +48,10 @@ public class AppView {
 //            Main.getMain().setScreen(ClientApp.getCurrentMenu());
 //        }
 
+
         // ------CHEAT------
         Main.getMain().setScreen(new WelcomeMenuView());
-
-        //Main.getMain().setScreen(new GiftHistoryView("a"));
-
-      cheat();
+        cheat();
     }
 
 }

@@ -29,7 +29,7 @@ public class SecurityQuestionMenuController extends MenuController {
                 put("userInfo", view.getUser().getInfo());
             }}, Message.Type.add_user));
             Main.getMain().getScreen().dispose();
-            ClientApp.setCurrentMenu(new LobbyMenuView());
+            ClientApp.setCurrentMenu(new LoginMenuView());
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         }
         else {

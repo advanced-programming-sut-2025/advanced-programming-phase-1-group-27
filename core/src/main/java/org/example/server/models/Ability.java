@@ -117,6 +117,11 @@ public class Ability {
         return info;
     }
 
+    public void set(Ability ability) {
+        this.xp = ability.xp;
+        this.level = ability.level;
+    }
+
     public void addXp(int xp) {
         this.xp += xp;
         if (this.level < 4 && this.xp >= this.level * 100 + 150) {

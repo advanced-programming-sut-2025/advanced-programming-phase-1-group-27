@@ -19,7 +19,8 @@ public enum InGameMenuType {
     ARTISAN(13),
     REACTION(14),
     LEADERBOARD(15),
-    FRIDGE(16);
+    FRIDGE(16),
+    JOURNAL(17);
 
 
     private final Integer menuIndex;

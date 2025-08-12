@@ -3,7 +3,9 @@ package org.example.client.controller.InteractionsWithOthers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
+import org.example.client.controller.CheatController;
 import org.example.client.controller.PopUpController;
 import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
@@ -14,6 +16,7 @@ import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.NPCs.NPC;
 import org.example.server.models.NPCs.Quest;
+import org.example.server.models.Relations.Gift;
 import org.example.server.models.Relations.Relation;
 import org.example.server.models.enums.ArtisanTypes;
 import org.example.server.models.enums.Plants.CropType;
@@ -21,10 +24,14 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.items.Recipe;
 import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.enums.items.ToolType;
+import org.example.server.models.enums.items.products.CookingProduct;
 import org.example.server.models.tools.Backpack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class InteractionsWithNPCController {
 
@@ -34,13 +41,13 @@ public class InteractionsWithNPCController {
             npc.getRelations().computeIfAbsent(ClientApp.getCurrentGame().getCurrentPlayer(), k -> new Relation());
             npc.addXP(ClientApp.getCurrentGame().getCurrentPlayer(), 20);
             int lobbyId = ClientApp.getCurrentGame().getLobbyId();
-            Message message = new Message(new HashMap<>(){{
-                put("mode" , "meet");
-                put("lobbyId" ,  lobbyId);
-                put("username" , ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
-                put("npcName" , npcName);
-                put("XP" , 20);
-            }} , Message.Type.interaction_p2npc);
+            Message message = new Message(new HashMap<>() {{
+                put("mode", "meet");
+                put("lobbyId", lobbyId);
+                put("username", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+                put("npcName", npcName);
+                put("XP", 20);
+            }}, Message.Type.interaction_p2npc);
             ClientApp.getServerConnectionThread().sendMessage(message);
         }
     }
@@ -71,13 +78,13 @@ public class InteractionsWithNPCController {
                 xp = 50;
             }
             int finalXp = xp;
-            Message message = new Message(new HashMap<>(){{
-                put("mode" , "gift");
-                put("lobbyId" ,  lobbyId);
-                put("username" , ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
-                put("npcName" , npcName);
-                put("XP" , finalXp);
-            }} , Message.Type.interaction_p2npc);
+            Message message = new Message(new HashMap<>() {{
+                put("mode", "gift");
+                put("lobbyId", lobbyId);
+                put("username", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+                put("npcName", npcName);
+                put("XP", finalXp);
+            }}, Message.Type.interaction_p2npc);
             ClientApp.getServerConnectionThread().sendMessage(message);
         }
         // TODO : Rassa dialogue
@@ -93,7 +100,7 @@ public class InteractionsWithNPCController {
                 npc.getCurrentCell().getPosition().getY()).getY();
 
         Sprite itemSprite = new Sprite(stack.getItem().getTexture());
-        itemSprite.setSize(72,62);
+        itemSprite.setSize(72, 62);
 
         System.out.println(x + " " + y);
         System.out.println(newOutsideView.getPlayerController().getX() + " " +
@@ -103,13 +110,9 @@ public class InteractionsWithNPCController {
                 ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),
                 x, y, 4
         ));
-//        PopUpController.addPopUp(new PopUpTexture(itemSprite,
-//                newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY(),
-//                0, 0,
-//                4));
 
 
-        return new GraphicalResult(npcName + " : Thank you! (You get " + xp + " xp)",false);
+        return new GraphicalResult(npcName + " : Thank you! (You get " + xp + " xp)", false);
     }
 
     public Result questList() {
@@ -299,22 +302,121 @@ public class InteractionsWithNPCController {
         return npc.getDaysForThirdQuest() <= daysPassed;
     }
 
-    public Result cheatAddLevel(String NPCName, String amountString) {
-        int amount = Integer.parseInt(amountString);
-        Player player = ClientApp.getCurrentGame().getCurrentPlayer();
-        NPC npc = findNPC(NPCName);
-        if (npc == null) {
-            return new Result(false, "NPC not found!");
+
+    public ArrayList<Quest> getQuests(String npcName) {
+        Message message = new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("npcName", npcName);
+        }}, Message.Type.get_npc_quests);
+
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, 2 * TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response) {
+            System.out.println("quests response is null");
+            return new ArrayList<>();
         }
-        if (!npc.getRelations().containsKey(player)) {
-            npc.getRelations().put(player, new Relation());
+        ArrayList<Quest> quests = new ArrayList<>();
+        for (LinkedTreeMap<String, Object> ti : response.<ArrayList<LinkedTreeMap<String, Object>>>getFromBody("quests")) {
+            quests.add(new Quest(ti));
         }
-        Relation relation = npc.getRelations().get(player);
-        if (relation.getLevel() + amount > 799) {
-            return new Result(false, "Level is too high!");
+        return quests;
+    }
+
+    public static boolean doIHaveThisQuest(Quest quest) {
+        for (Quest quest1 : ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests()) {
+            if ((Objects.equals(quest1.getRequest().getItem().getName(), quest.getRequest().getItem().getName())) &&
+                    (Objects.equals(quest1.getReward().getItem().getName(), quest.getReward().getItem().getName()))) {
+                return true;
+            }
         }
-        relation.setLevel(relation.getLevel() + amount);
-        int finalAmount = relation.getLevel();
-        return new Result(true, "Level is added! ( " + finalAmount + " )");
+        return false;
+    }
+
+    public static GraphicalResult finish(Quest quest, String npcName) {
+        if (quest.isDone()) {
+            return new GraphicalResult("Quest has been finished");
+        }
+        if (!doIHaveThisQuest(quest)) {
+            return new GraphicalResult("You should get quest!");
+        }
+        Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
+        Backpack backpack = currentPlayer.getBackpack();
+        if (!backpack.hasEnoughItem(quest.getRequest().getItem(), quest.getRequest().getQuantity())) {
+            return new GraphicalResult("You don't have enough items!");
+        }
+        backpack.reduceItems(quest.getRequest().getItem(), quest.getRequest().getQuantity());
+        if (quest.getReward().getItem() == ShopItems.RelationLevel) {
+            CheatController controller = new CheatController();
+            controller.cheatAddLevel(npcName, "1");
+        } else if (quest.getReward().getItem() == Recipe.SalmonDinnerRecipe) {
+            currentPlayer.getAvailableCookingRecipes().add(Recipe.SalmonDinnerRecipe);
+        } else if (quest.getReward().getItem() == ShopItems.Coin) {
+            currentPlayer.addMoney(quest.getReward().getQuantity());
+        } else {
+            backpack.addItems(quest.getReward().getItem(), quest.getReward().getStackLevel(), quest.getReward().getQuantity());
+        }
+        currentPlayer.getActiveQuests().remove(quest);
+        Message message = new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("quest", quest.getInfo());
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("npcName", npcName);
+        }}, Message.Type.finish_quest);
+        ClientApp.getServerConnectionThread().sendMessage(message);
+        Main.getMain().getScreen().dispose();
+        OutsideView newOutsideView = new OutsideView();
+        ClientApp.setNonMainMenu(newOutsideView);
+        Main.getMain().setScreen(newOutsideView);
+        return new GraphicalResult("");
+    }
+
+    public static GraphicalResult addQuest(Quest quest) {
+        if (ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().contains(quest)) {
+            return new GraphicalResult("You already have this quest!");
+        }
+        ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().add(quest);
+        System.out.println("anjam shod");
+        Main.getMain().getScreen().dispose();
+        OutsideView newOutsideView = new OutsideView();
+        ClientApp.setNonMainMenu(newOutsideView);
+        Main.getMain().setScreen(newOutsideView);
+        return new GraphicalResult("Quest added!");
+    }
+
+    public static ArrayList<Quest> getQuestsForJournal() {
+        Message message = new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+        }}, Message.Type.get_quests_journal);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response) {
+            System.out.println("quests journal response is null");
+            return new ArrayList<>();
+        }
+        ArrayList<Quest> quests = new ArrayList<>();
+        ArrayList<Quest> deleted = new ArrayList<>();
+        for (LinkedTreeMap<String, Object> ti : response.<ArrayList<LinkedTreeMap<String, Object>>>getFromBody("quests")) {
+            quests.add(new Quest(ti));
+        }
+        for (Quest quest : quests) {
+            if (quest.isDone()) {
+                for (Quest quest1 : ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests()) {
+                    if (quest.getRequest().getItem() == quest1.getRequest().getItem()) {
+                        if (quest1.getReward().getItem() == quest.getReward().getItem()) {
+                            deleted.add(quest);
+                        }
+                    }
+                }
+            }
+        }
+        for(Quest quest : deleted) {
+            ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().remove(quest);
+        }
+        return ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests();
+    }
+
+    public static void exit(){
+        Main.getMain().getScreen().dispose();
+        OutsideView newOutsideView = new OutsideView();
+        ClientApp.setNonMainMenu(newOutsideView);
+        Main.getMain().setScreen(newOutsideView);
     }
 }
