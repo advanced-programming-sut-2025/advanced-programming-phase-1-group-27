@@ -4,6 +4,7 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.model.enums.FishMovementType;
 import org.example.client.model.enums.MiniGameDifficulty;
+import org.example.client.view.AppMenu;
 import org.example.client.view.MiniGame.MiniGameView;
 import org.example.client.view.MiniGame.PostMiniGameMenuView;
 import org.example.client.view.OutsideView;
@@ -34,6 +35,7 @@ public class MiniGameController {
     private final MiniGameDifficulty difficulty;
     private float progress;
     private boolean isPerfect;
+    private MiniGameView miniGameView;
 
     public MiniGameController(ToolType fishingPole) {
         this.fishingPole = fishingPole;
@@ -63,7 +65,8 @@ public class MiniGameController {
     public void finishGame(boolean caughtSuccessfully) {
 
         checkFishingProcessStatus();
-
+        miniGameView.getFishIcon().remove();
+        miniGameView.getStage().clear();
         Stacks fishStack = new Stacks(caughtFish, fishLevel, numberOfFish);
 
         if (caughtSuccessfully) {
@@ -237,4 +240,7 @@ public class MiniGameController {
         return numberOfFish;
     }
 
+    public void setMiniGameView(MiniGameView miniGameView) {
+        this.miniGameView = miniGameView;
+    }
 }

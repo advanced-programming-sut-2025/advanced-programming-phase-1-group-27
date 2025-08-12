@@ -1,5 +1,7 @@
 package org.example.server.models.NPCs;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.server.models.Stacks;
 import org.example.server.models.enums.items.ToolType;
@@ -8,11 +10,15 @@ import org.example.server.models.tools.Backpack;
 import java.util.HashMap;
 
 public class Quest {
+
     private Stacks reward;
     private Stacks request;
     private String playerName;
     private boolean isDone;
     private int index;
+
+    private Label rewardLabel;
+    private Label requestLabel;
 
     public Quest(Stacks request, Stacks reward , int index) {
         this.reward = reward;
@@ -63,4 +69,29 @@ public class Quest {
     public void setDone(boolean done) {
         isDone = done;
     }
+
+//    public void initLabels(Stage stage){
+//
+//        rewardLabel
+//
+//        stage.addActor(rewardLabel);
+//        stage.addActor(requestLabel);
+//
+//    }
+//
+//    public void deleteLabels(){
+//
+//        rewardLabel.remove();
+//        requestLabel.remove();
+//
+//    }
+//
+//    public Label getRequestLabel() {
+//        return requestLabel;
+//    }
+//
+//    public Label getRewardLabel() {
+//        return rewardLabel;
+//    }
+
 }
