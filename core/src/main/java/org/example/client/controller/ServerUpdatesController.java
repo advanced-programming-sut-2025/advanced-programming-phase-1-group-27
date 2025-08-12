@@ -21,13 +21,10 @@ import org.example.client.view.InteractionMenus.MarriageRequestView;
 import org.example.client.view.OutsideView;
 import org.example.client.view.VoteView;
 import org.example.common.models.*;
-import org.example.server.models.Cell;
-import org.example.server.models.Item;
+import org.example.server.models.*;
 import org.example.server.models.Map.FarmMap;
 import org.example.server.models.Map.NPCMap;
-import org.example.server.models.Player;
 import org.example.server.models.Shops.Shop;
-import org.example.server.models.Stacks;
 import org.example.server.models.enums.AbilityType;
 import org.example.server.models.enums.Plants.Plant;
 import org.example.server.models.enums.StackLevel;
@@ -269,7 +266,7 @@ public class ServerUpdatesController { // handles updates sent by server
                 Main.getMain().setScreen(new VoteView(mode, ""));
             });
         } else if (mode.equals("terminateGame")) {
-            ClientApp.terminateGame();
+            handleTerminate();
         } else if (mode.equals("askToKick")) {
             Gdx.app.postRunnable(() -> {
                 Main.getMain().getScreen().dispose();
@@ -278,6 +275,16 @@ public class ServerUpdatesController { // handles updates sent by server
         } else if (mode.equals("kickPlayer")) {
             ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));
         }
+    }
+
+    private static void handleTerminate() {
+        User user = ClientApp.getLoggedInUser();
+        user.setMaxMoneyEarned(Math.max(user.getMaxMoneyEarned(), ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
+        user.setNumberOfGamesPlayed(user.getNumberOfGamesPlayed() + 1);
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("userInfo", user.getInfo());
+        }}, Message.Type.update_user_info));
+        ClientApp.terminateGame();
     }
 
     public static void handleChat(Message message) {

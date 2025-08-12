@@ -11,9 +11,9 @@ import org.example.server.models.enums.StackLevel;
 import org.example.server.models.enums.items.ToolType;
 
 public class WateringCan extends Tool {
-    //Water: 40 - 55 - 70 - 85 - 100
-    //EnergyUsage : 5 - 4 - 3 - 2 - 1;
-    //If farming talent is max -1
+    // Water: 40 - 55 - 70 - 85 - 100
+    // EnergyUsage : 5 - 4 - 3 - 2 - 1;
+    // If farming talent is max -1
     private int maxCapacity;
     private int waterCapacity;
 

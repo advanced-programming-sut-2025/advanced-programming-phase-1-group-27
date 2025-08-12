@@ -16,6 +16,10 @@ import org.example.server.models.tools.Backpack;
 import java.util.ArrayList;
 
 public class SaveController {
+    public static void sendInfo(String username, Message message) {
+        
+    }
+
     public static void handleInfo(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
@@ -23,7 +27,6 @@ public class SaveController {
         Player player = game.getPlayerByUsername(message.getFromBody("playerName"));
         handleFarmInfo(game, message.getFromBody("farmMapInfo"));
         handlePlayerInfo(lobby, player, message.getFromBody("playerInfo"));
-        // TODO
     }
 
     private static void handleFarmInfo(ServerGame game, LinkedTreeMap<String, Object> info) {
