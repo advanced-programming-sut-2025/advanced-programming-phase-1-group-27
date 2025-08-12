@@ -11,6 +11,8 @@ import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.PopUpTexture;
 import org.example.client.view.OutsideView;
+import org.example.common.models.Game;
+import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
@@ -101,10 +103,6 @@ public class InteractionsWithNPCController {
 
         Sprite itemSprite = new Sprite(stack.getItem().getTexture());
         itemSprite.setSize(72, 62);
-
-        System.out.println(x + " " + y);
-        System.out.println(newOutsideView.getPlayerController().getX() + " " +
-                newOutsideView.getPlayerController().getY());
 
         PopUpController.addPopUp(new PopUpTexture(itemSprite
                 ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),
@@ -366,11 +364,19 @@ public class InteractionsWithNPCController {
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);
         Main.getMain().setScreen(newOutsideView);
+
+        Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getQuestStar());
+        itemSprite.setSize(72, 62);
+        PopUpController.addPopUp(new PopUpTexture(itemSprite
+                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+70,
+                newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(), 4
+        ));
+
         return new GraphicalResult("");
     }
 
     public static GraphicalResult addQuest(Quest quest) {
-        if (ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests().contains(quest)) {
+        if ( doIHaveThisQuest(quest) ) {
             return new GraphicalResult("You already have this quest!");
         } else if (quest.isDone()) {
             return new GraphicalResult("Quest has been finished");

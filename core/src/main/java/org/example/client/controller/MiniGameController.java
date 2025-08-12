@@ -4,6 +4,7 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.model.enums.FishMovementType;
 import org.example.client.model.enums.MiniGameDifficulty;
+import org.example.client.view.AppMenu;
 import org.example.client.view.MiniGame.MiniGameView;
 import org.example.client.view.MiniGame.PostMiniGameMenuView;
 import org.example.client.view.OutsideView;
@@ -236,5 +237,6 @@ public class MiniGameController {
     public int getNumberOfCaughtFish() {
         return numberOfFish;
     }
+
 
 }

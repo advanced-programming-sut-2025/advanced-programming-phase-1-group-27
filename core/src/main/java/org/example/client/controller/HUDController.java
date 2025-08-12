@@ -397,10 +397,12 @@ public class HUDController extends MenuController {
                     matcher.group("level").trim());
         }
         else if ((matcher = CheatCommands.ToAllChat.getMatcher(input)) != null) {
+            ///  TODO PARSA MET TODAY ALL
             String text = trimMessage(matcher.group("chatText").trim());
             text = ClientApp.getLoggedInUser().getUsername() + ":\n" + text;
             result = sendToAll(text);
         }else if ((matcher = CheatCommands.PrivateChat.getMatcher(input)) != null) {
+            ///  TODO PARSA MET TODAY USER
             String text = trimMessage(matcher.group("chatText").trim());
             text = ClientApp.getLoggedInUser().getUsername() + ":\n" + text;
             String targetUsername = matcher.group("targetPlayer").trim();

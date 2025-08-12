@@ -29,7 +29,6 @@ public class MiniGameView extends AppMenu {
     private final Image miniGameBackground;
     private final Image greenBar;
     private Image fishIcon;
-    private final Image actualFishIcon;
     private final Image bar;
     private final Image progressBar;
     private final Image crownImage;
@@ -58,7 +57,6 @@ public class MiniGameView extends AppMenu {
         miniGameBackground = GameAssetManager.getGameAssetManager().getFishingMiniGameBackground();
         greenBar = GameAssetManager.getGameAssetManager().getFishingGreenBar();
         fishIcon = GameAssetManager.getGameAssetManager().getFishIcon();
-        actualFishIcon = caughtFish.getItemImage();
         bar = GameAssetManager.getGameAssetManager().getFishingBar();
         progressBar = GameAssetManager.getGameAssetManager().getFishingProgressBar();
         crownImage = GameAssetManager.getGameAssetManager().getCrown();
@@ -257,7 +255,6 @@ public class MiniGameView extends AppMenu {
                 }
                 else if ( keycode == Input.Keys.S ) {
                     sonarActivated = true;
-                    fishIcon.remove();
                     fishIcon = caughtFish.getItemImage();
                     displayFishIcon();
                     return true;
@@ -303,4 +300,7 @@ public class MiniGameView extends AppMenu {
 
     }
 
+    public Image getFishIcon() {
+        return fishIcon;
+    }
 }

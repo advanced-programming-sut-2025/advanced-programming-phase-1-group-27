@@ -381,6 +381,7 @@ Images/Artisans/Loom.png
 Images/Artisans/MayonnaiseMachine.png
 Images/Artisans/OilMaker.png
 Images/Artisans/PreservesJar.png
+Images/Bouquet.png
 Images/Buffs/Farming_Skill_Icon.png
 Images/Buffs/Fishing_Skill_Icon.png
 Images/Buffs/Foraging_Skill_Icon.png
@@ -736,8 +737,10 @@ Images/Fruits/Hot_Pepper.png
 Images/Fruits/Pineapple.png
 Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
+Images/GiftIcon.png
 Images/GiftPlayerMenuBackground.png
 Images/HoveringInfoWindow.png
+Images/HugIcon.png
 Images/Inbox/InboxMessageBackground.png
 Images/Inbox/MessageAlert.png
 Images/Inventory/InventoryMenuMan.png
@@ -752,6 +755,7 @@ Images/PlayerSocial/InteractionEmoji3.png
 Images/PlayerSocial/PlayerSocialBackground.png
 Images/PlayerSocial/PlayerSocialBackground2.png
 Images/PlayerSocial/SocialButton.png
+Images/QuestStar.png
 Images/RadioBackground.png
 Images/Shops/JojaMart.png
 Images/Shops/Pierres General Store.png
@@ -843,6 +847,7 @@ Images/Trees/Pomegranate/  (4).png
 Images/Trees/Pomegranate/  (5).png
 Images/Trees/Trees.atlas
 Images/Trees/Trees.png
+Images/WeddingRing.png
 Images/Wrecked_Greenhouse.png
 Images/greenhouse.png
 Images/greenhouse2.1.png

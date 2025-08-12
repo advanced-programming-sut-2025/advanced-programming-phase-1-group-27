@@ -154,6 +154,7 @@ public class PostMiniGameMenuView extends AppMenu {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 playClickSound();
+//                caughtFishImage.remove();
                 controller.backToOutside();
             }
         });
