@@ -39,6 +39,8 @@ public class OutsideView extends AppMenu {
     private final ToolGraphicalController toolController = new ToolGraphicalController(this);
     private final WorldController worldController = new WorldController(this);
     private final ArrayList<AnimalController> animalControllers = new ArrayList<>();
+    private final ArrayList<NpcController> npcControllers = new ArrayList<>();
+
     private Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     private final int tileSize = 40;
@@ -55,6 +57,15 @@ public class OutsideView extends AppMenu {
         toolController.setCamera(camera);
         worldController.setCamera(camera);
         ResultController.setCamera(camera);
+        npcControllers.add(new NpcController(ClientApp.getCurrentGame().getAbigail()));
+        npcControllers.add(new NpcController(ClientApp.getCurrentGame().getHarvey()));
+        npcControllers.add(new NpcController(ClientApp.getCurrentGame().getRobbin()));
+        npcControllers.add(new NpcController(ClientApp.getCurrentGame().getSebastian()));
+        npcControllers.add(new NpcController(ClientApp.getCurrentGame().getLia()));
+
+        for (NpcController npcController : npcControllers) {
+            npcController.setCamera(camera);
+        }
 
         for (Animal animal : ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap().getAnimals())
             animalControllers.add(new AnimalController(animal, this, camera));
@@ -155,6 +166,11 @@ public class OutsideView extends AppMenu {
             animalController.update();
             animalController.render();
         }
+        for (NpcController npcController : npcControllers) {
+            npcController.update();
+            if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
+                npcController.render();
+        }
         animalControllers.removeIf(AnimalController::sold);
 
         camera.update();
@@ -167,31 +183,8 @@ public class OutsideView extends AppMenu {
         stage.draw();
 
 
-
-        if (Gdx.input.justTouched()) {
-            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-
-            int i = OutsideView.getIndices(touchPos.x, touchPos.y).getX(),
-                    j = OutsideView.getIndices(touchPos.x, touchPos.y).getY();
-            Cell cell = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap().getCell(i, j);
-            if (cell != null && cell.getObject() instanceof NPC npc) {
-//                InteractionsWithNPCController controller = new InteractionsWithNPCController();
-//                controller.meetNPC(npc.getName());
-            }
-        }
-
-        sobhan();
-
     }
 
-    public void sobhan() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
-            Main.getMain().getScreen().dispose();
-            ClientApp.setCurrentMenu(new BuildMenuView(new Artisan(ArtisanTypes.Keg)));
-            Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        }
-    }
 
 
     @Override

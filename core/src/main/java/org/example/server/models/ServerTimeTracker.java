@@ -33,7 +33,7 @@ public class ServerTimeTracker implements Runnable {
             }
 
             try {
-                Thread.sleep(2_000);
+                Thread.sleep(10_000);
                 time.passAnHour();
             } catch (InterruptedException e) {
                 e.printStackTrace();

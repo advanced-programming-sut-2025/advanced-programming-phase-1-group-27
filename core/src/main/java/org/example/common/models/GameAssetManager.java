@@ -578,6 +578,138 @@ public class GameAssetManager {
             characterAtlas.createSprite("left_4")
     );
 
+    private final HashMap<NPCType, Animation<Texture>> NpcWalkDownAnimationMap = new HashMap<>(){{
+        put(NPCType.Harvey, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/HarveyWalk/00.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/10.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/20.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/30.png")
+                ));
+        put(NPCType.Abigail, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/AbigailWalk/00.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/10.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/20.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/30.png")
+        ));
+        put(NPCType.Sebastian, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/SebastianWalk/00.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/10.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/20.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/30.png")
+        ));
+        put(NPCType.Lia, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/LiaWalk/00.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/10.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/20.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/30.png")
+        ));
+        put(NPCType.Robbin, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/RobbinWalk/00.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/10.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/20.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/30.png")
+        ));
+    }};
+
+    private final HashMap<NPCType, Animation<Texture>> NpcWalkRightAnimationMap = new HashMap<>(){{
+        put(NPCType.Harvey, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/HarveyWalk/01.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/11.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/21.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/31.png")
+        ));
+        put(NPCType.Abigail, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/AbigailWalk/01.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/11.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/21.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/31.png")
+        ));
+        put(NPCType.Sebastian, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/SebastianWalk/01.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/11.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/21.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/31.png")
+        ));
+        put(NPCType.Lia, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/LiaWalk/01.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/11.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/21.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/31.png")
+        ));
+        put(NPCType.Robbin, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/RobbinWalk/01.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/11.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/21.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/31.png")
+        ));
+    }};
+
+    private final HashMap<NPCType, Animation<Texture>> NpcWalkUpAnimationMap = new HashMap<>(){{
+        put(NPCType.Harvey, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/HarveyWalk/02.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/12.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/22.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/32.png")
+        ));
+        put(NPCType.Abigail, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/AbigailWalk/02.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/12.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/22.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/32.png")
+        ));
+        put(NPCType.Sebastian, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/SebastianWalk/02.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/12.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/22.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/32.png")
+        ));
+        put(NPCType.Lia, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/LiaWalk/02.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/12.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/22.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/32.png")
+        ));
+        put(NPCType.Robbin, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/RobbinWalk/02.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/12.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/22.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/32.png")
+        ));
+    }};
+
+    private final HashMap<NPCType, Animation<Texture>> NpcWalkLeftAnimationMap = new HashMap<>(){{
+        put(NPCType.Harvey, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/HarveyWalk/03.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/13.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/23.png"),
+                new Texture("assets/NPCs/Other/HarveyWalk/33.png")
+        ));
+        put(NPCType.Abigail, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/AbigailWalk/03.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/13.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/23.png"),
+                new Texture("assets/NPCs/Other/AbigailWalk/33.png")
+        ));
+        put(NPCType.Sebastian, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/SebastianWalk/03.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/13.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/23.png"),
+                new Texture("assets/NPCs/Other/SebastianWalk/33.png")
+        ));
+        put(NPCType.Lia, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/LiaWalk/03.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/13.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/23.png"),
+                new Texture("assets/NPCs/Other/LiaWalk/33.png")
+        ));
+        put(NPCType.Robbin, new Animation<>(0.1f,
+                new Texture("assets/NPCs/Other/RobbinWalk/03.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/13.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/23.png"),
+                new Texture("assets/NPCs/Other/RobbinWalk/33.png")
+        ));
+    }};
+
     private final Texture arrowTexture = new  Texture(Gdx.files.internal("Clock/Arrow.png"));
 
     {
@@ -1409,6 +1541,22 @@ public class GameAssetManager {
 
     public Texture getAvatarTexture(int id) {
         return avatarTextures[id];
+    }
+
+    public Animation<Texture> getNpcWalkDownAnimation(NPCType npcType) {
+        return NpcWalkDownAnimationMap.get(npcType);
+    }
+
+    public Animation<Texture> getNpcWalkRightAnimation(NPCType npcType) {
+        return NpcWalkRightAnimationMap.get(npcType);
+    }
+
+    public Animation<Texture> getNpcWalkLeftAnimation(NPCType npcType) {
+        return NpcWalkLeftAnimationMap.get(npcType);
+    }
+
+    public Animation<Texture> getNpcWalkUpAnimation(NPCType npcType) {
+        return NpcWalkUpAnimationMap.get(npcType);
     }
 
     public Texture getPlowedCellTexture() {

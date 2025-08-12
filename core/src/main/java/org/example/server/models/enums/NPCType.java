@@ -4,7 +4,6 @@ import org.example.server.models.Cell;
 import org.example.server.models.Item;
 import org.example.server.models.NPCs.Quest;
 import org.example.server.models.enums.Plants.FruitType;
-import org.example.server.models.enums.items.FishType;
 import org.example.server.models.enums.items.MineralType;
 import org.example.server.models.enums.items.products.AnimalProduct;
 import org.example.server.models.enums.items.products.CookingProduct;
@@ -14,29 +13,29 @@ import java.util.ArrayList;
 
 public enum NPCType {
     Abigail("Abigail", AbigailQuests(), Features.Sad, AbigailFavouriteItems(),
-            "NPCs/Other/Abigail.png"),
+            "NPCs/Other/Abigail.png", 10, 19),
     Harvey("Harvey", HarveyQuests(), Features.Happy, HarveyFavouriteItems(),
-            "NPCs/Other/Harvey.png"),
+            "NPCs/Other/Harvey.png", 10, 18),
     Lia("Lia", LiaQuests(), Features.Lazy, LiaFavouriteItems(),
-            "NPCs/Other/Lia.png"),
+            "NPCs/Other/Lia.png", 12, 20),
     Robbin("Robbin", RobbinQuests(), Features.Scared, RobbinFavouriteItems(),
-            "NPCs/Other/Robbin.png"),
+            "NPCs/Other/Robbin.png", 10, 16),
     Sebastian("Sebastian", SebastianQuests(), Features.Angry, SebastianFavouriteItems(),
-            "NPCs/Other/Sebastian.png"),
+            "NPCs/Other/Sebastian.png", 11, 16),
     Clint("Clint", null, Features.Anxious, ClinicFavouriteItems(),
-            "NPCs/Shop/Clint.png"),
+            "NPCs/Shop/Clint.png", 0,0 ),
     Pierre("Pierre", null, Features.Angry, PierreFavouriteItems(),
-            "NPCs/Shop/Pierre.png"),
+            "NPCs/Shop/Pierre.png", 0, 0),
     Robin("Robin", null, Features.Happy, RobinFavouriteItems(),
-            "NPCs/Shop/Robin.png"),
+            "NPCs/Shop/Robin.png", 0, 0),
     Willy("Willy", null, Features.Sad, WillyFavouriteItems(),
-            "NPCs/Shop/Willy.png"),
+            "NPCs/Shop/Willy.png", 0,0 ),
     Marnie("Marnie", null, Features.Lazy, MarnieFavouriteItems(),
-            "NPCs/Shop/Marnie.png"),
+            "NPCs/Shop/Marnie.png", 0,0 ),
     Morris("Morris", null, Features.Sad, MorrisFavouriteItems(),
-            "NPCs/Shop/Morris.png"),
+            "NPCs/Shop/Morris.png", 0,0 ),
     Gus("Gus", null, Features.Happy, GusFavouriteItems(),
-            "NPCs/Shop/Gus.png"),
+            "NPCs/Shop/Gus.png", 0,0 ),
     ;
 
     private final String name;
@@ -45,13 +44,16 @@ public enum NPCType {
     private final ArrayList<Item> favorite;
     private Cell StandingCell;
     private String address;
+    private final int startDayTime, wonderOffTime;
 
-    NPCType(String name, Quest[] quests, Features features, ArrayList<Item> favorite, String address) {
+    NPCType(String name, Quest[] quests, Features features, ArrayList<Item> favorite, String address, int startDayTime, int wonderOffTime) {
         this.name = name;
         this.Quests = quests;
         this.features = features;
         this.favorite = favorite;
         this.address = address;
+        this.startDayTime = startDayTime;
+        this.wonderOffTime = wonderOffTime;
     }
 
     private static Quest[] AbigailQuests() {
@@ -240,5 +242,13 @@ public enum NPCType {
 
     public String getAddress() {
         return address;
+    }
+
+    public int getStartDayTime() {
+        return startDayTime;
+    }
+
+    public int getWonderOffTime() {
+        return wonderOffTime;
     }
 }

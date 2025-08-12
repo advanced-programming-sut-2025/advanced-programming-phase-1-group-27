@@ -15,6 +15,7 @@ import org.example.common.models.GraphicalResult;
 import org.example.server.models.*;
 import org.example.server.models.enums.CellType;
 import org.example.server.models.enums.Plants.Plant;
+import org.example.server.models.enums.Plants.SaplingType;
 import org.example.server.models.enums.Plants.SeedType;
 import org.example.server.models.enums.items.ShopItems;
 import org.example.server.models.enums.items.ToolType;
@@ -113,7 +114,12 @@ public class ToolGraphicalController {
                 Result res = new GameMenuController(new GameView()).plant(seedType, cell);
                 handleError(res);
             }
-        }
+            if (cell != null &&
+                    player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem() instanceof SaplingType saplingType) {
+
+            }
+
+            }
     }
 
     private void handleFertilization() {

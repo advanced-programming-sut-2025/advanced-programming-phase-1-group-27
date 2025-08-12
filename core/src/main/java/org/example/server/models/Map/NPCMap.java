@@ -77,9 +77,9 @@ public class NPCMap extends Map {
         cells[x + 3][y + 1].setType(CellType.Door);
         npcHouse.setDoor(cells[x + 3][y + 1]);
 
-        npc.setCurrentCell(cells[x + 4][y + 1]);
+//        npc.setCurrentCell(cells[x + 4][y + 1]);
         npc.setHome(npcHouse);
-        cells[x + 4][y + 1].setObject(npc);
+//        cells[x + 4][y + 1].setObject(npc);
 
     }
 

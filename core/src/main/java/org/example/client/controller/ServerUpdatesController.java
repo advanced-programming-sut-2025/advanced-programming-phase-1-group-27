@@ -296,7 +296,7 @@ public class ServerUpdatesController { // handles updates sent by server
                                 reaction.getText(),
                                 Color.BLACK,
                                 200,
-                                Align.center,
+                                Align.left,
                                 true
                         );
                         infoWindow.setPosition(otherPlayerController.getX(), otherPlayerController.getY() + 70);

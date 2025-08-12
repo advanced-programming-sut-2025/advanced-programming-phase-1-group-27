@@ -153,64 +153,50 @@ public class WorldController {
             renderBuilding(bt.i, bt.j, bt.textureIndex);
         }
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                float y = (cells.length - 1 - i) * tileSize;
-                float x = j * tileSize;
-                if (cells[i][j].getObject() instanceof NPC npc) {
-                    Main.getBatch().draw(GameAssetManager.getGameAssetManager().getNpcTexture(npc.getType()),
-                            x + 4, y, 32, 64);
-                    if (npc.getDialogue() != null) {
-
-                        Main.getBatch().draw(
-                                GameAssetManager.getGameAssetManager().getNPCDialogueSign(),
-                                x + 32, y + 64, 32, 32
-                        );
-
-                        Rectangle bounds = new Rectangle(x + 32, y + 56, 32, 32);
-                        if (Gdx.input.justTouched()) {
-                            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-                            camera.unproject(touchPos);
-                            if (bounds.contains(touchPos.x, touchPos.y)) {
-                                npc.setDialogue(npc.getDialogue().replace('—', ' '));
-                                npc.setDialogue(npc.getDialogue().replace('’', '\''));
-                                InfoWindow infoWindow = new InfoWindow(
-                                        GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
-                                        npc.getDialogue(),
-                                        Color.BLACK,
-                                        200,
-                                        Align.left,
-                                        true
-                                );
-                                infoWindow.setPosition(x + 32, y + 56);
-                                infoWindow.setFontScale(0.85f);
-                                infoWindow.setMaxTime(6.5f);
-                                infoWindows.add(infoWindow);
-
-
-                                npc.setDialogue(null);
-
-                                InteractionsWithNPCController controller = new InteractionsWithNPCController();
-                                controller.meetNPC(npc.getName());
-                            }
-                        }
-                    }
-
-                    Rectangle bounds = new Rectangle(x + 4, y, 32, 64);
-                    if (Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
-                        Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-                        camera.unproject(touchPos);
-                        if (bounds.contains(touchPos.x, touchPos.y)) {
-
-                            //  OPENING NPC MENU
-                            Main.getMain().getScreen().dispose();
-                            Main.getMain().setScreen(new NpcMenuView(npc.getName()));
-
-                        }
-                    }
-                }
-            }
-        }
+//        for (int i = 0; i < height; i++) {
+//            for (int j = 0; j < width; j++) {
+//                float y = (cells.length - 1 - i) * tileSize;
+//                float x = j * tileSize;
+//                if (cells[i][j].getObject() instanceof NPC npc) {
+//                    if (npc.getDialogue() != null) {
+//
+//                        Main.getBatch().draw(
+//                                GameAssetManager.getGameAssetManager().getNPCDialogueSign(),
+//                                x + 32, y + 64, 32, 32
+//                        );
+//
+//                        Rectangle bounds = new Rectangle(x + 32, y + 56, 32, 32);
+////                        if (Gdx.input.justTouched()) {
+////                            Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+////                            camera.unproject(touchPos);
+////                            if (bounds.contains(touchPos.x, touchPos.y)) {
+////                                npc.setDialogue(npc.getDialogue().replace('—', ' '));
+////                                npc.setDialogue(npc.getDialogue().replace('’', '\''));
+////                                InfoWindow infoWindow = new InfoWindow(
+////                                        GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
+////                                        npc.getDialogue(),
+////                                        Color.BLACK,
+////                                        200,
+////                                        Align.left,
+////                                        true
+////                                );
+////                                infoWindow.setPosition(x + 32, y + 56);
+////                                infoWindow.setFontScale(0.85f);
+////                                infoWindow.setMaxTime(6.5f);
+////                                infoWindows.add(infoWindow);
+////
+////
+////                                npc.setDialogue(null);
+////
+////                                InteractionsWithNPCController controller = new InteractionsWithNPCController();
+////                                controller.meetNPC(npc.getName());
+////                            }
+////                        }
+//                    }
+//
+//                }
+//            }
+//        }
     }
 
     private void renderMap(Map map) {
