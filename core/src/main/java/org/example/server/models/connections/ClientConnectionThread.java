@@ -1,5 +1,6 @@
 package org.example.server.models.connections;
 
+import org.example.common.database.DataBaseHelper;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;

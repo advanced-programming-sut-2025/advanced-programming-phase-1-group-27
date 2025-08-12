@@ -1,6 +1,7 @@
 package org.example.server.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.common.database.DataBaseHelper;
 import org.example.common.models.Message;
 import org.example.server.models.*;
 import org.example.server.models.AnimalProperty.Animal;
@@ -99,6 +100,14 @@ public class SaveController {
     public static void handleInfo(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
+        DataBaseHelper.saveClientGameInfo(lobby , message);
+        ServerGame game = lobby.getGame();
+        Player player = game.getPlayerByUsername(message.getFromBody("playerName"));
+        handleFarmInfo(game, message.getFromBody("farmMapInfo"));
+        handlePlayerInfo(lobby, player, message.getFromBody("playerInfo"));
+    }
+
+    public static void loadGameFromDB(Message message , Lobby lobby){
         ServerGame game = lobby.getGame();
         Player player = game.getPlayerByUsername(message.getFromBody("playerName"));
         handleFarmInfo(game, message.getFromBody("farmMapInfo"));

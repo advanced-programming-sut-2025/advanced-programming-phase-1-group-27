@@ -1,5 +1,6 @@
 package org.example.server.models;
 
+import org.example.common.database.DataBaseHelper;
 import org.example.common.models.Game;
 import org.example.common.models.Message;
 import org.example.common.models.MusicInfo;
@@ -172,6 +173,8 @@ public class ServerGame implements Game {
 
     public void passAnHour() {
         TimeController.passAnHour(lobby);
+        DataBaseHelper.saveTimeAndWeather(lobby , time , currentWeather);
+        DataBaseHelper.saveGiftsAndTrades(lobby , gifts , trades);
 //        updatePlayersBuff();
 //        updateArtisans();
         // player energies will be automatically updated
@@ -410,6 +413,10 @@ public class ServerGame implements Game {
         }}, Message.Type.set_weather));
     }
 
+    public void setWeather(Weather weather) {
+        currentWeather = weather;
+    }
+
     public Player getCurrentPlayer() {
         return players.get(currentPlayerIndex);
     }
@@ -582,12 +589,20 @@ public class ServerGame implements Game {
         trades.add(trade);
     }
 
+    public void setTrades(ArrayList<Trade> trades) {
+        this.trades = trades;
+    }
+
     public ArrayList<Gift> getGifts() {
         return gifts;
     }
 
     public void addGifts(Gift gift) {
         gifts.add(gift);
+    }
+
+    public void setGifts(ArrayList<Gift> gifts) {
+        this.gifts = gifts;
     }
 
     public void setPlayerMusic(String playerName, String songId, String songName) {
@@ -630,4 +645,6 @@ public class ServerGame implements Game {
         }
         return null;
     }
+
+
 }

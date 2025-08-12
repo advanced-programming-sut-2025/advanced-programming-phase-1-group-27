@@ -1,9 +1,15 @@
 package org.example.common.database;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Message;
 import org.example.common.models.Time;
 import org.example.common.utils.JSONUtils;
+import org.example.server.controller.SaveController;
 import org.example.server.models.Lobby;
+import org.example.server.models.Player;
+import org.example.server.models.Relations.Gift;
+import org.example.server.models.Relations.Trade;
+import org.example.server.models.ServerGame;
 import org.example.server.models.User;
 import org.example.server.models.enums.Weathers.Weather;
 
@@ -26,43 +32,6 @@ public class DataBaseHelper {
 
         } catch (SQLException e) {
             System.err.println("Error initializing database: " + e.getMessage());
-        }
-    }
-
-    public static void createDatabaseForSave() {
-        try (Connection conn = DriverManager.getConnection(DB_SAVE)) {
-            DatabaseMetaData meta = conn.getMetaData();
-
-            try (ResultSet tables = meta.getTables(null, null, "saves", null)) {
-                if (!tables.next()) {
-                    createSaveTable();
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error initializing database: " + e.getMessage());
-        }
-    }
-
-    public static void createSaveTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS saves (" +
-                "lobbyId INTEGER DEFAULT 0," +
-                "lobby TEXT NOT NULL," +
-                "Time TEXT DEFAULT NULL," +
-                "Weather TEXT DEFAULT NULL," +
-                "Trades TEXT DEFAULT NULL," +
-                "Gifts TEXT DEFAULT NULL," +
-                "NumberOfUsers INTEGER DEFAULT 0," +
-                "User1 TEXT DEFAULT NULL," +
-                "User2 TEXT DEFAULT NULL," +
-                "User3 TEXT DEFAULT NULL," +
-                "User4 TEXT DEFAULT NULL" +
-                ")";
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
-            System.out.println("Save table created or already exists.");
-        } catch (SQLException e) {
-            System.err.println("Error creating saves table: " + e.getMessage());
         }
     }
 
@@ -293,10 +262,46 @@ public class DataBaseHelper {
 
     // Save
 
+    public static void createDatabaseForSave() {
+        try (Connection conn = DriverManager.getConnection(DB_SAVE)) {
+            DatabaseMetaData meta = conn.getMetaData();
+
+            try (ResultSet tables = meta.getTables(null, null, "saves", null)) {
+                if (!tables.next()) {
+                    createSaveTable();
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error initializing database: " + e.getMessage());
+        }
+    }
+
+    public static void createSaveTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS saves (" +
+                "lobbyId INTEGER DEFAULT 0," +
+                "lobby TEXT NOT NULL," +
+                "Time TEXT DEFAULT NULL," +
+                "Weather TEXT DEFAULT NULL," +
+                "Trades TEXT DEFAULT NULL," +
+                "Gifts TEXT DEFAULT NULL," +
+                "User1 TEXT DEFAULT NULL," +
+                "User2 TEXT DEFAULT NULL," +
+                "User3 TEXT DEFAULT NULL," +
+                "User4 TEXT DEFAULT NULL" +
+                ")";
+        try (Connection conn = DriverManager.getConnection(DB_SAVE);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Save table created or already exists.");
+        } catch (SQLException e) {
+            System.err.println("Error creating saves table: " + e.getMessage());
+        }
+    }
+
     public static void saveLobby(Lobby lobby) {
         String sql = "INSERT INTO saves(lobbyId, lobby) VALUES(?, ?)";
         int lobbyId = lobby.getId();
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = DriverManager.getConnection(DB_SAVE);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             String lobbyGson = JSONUtils.toJson(new Message(new HashMap<>(){{
@@ -314,14 +319,36 @@ public class DataBaseHelper {
         }
     }
 
-    public static void saveTimeAndWeather(Lobby lobby, Time time, Weather weather) {
-        String sql = "UPDATE saves SET Time = ?, Weather = ? WHERE lobbyId = ?";
+    public static void deleteSave(Lobby lobby) {
+        String sql = "DELETE FROM saves WHERE lobbyId = ?";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
+        try (Connection conn = DriverManager.getConnection(DB_SAVE);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, time.toString());
-            pstmt.setString(2, weather.toString());
+            pstmt.setInt(1, lobby.getId());
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Lobby '" + lobby.getName() + "' deleted successfully.");
+            } else {
+                System.out.println("Lobby '" + lobby.getName() + "' not found, no deletion performed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error deleting lobby '" + lobby.getName() + "': " + e.getMessage());
+        }
+    }
+
+    public static synchronized void saveTimeAndWeather(Lobby lobby, Time time, Weather weather) {
+        String sql = "UPDATE saves SET Time = ?, Weather = ? WHERE lobbyId = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_SAVE);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            String timeGson = JSONUtils.toJson(new Message(new HashMap<>(){{
+                put("time", time.getInfo());
+            }} , Message.Type.save));
+
+            pstmt.setString(1, timeGson);
+            pstmt.setString(2, weather.name());
             pstmt.setInt(3, lobby.getId());
 
             int rowsAffected = pstmt.executeUpdate();
@@ -335,6 +362,160 @@ public class DataBaseHelper {
             System.err.println("Error updating time and weather for lobbyId '" +
                     lobby.getId() + "': " + e.getMessage());
         }
+    }
+
+    public static synchronized void saveGiftsAndTrades(Lobby lobby, ArrayList<Gift> gifts, ArrayList<Trade> trades) {
+        String sql = "UPDATE saves SET Gifts = ?, Trades = ? WHERE lobbyId = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_SAVE);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            ArrayList<HashMap<String , Object>> giftsArray = new ArrayList<>();
+            ArrayList<HashMap<String , Object>> tradesArray = new ArrayList<>();
+
+            for(Gift gift : gifts) {
+                giftsArray.add(gift.getInfo());
+            }
+
+            for(Trade trade : trades) {
+                tradesArray.add(trade.getInfo());
+            }
+
+            String trade = JSONUtils.toJson(new Message(new HashMap<>(){{
+                put("trades", tradesArray);
+            }} , Message.Type.save));
+
+            String gift = JSONUtils.toJson(new Message(new HashMap<>(){{
+                put("gifts", giftsArray);
+            }} , Message.Type.save));
+
+            pstmt.setString(1, gift);
+            pstmt.setString(2, trade);
+            pstmt.setInt(3, lobby.getId());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Gifts and trades for lobbyId '" + lobby.getId() +
+                        "' updated successfully.");
+            } else {
+                System.out.println("LobbyId '" + lobby.getId() + "' not found, update skipped.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error updating gifts and trades for lobbyId '" +
+                    lobby.getId() + "': " + e.getMessage());
+        }
+    }
+
+    public static synchronized void saveClientGameInfo(Lobby lobby, Message message) {
+        String selectSql = "SELECT User1, User2, User3, User4 FROM saves WHERE lobbyId = ?";
+        String updateSql = null;
+        String userColumnToUpdate = null;
+
+        try (Connection conn = DriverManager.getConnection(DB_SAVE);
+             PreparedStatement selectStmt = conn.prepareStatement(selectSql)) {
+
+            selectStmt.setInt(1, lobby.getId());
+            try (ResultSet rs = selectStmt.executeQuery()) {
+                if (rs.next()) {
+                    // Check User1 to User4 slots in order for null or empty
+                    for (int i = 1; i <= 4; i++) {
+                        String userData = rs.getString("User" + i);
+                        if (userData == null || userData.trim().isEmpty()) {
+                            userColumnToUpdate = "User" + i;
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println("LobbyId '" + lobby.getId() + "' not found.");
+                    return;
+                }
+            }
+
+            // Prepare update statement
+            updateSql = "UPDATE saves SET " + userColumnToUpdate + " = ? WHERE lobbyId = ?";
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                String messageJson = JSONUtils.toJson(message);
+                updateStmt.setString(1, messageJson);
+                updateStmt.setInt(2, lobby.getId());
+
+                int rowsUpdated = updateStmt.executeUpdate();
+                if (rowsUpdated > 0) {
+                    System.out.println("Saved client game info in " + userColumnToUpdate + " for lobbyId " + lobby.getId());
+                } else {
+                    System.out.println("Update failed, lobbyId " + lobby.getId() + " not found.");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error saving client game info for lobbyId " + lobby.getId() + ": " + e.getMessage());
+        }
+    }
+
+    public static ArrayList<Lobby> getLobbiesFromSave() {
+        ArrayList<Lobby> lobbies = new ArrayList<>();
+        String sql = "SELECT * FROM saves";
+
+        try (Connection conn = DriverManager.getConnection(DB_SAVE);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                try {
+                    int lobbyId = rs.getInt("lobbyId");
+                    String lobbyJson = rs.getString("lobby");
+                    Message lobbyMessage = JSONUtils.fromJson(lobbyJson);
+                    Lobby lobby = new Lobby(lobbyMessage.getFromBody("lobby"));
+                    for(int i = 1 ; i < 5 ; i++){
+                        String userData = rs.getString("User" + i);
+                        if (userData == null || userData.trim().isEmpty()) {
+                            break;
+                        }
+                        if(i == 1){
+                            lobby.createBasicGame();
+                        }
+                        Message message = JSONUtils.fromJson(userData);
+                        SaveController.loadGameFromDB(message , lobby);
+                    }
+                    String timeString = rs.getString("Time");
+                    String weatherString = rs.getString("Weather");
+                    String tradesString =  rs.getString("Trades");
+                    String giftsString = rs.getString("Gifts");
+
+
+                    ArrayList<Gift> gifts = new ArrayList<>();
+                    if (giftsString != null && !giftsString.trim().isEmpty()) {
+                        Message giftsMessage = JSONUtils.fromJson(giftsString);
+                        for(LinkedTreeMap<String ,Object> ti : giftsMessage.<ArrayList<LinkedTreeMap<String,Object>>>getFromBody("gifts")){
+                            gifts.add(new Gift(ti));
+                        }
+                    }
+                    lobby.getGame().setGifts(gifts);
+
+                    ArrayList<Trade> trades = new ArrayList<>();
+                    if (tradesString != null && !tradesString.trim().isEmpty()) {
+                        Message tradesMessage = JSONUtils.fromJson(tradesString);
+                        for(LinkedTreeMap<String ,Object> ti : tradesMessage.<ArrayList<LinkedTreeMap<String,Object>>>getFromBody("trades")){
+                            trades.add(new Trade(ti));
+                        }
+                    }
+                    lobby.getGame().setTrades(trades);
+
+                    Weather weather = Weather.getWeather(weatherString);
+                    lobby.getGame().setWeather(weather);
+
+                    Message timeMessage = JSONUtils.fromJson(timeString);
+                    lobby.getGame().getTime().loadTime(timeMessage.getFromBody("time"));
+
+                    lobbies.add(lobby);
+                } catch (Exception e) {
+                    System.err.println("Skipping a lobby due to JSON parsing error: " + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving lobbies from saves: " + e.getMessage());
+        }
+
+        return lobbies;
     }
 
 

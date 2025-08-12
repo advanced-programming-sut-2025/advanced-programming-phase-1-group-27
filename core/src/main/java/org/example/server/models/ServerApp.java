@@ -14,16 +14,10 @@ public class ServerApp {
     private static final ArrayList<ClientConnectionThread> connections = new ArrayList<>();
     private static ListenerThread listenerThread;
     private static boolean hasEnded = false;
-    private static ArrayList<Lobby> lobbies = new ArrayList<>();
+    private static ArrayList<Lobby> lobbies;
 
     static {
-        User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
-        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
-        Lobby test = new Lobby(admin, false , "pass" , true , 1111 , "test");
-        Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
-        lobby.setMap(admin.getUsername(), 0);
-        lobbies.add(lobby);
-        lobbies.add(test);
+        lobbies = DataBaseHelper.getLobbiesFromSave();
     }
 
     public static void setListenerThread(ListenerThread listenerThread) {
@@ -102,6 +96,7 @@ public class ServerApp {
     }
 
     public static void removeLobby(Lobby lobby) {
+        DataBaseHelper.deleteSave(lobby);
         lobbies.remove(lobby);
     }
 

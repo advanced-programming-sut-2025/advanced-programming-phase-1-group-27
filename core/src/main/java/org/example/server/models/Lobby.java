@@ -215,4 +215,19 @@ public class Lobby {
     public void notifyUser(User user, Message message) {
         ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
     }
+
+    public void createBasicGame() {
+        ArrayList<Player> players = new ArrayList<>();
+        for (User user : users) {
+            players.add(new Player(user));
+        }
+        ServerGame serverGame;
+        setGame(serverGame = new ServerGame(this, players));
+        serverGame.init();
+        for (Player player : players) {
+            int mapIndex = getUsernameToMap().get(player.getUsername());
+            player.setFarmMap(serverGame.getFarmMap(mapIndex));
+            player.setCurrentCell(serverGame.getFarmMap(mapIndex).getCell(8, 70));
+        }
+    }
 }

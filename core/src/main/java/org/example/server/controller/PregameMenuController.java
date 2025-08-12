@@ -1,5 +1,6 @@
 package org.example.server.controller;
 
+import org.example.common.database.DataBaseHelper;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
@@ -17,6 +18,7 @@ public class PregameMenuController {
         }
         ServerGame serverGame;
         lobby.setGame(serverGame = new ServerGame(lobby, players));
+        DataBaseHelper.saveLobby(lobby);
         serverGame.init();
         for (Player player : players) {
             int mapIndex = lobby.getUsernameToMap().get(player.getUsername());
