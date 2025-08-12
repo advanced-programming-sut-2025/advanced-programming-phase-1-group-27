@@ -310,19 +310,31 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void handleMarriageResponse(Message message) {
         boolean answer = message.getFromBody("answer");
+        Sprite itemSprite;
         // TODO: parsa, inja javab behet mirese
         if (answer) {
-            //animation for marriage
+//            itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
             ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(ShopItems.WeddingRing, 1);
         } else {
             //animation for reject
         }
+        OutsideView newOutsideView = new OutsideView();
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();
-            OutsideView newOutsideView = new OutsideView();
             ClientApp.setNonMainMenu(newOutsideView);
             Main.getMain().setScreen(newOutsideView);
         });
+
+
+//
+//            itemSprite.setSize(72, 62);
+//
+//            PopUpController.addPopUp(new PopUpTexture(itemSprite
+//                    ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+20,
+//                    newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+80, 4
+//            ));
+
+
     }
 
     public static void handleReaction(Message message) {

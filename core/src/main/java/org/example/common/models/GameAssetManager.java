@@ -709,6 +709,8 @@ public class GameAssetManager {
     private final Texture hugIcon = new Texture(Gdx.files.internal("Images/HugIcon.png"));
     private final Texture weddingRing = new Texture(Gdx.files.internal("Images/WeddingRing.png"));
     private final Texture bouquet = new Texture(Gdx.files.internal("Images/Bouquet.png"));
+    private final Texture brokenHeart = new Texture(Gdx.files.internal("Images/BrokenHeart.png"));
+
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -718,6 +720,10 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Texture getBrokenHeart() {
+        return brokenHeart;
     }
 
     public Texture getBouquet() {

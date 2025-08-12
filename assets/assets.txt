@@ -382,6 +382,7 @@ Images/Artisans/MayonnaiseMachine.png
 Images/Artisans/OilMaker.png
 Images/Artisans/PreservesJar.png
 Images/Bouquet.png
+Images/BrokenHeart.png
 Images/Buffs/Farming_Skill_Icon.png
 Images/Buffs/Fishing_Skill_Icon.png
 Images/Buffs/Foraging_Skill_Icon.png
