@@ -16,7 +16,6 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
 import org.example.server.models.NPCs.Quest;
-import org.example.server.models.Relations.Gift;
 import org.example.server.models.enums.items.ShopItems;
 
 import java.util.ArrayList;
@@ -218,7 +217,7 @@ public class QuestNPCMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.addQuest(selectedQuest);
+                errorLabel.set(controller.addQuest(selectedQuest));
             }
         });
 
@@ -226,7 +225,7 @@ public class QuestNPCMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                controller.finish(selectedQuest , npcName);
+                errorLabel.set(controller.finish(selectedQuest , npcName));
             }
         });
     }

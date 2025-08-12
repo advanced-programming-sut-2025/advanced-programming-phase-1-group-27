@@ -42,33 +42,33 @@ public class MiniGameController {
         fishLevel = getStackLevel(getFishCoefficient(fishingPole));
         caughtFishMovement = FishMovementType.values()[new Random().nextInt(FishMovementType.values().length)];
         System.out.println(caughtFishMovement.name());
-        if ( caughtFishMovement == FishMovementType.SMOOTH ){
-            previousDirection = new Random().nextInt(-1,3);
-        }
-        else{
+        if (caughtFishMovement == FishMovementType.SMOOTH) {
+            previousDirection = new Random().nextInt(-1, 3);
+        } else {
             previousDirection = null;
         }
         difficulty = MiniGameDifficulty.RETARD;
         progress = 50;
         isPerfect = true;
+        System.out.println(caughtFish.getName());
     }
 
-    public void startMiniGame(){
+    public void startMiniGame() {
 
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new MiniGameView(this));
 
     }
 
-    public void finishGame(boolean caughtSuccessfully){
+    public void finishGame(boolean caughtSuccessfully) {
 
         checkFishingProcessStatus();
 
         Stacks fishStack = new Stacks(caughtFish, fishLevel, numberOfFish);
 
-        if ( caughtSuccessfully ){
+        if (caughtSuccessfully) {
 
-            if ( ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(fishStack.getItem(), fishStack.getStackLevel(), fishStack.getQuantity()) ){
+            if (ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().canAdd(fishStack.getItem(), fishStack.getStackLevel(), fishStack.getQuantity())) {
                 ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(fishStack.getItem(), fishStack.getStackLevel(), fishStack.getQuantity());
             }
 
@@ -76,11 +76,11 @@ public class MiniGameController {
 
 
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new PostMiniGameMenuView(this, (caughtSuccessfully)? caughtFish: null , isPerfect));
+        Main.getMain().setScreen(new PostMiniGameMenuView(this, (caughtSuccessfully) ? caughtFish : null, isPerfect));
 
     }
 
-    public void backToOutside(){
+    public void backToOutside() {
 
         ClientApp.setNonMainMenu(null);
         Main.getMain().getScreen().dispose();
@@ -145,18 +145,16 @@ public class MiniGameController {
             return StackLevel.Iridium;
     }
 
-    private int randomDirection(){
+    private int randomDirection() {
 
-        if ( previousDirection == null ){
-            return new Random().nextInt(-1,3);
-        }
-        else{       // 66% shans movement ghabli
-            ArrayList<Integer> candidateDirections = new ArrayList<>(List.of(-1,0,1,
-                    previousDirection,previousDirection,previousDirection));
+        if (previousDirection == null) {
+            return new Random().nextInt(-1, 3);
+        } else {       // 66% shans movement ghabli
+            ArrayList<Integer> candidateDirections = new ArrayList<>(List.of(-1, 0, 1,
+                    previousDirection, previousDirection, previousDirection));
             previousDirection = candidateDirections.get(new Random().nextInt(candidateDirections.size()));
             return previousDirection;
         }
-
 
 
     }
@@ -166,56 +164,62 @@ public class MiniGameController {
 
         int direction = randomDirection();
         int totalDY = (caughtFishMovement == FishMovementType.DART) ? difficulty.getDartDY() : difficulty.getNormalDY();
-        int totalFrames = ( caughtFishMovement == FishMovementType.SINKER ) ? 15 : 30;
+        int totalFrames = (caughtFishMovement == FishMovementType.SINKER) ? 15 : 30;
 
-        if ( caughtFishMovement == FishMovementType.FLOATER ) {
-            if ( direction > 0 ){
+        if (caughtFishMovement == FishMovementType.FLOATER) {
+            if (direction > 0) {
                 totalDY = difficulty.getDartDY();
             }
         }
 
-        while ( ((totalDY * direction + currentY) > maxY) || ((totalDY * direction + currentY) < minY)){
-            direction = randomDirection();
+//        while ( ((totalDY * direction + currentY) > maxY) || ((totalDY * direction + currentY) < minY)){
+//            direction = randomDirection();
+//        }
+        if ((totalDY * direction + currentY) > maxY) {
+//            return (float) (maxY - currentY) / totalFrames;
+            direction *= -1;
+        } else if ((totalDY * direction + currentY) < minY) {
+//            return (float) (currentY - minY) / totalFrames;
+            direction *= -1;
         }
 
-        return (float) (totalDY * direction) / totalFrames ;
+
+        return (float) (totalDY * direction) / totalFrames;
 
 
     }
 
-    public void checkIfFishIsIn(float rectangleBottom,float fishBottom, float rectangleHeight, float fishHeight){
+    public void checkIfFishIsIn(float rectangleBottom, float fishBottom, float rectangleHeight, float fishHeight) {
 
 
-        if ( rectangleBottom < fishBottom && (rectangleBottom + rectangleHeight) > (fishBottom + fishHeight) ){
-            progress = Math.min(progress + 0.1f,100);
-            if ( progress >= 100 ){
+        if (rectangleBottom < fishBottom && (rectangleBottom + rectangleHeight) > (fishBottom + fishHeight)) {
+            progress = Math.min(progress + 0.1f, 100);
+            if (progress >= 100) {
                 finishGame(true);
             }
-        }
-        else{
-            progress = Math.max(progress - 0.1f,0);
+        } else {
+            progress = Math.max(progress - 0.1f, 0);
             isPerfect = false;
-            if ( progress <= 0 ){
+            if (progress <= 0) {
                 finishGame(false);
             }
         }
 
     }
 
-    public void checkFishingProcessStatus(){
+    public void checkFishingProcessStatus() {
 
-        if ( fishLevel == StackLevel.Silver ){
+        if (fishLevel == StackLevel.Silver) {
             fishLevel = StackLevel.Gold;
-        }
-        else if ( fishLevel == StackLevel.Gold ){
+        } else if (fishLevel == StackLevel.Gold) {
             fishLevel = StackLevel.Iridium;
         }
 
         ClientApp.getCurrentGame().getCurrentPlayer().fishXp(5);
         ClientApp.getCurrentGame().getCurrentPlayer().consumeEnergy(
 
-                (ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() == 4)?
-                        ToolType.getFishPoleEnergy(fishingPole)-1:ToolType.getFishPoleEnergy(fishingPole)
+                (ClientApp.getCurrentGame().getCurrentPlayer().getAbility(AbilityType.Fishing).getLevel() == 4) ?
+                        ToolType.getFishPoleEnergy(fishingPole) - 1 : ToolType.getFishPoleEnergy(fishingPole)
 
         );
 

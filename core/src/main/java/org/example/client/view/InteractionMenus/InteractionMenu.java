@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionController;
+import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.MarriageController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
@@ -21,6 +22,7 @@ import java.util.Scanner;
 public class InteractionMenu extends AppMenu {
 
     private final InteractionController controller;
+    private final InteractionsWithUserController userController;
     private final MarriageController marriageController;
     private final Image decoration1;
     private final Image decoration2;
@@ -44,7 +46,7 @@ public class InteractionMenu extends AppMenu {
     private Stage stage;
 
     public InteractionMenu(String username) {
-
+        userController = new InteractionsWithUserController();
         controller = new InteractionController();
         marriageController = new MarriageController();
         ClientApp.setNonMainMenu(this);
@@ -135,7 +137,7 @@ public class InteractionMenu extends AppMenu {
     @Override
     public void render(float delta) {
 
-        playersAreClose = controller.checkIfPlayersAreClose();
+        playersAreClose = controller.checkIfPlayersAreClose(targetUsername);
         errorLabel.update(delta);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         showErrorMessage();
@@ -207,6 +209,7 @@ public class InteractionMenu extends AppMenu {
         marriageButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                if ( !playersAreClose ) return;
                 playClickSound();
                 errorLabel.set(marriageController.askMarriage(targetUsername));
             }
@@ -217,7 +220,7 @@ public class InteractionMenu extends AppMenu {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 if ( !playersAreClose ) return;
                 playClickSound();
-                ///  TODO PARSA
+                errorLabel.set(userController.hug(targetUsername));
             }
         });
 
@@ -226,7 +229,7 @@ public class InteractionMenu extends AppMenu {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 if ( !playersAreClose ) return;
                 playClickSound();
-                ///  TODO PARSA
+                errorLabel.set(userController.flower(targetUsername));
             }
         });
 

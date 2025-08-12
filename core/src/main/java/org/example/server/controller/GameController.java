@@ -113,8 +113,12 @@ public class GameController {
         } else if (mode.equals("flower")) {
             player1.getPlayerMetToday().put(player2, Boolean.TRUE);
             player2.getPlayerMetToday().put(player1, Boolean.TRUE);
-            player1.goNextLevel(player2);
-            player2.goNextLevel(player1);
+            Relation relation = player1.getRelations().computeIfAbsent(player1, k -> new Relation());
+            if(relation.getLevel() == 2
+                    &&  relation.getXp() == 300){
+                player1.goNextLevel(player2);
+                player2.goNextLevel(player1);
+            }
         }else  if (mode.equals("hug")) {
             if (player1.getPlayerHuggedToday().get(player2) == null
                     || player1.getPlayerHuggedToday().get(player2) == Boolean.FALSE) {
