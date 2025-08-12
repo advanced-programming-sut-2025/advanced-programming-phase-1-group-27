@@ -1,7 +1,14 @@
 package org.example.client.controller.InteractionsWithOthers;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.Main;
+import org.example.client.controller.PopUpController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.MiniPlayer;
+import org.example.client.model.PopUpTexture;
+import org.example.client.view.OutsideView;
+import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
@@ -95,6 +102,32 @@ public class InteractionsWithUserController {
             put("self", ClientApp.getLoggedInUser().getUsername());
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
         }}, Message.Type.interaction_p2p));
+
+        OutsideView newOutsideView = new OutsideView();
+        Main.getMain().getScreen().dispose();
+        Main.getMain().setScreen(newOutsideView);
+        ClientApp.setCurrentMenu(newOutsideView);
+
+        /// TODO PARSA
+        Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getHugIcon());
+        itemSprite.setSize(72, 62);
+
+        float giverX = 0, giverY = 0;
+
+        for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+
+            if ( miniPlayer.getUsername().equals(username) ) {
+                giverX = miniPlayer.getPosition().getX();
+                giverY = miniPlayer.getPosition().getY();
+            }
+
+        }
+
+        PopUpController.addPopUp(new PopUpTexture(itemSprite
+                ,(newOutsideView.getPlayerController().getX()+giverX)/2f,(newOutsideView.getPlayerController().getY()+giverY)/2f,
+                (newOutsideView.getPlayerController().getX()+giverX)/2f, (newOutsideView.getPlayerController().getY()+giverY)/2f, 4
+        ));
+
         return new GraphicalResult("You hugged your friend!" , false);
     }
 
