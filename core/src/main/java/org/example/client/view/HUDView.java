@@ -783,7 +783,7 @@ public class HUDView extends AppMenu {
     private void displayMoneyInfo() {
 
         controller.setMoneyInfo(moneyInfo);
-        moneyInfo.setPosition(clockImage.getX() + clockImage.getWidth() / 2 + 25, clockImage.getY() + 30);
+        moneyInfo.setPosition(clockImage.getX() + clockImage.getWidth() / 2 + 25 + 100 - 25 * (controller.digitCount()), clockImage.getY() + 30);
         moneyInfo.setColor(new Color(0.86f, 0.169f, 0f, 1f));
         moneyInfo.toFront();
 
@@ -2008,7 +2008,7 @@ public class HUDView extends AppMenu {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-//                System.out.println(x + " " + y);
+                System.out.println(x + " " + y);
 
                 if (!isInputFieldVisible) {
 

@@ -96,7 +96,7 @@ public class Player extends User {
         this.foraging = new Ability();
         this.fishing = new Ability();
         this.currentCell = null;
-        this.money = 8569;
+        this.money = 10;
         this.currentTool = null;
         abilityFinder.put(AbilityType.Farming, farming);
         abilityFinder.put(AbilityType.Fishing, fishing);
