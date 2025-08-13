@@ -191,4 +191,17 @@ public class CheatController {
         return new Result(!result.hasError() , result.getMessage().getText().toString());
     }
 
+    public Result cheatAddPlayerXP(String playerName, String quantityString) {
+        int quantity = Integer.parseInt(quantityString);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new  HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self" , ClientApp.getLoggedInUser().getUsername());
+            put("other", playerName);
+            put("amount" , quantity);
+        }} , Message.Type.add_player_xp) ,  TIMEOUT_MILLIS);
+        if(response == null || response.getType() != Message.Type.response)
+            return new Result(false, "can't add xp!");
+        GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
+        return new Result(!result.hasError() , result.getMessage().getText().toString());
+    }
 }

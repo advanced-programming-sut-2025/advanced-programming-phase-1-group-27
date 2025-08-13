@@ -363,6 +363,10 @@ public class HUDController extends MenuController {
             result = controller.cheatAddPlayerLevel(
                     matcher.group("name").trim(),
                     matcher.group("level").trim());
+        } else if ((matcher = CheatCommands.CheatAddXPPlayer.getMatcher(input)) != null) {
+            result = controller.cheatAddPlayerXP(
+                    matcher.group("name").trim(),
+                    matcher.group("level").trim());
         } else if ((matcher = CheatCommands.ToAllChat.getMatcher(input)) != null) {
             ///  TODO PARSA MET TODAY ALL
             String text = trimMessage(matcher.group("chatText").trim());

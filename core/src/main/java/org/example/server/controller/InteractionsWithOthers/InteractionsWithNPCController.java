@@ -212,6 +212,14 @@ public class InteractionsWithNPCController {
         npc.addLevel(player, message.getIntFromBody("amount"));
     }
 
+    public static void cheatAddXP(Message message) {
+        int lobbyId = message.getIntFromBody("lobbyId");
+        Player player = findPlayer(message.getFromBody("self"), lobbyId);
+        NPC npc = findNPC(message.getFromBody("other"), lobbyId);
+        npc.getRelations().computeIfAbsent(player, k -> new Relation());
+        npc.addLevel(player, message.getIntFromBody("amount"));
+    }
+
     public static Message getQuests(Message message){
         int lobbyId = message.getIntFromBody("lobbyId");
         String npcName = message.getFromBody("npcName");

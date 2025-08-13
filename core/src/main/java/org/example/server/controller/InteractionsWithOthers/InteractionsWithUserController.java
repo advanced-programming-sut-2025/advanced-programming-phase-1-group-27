@@ -347,6 +347,37 @@ public class InteractionsWithUserController {
         }}, Message.Type.response);
     }
 
+    public static Message cheatAddPlayerXP(Message message) {
+        int lobbyId = message.getIntFromBody("lobbyId");
+        int quantity = message.getIntFromBody("amount");
+        Player currentPlayer = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("self"));
+        Player player = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("other"));
+        if (player == null) {
+            return new Message(new HashMap<>() {{
+                put("GraphicalResult", GraphicalResult.getInfo("Player not found"));
+            }}, Message.Type.response);
+        }
+        if(player.getUsername().equals(currentPlayer.getUsername())) {
+            return new Message(new HashMap<>() {{
+                put("GraphicalResult", GraphicalResult.getInfo("You can't add level to yourself!"));
+            }}, Message.Type.response);
+        }
+        if (!currentPlayer.getRelations().containsKey(player)) {
+            currentPlayer.getRelations().put(player, new Relation());
+        }
+        if (!player.getRelations().containsKey(currentPlayer)) {
+            player.getRelations().put(currentPlayer, new Relation());
+        }
+        Relation relation = currentPlayer.getRelations().get(player);
+        int amount = relation.getXp() + quantity;
+        Relation relation2 = player.getRelations().get(currentPlayer);
+        relation.setXp(amount);
+        relation2.setXp(amount);
+        return new Message(new HashMap<>() {{
+            put("GraphicalResult", GraphicalResult.getInfo("XP has been added successfully (" + relation.getXp() + ")", false));
+        }}, Message.Type.response);
+    }
+
     public static Message getGiftHistory(Message message) {
         int lobbyId = message.getIntFromBody("lobbyId");
         String starter = message.getFromBody("starter");

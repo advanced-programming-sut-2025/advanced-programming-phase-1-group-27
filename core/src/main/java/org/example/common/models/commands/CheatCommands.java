@@ -16,6 +16,7 @@ public enum CheatCommands {
     CheatSetFriendShip("\\s*cheat\\s+set\\s+friendship\\s+-n\\s+(?<name>.+)\\s+-c\\s+(?<amount>\\d+)\\s*"),
     CheatAddLevelNPC("\\s*cheat\\s+add\\s+level\\s+NPC\\s+-n\\s+(?<name>.+)\\s+-l\\s+(?<level>\\d+)\\s*"),
     CheatAddLevelPlayer("\\s*cheat\\s+add\\s+level\\s+player\\s+-n\\s+(?<name>.+)\\s+-l\\s+(?<level>\\d+)\\s*"),
+    CheatAddXPPlayer("\\s*cheat\\s+add\\s+level\\s+player\\s+-n\\s+(?<name>.+)\\s+-x\\s+(?<level>\\d+)\\s*"),
     CheatAddMoney("\\s*cheat\\s+add\\s+(?<amount>\\d+)\\s+dollars\\s*"),
     CheatSetAbility("cheat\\s+set\\s+ability\\s+-n\\s+(?<abilityName>.+)\\s+-l\\s+(?<level>\\d+)"),
     ToAllChat("\\s*!(?<chatText>.+)\\s*"),

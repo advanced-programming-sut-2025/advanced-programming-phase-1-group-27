@@ -186,6 +186,9 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.add_player_level) {
             sendMessage(InteractionsWithUserController.cheatAddPlayerLevel(message));
             return true;
+        }else if (message.getType() == Message.Type.add_player_xp) {
+            sendMessage(InteractionsWithUserController.cheatAddPlayerXP(message));
+            return true;
         } else if (message.getType() == Message.Type.add_npc_level) {
             InteractionsWithNPCController.cheatAddLevel(message);
             return true;
