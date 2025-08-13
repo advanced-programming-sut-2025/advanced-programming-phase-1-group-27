@@ -95,6 +95,13 @@ public class HUDController extends MenuController {
 
     }
 
+    public int digitCount(){
+
+        /// حالا راه تو دوره
+        return String.valueOf(Math.abs(ClientApp.getCurrentGame().getCurrentPlayer().getMoney())).length();
+
+    }
+
     public void setMoneyInfo(Label label) {
 
         String money = Integer.toString(ClientApp.getCurrentGame().getCurrentPlayer().getMoney());
