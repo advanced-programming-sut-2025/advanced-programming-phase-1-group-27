@@ -2,7 +2,6 @@ package org.example.server.controller;
 
 import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
-import org.example.server.models.App;
 import org.example.common.models.Result;
 import org.example.common.models.SecurityQuestion;
 import org.example.common.models.Menu;
@@ -21,19 +20,19 @@ public class SecurityQuestionMenuController extends MenuController {
 
     public void submitSecurityQuestion() {
 
-        if (!view.getAnswerTextField().getText().isEmpty()) {
-            view.getUser().setRecoveryQuestion(new SecurityQuestion(Questions.values()[view.getSecurityQuestionsBox().getSelectedIndex()].getQuestion(),
-                    view.getAnswerTextField().getText()));
-
-            App.addUser(view.getUser());
-
-            App.setCurrentMenu(Menu.LoginMenu);
-            Main.getMain().getScreen().dispose();
-            Main.getMain().setScreen(new LoginMenuView());
-        } else {
-            view.setErrorPhase(true);
-        }
-
+//        if (!view.getAnswerTextField().getText().isEmpty()) {
+//            view.getUser().setRecoveryQuestion(new SecurityQuestion(Questions.values()[view.getSecurityQuestionsBox().getSelectedIndex()].getQuestion(),
+//                    view.getAnswerTextField().getText()));
+//
+//            App.addUser(view.getUser());
+//
+//            App.setCurrentMenu(Menu.LoginMenu);
+//            Main.getMain().getScreen().dispose();
+//            Main.getMain().setScreen(new LoginMenuView());
+//        } else {
+//            view.setErrorPhase(true);
+//        }
+//
 
     }
 
@@ -47,7 +46,7 @@ public class SecurityQuestionMenuController extends MenuController {
     public Result exitMenu() {
 
         playClickSound();
-        App.setCurrentMenu(Menu.RegisterMenu);
+        //App.setCurrentMenu(Menu.RegisterMenu);
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new RegisterMenuView());
         return new Result(true, "Redirecting to registerViaGraphics menu ...");

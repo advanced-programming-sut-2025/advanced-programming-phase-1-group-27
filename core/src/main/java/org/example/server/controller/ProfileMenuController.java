@@ -3,7 +3,6 @@ package org.example.server.controller;
 import org.example.common.database.DataBaseHelper;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.App;
 import org.example.common.models.Result;
 import org.example.server.models.ServerApp;
 import org.example.common.models.User;
@@ -121,13 +120,13 @@ public class ProfileMenuController{
         return new Result(true, "Password changed successfully!");
     }
 
-    // TODO : nemikhaim?
-    public Result showInfo() {
-        User user = App.getLoggedInUser();
-        String result = "User info:\n" + "username: " + user.getUsername() + "\n" +
-                "nickname: " + user.getNickname() + "\n" +
-                "maximum money earned in a single game: " + user.getMaxMoneyEarned() + "\n" +
-                "number of games played: " + user.getNumberOfGamesPlayed();
-        return new Result(true, result);
-    }
+
+//    public Result showInfo() {
+//        User user = App.getLoggedInUser();
+//        String result = "User info:\n" + "username: " + user.getUsername() + "\n" +
+//                "nickname: " + user.getNickname() + "\n" +
+//                "maximum money earned in a single game: " + user.getMaxMoneyEarned() + "\n" +
+//                "number of games played: " + user.getNumberOfGamesPlayed();
+//        return new Result(true, result);
+//    }
 }
