@@ -2,6 +2,7 @@ package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -55,11 +56,14 @@ public class HomeView extends AppMenu {
     private void preProcess() {
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         player.setCurrentMap(player.getFarmMap());
-        player.setCurrentCell(player.getFarmMap().getCell(50, 71));
+        player.setCurrentCell(player.getFarmMap().getCell(8, 71));
     }
 
     @Override
     public void show() {
+        Main.getBatch().setProjectionMatrix(
+                new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight())
+        );
         //TODO Movaghati ast in
         preProcess();
 

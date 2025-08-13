@@ -308,7 +308,7 @@ public class GameMenuController extends MenuController {
                         " was Pet!");
             }
         }
-        return new Result(false, "No animal Found!");
+        return new Result(false, "Your not near the animal!");
     }
 
     public Result feedHay(String name) {

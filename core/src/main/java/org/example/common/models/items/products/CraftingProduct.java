@@ -1,7 +1,13 @@
 package org.example.common.models.items.products;
 
+import org.example.common.models.Artisan;
+import org.example.common.models.ArtisanTypes;
 import org.example.common.models.Item;
 import org.example.common.models.items.Recipe;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public enum CraftingProduct implements Item {
     //Some of them have extra for On/Off
@@ -65,6 +71,24 @@ public enum CraftingProduct implements Item {
             }
         }
         return recipe;
+    }
+
+    private final static HashMap<CraftingProduct, ArtisanTypes> craftingToArtisan = new HashMap<>(){{
+        put(Furnace, ArtisanTypes.Furnace);
+        put(Keg, ArtisanTypes.Keg);
+        put(BeeHouse, ArtisanTypes.BeeHouse);
+        put(CheesePress, ArtisanTypes.CheesePress);
+        put(Dehydrator, ArtisanTypes.Dehydrator);
+        put(CharcoalKiln, ArtisanTypes.CharcoalKiln);
+        put(Loom, ArtisanTypes.Loom);
+        put(MayonnaiseMachine, ArtisanTypes.MayonnaiseMachine);
+        put(OilMaker, ArtisanTypes.OilMaker);
+        put(PreservesJar, ArtisanTypes.PreservesJar);
+        put(FishSmoker, ArtisanTypes.FishSmoker);
+    }};
+
+    public ArtisanTypes getArtisan() {
+        return craftingToArtisan.getOrDefault(this, null);
     }
 }
 

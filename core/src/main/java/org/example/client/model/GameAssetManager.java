@@ -81,6 +81,7 @@ public class GameAssetManager {
     private final Image sunnySummer = new Image(new Texture(Gdx.files.internal("Clock/SunnySummer.png")));
     private final Image snowySummer = new Image(new Texture(Gdx.files.internal("Clock/SnowySummer.png")));
 
+    private final Texture artisanBackGroundTexture = new Texture("assets/Images/Artisans/ArtisanMenu.png");
     private final Image artisanBackground = new Image(new Texture("assets/Images/Artisans/ArtisanMenu.png"));
     private final Texture artisanBarBlack = new Texture("assets/Images/Artisans/ArtisanBarBack.png");
     private final Texture artisanBarFront = new Texture("assets/Images/Artisans/ArtisanBarFront.png");
@@ -113,6 +114,16 @@ public class GameAssetManager {
         put(CropType.Melon, new Texture("assets/Images/Crops/Giant_Melon.png"));
         put(CropType.Pumpkin, new Texture("assets/Images/Crops/Giant_Pumpkin.png"));
     }};
+
+    private final Texture[] shopTextures = new Texture[] {
+            new Texture("assets/Buildings/BlackSmith.png"),
+            new Texture("assets/Buildings/Jojamart.png"),
+            new Texture("assets/Buildings/Pierres_shop.png"),
+            new Texture("assets/Buildings/Carpenter's_Shop.png"),
+            new Texture("assets/Buildings/Fish_Shop.png"),
+            new Texture("assets/Buildings/MarnieRanch.png"),
+            new Texture("assets/Buildings/stardrop_saloon.png")
+    };
 
     private final Texture NPCDialogueSign = new Texture("assets/Images/!_Npc_Talking.png");
     private final Texture npcDialogueBox = new Texture("assets/Images/HoveringInfoWindow.png");
@@ -908,6 +919,10 @@ public class GameAssetManager {
         return new Image(fishingMiniGameBackground);
     }
 
+    public Texture getShopTexture(int index) {
+        return shopTextures[index];
+    }
+
     public Image getJournalMenuBackground() {
         return journalMenuBackground;
     }
@@ -1518,6 +1533,10 @@ public class GameAssetManager {
 
     public Image getArtisanBackground() {
         return artisanBackground;
+    }
+
+    public Texture getArtisanBackGroundTexture() {
+        return artisanBackGroundTexture;
     }
 
     public Texture getSpeedGroTexture() {

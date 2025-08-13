@@ -59,7 +59,6 @@ public class BuildMenuView extends AppMenu {
         Main.getBatch().setProjectionMatrix(
                 new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight())
         );
-
     }
 
     private void renderMap() {
@@ -90,7 +89,15 @@ public class BuildMenuView extends AppMenu {
             if (player.getFarmMap().freeRectangle(
                     i, j, buildingType.getHeight(), buildingType.getWidth()
             )) {
-                if (buildingType.isBarn())
+                if (artisan != null) {
+                    Cell cell = player.getFarmMap().getCell(i, j);
+                    cell.setObject(artisan);
+                    if (artisan.getType() == ArtisanTypes.BeeHouse) {
+                        artisan.setFinalProduct(ProcessedProductType.Honey);
+                        artisan.setTimeLeft(ProcessedProductType.Honey.getProcessingTime());
+                    }
+                }
+                else if (buildingType.isBarn())
                     player.getFarmMap().placeBarn(i, j, new Barn(buildingType, player.getFarmMap().getCell(i, j)));
                 else if (buildingType.isCoop())
                     player.getFarmMap().placeCoop(i, j, new Coop(buildingType, player.getFarmMap().getCell(i, j)));
@@ -100,14 +107,6 @@ public class BuildMenuView extends AppMenu {
                     cell.setBuilding(shippingBin);
                     player.getFarmMap().addShippingBin(shippingBin);
                     cell.setType(CellType.Building);
-                }
-                if (artisan != null) {
-                    Cell cell = player.getFarmMap().getCell(i, j);
-                    cell.setObject(artisan);
-                    if (artisan.getType() == ArtisanTypes.BeeHouse) {
-                        artisan.setFinalProduct(ProcessedProductType.Honey);
-                        artisan.setTimeLeft(ProcessedProductType.Honey.getProcessingTime());
-                    }
                 }
                 exit();
             }

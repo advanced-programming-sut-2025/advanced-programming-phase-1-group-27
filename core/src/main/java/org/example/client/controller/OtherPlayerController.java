@@ -1,13 +1,17 @@
 package org.example.client.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import org.example.client.Main;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
 import org.example.client.model.GameAssetManager;
+
+import java.awt.*;
 
 import static java.lang.Math.min;
 
@@ -28,6 +32,10 @@ public class OtherPlayerController {
         characterSprite.setScale(2f);
         x = OutsideView.getGraphicalPositionInNPCMap(i, j).getX();
         y = OutsideView.getGraphicalPositionInNPCMap(i, j).getY();
+    }
+
+    public void setCamera(Camera camera) {
+
     }
 
 
@@ -89,6 +97,18 @@ public class OtherPlayerController {
         }
     }
 
+    public void handleClick(Camera camera) {
+        Rectangle body = new Rectangle((int) characterSprite.getX(), (int) characterSprite.getY(),
+                (int) (characterSprite.getWidth() * 2), (int) (characterSprite.getHeight() * 2));
+
+        Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPos);
+        if (Gdx.input.justTouched() && body.contains(touchPos.x, touchPos.y)) {
+            //TODO agha abdi, esmesh = username
+            System.out.println("SAAAAAAAAALaaaaaaaaaaaaaam");
+        }
+    }
+
     public void update() {
         animationTime += Gdx.graphics.getDeltaTime();
 
@@ -124,8 +144,9 @@ public class OtherPlayerController {
         return y;
     }
 
-    public void render() {
+    public void render(Camera camera) {
         characterSprite.draw(Main.getBatch());
+        handleClick(camera);
     }
 
     public String getUsername() {

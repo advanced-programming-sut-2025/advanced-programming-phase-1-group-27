@@ -149,7 +149,7 @@ public class OutsideView extends AppMenu {
         ClientApp.getCurrentGame().updateOtherPlayers();
 
         if (ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)
-            ClientApp.getCurrentGame().renderOtherPlayers();
+            ClientApp.getCurrentGame().renderOtherPlayers(camera);
 
         for (AnimalController animalController : animalControllers) {
             animalController.update();

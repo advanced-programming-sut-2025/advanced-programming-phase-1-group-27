@@ -57,8 +57,14 @@ public class WorldController {
     public void renderBuilding(int i, int j, int index) {
         int x = OutsideView.getGraphicalPosition(i, j).getX() - 20,
                 y = OutsideView.getGraphicalPosition(i, j).getY() - 30;
-        TextureRegion textureRegion = GameAssetManager.getGameAssetManager().getCabinTextureRegion(index);
-        Main.getBatch().draw(textureRegion, x, y - 160, 164, 224);
+        if (i == 0) {
+            Texture texture = GameAssetManager.getGameAssetManager().getShopTexture(index);
+            Main.getBatch().draw(texture, x - 10, y - 160, 190, 190);
+        }
+        else {
+            TextureRegion textureRegion = GameAssetManager.getGameAssetManager().getCabinTextureRegion(index);
+            Main.getBatch().draw(textureRegion, x, y - 160, 164, 224);
+        }
     }
 
     public void renderGreenhouseInterior(FarmMap map) {

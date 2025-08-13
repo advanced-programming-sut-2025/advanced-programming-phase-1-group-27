@@ -2,6 +2,7 @@ package org.example.client.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Camera;
 import org.example.client.Main;
 import org.example.client.controller.OtherPlayerController;
 import org.example.client.view.OutsideView;
@@ -322,9 +323,9 @@ public class ClientGame implements Game {
             otherPlayerController.update();
     }
 
-    public void renderOtherPlayers() {
+    public void renderOtherPlayers(Camera camera) {
         for (OtherPlayerController otherPlayerController : otherPlayerControllers)
-            otherPlayerController.render();
+            otherPlayerController.render(camera);
     }
 
     public void removeOtherPlayer(String username) {

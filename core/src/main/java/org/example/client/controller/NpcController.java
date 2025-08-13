@@ -71,7 +71,7 @@ public class NpcController {
     }
 
     private void startWalkingRandomly() {
-        int random = new Random().nextInt(60);
+        int random = new Random().nextInt(120);
         if (random != 1)
             return;
         random = new Random().nextInt(4);

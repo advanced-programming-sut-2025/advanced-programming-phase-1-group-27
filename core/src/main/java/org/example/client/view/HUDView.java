@@ -15,11 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import org.example.client.Main;
 import org.example.client.controller.*;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.model.*;
 import org.example.client.model.enums.Emoji;
+import org.example.client.view.shopview.BuildMenuView;
 import org.example.common.models.*;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.AnimalProperty.AnimalEnclosure;
@@ -2342,12 +2344,21 @@ public class HUDView extends AppMenu {
 
         for (Map.Entry<CraftingProduct, ImageButton> entry : craftingProducts.entrySet()) {
             ImageButton imageButton = entry.getValue();
+            CraftingProduct craftingProduct = entry.getKey();
             imageButton.addListener(new ClickListener() {
                @Override
                public void clicked(InputEvent event, float x, float y) {
                    playClickSound();
-                   if (imageButton.getColor().a > 0.3f) {   // not enough ingredient
+                   if (imageButton.getColor().a > 0.3f) {
+                       System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOK");// not enough ingredient
                        errorLabel.set(controller.craft(entry.getKey()));
+                       if (craftingProduct.getArtisan() != null) {
+                           System.out.println("OOOOOH");
+                           Main.getMain().getScreen().dispose();
+                           ClientApp.setCurrentMenu(new BuildMenuView(new Artisan(
+                                   craftingProduct.getArtisan())));
+                           Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                       }
                    }
                    else {
                        errorLabel.set(new GraphicalResult("You don't have enough ingredient!"));
@@ -2450,6 +2461,7 @@ public class HUDView extends AppMenu {
                         animalX + 20, animalY + 20,
                         2
                 ));
+                setupAnimalData();
             }
         });
 
@@ -2470,6 +2482,7 @@ public class HUDView extends AppMenu {
                         animalX + 20, animalY + 70,
                         2
                 ));
+                setupAnimalData();
             }
         });
 

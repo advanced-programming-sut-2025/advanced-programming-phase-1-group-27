@@ -68,7 +68,7 @@ public class FridgeController {
         ));
         fridgeButton.setPosition(245,95);
 
-        artisanBackgrond = GameAssetManager.getGameAssetManager().getArtisanBackground();
+        artisanBackgrond = new Image(GameAssetManager.getGameAssetManager().getArtisanBackGroundTexture());
         artisanBackgrond.setHeight(700);
         artisanBackgrond.setWidth(700f / artisanBackgrond.getPrefHeight() * artisanBackgrond.getPrefWidth());
         artisanBackgrond.setPosition((Gdx.graphics.getWidth() - artisanBackgrond.getWidth()) / 2f,

@@ -64,8 +64,7 @@ public class ShippingBinController {
         selectedItemImages = new ArrayList<>();
         selectedQuantityLabels = new ArrayList<>();
 
-        artisanBackgrond = new Image(
-                GameAssetManager.getGameAssetManager().getArtisanBackground().getDrawable());
+        artisanBackgrond = new Image(GameAssetManager.getGameAssetManager().getArtisanBackGroundTexture());
         artisanBackgrond.setHeight(700);
         artisanBackgrond.setWidth(700f / artisanBackgrond.getPrefHeight() * artisanBackgrond.getPrefWidth());
         artisanBackgrond.setPosition((Gdx.graphics.getWidth() - artisanBackgrond.getWidth()) / 2f,

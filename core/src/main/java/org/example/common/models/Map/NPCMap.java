@@ -19,13 +19,13 @@ public class NPCMap extends Map {
             new BuildingTexture(5, 9, 22),
             new BuildingTexture(2, 9, 28),
 
-            new BuildingTexture(9, 0, 0),
-            new BuildingTexture(10, 0, 5),
-            new BuildingTexture(11, 0, 10),
-            new BuildingTexture(10, 0, 15),
-            new BuildingTexture(9, 0, 20),
-            new BuildingTexture(10, 0, 25),
-            new BuildingTexture(9, 0, 30)
+            new BuildingTexture(0, 0, 0),
+            new BuildingTexture(1, 0, 5),
+            new BuildingTexture(2, 0, 10),
+            new BuildingTexture(3, 0, 15),
+            new BuildingTexture(4, 0, 20),
+            new BuildingTexture(5, 0, 25),
+            new BuildingTexture(6, 0, 30)
     };
 
 
