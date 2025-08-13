@@ -38,8 +38,10 @@ public class LoadGameController {
     }
 
     private static void loadGame(Lobby lobby) {
+        lobby.getGame().resume();
         for (User user : lobby.getUsers()) {
             SaveController.sendInfo(lobby, user.getUsername());
         }
+        lobbyIdToNumberOfWaiting.put(lobby.getId(), 0);
     }
 }

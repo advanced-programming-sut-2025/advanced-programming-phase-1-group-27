@@ -56,6 +56,18 @@ public class LobbyController {
         }}, Message.Type.response);
     }
 
+    public static Message getNonActiveLobbiesList(Message message) {
+        ArrayList<Lobby> lobbies = ServerApp.getLobbies();
+        ArrayList<HashMap<String, Object>> lobbiesInfo = new ArrayList<>();
+        for (Lobby lobby : lobbies) {
+            if (lobby.getGame() == null)
+                lobbiesInfo.add(lobby.getInfo());
+        }
+        return new Message(new HashMap<>() {{
+            put("lobbiesInfo", lobbiesInfo);
+        }}, Message.Type.response);
+    }
+
     public static Message getOnlineUsersUsernames(Message message) {
         ArrayList<User> users = ServerApp.getOnlineUsers();
         ArrayList<String> usernames = new ArrayList<>();

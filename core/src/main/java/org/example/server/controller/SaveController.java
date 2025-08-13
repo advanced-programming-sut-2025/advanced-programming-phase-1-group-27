@@ -58,6 +58,8 @@ public class SaveController {
         info.put("money", player.getMoney());
         // BUFF
         info.put("buff", player.getCurrentBuff() == null? null : player.getCurrentBuff().getInfo());
+        // NUMBER OF QUESTS
+        info.put("numberOfQuestsDone", player.getNumberOfQuestsDone());
         return info;
     }
 
@@ -192,6 +194,8 @@ public class SaveController {
             player.setBuff(null);
         else
             player.setBuff(new Buff((LinkedTreeMap<String, Object>) info.get("buff")));
+        // NUMBER OF QUESTS
+        player.setNumberOfQuestsDone(((Number) info.get("numberOfQuestsDone")).intValue());
     }
 
     private static ArrayList<Recipe> handleRecipeInfo(ArrayList<String> info) {

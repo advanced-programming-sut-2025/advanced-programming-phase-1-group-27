@@ -23,6 +23,7 @@ public class PregameMenuController {
         lobby.setGame(serverGame = new ServerGame(lobby, players));
         DataBaseHelper.saveLobby(lobby);
         serverGame.init();
+        serverGame.resume();
         for (Player player : players) {
             int mapIndex = lobby.getUsernameToMap().get(player.getUsername());
             player.setFarmMap(serverGame.getFarmMap(mapIndex));

@@ -321,11 +321,12 @@ public class ServerUpdatesController { // handles updates sent by server
         } else {
             //animation for reject
         }
-        OutsideView newOutsideView = new OutsideView();
         Gdx.app.postRunnable(() -> {
+            OutsideView newOutsideView = new OutsideView();
             Main.getMain().getScreen().dispose();
             ClientApp.setNonMainMenu(newOutsideView);
             Main.getMain().setScreen(newOutsideView);
+            // TODO: inja benevis abdi jan kososherato
         });
 
 
@@ -410,6 +411,8 @@ public class ServerUpdatesController { // handles updates sent by server
     }
 
     public static void handleMiniPlayerUpdate(Message message) {
+        if (ClientApp.getCurrentGame() == null)
+            return;
         String mode = message.getFromBody("mode");
         if (mode.equals("ask")) {
             sendPlayerMiniInfo(message);
@@ -435,7 +438,7 @@ public class ServerUpdatesController { // handles updates sent by server
             put("position", player.getPosition().getInfo());
             put("mapIndex", player.getCurrentMap() instanceof NPCMap? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(player.getUsername()));
             put("money", player.getMoney());
-            put("numberOfQuestsCompleted", 0); // TODO: rassa, dorostesh kon
+            put("numberOfQuestsCompleted", player.getNumberOfQuestsDone());
             put("totalAbility", player.getAbility(AbilityType.Farming).getLevel() +
                     player.getAbility(AbilityType.Fishing).getLevel() +
                     player.getAbility(AbilityType.Foraging).getLevel() +

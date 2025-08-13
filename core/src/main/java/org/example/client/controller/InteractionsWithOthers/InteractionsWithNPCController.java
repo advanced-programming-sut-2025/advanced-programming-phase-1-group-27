@@ -207,6 +207,8 @@ public class InteractionsWithNPCController {
             put("npcName", npcName);
         }}, Message.Type.finish_quest);
         ClientApp.getServerConnectionThread().sendMessage(message);
+        ClientApp.getCurrentGame().getCurrentPlayer().addNumberOfQuestsDone();
+
         Main.getMain().getScreen().dispose();
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);
@@ -218,7 +220,6 @@ public class InteractionsWithNPCController {
                 ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+70,
                 newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(), 4
         ));
-
         return new GraphicalResult("");
     }
 

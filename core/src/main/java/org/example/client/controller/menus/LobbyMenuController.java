@@ -24,7 +24,7 @@ public class LobbyMenuController extends MenuController {
 
     public ArrayList<Lobby> getLobbies() {
         Message message = new Message(new HashMap<>()
-                , Message.Type.get_lobbies_list);
+                , Message.Type.get_nonactive_lobbies_list);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
             return new ArrayList<>();

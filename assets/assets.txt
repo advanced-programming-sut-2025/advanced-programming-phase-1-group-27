@@ -10,6 +10,7 @@ Avatars/stardew_avatar_2_2.png
 Buildings/Barn.png
 Buildings/Big Barn.png
 Buildings/Big Coop.png
+Buildings/BlackSmith.png
 Buildings/Buildings.atlas
 Buildings/Cabins.png
 Buildings/Carpenter's_Shop.png

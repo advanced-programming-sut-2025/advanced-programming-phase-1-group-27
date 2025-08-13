@@ -93,6 +93,9 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.get_lobbies_list) {
             sendMessage(LobbyController.getLobbiesList(message));
             return true;
+        } else if (message.getType() == Message.Type.get_nonactive_lobbies_list) {
+            sendMessage(LobbyController.getNonActiveLobbiesList(message));
+            return true;
         } else if (message.getType() == Message.Type.find_lobby) {
             sendMessage(LobbyController.findLobbyById(message));
             return true;
@@ -211,6 +214,9 @@ public class ClientConnectionThread extends ConnectionThread {
             LoadGameController.handleLoadRequest(message);
             return true;
         }
+        System.out.println("not handled message: " + message);
+        if (message != null)
+            System.out.println("type: " + message.getType());
         return false;
     }
 

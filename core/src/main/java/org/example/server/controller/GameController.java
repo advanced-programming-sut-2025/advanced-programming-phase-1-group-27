@@ -1,5 +1,6 @@
 package org.example.server.controller;
 
+import org.example.common.database.DataBaseHelper;
 import org.example.common.models.Item;
 import org.example.common.models.Lobby;
 import org.example.common.models.Player;
@@ -82,11 +83,11 @@ public class GameController {
         assert lobby != null;
         String username1 = message.getFromBody("username1");
         String username2 = message.getFromBody("username2");
-        Player currentPLayer = lobby.getGame().getPlayerByUsername(username1);
-        Player otherPLayer = lobby.getGame().getPlayerByUsername(username2);
-        assert currentPLayer != null;
-        assert otherPLayer != null;
-        Relation relation = currentPLayer.getRelations().computeIfAbsent(otherPLayer, k -> new Relation());
+        Player currentPlayer = lobby.getGame().getPlayerByUsername(username1);
+        Player otherPlayer = lobby.getGame().getPlayerByUsername(username2);
+        assert currentPlayer != null;
+        assert otherPlayer != null;
+        Relation relation = currentPlayer.getRelations().computeIfAbsent(otherPlayer, k -> new Relation());
         return new Message(new HashMap<>() {{
             put("Level", relation.getLevel());
             put("XP", relation.getXp());
@@ -180,6 +181,8 @@ public class GameController {
     public static void saveAndExit(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
+        DataBaseHelper.saveTimeAndWeather(lobby, lobby.getGame().getTime(), lobby.getGame().getCurrentWeather());
+        DataBaseHelper.saveGiftsAndTrades(lobby, lobby.getGame().getGifts(), lobby.getGame().getTrades());
         lobby.notifyAll(new Message(null, Message.Type.save_and_exit_game));
         lobby.getGame().pause();
     }
@@ -269,6 +272,16 @@ public class GameController {
         ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
                 starter.equals(self) ? other : starter
         );
+        if (mode.equals("response")) {
+            Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+            Player currentPlayer = lobby.getGame().getPlayerByUsername(starter);
+            Player otherPlayer = lobby.getGame().getPlayerByUsername(other);
+            assert currentPlayer != null;
+            assert otherPlayer != null;
+            Relation relation = currentPlayer.getRelations().computeIfAbsent(otherPlayer, k -> new Relation());
+            message.addToBody("level", relation.getLevel());
+            message.addToBody("xp", relation.getXp());
+        }
         assert connection != null;
         connection.sendMessage(message);
     }

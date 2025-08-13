@@ -15,6 +15,7 @@ public class MiniPlayer extends User {
     private int numberOfQuestsCompleted;
     private int money;
     private int totalAbility;
+    private int level, xp;
 
     private final Label usernameLabel;
     private final Label numberOfQuestsLabel;
@@ -40,7 +41,7 @@ public class MiniPlayer extends User {
             Player player = ClientApp.getCurrentGame().getCurrentPlayer();
             position = player.getCurrentCell().getPosition();
             mapIndex = player.getCurrentMap() instanceof NPCMap? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(getUsername());
-            numberOfQuestsCompleted = 0; // TODO : Rassa, dorostesh kon
+            numberOfQuestsCompleted = player.getNumberOfQuestsDone();
             money = player.getMoney();
             totalAbility = player.getAbility(AbilityType.Farming).getLevel() +
                            player.getAbility(AbilityType.Mining).getLevel() +
@@ -67,6 +68,8 @@ public class MiniPlayer extends User {
         numberOfQuestsCompleted = message.getIntFromBody("numberOfQuestsCompleted");
         money = message.getIntFromBody("money");
         totalAbility = message.getIntFromBody("totalAbility");
+        level = message.getIntFromBody("level");
+        xp = message.getIntFromBody("xp");
 
         numberOfQuestsLabel.setText(numberOfQuestsCompleted);
         earningsLabel.setText(money);
@@ -105,6 +108,14 @@ public class MiniPlayer extends User {
 
     public int getTotalAbility() {
         return totalAbility;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public Label getUsernameLabel() {

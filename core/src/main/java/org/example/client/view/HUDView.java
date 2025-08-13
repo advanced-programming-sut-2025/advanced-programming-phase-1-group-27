@@ -1581,10 +1581,9 @@ public class HUDView extends AppMenu {
 
                 if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),
                         player.getUsername())){
-
-                    Relation relation = InteractionsWithUserController.getRelation(ClientApp.getCurrentGame().getPlayers().get(z).getUsername());
-
-                    friendshipInfos.get(counter).setText("Level: "+relation.getLevel()+"    XP: "+relation.getXp());
+                    MiniPlayer miniPlayer = ClientApp.getCurrentGame().getPlayers().get(z);
+//                    Relation relation = InteractionsWithUserController.getRelation(ClientApp.getCurrentGame().getPlayers().get(z).getUsername());
+                    friendshipInfos.get(counter).setText("Level: "+miniPlayer.getLevel()+"    XP: "+miniPlayer.getXp());
                     counter ++;
                 }
             }

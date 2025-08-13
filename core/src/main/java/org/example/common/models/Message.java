@@ -29,6 +29,10 @@ public class Message {
         return (int) ((double) ((Double) body.get(fieldName)));
     }
 
+    public void addToBody(String fieldName, Object value) {
+        body.put(fieldName, value);
+    }
+
     public enum Type {
         command,
         response,
@@ -42,6 +46,7 @@ public class Message {
         change_profile,
         update_avatar,
         get_lobbies_list,
+        get_nonactive_lobbies_list,
         create_lobby,
         join_lobby,
         find_lobby,

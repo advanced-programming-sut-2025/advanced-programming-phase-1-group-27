@@ -17,7 +17,7 @@ public class ServerApp {
     private static final ArrayList<ClientConnectionThread> connections = new ArrayList<>();
     private static ListenerThread listenerThread;
     private static boolean hasEnded = false;
-    private static ArrayList<Lobby> lobbies;
+    private static ArrayList<Lobby> lobbies = new ArrayList<>();
 
     static {
         lobbies = DataBaseHelper.getLobbiesFromSave();

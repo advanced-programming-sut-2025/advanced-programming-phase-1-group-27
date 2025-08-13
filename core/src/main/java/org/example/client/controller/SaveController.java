@@ -5,6 +5,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.*;
 import org.example.client.view.HomeView;
+import org.example.client.view.OutsideView;
 import org.example.common.models.*;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.AnimalProperty.AnimalEnclosure;
@@ -66,6 +67,8 @@ public class SaveController {
             player.setBuff(null);
         else
             player.setBuff(new Buff((LinkedTreeMap<String, Object>) info.get("buff")));
+        // NUMBER OF QUESTS
+        player.setNumberOfQuestsDone(((Number) info.get("numberOfQuestsDone")).intValue());
     }
 
     private static ArrayList<Recipe> handleRecipeInfo(ArrayList<String> info) {
@@ -175,6 +178,8 @@ public class SaveController {
         info.put("money", player.getMoney());
         // BUFF
         info.put("buff", player.getCurrentBuff() == null? null : player.getCurrentBuff().getInfo());
+        // NUMBER OF QUESTS
+        info.put("numberOfQuestsDone", player.getNumberOfQuestsDone());
         return info;
     }
 

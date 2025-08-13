@@ -149,6 +149,9 @@ public class ServerConnectionThread extends ConnectionThread {
             SaveController.handleInfo(message);
             return true;
         }
+        System.out.println("not handled message: " + message);
+        if (message != null)
+            System.out.println("type: " + message.getType());
         return false;
     }
 

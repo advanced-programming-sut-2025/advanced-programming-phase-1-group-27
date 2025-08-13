@@ -65,7 +65,9 @@ public class Cell {
     private void handleObjectInfo(LinkedTreeMap<String, Object> info) {
         String type = (String) info.get("type");
         if (type.equals("plant")) {
-            object = Plant.handleInfo((LinkedTreeMap<String, Object>) info.get("plant"));
+            Plant plant = Plant.handleInfo((LinkedTreeMap<String, Object>) info.get("plant"));
+            object = plant;
+            plant.setCell(this);
         }
         else if (type.equals("mineral")) {
             object = MineralType.getItem((String) info.get("mineral"));

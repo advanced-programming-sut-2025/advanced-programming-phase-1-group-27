@@ -15,7 +15,7 @@ public class ServerTimeTracker implements Runnable {
         this.time = time;
         this.startTime = System.currentTimeMillis();
         this.isRunning = new AtomicBoolean(true);
-        this.isPaused = new AtomicBoolean(false);
+        this.isPaused = new AtomicBoolean(true);
     }
 
     @Override

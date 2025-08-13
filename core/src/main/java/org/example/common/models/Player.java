@@ -50,6 +50,7 @@ public class Player extends User {
     private java.util.Map<Player, Boolean> playerTradeToday = new HashMap<>();
     private Player spouse = null; // in case the player gets married
     private Buff currentBuff = null;
+    private int numberOfQuestsDone = 0;
 
     private Integer currentInventorySlotIndex = 0;
 
@@ -204,7 +205,7 @@ public class Player extends User {
         if (buff == null)
             currentBuff = null;
         else
-            currentBuff.set(buff);
+            currentBuff = new Buff(buff);
     }
 
     public Buff getCurrentBuff() {
@@ -683,5 +684,17 @@ public class Player extends User {
 
     public void addActiveQuests(Quest quest) {
         activeQuests.add(quest);
+    }
+
+    public int getNumberOfQuestsDone() {
+        return numberOfQuestsDone;
+    }
+
+    public void addNumberOfQuestsDone() {
+        numberOfQuestsDone++;
+    }
+
+    public void setNumberOfQuestsDone(int numberOfQuestsDone) {
+        this.numberOfQuestsDone = numberOfQuestsDone;
     }
 }

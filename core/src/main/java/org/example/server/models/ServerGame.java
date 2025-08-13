@@ -123,8 +123,9 @@ public class ServerGame implements Game {
             farmMaps[i] = builder.getFinalProduct();
         }
 
-        if (timeTracker != null)
+        if (timeTracker != null) {
             new Thread(timeTracker).start();
+        }
     }
 
     private void initShops() {
@@ -167,8 +168,8 @@ public class ServerGame implements Game {
 
     public void passAnHour() {
         TimeController.passAnHour(lobby);
-        DataBaseHelper.saveTimeAndWeather(lobby , time , currentWeather);
-        DataBaseHelper.saveGiftsAndTrades(lobby , gifts , trades);
+//        DataBaseHelper.saveTimeAndWeather(lobby , time , currentWeather);
+//        DataBaseHelper.saveGiftsAndTrades(lobby , gifts , trades);
 //        updatePlayersBuff();
 //        updateArtisans();
         // player energies will be automatically updated
