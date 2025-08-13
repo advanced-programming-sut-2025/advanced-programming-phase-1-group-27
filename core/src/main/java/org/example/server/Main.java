@@ -12,7 +12,8 @@ public class Main {
         }
         try {
             int port = Integer.parseInt(args[0]);
-            DataBaseHelper.createDatabase();
+            DataBaseHelper.createDatabaseForUser();
+            DataBaseHelper.createDatabaseForSave();
             ServerApp.setListenerThread(new ListenerThread(port));
             ServerApp.startListening();
 

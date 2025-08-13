@@ -4,18 +4,19 @@ import com.badlogic.gdx.graphics.Color;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.common.models.Result;
+import org.example.common.models.User;
 import org.example.client.view.menu.WelcomeMenuView;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.SecurityQuestionMenuView;
 import org.example.common.models.Message;
-import org.example.server.models.*;
-import org.example.server.models.enums.Gender;
+import org.example.common.models.Gender;
 
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class RegisterMenuController extends MenuController {
     private RegisterMenuView view;

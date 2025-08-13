@@ -4,23 +4,19 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.App;
-import org.example.server.models.Player;
-import org.example.server.models.Relations.Dialogue;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.Result;
-import org.example.server.models.enums.DialogueType;
-import org.example.server.models.enums.Gender;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.Player;
+import org.example.common.models.Result;
+import org.example.common.models.Gender;
+import org.example.common.models.StackLevel;
+import org.example.common.models.items.ShopItems;
+import org.example.common.models.tools.Backpack;
 
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class MarriageController {
 
@@ -63,14 +59,6 @@ public class MarriageController {
         return new GraphicalResult("You have sent your request successfully!");
     }
 
-    public Result showCouple() {
-        if (App.getCurrentGame().getCurrentPlayer().getSpouse() == null) {
-            return new Result(false, "You are not married");
-        } else {
-            return new Result(true, "You are married with " +
-                    App.getCurrentGame().getCurrentPlayer().getSpouse().getUsername());
-        }
-    }
 
     public void accept(String proposer) {
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{

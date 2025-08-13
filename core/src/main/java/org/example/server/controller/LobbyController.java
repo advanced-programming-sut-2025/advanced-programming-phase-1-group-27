@@ -3,11 +3,9 @@ package org.example.server.controller;
 
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.Lobby;
-import org.example.server.models.SecurityQuestion;
+import org.example.common.models.Lobby;
 import org.example.server.models.ServerApp;
-import org.example.server.models.User;
-import org.example.server.models.enums.Gender;
+import org.example.common.models.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -2,22 +2,18 @@ package org.example.client.view.MiniGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.example.client.Main;
 import org.example.client.controller.MiniGameController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.enums.FishMovementType;
 import org.example.client.view.AppMenu;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.enums.items.FishType;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.items.FishType;
 
 import java.util.Random;
 import java.util.Scanner;

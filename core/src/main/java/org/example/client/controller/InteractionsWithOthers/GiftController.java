@@ -8,15 +8,15 @@ import org.example.client.view.InteractionMenus.Gift.GiftPlayerMenuView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.Player;
-import org.example.server.models.Relations.Gift;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.Stacks;
+import org.example.common.models.Player;
+import org.example.common.models.Relations.Gift;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Stacks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class GiftController {
 

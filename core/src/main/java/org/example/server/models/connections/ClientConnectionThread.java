@@ -7,9 +7,9 @@ import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCC
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.controller.InteractionsWithOthers.MarriageController;
 import org.example.server.controller.InteractionsWithOthers.TradeController;
-import org.example.server.models.Lobby;
+import org.example.common.models.Lobby;
 import org.example.server.models.ServerApp;
-import org.example.server.models.User;
+import org.example.common.models.User;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -62,6 +62,9 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         } else if (message.getType() == Message.Type.login_request) {
             sendMessage(LoginMenuController.login(message, this));
+            return true;
+        } else if (message.getType() == Message.Type.update_user_info) {
+            ServerApp.updateUser(message);
             return true;
         } else if (message.getType() == Message.Type.add_user) {
             RegisterMenuController.addUser(message);
@@ -198,8 +201,13 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if(message.getType() == Message.Type.get_quests_journal){
             sendMessage(InteractionsWithNPCController.getQuestsJournal(message));
             return true;
+        } else if (message.getType() == Message.Type.meetP2P){
+            InteractionsWithUserController.meet(message);
+            return true;
+        } else if (message.getType() == Message.Type.load_game) {
+            LoadGameController.handleLoadRequest(message);
+            return true;
         }
-        System.out.println("not handled message: " + (message == null ? "null" : message.getType()));
         return false;
     }
 

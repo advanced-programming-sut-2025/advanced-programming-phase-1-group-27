@@ -6,9 +6,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class AppMenu implements Screen {

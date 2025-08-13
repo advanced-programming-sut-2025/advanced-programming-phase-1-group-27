@@ -1,16 +1,20 @@
 package org.example.server.controller;
 
+import org.example.common.models.Item;
+import org.example.common.models.Lobby;
+import org.example.common.models.Player;
+import org.example.common.models.User;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.ItemManager;
 import org.example.common.models.Message;
 import org.example.common.models.MusicInfo;
 import org.example.server.models.*;
-import org.example.server.models.Relations.Gift;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.Relations.Trade;
-import org.example.server.models.Shops.Shop;
+import org.example.common.models.Relations.Gift;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Relations.Trade;
+import org.example.common.models.Shops.Shop;
 import org.example.server.models.connections.ClientConnectionThread;
-import org.example.server.models.enums.Weathers.Weather;
+import org.example.common.models.Weathers.Weather;
 
 import java.util.HashMap;
 
@@ -116,7 +120,7 @@ public class GameController {
             Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
             player1.getPlayerMetToday().put(player2, Boolean.TRUE);
             player2.getPlayerMetToday().put(player1, Boolean.TRUE);
-            Relation relation = player1.getRelations().computeIfAbsent(player1, k -> new Relation());
+            Relation relation = player1.getRelations().computeIfAbsent(player2, k -> new Relation());
             if(relation.getLevel() == 2
                     &&  relation.getXp() == 300){
                 player1.goNextLevel(player2);

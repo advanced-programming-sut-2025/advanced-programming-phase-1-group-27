@@ -9,9 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.menus.WelcomeMenuController;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Result;
-import org.example.server.models.enums.commands.MainMenuCommands;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Result;
+import org.example.common.models.commands.MainMenuCommands;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;
@@ -210,17 +210,7 @@ public class WelcomeMenuView extends AppMenu {
 
     @Override
     public void executeCommands(Scanner scanner) {
-        String input = scanner.nextLine().trim();
-        Matcher matcher;
-        if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
-            System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
-            controller.exitMenu();
-        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
-            System.out.println(controller.showCurrentMenu());
-        } else {
-            System.out.println(new Result(false, "invalid command!"));
-        }
+
     }
 
 

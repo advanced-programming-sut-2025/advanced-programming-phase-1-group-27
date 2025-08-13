@@ -6,10 +6,9 @@ import org.example.client.view.menu.ForgetPasswordMenuView;
 import org.example.client.view.menu.LoginMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.App;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Result;
-import org.example.server.models.User;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Result;
+import org.example.common.models.User;
 
 import java.util.HashMap;
 
@@ -66,7 +65,7 @@ public class ForgetPasswordMenuController extends MenuController {
     }
 
     public void setRandomPassword() {
-        view.getNewPasswordField().setText(App.generatePassword());
+        view.getNewPasswordField().setText(ClientApp.generatePassword());
     }
 
     public User getAttemptingUser() {

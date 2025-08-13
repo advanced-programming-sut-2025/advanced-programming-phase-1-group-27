@@ -1,0 +1,687 @@
+package org.example.common.models;
+
+import org.example.common.models.Map.FarmMap;
+import org.example.common.models.Map.Map;
+import org.example.common.models.NPCs.NPC;
+import org.example.common.models.NPCs.Quest;
+import org.example.common.models.Relations.Dialogue;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Plants.FruitType;
+import org.example.common.models.items.Recipe;
+import org.example.common.models.items.ToolType;
+import org.example.common.models.items.products.CookingProduct;
+import org.example.common.models.items.products.CraftingProduct;
+import org.example.common.models.tools.Backpack;
+import org.example.common.models.tools.Tool;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Player extends User {
+    private ArrayList<Recipe> availableCraftingRecipes = new ArrayList<>();
+    private ArrayList<Recipe> availableCookingRecipes = new ArrayList<>();
+    // player's inventory
+    private Backpack backpack = new Backpack(ToolType.DeluxeBackpack);
+    // maps ability type to user's ability
+    private HashMap<AbilityType, Ability> abilityFinder = new HashMap<>();
+    private int energy, maxEnergy = 200, boostEnergy = 0;
+    private boolean cheater = false;
+    private Ability farming = new Ability(),
+            mining = new Ability(),
+            foraging = new Ability(),
+            fishing = new Ability();
+    private Cell currentCell;
+    private Menu currentMenu = Menu.Home;
+    private Map currentMap = null;
+    private FarmMap farmMap = null;
+    private int money;
+    private Tool currentTool;
+    private ArrayList<Dialogue> dialogues = new ArrayList<>();
+    private java.util.Map<Player, Relation> relations = new HashMap<>();
+    private ArrayList<Dialogue> inbox = new ArrayList<>();
+    private ArrayList<String> chatInbox = new ArrayList<>();
+    private ArrayList<Quest> activeQuests = new ArrayList<>();
+    //refresh every morning
+    private java.util.Map<NPC, Boolean> npcMetToday = new HashMap<>();
+    private java.util.Map<NPC, Boolean> npcGiftToday = new HashMap<>();
+    private java.util.Map<Player, Boolean> playerMetToday = new HashMap<>();
+    private java.util.Map<Player, Boolean> playerGiftToday = new HashMap<>();
+    private java.util.Map<Player, Boolean> playerHuggedToday = new HashMap<>();
+    private java.util.Map<Player, Boolean> playerTradeToday = new HashMap<>();
+    private Player spouse = null; // in case the player gets married
+    private Buff currentBuff = null;
+
+    private Integer currentInventorySlotIndex = 0;
+
+    {
+        backpack.addItems(ToolType.BasicAxe, ToolType.BasicAxe.getLevel(), 1);
+        backpack.addItems(ToolType.BasicHoe, ToolType.BasicHoe.getLevel(), 1);
+        backpack.addItems(ToolType.BasicPickaxe, ToolType.BasicPickaxe.getLevel(), 1);
+        backpack.addItems(ToolType.Scythe, ToolType.Scythe.getLevel(), 1);
+        backpack.addItems(ToolType.BasicWateringCan, ToolType.BasicWateringCan.getLevel(), 1);
+        backpack.addItems(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1);
+        backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
+
+        for ( FruitType ft: FruitType.values() ){
+            backpack.addItems(ft, StackLevel.Basic, 20);
+        }
+
+    }
+
+    public Player(String username, String password, String nickname, String email, Gender gender) {
+        super(username, password, nickname, email, gender);
+        initFields();
+    }
+
+    public Player(User user) {
+        super(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getGender());
+        initFields();
+    }
+
+    public void refreshNPCThings(Game game) {
+        npcMetToday.clear();
+        npcGiftToday.clear();
+        for (NPC npc : game.getNPCs()) {
+            npcMetToday.put(npc, false);
+            npcGiftToday.put(npc, false);
+        }
+    }
+
+    private void initFields() {
+        this.energy = 200;
+        this.farming = new Ability();
+        this.mining = new Ability();
+        this.foraging = new Ability();
+        this.fishing = new Ability();
+        this.currentCell = null;
+        this.money = 10;
+        this.currentTool = null;
+        abilityFinder.put(AbilityType.Farming, farming);
+        abilityFinder.put(AbilityType.Fishing, fishing);
+        abilityFinder.put(AbilityType.Foraging, foraging);
+        abilityFinder.put(AbilityType.Mining, mining);
+        // crafting recipes
+        availableCraftingRecipes.add(Recipe.FurnaceRecipe);
+        availableCraftingRecipes.add(Recipe.ScarecrowRecipe);
+        availableCraftingRecipes.add(Recipe.MayonnaiseMachineRecipe);
+        // cooking recipes
+        availableCookingRecipes.add(Recipe.FriedEggRecipe);
+        availableCookingRecipes.add(Recipe.BakedFishRecipe);
+        availableCookingRecipes.add(Recipe.SaladRecipe);
+        availableCookingRecipes.add(Recipe.PumpkinPieRecipe);
+        availableCookingRecipes.add(Recipe.SpaghettiRecipe);
+        availableCookingRecipes.add(Recipe.FruitSaladRecipe);
+        availableCookingRecipes.add(Recipe.RedPlateRecipe);
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public void addMoney(int money) {
+        this.money += money;
+        if (spouse != null)
+            spouse.addMoney(money);
+
+    }
+
+    public void spendMoney(int money) {
+        this.money -= money;
+        if (spouse != null)
+            spouse.spendMoney(money);
+    }
+
+    public Tool getCurrentTool() {
+        return currentTool;
+    }
+
+    public void setCurrentTool(Tool currentTool) {
+        this.currentTool = currentTool;
+    }
+
+    public Backpack getBackpack() {
+        return backpack;
+    }
+
+    public void setBackpack(Backpack backpack) {
+        this.backpack = backpack;
+    }
+
+    public void setBackpack(ToolType backpack) {
+        Backpack backpack1 = new Backpack(backpack);
+        for (Stacks stack : this.backpack.getItems()) {
+            backpack1.addItems(stack.getItem(), stack.getStackLevel(), stack.getQuantity());
+        }
+        this.backpack = backpack1;
+    }
+
+    public Map getCurrentMap() {
+        return currentMap;
+    }
+
+    public void setCurrentMap(Map map) {
+        currentMap = map;
+    }
+
+    public Player getSpouse() {
+        return spouse;
+    }
+
+    public void setSpouse(Player spouse) {
+        this.spouse = spouse;
+    }
+
+    public void removeBuff() {
+        if (currentBuff == null)
+            return;
+        if (currentBuff.getAbility() == AbilityType.MaxEnergyUltimate ||
+                currentBuff.getAbility() == AbilityType.MaxEnergyCommunity) {
+            boostEnergy = 0;
+        } else {
+            abilityFinder.get(currentBuff.getAbility()).reduceLevel();
+            removeRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel() + 1);
+        }
+        currentBuff = null;
+    }
+
+    public void addBuff(Buff buff) {
+        currentBuff = new Buff(buff);
+        if (currentBuff.getAbility() == AbilityType.MaxEnergyUltimate) {
+            boostEnergy = 100;
+        } else if (currentBuff.getAbility() == AbilityType.MaxEnergyCommunity) {
+            boostEnergy = 50;
+        } else {
+            abilityFinder.get(currentBuff.getAbility()).addLevel();
+            addRecipes(currentBuff.getAbility(), abilityFinder.get(currentBuff.getAbility()).getLevel());
+        }
+    }
+
+    public void setBuff(Buff buff) {
+        if (buff == null)
+            currentBuff = null;
+        else
+            currentBuff.set(buff);
+    }
+
+    public Buff getCurrentBuff() {
+        return currentBuff;
+    }
+
+    public ArrayList<Recipe> getAvailableCraftingRecipes() {
+        return availableCraftingRecipes;
+    }
+
+    public void setAvailableCraftingRecipes(ArrayList<Recipe> availableCraftingRecipes) {
+        this.availableCraftingRecipes = availableCraftingRecipes;
+    }
+
+    public ArrayList<Recipe> getAvailableCookingRecipes() {
+        return availableCookingRecipes;
+    }
+
+    public void setAvailableCookingRecipes(ArrayList<Recipe> availableCookingRecipes) {
+        this.availableCookingRecipes = availableCookingRecipes;
+    }
+
+    public void consumeEnergy(int amount) {
+        if (cheater)
+            return;
+        if (amount > boostEnergy) {
+            energy -= amount - boostEnergy;
+            boostEnergy = 0;
+        } else
+            boostEnergy -= amount;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public int getBoostEnergy() {
+        return boostEnergy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public void setMaxEnergy(int maxEnergy) {
+        this.maxEnergy = maxEnergy;
+    }
+
+    public void setBoostEnergy(int boostEnergy) {
+        this.boostEnergy = boostEnergy;
+    }
+
+    public void addEnergy(int amount) {
+        int val = Math.min(maxEnergy - energy, amount);
+        energy += val;
+    }
+
+    public void setCheater(boolean cheater) {
+        this.cheater = cheater;
+    }
+
+    public boolean isCheater() {
+        return cheater;
+    }
+
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
+
+    public boolean hasPassedOut() {
+        return (energy <= 0 && boostEnergy <= 0);
+    }
+
+    public Menu getCurrentMenu() {
+        return currentMenu;
+    }
+
+    public void setCurrentMenu(Menu currentMenu) {
+        this.currentMenu = currentMenu;
+    }
+
+    public Position getPosition() {
+        return currentCell.getPosition();
+    }
+
+    public java.util.Map<NPC, Boolean> getNpcMetToday() {
+        return npcMetToday;
+    }
+
+    public java.util.Map<NPC, Boolean> getNpcGiftToday() {
+        return npcGiftToday;
+    }
+
+    public Ability getAbility(AbilityType type) {
+        return abilityFinder.get(type);
+    }
+
+    public Cell getCurrentCell() {
+        return currentCell;
+    }
+
+    public void setCurrentCell(Cell currentCell) {
+        this.currentCell = currentCell;
+    }
+
+    public FarmMap getFarmMap() {
+        return farmMap;
+    }
+
+    public void setFarmMap(Map farmMap) {
+        this.currentMap = farmMap;
+    }
+
+    public void setFarmMap(FarmMap farmMap) {
+        this.farmMap = farmMap;
+    }
+
+    public boolean hasEnoughIngredients(Recipe recipe) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            if (getAvailableIngredient(ingredient) == null)
+                return false;
+        }
+        return true;
+    }
+
+    public void useRecipe(Recipe recipe) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            Item item = getAvailableIngredient(ingredient);
+            backpack.reduceItems(item, ingredient.getQuantity());
+        }
+        backpack.addItems(recipe.getFinalProduct(), StackLevel.Basic, 1);
+    }
+
+    public void useRecipeWithoutAdd(Recipe recipe) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            Item item = getAvailableIngredient(ingredient);
+            backpack.reduceItems(item, ingredient.getQuantity());
+        }
+    }
+
+    public Item getItemFromBackpack(String itemName) {
+        for (Stacks slot : backpack.getItems()) {
+            if (slot.getItem().getName().equalsIgnoreCase(itemName))
+                return slot.getItem();
+        }
+        return null;
+    }
+
+    public void farmXp(int xp) {
+        int level = farming.getLevel();
+        farming.addXp(xp);
+        if (farming.getLevel() > level) {
+            addRecipes(AbilityType.Farming, level + 1);
+        }
+    }
+
+    public void mineXp(int xp) {
+        int level = mining.getLevel();
+        mining.addXp(xp);
+        if (mining.getLevel() > level) {
+            addRecipes(AbilityType.Mining, level + 1);
+        }
+    }
+
+    public void forageXp(int xp) {
+        int level = foraging.getLevel();
+        foraging.addXp(xp);
+        if (foraging.getLevel() > level) {
+            addRecipes(AbilityType.Foraging, level + 1);
+        }
+    }
+
+    public void fishXp(int xp) {
+        int level = fishing.getLevel();
+        fishing.addXp(xp);
+        if (fishing.getLevel() > level) {
+            addRecipes(AbilityType.Fishing, level + 1);
+        }
+    }
+
+    public void setAbility(AbilityType abilityType, Ability newAbility) {
+        Ability ability = abilityFinder.get(abilityType);
+        ability.set(newAbility);
+    }
+
+    public boolean isByWater() {
+        for (Cell adjacentCell : currentCell.getAdjacentCells()) {
+            if (adjacentCell.getType() == CellType.Water)
+                return true;
+        }
+        return false;
+    }
+
+    public Item getAvailableIngredient(Ingredient ingredient) {
+        for (Item item : ingredient.getPossibleIngredients()) {
+            if (backpack.hasEnoughItem(item, ingredient.getQuantity()))
+                return item;
+        }
+        return null;
+    }
+
+    private void removeRecipes(AbilityType type, int level) {
+        if (level > 4)
+            return;
+        ArrayList<Recipe> recipes = Ability.getRecipeList(type, level);
+        for (Recipe recipe : recipes) {
+            if (recipe.getFinalProduct() instanceof CraftingProduct)
+                availableCraftingRecipes.remove(recipe);
+            else if (recipe.getFinalProduct() instanceof CookingProduct)
+                availableCookingRecipes.remove(recipe);
+        }
+    }
+
+    private void addRecipes(AbilityType type, int level) {
+        if (level > 4)
+            return;
+        ArrayList<Recipe> recipes = Ability.getRecipeList(type, level);
+        for (Recipe recipe : recipes) {
+            if (recipe.getFinalProduct() instanceof CraftingProduct)
+                availableCraftingRecipes.add(recipe);
+            else if (recipe.getFinalProduct() instanceof CookingProduct)
+                availableCookingRecipes.add(recipe);
+        }
+    }
+
+    public void addXP(Player player, int amount) {
+        if (!relations.containsKey(player)) {
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int xp = relation.getXp();
+        int level = relation.getLevel();
+        xp += amount;
+        int max = (level + 1) * 100;
+        if (xp > max) {
+            if (level == 4) {
+                xp = max;
+            } else if (level == 2) {
+                xp = max;
+            } else if (level == 3) {
+                xp = max;
+            } else {
+                xp -= max;
+                relation.setLevel(level + 1);
+            }
+        }
+        relation.setXp(xp);
+    }
+
+    public boolean canMarried(Player player) {
+        if (!relations.containsKey(player)) {
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int level = relation.getLevel();
+        int xp = relation.getXp();
+        int max = (level + 1) * 100;
+        if (level == 3
+                && xp == max) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canFlowered(Player player) {
+        if (!relations.containsKey(player)) {
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int level = relation.getLevel();
+        int xp = relation.getXp();
+        int max = (level + 1) * 100;
+        if (level == 2
+                && xp == max) {
+            return true;
+        }
+        return false;
+    }
+
+    public void goNextLevel(Player player) {
+        Relation relation = relations.get(player);
+        int level = relation.getLevel();
+        int xp = relation.getXp();
+        relation.setLevel(level + 1);
+        relation.setXp(0);
+    }
+
+    public void decreaseXP(Player player, int amount) {
+        if (!relations.containsKey(player)) {
+            relations.put(player, new Relation());
+        }
+        Relation relation = relations.get(player);
+        int xp = relation.getXp();
+        int level = relation.getLevel();
+        xp -= amount;
+        if (xp < 0) {
+            if (level == 0) {
+                xp = 0;
+            } else if (level == 4) {
+                xp = 0;
+            } else {
+                xp += level * 100;
+                level--;
+                relation.setLevel(level);
+            }
+        }
+        relation.setXp(xp);
+    }
+
+    public ArrayList<Dialogue> getDialogues() {
+        return dialogues;
+    }
+
+    public void deleteDialogue(Dialogue dialogue) {
+        dialogues.remove(dialogue);
+    }
+
+    public void addDialogue(Dialogue dialogue) {
+        dialogues.add(dialogue);
+    }
+
+    public void deleteTalk() {
+        ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
+        for (Dialogue dialogue : dialogues) {
+            if (dialogue.getType() == DialogueType.talk) {
+                selectedDialogues.add(dialogue);
+            }
+        }
+        dialogues.removeAll(selectedDialogues);
+    }
+
+    public void deleteMarriage() {
+        ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
+        for (Dialogue dialogue : dialogues) {
+            if (dialogue.getType() == DialogueType.Marriage) {
+                selectedDialogues.add(dialogue);
+            }
+        }
+        dialogues.removeAll(selectedDialogues);
+    }
+
+    public void deleteTrades() {
+        ArrayList<Dialogue> selectedDialogues = new ArrayList<>();
+        for (Dialogue dialogue : dialogues) {
+            if (dialogue.getType() == DialogueType.Trade) {
+                selectedDialogues.add(dialogue);
+            }
+        }
+        dialogues.removeAll(selectedDialogues);
+    }
+
+    public boolean isMarried() {
+        return spouse != null;
+    }
+
+    public java.util.Map<Player, Relation> getRelations() {
+        return relations;
+    }
+
+    public java.util.Map<Player, Boolean> getPlayerMetToday() {
+        return playerMetToday;
+    }
+
+    public java.util.Map<Player, Boolean> getPlayerGiftToday() {
+        return playerGiftToday;
+    }
+
+    public java.util.Map<Player, Boolean> getPlayerHuggedToday() {
+        return playerHuggedToday;
+    }
+
+    public java.util.Map<Player, Boolean> getPlayerTradeToday() {
+        return playerTradeToday;
+    }
+
+    public ToolType getTrashCan() {
+        for (Stacks slot : backpack.getItems()) {
+            if (slot.getItem() instanceof ToolType toolType) {
+                if (ToolType.isTrashCan(toolType))
+                    return toolType;
+            }
+        }
+        return null;
+    }
+
+    public ToolType getBackpackType() {
+        return switch (backpack.getCapacity()) {
+            case 12 -> ToolType.BasicBackpack;
+            case 24 -> ToolType.LargeBackpack;
+            case -1 -> ToolType.DeluxeBackpack;
+            default -> null;
+        };
+    }
+
+    public String getNotification() {
+        StringBuilder result = new StringBuilder(getUsername() + " notifications:\n");
+        ArrayList<Player> talk = new ArrayList<>();
+        ArrayList<Player> trade = new ArrayList<>();
+        ArrayList<Player> gift = new ArrayList<>();
+        ArrayList<Player> marriage = new ArrayList<>();
+        for (Dialogue dialogue : dialogues) {
+            if (dialogue.getType() == DialogueType.talk) {
+                if (!talk.contains(dialogue.getSender())) {
+                    talk.add(dialogue.getSender());
+                }
+            }
+            if (dialogue.getType() == DialogueType.gift) {
+                if (!gift.contains(dialogue.getSender())) {
+                    gift.add(dialogue.getSender());
+                }
+            }
+            if (dialogue.getType() == DialogueType.Trade) {
+                if (!trade.contains(dialogue.getSender())) {
+                    trade.add(dialogue.getSender());
+                }
+            }
+            if (dialogue.getType() == DialogueType.Marriage) {
+                if (!marriage.contains(dialogue.getSender())) {
+                    marriage.add(dialogue.getSender());
+                }
+            }
+        }
+        if (!talk.isEmpty()) {
+            result.append("Talk : \n");
+            for (Player player : talk) {
+                result.append(player.getUsername()).append("\n");
+            }
+            deleteTalk();
+        }
+        if (!gift.isEmpty()) {
+            result.append("Gift : \n");
+            for (Player player : gift) {
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+        if (!trade.isEmpty()) {
+            result.append("Trade : \n");
+            for (Player player : trade) {
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+        if (!marriage.isEmpty()) {
+            result.append("Marriage : \n");
+            for (Player player : marriage) {
+                result.append(player.getUsername()).append("\n");
+            }
+        }
+        return result.toString();
+    }
+
+    public Integer getCurrentInventorySlotIndex() {
+        return currentInventorySlotIndex;
+    }
+
+    public void setCurrentInventorySlotIndex(Integer currentInventorySlotIndex) {
+        this.currentInventorySlotIndex = currentInventorySlotIndex;
+    }
+
+    public ArrayList<Dialogue> getInbox() {
+        return inbox;
+    }
+
+    public void addToChatInbox(String message) {
+        synchronized (chatInbox) {
+            chatInbox.add(message);
+        }
+    }
+
+    public ArrayList<String> getChatInbox() {
+        return chatInbox;
+    }
+
+    public ArrayList<Quest> getActiveQuests() {
+        return activeQuests;
+    }
+
+    public void addActiveQuests(Quest quest) {
+        activeQuests.add(quest);
+    }
+}

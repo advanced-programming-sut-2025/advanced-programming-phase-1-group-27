@@ -1,12 +1,7 @@
 package org.example.client.model;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.model.enums.Emoji;
-import org.example.common.models.GameAssetManager;
 
 import java.util.HashMap;
 

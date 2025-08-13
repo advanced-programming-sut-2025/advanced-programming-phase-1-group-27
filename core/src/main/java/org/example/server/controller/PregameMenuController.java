@@ -1,5 +1,9 @@
 package org.example.server.controller;
 
+import org.example.common.models.Lobby;
+import org.example.common.models.Player;
+import org.example.common.models.User;
+import org.example.common.database.DataBaseHelper;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
@@ -17,6 +21,7 @@ public class PregameMenuController {
         }
         ServerGame serverGame;
         lobby.setGame(serverGame = new ServerGame(lobby, players));
+        DataBaseHelper.saveLobby(lobby);
         serverGame.init();
         for (Player player : players) {
             int mapIndex = lobby.getUsernameToMap().get(player.getUsername());
@@ -83,7 +88,7 @@ public class PregameMenuController {
             lobby.removeUser(selectedUser);
 
             if (lobby.getUsers().isEmpty()) {
-                ServerApp.getLobbies().remove(lobby);
+                ServerApp.removeLobby(lobby);
                 return;
             }
 

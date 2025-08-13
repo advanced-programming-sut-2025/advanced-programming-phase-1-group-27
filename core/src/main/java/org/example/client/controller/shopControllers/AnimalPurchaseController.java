@@ -2,37 +2,25 @@ package org.example.client.controller.shopControllers;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
-import org.example.client.controller.GameMenuController;
-import org.example.client.controller.ResultController;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
+import org.example.common.models.Player;
+import org.example.common.models.Result;
+import org.example.common.models.Stock;
 import org.example.client.view.AppMenu;
-import org.example.client.view.GameView;
-import org.example.client.view.menu.LobbyMenuView;
 import org.example.client.view.shopview.AnimalPurchaseView;
-import org.example.client.view.shopview.BuildMenuView;
-import org.example.client.view.shopview.MarnieRanch;
-import org.example.client.view.shopview.PurchaseMenuView;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.*;
-import org.example.server.models.AnimalProperty.Animal;
-import org.example.server.models.AnimalProperty.Barn;
-import org.example.server.models.AnimalProperty.Coop;
-import org.example.server.models.Shops.Shop;
-import org.example.server.models.enums.AbilityType;
-import org.example.server.models.enums.NPCType;
-import org.example.server.models.enums.items.AnimalType;
-import org.example.server.models.enums.items.BuildingType;
-import org.example.server.models.enums.items.Recipe;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.enums.items.products.CookingProduct;
-import org.example.server.models.enums.items.products.CraftingProduct;
+import org.example.common.models.AnimalProperty.Animal;
+import org.example.common.models.AnimalProperty.Barn;
+import org.example.common.models.AnimalProperty.Coop;
+import org.example.common.models.NPCType;
+import org.example.common.models.items.AnimalType;
 
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class AnimalPurchaseController extends MenuController {
     private final AnimalPurchaseView passwordMenuView;
@@ -44,7 +32,7 @@ public class AnimalPurchaseController extends MenuController {
     }
 
     public GraphicalResult purchaseAnimal(Stock stock, int num, NPCType npc, String name) {
-        int sum = stock.getSalePrice() * num;
+        int sum = stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()) * num;
         Player currentPlayer = ClientApp.getCurrentGame().getCurrentPlayer();
         if (sum > currentPlayer.getMoney()) {
             return new GraphicalResult("Sorry, you don't have enough money!",

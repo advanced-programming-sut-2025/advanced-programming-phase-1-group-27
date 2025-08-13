@@ -35,7 +35,7 @@ public class ServerTimeTracker implements Runnable {
             }
 
             try {
-                Thread.sleep(2_000);
+                Thread.sleep(10_000);
                 if (isRunning.get() && !isPaused.get())
                     time.passAnHour();
             } catch (InterruptedException e) {
@@ -59,5 +59,9 @@ public class ServerTimeTracker implements Runnable {
             isPaused.set(false);
             pauseLock.notifyAll();
         }
+    }
+
+    public boolean isRunning() {
+        return isRunning.get() && !isPaused.get();
     }
 }

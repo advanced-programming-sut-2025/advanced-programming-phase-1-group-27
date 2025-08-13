@@ -11,8 +11,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.menus.LobbyMenuController;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Lobby;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Lobby;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -45,7 +45,6 @@ public class LobbyMenuView extends AppMenu {
 
 
     public LobbyMenuView() {
-
         controller = new LobbyMenuController(this);
 
         errorLabel = new GraphicalResult();

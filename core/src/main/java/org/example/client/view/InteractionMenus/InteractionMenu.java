@@ -14,7 +14,7 @@ import org.example.client.controller.InteractionsWithOthers.MarriageController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 
 import java.util.Scanner;

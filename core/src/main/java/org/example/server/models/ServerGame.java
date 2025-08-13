@@ -1,28 +1,23 @@
 package org.example.server.models;
 
-import org.example.common.models.Game;
-import org.example.common.models.Message;
-import org.example.common.models.MusicInfo;
-import org.example.common.models.Time;
+import org.example.common.models.Cell;
+import org.example.common.models.Lobby;
+import org.example.common.models.Player;
+import org.example.common.models.User;
+import org.example.common.database.DataBaseHelper;
+import org.example.common.models.*;
 import org.example.server.controller.TimeController;
-import org.example.server.models.AnimalProperty.Animal;
-import org.example.server.models.Map.*;
-import org.example.server.models.NPCs.NPC;
-import org.example.server.models.Relations.Dialogue;
-import org.example.server.models.Relations.Gift;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.Relations.Trade;
-import org.example.server.models.Shops.BlackSmith;
-import org.example.server.models.Shops.Shop;
-import org.example.server.models.enums.NPCType;
-import org.example.server.models.enums.Plants.*;
-import org.example.server.models.enums.ShopType;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.Weathers.Weather;
-import org.example.server.models.enums.items.*;
-import org.example.server.models.enums.items.products.AnimalProduct;
-import org.example.server.models.enums.items.products.CookingProduct;
-import org.example.server.models.enums.items.products.ProcessedProductType;
+import org.example.common.models.AnimalProperty.Animal;
+import org.example.common.models.Map.*;
+import org.example.common.models.NPCs.NPC;
+import org.example.common.models.Relations.Dialogue;
+import org.example.common.models.Relations.Gift;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Relations.Trade;
+import org.example.common.models.Shops.BlackSmith;
+import org.example.common.models.Shops.Shop;
+import org.example.common.models.Plants.*;
+import org.example.common.models.Weathers.Weather;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -172,6 +167,8 @@ public class ServerGame implements Game {
 
     public void passAnHour() {
         TimeController.passAnHour(lobby);
+        DataBaseHelper.saveTimeAndWeather(lobby , time , currentWeather);
+        DataBaseHelper.saveGiftsAndTrades(lobby , gifts , trades);
 //        updatePlayersBuff();
 //        updateArtisans();
         // player energies will be automatically updated
@@ -272,7 +269,7 @@ public class ServerGame implements Game {
             if (player.getUsername().equals(currentPlayer.getUsername())) {
                 continue;
             } else {
-                if (hasInteracted.get(player) == Boolean.FALSE || hasInteracted.get(player) == null) {
+                if (hasInteracted.get(player) == Boolean.FALSE) {
                     currentPlayer.decreaseXP(player, 10);
                 }
             }
@@ -281,7 +278,7 @@ public class ServerGame implements Game {
         currentPlayer.getNpcGiftToday().clear();
         currentPlayer.getPlayerHuggedToday().clear();
         currentPlayer.getPlayerTradeToday().clear();
-        for (Player player : App.getCurrentGame().getPlayers()) {
+        for (Player player : players) {
             currentPlayer.getPlayerMetToday().put(player, false);
             currentPlayer.getPlayerGiftToday().put(player, false);
             currentPlayer.getPlayerHuggedToday().put(player, false);
@@ -408,6 +405,10 @@ public class ServerGame implements Game {
         lobby.notifyAll(new Message(new HashMap<>() {{
             put("weather", currentWeather.name());
         }}, Message.Type.set_weather));
+    }
+
+    public void setWeather(Weather weather) {
+        currentWeather = weather;
     }
 
     public Player getCurrentPlayer() {
@@ -582,12 +583,20 @@ public class ServerGame implements Game {
         trades.add(trade);
     }
 
+    public void setTrades(ArrayList<Trade> trades) {
+        this.trades = trades;
+    }
+
     public ArrayList<Gift> getGifts() {
         return gifts;
     }
 
     public void addGifts(Gift gift) {
         gifts.add(gift);
+    }
+
+    public void setGifts(ArrayList<Gift> gifts) {
+        this.gifts = gifts;
     }
 
     public void setPlayerMusic(String playerName, String songId, String songName) {
@@ -610,6 +619,12 @@ public class ServerGame implements Game {
         timeTracker.stop();
     }
 
+    public boolean isGameRunning() {
+        if (timeTracker == null)
+            return false;
+        return timeTracker.isRunning();
+    }
+
     public void kickPlayer(String playerName) {
         Player player = getPlayerByUsername(playerName);
         players.remove(player);
@@ -624,4 +639,6 @@ public class ServerGame implements Game {
         }
         return null;
     }
+
+
 }

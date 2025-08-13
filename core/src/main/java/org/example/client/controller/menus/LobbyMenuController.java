@@ -6,14 +6,14 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.menu.*;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Lobby;
-import org.example.server.models.Result;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Lobby;
+import org.example.common.models.Result;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class LobbyMenuController extends MenuController {
     LobbyMenuView view;
@@ -35,7 +35,13 @@ public class LobbyMenuController extends MenuController {
             Lobby lobby = new Lobby(info);
             lobbies.add(lobby);
         }
-        return lobbies;
+        ArrayList<Lobby> selectedLobbies = new ArrayList<>();
+        for(Lobby lobby : lobbies){
+            if(lobby.getGame() == null){
+                selectedLobbies.add(lobby);
+            }
+        }
+        return selectedLobbies;
     }
 
     public GraphicalResult findViaGraphicalResult() {
@@ -116,7 +122,7 @@ public class LobbyMenuController extends MenuController {
         Message responseForJoin = ClientApp.getServerConnectionThread().sendAndWaitForResponse(joinMessage, TIMEOUT_MILLIS);
         if (responseForJoin == null || responseForJoin.getType() != Message.Type.response) {
             return new GraphicalResult(
-                    "Failed to join",
+                    "Failed to loadGame",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }

@@ -14,10 +14,10 @@ import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCC
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.InteractionMenus.NpcMenuView;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.Stacks;
-import org.example.server.models.enums.NPCType;
+import org.example.common.models.Stacks;
+import org.example.common.models.NPCType;
 
 import java.util.ArrayList;
 import java.util.HashMap;

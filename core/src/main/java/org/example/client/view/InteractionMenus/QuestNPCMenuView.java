@@ -15,8 +15,8 @@ import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCC
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.NPCs.Quest;
-import org.example.server.models.enums.items.ShopItems;
+import org.example.common.models.NPCs.Quest;
+import org.example.common.models.items.ShopItems;
 
 import java.util.ArrayList;
 import java.util.Scanner;

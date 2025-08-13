@@ -1,9 +1,9 @@
 package org.example.client.controller.menus;
 
 import org.example.client.Main;
-import org.example.server.models.App;
-import org.example.server.models.Result;
-import org.example.server.models.enums.Menu;
+import org.example.client.model.ClientApp;
+import org.example.common.models.Result;
+import org.example.common.models.Menu;
 import org.example.client.view.menu.LoginMenuView;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.WelcomeMenuView;
@@ -34,23 +34,22 @@ public class WelcomeMenuController extends MenuController {
     @Override
     public Result exitMenu() {
         playClickSound();
-        App.setCurrentMenu(Menu.ExitMenu);
         return null;
     }
 
     public Result goToRegisterMenu() {
         playClickSound();
-        App.setCurrentMenu(Menu.RegisterMenu);
+        ClientApp.setCurrentMenu(new RegisterMenuView());
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new RegisterMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new Result(true, "Redirecting to registerViaGraphics menu ...");
     }
 
     public Result goToLoginMenu() {
         playClickSound();
-        App.setCurrentMenu(Menu.LoginMenu);
+        ClientApp.setCurrentMenu(new LoginMenuView());
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new LoginMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return new Result(true, "Redirecting to login menu ...");
     }
 }

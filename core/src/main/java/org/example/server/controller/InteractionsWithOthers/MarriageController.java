@@ -1,15 +1,13 @@
 package org.example.server.controller.InteractionsWithOthers;
 
+import org.example.common.models.Lobby;
+import org.example.common.models.Player;
+import org.example.common.models.Result;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
-import org.example.server.models.Relations.Dialogue;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.enums.DialogueType;
-import org.example.server.models.enums.Gender;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Gender;
 
 import java.util.HashMap;
 
@@ -70,15 +68,6 @@ public class MarriageController {
             player2.getRelations().put(player1, new Relation());
         }
         ServerApp.getClientConnectionThreadByUsername(proposer).sendMessage(message);
-    }
-
-    public Result showCouple() {
-        if (App.getCurrentGame().getCurrentPlayer().getSpouse() == null) {
-            return new Result(false, "You are not married");
-        } else {
-            return new Result(true, "You are married with " +
-                    App.getCurrentGame().getCurrentPlayer().getSpouse().getUsername());
-        }
     }
 
 //    public Result respond(String response, String username) {

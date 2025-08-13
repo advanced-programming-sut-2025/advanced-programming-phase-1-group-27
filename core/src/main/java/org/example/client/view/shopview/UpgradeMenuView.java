@@ -14,12 +14,11 @@ import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 import org.example.client.view.HUDView;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.App;
-import org.example.server.models.Stacks;
-import org.example.server.models.enums.NPCType;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.items.ToolType;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Stacks;
+import org.example.common.models.NPCType;
+import org.example.common.models.StackLevel;
+import org.example.common.models.items.ToolType;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -86,7 +85,7 @@ public class UpgradeMenuView extends AppMenu {
         stage = new Stage(new ScreenViewport());
         hudView = new HUDView(stage);
 
-        upgradeLimit = App.getCurrentGame().getBlacksmith().getUpgradeLimit();
+        upgradeLimit = ClientApp.getCurrentGame().getBlacksmith().getUpgradeLimit();
 
         setListeners();
     }

@@ -1,10 +1,13 @@
 package org.example.server.models;
 
+import org.example.common.models.Lobby;
+import org.example.common.models.SecurityQuestion;
+import org.example.common.models.User;
 import org.example.common.database.DataBaseHelper;
 import org.example.common.models.Message;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.connections.ListenerThread;
-import org.example.server.models.enums.Gender;
+import org.example.common.models.Gender;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,16 +17,15 @@ public class ServerApp {
     private static final ArrayList<ClientConnectionThread> connections = new ArrayList<>();
     private static ListenerThread listenerThread;
     private static boolean hasEnded = false;
-    private static ArrayList<Lobby> lobbies = new ArrayList<>();
+    private static ArrayList<Lobby> lobbies;
 
     static {
+        lobbies = DataBaseHelper.getLobbiesFromSave();
         User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
         admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
-        Lobby test = new Lobby(admin, false , "pass" , true , 1111 , "test");
         Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
         lobby.setMap(admin.getUsername(), 0);
         lobbies.add(lobby);
-        lobbies.add(test);
     }
 
     public static void setListenerThread(ListenerThread listenerThread) {
@@ -102,6 +104,7 @@ public class ServerApp {
     }
 
     public static void removeLobby(Lobby lobby) {
+        DataBaseHelper.deleteSave(lobby);
         lobbies.remove(lobby);
     }
 
@@ -139,5 +142,10 @@ public class ServerApp {
 
     public static ArrayList<ClientConnectionThread> getClientConnectionThreads() {
             return connections;
+    }
+
+    public static void updateUser(Message message) {
+        User user = new User(message.getFromBody("userInfo"));
+        // TODO : parsa bebar tooye paygah dade
     }
 }

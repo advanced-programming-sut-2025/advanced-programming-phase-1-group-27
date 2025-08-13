@@ -9,7 +9,7 @@ import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
-import org.example.server.models.enums.NPCType;
+import org.example.common.models.NPCType;
 
 import java.util.Scanner;
 

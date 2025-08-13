@@ -9,10 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
-import org.example.client.model.ClientApp;
-import org.example.client.model.MiniPlayer;
-import org.example.client.model.PopUpTexture;
-import org.example.client.model.Reaction;
+import org.example.client.model.*;
 import org.example.client.view.HomeView;
 import org.example.client.view.InteractionMenus.Trade.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.Trade.StartTradeView;
@@ -21,25 +18,21 @@ import org.example.client.view.InteractionMenus.MarriageRequestView;
 import org.example.client.view.OutsideView;
 import org.example.client.view.VoteView;
 import org.example.common.models.*;
-import org.example.server.models.Cell;
-import org.example.server.models.Item;
-import org.example.server.models.Map.FarmMap;
-import org.example.server.models.Map.NPCMap;
-import org.example.server.models.Player;
-import org.example.server.models.Shops.Shop;
-import org.example.server.models.Stacks;
-import org.example.server.models.enums.AbilityType;
-import org.example.server.models.enums.Plants.Plant;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.Weathers.Weather;
+import org.example.common.models.Map.FarmMap;
+import org.example.common.models.Map.NPCMap;
+import org.example.common.models.Shops.Shop;
+import org.example.common.models.AbilityType;
+import org.example.common.models.Plants.Plant;
+import org.example.common.models.StackLevel;
+import org.example.common.models.Weathers.Weather;
 
 import java.util.HashMap;
 import java.util.Random;
 
-import org.example.server.models.enums.Plants.Crop;
-import org.example.server.models.enums.Plants.Tree;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.Plants.Crop;
+import org.example.common.models.Plants.Tree;
+import org.example.common.models.items.ShopItems;
+import org.example.common.models.tools.Backpack;
 
 import java.util.ArrayList;
 
@@ -204,8 +197,8 @@ public class ServerUpdatesController { // handles updates sent by server
             itemSprite.setSize(72, 62);
 
             PopUpController.addPopUp(new PopUpTexture(itemSprite
-                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+20,
-                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+80, 4
+                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+80,
+                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+20, 4
             ));
 
         }
@@ -224,8 +217,8 @@ public class ServerUpdatesController { // handles updates sent by server
             itemSprite.setSize(72, 62);
 
             PopUpController.addPopUp(new PopUpTexture(itemSprite
-                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+20,
-                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+80, 4
+                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+80,
+                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+20, 4
             ));
 
         }
@@ -246,8 +239,8 @@ public class ServerUpdatesController { // handles updates sent by server
             for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
 
                 if ( miniPlayer.getUsername().equals(giver) ) {
-                    giverX = miniPlayer.getPosition().getX();
-                    giverY = miniPlayer.getPosition().getY();
+                    giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                    giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
                 }
 
             }
@@ -269,7 +262,7 @@ public class ServerUpdatesController { // handles updates sent by server
                 Main.getMain().setScreen(new VoteView(mode, ""));
             });
         } else if (mode.equals("terminateGame")) {
-            ClientApp.terminateGame();
+            handleTerminate();
         } else if (mode.equals("askToKick")) {
             Gdx.app.postRunnable(() -> {
                 Main.getMain().getScreen().dispose();
@@ -278,6 +271,16 @@ public class ServerUpdatesController { // handles updates sent by server
         } else if (mode.equals("kickPlayer")) {
             ClientApp.getCurrentGame().kickPlayer(message.getFromBody("playerName"));
         }
+    }
+
+    private static void handleTerminate() {
+        User user = ClientApp.getLoggedInUser();
+        user.setMaxMoneyEarned(Math.max(user.getMaxMoneyEarned(), ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
+        user.setNumberOfGamesPlayed(user.getNumberOfGamesPlayed() + 1);
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("userInfo", user.getInfo());
+        }}, Message.Type.update_user_info));
+        ClientApp.terminateGame();
     }
 
     public static void handleChat(Message message) {
@@ -360,7 +363,7 @@ public class ServerUpdatesController { // handles updates sent by server
                                 reaction.getText(),
                                 Color.BLACK,
                                 200,
-                                Align.center,
+                                Align.left,
                                 true
                         );
                         infoWindow.setPosition(otherPlayerController.getX(), otherPlayerController.getY() + 70);

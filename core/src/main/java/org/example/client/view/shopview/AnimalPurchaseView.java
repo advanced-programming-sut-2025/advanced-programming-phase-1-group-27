@@ -13,17 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.ResultController;
 import org.example.client.controller.shopControllers.AnimalPurchaseController;
-import org.example.client.controller.shopControllers.PurchaseMenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 import org.example.client.view.HUDView;
-import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.Stock;
-import org.example.server.models.enums.NPCType;
+import org.example.common.models.Stock;
+import org.example.common.models.NPCType;
 
 import java.util.Scanner;
 
@@ -139,7 +136,7 @@ public class AnimalPurchaseView extends AppMenu {
 
         number = 0;
         numberLabel = new Label(number + "", skin);
-        sumLabel = new Label("Sum : " + number * stock.getSalePrice(), skin);
+        sumLabel = new Label("Sum : " + number * stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()), skin);
         numberLabel.setFontScale(2f);
         sumLabel.setFontScale(2f);
         sumLabel.setColor(Color.BLACK);
@@ -209,7 +206,7 @@ public class AnimalPurchaseView extends AppMenu {
 
     private void displayItem(){
         quantityLabel.setText(stock.getQuantity() == -1? "unlimited" : String.valueOf(stock.getQuantity()));
-        priceLabel.setText(stock.getSalePrice() + "");
+        priceLabel.setText(stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()) + "");
 
         float width1 = nameLabel.getWidth();
         float width2 = width1 + levelLabel.getWidth();
@@ -248,7 +245,7 @@ public class AnimalPurchaseView extends AppMenu {
 
     private void displayButtons(){
         numberLabel.setText(number);
-        sumLabel.setText("Sum : " + number * stock.getSalePrice());
+        sumLabel.setText("Sum : " + number * stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()));
 
         sumLabel.setPosition(Gdx.graphics.getWidth() / 4f + increaseItemButton.getWidth() + decreaseItemButton.getWidth() + 300, Gdx.graphics.getHeight()/2f + 150);
         numberLabel.setPosition(Gdx.graphics.getWidth()/4f + increaseItemButton.getWidth() + 20 , Gdx.graphics.getHeight()/2f + 150);

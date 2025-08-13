@@ -5,10 +5,8 @@ import org.example.client.model.ClientApp;
 import org.example.client.model.MiniPlayer;
 import org.example.client.view.InteractionMenus.Gift.PreGiftMenuView;
 import org.example.client.view.InteractionMenus.Trade.PreTradeMenuView;
-import org.example.server.models.Map.NPCMap;
-import org.example.server.models.Player;
-
-import java.util.Vector;
+import org.example.common.models.Map.NPCMap;
+import org.example.common.models.Player;
 
 public class InteractionController {
 

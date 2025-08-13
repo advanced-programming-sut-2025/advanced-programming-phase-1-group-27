@@ -4,28 +4,28 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.PopUpController;
-import org.example.client.model.ClientApp;
-import org.example.client.model.MiniPlayer;
-import org.example.client.model.PopUpTexture;
+import org.example.client.model.*;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.server.models.*;
-import org.example.server.models.Relations.Dialogue;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.enums.DialogueType;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.*;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.items.ShopItems;
+import org.example.common.models.tools.Backpack;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 
 public class InteractionsWithUserController {
+    public static void meet(String username){
+        Message message = new Message(new HashMap<>() {{
+            put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+            put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            put("other", username);
+        }}, Message.Type.meetP2P);
+    }
+
     public static Relation getRelation(String username) {
         Message message = new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
@@ -76,9 +76,9 @@ public class InteractionsWithUserController {
         if (!backpack.hasEnoughItem(ShopItems.Bouquet, 1)) {
             return new GraphicalResult("You don't have any Bouquet!");
         }
-        if (!canFlowered(relation)) {
-            return new GraphicalResult("You can't give flower");
-        }
+//        if (!canFlowered(relation)) {
+//            return new GraphicalResult("You can't give flower");
+//        }
         backpack.reduceItems(ShopItems.Bouquet, 1);
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("mode", "flower");
@@ -117,8 +117,8 @@ public class InteractionsWithUserController {
         for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
 
             if ( miniPlayer.getUsername().equals(username) ) {
-                giverX = miniPlayer.getPosition().getX();
-                giverY = miniPlayer.getPosition().getY();
+                giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
             }
 
         }

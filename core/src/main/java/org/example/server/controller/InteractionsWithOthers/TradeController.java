@@ -2,7 +2,7 @@ package org.example.server.controller.InteractionsWithOthers;
 
 import org.example.common.models.Message;
 import org.example.server.models.*;
-import org.example.server.models.Relations.Trade;
+import org.example.common.models.Relations.Trade;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -9,8 +9,8 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.HomeView;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.enums.InGameMenuType;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.enums.InGameMenuType;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;

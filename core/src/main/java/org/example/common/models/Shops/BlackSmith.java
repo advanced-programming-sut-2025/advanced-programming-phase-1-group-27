@@ -1,0 +1,29 @@
+package org.example.common.models.Shops;
+
+import org.example.common.models.Seasons.Season;
+import org.example.common.models.ShopType;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class BlackSmith extends Shop {
+
+    Map<String, Integer> upgradeLimit = new HashMap<>();
+
+    public BlackSmith(ShopType shopType, Season season) {
+        super(shopType, season);
+        upgradeLimit.put("Copper Tool", 1);
+        upgradeLimit.put("Iron Tool", 1);
+        upgradeLimit.put("Gold Tool", 1);
+        upgradeLimit.put("Iridium Tool", 1);
+        upgradeLimit.put("Copper Trash Can", 1);
+        upgradeLimit.put("Steel Trash Can", 1);
+        upgradeLimit.put("Gold Trash Can", 1);
+        upgradeLimit.put("Iridium Trash Can", 1);
+    }
+
+    public Map<String, Integer> getUpgradeLimit() {
+        return upgradeLimit;
+    }
+
+}

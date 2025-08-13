@@ -1,6 +1,9 @@
 package org.example.common.models;
 
-import org.example.server.models.enums.Seasons.Season;
+import com.google.gson.internal.LinkedTreeMap;
+import org.example.common.models.Seasons.Season;
+
+import java.util.HashMap;
 
 public class Time {
     private Game game;
@@ -13,6 +16,22 @@ public class Time {
 
     public Time(Game game) {
         this.game = game;
+    }
+
+    public HashMap<String , Object> getInfo(){
+        HashMap<String, Object> timeInfo = new HashMap<>();
+        timeInfo.put("daysPassed", daysPassed);
+        timeInfo.put("hour", hour);
+        timeInfo.put("day", day);
+        timeInfo.put("season", season.name());
+        return timeInfo;
+    }
+
+    public void loadTime(LinkedTreeMap<String, Object> timeInfo) {
+        setDaysPassed(((Number) timeInfo.get("daysPassed")).intValue());
+        setHour(((Number) timeInfo.get("hour")).intValue());
+        setDay(((Number) timeInfo.get("day")).intValue());
+        setSeason(Season.getSeason((String) timeInfo.get("season")));
     }
 
     public int getHour() {
@@ -30,6 +49,22 @@ public class Time {
     public String getDateTime() {
         return new String(getDayOfWeek() + ", " + getSeason() + " " + getDate() + "\n" +
                 getHour() + ":00\n");
+    }
+
+    public void setDaysPassed(int daysPassed) {
+        this.daysPassed = daysPassed;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
     }
 
     public void passAnHour() {

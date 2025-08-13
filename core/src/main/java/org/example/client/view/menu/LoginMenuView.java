@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.menus.LoginMenuController;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.enums.commands.LoginMenuCommands;
+import org.example.common.models.commands.LoginMenuCommands;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;
@@ -258,28 +258,7 @@ public class LoginMenuView extends AppMenu {
     }
 
     public void executeCommands(Scanner scanner) {
-//        String input = scanner.nextLine().trim();
-//        Matcher matcher;
-//        if ((matcher = LoginMenuCommands.Login.getMatcher(input)) != null) {
-//            System.out.println(controller.login(
-//                    matcher.group("username").trim(),
-//                    matcher.group("password").trim(),
-//                    matcher.group("stay") != null
-//            ));
-//        } else if ((matcher = LoginMenuCommands.ForgetPassword.getMatcher(input)) != null) {
-//            System.out.println(controller.forgetPassword(
-//                    matcher.group("username").trim(),
-//                    scanner
-//            ));
-//        } else if ((matcher = MainMenuCommands.EnterMenu.getMatcher(input)) != null) {
-//            System.out.println(controller.enterMenu(matcher.group("menuName").trim()));
-//        } else if (MainMenuCommands.ExitMenu.getMatcher(input) != null) {
-//            System.out.println(controller.exitMenu());
-//        } else if (MainMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
-//            System.out.println(controller.showCurrentMenu());
-//        } else {
-//            System.out.println(new Result(false, "invalid command!"));
-//        }
+//
     }
 
     public Matcher getAnswer(Scanner scanner) {

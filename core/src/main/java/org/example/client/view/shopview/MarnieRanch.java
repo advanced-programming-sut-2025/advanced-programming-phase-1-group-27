@@ -10,16 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.ResultController;
 import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.HUDView;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Stock;
-import org.example.server.models.enums.NPCType;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Stock;
+import org.example.common.models.NPCType;
 import org.example.client.view.AppMenu;
-import org.example.server.models.enums.items.AnimalType;
+import org.example.common.models.items.AnimalType;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -116,7 +115,7 @@ public class MarnieRanch extends AppMenu {
 
             Table row = new Table();
             Label nameLabel1 = new Label(stock.getItem().getName(), skin);
-            Label priceLabel1 = new Label(stock.getSalePrice() + " G", skin);
+            Label priceLabel1 = new Label(stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()) + " G", skin);
             Label countLabel1 = new Label("", skin);
 
             if(stock.getQuantity() == -1){

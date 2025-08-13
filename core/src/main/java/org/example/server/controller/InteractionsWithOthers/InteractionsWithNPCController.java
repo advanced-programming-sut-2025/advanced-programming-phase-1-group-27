@@ -1,21 +1,12 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.client.model.ClientApp;
+import org.example.common.models.Player;
+import org.example.common.models.Result;
 import org.example.common.models.Message;
 import org.example.server.models.*;
-import org.example.server.models.NPCs.NPC;
-import org.example.server.models.NPCs.Quest;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.enums.ArtisanTypes;
-import org.example.server.models.enums.Features;
-import org.example.server.models.enums.Plants.CropType;
-import org.example.server.models.enums.Seasons.Season;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.Weathers.Weather;
-import org.example.server.models.enums.items.Recipe;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.NPCs.NPC;
+import org.example.common.models.NPCs.Quest;
+import org.example.common.models.Relations.Relation;
 
 import java.util.ArrayList;
 import java.util.HashMap;

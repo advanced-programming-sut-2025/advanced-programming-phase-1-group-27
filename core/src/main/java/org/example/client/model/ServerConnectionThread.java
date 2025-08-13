@@ -2,6 +2,7 @@ package org.example.client.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import org.example.client.controller.SaveController;
 import org.example.client.controller.ServerConnectionController;
 import org.example.client.controller.ServerUpdatesController;
 import org.example.client.view.menu.PregameMenuView;
@@ -14,7 +15,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.function.Consumer;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class ServerConnectionThread extends ConnectionThread {
     private OutputStream fileOutputStream = null;
@@ -144,7 +145,10 @@ public class ServerConnectionThread extends ConnectionThread {
             ServerUpdatesController.handleReaction(message);
             return true;
         }
-        System.out.println("not handled message: " + (message == null? "null" : message.getType()));
+        else if (message.getType() == Message.Type.client_game_info) {
+            SaveController.handleInfo(message);
+            return true;
+        }
         return false;
     }
 

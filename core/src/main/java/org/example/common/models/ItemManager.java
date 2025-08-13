@@ -1,17 +1,14 @@
 package org.example.common.models;
 
-import org.example.server.models.AnimalProperty.AnimalEnclosure;
-import org.example.server.models.AnimalProperty.Barn;
-import org.example.server.models.AnimalProperty.Coop;
-import org.example.server.models.Cell;
-import org.example.server.models.Item;
-import org.example.server.models.ProcessedProduct;
-import org.example.server.models.enums.Plants.*;
-import org.example.server.models.enums.items.*;
-import org.example.server.models.enums.items.products.AnimalProduct;
-import org.example.server.models.enums.items.products.CookingProduct;
-import org.example.server.models.enums.items.products.CraftingProduct;
-import org.example.server.models.enums.items.products.ProcessedProductType;
+import org.example.common.models.AnimalProperty.AnimalEnclosure;
+import org.example.common.models.AnimalProperty.Barn;
+import org.example.common.models.AnimalProperty.Coop;
+import org.example.common.models.Plants.*;
+import org.example.common.models.items.*;
+import org.example.common.models.items.products.AnimalProduct;
+import org.example.common.models.items.products.CookingProduct;
+import org.example.common.models.items.products.CraftingProduct;
+import org.example.common.models.items.products.ProcessedProductType;
 
 public class ItemManager {
     public static Item getItemByName(String itemName) {

@@ -4,23 +4,19 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.model.enums.FishMovementType;
 import org.example.client.model.enums.MiniGameDifficulty;
-import org.example.client.view.AppMenu;
 import org.example.client.view.MiniGame.MiniGameView;
 import org.example.client.view.MiniGame.PostMiniGameMenuView;
 import org.example.client.view.OutsideView;
-import org.example.server.models.App;
-import org.example.server.models.Stacks;
-import org.example.server.models.enums.AbilityType;
-import org.example.server.models.enums.Seasons.Season;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.items.FishType;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.tools.Tool;
+import org.example.common.models.Stacks;
+import org.example.common.models.AbilityType;
+import org.example.common.models.Seasons.Season;
+import org.example.common.models.StackLevel;
+import org.example.common.models.items.FishType;
+import org.example.common.models.items.ToolType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 
 import static java.lang.Math.min;
 

@@ -3,28 +3,20 @@ package org.example.client.view.shopview;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.HUDView;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
-import org.example.server.models.Shops.BlackSmith;
-import org.example.server.models.Stacks;
-import org.example.server.models.Stock;
-import org.example.server.models.enums.NPCType;
-import org.example.server.models.enums.Seasons.Season;
-import org.example.server.models.enums.ShopType;
+import org.example.common.models.Stock;
+import org.example.common.models.NPCType;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -121,7 +113,7 @@ public class BlackSmithShop extends AppMenu {
 
             Table row = new Table();
             Label nameLabel1 = new Label(stock.getItem().getName(), skin);
-            Label priceLabel1 = new Label(stock.getSalePrice() + " G", skin);
+            Label priceLabel1 = new Label(stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()) + " G", skin);
             Label countLabel1 = new Label("", skin);
 
             if (stock.getQuantity() == -1) {

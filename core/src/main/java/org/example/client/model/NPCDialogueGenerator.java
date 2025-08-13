@@ -1,11 +1,11 @@
 package org.example.client.model;
 
+import org.example.common.models.Player;
 import org.example.common.utils.OllamaService;
-import org.example.server.models.NPCs.NPC;
-import org.example.server.models.Player;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.enums.Seasons.Season;
-import org.example.server.models.enums.Weathers.Weather;
+import org.example.common.models.NPCs.NPC;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Seasons.Season;
+import org.example.common.models.Weathers.Weather;
 
 public class NPCDialogueGenerator implements Runnable {
     private final static String NPCRole =

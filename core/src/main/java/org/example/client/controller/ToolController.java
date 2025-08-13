@@ -1,12 +1,14 @@
 package org.example.client.controller;
 
 import org.example.client.model.ClientApp;
+import org.example.common.models.Item;
+import org.example.common.models.Player;
+import org.example.common.models.Stacks;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.*;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.enums.items.products.ProcessedProductType;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.StackLevel;
+import org.example.common.models.items.ToolType;
+import org.example.common.models.items.products.ProcessedProductType;
+import org.example.common.models.tools.Backpack;
 
 public class ToolController{
     public GraphicalResult upgradeTool(String toolName) {

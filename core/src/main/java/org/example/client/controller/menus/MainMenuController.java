@@ -3,7 +3,7 @@ package org.example.client.controller.menus;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.*;
-import org.example.server.models.Result;
+import org.example.common.models.Result;
 
 public class MainMenuController extends MenuController {
     private MainMenuView view;
@@ -22,6 +22,12 @@ public class MainMenuController extends MenuController {
     public void goToLobbyMenu(){
         Main.getMain().getScreen().dispose();
         ClientApp.setCurrentMenu(new LobbyMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+    }
+
+    public void goToLoadGameMenu() {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new PreLoadGameMenuView());
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 

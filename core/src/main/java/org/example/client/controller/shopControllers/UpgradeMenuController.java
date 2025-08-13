@@ -7,9 +7,9 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.shopview.UpgradeMenuView;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.Result;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.items.ToolType;
+import org.example.common.models.Result;
+import org.example.common.models.StackLevel;
+import org.example.common.models.items.ToolType;
 
 import java.util.Map;
 

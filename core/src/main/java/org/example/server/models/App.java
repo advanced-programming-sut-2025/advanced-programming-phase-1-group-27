@@ -1,8 +1,11 @@
 package org.example.server.models;
 
-import org.example.server.models.enums.Gender;
-import org.example.server.models.enums.Menu;
-import org.example.server.models.enums.Questions;
+import org.example.common.models.Player;
+import org.example.common.models.SecurityQuestion;
+import org.example.common.models.User;
+import org.example.common.models.Gender;
+import org.example.common.models.Menu;
+import org.example.common.models.Questions;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 

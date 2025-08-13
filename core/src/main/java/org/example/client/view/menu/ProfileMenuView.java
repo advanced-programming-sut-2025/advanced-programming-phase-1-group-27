@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.menus.ProfileMenuController;
 import org.example.common.models.GraphicalResult;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;

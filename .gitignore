@@ -44,6 +44,7 @@ build/
 
 Item's
 users.db
+saves.db
 
 data/login_user.json
 
