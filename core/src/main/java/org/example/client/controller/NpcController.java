@@ -14,14 +14,13 @@ import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCC
 import org.example.client.model.ClientApp;
 import org.example.client.view.InteractionMenus.NpcMenuView;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
-import org.example.common.models.InfoWindow;
-import org.example.server.models.Cell;
-import org.example.server.models.NPCs.NPC;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.InfoWindow;
+import org.example.common.models.Cell;
+import org.example.common.models.NPCs.NPC;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 public class NpcController {

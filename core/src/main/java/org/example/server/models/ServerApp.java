@@ -1,10 +1,13 @@
 package org.example.server.models;
 
+import org.example.common.models.Lobby;
+import org.example.common.models.SecurityQuestion;
+import org.example.common.models.User;
 import org.example.common.database.DataBaseHelper;
 import org.example.common.models.Message;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.connections.ListenerThread;
-import org.example.server.models.enums.Gender;
+import org.example.common.models.Gender;
 
 import java.util.ArrayList;
 import java.util.HashMap;

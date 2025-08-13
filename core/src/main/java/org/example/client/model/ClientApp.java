@@ -6,10 +6,9 @@ import org.example.client.controller.SaveController;
 import org.example.client.view.AppMenu;
 import org.example.client.view.menu.MainMenuView;
 import org.example.common.models.Message;
-import org.example.server.models.Player;
-import org.example.server.models.SecurityQuestion;
-import org.example.server.models.User;
-import org.example.server.models.enums.Gender;
+import org.example.common.models.Gender;
+import org.example.common.models.SecurityQuestion;
+import org.example.common.models.User;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -23,9 +22,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class ClientApp {
+    public static final int TIMEOUT_MILLIS = 5000;
+    
     private static String ip;
     private static int port;
     private static final String loggedInUserFilePath = "data/login_user.json";

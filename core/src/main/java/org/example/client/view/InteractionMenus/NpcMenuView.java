@@ -14,7 +14,7 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.InteractionMenus.Gift.GiftNpcMenuView;
 import org.example.client.view.OutsideView;
-import org.example.server.models.NPCs.NPC;
+import org.example.common.models.NPCs.NPC;
 
 import java.util.Scanner;
 

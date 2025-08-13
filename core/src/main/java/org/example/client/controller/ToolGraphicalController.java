@@ -6,20 +6,16 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import org.example.client.Main;
-import org.example.client.model.ClientApp;
-import org.example.client.model.PopUpTexture;
+import org.example.client.model.*;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.server.models.*;
-import org.example.server.models.enums.CellType;
-import org.example.server.models.enums.Plants.Plant;
-import org.example.server.models.enums.Plants.SaplingType;
-import org.example.server.models.enums.Plants.SeedType;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.tools.FishingPole;
+import org.example.common.models.*;
+import org.example.common.models.Plants.Plant;
+import org.example.common.models.Plants.SaplingType;
+import org.example.common.models.Plants.SeedType;
+import org.example.common.models.items.ShopItems;
+import org.example.common.models.items.ToolType;
+import org.example.common.models.tools.FishingPole;
 
 import java.util.ArrayList;
 

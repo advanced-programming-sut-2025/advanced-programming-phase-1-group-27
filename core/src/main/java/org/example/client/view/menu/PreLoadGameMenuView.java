@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.menus.PreLoadGameMenuController;
 import org.example.client.view.AppMenu;
-import org.example.server.models.Lobby;
+import org.example.common.models.Lobby;
 
 import java.util.ArrayList;
 import java.util.Scanner;

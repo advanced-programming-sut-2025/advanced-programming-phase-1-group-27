@@ -12,7 +12,7 @@ import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.client.view.InteractionMenus.InteractionMenu;
-import org.example.server.models.Stacks;
+import org.example.common.models.Stacks;
 
 import java.util.ArrayList;
 import java.util.Scanner;

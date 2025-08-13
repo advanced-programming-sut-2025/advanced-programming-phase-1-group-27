@@ -1,29 +1,18 @@
 package org.example.client.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.*;
-import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
-import org.example.client.view.shopview.BuildMenuView;
-import org.example.server.models.AnimalProperty.Animal;
-import org.example.server.models.AnimalProperty.Barn;
-import org.example.server.models.Artisan;
-import org.example.server.models.Cell;
-import org.example.server.models.Map.NPCMap;
-import org.example.server.models.NPCs.NPC;
-import org.example.server.models.Position;
-import org.example.server.models.enums.ArtisanTypes;
-import org.example.server.models.enums.SFX;
-import org.example.server.models.enums.items.AnimalType;
-import org.example.server.models.enums.items.BuildingType;
+import org.example.common.models.AnimalProperty.Animal;
+import org.example.common.models.Map.NPCMap;
+import org.example.common.models.Position;
+import org.example.client.model.enums.SFX;
 
 import java.util.ArrayList;
 import java.util.Scanner;

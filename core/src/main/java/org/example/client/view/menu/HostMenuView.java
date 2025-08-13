@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.menus.HostMenuController;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 
 import java.util.Scanner;
 

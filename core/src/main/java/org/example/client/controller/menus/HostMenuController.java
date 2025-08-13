@@ -2,15 +2,16 @@ package org.example.client.controller.menus;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.common.models.Lobby;
+import org.example.common.models.Result;
 import org.example.client.view.menu.*;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.*;
 
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class HostMenuController extends MenuController{
     private HostMenuView view;

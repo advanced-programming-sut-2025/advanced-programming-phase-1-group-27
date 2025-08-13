@@ -1,10 +1,9 @@
 package org.example.common.models;
 
 import com.google.gson.internal.LinkedTreeMap;
-import org.example.server.models.enums.Seasons.Season;
+import org.example.common.models.Seasons.Season;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Time {
     private Game game;

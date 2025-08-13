@@ -3,7 +3,7 @@ package org.example.client.controller;
 import com.badlogic.gdx.graphics.Camera;
 import org.example.client.Main;
 import org.example.client.model.PopUpTexture;
-import org.example.common.models.InfoWindow;
+import org.example.client.model.InfoWindow;
 
 import java.util.ArrayList;
 

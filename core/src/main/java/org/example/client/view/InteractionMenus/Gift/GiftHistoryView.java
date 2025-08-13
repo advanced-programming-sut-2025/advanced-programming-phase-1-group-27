@@ -15,7 +15,7 @@ import org.example.client.controller.InteractionsWithOthers.GiftController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.Relations.Gift;
+import org.example.common.models.Relations.Gift;
 
 import java.util.ArrayList;
 import java.util.Scanner;

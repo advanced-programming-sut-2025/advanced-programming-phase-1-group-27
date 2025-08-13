@@ -3,22 +3,17 @@ package org.example.client.controller.menus;
 import com.badlogic.gdx.Gdx;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
-import org.example.client.model.ClientApp;
-import org.example.client.model.ClientGame;
-import org.example.client.model.MiniPlayer;
+import org.example.client.model.*;
 import org.example.client.view.HomeView;
 import org.example.client.view.menu.LobbyMenuView;
 
 import org.example.client.view.menu.PregameMenuView;
-import org.example.common.models.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.server.models.*;
+import org.example.common.models.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class PregameMenuController extends MenuController {
     private final PregameMenuView view;

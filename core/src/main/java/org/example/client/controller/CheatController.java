@@ -2,28 +2,20 @@ package org.example.client.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
-import org.example.client.model.ClientApp;
+import org.example.client.model.*;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.ItemManager;
-import org.example.common.models.Message;
-import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
-import org.example.server.models.*;
-import org.example.server.models.AnimalProperty.Animal;
-import org.example.server.models.Map.FarmMap;
-import org.example.server.models.Map.NPCMap;
-import org.example.server.models.NPCs.NPC;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.enums.AbilityType;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.Weathers.Weather;
-import org.example.server.models.enums.items.ToolType;
+import org.example.common.models.*;
+import org.example.common.models.AnimalProperty.Animal;
+import org.example.common.models.Map.FarmMap;
+import org.example.common.models.Map.NPCMap;
+import org.example.common.models.NPCs.NPC;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Weathers.Weather;
+import org.example.common.models.items.ToolType;
 
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
-import static org.example.server.models.ServerApp.startListening;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class CheatController {
 

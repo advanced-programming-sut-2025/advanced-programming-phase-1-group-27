@@ -5,13 +5,11 @@ import org.example.common.models.Message;
 import org.example.common.models.Time;
 import org.example.common.utils.JSONUtils;
 import org.example.server.controller.SaveController;
-import org.example.server.models.Lobby;
-import org.example.server.models.Player;
-import org.example.server.models.Relations.Gift;
-import org.example.server.models.Relations.Trade;
-import org.example.server.models.ServerGame;
-import org.example.server.models.User;
-import org.example.server.models.enums.Weathers.Weather;
+import org.example.common.models.Lobby;
+import org.example.common.models.Relations.Gift;
+import org.example.common.models.Relations.Trade;
+import org.example.common.models.User;
+import org.example.common.models.Weathers.Weather;
 
 import java.sql.*;
 import java.util.ArrayList;

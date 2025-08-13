@@ -10,15 +10,15 @@ import org.example.client.view.InteractionMenus.Trade.TradeHistoryView;
 import org.example.client.view.InteractionMenus.Trade.TradeView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Message;
-import org.example.server.models.Relations.Trade;
-import org.example.server.models.Stacks;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.Relations.Trade;
+import org.example.common.models.Stacks;
+import org.example.common.models.items.ToolType;
+import org.example.common.models.tools.Backpack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class TradeController {
 

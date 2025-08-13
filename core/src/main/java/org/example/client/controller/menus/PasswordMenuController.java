@@ -8,13 +8,13 @@ import org.example.client.view.menu.PasswordMenuView;
 import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Lobby;
-import org.example.server.models.Result;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Lobby;
+import org.example.common.models.Result;
 
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class PasswordMenuController extends MenuController{
     private PasswordMenuView view;

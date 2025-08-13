@@ -12,9 +12,9 @@ import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
 import org.example.common.models.Message;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Result;
-import org.example.server.models.enums.InGameMenuType;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Result;
+import org.example.client.model.enums.InGameMenuType;
 
 import java.util.HashMap;
 

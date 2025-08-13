@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import org.example.client.Main;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.Result;
+import org.example.common.models.Result;
 
 import java.util.ArrayList;
 

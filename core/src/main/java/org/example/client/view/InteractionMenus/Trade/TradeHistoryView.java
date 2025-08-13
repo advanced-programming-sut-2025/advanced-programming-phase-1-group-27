@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.view.AppMenu;
-import org.example.server.models.Relations.Trade;
-import org.example.server.models.Stacks;
+import org.example.common.models.Relations.Trade;
+import org.example.common.models.Stacks;
 import java.util.ArrayList;
 import java.util.Scanner;
 

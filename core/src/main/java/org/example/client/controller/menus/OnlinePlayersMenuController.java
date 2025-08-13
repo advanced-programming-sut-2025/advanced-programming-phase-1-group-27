@@ -5,14 +5,14 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.LobbyMenuView;
 import org.example.common.models.Message;
-import org.example.server.models.Lobby;
-import org.example.server.models.Result;
-import org.example.server.models.User;
+import org.example.common.models.Lobby;
+import org.example.common.models.Result;
+import org.example.common.models.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class OnlinePlayersMenuController extends MenuController{
 

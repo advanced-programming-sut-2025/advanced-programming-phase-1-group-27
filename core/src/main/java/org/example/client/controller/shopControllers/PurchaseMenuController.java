@@ -2,31 +2,28 @@ package org.example.client.controller.shopControllers;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
-import org.example.client.controller.GameMenuController;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
+import org.example.common.models.Player;
+import org.example.common.models.Result;
+import org.example.common.models.Stock;
 import org.example.client.view.AppMenu;
-import org.example.client.view.GameView;
-import org.example.client.view.menu.LobbyMenuView;
 import org.example.client.view.shopview.BuildMenuView;
-import org.example.client.view.shopview.MarnieRanch;
 import org.example.client.view.shopview.PurchaseMenuView;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.*;
-import org.example.server.models.enums.AbilityType;
-import org.example.server.models.enums.NPCType;
-import org.example.server.models.enums.items.AnimalType;
-import org.example.server.models.enums.items.BuildingType;
-import org.example.server.models.enums.items.Recipe;
-import org.example.server.models.enums.items.ToolType;
-import org.example.server.models.enums.items.products.CookingProduct;
-import org.example.server.models.enums.items.products.CraftingProduct;
+import org.example.common.models.AbilityType;
+import org.example.common.models.NPCType;
+import org.example.common.models.items.BuildingType;
+import org.example.common.models.items.Recipe;
+import org.example.common.models.items.ToolType;
+import org.example.common.models.items.products.CookingProduct;
+import org.example.common.models.items.products.CraftingProduct;
 
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class PurchaseMenuController extends MenuController {
     private final PurchaseMenuView passwordMenuView;

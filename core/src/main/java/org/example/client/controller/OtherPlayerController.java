@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
-import org.example.common.models.GameAssetManager;
+import org.example.client.model.GameAssetManager;
 
 import static java.lang.Math.min;
 

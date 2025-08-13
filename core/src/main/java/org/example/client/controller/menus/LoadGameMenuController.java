@@ -5,7 +5,7 @@ import org.example.client.model.ClientApp;
 import org.example.client.view.menu.LoadGameMenuView;
 import org.example.client.view.menu.PreLoadGameMenuView;
 import org.example.common.models.Message;
-import org.example.server.models.Result;
+import org.example.common.models.Result;
 
 import java.util.HashMap;
 

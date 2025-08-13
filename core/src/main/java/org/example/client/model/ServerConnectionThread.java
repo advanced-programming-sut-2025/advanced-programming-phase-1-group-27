@@ -15,7 +15,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.function.Consumer;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class ServerConnectionThread extends ConnectionThread {
     private OutputStream fileOutputStream = null;

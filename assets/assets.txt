@@ -1250,6 +1250,7 @@ NPCs/Other/AbigailWalk/36.png
 NPCs/Other/AbigailWalk/37.png
 NPCs/Other/AbigailWalk/38.png
 NPCs/Other/AbigailWalk/39.png
+NPCs/Other/Abigail_Face.png
 NPCs/Other/Harvey.atlas
 NPCs/Other/Harvey.png
 NPCs/Other/HarveySheet.png
@@ -1309,6 +1310,8 @@ NPCs/Other/HarveyWalk/36.png
 NPCs/Other/HarveyWalk/37.png
 NPCs/Other/HarveyWalk/38.png
 NPCs/Other/HarveyWalk/39.png
+NPCs/Other/Harvey_Face.png
+NPCs/Other/Leah_Face.png
 NPCs/Other/Lia.atlas
 NPCs/Other/Lia.png
 NPCs/Other/LiaSheet.png
@@ -1407,6 +1410,7 @@ NPCs/Other/RobbinWalk/36.png
 NPCs/Other/RobbinWalk/37.png
 NPCs/Other/RobbinWalk/38.png
 NPCs/Other/RobbinWalk/39.png
+NPCs/Other/Robbin_Face.png
 NPCs/Other/Sebastian.atlas
 NPCs/Other/Sebastian.png
 NPCs/Other/SebastianSheet.png
@@ -1470,6 +1474,7 @@ NPCs/Other/SebastianWalk/36.png
 NPCs/Other/SebastianWalk/37.png
 NPCs/Other/SebastianWalk/38.png
 NPCs/Other/SebastianWalk/39.png
+NPCs/Other/Sebastian_Face.png
 NPCs/Shop/Clint.png
 NPCs/Shop/Gus.png
 NPCs/Shop/Marnie.png

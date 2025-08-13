@@ -1,6 +1,5 @@
 package org.example.server.models.connections;
 
-import org.example.common.database.DataBaseHelper;
 import org.example.common.models.ConnectionThread;
 import org.example.common.models.Message;
 import org.example.server.controller.*;
@@ -8,9 +7,9 @@ import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCC
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.controller.InteractionsWithOthers.MarriageController;
 import org.example.server.controller.InteractionsWithOthers.TradeController;
-import org.example.server.models.Lobby;
+import org.example.common.models.Lobby;
 import org.example.server.models.ServerApp;
-import org.example.server.models.User;
+import org.example.common.models.User;
 
 import java.io.File;
 import java.io.FileInputStream;

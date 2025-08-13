@@ -8,9 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import org.example.client.Main;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.AnimalProperty.Animal;
-import org.example.server.models.Cell;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.AnimalProperty.Animal;
+import org.example.common.models.Cell;
 
 import java.awt.*;
 import java.util.Random;

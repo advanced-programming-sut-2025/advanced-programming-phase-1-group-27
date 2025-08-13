@@ -1,9 +1,9 @@
 package org.example.server.controller;
 
 import org.example.common.models.Message;
-import org.example.server.models.Lobby;
+import org.example.common.models.Lobby;
 import org.example.server.models.ServerApp;
-import org.example.server.models.User;
+import org.example.common.models.User;
 
 import java.util.HashMap;
 

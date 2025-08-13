@@ -9,10 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
-import org.example.client.model.ClientApp;
-import org.example.client.model.MiniPlayer;
-import org.example.client.model.PopUpTexture;
-import org.example.client.model.Reaction;
+import org.example.client.model.*;
 import org.example.client.view.HomeView;
 import org.example.client.view.InteractionMenus.Trade.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.Trade.StartTradeView;
@@ -21,22 +18,21 @@ import org.example.client.view.InteractionMenus.MarriageRequestView;
 import org.example.client.view.OutsideView;
 import org.example.client.view.VoteView;
 import org.example.common.models.*;
-import org.example.server.models.*;
-import org.example.server.models.Map.FarmMap;
-import org.example.server.models.Map.NPCMap;
-import org.example.server.models.Shops.Shop;
-import org.example.server.models.enums.AbilityType;
-import org.example.server.models.enums.Plants.Plant;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.Weathers.Weather;
+import org.example.common.models.Map.FarmMap;
+import org.example.common.models.Map.NPCMap;
+import org.example.common.models.Shops.Shop;
+import org.example.common.models.AbilityType;
+import org.example.common.models.Plants.Plant;
+import org.example.common.models.StackLevel;
+import org.example.common.models.Weathers.Weather;
 
 import java.util.HashMap;
 import java.util.Random;
 
-import org.example.server.models.enums.Plants.Crop;
-import org.example.server.models.enums.Plants.Tree;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.Plants.Crop;
+import org.example.common.models.Plants.Tree;
+import org.example.common.models.items.ShopItems;
+import org.example.common.models.tools.Backpack;
 
 import java.util.ArrayList;
 

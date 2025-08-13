@@ -1,19 +1,19 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.client.controller.InteractionsWithOthers.MarriageController;
-import org.example.client.model.ClientApp;
+import org.example.common.models.Item;
+import org.example.common.models.Lobby;
+import org.example.common.models.Player;
+import org.example.common.models.Result;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
-import org.example.server.models.Relations.Dialogue;
-import org.example.server.models.Relations.Gift;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.Relations.Trade;
-import org.example.server.models.enums.DialogueType;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.Relations.Dialogue;
+import org.example.common.models.Relations.Gift;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.DialogueType;
+import org.example.common.models.items.ShopItems;
+import org.example.common.models.tools.Backpack;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 

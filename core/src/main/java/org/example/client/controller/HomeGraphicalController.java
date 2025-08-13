@@ -6,9 +6,9 @@ import org.example.client.model.ClientApp;
 import org.example.client.model.PopUpTexture;
 import org.example.client.view.GameView;
 import org.example.client.view.HomeView;
-import org.example.server.models.Item;
-import org.example.server.models.Player;
-import org.example.server.models.Result;
+import org.example.common.models.Item;
+import org.example.common.models.Player;
+import org.example.common.models.Result;
 
 public class HomeGraphicalController {
     HomeView view;

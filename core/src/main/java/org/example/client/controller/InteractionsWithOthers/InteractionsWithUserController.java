@@ -4,25 +4,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.PopUpController;
-import org.example.client.model.ClientApp;
-import org.example.client.model.MiniPlayer;
-import org.example.client.model.PopUpTexture;
+import org.example.client.model.*;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.server.models.*;
-import org.example.server.models.Relations.Dialogue;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.enums.DialogueType;
-import org.example.server.models.enums.items.ShopItems;
-import org.example.server.models.tools.Backpack;
+import org.example.common.models.*;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.items.ShopItems;
+import org.example.common.models.tools.Backpack;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 
 public class InteractionsWithUserController {

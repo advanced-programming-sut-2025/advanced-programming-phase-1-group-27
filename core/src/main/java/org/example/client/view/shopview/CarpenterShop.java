@@ -14,9 +14,9 @@ import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.HUDView;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Stock;
-import org.example.server.models.enums.NPCType;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Stock;
+import org.example.common.models.NPCType;
 import org.example.client.view.AppMenu;
 
 import java.util.ArrayList;

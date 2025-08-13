@@ -4,17 +4,16 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.LoadGameMenuView;
-import org.example.client.view.menu.LobbyMenuView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.PreLoadGameMenuView;
 import org.example.common.models.Message;
-import org.example.server.models.Lobby;
-import org.example.server.models.Result;
+import org.example.common.models.Lobby;
+import org.example.common.models.Result;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class PreLoadGameMenuController extends MenuController{
     private PreLoadGameMenuView view;

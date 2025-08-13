@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import org.example.client.Main;
 import org.example.client.view.OutsideView;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Position;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Position;
 
 import java.util.HashMap;
 import java.util.Iterator;

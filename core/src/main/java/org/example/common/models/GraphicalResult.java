@@ -3,6 +3,7 @@ package org.example.common.models;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.model.GameAssetManager;
 
 import java.util.HashMap;
 

@@ -1,10 +1,8 @@
 package org.example.server.controller;
 
 import org.example.common.models.Message;
-import org.example.server.models.Lobby;
+import org.example.common.models.Lobby;
 import org.example.server.models.ServerApp;
-
-import java.util.HashMap;
 
 public class TimeController {
     public static void passAnHour(Lobby lobby) {

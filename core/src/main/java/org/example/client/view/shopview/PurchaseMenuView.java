@@ -17,10 +17,9 @@ import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 import org.example.client.view.HUDView;
-import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.Stock;
-import org.example.server.models.enums.NPCType;
+import org.example.common.models.Stock;
+import org.example.common.models.NPCType;
 
 import java.util.Scanner;
 

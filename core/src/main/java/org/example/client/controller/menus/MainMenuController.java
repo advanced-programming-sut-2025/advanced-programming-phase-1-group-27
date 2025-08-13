@@ -3,7 +3,7 @@ package org.example.client.controller.menus;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
 import org.example.client.view.menu.*;
-import org.example.server.models.Result;
+import org.example.common.models.Result;
 
 public class MainMenuController extends MenuController {
     private MainMenuView view;

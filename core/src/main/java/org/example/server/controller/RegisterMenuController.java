@@ -1,11 +1,10 @@
 package org.example.server.controller;
 
-import com.google.gson.internal.LinkedTreeMap;
+import org.example.common.models.Result;
+import org.example.common.models.User;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
 import org.example.server.models.*;
-import org.example.server.models.enums.Gender;
-import org.example.server.models.enums.Questions;
 
 import java.util.HashMap;
 

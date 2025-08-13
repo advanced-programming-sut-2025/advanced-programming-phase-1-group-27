@@ -3,18 +3,10 @@ package org.example.client.model;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.google.gson.internal.LinkedTreeMap;
-import org.example.common.models.GameAssetManager;
-import org.example.common.models.Message;
-import org.example.server.models.Map.NPCMap;
-import org.example.server.models.Player;
-import org.example.server.models.Position;
-import org.example.server.models.User;
-import org.example.server.models.enums.AbilityType;
+import org.example.common.models.*;
+import org.example.common.models.Map.NPCMap;
 
-import java.awt.*;
 import java.util.HashMap;
-
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class MiniPlayer extends User {
 

@@ -7,29 +7,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.menus.MenuController;
-import org.example.client.model.ClientApp;
-import org.example.client.model.ClientGame;
-import org.example.client.model.MiniPlayer;
-import org.example.client.model.Reaction;
+import org.example.client.model.*;
 import org.example.client.model.enums.Emoji;
 import org.example.client.view.HUDView;
 import org.example.client.view.InteractionMenus.InteractionMenu;
 import org.example.client.view.InteractionMenus.Trade.PreTradeMenuView;
-import org.example.common.models.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.common.models.MusicInfo;
-import org.example.server.models.*;
-import org.example.server.models.NPCs.NPC;
-import org.example.server.models.Relations.Relation;
-import org.example.server.models.enums.NPCType;
-import org.example.server.models.enums.Seasons.Season;
-import org.example.server.models.enums.StackLevel;
-import org.example.server.models.enums.Weathers.Weather;
-import org.example.server.models.enums.commands.CheatCommands;
-import org.example.server.models.enums.items.Recipe;
-import org.example.server.models.enums.items.products.CookingProduct;
-import org.example.server.models.enums.items.products.CraftingProduct;
+import org.example.common.models.*;
+import org.example.common.models.NPCs.NPC;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Seasons.Season;
+import org.example.common.models.Weathers.Weather;
+import org.example.common.models.commands.CheatCommands;
+import org.example.common.models.items.Recipe;
+import org.example.common.models.items.products.CookingProduct;
+import org.example.common.models.items.products.CraftingProduct;
 
 import javax.swing.*;
 import java.io.File;
@@ -38,7 +29,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class HUDController extends MenuController {
 

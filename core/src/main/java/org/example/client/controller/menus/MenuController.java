@@ -1,9 +1,8 @@
 package org.example.client.controller.menus;
 
 import com.badlogic.gdx.audio.Sound;
-import org.example.server.models.App;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Result;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Result;
 
 public abstract class MenuController {
 
@@ -12,10 +11,6 @@ public abstract class MenuController {
     public abstract Result enterMenu(String menuName);
 
     public abstract Result exitMenu();
-
-    public Result showCurrentMenu() {
-        return new Result(true, App.getCurrentMenu().toString());
-    }
 
     protected void playClickSound() {
 

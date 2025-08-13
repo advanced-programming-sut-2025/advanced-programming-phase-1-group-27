@@ -13,17 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
-import org.example.client.controller.ResultController;
 import org.example.client.controller.shopControllers.AnimalPurchaseController;
-import org.example.client.controller.shopControllers.PurchaseMenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 import org.example.client.view.HUDView;
-import org.example.common.models.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.server.models.Stock;
-import org.example.server.models.enums.NPCType;
+import org.example.common.models.Stock;
+import org.example.common.models.NPCType;
 
 import java.util.Scanner;
 

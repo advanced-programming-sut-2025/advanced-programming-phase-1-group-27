@@ -1,6 +1,5 @@
 package org.example.client.controller.menus;
 
-import com.badlogic.gdx.graphics.Color;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
@@ -10,13 +9,13 @@ import org.example.client.view.menu.ProfileMenuView;
 import org.example.client.view.menu.UserInfoView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.common.models.GameAssetManager;
-import org.example.server.models.Result;
-import org.example.server.models.User;
+import org.example.client.model.GameAssetManager;
+import org.example.common.models.Result;
+import org.example.common.models.User;
 
 import java.util.HashMap;
 
-import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class ProfileMenuController extends MenuController {
     private ProfileMenuView view;
