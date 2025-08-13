@@ -18,6 +18,7 @@ public class MainMenuView extends AppMenu {
     private final MainMenuController controller;
     private final Label menuTitleLabel;
     private final TextButton lobbyMenuButton;
+    private final TextButton loadGameButton;
     private final TextButton profileMenuButton;
     private final TextButton userInfoMenuButton;
     private final TextButton logoutButton;
@@ -31,6 +32,7 @@ public class MainMenuView extends AppMenu {
         menuTitleLabel = new Label("Main Menu", skin);
 
         lobbyMenuButton = new TextButton("Lobby Menu", skin);
+        loadGameButton = new TextButton("Load Game", skin);
         profileMenuButton = new TextButton("Profile Menu", skin);
         userInfoMenuButton = new TextButton("User Info", skin);
         logoutButton = new TextButton("Logout", skin);
@@ -62,16 +64,19 @@ public class MainMenuView extends AppMenu {
     private void showButtons() {
 
         lobbyMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
+        loadGameButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
         profileMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
         userInfoMenuButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
         logoutButton.setWidth(Gdx.graphics.getWidth() / 4f * fadeInTimer);
 
-        lobbyMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 4 * Gdx.graphics.getHeight() / 7f);
-        profileMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 7f);
-        userInfoMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 2 * Gdx.graphics.getHeight() / 7f);
-        logoutButton.setPosition(Gdx.graphics.getWidth() / 8f, 1 * Gdx.graphics.getHeight() / 7f);
+        lobbyMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 4.5f * Gdx.graphics.getHeight() / 7f);
+        loadGameButton.setPosition(Gdx.graphics.getWidth() / 8f, 3.5f * Gdx.graphics.getHeight() / 7f);
+        profileMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 2.5f * Gdx.graphics.getHeight() / 7f);
+        userInfoMenuButton.setPosition(Gdx.graphics.getWidth() / 8f, 1.5f * Gdx.graphics.getHeight() / 7f);
+        logoutButton.setPosition(Gdx.graphics.getWidth() / 8f, 0.5f * Gdx.graphics.getHeight() / 7f);
 
         stage.addActor(lobbyMenuButton);
+        stage.addActor(loadGameButton);
         stage.addActor(profileMenuButton);
         stage.addActor(userInfoMenuButton);
         stage.addActor(logoutButton);
@@ -137,6 +142,14 @@ public class MainMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 controller.goToLobbyMenu();
+            }
+        });
+
+        loadGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.goToLoadGameMenu();
             }
         });
 

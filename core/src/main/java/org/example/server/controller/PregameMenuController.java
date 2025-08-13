@@ -85,7 +85,7 @@ public class PregameMenuController {
             lobby.removeUser(selectedUser);
 
             if (lobby.getUsers().isEmpty()) {
-                ServerApp.getLobbies().remove(lobby);
+                ServerApp.removeLobby(lobby);
                 return;
             }
 

@@ -205,6 +205,9 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.meetP2P){
             InteractionsWithUserController.meet(message);
             return true;
+        } else if (message.getType() == Message.Type.load_game) {
+            LoadGameController.handleLoadRequest(message);
+            return true;
         }
         return false;
     }

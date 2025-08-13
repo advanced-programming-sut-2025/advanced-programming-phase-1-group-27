@@ -230,4 +230,12 @@ public class Lobby {
             player.setCurrentCell(serverGame.getFarmMap(mapIndex).getCell(8, 70));
         }
     }
+
+    public boolean hasUser(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username))
+                return true;
+        }
+        return  false;
+    }
 }

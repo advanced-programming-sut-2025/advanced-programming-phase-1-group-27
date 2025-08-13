@@ -25,6 +25,12 @@ public class MainMenuController extends MenuController {
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
+    public void goToLoadGameMenu() {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new PreLoadGameMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+    }
+
     public void goToProfileMenu(){
         Main.getMain().getScreen().dispose();
         ClientApp.setCurrentMenu(new ProfileMenuView());

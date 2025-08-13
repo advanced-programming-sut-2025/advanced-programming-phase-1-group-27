@@ -122,7 +122,7 @@ public class LobbyMenuController extends MenuController {
         Message responseForJoin = ClientApp.getServerConnectionThread().sendAndWaitForResponse(joinMessage, TIMEOUT_MILLIS);
         if (responseForJoin == null || responseForJoin.getType() != Message.Type.response) {
             return new GraphicalResult(
-                    "Failed to join",
+                    "Failed to loadGame",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }

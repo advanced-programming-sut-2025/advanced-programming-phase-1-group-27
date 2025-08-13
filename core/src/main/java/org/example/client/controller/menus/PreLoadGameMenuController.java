@@ -1,60 +1,55 @@
 package org.example.client.controller.menus;
 
+import com.google.gson.internal.LinkedTreeMap;
+import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.view.menu.LoadGameMenuView;
 import org.example.client.view.menu.LobbyMenuView;
+import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.PreLoadGameMenuView;
+import org.example.common.models.Message;
 import org.example.server.models.Lobby;
 import org.example.server.models.Result;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
 
 public class PreLoadGameMenuController extends MenuController{
     private PreLoadGameMenuView view;
-    private LobbyMenuController lobbyMenuController;
 
     public PreLoadGameMenuController(PreLoadGameMenuView view) {
         this.view = view;
-        this.lobbyMenuController = new LobbyMenuController(new LobbyMenuView());
     }
 
-    public ArrayList<Lobby> getLobbiesForHost() {
-        ArrayList<Lobby> lobbies = lobbyMenuController.getLobbies();
-        ArrayList<Lobby> selectedLobbies = new ArrayList<>();
-        for(Lobby lobby : lobbies){
-            if(lobby.getGame() == null){
-                continue;
-            }
-            if(!lobby.getAdmin().getUsername().equals(ClientApp.getLoggedInUser().getUsername())){
-                continue;
-            }
-            if(lobby.getGame().isGameRunning()){
-                continue;
-            }
-            selectedLobbies.add(lobby);
+    public ArrayList<Lobby> getLobbiesToJoin() {
+        Message message = new Message(new HashMap<>()
+                , Message.Type.get_lobbies_list);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response) {
+            return new ArrayList<>();
         }
-        return selectedLobbies;
-    }
-
-    public ArrayList<Lobby> getLobbiesForJoin() {
-        ArrayList<Lobby> lobbies = lobbyMenuController.getLobbies();
-        ArrayList<Lobby> selectedLobbies = new ArrayList<>();
-        for(Lobby lobby : lobbies) {
-            if (lobby.getGame() == null) {
-                continue;
+        ArrayList<LinkedTreeMap<String, Object>> lobbiesInfo = response.getFromBody("lobbiesInfo");
+        ArrayList<Lobby> result = new ArrayList<>();
+        for (LinkedTreeMap<String, Object> lobbyInfo : lobbiesInfo) {
+            Lobby lobby = new Lobby(lobbyInfo);
+            if (lobby.hasUser(ClientApp.getLoggedInUser().getUsername())) {
+                result.add(lobby);
             }
-            if (lobby.getGame().isGameRunning()) {
-                continue;
-            }
-            selectedLobbies.add(lobby);
         }
-        return selectedLobbies;
+        return result;
     }
 
-    public void restore(){
+    public void loadGame(int lobbyId) {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new LoadGameMenuView(lobbyId));
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
 
-    }
-
-    public void join(){
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+            put("mode", "join");
+            put("lobbyId", lobbyId);
+        }}, Message.Type.load_game));
 
     }
 
@@ -65,6 +60,9 @@ public class PreLoadGameMenuController extends MenuController{
 
     @Override
     public Result exitMenu() {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new MainMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
         return null;
     }
 }

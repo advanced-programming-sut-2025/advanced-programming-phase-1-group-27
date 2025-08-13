@@ -18,43 +18,43 @@ import java.util.Scanner;
 public class PreLoadGameMenuView extends AppMenu {
     private final PreLoadGameMenuController controller;
 
-    private final SelectBox<String> selectedLobbiesForHost;
-    private final SelectBox<String> selectedLobbiesForJoin;
+//    private final SelectBox<String> selectedLobbiesForHost;
+    private final SelectBox<String> selectedLobbiesToJoin;
 
-    private final TextButton joinButton;
+    private final TextButton loadGameButton;
     private final TextButton restoreButton;
     private final TextButton backButton;
 
-    private final ArrayList<Lobby> selectedLobbiesForHostList;
-    private final ArrayList<Lobby> selectedLobbiesForJoinList;
+//    private final ArrayList<Lobby> selectedLobbiesForHostList;
+    private final ArrayList<Lobby> selectedLobbiesToJoinList;
 
     private Stage stage;
     public PreLoadGameMenuView() {
         this.controller = new PreLoadGameMenuController(this);
 
-        selectedLobbiesForHost = new SelectBox<>(skin);
-        selectedLobbiesForJoin = new SelectBox<>(skin);
+//        selectedLobbiesForHost = new SelectBox<>(skin);
+        selectedLobbiesToJoin = new SelectBox<>(skin);
 
-        joinButton = new TextButton("Join", skin);
+        loadGameButton = new TextButton("Join", skin);
         restoreButton = new TextButton("Restore", skin);
         backButton = new TextButton("Back", skin);
 
-        selectedLobbiesForHostList = controller.getLobbiesForHost();
-        selectedLobbiesForJoinList = controller.getLobbiesForJoin();
+//        selectedLobbiesForHostList = controller.getLobbiesForHost();
+        selectedLobbiesToJoinList = controller.getLobbiesToJoin();
 
         setListeners();
     }
 
 
     private void showButtons(){
-        joinButton.setPosition(Gdx.graphics.getWidth() / 2f - 500,
+        loadGameButton.setPosition(Gdx.graphics.getWidth() / 2f - 500,
                 2 * Gdx.graphics.getHeight() / 12f);
         restoreButton.setPosition(Gdx.graphics.getWidth() / 2f + 200,
                 2 * Gdx.graphics.getHeight() / 12f);
         backButton.setPosition(Gdx.graphics.getWidth() / 2f - 200,
                 2 * Gdx.graphics.getHeight() / 12f);
 
-        stage.addActor(joinButton);
+        stage.addActor(loadGameButton);
         stage.addActor(restoreButton);
         stage.addActor(backButton);
     }
@@ -62,7 +62,7 @@ public class PreLoadGameMenuView extends AppMenu {
     private void showSelectBoxJoin() {
         Array<String> lobbyInfos = new Array<>();
 
-        for (Lobby lobby : selectedLobbiesForJoinList) {
+        for (Lobby lobby : selectedLobbiesToJoinList) {
             if (lobby.isVisible()) {
                 StringBuilder s = new StringBuilder();
                 s.append(lobby.getId()).append(" ").append(lobby.getName());
@@ -75,38 +75,38 @@ public class PreLoadGameMenuView extends AppMenu {
             }
         }
 
-        selectedLobbiesForJoin.setItems(lobbyInfos);
+        selectedLobbiesToJoin.setItems(lobbyInfos);
 
-        selectedLobbiesForJoin.setWidth(Gdx.graphics.getWidth() / 5f);
+        selectedLobbiesToJoin.setWidth(Gdx.graphics.getWidth() / 5f);
 
-        selectedLobbiesForJoin.setPosition((Gdx.graphics.getWidth() / 2f - selectedLobbiesForJoin.getWidth()) / 2f, 6 * Gdx.graphics.getHeight() / 12f);
+        selectedLobbiesToJoin.setPosition((Gdx.graphics.getWidth() / 2f - selectedLobbiesToJoin.getWidth()) / 2f, 6 * Gdx.graphics.getHeight() / 12f);
 
-        stage.addActor(selectedLobbiesForJoin);
+        stage.addActor(selectedLobbiesToJoin);
     }
 
     private void showSelectBoxHost() {
-        Array<String> lobbyInfos = new Array<>();
+//        Array<String> lobbyInfos = new Array<>();
+//
+//        for (Lobby lobby : selectedLobbiesForHostList) {
+//            if (lobby.isVisible()) {
+//                StringBuilder s = new StringBuilder();
+//                s.append(lobby.getId()).append(" ").append(lobby.getName());
+//                if (!lobby.isPublic()) {
+//                    s.append(" private");
+//                } else {
+//                    s.append(" public");
+//                }
+//                lobbyInfos.add(s.toString());
+//            }
+//        }
 
-        for (Lobby lobby : selectedLobbiesForHostList) {
-            if (lobby.isVisible()) {
-                StringBuilder s = new StringBuilder();
-                s.append(lobby.getId()).append(" ").append(lobby.getName());
-                if (!lobby.isPublic()) {
-                    s.append(" private");
-                } else {
-                    s.append(" public");
-                }
-                lobbyInfos.add(s.toString());
-            }
-        }
+//        selectedLobbiesForHost.setItems(lobbyInfos);
 
-        selectedLobbiesForHost.setItems(lobbyInfos);
+//        selectedLobbiesForHost.setWidth(Gdx.graphics.getWidth() / 5f);
 
-        selectedLobbiesForHost.setWidth(Gdx.graphics.getWidth() / 5f);
+//        selectedLobbiesForHost.setPosition((Gdx.graphics.getWidth() / 2f + 3 * selectedLobbiesForHost.getWidth()) / 2f, 6 * Gdx.graphics.getHeight() / 12f);
 
-        selectedLobbiesForHost.setPosition((Gdx.graphics.getWidth() / 2f + 3 * selectedLobbiesForHost.getWidth()) / 2f, 6 * Gdx.graphics.getHeight() / 12f);
-
-        stage.addActor(selectedLobbiesForHost);
+//        stage.addActor(selectedLobbiesForHost);
     }
 
     @Override
@@ -119,11 +119,11 @@ public class PreLoadGameMenuView extends AppMenu {
 
     @Override
     public void render(float delta) {
+        showButtons();
+//        showSelectBoxHost();
+        showSelectBoxJoin();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        showButtons();
-        showSelectBoxHost();
-        showSelectBoxJoin();
     }
 
     @Override
@@ -161,15 +161,15 @@ public class PreLoadGameMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-//                controller.exitMenu();
+                controller.exitMenu();
             }
         });
 
-        joinButton.addListener(new ClickListener() {
+        loadGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-//                controller.exitMenu();
+                controller.loadGame(Integer.parseInt(selectedLobbiesToJoin.getSelected().split(" ")[0]));
             }
         });
 
@@ -182,11 +182,11 @@ public class PreLoadGameMenuView extends AppMenu {
         });
     }
 
-    public SelectBox<String> getSelectedLobbiesForHost() {
-        return selectedLobbiesForHost;
-    }
+//    public SelectBox<String> getSelectedLobbiesForHost() {
+//        return selectedLobbiesForHost;
+//    }
 
     public SelectBox<String> getSelectedLobbiesForJoin() {
-        return selectedLobbiesForJoin;
+        return selectedLobbiesToJoin;
     }
 }

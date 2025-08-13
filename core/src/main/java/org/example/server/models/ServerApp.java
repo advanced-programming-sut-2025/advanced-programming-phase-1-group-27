@@ -18,6 +18,11 @@ public class ServerApp {
 
     static {
         lobbies = DataBaseHelper.getLobbiesFromSave();
+        User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
+        admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
+        Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
+        lobby.setMap(admin.getUsername(), 0);
+        lobbies.add(lobby);
     }
 
     public static void setListenerThread(ListenerThread listenerThread) {

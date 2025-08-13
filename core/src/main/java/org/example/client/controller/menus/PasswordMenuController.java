@@ -45,7 +45,7 @@ public class PasswordMenuController extends MenuController{
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if(response == null || response.getType() != Message.Type.response) {
             return new GraphicalResult(
-                    "Failed to join",
+                    "Failed to loadGame",
                     GameAssetManager.getGameAssetManager().getErrorColor()
             );
         }

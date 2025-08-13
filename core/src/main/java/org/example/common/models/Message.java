@@ -92,5 +92,6 @@ public class Message {
         get_quests_journal,
         meetP2P,
         save,
+        load_game
     }
 }
