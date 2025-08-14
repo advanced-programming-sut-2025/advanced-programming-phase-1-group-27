@@ -4,11 +4,7 @@ import org.example.client.Main;
 import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
 import org.example.client.view.MiniGame.PreMiniGameMenuView;
-import org.example.common.models.Cell;
-import org.example.common.models.Result;
-import org.example.common.models.AbilityType;
-import org.example.common.models.CellType;
-import org.example.common.models.StackLevel;
+import org.example.common.models.*;
 import org.example.common.models.items.ToolType;
 
 public class FishingPole extends Tool {
@@ -89,11 +85,10 @@ public class FishingPole extends Tool {
     public Result use(Cell cell) {
         if (cell.getType() == CellType.Water) {
 
-            if ( ClientApp.getCurrentGame().getCurrentPlayer().getEnergy() < ToolType.getFishPoleEnergy(this.getToolType()) ) {
+            if (ClientApp.getCurrentGame().getCurrentPlayer().getEnergy() < ToolType.getFishPoleEnergy(this.getToolType())) {
                 ResultController.addError("Fishing failed! You don't have enough energy!");
                 ClientApp.getCurrentGame().getCurrentPlayer().setEnergy(0);
-            }
-            else{
+            } else {
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new PreMiniGameMenuView(this.getToolType()));
             }

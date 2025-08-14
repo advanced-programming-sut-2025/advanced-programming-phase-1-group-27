@@ -92,6 +92,14 @@ public class Ability {
 
     private int xp = 0, level = 0;
 
+    public Ability() {
+    }
+
+    public Ability(LinkedTreeMap<String, Object> info) {
+        this.xp = ((Number) info.get("xp")).intValue();
+        this.level = ((Number) info.get("level")).intValue();
+    }
+
     public static ArrayList<Recipe> getRecipeList(AbilityType type, int level) {
         return switch (type) {
             case Farming -> farmingRecipes.get(level - 1);
@@ -100,13 +108,6 @@ public class Ability {
             case Mining -> miningRecipes.get(level - 1);
             default -> new ArrayList<>();
         };
-    }
-
-    public Ability() {}
-
-    public Ability(LinkedTreeMap<String, Object> info) {
-        this.xp = ((Number) info.get("xp")).intValue();
-        this.level = ((Number) info.get("level")).intValue();
     }
 
     public HashMap<String, Object> getInfo() {

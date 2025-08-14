@@ -8,9 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.controller.VoteController;
-import org.example.client.model.ClientApp;
 import org.example.client.model.RoundedRectangleTexture;
 
 import java.util.Scanner;
@@ -36,8 +34,8 @@ public class VoteView extends AppMenu {
 
         controller = new VoteController();
 
-        yesButton = new TextButton("Yes" , skin);
-        noButton = new TextButton("No" , skin);
+        yesButton = new TextButton("Yes", skin);
+        noButton = new TextButton("No", skin);
 
         creamImage = new Image(RoundedRectangleTexture.createCreamRoundedRect(
                 Gdx.graphics.getWidth(),
@@ -50,8 +48,7 @@ public class VoteView extends AppMenu {
                 30));
         if (voteMode.equals("askToTerminate")) {
             label = new Label("Do you want to terminate the game?", skin);
-        }
-        else {
+        } else {
             label = new Label("Do you want to kick " + username + "?", skin);
         }
         label.setColor(Color.BLACK);
@@ -92,9 +89,9 @@ public class VoteView extends AppMenu {
         displayBackground();
         yesButton.setWidth(300);
         noButton.setWidth(300);
-        label.setPosition(Gdx.graphics.getWidth() / 2f - label.getWidth() + 50,  Gdx.graphics.getHeight() / 2f + label.getHeight() + 50);
+        label.setPosition(Gdx.graphics.getWidth() / 2f - label.getWidth() + 50, Gdx.graphics.getHeight() / 2f + label.getHeight() + 50);
         yesButton.setPosition(Gdx.graphics.getWidth() / 2f + yesButton.getWidth() - 150, Gdx.graphics.getHeight() / 2f - yesButton.getHeight());
-        noButton.setPosition(Gdx.graphics.getWidth() / 2f - noButton.getWidth() - 150 , Gdx.graphics.getHeight() / 2f - noButton.getHeight());
+        noButton.setPosition(Gdx.graphics.getWidth() / 2f - noButton.getWidth() - 150, Gdx.graphics.getHeight() / 2f - noButton.getHeight());
         stage.addActor(label);
         stage.addActor(noButton);
         stage.addActor(yesButton);

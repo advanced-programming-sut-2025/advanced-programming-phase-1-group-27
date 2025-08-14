@@ -10,9 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.MiniGameController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.model.enums.FishMovementType;
 import org.example.client.view.AppMenu;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.items.FishType;
 
 import java.util.Random;
@@ -26,15 +26,13 @@ public class MiniGameView extends AppMenu {
     private final Label menuTitleLabel;
     private final Image miniGameBackground;
     private final Image greenBar;
-    private Image fishIcon;
     private final Image bar;
     private final Image progressBar;
     private final Image crownImage;
     private final Image sonarImage;
-
     private final FishType caughtFish;
-
     private final int greenBarDY = 5;
+    private Image fishIcon;
     private float barY;
     private float fishDY;
     private float fishY;
@@ -61,8 +59,8 @@ public class MiniGameView extends AppMenu {
         progressBar = GameAssetManager.getGameAssetManager().getFishingProgressBar();
         crownImage = GameAssetManager.getGameAssetManager().getCrown();
         sonarImage = GameAssetManager.getGameAssetManager().getSonarBobberWindow();
-        barY = 126 + new Random().nextInt(0,979-(int)greenBar.getHeight()-126);
-        fishY = barY +  (greenBar.getHeight()-fishIcon.getHeight())/2f;
+        barY = 126 + new Random().nextInt(0, 979 - (int) greenBar.getHeight() - 126);
+        fishY = barY + (greenBar.getHeight() - fishIcon.getHeight()) / 2f;
         fishDY = 0;
         sonarActivated = false;
 
@@ -70,24 +68,23 @@ public class MiniGameView extends AppMenu {
 
     }
 
-    private void displayGameBackground(){
+    private void displayGameBackground() {
 
 
-
-        miniGameBackground.setSize(miniGameBackground.getWidth()*2, miniGameBackground.getHeight()*2);
-        miniGameBackground.setPosition((stage.getWidth()-miniGameBackground.getWidth())/2f,
-                (stage.getHeight()- miniGameBackground.getHeight())/2f);
+        miniGameBackground.setSize(miniGameBackground.getWidth() * 2, miniGameBackground.getHeight() * 2);
+        miniGameBackground.setPosition((stage.getWidth() - miniGameBackground.getWidth()) / 2f,
+                (stage.getHeight() - miniGameBackground.getHeight()) / 2f);
 
         bar.setHeight(miniGameBackground.getHeight());
         bar.setPosition(miniGameBackground.getX() + miniGameBackground.getWidth() + 50,
-                miniGameBackground.getY() );
+                miniGameBackground.getY());
 
         stage.addActor(miniGameBackground);
         stage.addActor(bar);
 
     }
 
-    private void displayGreenBar(){
+    private void displayGreenBar() {
 
         greenBar.setWidth(54);
         greenBar.setX(890);
@@ -95,7 +92,7 @@ public class MiniGameView extends AppMenu {
 
     }
 
-    private void updateGreenBar(){
+    private void updateGreenBar() {
 
         if (upPressed) {
             barY = Math.min(barY + greenBarDY, 979 - greenBar.getHeight());
@@ -107,21 +104,20 @@ public class MiniGameView extends AppMenu {
         greenBar.setY(barY);
     }
 
-    private void displayFishIcon(){
+    private void displayFishIcon() {
 
-        fishIcon.setX(greenBar.getX() + (greenBar.getWidth()-fishIcon.getWidth())/2f);
+        fishIcon.setX(greenBar.getX() + (greenBar.getWidth() - fishIcon.getWidth()) / 2f);
         stage.addActor(fishIcon);
 
     }
 
-    private void updateFish(){
+    private void updateFish() {
 
-        if ( controller.getCaughtFishMovement() == FishMovementType.SINKER) {
-            if ( timer <= 0.25f ){
+        if (controller.getCaughtFishMovement() == FishMovementType.SINKER) {
+            if (timer <= 0.25f) {
                 fishY += fishDY;
             }
-        }
-        else{
+        } else {
             fishY += fishDY;
         }
 
@@ -131,45 +127,45 @@ public class MiniGameView extends AppMenu {
 
     }
 
-    private void displayProgressBar(){
+    private void displayProgressBar() {
 
-        progressBar.setPosition(bar.getX()+11,bar.getY()+9);
-        progressBar.setHeight(880 * controller.getProgress()/100);
+        progressBar.setPosition(bar.getX() + 11, bar.getY() + 9);
+        progressBar.setHeight(880 * controller.getProgress() / 100);
         stage.addActor(progressBar);
 
     }
 
-    private void updateProgressBar(){
-        progressBar.setHeight(Math.min(880,880 * controller.getProgress()/100));
-        progressBar.setColor(1-controller.getProgress()/100,controller.getProgress()/100,0,1);
+    private void updateProgressBar() {
+        progressBar.setHeight(Math.min(880, 880 * controller.getProgress() / 100));
+        progressBar.setColor(1 - controller.getProgress() / 100, controller.getProgress() / 100, 0, 1);
     }
 
-    private void displayCrown(){
+    private void displayCrown() {
 
-        if (caughtFish.isLegendary() ){
+        if (caughtFish.isLegendary()) {
             stage.addActor(crownImage);
         }
 
     }
 
-    private void updateCrown(){
+    private void updateCrown() {
 
-        crownImage.setPosition(890, fishIcon.getY()+fishIcon.getHeight());
+        crownImage.setPosition(890, fishIcon.getY() + fishIcon.getHeight());
 
     }
 
-    private void displaySonar(){
+    private void displaySonar() {
 
-        sonarImage.setColor(sonarImage.getColor().r,sonarImage.getColor().g,sonarImage.getColor().b,0.5f);
+        sonarImage.setColor(sonarImage.getColor().r, sonarImage.getColor().g, sonarImage.getColor().b, 0.5f);
         sonarImage.setVisible(sonarActivated);
         stage.addActor(sonarImage);
 
     }
 
-    private void updateSonar(){
+    private void updateSonar() {
 
         sonarImage.setVisible(sonarActivated);
-        sonarImage.setPosition(fishIcon.getX()-40, fishIcon.getY()-15);
+        sonarImage.setPosition(fishIcon.getX() - 40, fishIcon.getY() - 15);
 
     }
 
@@ -191,18 +187,17 @@ public class MiniGameView extends AppMenu {
     @Override
     public void render(float delta) {
 
-        if ( timer >= 0.5f ){
+        if (timer >= 0.5f) {
             timer = 0;
-            fishDY = controller.getFishMovement(fishY,126,979- greenBar.getHeight());
-        }
-        else{
+            fishDY = controller.getFishMovement(fishY, 126, 979 - greenBar.getHeight());
+        } else {
             timer += delta;
         }
 
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
-        controller.checkIfFishIsIn(barY,fishY,greenBar.getHeight(),fishIcon.getHeight());
+        controller.checkIfFishIsIn(barY, fishY, greenBar.getHeight(), fishIcon.getHeight());
         updateGreenBar();
         updateProgressBar();
         updateSonar();
@@ -245,22 +240,19 @@ public class MiniGameView extends AppMenu {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
 
-                if ( keycode == Input.Keys.UP ) {
+                if (keycode == Input.Keys.UP) {
                     upPressed = true;
                     return true;
-                }
-                else if ( keycode == Input.Keys.DOWN ) {
+                } else if (keycode == Input.Keys.DOWN) {
                     downPressed = true;
                     return true;
-                }
-                else if ( keycode == Input.Keys.S ) {
+                } else if (keycode == Input.Keys.S) {
                     sonarActivated = true;
                     fishIcon.remove();
                     fishIcon = new Image(caughtFish.getItemImage().getDrawable());
                     displayFishIcon();
                     return true;
-                }
-                else if ( keycode == Input.Keys.Q ) {
+                } else if (keycode == Input.Keys.Q) {
                     controller.finishGame(false);
                     return true;
                 }
@@ -271,11 +263,10 @@ public class MiniGameView extends AppMenu {
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
 
-                if ( keycode == Input.Keys.UP ) {
+                if (keycode == Input.Keys.UP) {
                     upPressed = false;
                     return true;
-                }
-                else if ( keycode == Input.Keys.DOWN ) {
+                } else if (keycode == Input.Keys.DOWN) {
                     downPressed = false;
                     return true;
                 }
@@ -284,7 +275,7 @@ public class MiniGameView extends AppMenu {
             }
 
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println(x + " " + y);
                 return false;
             }
@@ -293,7 +284,6 @@ public class MiniGameView extends AppMenu {
         });
 
     }
-
 
 
     @Override

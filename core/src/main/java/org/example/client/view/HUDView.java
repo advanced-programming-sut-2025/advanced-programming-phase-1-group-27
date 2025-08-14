@@ -8,9 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -19,15 +16,18 @@ import org.example.client.Main;
 import org.example.client.controller.*;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
-import org.example.client.model.*;
+import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.MiniPlayer;
+import org.example.client.model.PopUpTexture;
 import org.example.client.model.enums.Emoji;
+import org.example.client.model.enums.InGameMenuType;
 import org.example.client.view.shopview.BuildMenuView;
 import org.example.common.models.*;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.AnimalProperty.AnimalEnclosure;
 import org.example.common.models.NPCs.Quest;
 import org.example.common.models.Relations.Relation;
-import org.example.client.model.enums.InGameMenuType;
 import org.example.common.models.items.Recipe;
 import org.example.common.models.items.ShopItems;
 import org.example.common.models.items.products.CookingProduct;
@@ -56,8 +56,6 @@ public class HUDView extends AppMenu {
     private final Label craftingProductNameLabel;
     private final Label craftingProductIngredientsLabel;
     private final Label messageLabel;
-    private ArrayList<Label> enclosureLabels = new ArrayList<>();
-    private Label animalInfoLabel;
     private final Label songNameLabel;
     private final Label listenTogetherLabel;
     private final Label leaderBoardUsernameLabel;
@@ -68,9 +66,6 @@ public class HUDView extends AppMenu {
     private final Label requestLabel;
     private final Label rewardLabel;
     private final Label journalLabel;
-
-    private ArrayList<Label> questLabels = new ArrayList<>();
-
     private final Image blackImage;
     private final Image hoveringInfoWindow;
     private final Image clockArrowImage;
@@ -99,51 +94,18 @@ public class HUDView extends AppMenu {
     private final Image reactionMenuBackground;
     private final Image leaderBoardMenuBackground;
     private final Image journalMenuBackground;
-    private Image clockImage;
-    private Image buffImage;
-
     private final ImageButton socialButton;
     private final ImageButton messageAlertImage;
     private final ImageButton messageBackgroundImage;
-
-
     private final ArrayList<Image> skillPoints;
     private final ArrayList<Image> npcAvatars;
     private final ArrayList<Image> checkBoxes;
-    private final HashMap<MiniPlayer,Image> playerIconsInMap;
-
+    private final HashMap<MiniPlayer, Image> playerIconsInMap;
     private final HashMap<CraftingProduct, ImageButton> craftingProducts;
     private final HashMap<CookingProduct, ImageButton> cookingProducts;
-    private HashMap<Stacks,Label> onScreenItemsQuantity;
-
     private final TextField textInputField;
     private final TextField reactionTextField;
-
     private final GraphicalResult errorLabel;
-
-    private boolean isInputFieldVisible;
-    private boolean tJustPressed;
-    private boolean ctrlPressed;
-    private boolean yourSongsPage;
-    private boolean readingMessage;
-    private boolean reactionTyping;
-
-    private Backpack inventoryItems;
-
-    private ArrayList<Stacks> onScreenItems;
-
-    private Integer rowCoEfficient;
-    private Integer currentSlotInInventory;
-
-    private InGameMenuType currentMenu;
-
-    private Item currentStacksHover;
-
-    private AnimalEnclosure animalEnclosure;
-    private Animal animal;
-
-    private float miniPlayerUpdateTimer = 0f;
-
     private final TextButton exitGameButton;
     private final TextButton terminateButton;
     private final TextButton kickPlayerButton;
@@ -161,27 +123,39 @@ public class HUDView extends AppMenu {
     private final TextButton earningsSortButton;
     private final TextButton numberOfQuestsSortButton;
     private final TextButton skillSortButton;
-
-
     private final TextButton randomizeEmojis;
     private final TextButton sendReaction;
-
     private final SelectBox<String> playerSelectBox;
-
-    private AbilityType currentAbilityTypeHovering;
-
     private final ArrayList<Label> npcLabels;
     private final ArrayList<Label> npcInfos;
-
     private final ArrayList<Label> friendsLabels;
     private final ArrayList<Label> friendshipInfos;
     private final ArrayList<TextButton> friendButtons;
-    private ArrayList<TextButton> enclosureButtons = new ArrayList<>();
-
-
     private final SelectBox<String> yourSongsSelectBox;
     private final SelectBox<String> othersSongsSelectBox;
-
+    private ArrayList<Label> enclosureLabels = new ArrayList<>();
+    private Label animalInfoLabel;
+    private ArrayList<Label> questLabels = new ArrayList<>();
+    private Image clockImage;
+    private Image buffImage;
+    private HashMap<Stacks, Label> onScreenItemsQuantity;
+    private boolean isInputFieldVisible;
+    private boolean tJustPressed;
+    private boolean ctrlPressed;
+    private boolean yourSongsPage;
+    private boolean readingMessage;
+    private boolean reactionTyping;
+    private Backpack inventoryItems;
+    private ArrayList<Stacks> onScreenItems;
+    private Integer rowCoEfficient;
+    private Integer currentSlotInInventory;
+    private InGameMenuType currentMenu;
+    private Item currentStacksHover;
+    private AnimalEnclosure animalEnclosure;
+    private Animal animal;
+    private float miniPlayerUpdateTimer = 0f;
+    private AbilityType currentAbilityTypeHovering;
+    private ArrayList<TextButton> enclosureButtons = new ArrayList<>();
     private ArrayList<String> inbox;
 
     private ArrayList<Emoji> emojiButtons;
@@ -203,7 +177,7 @@ public class HUDView extends AppMenu {
 
 
         playerIconsInMap = new HashMap<>();
-        for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
+        for (MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers()) {
             Image playerIconImage = new Image(GameAssetManager.getGameAssetManager().getPlayerIcon());
             playerIconImage.setVisible(false);
             playerIconsInMap.put(inGamePlayer,
@@ -213,12 +187,12 @@ public class HUDView extends AppMenu {
         }
 
         skillPoints = new ArrayList<>();
-        for( int i = 0 ; i < 16; i++ ){
+        for (int i = 0; i < 16; i++) {
             skillPoints.add(new Image(GameAssetManager.getGameAssetManager().getSkillPointImage()));
         }
 
         checkBoxes = new ArrayList<>();
-        for( int i = 0 ; i < 10; i++ ){
+        for (int i = 0; i < 10; i++) {
             checkBoxes.add(new Image(GameAssetManager.getGameAssetManager().getCheckBox()));
         }
 
@@ -230,11 +204,11 @@ public class HUDView extends AppMenu {
         npcAvatars.add(GameAssetManager.getGameAssetManager().getNpc5Avatar());
 
         npcLabels = new ArrayList<>();
-        npcLabels.add(new Label(NPCType.Abigail.getName(),skin));
-        npcLabels.add(new Label(NPCType.Harvey.getName(),skin));
-        npcLabels.add(new Label(NPCType.Lia.getName(),skin));
-        npcLabels.add(new Label(NPCType.Robbin.getName(),skin));
-        npcLabels.add(new Label(NPCType.Sebastian.getName(),skin));
+        npcLabels.add(new Label(NPCType.Abigail.getName(), skin));
+        npcLabels.add(new Label(NPCType.Harvey.getName(), skin));
+        npcLabels.add(new Label(NPCType.Lia.getName(), skin));
+        npcLabels.add(new Label(NPCType.Robbin.getName(), skin));
+        npcLabels.add(new Label(NPCType.Sebastian.getName(), skin));
 
         npcInfos = new ArrayList<>();
 
@@ -242,22 +216,22 @@ public class HUDView extends AppMenu {
 
         currentAbilityTypeHovering = null;
 
-        craftingProductNameLabel = new Label("",skin);
+        craftingProductNameLabel = new Label("", skin);
         craftingProductIngredientsLabel = new Label("", skin);
         dayInfo = new Label("", skin);
         moneyInfo = new Label("", skin);
         timeInfo = new Label("", skin);
-        messageLabel = new Label("",skin);
-        songNameLabel = new Label("Currently listening to: "+"Song name",skin);
-        listenTogetherLabel = new Label("Listen together with:",skin);
-        leaderBoardUsernameLabel = new Label("Username",skin);
-        leaderBoardEarningsLabel = new Label("Earnings",skin);
-        leaderBoardSkillsLabel = new Label("Skills",skin);
-        leaderBoardNumberOfQuestsLabel = new Label("Number of\n  Quests",skin);
-        sortByLabel = new Label("Sort by:",skin);
-        journalLabel = new Label("Journal",skin);
-        requestLabel = new Label("Request",skin);
-        rewardLabel = new Label("Reward",skin);
+        messageLabel = new Label("", skin);
+        songNameLabel = new Label("Currently listening to: " + "Song name", skin);
+        listenTogetherLabel = new Label("Listen together with:", skin);
+        leaderBoardUsernameLabel = new Label("Username", skin);
+        leaderBoardEarningsLabel = new Label("Earnings", skin);
+        leaderBoardSkillsLabel = new Label("Skills", skin);
+        leaderBoardNumberOfQuestsLabel = new Label("Number of\n  Quests", skin);
+        sortByLabel = new Label("Sort by:", skin);
+        journalLabel = new Label("Journal", skin);
+        requestLabel = new Label("Request", skin);
+        rewardLabel = new Label("Reward", skin);
 
         requestLabel.setColor(Color.BLACK);
         rewardLabel.setColor(Color.BLACK);
@@ -279,7 +253,6 @@ public class HUDView extends AppMenu {
         sortByLabel.setVisible(false);
 
 
-
         playerSelectBox = new SelectBox<>(skin);
 
         Array<String> playersUsername = new Array<>();
@@ -288,22 +261,22 @@ public class HUDView extends AppMenu {
         );
         playerSelectBox.setItems(playersUsername);
         playerSelectBox.setWidth(300);
-        playerSelectBox.setPosition(600,380);
+        playerSelectBox.setPosition(600, 380);
         playerSelectBox.setVisible(false);
 
-        exitGameButton = new TextButton("Save and Exit",skin);
-        terminateButton = new TextButton("Terminate Game",skin);
-        kickPlayerButton = new TextButton("Kick",skin);
-        playButton = new TextButton("Play",skin);
+        exitGameButton = new TextButton("Save and Exit", skin);
+        terminateButton = new TextButton("Terminate Game", skin);
+        kickPlayerButton = new TextButton("Kick", skin);
+        playButton = new TextButton("Play", skin);
         listenButton = new TextButton("Listen", skin);
-        nextPageButton = new TextButton(">",skin);
-        previousPageButton = new TextButton("<",skin);
-        uploadSongButton = new TextButton("Upload",skin);
-        randomizeEmojis = new TextButton("New Emojis",skin);
-        sendReaction = new TextButton("Send!",skin);
-        earningsSortButton = new TextButton("Earnings",skin);
-        numberOfQuestsSortButton = new TextButton("Number Of Quests",skin);
-        skillSortButton = new TextButton("Skills",skin);
+        nextPageButton = new TextButton(">", skin);
+        previousPageButton = new TextButton("<", skin);
+        uploadSongButton = new TextButton("Upload", skin);
+        randomizeEmojis = new TextButton("New Emojis", skin);
+        sendReaction = new TextButton("Send!", skin);
+        earningsSortButton = new TextButton("Earnings", skin);
+        numberOfQuestsSortButton = new TextButton("Number Of Quests", skin);
+        skillSortButton = new TextButton("Skills", skin);
 
         earningsSortButton.setVisible(false);
         numberOfQuestsSortButton.setVisible(false);
@@ -316,10 +289,10 @@ public class HUDView extends AppMenu {
         sendReaction.setVisible(false);
         reactionTextField.setVisible(false);
 
-        kickPlayerButton.setPosition(950,380-(kickPlayerButton.getHeight()-playerSelectBox.getHeight())/2f);
+        kickPlayerButton.setPosition(950, 380 - (kickPlayerButton.getHeight() - playerSelectBox.getHeight()) / 2f);
         kickPlayerButton.setVisible(false);
 
-        enclosureMenuExitButton = new TextButton("Close",skin);
+        enclosureMenuExitButton = new TextButton("Close", skin);
         enclosureMenuExitButton.setWidth(500);
         enclosureMenuExitButton.setPosition((Gdx.graphics.getWidth() - enclosureMenuExitButton.getWidth()) / 2f,
                 100);
@@ -328,32 +301,31 @@ public class HUDView extends AppMenu {
         buffImage = new Image();
         buffImage.setPosition(1800, 100);
 
-        animalExitButton = new TextButton("Close",skin);
+        animalExitButton = new TextButton("Close", skin);
         animalExitButton.setWidth(500);
         animalExitButton.setPosition((Gdx.graphics.getWidth() - animalExitButton.getWidth()) / 2f,
                 100);
         animalExitButton.setVisible(false);
 
-        animalSellButton = new TextButton("Sell",skin);
+        animalSellButton = new TextButton("Sell", skin);
         animalSellButton.setWidth(600);
         animalSellButton.setPosition(Gdx.graphics.getWidth() / 2f - 610, 100 + animalSellButton.getHeight() + 20);
         animalSellButton.setVisible(false);
 
-        animalFeedButton = new TextButton("Feed",skin);
+        animalFeedButton = new TextButton("Feed", skin);
         animalFeedButton.setWidth(600);
         animalFeedButton.setPosition(Gdx.graphics.getWidth() / 2f + 10, 100 + animalSellButton.getHeight() + 20);
         animalFeedButton.setVisible(false);
 
-        animalPetButton = new TextButton("Pet",skin);
+        animalPetButton = new TextButton("Pet", skin);
         animalPetButton.setWidth(600);
         animalPetButton.setPosition(Gdx.graphics.getWidth() / 2f - 610, 100 + 2 * animalSellButton.getHeight() + 40);
         animalPetButton.setVisible(false);
 
-        animalCollectButton = new TextButton("Collect Product",skin);
+        animalCollectButton = new TextButton("Collect Product", skin);
         animalCollectButton.setWidth(600);
         animalCollectButton.setPosition(Gdx.graphics.getWidth() / 2f + 10, 100 + 2 * animalSellButton.getHeight() + 40);
         animalCollectButton.setVisible(false);
-
 
 
         rowCoEfficient = 1;
@@ -392,7 +364,7 @@ public class HUDView extends AppMenu {
 
 
         socialButton = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getSocialButton()));
-        socialButton.setPosition(100,100);
+        socialButton.setPosition(100, 100);
 
         textInputField = new TextField("", skin);
 
@@ -414,7 +386,7 @@ public class HUDView extends AppMenu {
         controller.setMoneyInfo(moneyInfo);
         controller.setTimeInfo(timeInfo);
 
-        for ( Stacks stack : inventoryItems.getItems() ) {
+        for (Stacks stack : inventoryItems.getItems()) {
             addToScreen(Stacks.copy(stack));
         }
 
@@ -441,46 +413,45 @@ public class HUDView extends AppMenu {
         }
 
 
-
-        mapMenuBackground.setPosition((Gdx.graphics.getWidth()-mapMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-mapMenuBackground.getHeight())/2f);
+        mapMenuBackground.setPosition((Gdx.graphics.getWidth() - mapMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - mapMenuBackground.getHeight()) / 2f);
         mapMenuBackground.setVisible(false);
 
-        playerSocialMenuBackground.setPosition((Gdx.graphics.getWidth()-playerSocialMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-playerSocialMenuBackground.getHeight())/2f);
+        playerSocialMenuBackground.setPosition((Gdx.graphics.getWidth() - playerSocialMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - playerSocialMenuBackground.getHeight()) / 2f);
         playerSocialMenuBackground.setVisible(false);
 
-        cookingMenuBackground.setPosition((Gdx.graphics.getWidth()-cookingMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()-cookingMenuBackground.getHeight())/2f);
+        cookingMenuBackground.setPosition((Gdx.graphics.getWidth() - cookingMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - cookingMenuBackground.getHeight()) / 2f);
         cookingMenuBackground.setVisible(false);
 
-        radioBackgroundImage.setPosition((Gdx.graphics.getWidth()- radioBackgroundImage.getWidth())/2f,(Gdx.graphics.getHeight()- radioBackgroundImage.getHeight())/2f);
+        radioBackgroundImage.setPosition((Gdx.graphics.getWidth() - radioBackgroundImage.getWidth()) / 2f, (Gdx.graphics.getHeight() - radioBackgroundImage.getHeight()) / 2f);
         radioBackgroundImage.setVisible(false);
 
-        reactionMenuBackground.setPosition((Gdx.graphics.getWidth()- reactionMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()- reactionMenuBackground.getHeight())/2f);
+        reactionMenuBackground.setPosition((Gdx.graphics.getWidth() - reactionMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - reactionMenuBackground.getHeight()) / 2f);
         reactionMenuBackground.setVisible(false);
 
-        leaderBoardMenuBackground.setPosition((Gdx.graphics.getWidth()- leaderBoardMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()- leaderBoardMenuBackground.getHeight())/2f);
+        leaderBoardMenuBackground.setPosition((Gdx.graphics.getWidth() - leaderBoardMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - leaderBoardMenuBackground.getHeight()) / 2f);
         leaderBoardMenuBackground.setVisible(false);
 
-        journalMenuBackground.setPosition((Gdx.graphics.getWidth()- journalMenuBackground.getWidth())/2f,(Gdx.graphics.getHeight()- journalMenuBackground.getHeight())/2f);
+        journalMenuBackground.setPosition((Gdx.graphics.getWidth() - journalMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - journalMenuBackground.getHeight()) / 2f);
         journalMenuBackground.setVisible(false);
 
-        hoveringInfoWindow.setPosition(Gdx.graphics.getWidth()-hoveringInfoWindow.getWidth()-80,
+        hoveringInfoWindow.setPosition(Gdx.graphics.getWidth() - hoveringInfoWindow.getWidth() - 80,
                 20);
 
 
-        craftingProductNameLabel.setPosition(hoveringInfoWindow.getX()+20,hoveringInfoWindow.getHeight()-20);
+        craftingProductNameLabel.setPosition(hoveringInfoWindow.getX() + 20, hoveringInfoWindow.getHeight() - 20);
         craftingProductNameLabel.setVisible(false);
         craftingProductNameLabel.setColor(Color.BLACK);
         craftingProductNameLabel.setFontScale(1f);
 
-        craftingProductIngredientsLabel.setPosition(hoveringInfoWindow.getX()+20,
-                hoveringInfoWindow.getHeight()/2f);
+        craftingProductIngredientsLabel.setPosition(hoveringInfoWindow.getX() + 20,
+                hoveringInfoWindow.getHeight() / 2f);
         craftingProductIngredientsLabel.setVisible(false);
         craftingProductIngredientsLabel.setColor(Color.BLACK);
         craftingProductIngredientsLabel.setFontScale(0.7f);
 
-        exitGameButton.setPosition((Gdx.graphics.getWidth()-exitGameButton.getWidth())/2f,
+        exitGameButton.setPosition((Gdx.graphics.getWidth() - exitGameButton.getWidth()) / 2f,
                 620);
-        terminateButton.setPosition((Gdx.graphics.getWidth()- terminateButton.getWidth())/2f,
+        terminateButton.setPosition((Gdx.graphics.getWidth() - terminateButton.getWidth()) / 2f,
                 500);
 
         terminateButton.setVisible(false);
@@ -494,7 +465,7 @@ public class HUDView extends AppMenu {
         foragingHoverImage.setVisible(false);
 
         mapImage.setVisible(false);
-        mapImage.setSize(720,530);
+        mapImage.setSize(720, 530);
 
         //  INBOX
         messageAlertImage = new ImageButton(GameAssetManager.getGameAssetManager().getMessageAlertImage().getDrawable());
@@ -601,16 +572,16 @@ public class HUDView extends AppMenu {
 
         int counter = 0;
 
-        for ( int z = 0; z < Math.min(4,ClientApp.getCurrentGame().getPlayers().size()); z++ ){
+        for (int z = 0; z < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()); z++) {
 
             if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),
-                    player.getUsername())){
+                    player.getUsername())) {
 
                 Relation relation = InteractionsWithUserController.getRelation(ClientApp.getCurrentGame().getPlayers().get(z).getUsername());
 
-                Label nameLabel = new Label(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),skin);
-                Label friendshipInfo = new Label("Level: "+relation.getLevel()+"    XP: "+relation.getXp(),skin);
-                TextButton interactButton = new TextButton("Interact",skin);
+                Label nameLabel = new Label(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(), skin);
+                Label friendshipInfo = new Label("Level: " + relation.getLevel() + "    XP: " + relation.getXp(), skin);
+                TextButton interactButton = new TextButton("Interact", skin);
 
                 nameLabel.setColor(Color.BLACK);
                 friendshipInfo.setColor(Color.BLACK);
@@ -623,16 +594,16 @@ public class HUDView extends AppMenu {
                 friendshipInfos.add(friendshipInfo);
                 friendButtons.add(interactButton);
 
-                nameLabel.setPosition(520,660 - 180 * counter);
-                friendshipInfo.setPosition(670,660 - 180 * counter);
-                interactButton.setPosition(950,660 - 180 * counter - (interactButton.getHeight()-nameLabel.getHeight())/2f);
+                nameLabel.setPosition(520, 660 - 180 * counter);
+                friendshipInfo.setPosition(670, 660 - 180 * counter);
+                interactButton.setPosition(950, 660 - 180 * counter - (interactButton.getHeight() - nameLabel.getHeight()) / 2f);
 
 
                 stage.addActor(nameLabel);
                 stage.addActor(friendshipInfo);
                 stage.addActor(interactButton);
 
-                counter ++;
+                counter++;
 
 
             }
@@ -656,39 +627,39 @@ public class HUDView extends AppMenu {
 
         }
 
-        for ( int k = 0 ; k < 16; k++ ){
+        for (int k = 0; k < 16; k++) {
 
             Image skillPoint = skillPoints.get(k);
-            skillPoint.setPosition(874 + (k%4) * 57,704 - (k/4) * 84);
+            skillPoint.setPosition(874 + (k % 4) * 57, 704 - (k / 4) * 84);
             skillPoint.setVisible(false);
             stage.addActor(skillPoint);
 
         }
 
-        for ( int t = 0 ; t < 10; t++ ){
+        for (int t = 0; t < 10; t++) {
 
             Image checkBox = checkBoxes.get(t);
-            checkBox.setPosition(1123 + (t%2) * 118,688 - (t/2) * 112);
+            checkBox.setPosition(1123 + (t % 2) * 118, 688 - (t / 2) * 112);
             checkBox.setVisible(false);
             stage.addActor(checkBox);
 
         }
 
-        for ( int j = 0; j < 5; j++ ) {
-            npcAvatars.get(j).setSize(110,110);
-            npcAvatars.get(j).setPosition(496,680 - 110 * j - 2 * j);
+        for (int j = 0; j < 5; j++) {
+            npcAvatars.get(j).setSize(110, 110);
+            npcAvatars.get(j).setPosition(496, 680 - 110 * j - 2 * j);
             npcAvatars.get(j).setVisible(false);
-            npcLabels.get(j).setPosition(620,680 - 110 * j - 2 * j+40);
+            npcLabels.get(j).setPosition(620, 680 - 110 * j - 2 * j + 40);
             npcLabels.get(j).setVisible(false);
             npcLabels.get(j).setFontScale(0.8f);
             npcLabels.get(j).setColor(Color.BLACK);
             stage.addActor(npcAvatars.get(j));
             stage.addActor(npcLabels.get(j));
-            Label infoLabel = new Label("",skin);
+            Label infoLabel = new Label("", skin);
             npcInfos.add(infoLabel);
             infoLabel.setVisible(false);
             infoLabel.setColor(Color.BLACK);
-            infoLabel.setPosition(800,680 - 110 * j - 2 * j+50);
+            infoLabel.setPosition(800, 680 - 110 * j - 2 * j + 50);
             stage.addActor(infoLabel);
         }
 
@@ -722,17 +693,17 @@ public class HUDView extends AppMenu {
 
         emojiButtons = new ArrayList<>();
 
-        for(Emoji emoji : Emoji.values()) {
+        for (Emoji emoji : Emoji.values()) {
 
 
-            emoji.getEmojiButton().setSize(96,96);
+            emoji.getEmojiButton().setSize(96, 96);
             emoji.getEmojiButton().setVisible(false);
             stage.addActor(emoji.getEmojiButton());
             emojiButtons.add(emoji);
 
         }
 
-        for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
+        for (MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers()) {
             inGamePlayer.getUsernameLabel().setVisible(false);
             inGamePlayer.getEarningsLabel().setVisible(false);
             inGamePlayer.getSkillLabel().setVisible(false);
@@ -749,7 +720,7 @@ public class HUDView extends AppMenu {
 
     private void displayClock() {
 
-        if ( ClientApp.getCurrentGame().getTime().getHour() == 9 ){
+        if (ClientApp.getCurrentGame().getTime().getHour() == 9) {
             clockImage.remove();
         }
 
@@ -821,14 +792,13 @@ public class HUDView extends AppMenu {
 
     private void displayInventoryHotBar() {
 
-        if ( currentMenu == InGameMenuType.NONE ) {
+        if (currentMenu == InGameMenuType.NONE) {
             inventoryHotBarImage.setPosition((Gdx.graphics.getWidth() - inventoryHotBarImage.getWidth()) / 2, 10);
             inventorySelectSlotImage.setPosition(inventoryHotBarImage.getX() + 18 + controller.getSlotPosition(), 26);
 
             inventoryHotBarImage.setVisible(true);
             inventorySelectSlotImage.setVisible(true);
-        }
-        else{
+        } else {
             inventoryHotBarImage.setVisible(false);
             inventorySelectSlotImage.setVisible(false);
         }
@@ -838,20 +808,18 @@ public class HUDView extends AppMenu {
     private void showHotBarItems() {
 
 
-        if ( currentMenu == InGameMenuType.NONE ) {
+        if (currentMenu == InGameMenuType.NONE) {
 
 
-
-            for ( int i = 0 ; i < Math.min(onScreenItems.size(),12); i++ ){
+            for (int i = 0; i < Math.min(onScreenItems.size(), 12); i++) {
                 onScreenItems.get(i).getItem().getItemImage().setVisible(true);
                 onScreenItems.get(i).getItem().getItemImage().setPosition(inventoryHotBarImage.getX() + 18 + controller.getItemPosition(i) + 5, 26 + 5);
                 onScreenItems.get(i).getItem().getItemImage().toFront();
             }
 
-            for( int i = 12; i < onScreenItems.size(); i++ ){
+            for (int i = 12; i < onScreenItems.size(); i++) {
                 onScreenItems.get(i).getItem().getItemImage().setVisible(false);
             }
-
 
 
         }
@@ -867,15 +835,15 @@ public class HUDView extends AppMenu {
 
         // INVENTORY ITEMS
 
-        if ( currentMenu == InGameMenuType.INVENTORY ) {
+        if (currentMenu == InGameMenuType.INVENTORY) {
 
-            for ( int i = 0; i < Math.min(onScreenItems.size(),12); i++ ){
-                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 705);
+            for (int i = 0; i < Math.min(onScreenItems.size(), 12); i++) {
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i % 12), 705);
                 onScreenItems.get(i).getItem().getItemImage().setVisible(true);
                 onScreenItems.get(i).getItem().getItemImage().toFront();
             }
 
-            for ( int i = 12; i < onScreenItems.size(); i++ ){
+            for (int i = 12; i < onScreenItems.size(); i++) {
 
                 onScreenItems.get(i).getItem().getItemImage().setVisible(false);
 
@@ -883,9 +851,9 @@ public class HUDView extends AppMenu {
 
             int k = 12;
 
-            for ( int i = 12 * rowCoEfficient; i < Math.min(12 * (rowCoEfficient+2),onScreenItems.size()); i++){
+            for (int i = 12 * rowCoEfficient; i < Math.min(12 * (rowCoEfficient + 2), onScreenItems.size()); i++) {
                 onScreenItems.get(i).getItem().getItemImage().setVisible(true);
-                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(k%12), 705 - (float)((80-((k/12)-1)*5) * (k/12)));
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(k % 12), 705 - (float) ((80 - ((k / 12) - 1) * 5) * (k / 12)));
                 onScreenItems.get(i).getItem().getItemImage().toFront();
                 k++;
             }
@@ -895,30 +863,25 @@ public class HUDView extends AppMenu {
 
         // DISPLAYING RED BOX
 
-        if ( currentMenu == InGameMenuType.INVENTORY) {
+        if (currentMenu == InGameMenuType.INVENTORY) {
 
             if (currentSlotInInventory != null) {
                 inventorySelectSlotImage.setVisible(true);
-                inventorySelectSlotImage.setSize(63,60);
-                if ( currentSlotInInventory/12 == 0 ){
-                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 700);
-                }
-                else if ( currentSlotInInventory/12 == 1 ){
-                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 620);
-                }
-                else if ( currentSlotInInventory/12 == 2 ){
-                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory%12)*63), 550);
+                inventorySelectSlotImage.setSize(63, 60);
+                if (currentSlotInInventory / 12 == 0) {
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory % 12) * 63), 700);
+                } else if (currentSlotInInventory / 12 == 1) {
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory % 12) * 63), 620);
+                } else if (currentSlotInInventory / 12 == 2) {
+                    inventorySelectSlotImage.setPosition((520 + (currentSlotInInventory % 12) * 63), 550);
                 }
                 inventorySelectSlotImage.toFront();
-            }
-            else{
+            } else {
                 inventorySelectSlotImage.setVisible(false);
             }
 
 
         }
-
-
 
 
     }
@@ -928,26 +891,26 @@ public class HUDView extends AppMenu {
         skillMenuBackground.setPosition((Gdx.graphics.getWidth() - skillMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - skillMenuBackground.getHeight()) / 2f);
         skillMenuBackground.setVisible(currentMenu == InGameMenuType.SKILL);
 
-        for( int i = 0; i < Math.min(4,player.getAbility(AbilityType.Farming).getLevel()); i++ ){
+        for (int i = 0; i < Math.min(4, player.getAbility(AbilityType.Farming).getLevel()); i++) {
             skillPoints.get(i).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
-        for( int i = 0; i < Math.min(4,player.getAbility(AbilityType.Mining).getLevel()); i++ ){
-            skillPoints.get(i+4).setVisible(currentMenu == InGameMenuType.SKILL);
+        for (int i = 0; i < Math.min(4, player.getAbility(AbilityType.Mining).getLevel()); i++) {
+            skillPoints.get(i + 4).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
-        for( int i = 0; i < Math.min(4,player.getAbility(AbilityType.Foraging).getLevel()); i++ ){
-            skillPoints.get(i+8).setVisible(currentMenu == InGameMenuType.SKILL);
+        for (int i = 0; i < Math.min(4, player.getAbility(AbilityType.Foraging).getLevel()); i++) {
+            skillPoints.get(i + 8).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
-        for( int i = 0; i < Math.min(4,player.getAbility(AbilityType.Fishing).getLevel()); i++ ){
-            skillPoints.get(i+12).setVisible(currentMenu == InGameMenuType.SKILL);
+        for (int i = 0; i < Math.min(4, player.getAbility(AbilityType.Fishing).getLevel()); i++) {
+            skillPoints.get(i + 12).setVisible(currentMenu == InGameMenuType.SKILL);
         }
 
 
     }
 
-    private void displayRadio(){
+    private void displayRadio() {
 
         Array<String> songList = new Array<>();
         ClientApp.getCurrentGame().getSongList().keySet().forEach(songList::add);
@@ -959,7 +922,7 @@ public class HUDView extends AppMenu {
         });
         othersSongsSelectBox.setItems(otherPlayerUsernames);
 
-        songNameLabel.setText("Currently listening to: " + ((ClientApp.getCurrentGame().getCurrentMusicName() == null)? "Nothing":ClientApp.getCurrentGame().getCurrentMusicName()));
+        songNameLabel.setText("Currently listening to: " + ((ClientApp.getCurrentGame().getCurrentMusicName() == null) ? "Nothing" : ClientApp.getCurrentGame().getCurrentMusicName()));
 
         radioBackgroundImage.setVisible(currentMenu == InGameMenuType.RADIO);
         songNameLabel.setVisible(currentMenu == InGameMenuType.RADIO);
@@ -970,16 +933,16 @@ public class HUDView extends AppMenu {
         uploadSongButton.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
         listenTogetherLabel.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
 
-        previousPageButton.setPosition(radioBackgroundImage.getX()+40, radioBackgroundImage.getY()+40);
-        nextPageButton.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth()-40 - nextPageButton.getWidth(), radioBackgroundImage.getY()+40);
+        previousPageButton.setPosition(radioBackgroundImage.getX() + 40, radioBackgroundImage.getY() + 40);
+        nextPageButton.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() - 40 - nextPageButton.getWidth(), radioBackgroundImage.getY() + 40);
         nextPageButton.toFront();
         previousPageButton.toFront();
 
         yourSongsSelectBox.setWidth(3 * radioBackgroundImage.getWidth() / 5);
         othersSongsSelectBox.setWidth(3 * radioBackgroundImage.getWidth() / 5);
 
-        yourSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5,nextPageButton.getY()+20);
-        othersSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5,nextPageButton.getY()+20);
+        yourSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5, nextPageButton.getY() + 20);
+        othersSongsSelectBox.setPosition(radioBackgroundImage.getX() + radioBackgroundImage.getWidth() / 5, nextPageButton.getY() + 20);
 
         yourSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && yourSongsPage);
         othersSongsSelectBox.setVisible(currentMenu == InGameMenuType.RADIO && !yourSongsPage);
@@ -988,36 +951,35 @@ public class HUDView extends AppMenu {
 
         uploadSongButton.setWidth(yourSongsSelectBox.getWidth());
         playButton.setWidth(yourSongsSelectBox.getWidth());
-        uploadSongButton.setPosition(yourSongsSelectBox.getX(),songNameLabel.getY()- uploadSongButton.getHeight()- 50);
-        playButton.setPosition(yourSongsSelectBox.getX(),songNameLabel.getY()- uploadSongButton.getHeight()- 100 - playButton.getHeight());
+        uploadSongButton.setPosition(yourSongsSelectBox.getX(), songNameLabel.getY() - uploadSongButton.getHeight() - 50);
+        playButton.setPosition(yourSongsSelectBox.getX(), songNameLabel.getY() - uploadSongButton.getHeight() - 100 - playButton.getHeight());
 
 
-        listenTogetherLabel.setPosition(othersSongsSelectBox.getX()+50, playButton.getY());
+        listenTogetherLabel.setPosition(othersSongsSelectBox.getX() + 50, playButton.getY());
         listenButton.setWidth(othersSongsSelectBox.getWidth());
-        listenButton.setPosition(othersSongsSelectBox.getX(), uploadSongButton.getY()-50);
+        listenButton.setPosition(othersSongsSelectBox.getX(), uploadSongButton.getY() - 50);
 
     }
 
-    private void displaySocialMenu(){
+    private void displaySocialMenu() {
 
         socialMenuBackground.setPosition((Gdx.graphics.getWidth() - socialMenuBackground.getWidth()) / 2f, (Gdx.graphics.getHeight() - socialMenuBackground.getHeight()) / 2f);
         socialMenuBackground.setVisible(currentMenu == InGameMenuType.SOCIAL);
 
-        for ( int i = 0; i < 5; i++ ){
+        for (int i = 0; i < 5; i++) {
 
             npcInfos.get(i).setText(controller.getNPCInfo(NPCType.values()[i]));
 
             npcAvatars.get(i).setVisible(currentMenu == InGameMenuType.SOCIAL);
             npcLabels.get(i).setVisible(currentMenu == InGameMenuType.SOCIAL);
             npcInfos.get(i).setVisible(currentMenu == InGameMenuType.SOCIAL);
-            checkBoxes.get(2*i).setVisible(currentMenu == InGameMenuType.SOCIAL &&
-                    controller.gotGiftedToday(NPCType.values()[i]) );
+            checkBoxes.get(2 * i).setVisible(currentMenu == InGameMenuType.SOCIAL &&
+                    controller.gotGiftedToday(NPCType.values()[i]));
 
-            checkBoxes.get(2*i + 1).setVisible(currentMenu == InGameMenuType.SOCIAL &&
-                    controller.metToday(NPCType.values()[i]) );
+            checkBoxes.get(2 * i + 1).setVisible(currentMenu == InGameMenuType.SOCIAL &&
+                    controller.metToday(NPCType.values()[i]));
 
         }
-
 
 
     }
@@ -1052,11 +1014,11 @@ public class HUDView extends AppMenu {
 
         // INVENTORY ITEMS
 
-        if ( currentMenu == InGameMenuType.CRAFTING ) {
+        if (currentMenu == InGameMenuType.CRAFTING) {
 
-            for ( int i = 0; i < Math.min(onScreenItems.size(),36); i++ ){
+            for (int i = 0; i < Math.min(onScreenItems.size(), 36); i++) {
 
-                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 385 - (float)(70 * (i/12)) );
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i % 12), 385 - (float) (70 * (i / 12)));
                 onScreenItems.get(i).getItem().getItemImage().setVisible(true);
                 onScreenItems.get(i).getItem().getItemImage().toFront();
 
@@ -1114,23 +1076,22 @@ public class HUDView extends AppMenu {
             removeFromScreen(removableStack);
         }
 
-        for ( Stacks stack : addableStack ) {
+        for (Stacks stack : addableStack) {
             addToScreen(stack);
         }
 
     }
 
-    private void displayItemQuantity(){
+    private void displayItemQuantity() {
 
-        for ( Stacks stacks: onScreenItems ){
+        for (Stacks stacks : onScreenItems) {
             Label label = onScreenItemsQuantity.get(stacks);
-            if ( stacks.getItem().getItemImage().isVisible() ){
+            if (stacks.getItem().getItemImage().isVisible()) {
                 label.setVisible(true);
-                label.setPosition(stacks.getItem().getItemImage().getX()+stacks.getItem().getItemImage().getWidth()-15,
-                        stacks.getItem().getItemImage().getY()+stacks.getItem().getItemImage().getHeight()-25);
+                label.setPosition(stacks.getItem().getItemImage().getX() + stacks.getItem().getItemImage().getWidth() - 15,
+                        stacks.getItem().getItemImage().getY() + stacks.getItem().getItemImage().getHeight() - 25);
                 label.toFront();
-            }
-            else{
+            } else {
                 label.setVisible(false);
             }
 
@@ -1138,7 +1099,7 @@ public class HUDView extends AppMenu {
 
     }
 
-    private void displayCookingMenu(){
+    private void displayCookingMenu() {
 
         // BACKGROUND
         cookingMenuBackground.setVisible(currentMenu == InGameMenuType.COOKING);
@@ -1167,11 +1128,11 @@ public class HUDView extends AppMenu {
 
         // INVENTORY ITEMS
 
-        if ( currentMenu == InGameMenuType.COOKING ) {
+        if (currentMenu == InGameMenuType.COOKING) {
 
-            for ( int i = 0; i < Math.min(onScreenItems.size(),36); i++ ){
+            for (int i = 0; i < Math.min(onScreenItems.size(), 36); i++) {
 
-                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i%12), 420 - (float)(70 * (i/12)) );
+                onScreenItems.get(i).getItem().getItemImage().setPosition(520 + controller.getItemPosition(i % 12), 420 - (float) (70 * (i / 12)));
                 onScreenItems.get(i).getItem().getItemImage().setVisible(true);
                 onScreenItems.get(i).getItem().getItemImage().toFront();
 
@@ -1182,19 +1143,19 @@ public class HUDView extends AppMenu {
 
     }
 
-    private void applyNightEffect(){
-        blackImage.setColor(0,0,0,(ClientApp.getCurrentGame().getTime().getHour()>18)? 0.5f:0);
+    private void applyNightEffect() {
+        blackImage.setColor(0, 0, 0, (ClientApp.getCurrentGame().getTime().getHour() > 18) ? 0.5f : 0);
     }
 
-    private void displayHoveringItemInfo(){
+    private void displayHoveringItemInfo() {
 
-        if ( currentStacksHover != null ){
+        if (currentStacksHover != null) {
             craftingProductNameLabel.setText(currentStacksHover.getName());
 
-            if (currentStacksHover instanceof CraftingProduct product){
+            if (currentStacksHover instanceof CraftingProduct product) {
                 Recipe recipe = product.getRecipe();
                 craftingProductIngredientsLabel.setText(recipe.getInfo());
-            }else if (currentStacksHover instanceof CookingProduct product){
+            } else if (currentStacksHover instanceof CookingProduct product) {
                 Recipe recipe = product.getRecipe();
                 craftingProductIngredientsLabel.setText(recipe.getInfo());
             }
@@ -1209,7 +1170,7 @@ public class HUDView extends AppMenu {
 
     }
 
-    private void displaySkillInfo(){
+    private void displaySkillInfo() {
 
         farmingHoverImage.setVisible(false);
         miningHoverImage.setVisible(false);
@@ -1221,45 +1182,38 @@ public class HUDView extends AppMenu {
         foragingHoverImage.toFront();
         fishingHoverImage.toFront();
 
-        if ( currentMenu == InGameMenuType.SKILL ){
+        if (currentMenu == InGameMenuType.SKILL) {
 
             double mouseX = Gdx.input.getX();
             double mouseY = 1080 - Gdx.input.getY();
 
 
-            if ( (690< mouseX && mouseX < 850 ) && ( 715 < mouseY && mouseY < 760 ) ){
+            if ((690 < mouseX && mouseX < 850) && (715 < mouseY && mouseY < 760)) {
                 currentAbilityTypeHovering = AbilityType.Farming;
-            }
-            else if ( (716< mouseX && mouseX < 854 ) && ( 634 < mouseY && mouseY < 666 ) ){
+            } else if ((716 < mouseX && mouseX < 854) && (634 < mouseY && mouseY < 666)) {
                 currentAbilityTypeHovering = AbilityType.Mining;
-            }
-            else if ( (686< mouseX && mouseX < 854 ) && ( 554 < mouseY && mouseY < 581 ) ){
+            } else if ((686 < mouseX && mouseX < 854) && (554 < mouseY && mouseY < 581)) {
                 currentAbilityTypeHovering = AbilityType.Foraging;
-            }
-            else if ( (708< mouseX && mouseX < 856 ) && ( 459 < mouseY && mouseY < 497 ) ){
+            } else if ((708 < mouseX && mouseX < 856) && (459 < mouseY && mouseY < 497)) {
                 currentAbilityTypeHovering = AbilityType.Fishing;
-            }
-            else{
+            } else {
                 currentAbilityTypeHovering = null;
             }
 
-            if ( currentAbilityTypeHovering != null ){
+            if (currentAbilityTypeHovering != null) {
 
-                if ( currentAbilityTypeHovering == AbilityType.Farming ){
+                if (currentAbilityTypeHovering == AbilityType.Farming) {
                     farmingHoverImage.setVisible(true);
-                    farmingHoverImage.setPosition((float)  mouseX,(float) mouseY);
-                }
-                else if ( currentAbilityTypeHovering == AbilityType.Mining ){
+                    farmingHoverImage.setPosition((float) mouseX, (float) mouseY);
+                } else if (currentAbilityTypeHovering == AbilityType.Mining) {
                     miningHoverImage.setVisible(true);
-                    miningHoverImage.setPosition((float)  mouseX,(float) mouseY);
-                }
-                else if ( currentAbilityTypeHovering == AbilityType.Fishing ){
+                    miningHoverImage.setPosition((float) mouseX, (float) mouseY);
+                } else if (currentAbilityTypeHovering == AbilityType.Fishing) {
                     fishingHoverImage.setVisible(true);
-                    fishingHoverImage.setPosition((float)  mouseX,(float) mouseY);
-                }
-                else {
+                    fishingHoverImage.setPosition((float) mouseX, (float) mouseY);
+                } else {
                     foragingHoverImage.setVisible(true);
-                    foragingHoverImage.setPosition((float)  mouseX,(float) mouseY);
+                    foragingHoverImage.setPosition((float) mouseX, (float) mouseY);
                 }
 
             }
@@ -1270,11 +1224,11 @@ public class HUDView extends AppMenu {
 
     }
 
-    private void displayPlayerSocial(){
+    private void displayPlayerSocial() {
 
         playerSocialMenuBackground.setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
 
-        for ( int i = 0; i < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()) - 1; i++ ){
+        for (int i = 0; i < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()) - 1; i++) {
 
             friendsLabels.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
             friendshipInfos.get(i).setVisible(currentMenu == InGameMenuType.PLAYER_SOCIAL);
@@ -1383,71 +1337,68 @@ public class HUDView extends AppMenu {
         makeOnScreenItemsInvisible();
     }
 
-    private void updatePlayerPositionsInMap(){
+    private void updatePlayerPositionsInMap() {
 
-        for( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
+        for (MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers()) {
 
             int xInitial = 764;
             int yInitial = 448;
 
-            int xCoEfficient = (inGamePlayer.getMapIndex()==4)? 265:210;
-            int yCoEfficient = (inGamePlayer.getMapIndex()==4)? 130:184;
+            int xCoEfficient = (inGamePlayer.getMapIndex() == 4) ? 265 : 210;
+            int yCoEfficient = (inGamePlayer.getMapIndex() == 4) ? 130 : 184;
 
-            if ( inGamePlayer.getMapIndex() == 0 ){
+            if (inGamePlayer.getMapIndex() == 0) {
                 xInitial = 560;
                 yInitial = 564;
-            }
-            else if ( inGamePlayer.getMapIndex() == 1 ){
+            } else if (inGamePlayer.getMapIndex() == 1) {
                 xInitial = 1022;
                 yInitial = 564;
-            }
-            else if ( inGamePlayer.getMapIndex() == 2 ){
+            } else if (inGamePlayer.getMapIndex() == 2) {
                 xInitial = 566;
                 yInitial = 271;
-            }
-            else if ( inGamePlayer.getMapIndex() == 3 ){
+            } else if (inGamePlayer.getMapIndex() == 3) {
                 xInitial = 1018;
                 yInitial = 271;
             }
 
 
             Image playerIcon = playerIconsInMap.get(inGamePlayer);
-            playerIcon.setPosition(xInitial + xCoEfficient * inGamePlayer.getXRatio() - playerIcon.getWidth()/2f,
-                    yInitial + yCoEfficient * inGamePlayer.getYRatio() - playerIcon.getHeight()/2f);
+            playerIcon.setPosition(xInitial + xCoEfficient * inGamePlayer.getXRatio() - playerIcon.getWidth() / 2f,
+                    yInitial + yCoEfficient * inGamePlayer.getYRatio() - playerIcon.getHeight() / 2f);
             playerIcon.toFront();
 
         }
 
     }
 
-    private void displayMapMenu(){
+    private void displayMapMenu() {
 
         mapMenuBackground.setVisible(currentMenu == InGameMenuType.MAP);
         mapImage.setVisible(currentMenu == InGameMenuType.MAP);
-        for( MiniPlayer player : playerIconsInMap.keySet() ){
+        for (MiniPlayer player : playerIconsInMap.keySet()) {
             playerIconsInMap.get(player).setVisible(currentMenu == InGameMenuType.MAP);
         }
 
-        mapImage.setPosition(mapMenuBackground.getX()+(mapMenuBackground.getWidth()-mapImage.getWidth())/2f,
-                mapMenuBackground.getY()+(mapMenuBackground.getHeight()-mapImage.getHeight())/2f-30);
+        mapImage.setPosition(mapMenuBackground.getX() + (mapMenuBackground.getWidth() - mapImage.getWidth()) / 2f,
+                mapMenuBackground.getY() + (mapMenuBackground.getHeight() - mapImage.getHeight()) / 2f - 30);
 
         updatePlayerPositionsInMap();
 
     }
 
-    private void displayEnergy(){
+    private void displayEnergy() {
 
         boostBar.setVisible(player.getBoostEnergy() != 0);
         redBar.setVisible(player.getBoostEnergy() != 0);
         greenBar.setVisible(player.getEnergy() != 0);
-        greenBar.setColor(1 - ((float) player.getEnergy() / player.getMaxEnergy()),((float) player.getEnergy() / player.getMaxEnergy()),1,1);
+        greenBar.setColor(1 - ((float) player.getEnergy() / player.getMaxEnergy()), ((float) player.getEnergy() / player.getMaxEnergy()), 1, 1);
 
-        energyBar.setPosition(Gdx.graphics.getWidth()-energyBar.getWidth()-20,20);
-        boostBar.setPosition(Gdx.graphics.getWidth()-boostBar.getWidth()-20,20 + boostBar.getHeight() + 20);
+        energyBar.setPosition(Gdx.graphics.getWidth() - energyBar.getWidth() - 20, 20);
+        boostBar.setPosition(Gdx.graphics.getWidth() - boostBar.getWidth() - 20, 20 + boostBar.getHeight() + 20);
         greenBar.setHeight(250 * ((float) player.getEnergy() / player.getMaxEnergy()));
-        greenBar.setPosition(energyBar.getX()+11,energyBar.getY()+9);
-        redBar.setHeight(250 * ((float) player.getBoostEnergy() /100));
-        redBar.setPosition(boostBar.getX()+11,boostBar.getY()+9);
+        greenBar.setPosition(energyBar.getX() + 11, energyBar.getY() + 9);
+        redBar.setHeight(250 * ((float) player.getBoostEnergy() / 100));
+        redBar.setPosition(boostBar.getX() + 11, boostBar.getY() + 9);
 
         energyBar.toFront();
         boostBar.toFront();
@@ -1457,21 +1408,21 @@ public class HUDView extends AppMenu {
 
     }
 
-    private void displayInbox(){
+    private void displayInbox() {
 
         messageAlertImage.setVisible(!inbox.isEmpty() && !readingMessage);
         messageBackgroundImage.setVisible(readingMessage);
         messageLabel.setVisible(readingMessage);
 
 
-        messageAlertImage.setPosition(50,Gdx.graphics.getHeight()-50-messageAlertImage.getHeight());
-        messageBackgroundImage.setPosition(50,Gdx.graphics.getHeight()-messageBackgroundImage.getHeight() - 50);
+        messageAlertImage.setPosition(50, Gdx.graphics.getHeight() - 50 - messageAlertImage.getHeight());
+        messageBackgroundImage.setPosition(50, Gdx.graphics.getHeight() - messageBackgroundImage.getHeight() - 50);
         messageLabel.setPosition(70, messageBackgroundImage.getY() + messageBackgroundImage.getHeight() - 50 - messageLabel.getHeight());
 
 
     }
 
-    private void displayReactionMenu(){
+    private void displayReactionMenu() {
 
         reactionTyping = stage.getKeyboardFocus() == reactionTextField;
 
@@ -1480,32 +1431,30 @@ public class HUDView extends AppMenu {
         reactionTextField.setVisible(currentMenu == InGameMenuType.REACTION);
         sendReaction.setVisible(currentMenu == InGameMenuType.REACTION);
 
-        reactionTextField.setWidth(reactionMenuBackground.getWidth()-100);
+        reactionTextField.setWidth(reactionMenuBackground.getWidth() - 100);
         reactionTextField.setPosition(reactionMenuBackground.getX() + 50, reactionMenuBackground.getY() + 300);
 
-        randomizeEmojis.setWidth(reactionTextField.getWidth()/2f-25);
-        sendReaction.setWidth(reactionTextField.getWidth()/2f-25);
+        randomizeEmojis.setWidth(reactionTextField.getWidth() / 2f - 25);
+        sendReaction.setWidth(reactionTextField.getWidth() / 2f - 25);
 
-        sendReaction.setPosition(reactionTextField.getX(),reactionTextField.getY() - sendReaction.getHeight()-50);
-        randomizeEmojis.setPosition(reactionTextField.getX() + sendReaction.getWidth() + 50,reactionTextField.getY() - sendReaction.getHeight()-50);
+        sendReaction.setPosition(reactionTextField.getX(), reactionTextField.getY() - sendReaction.getHeight() - 50);
+        randomizeEmojis.setPosition(reactionTextField.getX() + sendReaction.getWidth() + 50, reactionTextField.getY() - sendReaction.getHeight() - 50);
 
         int num = 0;
-        for ( Emoji emoji : emojiButtons ){
+        for (Emoji emoji : emojiButtons) {
 
-            if ( num < 5 ){
+            if (num < 5) {
                 emoji.getEmojiButton().setVisible(currentMenu == InGameMenuType.REACTION);
                 emoji.getEmojiButton().toFront();
                 emoji.getEmojiButton().setPosition(
                         reactionMenuBackground.getX() + 150 * num + 70, reactionMenuBackground.getY() + reactionMenuBackground.getHeight() - emoji.getEmojiButton().getHeight() - 100
                 );
-            }
-            else{
+            } else {
                 emoji.getEmojiButton().setVisible(false);
             }
-            num ++;
+            num++;
 
         }
-
 
 
     }
@@ -1523,7 +1472,7 @@ public class HUDView extends AppMenu {
         buffImage.setVisible(player.getCurrentBuff() != null);
     }
 
-    private void displayLeaderBoard(){
+    private void displayLeaderBoard() {
 
         leaderBoardMenuBackground.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
         leaderBoardUsernameLabel.setVisible(currentMenu == InGameMenuType.LEADERBOARD);
@@ -1539,16 +1488,16 @@ public class HUDView extends AppMenu {
 
         skillSortButton.setWidth(earningsSortButton.getWidth());
 
-        leaderBoardUsernameLabel.setPosition(leaderBoardMenuBackground.getX()+50 + 25,topY - 115  - leaderBoardUsernameLabel.getHeight());
-        leaderBoardEarningsLabel.setPosition(leaderBoardMenuBackground.getX()+250 + 25,topY - 115 - leaderBoardEarningsLabel.getHeight());
-        leaderBoardSkillsLabel.setPosition(leaderBoardMenuBackground.getX()+425 + 25 ,topY - 115 - leaderBoardSkillsLabel.getHeight());
-        leaderBoardNumberOfQuestsLabel.setPosition(leaderBoardMenuBackground.getX()+550 + 25,topY - 100 - leaderBoardNumberOfQuestsLabel.getHeight());
-        skillSortButton.setPosition(leaderBoardMenuBackground.getX()+150+10,leaderBoardMenuBackground.getY()+25);
-        earningsSortButton.setPosition(skillSortButton.getX()+skillSortButton.getWidth()+50+10,leaderBoardMenuBackground.getY()+25);
-        sortByLabel.setPosition(leaderBoardMenuBackground.getX()+50,skillSortButton.getY()+skillSortButton.getHeight()+15 + (numberOfQuestsSortButton.getHeight()-sortByLabel.getHeight())/2f);
-        numberOfQuestsSortButton.setPosition(sortByLabel.getX()+sortByLabel.getWidth()+50,skillSortButton.getY()+skillSortButton.getHeight()+15);
+        leaderBoardUsernameLabel.setPosition(leaderBoardMenuBackground.getX() + 50 + 25, topY - 115 - leaderBoardUsernameLabel.getHeight());
+        leaderBoardEarningsLabel.setPosition(leaderBoardMenuBackground.getX() + 250 + 25, topY - 115 - leaderBoardEarningsLabel.getHeight());
+        leaderBoardSkillsLabel.setPosition(leaderBoardMenuBackground.getX() + 425 + 25, topY - 115 - leaderBoardSkillsLabel.getHeight());
+        leaderBoardNumberOfQuestsLabel.setPosition(leaderBoardMenuBackground.getX() + 550 + 25, topY - 100 - leaderBoardNumberOfQuestsLabel.getHeight());
+        skillSortButton.setPosition(leaderBoardMenuBackground.getX() + 150 + 10, leaderBoardMenuBackground.getY() + 25);
+        earningsSortButton.setPosition(skillSortButton.getX() + skillSortButton.getWidth() + 50 + 10, leaderBoardMenuBackground.getY() + 25);
+        sortByLabel.setPosition(leaderBoardMenuBackground.getX() + 50, skillSortButton.getY() + skillSortButton.getHeight() + 15 + (numberOfQuestsSortButton.getHeight() - sortByLabel.getHeight()) / 2f);
+        numberOfQuestsSortButton.setPosition(sortByLabel.getX() + sortByLabel.getWidth() + 50, skillSortButton.getY() + skillSortButton.getHeight() + 15);
 
-        for ( int i = 0; i < playersInLeaderBoard.size(); i++ ){
+        for (int i = 0; i < playersInLeaderBoard.size(); i++) {
 
             MiniPlayer miniPlayer = playersInLeaderBoard.get(i);
             miniPlayer.getUsernameLabel().setVisible(currentMenu == InGameMenuType.LEADERBOARD);
@@ -1556,60 +1505,60 @@ public class HUDView extends AppMenu {
             miniPlayer.getSkillLabel().setVisible(currentMenu == InGameMenuType.LEADERBOARD);
             miniPlayer.getNumberOfQuestsLabel().setVisible(currentMenu == InGameMenuType.LEADERBOARD);
 
-            miniPlayer.getUsernameLabel().setPosition(leaderBoardUsernameLabel.getX(),645- 50 * i);
-            miniPlayer.getEarningsLabel().setPosition(leaderBoardEarningsLabel.getX(),665- 50 * i);
-            miniPlayer.getSkillLabel().setPosition(leaderBoardSkillsLabel.getX(),665- 50 * i);
-            miniPlayer.getNumberOfQuestsLabel().setPosition(leaderBoardNumberOfQuestsLabel.getX(),665- 50 * i);
+            miniPlayer.getUsernameLabel().setPosition(leaderBoardUsernameLabel.getX(), 645 - 50 * i);
+            miniPlayer.getEarningsLabel().setPosition(leaderBoardEarningsLabel.getX(), 665 - 50 * i);
+            miniPlayer.getSkillLabel().setPosition(leaderBoardSkillsLabel.getX(), 665 - 50 * i);
+            miniPlayer.getNumberOfQuestsLabel().setPosition(leaderBoardNumberOfQuestsLabel.getX(), 665 - 50 * i);
 
         }
 
     }
 
-    private void updatePlayers(){
+    private void updatePlayers() {
 
-        if ( miniPlayerUpdateTimer > 1f ){
+        if (miniPlayerUpdateTimer > 1f) {
 
-            for ( MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers() ){
+            for (MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers()) {
                 inGamePlayer.updateMiniPlayer();
             }
             playersInLeaderBoard.clear();
-            playersInLeaderBoard.addAll( ClientApp.getCurrentGame().getPlayers() );
+            playersInLeaderBoard.addAll(ClientApp.getCurrentGame().getPlayers());
             sortPlayersList();
 
             int counter = 0;
-            for ( int z = 0; z < Math.min(4,ClientApp.getCurrentGame().getPlayers().size()); z++ ){
+            for (int z = 0; z < Math.min(4, ClientApp.getCurrentGame().getPlayers().size()); z++) {
 
                 if (!Objects.equals(ClientApp.getCurrentGame().getPlayers().get(z).getUsername(),
-                        player.getUsername())){
+                        player.getUsername())) {
                     MiniPlayer miniPlayer = ClientApp.getCurrentGame().getPlayers().get(z);
 //                    Relation relation = InteractionsWithUserController.getRelation(ClientApp.getCurrentGame().getPlayers().get(z).getUsername());
-                    friendshipInfos.get(counter).setText("Level: "+miniPlayer.getLevel()+"    XP: "+miniPlayer.getXp());
-                    counter ++;
+                    friendshipInfos.get(counter).setText("Level: " + miniPlayer.getLevel() + "    XP: " + miniPlayer.getXp());
+                    counter++;
                 }
             }
 
         }
 
-        if ( miniPlayerUpdateTimer > 1f ){
+        if (miniPlayerUpdateTimer > 1f) {
             miniPlayerUpdateTimer = 0f;
         }
 
     }
 
-    private void displayJournal(){
+    private void displayJournal() {
 
         journalMenuBackground.setVisible(currentMenu == InGameMenuType.JOURNAL);
         journalLabel.setVisible(currentMenu == InGameMenuType.JOURNAL);
         requestLabel.setVisible(currentMenu == InGameMenuType.JOURNAL);
         rewardLabel.setVisible(currentMenu == InGameMenuType.JOURNAL);
 
-        journalLabel.setPosition(journalMenuBackground.getX()+50,
-                journalMenuBackground.getY()+journalMenuBackground.getHeight()-journalLabel.getHeight()-100);
+        journalLabel.setPosition(journalMenuBackground.getX() + 50,
+                journalMenuBackground.getY() + journalMenuBackground.getHeight() - journalLabel.getHeight() - 100);
 
-        requestLabel.setPosition(journalMenuBackground.getX()+50,journalLabel.getY()-requestLabel.getHeight()-20);
-        rewardLabel.setPosition(journalMenuBackground.getX() + journalMenuBackground.getWidth()/2f,journalLabel.getY()-rewardLabel.getHeight()-20);
+        requestLabel.setPosition(journalMenuBackground.getX() + 50, journalLabel.getY() - requestLabel.getHeight() - 20);
+        rewardLabel.setPosition(journalMenuBackground.getX() + journalMenuBackground.getWidth() / 2f, journalLabel.getY() - rewardLabel.getHeight() - 20);
 
-        if ( currentMenu != InGameMenuType.JOURNAL ){
+        if (currentMenu != InGameMenuType.JOURNAL) {
 
             makeQuestsInvisible();
 
@@ -1629,7 +1578,6 @@ public class HUDView extends AppMenu {
     }
 
     public void displayHUD(float delta) {
-
 
 
         miniPlayerUpdateTimer += delta;
@@ -1729,81 +1677,69 @@ public class HUDView extends AppMenu {
                         stage.setKeyboardFocus(textInputField);
                         tJustPressed = true;
                         return true;
-                    }
-                    else if (keycode == Input.Keys.E) {
+                    } else if (keycode == Input.Keys.E) {
 
-                        if (currentMenu != InGameMenuType.INVENTORY ) {
+                        if (currentMenu != InGameMenuType.INVENTORY) {
                             currentMenu = InGameMenuType.INVENTORY;
                         } else {
                             currentMenu = InGameMenuType.NONE;
                         }
 
-                    }
-                    else if (keycode == Input.Keys.ESCAPE) {
+                    } else if (keycode == Input.Keys.ESCAPE) {
 
                         if (currentMenu == InGameMenuType.EXIT) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else {
+                        } else {
                             currentMenu = InGameMenuType.EXIT;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if (keycode == Input.Keys.V) {
+                    } else if (keycode == Input.Keys.V) {
 
-                        if ( currentMenu == InGameMenuType.SKILL ) {
+                        if (currentMenu == InGameMenuType.SKILL) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else{
+                        } else {
                             currentMenu = InGameMenuType.SKILL;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if (keycode == Input.Keys.N) {
+                    } else if (keycode == Input.Keys.N) {
 
-                        if ( currentMenu == InGameMenuType.MAP ) {
+                        if (currentMenu == InGameMenuType.MAP) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else{
+                        } else {
                             currentMenu = InGameMenuType.MAP;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if (keycode == Input.Keys.B) {
+                    } else if (keycode == Input.Keys.B) {
 
-                        if ( currentMenu == InGameMenuType.SOCIAL ) {
+                        if (currentMenu == InGameMenuType.SOCIAL) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else{
+                        } else {
                             currentMenu = InGameMenuType.SOCIAL;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if (keycode == Input.Keys.F) {
+                    } else if (keycode == Input.Keys.F) {
 
-                        if ( currentMenu == InGameMenuType.JOURNAL ) {
+                        if (currentMenu == InGameMenuType.JOURNAL) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else{
+                        } else {
 
                             int counter = 0;
 
-                            for ( Quest quest: InteractionsWithNPCController.getQuestsForJournal() ){
+                            for (Quest quest : InteractionsWithNPCController.getQuestsForJournal()) {
 
-                                Label requestLabelQuest = new Label(quest.getRequest().getItem().getName()+"\nx" + quest.getRequest().getQuantity(),skin);
+                                Label requestLabelQuest = new Label(quest.getRequest().getItem().getName() + "\nx" + quest.getRequest().getQuantity(), skin);
                                 questLabels.add(requestLabelQuest);
 
                                 Label rewardLabelQuest;
 
-                                if ( quest.getReward().getItem() == ShopItems.RelationLevel ){
-                                    rewardLabelQuest = new Label("+1 Relation!!!",skin);
-                                }
-                                else{
-                                    rewardLabelQuest = new Label(quest.getReward().getItem().getName()+"\nx" + quest.getReward().getQuantity(),skin);
+                                if (quest.getReward().getItem() == ShopItems.RelationLevel) {
+                                    rewardLabelQuest = new Label("+1 Relation!!!", skin);
+                                } else {
+                                    rewardLabelQuest = new Label(quest.getReward().getItem().getName() + "\nx" + quest.getReward().getQuantity(), skin);
                                 }
 
                                 questLabels.add(rewardLabelQuest);
@@ -1817,7 +1753,7 @@ public class HUDView extends AppMenu {
                                 stage.addActor(requestLabelQuest);
                                 stage.addActor(rewardLabelQuest);
 
-                                counter ++;
+                                counter++;
 
                             }
 
@@ -1825,94 +1761,80 @@ public class HUDView extends AppMenu {
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if (keycode == Input.Keys.Z) {
+                    } else if (keycode == Input.Keys.Z) {
 
-                        if ( currentMenu == InGameMenuType.PLAYER_SOCIAL ) {
+                        if (currentMenu == InGameMenuType.PLAYER_SOCIAL) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else{
+                        } else {
                             currentMenu = InGameMenuType.PLAYER_SOCIAL;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if (keycode == Input.Keys.L) {
+                    } else if (keycode == Input.Keys.L) {
 
-                        if ( currentMenu == InGameMenuType.LEADERBOARD ) {
+                        if (currentMenu == InGameMenuType.LEADERBOARD) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else{
+                        } else {
                             currentMenu = InGameMenuType.LEADERBOARD;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }else if (keycode == Input.Keys.M) {
+                    } else if (keycode == Input.Keys.M) {
 
                         if (currentMenu == InGameMenuType.CRAFTING) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else {
+                        } else {
                             currentMenu = InGameMenuType.CRAFTING;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if (keycode == Input.Keys.R) {
+                    } else if (keycode == Input.Keys.R) {
 
                         if (currentMenu == InGameMenuType.RADIO) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else {
+                        } else {
                             currentMenu = InGameMenuType.RADIO;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if (keycode == Input.Keys.G) {
+                    } else if (keycode == Input.Keys.G) {
 
                         if (currentMenu == InGameMenuType.REACTION) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else {
+                        } else {
                             currentMenu = InGameMenuType.REACTION;
                             makeOnScreenItemsInvisible();
                         }
 
-                    }
-                    else if ( keycode == Input.Keys.C ) {
+                    } else if (keycode == Input.Keys.C) {
 
-                        if ( currentMenu == InGameMenuType.COOKING ) {
+                        if (currentMenu == InGameMenuType.COOKING) {
                             currentMenu = InGameMenuType.NONE;
-                        }
-                        else{
+                        } else {
                             currentMenu = InGameMenuType.COOKING;
                             makeOnScreenItemsInvisible();
                         }
 
                     }
 
-                    if ( currentMenu == InGameMenuType.INVENTORY ) {
+                    if (currentMenu == InGameMenuType.INVENTORY) {
 
-                        if ( keycode == Input.Keys.D ) {
+                        if (keycode == Input.Keys.D) {
 
-                            if ( currentSlotInInventory != null ) {
+                            if (currentSlotInInventory != null) {
 
-                                int itemNumber = (currentSlotInInventory<12)? currentSlotInInventory:(currentSlotInInventory + (rowCoEfficient-1) * 12);
+                                int itemNumber = (currentSlotInInventory < 12) ? currentSlotInInventory : (currentSlotInInventory + (rowCoEfficient - 1) * 12);
 
-                                if ( itemNumber >= onScreenItems.size() ){
+                                if (itemNumber >= onScreenItems.size()) {
                                     errorLabel.set(new GraphicalResult("Selected slot is empty!"));
-                                }
-                                else{
+                                } else {
                                     errorLabel.set(controller.removeFromInventory(onScreenItems.get(itemNumber)));
                                 }
                             }
 
                         }
 
-                    }
-
-                    else if ( currentMenu == InGameMenuType.NONE ) {
+                    } else if (currentMenu == InGameMenuType.NONE) {
                         if (keycode == Input.Keys.NUM_1) {
 
                             controller.quickSetHotBarIndex(0);
@@ -1965,19 +1887,16 @@ public class HUDView extends AppMenu {
                     }
 
 
-                }
-                else {
+                } else {
 
-                    if ( reactionTyping ){
-                        if ( keycode == Input.Keys.ENTER ) {
+                    if (reactionTyping) {
+                        if (keycode == Input.Keys.ENTER) {
                             stage.setKeyboardFocus(null);
                         }
-                    }
-                    else{
-                        if ( keycode == Input.Keys.TAB ) {
+                    } else {
+                        if (keycode == Input.Keys.TAB) {
                             controller.handleTabPressInTextInput();
-                        }
-                        else if (keycode == Input.Keys.ENTER) {
+                        } else if (keycode == Input.Keys.ENTER) {
                             playClickSound();
                             errorLabel.set(controller.handleTextInput());
                             return true;
@@ -2034,67 +1953,58 @@ public class HUDView extends AppMenu {
                         }
                     }
 
-                    for ( int i = 0; i < 12; i++ ){
+                    for (int i = 0; i < 12; i++) {
 
-                        if ( (520 + i*63) < x && x < (520 + (i+1)*63) ){
+                        if ((520 + i * 63) < x && x < (520 + (i + 1) * 63)) {
 
-                            if ( !ctrlPressed ){
-                                if ( 700 < y && y < 760 ){
-                                    if ( currentSlotInInventory == null ){
+                            if (!ctrlPressed) {
+                                if (700 < y && y < 760) {
+                                    if (currentSlotInInventory == null) {
                                         currentSlotInInventory = i;
-                                    }
-                                    else{
-                                        if ( currentSlotInInventory != i ){
+                                    } else {
+                                        if (currentSlotInInventory != i) {
                                             currentSlotInInventory = i;
+                                        } else {
+                                            currentSlotInInventory = null;
                                         }
-                                        else{
+                                    }
+                                    return true;
+                                } else if (620 < y && y < 680) {
+                                    if (currentSlotInInventory == null) {
+                                        currentSlotInInventory = i + 12;
+                                    } else {
+                                        if (currentSlotInInventory != (i + 12)) {
+                                            currentSlotInInventory = i + 12;
+                                        } else {
+                                            currentSlotInInventory = null;
+                                        }
+                                    }
+                                    return true;
+                                } else if (550 < y && y < 610) {
+                                    if (currentSlotInInventory == null) {
+                                        currentSlotInInventory = i + 24;
+                                    } else {
+                                        if (currentSlotInInventory != (i + 24)) {
+                                            currentSlotInInventory = i + 24;
+                                        } else {
                                             currentSlotInInventory = null;
                                         }
                                     }
                                     return true;
                                 }
-                                else if ( 620 < y && y < 680 ){
-                                    if ( currentSlotInInventory == null ){
-                                        currentSlotInInventory = i+12;
-                                    }
-                                    else{
-                                        if ( currentSlotInInventory != (i+12) ){
-                                            currentSlotInInventory = i+12;
-                                        }
-                                        else{
-                                            currentSlotInInventory = null;
-                                        }
-                                    }
-                                    return true;
-                                }
-                                else if ( 550 < y && y < 610 ){
-                                    if ( currentSlotInInventory == null ){
-                                        currentSlotInInventory = i+24;
-                                    }
-                                    else{
-                                        if ( currentSlotInInventory != (i+24) ){
-                                            currentSlotInInventory = i+24;
-                                        }
-                                        else{
-                                            currentSlotInInventory = null;
-                                        }
-                                    }
-                                    return true;
-                                }
-                            }
-                            else{
+                            } else {
 
-                                if ( currentSlotInInventory != null ){
-                                    int currentItemIndex = (currentSlotInInventory<12)? currentSlotInInventory:currentSlotInInventory+12*(rowCoEfficient-1);
+                                if (currentSlotInInventory != null) {
+                                    int currentItemIndex = (currentSlotInInventory < 12) ? currentSlotInInventory : currentSlotInInventory + 12 * (rowCoEfficient - 1);
 
-                                    if ( currentItemIndex >= onScreenItems.size() ){
+                                    if (currentItemIndex >= onScreenItems.size()) {
                                         errorLabel.set(new GraphicalResult("First item was empty"));
                                         return true;
                                     }
 
-                                    if ( 700 < y && y < 760 ){
+                                    if (700 < y && y < 760) {
 
-                                        if ( i >= onScreenItems.size() ){
+                                        if (i >= onScreenItems.size()) {
                                             errorLabel.set(new GraphicalResult("You can't place your item here"));
                                             return true;
                                         }
@@ -2102,26 +2012,24 @@ public class HUDView extends AppMenu {
                                         inventoryItems.switchItem(currentItemIndex, i);
                                         currentSlotInInventory = null;
                                         return true;
-                                    }
-                                    else if ( 620 < y && y < 680 ){
+                                    } else if (620 < y && y < 680) {
 
-                                        if ( (i+12*rowCoEfficient) >= onScreenItems.size() ){
+                                        if ((i + 12 * rowCoEfficient) >= onScreenItems.size()) {
                                             errorLabel.set(new GraphicalResult("You can't place your item here"));
                                             return true;
                                         }
 
-                                        inventoryItems.switchItem(currentItemIndex, i+12*rowCoEfficient);
+                                        inventoryItems.switchItem(currentItemIndex, i + 12 * rowCoEfficient);
                                         currentSlotInInventory = null;
                                         return true;
-                                    }
-                                    else if ( 550 < y && y < 610 ){
+                                    } else if (550 < y && y < 610) {
 
-                                        if ( (i+12*(rowCoEfficient+1)) >= onScreenItems.size() ){
+                                        if ((i + 12 * (rowCoEfficient + 1)) >= onScreenItems.size()) {
                                             errorLabel.set(new GraphicalResult("You can't place your item here"));
                                             return true;
                                         }
 
-                                        inventoryItems.switchItem(currentItemIndex, i+12*(rowCoEfficient+1));
+                                        inventoryItems.switchItem(currentItemIndex, i + 12 * (rowCoEfficient + 1));
                                         currentSlotInInventory = null;
                                         return true;
                                     }
@@ -2152,27 +2060,23 @@ public class HUDView extends AppMenu {
                     }
                     return true;
 
-                }
-                else if ( currentMenu == InGameMenuType.INVENTORY ) {
-                    if ( (495 < x && x < 1300) && (540 < y && y < 780) ){
-                        if (amountY > 0 && (rowCoEfficient+2)*12 < onScreenItems.size()) {
+                } else if (currentMenu == InGameMenuType.INVENTORY) {
+                    if ((495 < x && x < 1300) && (540 < y && y < 780)) {
+                        if (amountY > 0 && (rowCoEfficient + 2) * 12 < onScreenItems.size()) {
                             rowCoEfficient += 1;
-                            if ( currentSlotInInventory != null ){
-                                if ( 12 <= currentSlotInInventory && currentSlotInInventory < 24 ){
+                            if (currentSlotInInventory != null) {
+                                if (12 <= currentSlotInInventory && currentSlotInInventory < 24) {
                                     currentSlotInInventory = null;
-                                }
-                                else if ( 24 <= currentSlotInInventory ){
+                                } else if (24 <= currentSlotInInventory) {
                                     currentSlotInInventory -= 12;
                                 }
                             }
-                        }
-                        else if ( amountY < 0 ){
-                            rowCoEfficient = max(1, rowCoEfficient-1);
-                            if ( currentSlotInInventory != null){
-                                if ( 24 <= currentSlotInInventory ){
+                        } else if (amountY < 0) {
+                            rowCoEfficient = max(1, rowCoEfficient - 1);
+                            if (currentSlotInInventory != null) {
+                                if (24 <= currentSlotInInventory) {
                                     currentSlotInInventory = null;
-                                }
-                                else if (12 <= currentSlotInInventory){
+                                } else if (12 <= currentSlotInInventory) {
                                     currentSlotInInventory += 12;
                                 }
                             }
@@ -2192,7 +2096,7 @@ public class HUDView extends AppMenu {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
 
-                if ( reactionTextField.getText().length() > 10 ){
+                if (reactionTextField.getText().length() > 10) {
                     String first = reactionTextField.getText().substring(0, 10);
                     reactionTextField.setText(first);
                     reactionTextField.setCursorPosition(reactionTextField.getText().length());
@@ -2202,7 +2106,7 @@ public class HUDView extends AppMenu {
             }
         });
 
-        for ( int i = 0; i < 5; i++ ){
+        for (int i = 0; i < 5; i++) {
             Emoji emoji = emojiButtons.get(i);
             emoji.getEmojiButton().addListener(new ClickListener() {
 
@@ -2294,10 +2198,9 @@ public class HUDView extends AppMenu {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if ( currentMenu == InGameMenuType.PLAYER_SOCIAL ) {
+                if (currentMenu == InGameMenuType.PLAYER_SOCIAL) {
                     currentMenu = InGameMenuType.NONE;
-                }
-                else{
+                } else {
                     currentMenu = InGameMenuType.PLAYER_SOCIAL;
                     makeOnScreenItemsInvisible();
                 }
@@ -2323,7 +2226,7 @@ public class HUDView extends AppMenu {
 
         });
 
-        for (CraftingProduct craftingProduct: craftingProducts.keySet()) {
+        for (CraftingProduct craftingProduct : craftingProducts.keySet()) {
             ImageButton imageButton = craftingProducts.get(craftingProduct);
             imageButton.addListener(new ClickListener() {
                 @Override
@@ -2345,27 +2248,26 @@ public class HUDView extends AppMenu {
             ImageButton imageButton = entry.getValue();
             CraftingProduct craftingProduct = entry.getKey();
             imageButton.addListener(new ClickListener() {
-               @Override
-               public void clicked(InputEvent event, float x, float y) {
-                   playClickSound();
-                   if (imageButton.getColor().a > 0.3f) {
-                       System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOK");// not enough ingredient
-                       errorLabel.set(controller.craft(entry.getKey()));
-                       if (craftingProduct.getArtisan() != null) {
-                           System.out.println("OOOOOH");
-                           Main.getMain().getScreen().dispose();
-                           ClientApp.setCurrentMenu(new BuildMenuView(new Artisan(
-                                   craftingProduct.getArtisan())));
-                           Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                           ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(
-                                   craftingProduct, 1
-                           );
-                       }
-                   }
-                   else {
-                       errorLabel.set(new GraphicalResult("You don't have enough ingredient!"));
-                   }
-               }
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    playClickSound();
+                    if (imageButton.getColor().a > 0.3f) {
+                        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOK");// not enough ingredient
+                        errorLabel.set(controller.craft(entry.getKey()));
+                        if (craftingProduct.getArtisan() != null) {
+                            System.out.println("OOOOOH");
+                            Main.getMain().getScreen().dispose();
+                            ClientApp.setCurrentMenu(new BuildMenuView(new Artisan(
+                                    craftingProduct.getArtisan())));
+                            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                            ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(
+                                    craftingProduct, 1
+                            );
+                        }
+                    } else {
+                        errorLabel.set(new GraphicalResult("You don't have enough ingredient!"));
+                    }
+                }
             });
         }
 
@@ -2377,15 +2279,14 @@ public class HUDView extends AppMenu {
                     playClickSound();
                     if (imageButton.getColor().a > 0.3f) {
                         errorLabel.set(controller.cook(entry.getKey()));
-                    }
-                    else {
+                    } else {
                         errorLabel.set(new GraphicalResult("You don't have enough ingredient!"));
                     }
                 }
             });
         }
 
-        for ( CookingProduct cookingProduct: cookingProducts.keySet()  ){
+        for (CookingProduct cookingProduct : cookingProducts.keySet()) {
 
             ImageButton imageButton = cookingProducts.get(cookingProduct);
             imageButton.addListener(new ClickListener() {
@@ -2405,9 +2306,9 @@ public class HUDView extends AppMenu {
         }
 
         int counter = 0;
-        for ( MiniPlayer inGamePlayer: ClientApp.getCurrentGame().getPlayers() ){
+        for (MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers()) {
 
-            if ( !player.getUsername().equals(inGamePlayer.getUsername()) ){
+            if (!player.getUsername().equals(inGamePlayer.getUsername())) {
                 friendButtons.get(counter).addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -2416,7 +2317,7 @@ public class HUDView extends AppMenu {
                     }
 
                 });
-                counter ++;
+                counter++;
             }
 
 
@@ -2474,7 +2375,7 @@ public class HUDView extends AppMenu {
                 currentMenu = InGameMenuType.NONE;
                 ResultController.addResult(new GameMenuController(new GameView()).pet(animal.getName()));
                 float animalX = OutsideView.getGraphicalPositionInFarmMap(animal.getCurrentCell().getPosition().getX(),
-                animal.getCurrentCell().getPosition().getY()).getX();
+                        animal.getCurrentCell().getPosition().getY()).getX();
                 float animalY = OutsideView.getGraphicalPositionInFarmMap(animal.getCurrentCell().getPosition().getX(),
                         animal.getCurrentCell().getPosition().getY()).getY();
                 PopUpController.addPopUp(new PopUpTexture(
@@ -2529,30 +2430,25 @@ public class HUDView extends AppMenu {
         });
 
         playButton.addListener(new ClickListener() {
-           @Override
-           public void clicked(InputEvent event, float x, float y) {
-               playClickSound();
-               controller.playSong(
-                       ClientApp.getCurrentGame().getSongIdByName(yourSongsSelectBox.getSelected()),
-                       yourSongsSelectBox.getSelected()
-               );
-           }
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.playSong(
+                        ClientApp.getCurrentGame().getSongIdByName(yourSongsSelectBox.getSelected()),
+                        yourSongsSelectBox.getSelected()
+                );
+            }
         });
 
         listenButton.addListener(new ClickListener() {
-           @Override
-           public void clicked(InputEvent event, float x, float y) {
-               playClickSound();
-               errorLabel.set(controller.listenWith(othersSongsSelectBox.getSelected()));
-           }
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                errorLabel.set(controller.listenWith(othersSongsSelectBox.getSelected()));
+            }
         });
 
 
-    }
-
-
-    public void setInputFieldVisible(boolean inputFieldVisible) {
-        isInputFieldVisible = inputFieldVisible;
     }
 
     public void setClockImage(Image clockImage) {
@@ -2573,6 +2469,10 @@ public class HUDView extends AppMenu {
         return isInputFieldVisible;
     }
 
+    public void setInputFieldVisible(boolean inputFieldVisible) {
+        isInputFieldVisible = inputFieldVisible;
+    }
+
     private void removeFromScreen(Stacks stack) {
 
         onScreenItemsQuantity.get(stack).remove();
@@ -2585,23 +2485,22 @@ public class HUDView extends AppMenu {
 
     private void addToScreen(Stacks stack) {
 
-        Label quantityLabel = new Label(Integer.toString(stack.getQuantity()),skin);
+        Label quantityLabel = new Label(Integer.toString(stack.getQuantity()), skin);
         quantityLabel.setVisible(false);
         quantityLabel.setColor(Color.RED);
         quantityLabel.setFontScale(0.7f);
         stage.addActor(quantityLabel);
-        onScreenItemsQuantity.put(stack,quantityLabel);
+        onScreenItemsQuantity.put(stack, quantityLabel);
 
-        stack.getItem().getItemImage().setSize(48,48);
+        stack.getItem().getItemImage().setSize(48, 48);
         stack.getItem().getItemImage().setVisible(false);
         stage.addActor(stack.getItem().getItemImage());
         onScreenItems.add(stack);
 
 
-
     }
 
-    public void makeOnScreenItemsInvisible(){
+    public void makeOnScreenItemsInvisible() {
 
         for (Stacks onScreenItem : onScreenItems) {
             onScreenItem.getItem().getItemImage().setVisible(false);
@@ -2633,24 +2532,22 @@ public class HUDView extends AppMenu {
         return shippingBinController;
     }
 
-    private void sortPlayersList(){
+    private void sortPlayersList() {
 
-        if ( sortType == 0 ){
+        if (sortType == 0) {
             playersInLeaderBoard.sort(Comparator.comparingDouble(MiniPlayer::getMoney).reversed());
-        }
-        else if ( sortType == 1 ){
+        } else if (sortType == 1) {
             playersInLeaderBoard.sort(Comparator.comparingDouble(MiniPlayer::getTotalAbility).reversed());
-        }
-        else if ( sortType == 2 ){
+        } else if (sortType == 2) {
             playersInLeaderBoard.sort(Comparator.comparingDouble(MiniPlayer::getNumberOfQuestsCompleted).reversed());
         }
 
 
     }
 
-    private void makeQuestsInvisible(){
+    private void makeQuestsInvisible() {
 
-        for( Label quest: questLabels ){
+        for (Label quest : questLabels) {
             quest.remove();
         }
 

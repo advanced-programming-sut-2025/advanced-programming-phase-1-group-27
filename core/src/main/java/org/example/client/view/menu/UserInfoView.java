@@ -14,8 +14,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.AppMenu;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.AppMenu;
 import org.example.common.models.User;
 
 import java.util.Scanner;
@@ -93,13 +93,13 @@ public class UserInfoView extends AppMenu {
 
     private void setListeners() {
         backButton.addListener(new ClickListener() {
-           @Override
-           public void clicked(InputEvent event, float x, float y) {
-               playClickSound();
-               Main.getMain().getScreen().dispose();
-               ClientApp.setCurrentMenu(lastMenu);
-               Main.getMain().setScreen(ClientApp.getCurrentMenu());
-           }
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                Main.getMain().getScreen().dispose();
+                ClientApp.setCurrentMenu(lastMenu);
+                Main.getMain().setScreen(ClientApp.getCurrentMenu());
+            }
         });
     }
 

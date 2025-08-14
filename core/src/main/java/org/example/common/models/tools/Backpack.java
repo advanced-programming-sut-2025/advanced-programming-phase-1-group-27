@@ -3,8 +3,8 @@ package org.example.common.models.tools;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Item;
 import org.example.common.models.ProcessedProduct;
-import org.example.common.models.Stacks;
 import org.example.common.models.StackLevel;
+import org.example.common.models.Stacks;
 import org.example.common.models.items.ToolType;
 
 import java.util.ArrayList;
@@ -305,7 +305,7 @@ public class Backpack extends Tool {
         return items.get(index);
     }
 
-    public void switchItem(int index1, int index2){
+    public void switchItem(int index1, int index2) {
         Collections.swap(items, index1, index2);
     }
 

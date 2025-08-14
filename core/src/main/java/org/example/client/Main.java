@@ -1,12 +1,9 @@
 package org.example.client;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.example.client.model.ClientApp;
 import org.example.client.view.AppView;
-import org.example.client.view.HomeView;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.

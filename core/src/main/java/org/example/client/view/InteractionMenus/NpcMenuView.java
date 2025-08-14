@@ -21,16 +21,13 @@ import java.util.Scanner;
 public class NpcMenuView extends AppMenu {
 
     private final InteractionsWithNPCController controller;
-    private Stage stage;
     private final NPC npc;
-
     private final Label npcManuLabel;
-
     private final TextButton backButton;
     private final TextButton questMenuButton;
     private final TextButton giftButton;
-
     private final Image npcImage;
+    private Stage stage;
 
 
     public NpcMenuView(String npcName) {
@@ -52,24 +49,24 @@ public class NpcMenuView extends AppMenu {
 
     }
 
-    private void displayLabels(){
+    private void displayLabels() {
 
         npcManuLabel.setFontScale(3f);
-        npcManuLabel.setPosition(Gdx.graphics.getWidth()/8f, 3 * Gdx.graphics.getHeight() / 4f);
+        npcManuLabel.setPosition(Gdx.graphics.getWidth() / 8f, 3 * Gdx.graphics.getHeight() / 4f);
 
         stage.addActor(npcManuLabel);
 
     }
 
-    private void displayButtons(){
+    private void displayButtons() {
 
-        giftButton.setWidth(Gdx.graphics.getWidth()/4f);
-        questMenuButton.setWidth(Gdx.graphics.getWidth()/4f);
-        backButton.setWidth(Gdx.graphics.getWidth()/4f);
+        giftButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        questMenuButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        backButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        giftButton.setPosition(3 * Gdx.graphics.getWidth()/16f,4 * Gdx.graphics.getHeight() / 8f);
-        questMenuButton.setPosition(3 * Gdx.graphics.getWidth()/16f,3 * Gdx.graphics.getHeight() / 8f);
-        backButton.setPosition(3 * Gdx.graphics.getWidth()/16f,2 * Gdx.graphics.getHeight() / 8f);
+        giftButton.setPosition(3 * Gdx.graphics.getWidth() / 16f, 4 * Gdx.graphics.getHeight() / 8f);
+        questMenuButton.setPosition(3 * Gdx.graphics.getWidth() / 16f, 3 * Gdx.graphics.getHeight() / 8f);
+        backButton.setPosition(3 * Gdx.graphics.getWidth() / 16f, 2 * Gdx.graphics.getHeight() / 8f);
 
 
         stage.addActor(backButton);
@@ -156,7 +153,6 @@ public class NpcMenuView extends AppMenu {
         });
 
     }
-
 
 
     @Override

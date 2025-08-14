@@ -38,9 +38,9 @@ public class PreGiftMenuView extends AppMenu {
         ClientApp.setNonMainMenu(this);
         targetUsername = username;
         errorLabel = new GraphicalResult();
-        giftButton = new TextButton("Gift" , skin);
-        historyButton = new TextButton("History Gift" , skin);
-        backButton = new TextButton("Back" , skin);
+        giftButton = new TextButton("Gift", skin);
+        historyButton = new TextButton("History Gift", skin);
+        backButton = new TextButton("Back", skin);
 
         giftMenuLabel = new Label("Gift Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
@@ -69,9 +69,9 @@ public class PreGiftMenuView extends AppMenu {
         giftButton.setWidth(Gdx.graphics.getWidth() / 4f);
         historyButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        giftButton.setPosition((Gdx.graphics.getWidth()-giftButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
-        historyButton.setPosition((Gdx.graphics.getWidth()-historyButton.getWidth())/2f, 2 * Gdx.graphics.getHeight() / 6f);
-        backButton.setPosition((Gdx.graphics.getWidth()-backButton.getWidth())/2f, Gdx.graphics.getHeight() / 6f);
+        giftButton.setPosition((Gdx.graphics.getWidth() - giftButton.getWidth()) / 2f, 3 * Gdx.graphics.getHeight() / 6f);
+        historyButton.setPosition((Gdx.graphics.getWidth() - historyButton.getWidth()) / 2f, 2 * Gdx.graphics.getHeight() / 6f);
+        backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2f, Gdx.graphics.getHeight() / 6f);
 
         stage.addActor(menuBackground);
         stage.addActor(giftButton);
@@ -129,7 +129,7 @@ public class PreGiftMenuView extends AppMenu {
                 playClickSound();
                 controller.openGiftMenu(targetUsername);
                 GraphicalResult openGiftMenuResult = controller.openGiftMenu(targetUsername);
-                if (openGiftMenuResult.hasError() ){
+                if (openGiftMenuResult.hasError()) {
                     errorLabel.set(openGiftMenuResult);
                 }
             }

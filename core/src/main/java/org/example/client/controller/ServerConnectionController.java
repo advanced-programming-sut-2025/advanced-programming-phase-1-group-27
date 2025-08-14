@@ -3,7 +3,6 @@ package org.example.client.controller;
 import org.example.client.model.ClientApp;
 import org.example.common.models.Message;
 
-import java.awt.*;
 import java.util.HashMap;
 
 public class ServerConnectionController {

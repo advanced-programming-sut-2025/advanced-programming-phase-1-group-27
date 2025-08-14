@@ -3,11 +3,11 @@ package org.example.client.controller.menus;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.menu.*;
 import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.Lobby;
+import org.example.common.models.Message;
 import org.example.common.models.Result;
 
 import java.util.ArrayList;
@@ -20,69 +20,6 @@ public class LobbyMenuController extends MenuController {
 
     public LobbyMenuController(LobbyMenuView view) {
         this.view = view;
-    }
-
-    public ArrayList<Lobby> getLobbies() {
-        Message message = new Message(new HashMap<>()
-                , Message.Type.get_nonactive_lobbies_list);
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
-        if (response == null || response.getType() != Message.Type.response) {
-            return new ArrayList<>();
-        }
-        ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
-        ArrayList<Lobby> lobbies = new ArrayList<>();
-        for (LinkedTreeMap<String, Object> info : list) {
-            Lobby lobby = new Lobby(info);
-            lobbies.add(lobby);
-        }
-        ArrayList<Lobby> selectedLobbies = new ArrayList<>();
-        for(Lobby lobby : lobbies){
-            if(lobby.getGame() == null){
-                selectedLobbies.add(lobby);
-            }
-        }
-        return selectedLobbies;
-    }
-
-    public GraphicalResult findViaGraphicalResult() {
-        if (view.getGameIdTextField().getText().isEmpty())
-            return new GraphicalResult("No id has been entered!");
-
-        int id;
-        try {
-            id = Integer.parseInt(view.getGameIdTextField().getText());
-        }
-        catch (Exception e) {
-            return new GraphicalResult("ID must be a 4 digit number");
-        }
-        if (id < 0 || id > 9999)
-            return new GraphicalResult("ID must be a 4 digit number");
-
-        return find(id);
-    }
-
-    public GraphicalResult join() {
-        if (view.getPublicGamesSelectBox().getSelected().isEmpty()) {
-            return new GraphicalResult(
-                    "No game has been selected!",
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
-        }
-        String selected = view.getPublicGamesSelectBox().getSelected();
-        String gameId = selected.split(" ")[0];
-        return find(Integer.parseInt(gameId));
-    }
-
-    public void host() {
-        Main.getMain().getScreen().dispose();
-        ClientApp.setCurrentMenu(new HostMenuView());
-        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-    }
-
-    public void goToPlayersMenu() {
-        Main.getMain().getScreen().dispose();
-        ClientApp.setCurrentMenu(new OnlinePlayersMenuView());
-        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
     private static GraphicalResult find(int id) {
@@ -146,6 +83,67 @@ public class LobbyMenuController extends MenuController {
         );
     }
 
+    public ArrayList<Lobby> getLobbies() {
+        Message message = new Message(new HashMap<>()
+                , Message.Type.get_nonactive_lobbies_list);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response) {
+            return new ArrayList<>();
+        }
+        ArrayList<LinkedTreeMap<String, Object>> list = response.getFromBody("lobbiesInfo");
+        ArrayList<Lobby> lobbies = new ArrayList<>();
+        for (LinkedTreeMap<String, Object> info : list) {
+            Lobby lobby = new Lobby(info);
+            lobbies.add(lobby);
+        }
+        ArrayList<Lobby> selectedLobbies = new ArrayList<>();
+        for (Lobby lobby : lobbies) {
+            if (lobby.getGame() == null) {
+                selectedLobbies.add(lobby);
+            }
+        }
+        return selectedLobbies;
+    }
+
+    public GraphicalResult findViaGraphicalResult() {
+        if (view.getGameIdTextField().getText().isEmpty())
+            return new GraphicalResult("No id has been entered!");
+
+        int id;
+        try {
+            id = Integer.parseInt(view.getGameIdTextField().getText());
+        } catch (Exception e) {
+            return new GraphicalResult("ID must be a 4 digit number");
+        }
+        if (id < 0 || id > 9999)
+            return new GraphicalResult("ID must be a 4 digit number");
+
+        return find(id);
+    }
+
+    public GraphicalResult join() {
+        if (view.getPublicGamesSelectBox().getSelected().isEmpty()) {
+            return new GraphicalResult(
+                    "No game has been selected!",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        }
+        String selected = view.getPublicGamesSelectBox().getSelected();
+        String gameId = selected.split(" ")[0];
+        return find(Integer.parseInt(gameId));
+    }
+
+    public void host() {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new HostMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+    }
+
+    public void goToPlayersMenu() {
+        Main.getMain().getScreen().dispose();
+        ClientApp.setCurrentMenu(new OnlinePlayersMenuView());
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
+    }
 
     @Override
     public Result enterMenu(String menuName) {

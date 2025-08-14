@@ -95,7 +95,7 @@ public class HUDController extends MenuController {
 
     }
 
-    public int digitCount(){
+    public int digitCount() {
 
         return String.valueOf(Math.abs(ClientApp.getCurrentGame().getCurrentPlayer().getMoney())).length();
 

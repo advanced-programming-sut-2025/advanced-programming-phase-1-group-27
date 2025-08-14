@@ -1,6 +1,5 @@
 package org.example.common.models;
 
-import com.badlogic.gdx.math.Interpolation;
 import org.example.common.utils.JSONUtils;
 
 import java.io.DataInputStream;
@@ -114,8 +113,7 @@ abstract public class ConnectionThread extends Thread {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }
-                else if (packetType == PACKET_TYPE_BINARY) {
+                } else if (packetType == PACKET_TYPE_BINARY) {
                     handleBinaryPacket(packet);
                 }
             } catch (Exception e) {

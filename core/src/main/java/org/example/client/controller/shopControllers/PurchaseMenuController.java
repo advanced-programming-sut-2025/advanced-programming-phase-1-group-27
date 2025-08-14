@@ -4,17 +4,11 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
-import org.example.common.models.Player;
-import org.example.common.models.Result;
-import org.example.common.models.Stock;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
 import org.example.client.view.shopview.BuildMenuView;
 import org.example.client.view.shopview.PurchaseMenuView;
-import org.example.client.model.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.common.models.AbilityType;
-import org.example.common.models.NPCType;
+import org.example.common.models.*;
 import org.example.common.models.items.BuildingType;
 import org.example.common.models.items.Recipe;
 import org.example.common.models.items.ToolType;
@@ -29,7 +23,7 @@ public class PurchaseMenuController extends MenuController {
     private final PurchaseMenuView passwordMenuView;
     private final AppMenu shopMenuView;
 
-    public PurchaseMenuController(PurchaseMenuView passwordMenuView ,  AppMenu shopMenuView) {
+    public PurchaseMenuController(PurchaseMenuView passwordMenuView, AppMenu shopMenuView) {
         this.passwordMenuView = passwordMenuView;
         this.shopMenuView = shopMenuView;
     }
@@ -76,13 +70,13 @@ public class PurchaseMenuController extends MenuController {
         int quantity = stock.getQuantity();
         int lobbyId = ClientApp.getCurrentGame().getLobbyId();
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(
-            new Message(new HashMap<String, Object>() {{
-                put("lobbyId", lobbyId);
-                put("shopName", shopName);
-                put("itemName", itemName);
-                put("quantity", num);
-            }}, Message.Type.purchase_from_shop),
-            TIMEOUT_MILLIS
+                new Message(new HashMap<String, Object>() {{
+                    put("lobbyId", lobbyId);
+                    put("shopName", shopName);
+                    put("itemName", itemName);
+                    put("quantity", num);
+                }}, Message.Type.purchase_from_shop),
+                TIMEOUT_MILLIS
         );
         if (response == null || response.getType() != Message.Type.response) {
             return new GraphicalResult(
@@ -91,12 +85,12 @@ public class PurchaseMenuController extends MenuController {
             );
         }
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
-        if(result.hasError())
+        if (result.hasError())
             return result;
-        if(stock.getItem().equals(ToolType.DeluxeBackpack) || stock.getItem().equals(ToolType.LargeBackpack)){
+        if (stock.getItem().equals(ToolType.DeluxeBackpack) || stock.getItem().equals(ToolType.LargeBackpack)) {
             ToolType backpack = (ToolType) stock.getItem();
             currentPlayer.setBackpack(backpack);
-        }else if(stock.getItem() instanceof Recipe recipe) {
+        } else if (stock.getItem() instanceof Recipe recipe) {
             if (recipe.getFinalProduct() instanceof CraftingProduct)
                 currentPlayer.getAvailableCraftingRecipes().add(recipe);
             else if (recipe.getFinalProduct() instanceof CookingProduct)
@@ -117,7 +111,7 @@ public class PurchaseMenuController extends MenuController {
         return null;
     }
 
-    public GraphicalResult build(){
+    public GraphicalResult build() {
         //TODO : Rassa
         return null;
     }

@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.AppMenu;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.AppMenu;
 import org.example.common.models.Message;
 
 import java.util.HashMap;
@@ -114,16 +114,16 @@ public class AvatarMenuView extends AppMenu {
                 int finalI = i;
                 int finalJ = j;
                 avatarImage.addListener(new ClickListener() {
-                   @Override
-                   public void clicked(InputEvent event, float x, float y) {
-                       playClickSound();
-                       ClientApp.getLoggedInUser().setAvatarId(finalI * 3 + finalJ);
-                       ClientApp.updateFile(ClientApp.getLoggedInUser());
-                       ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
-                           put("avatarId", finalI * 3 + finalJ);
-                       }}, Message.Type.update_avatar));
-                       currentAvatar.setDrawable(new TextureRegionDrawable(new TextureRegion(avatarTexture)));
-                   }
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        playClickSound();
+                        ClientApp.getLoggedInUser().setAvatarId(finalI * 3 + finalJ);
+                        ClientApp.updateFile(ClientApp.getLoggedInUser());
+                        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                            put("avatarId", finalI * 3 + finalJ);
+                        }}, Message.Type.update_avatar));
+                        currentAvatar.setDrawable(new TextureRegionDrawable(new TextureRegion(avatarTexture)));
+                    }
                 });
                 avatarGrid.add(avatarImage).size(200, 200);
             }

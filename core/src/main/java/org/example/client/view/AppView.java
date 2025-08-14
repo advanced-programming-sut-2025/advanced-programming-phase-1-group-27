@@ -2,12 +2,10 @@ package org.example.client.view;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.common.models.Lobby;
-import org.example.common.models.SecurityQuestion;
-import org.example.common.models.User;
-import org.example.client.view.menu.*;
-import org.example.common.models.Message;
-import org.example.common.models.Gender;
+import org.example.client.view.menu.MainMenuView;
+import org.example.client.view.menu.PregameMenuView;
+import org.example.client.view.menu.WelcomeMenuView;
+import org.example.common.models.*;
 
 import java.util.HashMap;
 
@@ -20,11 +18,11 @@ public class AppView {
 //        } while (App.getCurrentMenu() != Menu.ExitMenu);
 //    }
 
-    private void cheat(){
-        User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
+    private void cheat() {
+        User admin = new User("admin", "admin", "God", "test@gmail.com", Gender.Male);
         admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
         ClientApp.setLoggedInUser(admin);
-        Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
+        Lobby lobby = new Lobby(admin, true, "", true, 2222, "test");
         lobby.setMap(admin.getUsername(), 0);
 
         ClientApp.setCurrentMenu(new PregameMenuView(lobby));
@@ -44,8 +42,7 @@ public class AppView {
         if (ClientApp.loadSavedUser()) {
             ClientApp.setCurrentMenu(new MainMenuView());
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        }
-        else {
+        } else {
             ClientApp.setCurrentMenu(new WelcomeMenuView());
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         }

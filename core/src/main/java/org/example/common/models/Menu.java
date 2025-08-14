@@ -1,6 +1,6 @@
 package org.example.common.models;
 
-import org.example.client.view.*;
+import org.example.client.view.AppMenu;
 
 public enum Menu {
     WelcomeMenu,

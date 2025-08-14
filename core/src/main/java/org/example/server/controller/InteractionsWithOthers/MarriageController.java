@@ -1,13 +1,8 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.common.models.Lobby;
-import org.example.common.models.Player;
-import org.example.common.models.Result;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.server.models.*;
+import org.example.common.models.*;
 import org.example.common.models.Relations.Relation;
-import org.example.common.models.Gender;
+import org.example.server.models.ServerApp;
 
 import java.util.HashMap;
 

@@ -4,14 +4,17 @@ package org.example.client.view.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array; // Correct Array import
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.menus.LobbyMenuController;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.Lobby;
 
 import java.util.ArrayList;
@@ -162,7 +165,7 @@ public class LobbyMenuView extends AppMenu {
 
     private void showErrorMessage() {
 
-        errorLabel.setPosition(Gdx.graphics.getWidth()/8f, 9 * Gdx.graphics.getHeight() / 12f);
+        errorLabel.setPosition(Gdx.graphics.getWidth() / 8f, 9 * Gdx.graphics.getHeight() / 12f);
         errorLabel.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
         stage.addActor(errorLabel.getMessage());
 

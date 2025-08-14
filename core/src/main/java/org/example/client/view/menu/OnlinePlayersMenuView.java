@@ -25,7 +25,7 @@ public class OnlinePlayersMenuView extends AppMenu {
     private Stage stage;
 
     public OnlinePlayersMenuView() {
-        this.controller = new OnlinePlayersMenuController ();
+        this.controller = new OnlinePlayersMenuController();
 
         this.menuTitle = new Label("Online Players Menu", skin);
         this.backButton = new TextButton("Back", skin);

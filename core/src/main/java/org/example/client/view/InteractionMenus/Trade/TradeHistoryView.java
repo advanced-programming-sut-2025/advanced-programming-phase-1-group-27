@@ -15,6 +15,7 @@ import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.view.AppMenu;
 import org.example.common.models.Relations.Trade;
 import org.example.common.models.Stacks;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,12 +24,9 @@ public class TradeHistoryView extends AppMenu {
 
     private final String username;
     private final ArrayList<Trade> trades;
-
+    private final TextButton exitButton;
     private Table table;
     private ScrollPane scrollPane;
-
-    private final TextButton exitButton;
-
     private Stage stage;
 
     public TradeHistoryView(String username) {
@@ -36,7 +34,7 @@ public class TradeHistoryView extends AppMenu {
         this.username = username;
         trades = controller.getTradeHistory(username);
 
-        exitButton = new TextButton("Exit" , skin);
+        exitButton = new TextButton("Exit", skin);
         table = new Table();
         scrollPane = new ScrollPane(table, skin);
         scrollPane.setFadeScrollBars(false);
@@ -48,8 +46,8 @@ public class TradeHistoryView extends AppMenu {
         setListeners();
     }
 
-    private void displayButtons(){
-        exitButton.setPosition(0 , 0);
+    private void displayButtons() {
+        exitButton.setPosition(0, 0);
         stage.addActor(exitButton);
     }
 
@@ -79,12 +77,12 @@ public class TradeHistoryView extends AppMenu {
             Label fromLabel1 = new Label(trade.getStarter(), skin);
             Label toLabel1 = new Label(trade.getOther(), skin);
             StringBuilder starter = new StringBuilder();
-            for(Stacks stacks : trade.getStarterSelected()){
+            for (Stacks stacks : trade.getStarterSelected()) {
                 starter.append(stacks.getItem().getName()).append(" * ").append(stacks.getQuantity());
                 starter.append("\n");
             }
             StringBuilder other = new StringBuilder();
-            for(Stacks stacks : trade.getOthersSelected()){
+            for (Stacks stacks : trade.getOthersSelected()) {
                 other.append(stacks.getItem().getName()).append(" * ").append(stacks.getQuantity());
                 other.append("\n");
             }

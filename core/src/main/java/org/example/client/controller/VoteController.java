@@ -14,8 +14,7 @@ public class VoteController {
                 put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
                 put("vote", answer);
             }}, Message.Type.voting));
-        }
-        else {
+        } else {
             ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
                 put("mode", "voteToKick");
                 put("lobbyId", ClientApp.getCurrentGame().getLobbyId());

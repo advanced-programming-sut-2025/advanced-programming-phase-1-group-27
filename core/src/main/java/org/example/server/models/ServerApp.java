@@ -1,13 +1,9 @@
 package org.example.server.models;
 
-import org.example.common.models.Lobby;
-import org.example.common.models.SecurityQuestion;
-import org.example.common.models.User;
 import org.example.common.database.DataBaseHelper;
-import org.example.common.models.Message;
+import org.example.common.models.*;
 import org.example.server.models.connections.ClientConnectionThread;
 import org.example.server.models.connections.ListenerThread;
-import org.example.common.models.Gender;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +17,9 @@ public class ServerApp {
 
     static {
         lobbies = DataBaseHelper.getLobbiesFromSave();
-        User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
+        User admin = new User("admin", "admin", "God", "test@gmail.com", Gender.Male);
         admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
-        Lobby lobby = new Lobby(admin, true , "" , true , 2222 , "test");
+        Lobby lobby = new Lobby(admin, true, "", true, 2222, "test");
         lobby.setMap(admin.getUsername(), 0);
         lobbies.add(lobby);
     }
@@ -55,7 +51,7 @@ public class ServerApp {
         if (clientConnectionThread == null)
             return;
         connections.remove(clientConnectionThread);
-        System.err.println("REMOVED CONNECTION: " + (clientConnectionThread.getUser() == null? "null" : clientConnectionThread.getUser().getUsername()));
+        System.err.println("REMOVED CONNECTION: " + (clientConnectionThread.getUser() == null ? "null" : clientConnectionThread.getUser().getUsername()));
     }
 
     public static void addConnection(ClientConnectionThread clientConnectionThread) {
@@ -102,19 +98,19 @@ public class ServerApp {
     public static void addLobby(Lobby lobby) {
         lobbies.add(lobby);
         new Thread(() -> {
-           while (lobby.getGame() == null) {
-               try {
-                   Thread.sleep(2000);
-                   if (System.currentTimeMillis() - lobby.getLastChange().longValue() > 5 * 60 * 1000) {
-                       removeLobby(lobby);
-                       lobby.notifyAll(new Message(null, Message.Type.terminating_lobby));
-                       break;
-                   }
-               } catch (InterruptedException e) {
-                   throw new RuntimeException(e);
-               }
+            while (lobby.getGame() == null) {
+                try {
+                    Thread.sleep(2000);
+                    if (System.currentTimeMillis() - lobby.getLastChange().longValue() > 5 * 60 * 1000) {
+                        removeLobby(lobby);
+                        lobby.notifyAll(new Message(null, Message.Type.terminating_lobby));
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
-           }
+            }
         }).start();
     }
 
@@ -129,7 +125,7 @@ public class ServerApp {
             if (connection.getUser() != null)
                 onlineUsers.add(connection.getUser());
         }
-        User admin = new User("admin" , "admin" , "God" , "test@gmail.com" , Gender.Male);
+        User admin = new User("admin", "admin", "God", "test@gmail.com", Gender.Male);
         admin.setRecoveryQuestion(new SecurityQuestion("Are you gay?", "yes"));
         onlineUsers.add(admin);
         return onlineUsers;
@@ -156,7 +152,7 @@ public class ServerApp {
     }
 
     public static ArrayList<ClientConnectionThread> getClientConnectionThreads() {
-            return connections;
+        return connections;
     }
 
     public static void updateUser(Message message) {

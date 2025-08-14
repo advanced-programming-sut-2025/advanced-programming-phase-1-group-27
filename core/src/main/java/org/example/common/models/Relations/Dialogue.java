@@ -1,7 +1,7 @@
 package org.example.common.models.Relations;
 
-import org.example.common.models.Player;
 import org.example.common.models.DialogueType;
+import org.example.common.models.Player;
 
 public class Dialogue {
     private DialogueType type;

@@ -7,20 +7,17 @@ import org.example.client.Main;
 import org.example.client.controller.OtherPlayerController;
 import org.example.client.view.OutsideView;
 import org.example.client.view.menu.MainMenuView;
-import org.example.common.models.*;
 import org.example.common.models.AnimalProperty.Animal;
+import org.example.common.models.*;
 import org.example.common.models.Map.*;
 import org.example.common.models.NPCs.NPC;
-import org.example.common.models.Relations.Relation;
-import org.example.common.models.Shops.BlackSmith;
-import org.example.common.models.Shops.Shop;
-import org.example.common.models.NPCType;
 import org.example.common.models.Plants.Crop;
 import org.example.common.models.Plants.FruitType;
 import org.example.common.models.Plants.Plant;
 import org.example.common.models.Plants.Tree;
-import org.example.common.models.ShopType;
-import org.example.common.models.StackLevel;
+import org.example.common.models.Relations.Relation;
+import org.example.common.models.Shops.BlackSmith;
+import org.example.common.models.Shops.Shop;
 import org.example.common.models.Weathers.Weather;
 import org.example.common.models.items.MineralType;
 import org.example.common.models.items.products.AnimalProduct;
@@ -209,8 +206,10 @@ public class ClientGame implements Game {
                 if (plant.getCell().isProtected())
                     continue;
 
-                if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView && ClientApp.getNonMainMenu() == null){
-                    outsideView.displayCrowAttack(plant.getCell().getPosition().getX(),plant.getCell().getPosition().getY());
+                if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView &&
+                        ClientApp.getNonMainMenu() == null &&
+                        !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap)) {
+                    outsideView.displayCrowAttack(plant.getCell().getPosition().getX(), plant.getCell().getPosition().getY());
                 }
 
                 if (plant instanceof Crop crop) {
@@ -500,8 +499,8 @@ public class ClientGame implements Game {
     }
 
     public NPC getNPCByType(NPCType type) {
-        for ( NPC npc : npcs ) {
-            if ( npc.getType() == type ){
+        for (NPC npc : npcs) {
+            if (npc.getType() == type) {
                 return npc;
             }
         }

@@ -1,15 +1,15 @@
 package org.example.common.database;
 
 import com.google.gson.internal.LinkedTreeMap;
-import org.example.common.models.Message;
-import org.example.common.models.Time;
-import org.example.common.utils.JSONUtils;
-import org.example.server.controller.SaveController;
 import org.example.common.models.Lobby;
+import org.example.common.models.Message;
 import org.example.common.models.Relations.Gift;
 import org.example.common.models.Relations.Trade;
+import org.example.common.models.Time;
 import org.example.common.models.User;
 import org.example.common.models.Weathers.Weather;
+import org.example.common.utils.JSONUtils;
+import org.example.server.controller.SaveController;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -169,7 +169,7 @@ public class DataBaseHelper {
         }
     }
 
-    public static void  changeEmail(String username, String newEmail) {
+    public static void changeEmail(String username, String newEmail) {
         String sql = "UPDATE users SET email = ? WHERE username = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -302,9 +302,9 @@ public class DataBaseHelper {
         try (Connection conn = DriverManager.getConnection(DB_SAVE);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            String lobbyGson = JSONUtils.toJson(new Message(new HashMap<>(){{
+            String lobbyGson = JSONUtils.toJson(new Message(new HashMap<>() {{
                 put("lobby", lobby.getInfo());
-            }} , Message.Type.save));
+            }}, Message.Type.save));
 
             pstmt.setInt(1, lobbyId);
             pstmt.setString(2, lobbyGson);
@@ -341,9 +341,9 @@ public class DataBaseHelper {
         try (Connection conn = DriverManager.getConnection(DB_SAVE);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            String timeGson = JSONUtils.toJson(new Message(new HashMap<>(){{
+            String timeGson = JSONUtils.toJson(new Message(new HashMap<>() {{
                 put("time", time.getInfo());
-            }} , Message.Type.save));
+            }}, Message.Type.save));
 
             pstmt.setString(1, timeGson);
             pstmt.setString(2, weather.name());
@@ -368,24 +368,24 @@ public class DataBaseHelper {
         try (Connection conn = DriverManager.getConnection(DB_SAVE);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            ArrayList<HashMap<String , Object>> giftsArray = new ArrayList<>();
-            ArrayList<HashMap<String , Object>> tradesArray = new ArrayList<>();
+            ArrayList<HashMap<String, Object>> giftsArray = new ArrayList<>();
+            ArrayList<HashMap<String, Object>> tradesArray = new ArrayList<>();
 
-            for(Gift gift : gifts) {
+            for (Gift gift : gifts) {
                 giftsArray.add(gift.getInfo());
             }
 
-            for(Trade trade : trades) {
+            for (Trade trade : trades) {
                 tradesArray.add(trade.getInfo());
             }
 
-            String trade = JSONUtils.toJson(new Message(new HashMap<>(){{
+            String trade = JSONUtils.toJson(new Message(new HashMap<>() {{
                 put("trades", tradesArray);
-            }} , Message.Type.save));
+            }}, Message.Type.save));
 
-            String gift = JSONUtils.toJson(new Message(new HashMap<>(){{
+            String gift = JSONUtils.toJson(new Message(new HashMap<>() {{
                 put("gifts", giftsArray);
-            }} , Message.Type.save));
+            }}, Message.Type.save));
 
             pstmt.setString(1, gift);
             pstmt.setString(2, trade);
@@ -463,27 +463,27 @@ public class DataBaseHelper {
                     String lobbyJson = rs.getString("lobby");
                     Message lobbyMessage = JSONUtils.fromJson(lobbyJson);
                     Lobby lobby = new Lobby(lobbyMessage.getFromBody("lobby"));
-                    for(int i = 1 ; i < 5 ; i++){
+                    for (int i = 1; i < 5; i++) {
                         String userData = rs.getString("User" + i);
                         if (userData == null || userData.trim().isEmpty()) {
                             break;
                         }
-                        if(i == 1){
+                        if (i == 1) {
                             lobby.createBasicGame();
                         }
                         Message message = JSONUtils.fromJson(userData);
-                        SaveController.loadGameFromDB(message , lobby);
+                        SaveController.loadGameFromDB(message, lobby);
                     }
                     String timeString = rs.getString("Time");
                     String weatherString = rs.getString("Weather");
-                    String tradesString =  rs.getString("Trades");
+                    String tradesString = rs.getString("Trades");
                     String giftsString = rs.getString("Gifts");
 
 
                     ArrayList<Gift> gifts = new ArrayList<>();
                     if (giftsString != null && !giftsString.trim().isEmpty()) {
                         Message giftsMessage = JSONUtils.fromJson(giftsString);
-                        for(LinkedTreeMap<String ,Object> ti : giftsMessage.<ArrayList<LinkedTreeMap<String,Object>>>getFromBody("gifts")){
+                        for (LinkedTreeMap<String, Object> ti : giftsMessage.<ArrayList<LinkedTreeMap<String, Object>>>getFromBody("gifts")) {
                             gifts.add(new Gift(ti));
                         }
                     }
@@ -492,7 +492,7 @@ public class DataBaseHelper {
                     ArrayList<Trade> trades = new ArrayList<>();
                     if (tradesString != null && !tradesString.trim().isEmpty()) {
                         Message tradesMessage = JSONUtils.fromJson(tradesString);
-                        for(LinkedTreeMap<String ,Object> ti : tradesMessage.<ArrayList<LinkedTreeMap<String,Object>>>getFromBody("trades")){
+                        for (LinkedTreeMap<String, Object> ti : tradesMessage.<ArrayList<LinkedTreeMap<String, Object>>>getFromBody("trades")) {
                             trades.add(new Trade(ti));
                         }
                     }

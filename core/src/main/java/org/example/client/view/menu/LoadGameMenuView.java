@@ -53,11 +53,11 @@ public class LoadGameMenuView extends AppMenu {
 
     private void setListeners() {
         backButton.addListener(new ClickListener() {
-           @Override
-           public void clicked(InputEvent event, float x, float y) {
-               playClickSound();
-               controller.exitMenu();
-           }
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.exitMenu();
+            }
         });
     }
 
@@ -67,8 +67,8 @@ public class LoadGameMenuView extends AppMenu {
         Gdx.input.setInputProcessor(stage);
         displayBackground();
         backButton.setWidth(300);
-        label.setPosition(Gdx.graphics.getWidth() / 2f - label.getWidth() + 50,  Gdx.graphics.getHeight() / 2f + label.getHeight() + 50);
-        backButton.setPosition(Gdx.graphics.getWidth() / 2f - 2, Gdx.graphics.getHeight() / 2f - backButton.getHeight());
+        label.setPosition(Gdx.graphics.getWidth() / 2f - label.getWidth() + 50, Gdx.graphics.getHeight() / 2f + label.getHeight() + 50);
+        backButton.setPosition(Gdx.graphics.getWidth() / 2f - backButton.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - backButton.getHeight());
         stage.addActor(label);
         stage.addActor(backButton);
     }

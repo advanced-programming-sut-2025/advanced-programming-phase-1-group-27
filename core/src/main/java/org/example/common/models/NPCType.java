@@ -21,28 +21,28 @@ public enum NPCType {
     Sebastian("Sebastian", SebastianQuests(), Features.Angry, SebastianFavouriteItems(),
             "NPCs/Other/Sebastian.png", 11, 16),
     Clint("Clint", null, Features.Anxious, ClinicFavouriteItems(),
-            "NPCs/Shop/Clint.png", 0,0 ),
+            "NPCs/Shop/Clint.png", 0, 0),
     Pierre("Pierre", null, Features.Angry, PierreFavouriteItems(),
             "NPCs/Shop/Pierre.png", 0, 0),
     Robin("Robin", null, Features.Happy, RobinFavouriteItems(),
             "NPCs/Shop/Robin.png", 0, 0),
     Willy("Willy", null, Features.Sad, WillyFavouriteItems(),
-            "NPCs/Shop/Willy.png", 0,0 ),
+            "NPCs/Shop/Willy.png", 0, 0),
     Marnie("Marnie", null, Features.Lazy, MarnieFavouriteItems(),
-            "NPCs/Shop/Marnie.png", 0,0 ),
+            "NPCs/Shop/Marnie.png", 0, 0),
     Morris("Morris", null, Features.Sad, MorrisFavouriteItems(),
-            "NPCs/Shop/Morris.png", 0,0 ),
+            "NPCs/Shop/Morris.png", 0, 0),
     Gus("Gus", null, Features.Happy, GusFavouriteItems(),
-            "NPCs/Shop/Gus.png", 0,0 ),
+            "NPCs/Shop/Gus.png", 0, 0),
     ;
 
     private final String name;
     private final Quest[] Quests;
     private final Features features;
     private final ArrayList<Item> favorite;
+    private final int startDayTime, wonderOffTime;
     private Cell StandingCell;
     private String address;
-    private final int startDayTime, wonderOffTime;
 
     NPCType(String name, Quest[] quests, Features features, ArrayList<Item> favorite, String address, int startDayTime, int wonderOffTime) {
         this.name = name;
@@ -72,40 +72,40 @@ public enum NPCType {
         quests[1] = new Quest(QuestsForNPCs.HarveySecondQuest.getRequest()
                 , QuestsForNPCs.HarveySecondQuest.getReward(), 1);
         quests[2] = new Quest(QuestsForNPCs.HarveyThirdQuest.getRequest()
-                , QuestsForNPCs.HarveyThirdQuest.getReward() , 2);
+                , QuestsForNPCs.HarveyThirdQuest.getReward(), 2);
         return quests;
     }
 
     private static Quest[] LiaQuests() {
         Quest[] quests = new Quest[3];
         quests[0] = new Quest(QuestsForNPCs.LiaFirstQuest.getRequest()
-                , QuestsForNPCs.LiaFirstQuest.getReward() , 0);
+                , QuestsForNPCs.LiaFirstQuest.getReward(), 0);
         quests[1] = new Quest(QuestsForNPCs.LiaSecondQuest.getRequest()
-                , QuestsForNPCs.LiaSecondQuest.getReward() , 1);
+                , QuestsForNPCs.LiaSecondQuest.getReward(), 1);
         quests[2] = new Quest(QuestsForNPCs.LiaThirdQuest.getRequest()
-                , QuestsForNPCs.LiaThirdQuest.getReward() , 2);
+                , QuestsForNPCs.LiaThirdQuest.getReward(), 2);
         return quests;
     }
 
     private static Quest[] RobbinQuests() {
         Quest[] quests = new Quest[3];
         quests[0] = new Quest(QuestsForNPCs.RobbinFirstQuest.getRequest()
-                , QuestsForNPCs.RobbinFirstQuest.getReward() , 0);
+                , QuestsForNPCs.RobbinFirstQuest.getReward(), 0);
         quests[1] = new Quest(QuestsForNPCs.RobbinSecondQuest.getRequest()
-                , QuestsForNPCs.RobbinSecondQuest.getReward() , 1);
+                , QuestsForNPCs.RobbinSecondQuest.getReward(), 1);
         quests[2] = new Quest(QuestsForNPCs.RobbinThirdQuest.getRequest()
-                , QuestsForNPCs.RobbinThirdQuest.getReward() , 2);
+                , QuestsForNPCs.RobbinThirdQuest.getReward(), 2);
         return quests;
     }
 
     private static Quest[] SebastianQuests() {
         Quest[] quests = new Quest[3];
         quests[0] = new Quest(QuestsForNPCs.SebastianFirstQuest.getRequest()
-                , QuestsForNPCs.SebastianFirstQuest.getReward() , 0);
+                , QuestsForNPCs.SebastianFirstQuest.getReward(), 0);
         quests[1] = new Quest(QuestsForNPCs.SebastianSecondQuest.getRequest()
-                , QuestsForNPCs.SebastianSecondQuest.getReward() , 1);
+                , QuestsForNPCs.SebastianSecondQuest.getReward(), 1);
         quests[2] = new Quest(QuestsForNPCs.SebastianThirdQuest.getRequest()
-                , QuestsForNPCs.SebastianThirdQuest.getReward() , 2);
+                , QuestsForNPCs.SebastianThirdQuest.getReward(), 2);
         return quests;
     }
 

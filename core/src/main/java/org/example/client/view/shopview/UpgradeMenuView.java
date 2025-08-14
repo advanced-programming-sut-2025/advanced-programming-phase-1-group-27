@@ -11,13 +11,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.shopControllers.UpgradeMenuController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
 import org.example.client.view.HUDView;
-import org.example.client.model.GameAssetManager;
-import org.example.common.models.Stacks;
 import org.example.common.models.NPCType;
 import org.example.common.models.StackLevel;
+import org.example.common.models.Stacks;
 import org.example.common.models.items.ToolType;
 
 import java.util.ArrayList;
@@ -33,26 +33,20 @@ public class UpgradeMenuView extends AppMenu {
     private final Image creamImage;
     private final Image brownImage;
     private final Image backgroundImage;
-
-    private Label moneyLabel;
-
     private final TextButton exitButton;
-
     private final HUDView hudView;
-
+    private final Map<String, Integer> upgradeLimit;
+    private Label moneyLabel;
     private ArrayList<Stacks> stockItems;
     private Table stockTable;
     private ScrollPane scrollPane;
-
-    private final Map<String, Integer> upgradeLimit;
-
     private float timer = 0f;
 
     private Stage stage;
 
-    public UpgradeMenuView(NPCType npc , AppMenu shopMenu) {
+    public UpgradeMenuView(NPCType npc, AppMenu shopMenu) {
         this.npc = npc;
-        controller = new UpgradeMenuController(this , shopMenu);
+        controller = new UpgradeMenuController(this, shopMenu);
         npcImage = new Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
         coinImage = new Image(GameAssetManager.getGameAssetManager().getCoinTexture());
@@ -189,7 +183,7 @@ public class UpgradeMenuView extends AppMenu {
         scrollPane.setPosition(-120, Gdx.graphics.getHeight() / 2f - 150);
     }
 
-    private void displayMoney(){
+    private void displayMoney() {
         moneyLabel.setText(String.valueOf(ClientApp.getCurrentGame().getCurrentPlayer().getMoney()));
         moneyLabel.setFontScale(1.5f);
         moneyLabel.setPosition(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 100);
@@ -198,12 +192,12 @@ public class UpgradeMenuView extends AppMenu {
         stage.addActor(coinImage);
     }
 
-    private void displayButtons(){
-        exitButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight()/2f - 40);
+    private void displayButtons() {
+        exitButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight() / 2f - 40);
         stage.addActor(exitButton);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -213,15 +207,15 @@ public class UpgradeMenuView extends AppMenu {
         });
     }
 
-    private void displayNPC(){
+    private void displayNPC() {
         npcImage.setPosition(Gdx.graphics.getWidth() - npcImage.getWidth() - 20, 0);
         stage.addActor(npcImage);
     }
 
-    private void displayBackground(){
-        brownImage.setPosition(0 , 5);
-        creamImage.setPosition( 0, npcImage.getHeight() + 20);
-        backgroundImage.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight() - brownImage.getHeight());
+    private void displayBackground() {
+        brownImage.setPosition(0, 5);
+        creamImage.setPosition(0, npcImage.getHeight() + 20);
+        backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - brownImage.getHeight());
         backgroundImage.setPosition(0, brownImage.getHeight() + 20);
 
         creamImage.setColor(1f, 1f, 1f, 0.5f);

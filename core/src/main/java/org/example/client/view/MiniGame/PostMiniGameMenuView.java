@@ -10,8 +10,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.MiniGameController;
 import org.example.client.model.ClientApp;
-import org.example.client.view.AppMenu;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.AppMenu;
 import org.example.common.models.items.FishType;
 
 import java.util.Scanner;
@@ -40,8 +40,8 @@ public class PostMiniGameMenuView extends AppMenu {
         doneButton = new TextButton("Done", skin);
         menuTitleLabel = new Label("Fishing Mini-Game!", skin);
         lostLabel = new Label("You Lost ):", skin);
-        wonLabel = new Label("You successfully caught x" + controller.getNumberOfCaughtFish()+" "+controller.getCaughtFish().getName(), skin);
-        perfectLabel = new Label("In a PERFECT WAYYYY!!!!",skin);
+        wonLabel = new Label("You successfully caught x" + controller.getNumberOfCaughtFish() + " " + controller.getCaughtFish().getName(), skin);
+        perfectLabel = new Label("In a PERFECT WAYYYY!!!!", skin);
         caughtFishImage = controller.getCaughtFish().getItemImage();
 
         this.caughtFish = caughtFish;
@@ -51,24 +51,23 @@ public class PostMiniGameMenuView extends AppMenu {
 
     }
 
-    private void displayLabels(){
+    private void displayLabels() {
 
-        menuTitleLabel.setPosition(stage.getWidth()/8, 5 * stage.getHeight()/6f);
+        menuTitleLabel.setPosition(stage.getWidth() / 8, 5 * stage.getHeight() / 6f);
         menuTitleLabel.setFontScale(3f);
 
         lostLabel.setVisible(caughtFish == null);
-        lostLabel.setPosition(Gdx.graphics.getWidth()/4f,4 * stage.getHeight()/6f);
+        lostLabel.setPosition(Gdx.graphics.getWidth() / 4f, 4 * stage.getHeight() / 6f);
         lostLabel.setColor(GameAssetManager.getGameAssetManager().getErrorColor());
         lostLabel.setFontScale(2f);
 
         wonLabel.setVisible(caughtFish != null);
-        wonLabel.setPosition(Gdx.graphics.getWidth()/4f,4 * stage.getHeight()/6f);
+        wonLabel.setPosition(Gdx.graphics.getWidth() / 4f, 4 * stage.getHeight() / 6f);
         wonLabel.setColor(GameAssetManager.getGameAssetManager().getAcceptColor());
         wonLabel.setFontScale(2f);
 
         perfectLabel.setVisible(caughtFish != null && isPerfect);
-        perfectLabel.setPosition(Gdx.graphics.getWidth()/4f,3 * stage.getHeight()/6f);
-
+        perfectLabel.setPosition(Gdx.graphics.getWidth() / 4f, 3 * stage.getHeight() / 6f);
 
 
         stage.addActor(menuTitleLabel);
@@ -78,17 +77,17 @@ public class PostMiniGameMenuView extends AppMenu {
 
     }
 
-    private void displayButtons(){
+    private void displayButtons() {
 
-        doneButton.setWidth(stage.getWidth()/4f);
-        doneButton.setPosition(3 * stage.getWidth()/8f,stage.getHeight()/6f);
+        doneButton.setWidth(stage.getWidth() / 4f);
+        doneButton.setPosition(3 * stage.getWidth() / 8f, stage.getHeight() / 6f);
         stage.addActor(doneButton);
 
     }
 
-    private void displayImages(){
+    private void displayImages() {
 
-        caughtFishImage.setPosition((Gdx.graphics.getWidth()-caughtFishImage.getWidth())/2f,3 * stage.getHeight()/6f);
+        caughtFishImage.setPosition((Gdx.graphics.getWidth() - caughtFishImage.getWidth()) / 2f, 3 * stage.getHeight() / 6f);
         caughtFishImage.setVisible(caughtFish != null);
 
         stage.addActor(caughtFishImage);
@@ -113,7 +112,6 @@ public class PostMiniGameMenuView extends AppMenu {
         Main.getBatch().end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-
 
 
         stage.draw();

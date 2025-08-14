@@ -9,18 +9,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import org.example.client.Main;
 import org.example.client.controller.WorldController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
 import org.example.client.view.OutsideView;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.AnimalProperty.Barn;
 import org.example.common.models.AnimalProperty.Coop;
-import org.example.common.models.Artisan;
-import org.example.common.models.Cell;
+import org.example.common.models.*;
 import org.example.common.models.Map.FarmMap;
-import org.example.common.models.Player;
-import org.example.common.models.ShippingBin;
-import org.example.common.models.ArtisanTypes;
-import org.example.common.models.CellType;
 import org.example.common.models.items.BuildingType;
 import org.example.common.models.items.products.ProcessedProductType;
 
@@ -34,15 +29,13 @@ public class BuildMenuView extends AppMenu {
     private final Player player = ClientApp.getCurrentGame().getCurrentPlayer();
 
 
-    private final float tileSize = 18f,
-    constantX = (Gdx.graphics.getWidth() - 75 * tileSize) / 2f,
-    constantY = (Gdx.graphics.getHeight() - 55 * tileSize) / 2f;
-
-
     public BuildMenuView(BuildingType buildingType) {
         this.buildingType = buildingType;
         artisan = null;
-    }
+    }    private final float tileSize = 18f,
+            constantX = (Gdx.graphics.getWidth() - 75 * tileSize) / 2f,
+            constantY = (Gdx.graphics.getHeight() - 55 * tileSize) / 2f;
+
 
     public BuildMenuView(Artisan artisan) {
         this.artisan = artisan;
@@ -96,12 +89,11 @@ public class BuildMenuView extends AppMenu {
                         artisan.setFinalProduct(ProcessedProductType.Honey);
                         artisan.setTimeLeft(ProcessedProductType.Honey.getProcessingTime());
                     }
-                }
-                else if (buildingType.isBarn())
+                } else if (buildingType.isBarn())
                     player.getFarmMap().placeBarn(i, j, new Barn(buildingType, player.getFarmMap().getCell(i, j)));
                 else if (buildingType.isCoop())
                     player.getFarmMap().placeCoop(i, j, new Coop(buildingType, player.getFarmMap().getCell(i, j)));
-                else if (buildingType == BuildingType.ShippingBin){
+                else if (buildingType == BuildingType.ShippingBin) {
                     Cell cell = player.getFarmMap().getCell(i, j);
                     ShippingBin shippingBin = new ShippingBin(cell);
                     cell.setBuilding(shippingBin);
@@ -130,7 +122,7 @@ public class BuildMenuView extends AppMenu {
     @Override
     public void render(float delta) {
 
-        ScreenUtils.clear(0,0,0, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         Main.getBatch().begin();
         Main.getBatch().draw(GameAssetManager.getGameAssetManager().getPlayerSocialBackGroundTexture(),
@@ -175,4 +167,6 @@ public class BuildMenuView extends AppMenu {
     public void dispose() {
 
     }
+
+
 }

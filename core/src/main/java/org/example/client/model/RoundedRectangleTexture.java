@@ -1,8 +1,9 @@
 package org.example.client.model;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 
 public class RoundedRectangleTexture {
     public static Texture createRoundedRectangle(int width, int height, int cornerRadius, Color color) {
@@ -28,7 +29,7 @@ public class RoundedRectangleTexture {
     }
 
     public static Texture createBrownRoundedRect(int width, int height, int cornerRadius) {
-        Color brown = new Color(210/255f, 180/255f, 140/255f, 0.8f);
+        Color brown = new Color(210 / 255f, 180 / 255f, 140 / 255f, 0.8f);
         return createRoundedRectangle(width, height, cornerRadius, brown);
     }
 }

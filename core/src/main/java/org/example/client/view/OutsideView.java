@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.*;
 import org.example.client.model.ClientApp;
+import org.example.client.model.enums.SFX;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.Map.NPCMap;
 import org.example.common.models.Position;
-import org.example.client.model.enums.SFX;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,10 +29,8 @@ public class OutsideView extends AppMenu {
     private final WorldController worldController = new WorldController(this);
     private final ArrayList<AnimalController> animalControllers = new ArrayList<>();
     private final ArrayList<NpcController> npcControllers = new ArrayList<>();
-
-    private Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
     private final int tileSize = 40;
+    private Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     public OutsideView() {
 
@@ -68,7 +66,7 @@ public class OutsideView extends AppMenu {
 
     /// ---> Gives the Player Position <---
     public static Position getGraphicalPosition(int i, int j) {
-        int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
+        int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap ? 15 : 54;
         return new Position(j * 40 + 20, (k - i) * 40 + 30);
     }
 
@@ -89,7 +87,7 @@ public class OutsideView extends AppMenu {
 
     /// ---> Gets the Player Position and gives his cell <---
     public static Position getIndices(float x, float y) {
-        int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap? 15: 54;
+        int k = ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap ? 15 : 54;
         return new Position(k - (int) Math.floor(y / 40), (int) Math.floor(x / 40));
     }
 
@@ -105,16 +103,16 @@ public class OutsideView extends AppMenu {
         return new Position(k - (int) Math.floor(y / 40), (int) Math.floor(x / 40));
     }
 
-    public void displayThorAnimation(int i, int j){
+    public void displayThorAnimation(int i, int j) {
 
         SFX.THOR.play();
-        outsideWorldController.setThor(1f,i,j);
+        outsideWorldController.setThor(1f, i, j);
 
     }
 
-    public void displayCrowAttack(int i, int j){
+    public void displayCrowAttack(int i, int j) {
 
-        outsideWorldController.setCrowAttack(3.35f,i,j);
+        outsideWorldController.setCrowAttack(3.35f, i, j);
 
     }
 
@@ -136,7 +134,6 @@ public class OutsideView extends AppMenu {
         ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
-
 
 
         worldController.updateAndRender();
@@ -173,7 +170,6 @@ public class OutsideView extends AppMenu {
 
 
     }
-
 
 
     @Override

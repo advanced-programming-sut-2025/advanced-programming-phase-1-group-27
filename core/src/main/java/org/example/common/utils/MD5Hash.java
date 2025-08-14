@@ -15,7 +15,7 @@ public class MD5Hash {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             try (InputStream inputStream = new FileInputStream(file);
                  DigestInputStream digestInputStream = new DigestInputStream(inputStream, messageDigest)) {
-                while (digestInputStream.read() != -1);
+                while (digestInputStream.read() != -1) ;
             }
             byte[] digest = messageDigest.digest();
             return bytesToHex(digest);

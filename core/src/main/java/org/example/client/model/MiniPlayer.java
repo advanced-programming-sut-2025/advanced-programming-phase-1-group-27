@@ -10,6 +10,10 @@ import java.util.HashMap;
 
 public class MiniPlayer extends User {
 
+    private final Label usernameLabel;
+    private final Label numberOfQuestsLabel;
+    private final Label earningsLabel;
+    private final Label skillLabel;
     private Position position;
     private int mapIndex;
     private int numberOfQuestsCompleted;
@@ -17,16 +21,11 @@ public class MiniPlayer extends User {
     private int totalAbility;
     private int level, xp;
 
-    private final Label usernameLabel;
-    private final Label numberOfQuestsLabel;
-    private final Label earningsLabel;
-    private final Label skillLabel;
-
     public MiniPlayer(User user, int mapIndex) {
         super(user.getUsername(), user.getPassword(), user.getNickname(), user.getEmail(), user.getGender());
         this.mapIndex = mapIndex;
         position = new Position(8, 70);
-        usernameLabel = new Label(user.getUsername(),GameAssetManager.getGameAssetManager().getSkin());
+        usernameLabel = new Label(user.getUsername(), GameAssetManager.getGameAssetManager().getSkin());
         numberOfQuestsLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
         earningsLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
         skillLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
@@ -40,18 +39,17 @@ public class MiniPlayer extends User {
         if (ClientApp.getLoggedInUser().getUsername().equals(getUsername())) {
             Player player = ClientApp.getCurrentGame().getCurrentPlayer();
             position = player.getCurrentCell().getPosition();
-            mapIndex = player.getCurrentMap() instanceof NPCMap? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(getUsername());
+            mapIndex = player.getCurrentMap() instanceof NPCMap ? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(getUsername());
             numberOfQuestsCompleted = player.getNumberOfQuestsDone();
             money = player.getMoney();
             totalAbility = player.getAbility(AbilityType.Farming).getLevel() +
-                           player.getAbility(AbilityType.Mining).getLevel() +
-                           player.getAbility(AbilityType.Foraging).getLevel() +
-                           player.getAbility(AbilityType.Fishing).getLevel();
+                    player.getAbility(AbilityType.Mining).getLevel() +
+                    player.getAbility(AbilityType.Foraging).getLevel() +
+                    player.getAbility(AbilityType.Fishing).getLevel();
             numberOfQuestsLabel.setText(numberOfQuestsCompleted);
             earningsLabel.setText(money);
             skillLabel.setText(totalAbility);
-        }
-        else{
+        } else {
             ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
                 put("mode", "ask");
                 put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
@@ -76,17 +74,17 @@ public class MiniPlayer extends User {
         skillLabel.setText(totalAbility);
     }
 
-    public float getXRatio(){
+    public float getXRatio() {
 
-        return ( float )( position.getY() /
-                ( (mapIndex == 4) ? 34f : 75f ) );
+        return (float) (position.getY() /
+                ((mapIndex == 4) ? 34f : 75f));
 
     }
 
-    public float getYRatio(){
+    public float getYRatio() {
 
-        return 1 - ( float )( position.getX() /
-                ( (mapIndex == 4) ? 16f : 55f ) );
+        return 1 - (float) (position.getX() /
+                ((mapIndex == 4) ? 16f : 55f));
 
     }
 

@@ -11,12 +11,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
-import org.example.client.model.RoundedRectangleTexture;
-import org.example.client.view.HUDView;
 import org.example.client.model.GameAssetManager;
+import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
-import org.example.common.models.Stock;
+import org.example.client.view.HUDView;
 import org.example.common.models.NPCType;
+import org.example.common.models.Stock;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,12 +31,9 @@ public class BlackSmithShop extends AppMenu {
     private final Image backgroundImage;
 
     private final HUDView hudView;
-
-    private float timer = 0f;
-
     private final TextButton upgradeButton;
     private final TextButton exitButton;
-
+    private float timer = 0f;
     private ArrayList<Stock> stockItems;
     private Table stockTable;
     private ScrollPane scrollPane;

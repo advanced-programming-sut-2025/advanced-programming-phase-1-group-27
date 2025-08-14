@@ -5,11 +5,8 @@ import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCC
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.MarriageController;
 import org.example.common.models.Result;
-import org.example.common.models.Menu;
-import org.example.common.models.commands.*;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class GameView extends AppMenu {
     private final GameMenuController controller;

@@ -12,9 +12,9 @@ import org.example.client.controller.InteractionsWithOthers.InteractionControlle
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.client.controller.InteractionsWithOthers.MarriageController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
 import org.example.client.view.OutsideView;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 
 import java.util.Scanner;
@@ -26,23 +26,17 @@ public class InteractionMenu extends AppMenu {
     private final MarriageController marriageController;
     private final Image decoration1;
     private final Image decoration2;
-
-    private boolean playersAreClose;
-
     private final String targetUsername;
-
     private final TextButton tradeButton;
     private final TextButton giftButton;
     private final TextButton flowerButton;
     private final TextButton marriageButton;
     private final TextButton hugButton;
     private final TextButton backButton;
-
     private final Label menuLabel;
     private final Label targetPlayerLabel;
-
     private final GraphicalResult errorLabel;
-
+    private boolean playersAreClose;
     private Stage stage;
 
     public InteractionMenu(String username) {
@@ -57,12 +51,12 @@ public class InteractionMenu extends AppMenu {
 
         errorLabel = new GraphicalResult();
 
-        tradeButton = new TextButton("Trade" , skin);
-        giftButton = new TextButton("Gift" , skin);
-        flowerButton = new TextButton("Flower" , skin);
-        marriageButton = new TextButton("Marriage" , skin);
-        hugButton = new TextButton("Hug" , skin);
-        backButton = new TextButton("Back" , skin);
+        tradeButton = new TextButton("Trade", skin);
+        giftButton = new TextButton("Gift", skin);
+        flowerButton = new TextButton("Flower", skin);
+        marriageButton = new TextButton("Marriage", skin);
+        hugButton = new TextButton("Hug", skin);
+        backButton = new TextButton("Back", skin);
 
         menuLabel = new Label("Interaction Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
@@ -74,15 +68,15 @@ public class InteractionMenu extends AppMenu {
         errorLabel.setPosition(Gdx.graphics.getWidth() / 2f - 175, Gdx.graphics.getHeight() - 40);
     }
 
-    private void updateButtons(){
+    private void updateButtons() {
 
-        hugButton.setColor(hugButton.getColor().r,hugButton.getColor().g,hugButton.getColor().b,
+        hugButton.setColor(hugButton.getColor().r, hugButton.getColor().g, hugButton.getColor().b,
                 (playersAreClose ? 1.0f : 0.3f));
 
-        flowerButton.setColor(flowerButton.getColor().r,flowerButton.getColor().g,flowerButton.getColor().b,
+        flowerButton.setColor(flowerButton.getColor().r, flowerButton.getColor().g, flowerButton.getColor().b,
                 (playersAreClose ? 1.0f : 0.3f));
 
-        marriageButton.setColor(marriageButton.getColor().r,marriageButton.getColor().g,marriageButton.getColor().b,
+        marriageButton.setColor(marriageButton.getColor().r, marriageButton.getColor().g, marriageButton.getColor().b,
                 (playersAreClose ? 1.0f : 0.3f));
 
         hugButton.setDisabled(!playersAreClose);
@@ -110,17 +104,17 @@ public class InteractionMenu extends AppMenu {
         marriageButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
 
-        tradeButton.setPosition(4*(Gdx.graphics.getWidth()-tradeButton.getWidth())/5f, 15 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight()/2f);
-        giftButton.setPosition(4*(Gdx.graphics.getWidth()-giftButton.getWidth())/5f, 13 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight()/2f);
-        flowerButton.setPosition(4*(Gdx.graphics.getWidth()-flowerButton.getWidth())/5f, 11 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight()/2f);
-        hugButton.setPosition(4*(Gdx.graphics.getWidth()-flowerButton.getWidth())/5f, 9 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight()/2f);
-        marriageButton.setPosition(4*(Gdx.graphics.getWidth()-marriageButton.getWidth())/5f, 7 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight()/2f);
-        backButton.setPosition(4*(Gdx.graphics.getWidth()-backButton.getWidth())/5f, 5*Gdx.graphics.getHeight() / 18f - tradeButton.getHeight()/2f);
+        tradeButton.setPosition(4 * (Gdx.graphics.getWidth() - tradeButton.getWidth()) / 5f, 15 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight() / 2f);
+        giftButton.setPosition(4 * (Gdx.graphics.getWidth() - giftButton.getWidth()) / 5f, 13 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight() / 2f);
+        flowerButton.setPosition(4 * (Gdx.graphics.getWidth() - flowerButton.getWidth()) / 5f, 11 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight() / 2f);
+        hugButton.setPosition(4 * (Gdx.graphics.getWidth() - flowerButton.getWidth()) / 5f, 9 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight() / 2f);
+        marriageButton.setPosition(4 * (Gdx.graphics.getWidth() - marriageButton.getWidth()) / 5f, 7 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight() / 2f);
+        backButton.setPosition(4 * (Gdx.graphics.getWidth() - backButton.getWidth()) / 5f, 5 * Gdx.graphics.getHeight() / 18f - tradeButton.getHeight() / 2f);
 
-        decoration1.setSize(252,252);
-        decoration2.setSize(252,252);
-        decoration1.setPosition(200,250);
-        decoration2.setPosition(500,300);
+        decoration1.setSize(252, 252);
+        decoration2.setSize(252, 252);
+        decoration1.setPosition(200, 250);
+        decoration2.setPosition(500, 300);
 
 
         stage.addActor(menuBackground);
@@ -213,7 +207,7 @@ public class InteractionMenu extends AppMenu {
         marriageButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if ( !playersAreClose ) return;
+                if (!playersAreClose) return;
                 playClickSound();
                 errorLabel.set(marriageController.askMarriage(targetUsername));
             }
@@ -222,7 +216,7 @@ public class InteractionMenu extends AppMenu {
         hugButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if ( !playersAreClose ) return;
+                if (!playersAreClose) return;
                 playClickSound();
                 errorLabel.set(userController.hug(targetUsername));
             }
@@ -231,7 +225,7 @@ public class InteractionMenu extends AppMenu {
         flowerButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if ( !playersAreClose ) return;
+                if (!playersAreClose) return;
                 playClickSound();
                 errorLabel.set(userController.flower(targetUsername));
             }

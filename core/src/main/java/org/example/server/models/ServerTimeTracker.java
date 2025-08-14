@@ -5,11 +5,11 @@ import org.example.common.models.Time;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ServerTimeTracker implements Runnable {
+    private final Object pauseLock = new Object();
     private Time time;
     private long startTime;
     private AtomicBoolean isRunning;
     private AtomicBoolean isPaused;
-    private final Object pauseLock = new Object();
 
     public ServerTimeTracker(Time time) {
         this.time = time;

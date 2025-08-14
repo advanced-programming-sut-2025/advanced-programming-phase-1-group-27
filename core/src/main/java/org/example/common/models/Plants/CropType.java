@@ -179,7 +179,6 @@ public enum CropType implements PlantType, Edible {
             "assets/Images/Crops/AncientFruit"),
 
 
-
     // Foragings:
     Daffodil(FruitType.Daffodil, new int[]{}, 30, 0
             , null, 0, false, false, false
@@ -264,7 +263,8 @@ public enum CropType implements PlantType, Edible {
     WinterRoot(FruitType.WinterRoot, new int[]{}, 70, 0
             , null, 25, false, true, false
             , new Season[]{Season.Winter},
-            "assets/Images/Crops/Foragings/Winter_Root.png"),;
+            "assets/Images/Crops/Foragings/Winter_Root.png"),
+    ;
 
     private static final HashMap<Season, ArrayList<CropType>> foragingCropsBySeason = new HashMap<>() {{
         put(Season.Spring, new ArrayList<>(List.of(Grass, Daffodil, Dandelion, Leek, Morel, SalmonBerry,

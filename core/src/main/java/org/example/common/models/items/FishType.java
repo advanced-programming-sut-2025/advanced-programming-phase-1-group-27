@@ -8,26 +8,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public enum FishType implements Item, Edible {
-    Salmon(75, Season.Fall, false, 75,"Items/FishType/Salmon.png"),
+    Salmon(75, Season.Fall, false, 75, "Items/FishType/Salmon.png"),
     Sardine(40, Season.Fall, false, 40, "Items/FishType/Sardine.png"),
     Shad(60, Season.Fall, false, 60, "Items/FishType/Shad.png"),
     BlueDiscus(120, Season.Fall, false, 120, "Items/FishType/Blue_Discus.png"),
     MidnightCarp(150, Season.Winter, false, 150, "Items/FishType/Midnight_Carp.png"),
     Squid(80, Season.Winter, false, 80, "Items/FishType/Squid.png"),
     Tuna(100, Season.Winter, false, 100, "Items/FishType/Tuna.png"),
-    Perch(55, Season.Winter, false, 55,  "Items/FishType/Perch.png"),
+    Perch(55, Season.Winter, false, 55, "Items/FishType/Perch.png"),
     Flounder(100, Season.Spring, false, 100, "Items/FishType/Flounder.png"),
     Lionfish(100, Season.Spring, false, 100, "Items/FishType/Lionfish.png"),
     Herring(30, Season.Spring, false, 30, "Items/FishType/Herring.png"),
-    Ghostfish(45, Season.Spring, false, 45,  "Items/FishType/Ghostfish.png"),
-    Tilapia(75, Season.Summer, false, 75,  "Items/FishType/Tilapia.png"),
+    Ghostfish(45, Season.Spring, false, 45, "Items/FishType/Ghostfish.png"),
+    Tilapia(75, Season.Summer, false, 75, "Items/FishType/Tilapia.png"),
     Dorado(100, Season.Summer, false, 100, "Items/FishType/Dorado.png"),
     Sunfish(30, Season.Summer, false, 30, "Items/FishType/Sunfish.png"),
-    RainbowTrout(65, Season.Summer, false, 65,  "Items/FishType/Rainbow_Trout.png"),
+    RainbowTrout(65, Season.Summer, false, 65, "Items/FishType/Rainbow_Trout.png"),
     Legend(5000, Season.Spring, true, 500, "Items/FishType/Legend.png"),
     Glacierfish(1000, Season.Winter, true, 200, "Items/FishType/Glacierfish.png"),
     Angler(900, Season.Fall, true, 200, "Items/FishType/Angler.png"),
-    Crimsonfish(1500, Season.Summer, true, 250, "Items/FishType/Crimsonfish.png"),;
+    Crimsonfish(1500, Season.Summer, true, 250, "Items/FishType/Crimsonfish.png"),
+    ;
 
     private static HashMap<Season, FishType> cheapestOfSeason = new HashMap<>() {{
         put(Season.Fall, Sardine);
@@ -48,7 +49,6 @@ public enum FishType implements Item, Edible {
         this.energy = energy;
         this.address = address;
     }
-
 
 
     public static HashMap<Season, FishType> getCheapestOfSeason() {

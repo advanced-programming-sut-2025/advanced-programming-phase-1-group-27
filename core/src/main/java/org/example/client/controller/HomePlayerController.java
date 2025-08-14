@@ -7,20 +7,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.client.view.HomeView;
-import org.example.client.view.OutsideView;
 import org.example.client.model.GameAssetManager;
 import org.example.client.model.enums.InGameMenuType;
+import org.example.client.view.HomeView;
+import org.example.client.view.OutsideView;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class HomePlayerController {
-    private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f;
     private final float speed = 3f;
+    private final HomeView view;
+    private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f;
     private Sprite characterSprite = new Sprite(GameAssetManager.getGameAssetManager().getStandingSprite());
     private float time = 0f;
-    private final HomeView view;
 
     public HomePlayerController(HomeView view) {
         characterSprite.setScale(2f);
@@ -48,7 +48,7 @@ public class HomePlayerController {
 
 
         if (!view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
-        InGameMenuType.NONE) {
+                InGameMenuType.NONE) {
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 x -= speed;
                 updateAnimation(GameAssetManager.getGameAssetManager().getWalkLeft());

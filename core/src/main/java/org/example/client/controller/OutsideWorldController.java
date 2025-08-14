@@ -3,8 +3,8 @@ package org.example.client.controller;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import org.example.client.Main;
-import org.example.client.view.OutsideView;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.OutsideView;
 import org.example.common.models.Position;
 
 import java.util.HashMap;
@@ -16,9 +16,8 @@ public class OutsideWorldController {
     private final OutsideView view;
 
     private final Animation<Texture> thorAnimationFrames = GameAssetManager.getGameAssetManager().getThorAnimationFrames();
-    private HashMap<Position, Float> thors = new HashMap<>();
-
     private final Animation<Texture> crowAnimationFrames = GameAssetManager.getGameAssetManager().getCrowAnimationFrames();
+    private HashMap<Position, Float> thors = new HashMap<>();
     private HashMap<Position, Float> crows = new HashMap<>();
 
     public OutsideWorldController(OutsideView view) {
@@ -27,7 +26,7 @@ public class OutsideWorldController {
 
     public void update(float delta) {
 
-        Iterator<Map.Entry<Position,Float>> iteratorThor = thors.entrySet().iterator();
+        Iterator<Map.Entry<Position, Float>> iteratorThor = thors.entrySet().iterator();
         while (iteratorThor.hasNext()) {
             Map.Entry<Position, Float> entry = iteratorThor.next();
             entry.setValue(entry.getValue() - delta);
@@ -61,12 +60,12 @@ public class OutsideWorldController {
 
     private void drawThor() {
 
-        for ( Position position : thors.keySet() ) {
+        for (Position position : thors.keySet()) {
 
             Main.getBatch().draw(
 
                     thorAnimationFrames.getKeyFrame(thors.get(position)),
-                    position.getX() - thorAnimationFrames.getKeyFrame(thors.get(position)).getWidth()/2f ,
+                    position.getX() - thorAnimationFrames.getKeyFrame(thors.get(position)).getWidth() / 2f,
                     position.getY()
 
             );
@@ -75,15 +74,15 @@ public class OutsideWorldController {
 
     }
 
-    private void drawCrow(){
+    private void drawCrow() {
 
-        for ( Position position : crows.keySet() ) {
+        for (Position position : crows.keySet()) {
 
             Main.getBatch().draw(
 
                     crowAnimationFrames.getKeyFrame(crows.get(position)),
-                    position.getX() - crowAnimationFrames.getKeyFrame(crows.get(position)).getWidth()/2f ,
-                    position.getY()-200
+                    position.getX() - crowAnimationFrames.getKeyFrame(crows.get(position)).getWidth() / 2f,
+                    position.getY() - 200
 
             );
 
@@ -92,11 +91,11 @@ public class OutsideWorldController {
     }
 
     public void setThor(float thorTimer, int i, int j) {
-        this.thors.put(OutsideView.getGraphicalPosition(i,j), thorTimer);
+        this.thors.put(OutsideView.getGraphicalPosition(i, j), thorTimer);
     }
 
     public void setCrowAttack(float crowTimer, int i, int j) {
-        this.crows.put(OutsideView.getGraphicalPosition(i,j), crowTimer);
+        this.crows.put(OutsideView.getGraphicalPosition(i, j), crowTimer);
     }
 
 }

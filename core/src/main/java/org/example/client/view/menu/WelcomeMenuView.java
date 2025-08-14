@@ -10,12 +10,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.menus.WelcomeMenuController;
 import org.example.client.model.GameAssetManager;
-import org.example.common.models.Result;
-import org.example.common.models.commands.MainMenuCommands;
 import org.example.client.view.AppMenu;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class WelcomeMenuView extends AppMenu {
 

@@ -1,15 +1,15 @@
 package org.example.server.models.connections;
 
 import org.example.common.models.ConnectionThread;
+import org.example.common.models.Lobby;
 import org.example.common.models.Message;
+import org.example.common.models.User;
 import org.example.server.controller.*;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.server.controller.InteractionsWithOthers.InteractionsWithUserController;
 import org.example.server.controller.InteractionsWithOthers.MarriageController;
 import org.example.server.controller.InteractionsWithOthers.TradeController;
-import org.example.common.models.Lobby;
 import org.example.server.models.ServerApp;
-import org.example.common.models.User;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,8 +63,7 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.leave_app) {
             sendMessage(new Message(null, Message.Type.response));
             return true;
-        }
-        else if (message.getType() == Message.Type.login_request) {
+        } else if (message.getType() == Message.Type.login_request) {
             sendMessage(LoginMenuController.login(message, this));
             return true;
         } else if (message.getType() == Message.Type.update_user_info) {
@@ -193,25 +192,25 @@ public class ClientConnectionThread extends ConnectionThread {
         } else if (message.getType() == Message.Type.add_player_level) {
             sendMessage(InteractionsWithUserController.cheatAddPlayerLevel(message));
             return true;
-        }else if (message.getType() == Message.Type.add_player_xp) {
+        } else if (message.getType() == Message.Type.add_player_xp) {
             sendMessage(InteractionsWithUserController.cheatAddPlayerXP(message));
             return true;
         } else if (message.getType() == Message.Type.add_npc_level) {
             InteractionsWithNPCController.cheatAddLevel(message);
             return true;
-        } else if (message.getType() == Message.Type.get_npc_quests){
+        } else if (message.getType() == Message.Type.get_npc_quests) {
             sendMessage(InteractionsWithNPCController.getQuests(message));
             return true;
-        } else if (message.getType() == Message.Type.do_i_have_quest){
+        } else if (message.getType() == Message.Type.do_i_have_quest) {
             sendMessage(InteractionsWithNPCController.doIHaveThisQuest(message));
             return true;
-        } else if (message.getType() == Message.Type.finish_quest){
+        } else if (message.getType() == Message.Type.finish_quest) {
             InteractionsWithNPCController.finishQuest(message);
             return true;
-        } else if(message.getType() == Message.Type.get_quests_journal){
+        } else if (message.getType() == Message.Type.get_quests_journal) {
             sendMessage(InteractionsWithNPCController.getQuestsJournal(message));
             return true;
-        } else if (message.getType() == Message.Type.meetP2P){
+        } else if (message.getType() == Message.Type.meetP2P) {
             InteractionsWithUserController.meet(message);
             return true;
         } else if (message.getType() == Message.Type.load_game) {

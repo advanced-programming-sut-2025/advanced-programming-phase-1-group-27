@@ -22,6 +22,15 @@ public enum StackLevel {
     StackLevel() {
     }
 
+    public static StackLevel getStackLevel(String levelName) {
+        for (StackLevel stackLevel : values()) {
+            if (stackLevel.name().equalsIgnoreCase(levelName)) {
+                return stackLevel;
+            }
+        }
+        return null;
+    }
+
     public boolean isBetterThan(StackLevel level) {
         //works for basic, copper, ... , Iridium
         //uses the DECLARATION ORDER (BAMBOO > TRAINING)
@@ -31,14 +40,5 @@ public enum StackLevel {
 
     public double getPriceModifier() {
         return priceModifier;
-    }
-
-    public static StackLevel getStackLevel(String levelName) {
-        for (StackLevel stackLevel : values()) {
-            if (stackLevel.name().equalsIgnoreCase(levelName)) {
-                return stackLevel;
-            }
-        }
-        return null;
     }
 }

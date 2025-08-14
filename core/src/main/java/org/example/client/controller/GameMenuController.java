@@ -2,28 +2,23 @@ package org.example.client.controller;
 
 import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
-import org.example.client.model.*;
+import org.example.client.model.ClientApp;
+import org.example.client.view.GameView;
 import org.example.client.view.HomeView;
 import org.example.client.view.shopview.*;
-import org.example.common.models.*;
 import org.example.common.models.AnimalProperty.Animal;
+import org.example.common.models.*;
 import org.example.common.models.Map.*;
-import org.example.common.models.Map.Map;
-import org.example.common.models.Shops.Shop;
 import org.example.common.models.Plants.*;
 import org.example.common.models.Seasons.Season;
-import org.example.common.models.Weathers.Weather;
-import org.example.common.models.items.*;
-import org.example.common.models.items.products.AnimalProduct;
+import org.example.common.models.items.AnimalType;
+import org.example.common.models.items.MineralType;
 import org.example.common.models.items.products.CookingProduct;
-import org.example.common.models.items.products.CraftingProduct;
-import org.example.common.models.items.products.ProcessedProductType;
-import org.example.client.view.GameView;
 
-import java.util.*;
-
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Scanner;
 
 public class GameMenuController extends MenuController {
     private GameView view;
@@ -68,123 +63,123 @@ public class GameMenuController extends MenuController {
             //String answer = scanner.nextLine();
             while (true) {
                 //if (answer.trim().equals("Y")) {
-                    if (currentPlayer.getEnergy() > energy) {
-                        currentPlayer.consumeEnergy(energy);
-                        currentPlayer.setCurrentCell(destination);
-                        if (destination.getType() == CellType.MapLink) {
-                            if (((Cell) destination.getObject()).getMap() == currentPlayer.getFarmMap() ||
-                                    ((Cell) destination.getObject()).getMap() == ClientApp.getCurrentGame().getNpcMap() ||
-                                    (currentPlayer.getSpouse() != null &&
-                                            ((Cell) destination.getObject()).getMap() == currentPlayer.getSpouse().getFarmMap())) {
-                                Cell newDestination = (Cell) destination.getObject();
-                                currentPlayer.setCurrentCell(newDestination);
-                                currentPlayer.setCurrentMap(newDestination.getMap());
-                                if (((Cell) destination.getObject()).getMap() instanceof NPCMap) {
-                                    ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
-                                        put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
-                                        put("username", currentPlayer.getUsername());
-                                        put("x", ((Cell) destination.getObject()).getPosition().getX());
-                                        put("y", ((Cell) destination.getObject()).getPosition().getY());
-                                    }}, Message.Type.enter_npc));
-                                }
-                                if (((Cell) destination.getObject()).getMap() instanceof FarmMap) {
-                                    ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
-                                        put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
-                                        put("username", currentPlayer.getUsername());
-                                        put("x", ((Cell) destination.getObject()).getPosition().getX());
-                                        put("y", ((Cell) destination.getObject()).getPosition().getY());
-                                    }}, Message.Type.leave_npc));
-                                }
-                                return new Result(true, "You Changed your Map And Now Are On Cell(" +
-                                        newDestination.getPosition().getX() + "," +
-                                        newDestination.getPosition().getY() + ") of " +
-                                        newDestination.getMap().getClass().getSimpleName());
-                            } else {
-                                return new Result(true, "You Walked But Are Not Able to Change Your Map!!");
+                if (currentPlayer.getEnergy() > energy) {
+                    currentPlayer.consumeEnergy(energy);
+                    currentPlayer.setCurrentCell(destination);
+                    if (destination.getType() == CellType.MapLink) {
+                        if (((Cell) destination.getObject()).getMap() == currentPlayer.getFarmMap() ||
+                                ((Cell) destination.getObject()).getMap() == ClientApp.getCurrentGame().getNpcMap() ||
+                                (currentPlayer.getSpouse() != null &&
+                                        ((Cell) destination.getObject()).getMap() == currentPlayer.getSpouse().getFarmMap())) {
+                            Cell newDestination = (Cell) destination.getObject();
+                            currentPlayer.setCurrentCell(newDestination);
+                            currentPlayer.setCurrentMap(newDestination.getMap());
+                            if (((Cell) destination.getObject()).getMap() instanceof NPCMap) {
+                                ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                                    put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+                                    put("username", currentPlayer.getUsername());
+                                    put("x", ((Cell) destination.getObject()).getPosition().getX());
+                                    put("y", ((Cell) destination.getObject()).getPosition().getY());
+                                }}, Message.Type.enter_npc));
                             }
-                        } else if (destination.getType() == CellType.Door) {
-                            if (destination.getBuilding() instanceof StoreBuilding storeBuilding) {
-                                currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
-                                int time = ClientApp.getCurrentGame().getTime().getHour();
-                                if (storeBuilding.getStore().getShopType().getStartTime() > time ||
-                                        storeBuilding.getStore().getShopType().getEndTime() < time) {
-                                    return new Result(false,
-                                            "The shop you want to enter is closed at the moment.");
-                                }
-                                switch (storeBuilding.getStore().getShopType()) {
-                                    case ShopType.CarpenterShop -> {
-                                        currentPlayer.setCurrentMenu(Menu.CarpenterShop);
-                                        ClientApp.setCurrentMenu(new CarpenterShop());
-                                        Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                                        return new Result(true, "You Entered The Carpenter Shop!");
-                                    }
-                                    case ShopType.FishShop -> {
-                                        currentPlayer.setCurrentMenu(Menu.FishShop);
-                                        ClientApp.setCurrentMenu(new FishShop());
-                                        Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                                        return new Result(true, "You Entered The Fish Shop!");
-                                    }
-                                    case ShopType.Blacksmith -> {
-                                        currentPlayer.setCurrentMenu(Menu.BlackSmithShop);
-                                        ClientApp.setCurrentMenu(new BlackSmithShop());
-                                        Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                                        return new Result(true, "You Entered The Blacksmith Shop!");
-                                    }
-                                    case ShopType.JojaMart -> {
-                                        currentPlayer.setCurrentMenu(Menu.JojaMartShop);
-                                        ClientApp.setCurrentMenu(new JojaMartShop());
-                                        Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                                        return new Result(true, "You Entered The Joja Mart Shop!");
-                                    }
-                                    case ShopType.MarnieRanch -> {
-                                        currentPlayer.setCurrentMenu(Menu.MarnieRanch);
-                                        ClientApp.setCurrentMenu(new MarnieRanch());
-                                        Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                                        return new Result(true, "You Entered The Marnie Ranch!");
-                                    }
-                                    case ShopType.PierreGeneralStore -> {
-                                        currentPlayer.setCurrentMenu(Menu.PierreGeneralShop);
-                                        ClientApp.setCurrentMenu(new PierreGeneralShop());
-                                        Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                                        return new Result(true, "You Entered The Pierre General Shop!");
-                                    }
-                                    case ShopType.StardropSaloon -> {
-                                        currentPlayer.setCurrentMenu(Menu.StardropSaloonShop);
-                                        ClientApp.setCurrentMenu(new StardropSaloonShop());
-                                        Main.getMain().getScreen().dispose();
-                                        Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                                        return new Result(true, "You Entered The Stardrop Saloon Shop!");
-                                    }
-                                }
-                            } else if (destination.getBuilding() instanceof Hut) {
-                                currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
-                                currentPlayer.setCurrentMenu(Menu.Home);
-                                Main.getMain().getScreen().dispose();
-                                ClientApp.setCurrentMenu(new HomeView());
-                                Main.getMain().setScreen(ClientApp.getCurrentMenu());
-                                Main.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, 1920, 1080);
-                                return new Result(true, "You Entered Your Home :)");
+                            if (((Cell) destination.getObject()).getMap() instanceof FarmMap) {
+                                ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
+                                    put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+                                    put("username", currentPlayer.getUsername());
+                                    put("x", ((Cell) destination.getObject()).getPosition().getX());
+                                    put("y", ((Cell) destination.getObject()).getPosition().getY());
+                                }}, Message.Type.leave_npc));
                             }
+                            return new Result(true, "You Changed your Map And Now Are On Cell(" +
+                                    newDestination.getPosition().getX() + "," +
+                                    newDestination.getPosition().getY() + ") of " +
+                                    newDestination.getMap().getClass().getSimpleName());
+                        } else {
+                            return new Result(true, "You Walked But Are Not Able to Change Your Map!!");
                         }
-                        return new Result(true, "You Walked And Now Are On Cell(" +
-                                i + "," + j + ")");
-                    } else {
-
-                        Cell trueDestination = currentMap.getPlaceInPath(currentPlayer.getCurrentCell(), destination,
-                                currentPlayer.getEnergy());
-                        currentPlayer.consumeEnergy(100000);
-
-                        currentPlayer.setCurrentCell(trueDestination);
-                        return new Result(false, "You Passed Out In Cell (" +
-                                trueDestination.getPosition().getX() + ", " +
-                                trueDestination.getPosition().getY() + ") !");
+                    } else if (destination.getType() == CellType.Door) {
+                        if (destination.getBuilding() instanceof StoreBuilding storeBuilding) {
+                            currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
+                            int time = ClientApp.getCurrentGame().getTime().getHour();
+                            if (storeBuilding.getStore().getShopType().getStartTime() > time ||
+                                    storeBuilding.getStore().getShopType().getEndTime() < time) {
+                                return new Result(false,
+                                        "The shop you want to enter is closed at the moment.");
+                            }
+                            switch (storeBuilding.getStore().getShopType()) {
+                                case ShopType.CarpenterShop -> {
+                                    currentPlayer.setCurrentMenu(Menu.CarpenterShop);
+                                    ClientApp.setCurrentMenu(new CarpenterShop());
+                                    Main.getMain().getScreen().dispose();
+                                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                                    return new Result(true, "You Entered The Carpenter Shop!");
+                                }
+                                case ShopType.FishShop -> {
+                                    currentPlayer.setCurrentMenu(Menu.FishShop);
+                                    ClientApp.setCurrentMenu(new FishShop());
+                                    Main.getMain().getScreen().dispose();
+                                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                                    return new Result(true, "You Entered The Fish Shop!");
+                                }
+                                case ShopType.Blacksmith -> {
+                                    currentPlayer.setCurrentMenu(Menu.BlackSmithShop);
+                                    ClientApp.setCurrentMenu(new BlackSmithShop());
+                                    Main.getMain().getScreen().dispose();
+                                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                                    return new Result(true, "You Entered The Blacksmith Shop!");
+                                }
+                                case ShopType.JojaMart -> {
+                                    currentPlayer.setCurrentMenu(Menu.JojaMartShop);
+                                    ClientApp.setCurrentMenu(new JojaMartShop());
+                                    Main.getMain().getScreen().dispose();
+                                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                                    return new Result(true, "You Entered The Joja Mart Shop!");
+                                }
+                                case ShopType.MarnieRanch -> {
+                                    currentPlayer.setCurrentMenu(Menu.MarnieRanch);
+                                    ClientApp.setCurrentMenu(new MarnieRanch());
+                                    Main.getMain().getScreen().dispose();
+                                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                                    return new Result(true, "You Entered The Marnie Ranch!");
+                                }
+                                case ShopType.PierreGeneralStore -> {
+                                    currentPlayer.setCurrentMenu(Menu.PierreGeneralShop);
+                                    ClientApp.setCurrentMenu(new PierreGeneralShop());
+                                    Main.getMain().getScreen().dispose();
+                                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                                    return new Result(true, "You Entered The Pierre General Shop!");
+                                }
+                                case ShopType.StardropSaloon -> {
+                                    currentPlayer.setCurrentMenu(Menu.StardropSaloonShop);
+                                    ClientApp.setCurrentMenu(new StardropSaloonShop());
+                                    Main.getMain().getScreen().dispose();
+                                    Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                                    return new Result(true, "You Entered The Stardrop Saloon Shop!");
+                                }
+                            }
+                        } else if (destination.getBuilding() instanceof Hut) {
+                            currentPlayer.setCurrentCell(destination.getAdjacentCells().get(2));
+                            currentPlayer.setCurrentMenu(Menu.Home);
+                            Main.getMain().getScreen().dispose();
+                            ClientApp.setCurrentMenu(new HomeView());
+                            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                            Main.getBatch().getProjectionMatrix().setToOrtho2D(0, 0, 1920, 1080);
+                            return new Result(true, "You Entered Your Home :)");
+                        }
                     }
+                    return new Result(true, "You Walked And Now Are On Cell(" +
+                            i + "," + j + ")");
+                } else {
+
+                    Cell trueDestination = currentMap.getPlaceInPath(currentPlayer.getCurrentCell(), destination,
+                            currentPlayer.getEnergy());
+                    currentPlayer.consumeEnergy(100000);
+
+                    currentPlayer.setCurrentCell(trueDestination);
+                    return new Result(false, "You Passed Out In Cell (" +
+                            trueDestination.getPosition().getX() + ", " +
+                            trueDestination.getPosition().getY() + ") !");
+                }
 //                } else if (answer.trim().equals("N")) {
 //                    return new Result(false, "Alright.");
 //                }
@@ -255,7 +250,6 @@ public class GameMenuController extends MenuController {
     }
 
 
-
     public Result plant(SeedType source, Cell cell) {
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
         if (cell.getType() == CellType.Quarry)
@@ -296,7 +290,6 @@ public class GameMenuController extends MenuController {
         }
 
     }
-
 
 
     public Result pet(String animalName) {
@@ -385,7 +378,6 @@ public class GameMenuController extends MenuController {
         return new Result(true, "You Sold " + animal.getName() + " " +
                 animal.getType().getName() + " for " + animal.getPrice() + " Coins!");
     }
-
 
 
     public Result eatFood(String foodName) {

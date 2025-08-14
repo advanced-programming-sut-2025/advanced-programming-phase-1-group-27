@@ -1,13 +1,8 @@
 package org.example.server.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
-import org.example.common.models.Cell;
-import org.example.common.models.Lobby;
-import org.example.common.models.Player;
-import org.example.common.models.Position;
 import org.example.common.database.DataBaseHelper;
 import org.example.common.models.*;
-import org.example.server.models.*;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.AnimalProperty.AnimalEnclosure;
 import org.example.common.models.AnimalProperty.Barn;
@@ -16,6 +11,8 @@ import org.example.common.models.Map.FarmMap;
 import org.example.common.models.Map.NPCMap;
 import org.example.common.models.items.Recipe;
 import org.example.common.models.tools.Backpack;
+import org.example.server.models.ServerApp;
+import org.example.server.models.ServerGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +54,7 @@ public class SaveController {
         // MONEY
         info.put("money", player.getMoney());
         // BUFF
-        info.put("buff", player.getCurrentBuff() == null? null : player.getCurrentBuff().getInfo());
+        info.put("buff", player.getCurrentBuff() == null ? null : player.getCurrentBuff().getInfo());
         // NUMBER OF QUESTS
         info.put("numberOfQuestsDone", player.getNumberOfQuestsDone());
         return info;
@@ -104,14 +101,14 @@ public class SaveController {
     public static void handleInfo(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
         assert lobby != null;
-        DataBaseHelper.saveClientGameInfo(lobby , message);
+        DataBaseHelper.saveClientGameInfo(lobby, message);
         ServerGame game = lobby.getGame();
         Player player = game.getPlayerByUsername(message.getFromBody("playerName"));
         handleFarmInfo(game, message.getFromBody("farmMapInfo"));
         handlePlayerInfo(lobby, player, message.getFromBody("playerInfo"));
     }
 
-    public static void loadGameFromDB(Message message , Lobby lobby){
+    public static void loadGameFromDB(Message message, Lobby lobby) {
         ServerGame game = lobby.getGame();
         Player player = game.getPlayerByUsername(message.getFromBody("playerName"));
         handleFarmInfo(game, message.getFromBody("farmMapInfo"));

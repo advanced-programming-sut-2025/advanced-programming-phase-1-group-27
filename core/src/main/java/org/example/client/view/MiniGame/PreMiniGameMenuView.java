@@ -41,22 +41,22 @@ public class PreMiniGameMenuView extends AppMenu {
 
     }
 
-    private void displayLabels(){
+    private void displayLabels() {
 
-        menuTitleLabel.setPosition(stage.getWidth()/8, 5 * stage.getHeight()/6f);
+        menuTitleLabel.setPosition(stage.getWidth() / 8, 5 * stage.getHeight() / 6f);
         menuTitleLabel.setFontScale(3f);
         stage.addActor(menuTitleLabel);
 
     }
 
-    private void displayButtons(){
+    private void displayButtons() {
 
 
-        startButton.setWidth(stage.getWidth()/4f);
-        backButton.setWidth(stage.getWidth()/4f);
+        startButton.setWidth(stage.getWidth() / 4f);
+        backButton.setWidth(stage.getWidth() / 4f);
 
-        startButton.setPosition(3 * stage.getWidth()/8f, 3 * stage.getHeight()/6f);
-        backButton.setPosition(3 * stage.getWidth()/8f, 2 * stage.getHeight()/6f);
+        startButton.setPosition(3 * stage.getWidth() / 8f, 3 * stage.getHeight() / 6f);
+        backButton.setPosition(3 * stage.getWidth() / 8f, 2 * stage.getHeight() / 6f);
 
         stage.addActor(startButton);
         stage.addActor(backButton);

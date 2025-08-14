@@ -9,7 +9,7 @@ import org.example.common.models.Result;
 
 import java.util.HashMap;
 
-public class LoadGameMenuController extends MenuController{
+public class LoadGameMenuController extends MenuController {
     private LoadGameMenuView view;
 
     public LoadGameMenuController(LoadGameMenuView view) {

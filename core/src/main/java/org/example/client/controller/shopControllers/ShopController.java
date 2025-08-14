@@ -8,9 +8,9 @@ import org.example.client.view.OutsideView;
 import org.example.client.view.shopview.AnimalPurchaseView;
 import org.example.client.view.shopview.PurchaseMenuView;
 import org.example.client.view.shopview.UpgradeMenuView;
+import org.example.common.models.NPCType;
 import org.example.common.models.Result;
 import org.example.common.models.Stock;
-import org.example.common.models.NPCType;
 
 public class ShopController extends MenuController {
     private final AppMenu shopMenu;
@@ -23,17 +23,17 @@ public class ShopController extends MenuController {
 
     public void purchase(Stock stock) {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new PurchaseMenuView(stock , npc , shopMenu));
+        Main.getMain().setScreen(new PurchaseMenuView(stock, npc, shopMenu));
     }
 
     public void purchaseAnimal(Stock stock) {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new AnimalPurchaseView(stock , npc , shopMenu));
+        Main.getMain().setScreen(new AnimalPurchaseView(stock, npc, shopMenu));
     }
 
     public void upgrade() {
         Main.getMain().getScreen().dispose();
-        Main.getMain().setScreen(new UpgradeMenuView(npc , shopMenu));
+        Main.getMain().setScreen(new UpgradeMenuView(npc, shopMenu));
     }
 
     @Override

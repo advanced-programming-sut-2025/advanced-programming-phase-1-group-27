@@ -2,8 +2,8 @@ package org.example.client.controller;
 
 import com.badlogic.gdx.graphics.Camera;
 import org.example.client.Main;
-import org.example.client.model.PopUpTexture;
 import org.example.client.model.InfoWindow;
+import org.example.client.model.PopUpTexture;
 
 import java.util.ArrayList;
 
@@ -21,10 +21,6 @@ public class PopUpController {
         infoWindows.add(infoWindow);
     }
 
-    public void setcamera(Camera c) {
-        camera = c;
-    }
-
     public static void renderPopUps() {
         for (PopUpTexture popUp : popUps) {
             popUp.update();
@@ -37,5 +33,9 @@ public class PopUpController {
         for (InfoWindow infoWindow : infoWindows) {
             infoWindow.draw(Main.getBatch());
         }
+    }
+
+    public void setcamera(Camera c) {
+        camera = c;
     }
 }

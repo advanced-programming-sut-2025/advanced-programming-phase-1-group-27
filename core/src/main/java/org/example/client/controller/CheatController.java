@@ -2,7 +2,7 @@ package org.example.client.controller;
 
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
-import org.example.client.model.*;
+import org.example.client.model.ClientApp;
 import org.example.client.view.OutsideView;
 import org.example.common.models.*;
 import org.example.common.models.AnimalProperty.Animal;
@@ -55,10 +55,10 @@ public class CheatController {
         } else {
             cell.thor();
 
-            if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView
-            && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap npcMap)) {
+            if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView
+                    && !(ClientApp.getCurrentGame().getCurrentPlayer().getCurrentMap() instanceof NPCMap npcMap)) {
 
-                outsideView.displayThorAnimation(i,j);
+                outsideView.displayThorAnimation(i, j);
 
             }
 
@@ -168,40 +168,40 @@ public class CheatController {
         }
         relation.setLevel(relation.getLevel() + amount);
         int finalAmount = relation.getLevel();
-        ClientApp.getServerConnectionThread().sendMessage(new Message(new  HashMap<>() {{
+        ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
-            put("self" , ClientApp.getLoggedInUser().getUsername());
+            put("self", ClientApp.getLoggedInUser().getUsername());
             put("other", npc.getName());
-            put("amount" , amount);
-        }} , Message.Type.add_npc_level));
+            put("amount", amount);
+        }}, Message.Type.add_npc_level));
         return new Result(true, "Level is added! ( " + finalAmount + " )");
     }
 
     public Result cheatAddPlayerLevel(String playerName, String quantityString) {
         int quantity = Integer.parseInt(quantityString);
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new  HashMap<>() {{
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
-            put("self" , ClientApp.getLoggedInUser().getUsername());
+            put("self", ClientApp.getLoggedInUser().getUsername());
             put("other", playerName);
-            put("amount" , quantity);
-        }} , Message.Type.add_player_level) ,  TIMEOUT_MILLIS);
-        if(response == null || response.getType() != Message.Type.response)
+            put("amount", quantity);
+        }}, Message.Type.add_player_level), TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response)
             return new Result(false, "can't add level!");
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
-        return new Result(!result.hasError() , result.getMessage().getText().toString());
+        return new Result(!result.hasError(), result.getMessage().getText().toString());
     }
 
     public Result cheatAddPlayerXP(String playerName, String quantityString) {
         int quantity = Integer.parseInt(quantityString);
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new  HashMap<>() {{
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
-            put("self" , ClientApp.getLoggedInUser().getUsername());
+            put("self", ClientApp.getLoggedInUser().getUsername());
             put("other", playerName);
-            put("amount" , quantity);
-        }} , Message.Type.add_player_xp) ,  TIMEOUT_MILLIS);
-        if(response == null || response.getType() != Message.Type.response)
+            put("amount", quantity);
+        }}, Message.Type.add_player_xp), TIMEOUT_MILLIS);
+        if (response == null || response.getType() != Message.Type.response)
             return new Result(false, "can't add xp!");
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
-        return new Result(!result.hasError() , result.getMessage().getText().toString());
+        return new Result(!result.hasError(), result.getMessage().getText().toString());
     }
 }

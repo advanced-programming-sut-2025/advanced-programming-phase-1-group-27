@@ -6,21 +6,21 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.GiftController;
 import org.example.client.model.ClientApp;
-import org.example.client.view.AppMenu;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.AppMenu;
 import org.example.common.models.Stacks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
-import static java.lang.Math.max;
 
 public class GiftPlayerMenuView extends AppMenu {
 
@@ -305,7 +305,7 @@ public class GiftPlayerMenuView extends AppMenu {
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
                 ///  TODO PARSA: starter - other - onScreenItems.get(selectItemIndex) - itemCount
-                controller.gift(other , onScreenItems.get(selectItemIndex), itemCount);
+                controller.gift(other, onScreenItems.get(selectItemIndex), itemCount);
             }
         });
 

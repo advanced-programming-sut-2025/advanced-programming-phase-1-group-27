@@ -1,8 +1,8 @@
 package org.example.common.models.Map;
 
 import org.example.common.models.Cell;
-import org.example.common.models.Position;
 import org.example.common.models.CellType;
+import org.example.common.models.Position;
 
 import java.util.*;
 
@@ -111,7 +111,7 @@ public class Map {
     }
 
     public int getPathEnergy(Cell A, Cell B) {
-        return ((new Random()).nextInt(10) < 2? 1: 0);
+        return ((new Random()).nextInt(10) < 2 ? 1 : 0);
     }
 
     public Cell getPlaceInPath(Cell A, Cell B, int energy) {

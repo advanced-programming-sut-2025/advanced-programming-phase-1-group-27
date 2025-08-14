@@ -2,17 +2,17 @@ package org.example.common.models.Map;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
-import org.example.client.view.OutsideView;
-import org.example.common.models.Game;
-import org.example.client.model.GameAssetManager;
 import org.example.client.model.BuildingTexture;
+import org.example.client.model.GameAssetManager;
+import org.example.client.view.OutsideView;
 import org.example.common.models.Cell;
-import org.example.common.models.NPCs.NPC;
 import org.example.common.models.CellType;
+import org.example.common.models.Game;
+import org.example.common.models.NPCs.NPC;
 
 public class NPCMap extends Map {
 
-    private final BuildingTexture[] buildingTextures = new BuildingTexture[] {
+    private final BuildingTexture[] buildingTextures = new BuildingTexture[]{
             new BuildingTexture(2, 9, 2),
             new BuildingTexture(5, 9, 8),
             new BuildingTexture(2, 9, 15),
@@ -27,7 +27,6 @@ public class NPCMap extends Map {
             new BuildingTexture(5, 0, 25),
             new BuildingTexture(6, 0, 30)
     };
-
 
 
     public NPCMap(Game game) {
@@ -96,7 +95,7 @@ public class NPCMap extends Map {
 
 
     }
-    
+
     public void renderBuilding(int i, int j, int index) {
         int x = OutsideView.getGraphicalPosition(i, j).getX() - 20,
                 y = OutsideView.getGraphicalPosition(i, j).getY() - 30;

@@ -5,10 +5,9 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.model.GameAssetManager;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.AnimalProperty.AnimalEnclosure;
-import org.example.common.models.AnimalProperty.Barn;
-import org.example.common.models.AnimalProperty.Coop;
-import org.example.common.models.Map.*;
-import org.example.common.models.NPCs.NPC;
+import org.example.common.models.Map.FarmMap;
+import org.example.common.models.Map.Map;
+import org.example.common.models.Map.NPCMap;
 import org.example.common.models.Plants.*;
 import org.example.common.models.Seasons.Season;
 import org.example.common.models.items.MineralType;
@@ -55,8 +54,7 @@ public class Cell {
             setType(CellType.Building);
             if (map instanceof FarmMap farmMap)
                 farmMap.addShippingBin(shippingBin);
-        }
-        else { // type == none
+        } else { // type == none
             if (building instanceof ShippingBin || building instanceof AnimalEnclosure)
                 building = null;
         }
@@ -68,14 +66,11 @@ public class Cell {
             Plant plant = Plant.handleInfo((LinkedTreeMap<String, Object>) info.get("plant"));
             object = plant;
             plant.setCell(this);
-        }
-        else if (type.equals("mineral")) {
+        } else if (type.equals("mineral")) {
             object = MineralType.getItem((String) info.get("mineral"));
-        }
-        else if (type.equals("artisan")) {
+        } else if (type.equals("artisan")) {
             object = new Artisan((LinkedTreeMap<String, Object>) info.get("artisan"));
-        }
-        else { // type == none
+        } else { // type == none
             if (object instanceof Plant || object instanceof MineralType || object instanceof Artisan) {
                 object = null;
             }
@@ -96,16 +91,13 @@ public class Cell {
         if (object instanceof Plant plant) {
             info.put("type", "plant");
             info.put("plant", plant.getInfo());
-        }
-        else if (object instanceof MineralType mineralType) {
+        } else if (object instanceof MineralType mineralType) {
             info.put("type", "mineral");
             info.put("mineral", mineralType.name());
-        }
-        else if (object instanceof Artisan artisan) {
+        } else if (object instanceof Artisan artisan) {
             info.put("type", "artisan");
             info.put("artisan", artisan.getInfo());
-        }
-        else
+        } else
             info.put("type", "none");
         return info;
     }
@@ -115,8 +107,7 @@ public class Cell {
         if (building instanceof ShippingBin shippingBin) {
             info.put("type", "shippingBin");
             info.put("shippingBin", shippingBin.getInfo());
-        }
-        else {
+        } else {
             info.put("type", "none");
         }
         return info;
@@ -133,7 +124,7 @@ public class Cell {
 //        }
 
         if (object instanceof Plant || object instanceof Animal || object instanceof MineralType
-        || object instanceof Artisan)
+                || object instanceof Artisan)
             return false;
         return cellType == CellType.Plowed || cellType == CellType.Free || cellType == CellType.View ||
                 cellType == CellType.Door || cellType == CellType.MapLink || cellType == CellType.Quarry;

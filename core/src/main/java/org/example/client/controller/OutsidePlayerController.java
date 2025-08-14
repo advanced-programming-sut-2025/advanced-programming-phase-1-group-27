@@ -8,34 +8,32 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.enums.InGameMenuType;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
 import org.example.common.models.Message;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.Result;
-import org.example.client.model.enums.InGameMenuType;
 
 import java.util.HashMap;
 
-import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class OutsidePlayerController {
+    private final float speed = 160f;
+    private final GameMenuController gameMenuController = new GameMenuController(new GameView());
+    private final OutsideView view;
     private float x = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX();
     private float y = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY();
     private float
-    lastX, lastY, destX, destY;
+            lastX, lastY, destX, destY;
     private Animation<TextureRegion> currentAnimation;
-    private final float speed = 160f;
     private Sprite characterSprite = new Sprite(GameAssetManager.getGameAssetManager().getStandingSprite());
     private float time = 0f, animationTime = 0f;
     private Camera camera;
-    private final GameMenuController gameMenuController = new GameMenuController(new GameView());
-
     private boolean walking = false, passedOut = false;
     private Direction direction = null;
-    private final OutsideView view;
 
     public OutsidePlayerController(OutsideView view) {
         characterSprite.setScale(2f);
@@ -93,7 +91,7 @@ public class OutsidePlayerController {
 
 
         if (!passedOut && !walking && !view.getHudView().getTextInputField().isVisible() && view.getHudView().getCurrentMenu() ==
-        InGameMenuType.NONE) {
+                InGameMenuType.NONE) {
             x = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getX();
             y = OutsideView.getGraphicalPosition(ClientApp.getCurrentGame().getCurrentPlayer().getPosition()).getY();
             lastX = x;
@@ -113,8 +111,7 @@ public class OutsidePlayerController {
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkLeft();
                     direction = Direction.Left;
                 }
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 Result result = gameMenuController.walk(
                         OutsideView.getIndices(x + 40, y).getX() + "",
                         OutsideView.getIndices(x + 40, y).getY() + "");
@@ -126,8 +123,7 @@ public class OutsidePlayerController {
                     currentAnimation = GameAssetManager.getGameAssetManager().getWalkRight();
                     direction = Direction.Right;
                 }
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 Result result = gameMenuController.walk(
                         OutsideView.getIndices(x, y + 40).getX() + "",
                         OutsideView.getIndices(x, y + 40).getY() + "");
@@ -140,8 +136,7 @@ public class OutsidePlayerController {
                     direction = Direction.Up;
 
                 }
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 Result result = gameMenuController.walk(
                         OutsideView.getIndices(x, y - 40).getX() + "",
                         OutsideView.getIndices(x, y - 40).getY() + "");

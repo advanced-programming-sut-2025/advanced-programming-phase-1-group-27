@@ -5,23 +5,24 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-        import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.enums.InGameMenuType;
+import org.example.client.view.HUDView;
+import org.example.common.models.GraphicalResult;
 import org.example.common.models.Player;
 import org.example.common.models.ShippingBin;
 import org.example.common.models.Stacks;
-import org.example.client.view.HUDView;
-import org.example.client.model.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.client.model.enums.InGameMenuType;
 import org.example.common.models.items.ToolType;
 import org.example.common.models.tools.Backpack;
 
 import java.awt.*;
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class ShippingBinController {
 
@@ -32,22 +33,16 @@ public class ShippingBinController {
     private final Skin skin = GameAssetManager.getGameAssetManager().getSkin();
 
     //MAIN MENU:
-
-    private ArrayList<Stacks> inventoryCopy;
     private final ArrayList<Image> itemImages;
     private final ArrayList<Label> quantityLabels;
-
-    private ArrayList<Stacks> selectedItems;
     private final ArrayList<Image> selectedItemImages;
     private final ArrayList<Label> selectedQuantityLabels;
-
+    private final Image artisanBackgrond;
+    private final TextButton okButton;
+    private ArrayList<Stacks> inventoryCopy;
+    private ArrayList<Stacks> selectedItems;
     private ShippingBin shippingBin;
     private Backpack backpack = new Backpack(ToolType.BasicBackpack);
-
-    private final Image artisanBackgrond;
-
-    private final TextButton okButton;
-
     private GraphicalResult error = new GraphicalResult();
 
 
@@ -70,7 +65,6 @@ public class ShippingBinController {
         artisanBackgrond.setPosition((Gdx.graphics.getWidth() - artisanBackgrond.getWidth()) / 2f,
                 (Gdx.graphics.getHeight() - artisanBackgrond.getHeight()) / 2f);
         artisanBackgrond.setVisible(hudView.getCurrentMenu() == InGameMenuType.SHBIN);
-
 
 
         okButton = new TextButton("OK", skin);

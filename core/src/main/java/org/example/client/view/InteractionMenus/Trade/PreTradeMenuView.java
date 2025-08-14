@@ -40,9 +40,9 @@ public class PreTradeMenuView extends AppMenu {
         ClientApp.setNonMainMenu(this);
         targetUsername = username;
 
-        tradeButton = new TextButton("Trade" , skin);
-        historyButton = new TextButton("History Trade" , skin);
-        backButton = new TextButton("Back" , skin);
+        tradeButton = new TextButton("Trade", skin);
+        historyButton = new TextButton("History Trade", skin);
+        backButton = new TextButton("Back", skin);
 
         tradeMenuLabel = new Label("Trade Menu", skin);
         targetPlayerLabel = new Label("Target Player: " + username, skin);
@@ -68,9 +68,9 @@ public class PreTradeMenuView extends AppMenu {
         tradeButton.setWidth(Gdx.graphics.getWidth() / 4f);
         historyButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        tradeButton.setPosition((Gdx.graphics.getWidth()-tradeButton.getWidth())/2f, 3 * Gdx.graphics.getHeight() / 6f);
-        historyButton.setPosition((Gdx.graphics.getWidth()-historyButton.getWidth())/2f, 2 * Gdx.graphics.getHeight() / 6f);
-        backButton.setPosition((Gdx.graphics.getWidth()-backButton.getWidth())/2f, Gdx.graphics.getHeight() / 6f);
+        tradeButton.setPosition((Gdx.graphics.getWidth() - tradeButton.getWidth()) / 2f, 3 * Gdx.graphics.getHeight() / 6f);
+        historyButton.setPosition((Gdx.graphics.getWidth() - historyButton.getWidth()) / 2f, 2 * Gdx.graphics.getHeight() / 6f);
+        backButton.setPosition((Gdx.graphics.getWidth() - backButton.getWidth()) / 2f, Gdx.graphics.getHeight() / 6f);
 
         stage.addActor(menuBackground);
         stage.addActor(tradeButton);

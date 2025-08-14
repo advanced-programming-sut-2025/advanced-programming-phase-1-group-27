@@ -11,13 +11,16 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import org.example.client.Main;
-import org.example.client.model.*;
+import org.example.client.model.BuildingTexture;
+import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.InfoWindow;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
-import org.example.common.models.*;
 import org.example.common.models.AnimalProperty.AnimalEnclosure;
 import org.example.common.models.AnimalProperty.Barn;
 import org.example.common.models.AnimalProperty.Coop;
+import org.example.common.models.*;
 import org.example.common.models.Map.FarmMap;
 import org.example.common.models.Map.GreenHouse;
 import org.example.common.models.Map.Map;
@@ -31,18 +34,14 @@ import org.example.common.models.items.MineralType;
 import java.util.ArrayList;
 
 public class WorldController {
+    private final OutsideView view;
     private int tileSize = 40;
     private Camera camera;
-    private final OutsideView view;
     private ArrayList<Label> dialogueLabels = new ArrayList<>();
     private ArrayList<InfoWindow> infoWindows = new ArrayList<>();
 
     public WorldController(OutsideView view) {
         this.view = view;
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
     }
 
     public static TextureRegion createColoredTexture(Color color) {
@@ -54,14 +53,17 @@ public class WorldController {
         return new TextureRegion(texture);
     }
 
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
     public void renderBuilding(int i, int j, int index) {
         int x = OutsideView.getGraphicalPosition(i, j).getX() - 20,
                 y = OutsideView.getGraphicalPosition(i, j).getY() - 30;
         if (i == 0) {
             Texture texture = GameAssetManager.getGameAssetManager().getShopTexture(index);
             Main.getBatch().draw(texture, x - 10, y - 160, 190, 190);
-        }
-        else {
+        } else {
             TextureRegion textureRegion = GameAssetManager.getGameAssetManager().getCabinTextureRegion(index);
             Main.getBatch().draw(textureRegion, x, y - 160, 164, 224);
         }
@@ -88,8 +90,7 @@ public class WorldController {
                         if (crop.isAlwaysWatered()) {
                             texture = GameAssetManager.getGameAssetManager().getDeluxeRetainingSoilTexture();
                             Main.getBatch().draw(texture, x + 30, y + 30, 10, 10);
-                        }
-                        else if (crop.isFertilized()) {
+                        } else if (crop.isFertilized()) {
                             texture = GameAssetManager.getGameAssetManager().getSpeedGroTexture();
                             Main.getBatch().draw(texture, x + 30, y + 30, 10, 10);
                         }
@@ -106,8 +107,7 @@ public class WorldController {
             Main.getBatch().draw(GameAssetManager.getGameAssetManager().getGreenHouseTexture(),
                     x, y - 240, 320, 280);
             renderGreenhouseInterior(map);
-        }
-        else
+        } else
             Main.getBatch().draw(GameAssetManager.getGameAssetManager().getWreckedGreenHouseTexture(),
                     x, y - 240, 320, 380);
 
@@ -209,8 +209,7 @@ public class WorldController {
 
                     if (texture == null) continue;
                     Main.getBatch().draw(texture, x, y, tileSize, tileSize);
-                }
-                else {
+                } else {
                     float x = j * tileSize;
                     float y = (height - 1 - i) * tileSize;
                     Texture texture =
@@ -243,8 +242,7 @@ public class WorldController {
                     if (crop.isAlwaysWatered()) {
                         texture = GameAssetManager.getGameAssetManager().getDeluxeRetainingSoilTexture();
                         Main.getBatch().draw(texture, x + 30, y + 30, 10, 10);
-                    }
-                    else if (crop.isFertilized()) {
+                    } else if (crop.isFertilized()) {
                         texture = GameAssetManager.getGameAssetManager().getSpeedGroTexture();
                         Main.getBatch().draw(texture, x + 30, y + 30, 10, 10);
                     }
@@ -273,7 +271,7 @@ public class WorldController {
                     if (artisan.getFinalProduct() != null) {
                         float maxLen = 50;
                         float len = (1 - (float) artisan.getTimeLeft() / (float) artisan.getFinalProduct().getType().getProcessingTime())
-                                 * maxLen;
+                                * maxLen;
                         Main.getBatch().draw(GameAssetManager.getGameAssetManager().getArtisanBarBlack(),
                                 x + 20 - maxLen / 2f, y + 72,
                                 maxLen, 4);
@@ -286,7 +284,7 @@ public class WorldController {
         }
         if (map instanceof NPCMap) {
             renderNpcMap((NPCMap) map);
-        } else{
+        } else {
             renderFarmMap((FarmMap) map);
         }
     }
@@ -312,7 +310,7 @@ public class WorldController {
                 return;
             if (cell.getObject() instanceof Plant plant) {
                 String info = new String("Plant name: " + plant.getType().getName() + "\n" +
-                        (plant.getWateredToday()? "Watered today": "Not watered today!") + "\n" +
+                        (plant.getWateredToday() ? "Watered today" : "Not watered today!") + "\n" +
                         "Current Stage: " + plant.getCurrentStage() + "\n" +
                         "Seasons: " + plant.getType().getSeasons().toString().replaceAll("\\[|\\]", "") +
                         "\n");
@@ -338,8 +336,7 @@ public class WorldController {
 //            else if (cell.getObject() instanceof Animal animal) {
 //                view.getHudView().setAnimal(animal);
 //            }
-        }
-        else if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        } else if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             if (cell == null)
                 return;
             if (cell.getObject() instanceof Artisan artisan) {

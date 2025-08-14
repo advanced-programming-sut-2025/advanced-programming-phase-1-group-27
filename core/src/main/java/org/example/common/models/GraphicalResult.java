@@ -48,10 +48,32 @@ public class GraphicalResult {
     public GraphicalResult(LinkedTreeMap<String, Object> data) {
         isError = (boolean) data.get("isError");
         message = new Label((String) data.get("message text"), GameAssetManager.getGameAssetManager().getSkin());
-        message.setColor(isError? GameAssetManager.getGameAssetManager().getErrorColor() : GameAssetManager.getGameAssetManager().getAcceptColor());
+        message.setColor(isError ? GameAssetManager.getGameAssetManager().getErrorColor() : GameAssetManager.getGameAssetManager().getAcceptColor());
         message.setFontScale(1f);
         message.setVisible((boolean) data.get("visibility"));
         displayTime = ((Number) data.get("displayTime")).floatValue();
+    }
+
+    // in order to send object's data via network
+    public static HashMap<String, Object> getInfo(String message) {
+        return new HashMap<>() {{
+            put("message text", message);
+            put("displayTime", 3f);
+            put("isError", true);
+            put("visibility", true); // this function can be overloaded in order to have optional visibility
+        }};
+    }
+
+    public static HashMap<String, Object> getInfo(String message, boolean isError) {
+        HashMap<String, Object> info = getInfo(message);
+        info.put("isError", isError);
+        return info;
+    }
+
+    public static HashMap<String, Object> getInfo(String message, float displayTime) {
+        HashMap<String, Object> info = getInfo(message);
+        info.put("displayTime", displayTime);
+        return info;
     }
 
     public void set(GraphicalResult graphicalResult) {
@@ -95,33 +117,11 @@ public class GraphicalResult {
         return isError;
     }
 
-    public void setDisplayTime(float displayTime) {
-        this.displayTime = displayTime;
-    }
-
     public float getDisplayTime() {
         return displayTime;
     }
 
-    // in order to send object's data via network
-    public static HashMap<String, Object> getInfo(String message) {
-        return new HashMap<>() {{
-            put("message text", message);
-            put("displayTime", 3f);
-            put("isError", true);
-            put("visibility", true); // this function can be overloaded in order to have optional visibility
-        }};
-    }
-
-    public static HashMap<String, Object> getInfo(String message, boolean isError) {
-        HashMap<String, Object> info = getInfo(message);
-        info.put("isError", isError);
-        return info;
-    }
-
-    public static HashMap<String, Object> getInfo(String message, float displayTime) {
-        HashMap<String, Object> info = getInfo(message);
-        info.put("displayTime", displayTime);
-        return info;
+    public void setDisplayTime(float displayTime) {
+        this.displayTime = displayTime;
     }
 }

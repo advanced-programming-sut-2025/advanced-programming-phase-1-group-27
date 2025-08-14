@@ -9,31 +9,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.menus.PasswordMenuController;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.Lobby;
 
 import java.util.Scanner;
 
-public class PasswordMenuView  extends AppMenu {
-    
+public class PasswordMenuView extends AppMenu {
+
     private final PasswordMenuController controller;
     private final Lobby lobby;
 
     private final Label menuDescriptionLabel;
-    
+
     private final TextField passwordField;
-    
+
     private final TextButton joinButton;
     private final TextButton backButton;
-    
+
     private final GraphicalResult errorLabel;
 
     private Stage stage;
 
     public PasswordMenuView(Lobby lobby) {
-        
+
         controller = new PasswordMenuController(this);
         this.lobby = lobby;
 
@@ -41,7 +41,7 @@ public class PasswordMenuView  extends AppMenu {
 
         passwordField = new TextField("", skin);
         joinButton = new TextButton("Join", skin);
-        backButton  = new  TextButton("Back", skin);
+        backButton = new TextButton("Back", skin);
 
         errorLabel = new GraphicalResult();
 
@@ -60,20 +60,20 @@ public class PasswordMenuView  extends AppMenu {
         stage.addActor(menuDescriptionLabel);
     }
 
-    private void showInputFields(){
-        passwordField.setWidth(Gdx.graphics.getWidth()/4f);
-        passwordField.setPosition((Gdx.graphics.getWidth() - passwordField.getWidth())/2f,7*Gdx.graphics.getHeight()/15f-20);
+    private void showInputFields() {
+        passwordField.setWidth(Gdx.graphics.getWidth() / 4f);
+        passwordField.setPosition((Gdx.graphics.getWidth() - passwordField.getWidth()) / 2f, 7 * Gdx.graphics.getHeight() / 15f - 20);
         stage.addActor(passwordField);
     }
 
-    private void showButtons(){
-        backButton.setWidth(Gdx.graphics.getWidth()/4f);
-        joinButton.setWidth(Gdx.graphics.getWidth()/4f);
+    private void showButtons() {
+        backButton.setWidth(Gdx.graphics.getWidth() / 4f);
+        joinButton.setWidth(Gdx.graphics.getWidth() / 4f);
 
-        backButton.setPosition(5 * Gdx.graphics.getWidth()/24f,
-                2*Gdx.graphics.getHeight()/12f);
-        joinButton.setPosition(13 * Gdx.graphics.getWidth()/24f,
-                2*Gdx.graphics.getHeight()/12f);
+        backButton.setPosition(5 * Gdx.graphics.getWidth() / 24f,
+                2 * Gdx.graphics.getHeight() / 12f);
+        joinButton.setPosition(13 * Gdx.graphics.getWidth() / 24f,
+                2 * Gdx.graphics.getHeight() / 12f);
 
         stage.addActor(backButton);
         stage.addActor(joinButton);

@@ -5,9 +5,6 @@ import org.example.common.models.Lobby;
 import org.example.common.models.Message;
 import org.example.common.models.User;
 import org.example.server.models.ServerApp;
-import org.example.server.models.connections.ClientConnectionThread;
-
-import java.util.HashMap;
 
 public class DcController {
     public static void handleDC(Message message) {
@@ -27,8 +24,7 @@ public class DcController {
                 }
                 if (reconnect) {
                     SaveController.sendInfo(lobby, playerName);
-                }
-                else {
+                } else {
                     DataBaseHelper.saveTimeAndWeather(lobby, lobby.getGame().getTime(), lobby.getGame().getCurrentWeather());
                     DataBaseHelper.saveGiftsAndTrades(lobby, lobby.getGame().getGifts(), lobby.getGame().getTrades());
                     lobby.getGame().pause();

@@ -29,16 +29,12 @@ public class QuestNPCMenuView extends AppMenu {
     private final ArrayList<Quest> quests;
 
     private final GraphicalResult errorLabel;
-
-    private Quest selectedQuest = null;
-
-    private Table table;
-    private ScrollPane scrollPane;
-
     private final TextButton addButton;
     private final TextButton finishButton;
     private final TextButton exitButton;
-
+    private Quest selectedQuest = null;
+    private Table table;
+    private ScrollPane scrollPane;
     private Stage stage;
 
     public QuestNPCMenuView(String npcName) {
@@ -127,7 +123,7 @@ public class QuestNPCMenuView extends AppMenu {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     playClickSound();
-                    selectedQuest =  quest;
+                    selectedQuest = quest;
                 }
             });
         }
@@ -225,7 +221,7 @@ public class QuestNPCMenuView extends AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                errorLabel.set(controller.finish(selectedQuest , npcName));
+                errorLabel.set(controller.finish(selectedQuest, npcName));
             }
         });
     }

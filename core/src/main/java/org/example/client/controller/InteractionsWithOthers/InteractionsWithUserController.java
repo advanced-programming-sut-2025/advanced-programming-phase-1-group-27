@@ -4,10 +4,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.PopUpController;
-import org.example.client.model.*;
+import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.MiniPlayer;
+import org.example.client.model.PopUpTexture;
 import org.example.client.view.OutsideView;
-import org.example.common.models.*;
+import org.example.common.models.GraphicalResult;
+import org.example.common.models.Message;
+import org.example.common.models.Player;
 import org.example.common.models.Relations.Relation;
+import org.example.common.models.Stacks;
 import org.example.common.models.items.ShopItems;
 import org.example.common.models.tools.Backpack;
 
@@ -18,7 +24,7 @@ import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 
 public class InteractionsWithUserController {
-    public static void meet(String username){
+    public static void meet(String username) {
         Message message = new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
@@ -45,10 +51,10 @@ public class InteractionsWithUserController {
     }
 
     public static ArrayList<Stacks> getInventory(String username) {
-        Message message = new Message(new HashMap<>(){{
+        Message message = new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("username", username);
-        }} , Message.Type.get_player_inventory);
+        }}, Message.Type.get_player_inventory);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
             System.out.println("Inventory failed!");
@@ -87,7 +93,7 @@ public class InteractionsWithUserController {
             put("self", ClientApp.getLoggedInUser().getUsername());
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
         }}, Message.Type.interaction_p2p));
-        return new GraphicalResult("You have give your friend flower!" , false);
+        return new GraphicalResult("You have give your friend flower!", false);
     }
 
     public GraphicalResult hug(String username) {
@@ -114,9 +120,9 @@ public class InteractionsWithUserController {
 
         float giverX = 0, giverY = 0;
 
-        for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+        for (MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers()) {
 
-            if ( miniPlayer.getUsername().equals(username) ) {
+            if (miniPlayer.getUsername().equals(username)) {
                 giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
                 giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
             }
@@ -124,11 +130,11 @@ public class InteractionsWithUserController {
         }
 
         PopUpController.addPopUp(new PopUpTexture(itemSprite
-                ,(newOutsideView.getPlayerController().getX()+giverX)/2f,(newOutsideView.getPlayerController().getY()+giverY)/2f,
-                (newOutsideView.getPlayerController().getX()+giverX)/2f, (newOutsideView.getPlayerController().getY()+giverY)/2f, 4
+                , (newOutsideView.getPlayerController().getX() + giverX) / 2f, (newOutsideView.getPlayerController().getY() + giverY) / 2f,
+                (newOutsideView.getPlayerController().getX() + giverX) / 2f, (newOutsideView.getPlayerController().getY() + giverY) / 2f, 4
         ));
 
-        return new GraphicalResult("You hugged your friend!" , false);
+        return new GraphicalResult("You hugged your friend!", false);
     }
 
     private boolean canFlowered(Relation relation) {

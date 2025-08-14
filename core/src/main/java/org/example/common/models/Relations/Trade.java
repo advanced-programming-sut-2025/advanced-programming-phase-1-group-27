@@ -33,6 +33,15 @@ public class Trade {
         this.id = ((Number) info.get("id")).intValue();
     }
 
+    public Trade(Message message) {
+        this.starter = message.getFromBody("starter");
+        this.other = message.getFromBody("other");
+        this.starterSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("starterSelected")).getItems();
+        this.othersSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("otherSelected")).getItems();
+        this.id = idCounter;
+        idCounter++;
+    }
+
     public HashMap<String, Object> getInfo() {
         HashMap<String, Object> info = new HashMap<>();
         info.put("starter", starter);
@@ -41,15 +50,6 @@ public class Trade {
         info.put("otherSelected", new Backpack(ToolType.BasicBackpack, othersSelected).getInfo());
         info.put("id", id);
         return info;
-    }
-
-    public Trade(Message message) {
-        this.starter = message.getFromBody("starter");
-        this.other = message.getFromBody("other");
-        this.starterSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("starterSelected")).getItems();
-        this.othersSelected = new Backpack(message.<LinkedTreeMap<String, Object>>getFromBody("otherSelected")).getItems();
-        this.id = idCounter;
-        idCounter++;
     }
 
     public String getStarter() {

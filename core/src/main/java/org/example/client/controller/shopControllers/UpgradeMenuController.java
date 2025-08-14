@@ -18,7 +18,7 @@ public class UpgradeMenuController extends MenuController {
     private final AppMenu shopMenuView;
     private final UpgradeMenuView view;
 
-    public UpgradeMenuController(UpgradeMenuView view , AppMenu shopMenuView) {
+    public UpgradeMenuController(UpgradeMenuView view, AppMenu shopMenuView) {
         this.toolController = new ToolController();
         this.shopMenuView = shopMenuView;
         this.view = view;

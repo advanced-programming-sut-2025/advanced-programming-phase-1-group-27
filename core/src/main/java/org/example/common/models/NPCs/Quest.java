@@ -17,12 +17,20 @@ public class Quest {
     private Label rewardLabel;
     private Label requestLabel;
 
-    public Quest(Stacks request, Stacks reward , int index) {
+    public Quest(Stacks request, Stacks reward, int index) {
         this.reward = reward;
         this.request = request;
         this.playerName = "";
         this.isDone = false;
         this.index = index;
+    }
+
+    public Quest(LinkedTreeMap<String, Object> info) {
+        this.request = new Stacks((LinkedTreeMap<String, Object>) info.get("request"));
+        this.reward = new Stacks((LinkedTreeMap<String, Object>) info.get("reward"));
+        this.playerName = (String) info.get("playerName");
+        this.isDone = (boolean) info.get("isDone");
+        this.index = ((Number) info.get("index")).intValue();
     }
 
     public HashMap<String, Object> getInfo() {
@@ -33,14 +41,6 @@ public class Quest {
         info.put("isDone", isDone);
         info.put("index", index);
         return info;
-    }
-
-    public Quest (LinkedTreeMap<String, Object> info) {
-        this.request = new Stacks((LinkedTreeMap<String, Object>) info.get("request"));
-        this.reward = new Stacks((LinkedTreeMap<String, Object>) info.get("reward"));
-        this.playerName = (String) info.get("playerName");
-        this.isDone = (boolean) info.get("isDone");
-        this.index = ((Number) info.get("index")).intValue();
     }
 
     public Stacks getReward() {

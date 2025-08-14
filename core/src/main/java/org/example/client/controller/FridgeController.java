@@ -11,13 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.enums.InGameMenuType;
 import org.example.client.view.HUDView;
 import org.example.client.view.HomeView;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Player;
 import org.example.common.models.Stacks;
-import org.example.client.model.enums.InGameMenuType;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,22 +31,15 @@ public class FridgeController {
     private final Skin skin = GameAssetManager.getGameAssetManager().getSkin();
 
     //MAIN MENU:
-
-    private ArrayList<Stacks> inventoryCopy;
     private final ArrayList<Image> itemImages;
     private final ArrayList<Label> quantityLabels;
-
-    private ArrayList<Stacks> selectedItems;
     private final ArrayList<Image> selectedItemImages;
     private final ArrayList<Label> selectedQuantityLabels;
-
-
     private final Image artisanBackgrond;
-
     private final ImageButton fridgeButton;
-
     private final TextButton okButton;
-
+    private ArrayList<Stacks> inventoryCopy;
+    private ArrayList<Stacks> selectedItems;
     private GraphicalResult error = new GraphicalResult();
 
 
@@ -66,7 +59,7 @@ public class FridgeController {
         fridgeButton = new ImageButton(new TextureRegionDrawable(
                 GameAssetManager.getGameAssetManager().getFridgeTexture()
         ));
-        fridgeButton.setPosition(245,95);
+        fridgeButton.setPosition(245, 95);
 
         artisanBackgrond = new Image(GameAssetManager.getGameAssetManager().getArtisanBackGroundTexture());
         artisanBackgrond.setHeight(700);
@@ -74,7 +67,6 @@ public class FridgeController {
         artisanBackgrond.setPosition((Gdx.graphics.getWidth() - artisanBackgrond.getWidth()) / 2f,
                 (Gdx.graphics.getHeight() - artisanBackgrond.getHeight()) / 2f);
         artisanBackgrond.setVisible(hudView.getCurrentMenu() == InGameMenuType.FRIDGE);
-
 
 
         okButton = new TextButton("OK", skin);
@@ -217,7 +209,7 @@ public class FridgeController {
                 x += distX;
             }
         }
-        
+
         selectedItems = ClientApp.getCurrentGame().getCurrentPlayer().getFarmMap().getHut().getRefrigerator().getItems();
 
         leftEdge = (Gdx.graphics.getWidth() - artisanBackgrond.getWidth()) / 2f + 57;

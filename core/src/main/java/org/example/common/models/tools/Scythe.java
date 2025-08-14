@@ -1,6 +1,6 @@
 package org.example.common.models.tools;
 
-import org.example.client.model.*;
+import org.example.client.model.ClientApp;
 import org.example.common.models.*;
 import org.example.common.models.Plants.Crop;
 import org.example.common.models.Plants.CropType;

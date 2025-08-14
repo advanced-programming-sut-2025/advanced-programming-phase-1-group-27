@@ -5,16 +5,11 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.PopUpController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.model.MiniPlayer;
 import org.example.client.model.PopUpTexture;
 import org.example.client.view.OutsideView;
-import org.example.client.model.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.common.models.Player;
-import org.example.common.models.Result;
-import org.example.common.models.Gender;
-import org.example.common.models.StackLevel;
+import org.example.common.models.*;
 import org.example.common.models.items.ShopItems;
 import org.example.common.models.tools.Backpack;
 
@@ -81,14 +76,14 @@ public class MarriageController {
         Sprite ringSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
         Sprite heartSprite = new Sprite(GameAssetManager.getGameAssetManager().getHeart1());
 
-        ringSprite.setSize(72,72);
-        heartSprite.setSize(72,72);
+        ringSprite.setSize(72, 72);
+        heartSprite.setSize(72, 72);
 
         float proposerX = 0, proposerY = 0;
 
-        for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+        for (MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers()) {
 
-            if ( miniPlayer.getUsername().equals(proposer) ) {
+            if (miniPlayer.getUsername().equals(proposer)) {
                 proposerX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
                 proposerY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
             }
@@ -96,18 +91,18 @@ public class MarriageController {
         }
 
         PopUpController.addPopUp(new PopUpTexture(heartSprite
-                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
-                newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+                , newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY() + 80,
+                newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY() + 20, 4
         ));
 
         PopUpController.addPopUp(new PopUpTexture(heartSprite
-                ,proposerX,proposerY+80,
-                proposerX, proposerY+20, 4
+                , proposerX, proposerY + 80,
+                proposerX, proposerY + 20, 4
         ));
 
         PopUpController.addPopUp(new PopUpTexture(ringSprite,
                 proposerX, proposerY
-                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(), 4
+                , newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY(), 4
         ));
 
 
@@ -128,14 +123,14 @@ public class MarriageController {
         Sprite noMarriageSprite = new Sprite(GameAssetManager.getGameAssetManager().getNoMarriage());
         Sprite brokenHeartSprite = new Sprite(GameAssetManager.getGameAssetManager().getBrokenHeart());
 
-        noMarriageSprite.setSize(72,72);
-        brokenHeartSprite.setSize(72,72);
+        noMarriageSprite.setSize(72, 72);
+        brokenHeartSprite.setSize(72, 72);
 
         float proposerX = 0, proposerY = 0;
 
-        for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+        for (MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers()) {
 
-            if ( miniPlayer.getUsername().equals(proposer) ) {
+            if (miniPlayer.getUsername().equals(proposer)) {
                 proposerX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
                 proposerY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
             }
@@ -143,16 +138,14 @@ public class MarriageController {
         }
 
         PopUpController.addPopUp(new PopUpTexture(brokenHeartSprite
-                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
-                newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+                , newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY() + 80,
+                newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY() + 20, 4
         ));
 
         PopUpController.addPopUp(new PopUpTexture(noMarriageSprite
-                ,proposerX,proposerY+80,
-                proposerX, proposerY+20, 4
+                , proposerX, proposerY + 80,
+                proposerX, proposerY + 20, 4
         ));
-
-
 
 
     }

@@ -47,105 +47,82 @@ public class ServerConnectionThread extends ConnectionThread {
             if (ClientApp.getCurrentMenu() instanceof PregameMenuView pregameMenuView)
                 pregameMenuView.getController().goToLobbyMenu();
             return true;
-        }
-        else if (message.getType() == Message.Type.start_game) {
+        } else if (message.getType() == Message.Type.start_game) {
             if (ClientApp.getCurrentMenu() instanceof PregameMenuView pregameMenuView) {
                 pregameMenuView.getController().startGame(message);
                 return true;
             }
             return false;
-        }
-        else if (message.getType() == Message.Type.update_shop) {
+        } else if (message.getType() == Message.Type.update_shop) {
             assert ClientApp.getCurrentGame() != null;
             ServerUpdatesController.updateShopStock(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.pass_an_hour) {
+        } else if (message.getType() == Message.Type.pass_an_hour) {
             assert ClientApp.getCurrentGame() != null;
             ServerUpdatesController.passAnHour();
             return true;
-        }
-        else if (message.getType() == Message.Type.advance_time) {
+        } else if (message.getType() == Message.Type.advance_time) {
             assert ClientApp.getCurrentGame() != null;
             ServerUpdatesController.cheatAdvanceTime(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.set_weather) {
+        } else if (message.getType() == Message.Type.set_weather) {
             assert ClientApp.getCurrentGame() != null;
             ServerUpdatesController.setWeather(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.crows_attack) {
+        } else if (message.getType() == Message.Type.crows_attack) {
             assert ClientApp.getCurrentGame() != null;
             ServerUpdatesController.crowsAttack(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.foraging_updates) {
+        } else if (message.getType() == Message.Type.foraging_updates) {
             assert ClientApp.getCurrentGame() != null;
             ServerUpdatesController.updateForaging(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.enter_npc) {
+        } else if (message.getType() == Message.Type.enter_npc) {
             ServerUpdatesController.otherPlayerEnteredNpcMap(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.leave_npc) {
+        } else if (message.getType() == Message.Type.leave_npc) {
             ServerUpdatesController.otherPlayerLeftNpcMap(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.walk_update) {
+        } else if (message.getType() == Message.Type.walk_update) {
             ServerUpdatesController.otherPlayerWalking(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.get_player_inventory) {
+        } else if (message.getType() == Message.Type.get_player_inventory) {
             sendMessage(ServerUpdatesController.getInventory());
             return true;
-        }
-        else if (message.getType() == Message.Type.interaction_p2p) {
+        } else if (message.getType() == Message.Type.interaction_p2p) {
             ServerUpdatesController.handleP2P(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.start_download) {
+        } else if (message.getType() == Message.Type.start_download) {
             handleStartDownload(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.download_complete) {
+        } else if (message.getType() == Message.Type.download_complete) {
             completeDownload();
             return true;
-        }
-        else if (message.getType() == Message.Type.get_music_offset) {
+        } else if (message.getType() == Message.Type.get_music_offset) {
             sendMessage(ServerUpdatesController.getMusicOffset());
             return true;
-        }
-        else if (message.getType() == Message.Type.save_and_exit_game) {
+        } else if (message.getType() == Message.Type.save_and_exit_game) {
             ClientApp.saveGame();
             return true;
-        }
-        else if (message.getType() == Message.Type.voting) {
+        } else if (message.getType() == Message.Type.voting) {
             ServerUpdatesController.handleVote(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.chat) {
+        } else if (message.getType() == Message.Type.chat) {
             ServerUpdatesController.handleChat(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.update_mini_player) {
+        } else if (message.getType() == Message.Type.update_mini_player) {
             ServerUpdatesController.handleMiniPlayerUpdate(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.marriage_request) {
+        } else if (message.getType() == Message.Type.marriage_request) {
             ServerUpdatesController.handleMarriageRequest(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.marriage_response) {
+        } else if (message.getType() == Message.Type.marriage_response) {
             ServerUpdatesController.handleMarriageResponse(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.reaction) {
+        } else if (message.getType() == Message.Type.reaction) {
             ServerUpdatesController.handleReaction(message);
             return true;
-        }
-        else if (message.getType() == Message.Type.client_game_info) {
+        } else if (message.getType() == Message.Type.client_game_info) {
             SaveController.handleInfo(message);
             return true;
         }

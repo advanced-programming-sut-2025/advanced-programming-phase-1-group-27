@@ -1,9 +1,9 @@
 package org.example.common.models.AnimalProperty;
 
 import com.google.gson.internal.LinkedTreeMap;
-import org.example.common.models.ItemManager;
 import org.example.common.models.Building;
 import org.example.common.models.Cell;
+import org.example.common.models.ItemManager;
 import org.example.common.models.items.BuildingType;
 
 import java.util.ArrayList;
@@ -43,10 +43,6 @@ public abstract class AnimalEnclosure extends Building {
         return result;
     }
 
-    public void setAnimals(ArrayList<Animal> animals) {
-        this.animals = animals;
-    }
-
     public void addAnimal(Animal animal) {
         animals.add(animal);
     }
@@ -59,6 +55,10 @@ public abstract class AnimalEnclosure extends Building {
 
     public ArrayList<Animal> getAnimals() {
         return animals;
+    }
+
+    public void setAnimals(ArrayList<Animal> animals) {
+        this.animals = animals;
     }
 
 }

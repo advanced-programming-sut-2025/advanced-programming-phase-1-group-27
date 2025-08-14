@@ -3,8 +3,8 @@ package org.example.common.models.AnimalProperty;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.Cell;
 import org.example.common.models.Position;
-import org.example.common.models.Stacks;
 import org.example.common.models.StackLevel;
+import org.example.common.models.Stacks;
 import org.example.common.models.items.AnimalType;
 import org.example.common.models.items.products.AnimalProduct;
 

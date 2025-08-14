@@ -23,23 +23,17 @@ import java.util.Scanner;
 public class GiftHistoryView extends AppMenu {
 
     private final GiftController controller;
-    Gift selectedGift = null;
-
     private final String username;
     private final ArrayList<Gift> gifts;
-
     private final GraphicalResult errorLabel;
-
-    private Table table;
-    private ScrollPane scrollPane;
-
     private final TextButton increaseAmountButton;
     private final TextButton decreaseAmountButton;
     private final TextButton rateButton;
     private final TextButton exitButton;
-
     private final Label countLabel;
-
+    Gift selectedGift = null;
+    private Table table;
+    private ScrollPane scrollPane;
     private int rateNumber = 1;
 
     private Stage stage;
@@ -148,7 +142,7 @@ public class GiftHistoryView extends AppMenu {
         countLabel.setVisible(selectedGift != null);
 
         increaseAmountButton.setPosition(3 * Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() / 2f + 100);
-        countLabel.setPosition(3 * Gdx.graphics.getWidth() / 4f + increaseAmountButton.getWidth()/2f, Gdx.graphics.getHeight() / 2f + 50);
+        countLabel.setPosition(3 * Gdx.graphics.getWidth() / 4f + increaseAmountButton.getWidth() / 2f, Gdx.graphics.getHeight() / 2f + 50);
         decreaseAmountButton.setPosition(3 * Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() / 2f - 100);
 
         rateButton.setPosition(3 * Gdx.graphics.getWidth() / 4f + 200, Gdx.graphics.getHeight() / 2f);

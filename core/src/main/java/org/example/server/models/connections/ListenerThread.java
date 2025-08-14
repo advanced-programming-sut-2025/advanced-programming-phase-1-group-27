@@ -39,6 +39,7 @@ public class ListenerThread extends Thread {
 
         try {
             serverSocket.close();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 }

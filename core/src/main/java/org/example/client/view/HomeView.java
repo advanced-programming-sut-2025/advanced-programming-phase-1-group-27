@@ -5,27 +5,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.HomeGraphicalController;
+import org.example.client.controller.HomePlayerController;
 import org.example.client.controller.PopUpController;
 import org.example.client.controller.ResultController;
 import org.example.client.model.ClientApp;
-import org.example.client.controller.HomePlayerController;
 import org.example.client.model.GameAssetManager;
 import org.example.common.models.Player;
-import org.example.common.models.Result;
-import org.example.common.models.Menu;
-import org.example.common.models.commands.CheatCommands;
-import org.example.common.models.commands.GameMenuCommands;
-import org.example.common.models.commands.HomeCommands;
-import org.example.common.models.commands.MainMenuCommands;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class HomeView extends AppMenu {
 
@@ -49,7 +42,7 @@ public class HomeView extends AppMenu {
         hudView = new HUDView(stage);
         homeGraphicalController = new HomeGraphicalController(this);
         playerController = new HomePlayerController(this);
-        advanceTimeButton = new TextButton("advance",skin);
+        advanceTimeButton = new TextButton("advance", skin);
 
     }
 
@@ -75,12 +68,11 @@ public class HomeView extends AppMenu {
 
         setListeners();
 
-        homeSprite.setCenter(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f);
+        homeSprite.setCenter(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
         homeSprite.setScale(0.2f);
 
         fridgeSprite.setScale(0.7f);
-        fridgeSprite.setPosition(Gdx.graphics.getWidth()/2f + 75, Gdx.graphics.getHeight()/2f + 20);
-
+        fridgeSprite.setPosition(Gdx.graphics.getWidth() / 2f + 75, Gdx.graphics.getHeight() / 2f + 20);
 
 
     }
@@ -138,7 +130,7 @@ public class HomeView extends AppMenu {
         return hudView;
     }
 
-    private void setListeners(){
+    private void setListeners() {
 
         advanceTimeButton.addListener(new ClickListener() {
             @Override

@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import org.example.client.Main;
-import org.example.client.view.OutsideView;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.OutsideView;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.Cell;
 
@@ -19,12 +19,11 @@ public class AnimalController {
     private final Animal animal;
     private final OutsideView outsideView;
     private final Camera camera;
-
+    private final Sprite sprite;
     private int initI, initJ, i, j;
     private float x, y, destX, destY, time = 0f, animationTime = 0f;
     private boolean flag = true, walking = false;
     private Animation<Texture> currentAnimation;
-    private final Sprite sprite;
 
     public AnimalController(Animal animal, OutsideView outsideView, Camera camera) {
         this.animal = animal;
@@ -90,8 +89,7 @@ public class AnimalController {
                 y = destY;
 
             }
-        }
-        else  {
+        } else {
             int random = new Random().nextInt(60);
             if (random != 1)
                 return;

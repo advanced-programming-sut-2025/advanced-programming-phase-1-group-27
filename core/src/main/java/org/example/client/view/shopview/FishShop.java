@@ -11,12 +11,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.shopControllers.ShopController;
 import org.example.client.model.ClientApp;
-import org.example.client.model.RoundedRectangleTexture;
-import org.example.client.view.HUDView;
 import org.example.client.model.GameAssetManager;
-import org.example.common.models.Stock;
-import org.example.common.models.NPCType;
+import org.example.client.model.RoundedRectangleTexture;
 import org.example.client.view.AppMenu;
+import org.example.client.view.HUDView;
+import org.example.common.models.NPCType;
+import org.example.common.models.Stock;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -32,11 +32,8 @@ public class FishShop extends AppMenu {
 
 
     private final HUDView hudView;
-
-    private float timer = 0f;
-
     private final TextButton exitButton;
-
+    private float timer = 0f;
     private ArrayList<Stock> stockItems;
     private Table stockTable;
     private ScrollPane scrollPane;
@@ -46,7 +43,7 @@ public class FishShop extends AppMenu {
 
     public FishShop() {
         npc = NPCType.Willy;
-        controller = new ShopController(this , npc);
+        controller = new ShopController(this, npc);
         npcImage = new Image(new Texture(npc.getAddress()));
         npcImage.setSize(npcImage.getWidth() * 2.5f, npcImage.getHeight() * 2.5f);
 
@@ -115,11 +112,11 @@ public class FishShop extends AppMenu {
             Label priceLabel1 = new Label(stock.getSalePrice(ClientApp.getCurrentGame().getTime().getSeason()) + " G", skin);
             Label countLabel1 = new Label("", skin);
 
-            if(stock.getQuantity() == -1){
+            if (stock.getQuantity() == -1) {
                 countLabel1.setText("unlimited");
-            }else if(stock.getQuantity() == 0){
+            } else if (stock.getQuantity() == 0) {
                 countLabel1.setText("not available");
-            }else {
+            } else {
                 countLabel1.setText(String.valueOf(stock.getQuantity()));
             }
 
@@ -141,26 +138,26 @@ public class FishShop extends AppMenu {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     playClickSound();
-                     controller.purchase(stock);
+                    controller.purchase(stock);
                 }
             });
         }
 
         scrollPane.setSize(redAreaWidth, 600);
-        scrollPane.setPosition(-120, Gdx.graphics.getHeight()/2f - 150);
+        scrollPane.setPosition(-120, Gdx.graphics.getHeight() / 2f - 150);
     }
 
-    private void displayCheckBox(){
-        showOnlyAvailableCheckBox.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight()/2f);
+    private void displayCheckBox() {
+        showOnlyAvailableCheckBox.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight() / 2f);
         stage.addActor(showOnlyAvailableCheckBox);
     }
 
-    private void displayButtons(){
-        exitButton.setPosition(Gdx.graphics.getWidth() - 250, Gdx.graphics.getHeight()/2f - 160);
+    private void displayButtons() {
+        exitButton.setPosition(Gdx.graphics.getWidth() - 250, Gdx.graphics.getHeight() / 2f - 160);
         stage.addActor(exitButton);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -178,15 +175,15 @@ public class FishShop extends AppMenu {
         });
     }
 
-    private void displayNPC(){
+    private void displayNPC() {
         npcImage.setPosition(Gdx.graphics.getWidth() - npcImage.getWidth() - 20, 0);
         stage.addActor(npcImage);
     }
 
-    private void displayBackground(){
-        brownImage.setPosition(0 , 5);
-        creamImage.setPosition( 0, npcImage.getHeight() + 20);
-        backgroundImage.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight() - brownImage.getHeight());
+    private void displayBackground() {
+        brownImage.setPosition(0, 5);
+        creamImage.setPosition(0, npcImage.getHeight() + 20);
+        backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - brownImage.getHeight());
         backgroundImage.setPosition(0, brownImage.getHeight() + 20);
 
         creamImage.setColor(1f, 1f, 1f, 0.5f);

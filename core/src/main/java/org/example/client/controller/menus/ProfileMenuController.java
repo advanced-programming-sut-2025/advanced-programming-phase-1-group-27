@@ -3,13 +3,13 @@ package org.example.client.controller.menus;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.menu.AvatarMenuView;
 import org.example.client.view.menu.MainMenuView;
 import org.example.client.view.menu.ProfileMenuView;
 import org.example.client.view.menu.UserInfoView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.Result;
 import org.example.common.models.User;
 
@@ -22,6 +22,41 @@ public class ProfileMenuController extends MenuController {
 
     public ProfileMenuController(ProfileMenuView view) {
         this.view = view;
+    }
+
+    private static GraphicalResult changeAttempt(String username, String password, String nickname, String email) {
+        if (username == null) {
+            username = "";
+        }
+        if (password == null) {
+            password = "";
+        }
+        if (nickname == null) {
+            nickname = "";
+        }
+        if (email == null) {
+            email = "";
+        }
+        String finalUsername = username;
+        String finalPassword = password;
+        String finalNickname = nickname;
+        String finalEmail = email;
+
+        Message message = new Message(new HashMap<>() {{
+            put("username", finalUsername);
+            put("password", finalPassword);
+            put("nickname", finalNickname);
+            put("email", finalEmail);
+        }}, Message.Type.change_profile);
+        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
+
+        if (response == null || response.getType() != Message.Type.response) {
+            return new GraphicalResult(
+                    "Failed to change profile",
+                    GameAssetManager.getGameAssetManager().getErrorColor()
+            );
+        }
+        return new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
     }
 
     public GraphicalResult changeViaGraphics() {
@@ -43,56 +78,21 @@ public class ProfileMenuController extends MenuController {
             );
         }
 
-        GraphicalResult changeAttempt = changeAttempt(newUsername , newPassword , newNickname , newEmail);
+        GraphicalResult changeAttempt = changeAttempt(newUsername, newPassword, newNickname, newEmail);
         if (changeAttempt.hasError()) {
             return changeAttempt;
         }
 
         User newUser;
-        if(!newUsername.isEmpty()){
+        if (!newUsername.isEmpty()) {
             newUser = ClientApp.getUserByUsername(newUsername);
-        }else {
+        } else {
             newUser = ClientApp.getUserByUsername(ClientApp.getLoggedInUser().getUsername());
         }
         ClientApp.setLoggedInUser(newUser);
         ClientApp.updateFile(newUser);
 
         return new GraphicalResult(changeAttempt.getMessage().getText().toString(), false);
-    }
-
-    private static GraphicalResult changeAttempt(String username , String password , String nickname , String email) {
-        if(username == null){
-            username = "";
-        }
-        if(password == null){
-            password = "";
-        }
-        if(nickname == null){
-            nickname = "";
-        }
-        if(email == null){
-            email = "";
-        }
-        String finalUsername = username;
-        String finalPassword = password;
-        String finalNickname = nickname;
-        String finalEmail = email;
-
-        Message message = new Message(new HashMap<>() {{
-            put("username", finalUsername);
-            put("password", finalPassword);
-            put("nickname" , finalNickname);
-            put("email" , finalEmail);
-        }}, Message.Type.change_profile);
-        Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
-
-        if (response == null || response.getType() != Message.Type.response) {
-            return new GraphicalResult(
-                    "Failed to change profile",
-                    GameAssetManager.getGameAssetManager().getErrorColor()
-            );
-        }
-        return new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
     }
 
     private boolean hasEmptyField() {

@@ -18,15 +18,6 @@ public enum Season {
         this.possibleWeathers = possibleWeathers;
     }
 
-    public Weather pickARandomWeather() {
-        int randomIndex = new Random().nextInt(possibleWeathers.length);
-        return possibleWeathers[randomIndex];
-    }
-
-    public Season getNextSeason() {
-        return Season.values()[(this.index + 1) % 4];
-    }
-
     public static Season getSeason(String seasonName) {
         for (Season season : values()) {
             if (season.name().equalsIgnoreCase(seasonName)) {
@@ -34,5 +25,14 @@ public enum Season {
             }
         }
         return null;
+    }
+
+    public Weather pickARandomWeather() {
+        int randomIndex = new Random().nextInt(possibleWeathers.length);
+        return possibleWeathers[randomIndex];
+    }
+
+    public Season getNextSeason() {
+        return Season.values()[(this.index + 1) % 4];
     }
 }

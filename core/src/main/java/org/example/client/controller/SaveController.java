@@ -3,9 +3,10 @@ package org.example.client.controller;
 import com.badlogic.gdx.Gdx;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
-import org.example.client.model.*;
+import org.example.client.model.ClientApp;
+import org.example.client.model.ClientGame;
+import org.example.client.model.MiniPlayer;
 import org.example.client.view.HomeView;
-import org.example.client.view.OutsideView;
 import org.example.common.models.*;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.AnimalProperty.AnimalEnclosure;
@@ -129,7 +130,7 @@ public class SaveController {
         else if (enclosure instanceof Barn barn)
             farmMap.getBarns().add(barn);
     }
-    
+
     private static void createBasicClientGame(Lobby lobby) {
         ArrayList<MiniPlayer> miniPlayers = new ArrayList<>();
         for (User user : lobby.getUsers()) {
@@ -144,7 +145,7 @@ public class SaveController {
         ));
         clientGame.init(lobby.getUsernameToMap().get(currentPlayer.getUsername()));
     }
-    
+
     public static void sendInfo() {
         ClientGame currentGame = ClientApp.getCurrentGame();
         Player player = currentGame.getCurrentPlayer();
@@ -179,7 +180,7 @@ public class SaveController {
         // MONEY
         info.put("money", player.getMoney());
         // BUFF
-        info.put("buff", player.getCurrentBuff() == null? null : player.getCurrentBuff().getInfo());
+        info.put("buff", player.getCurrentBuff() == null ? null : player.getCurrentBuff().getInfo());
         // NUMBER OF QUESTS
         info.put("numberOfQuestsDone", player.getNumberOfQuestsDone());
         return info;

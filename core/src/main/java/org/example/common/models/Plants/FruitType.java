@@ -5,7 +5,7 @@ import org.example.common.models.Item;
 
 public enum FruitType implements Item, Edible {
     //Grass :
-    Fiber(50, false, 0,"Items/Fruit/Fiber.png"),
+    Fiber(50, false, 0, "Items/Fruit/Fiber.png"),
     //Trees :
     Apricot(59, true, 38, "Items/Fruit/Apricot.png"),
     Cherry(80, true, 38, "Items/Fruit/Cherry.png"),
@@ -67,25 +67,26 @@ public enum FruitType implements Item, Edible {
     Radish(90, true, 45, "Items/Fruit/Radish.png"),
     RedCabbage(260, true, 75, "Items/Fruit/Red_Cabbage.png"),
     Starfruit(750, true, 125, "Items/Fruit/Starfruit.png"),
-    SummerSpangle(90, true, 45,  "Items/Fruit/Summer_Spangle.png"),
-    SummerSquash(45, true, 63,  "Items/Fruit/Summer_Squash.png"),
-    Sunflower(80, true, 45,  "Items/Fruit/Sunflower.png"),
+    SummerSpangle(90, true, 45, "Items/Fruit/Summer_Spangle.png"),
+    SummerSquash(45, true, 63, "Items/Fruit/Summer_Squash.png"),
+    Sunflower(80, true, 45, "Items/Fruit/Sunflower.png"),
     Tomato(60, true, 20, "Items/Fruit/Tomato.png"),
     Wheat(25, false, 0, "Items/Fruit/Wheat.png"),
     Amaranth(150, true, 50, "Items/Fruit/Amaranth.png"),
     Artichoke(160, true, 30, "Items/Fruit/Artichoke.png"),
     Beet(100, true, 30, "Items/Fruit/Beet.png"),
     BokChoy(80, true, 25, "Items/Fruit/Bok_Choy.png"),
-    Broccoli(70, true, 63,  "Items/Fruit/Broccoli.png"),
+    Broccoli(70, true, 63, "Items/Fruit/Broccoli.png"),
     Cranberry(75, true, 38, "Items/Fruit/Cranberries.png"),
     Eggplant(60, true, 20, "Items/Fruit/Eggplant.png"),
-    FairyRose(290, true, 45,"Items/Fruit/Fairy_Rose.png"),
+    FairyRose(290, true, 45, "Items/Fruit/Fairy_Rose.png"),
     //Grape(80, true, 38),
     Pumpkin(320, false, 0, "Items/Fruit/Pumpkin.png"),
-    Yam(160, true, 45,  "Items/Fruit/Yam.png"),
+    Yam(160, true, 45, "Items/Fruit/Yam.png"),
     SweetGemBerry(3000, false, 0, "Items/Fruit/Sweet_Gem_Berry.png"),
-    PowderMelon(60, true, 63,  "Items/Fruit/Powdermelon.png"),
-    AncientFruit(550, false, 0, "Items/Fruit/Ancient_Fruit.png"),;
+    PowderMelon(60, true, 63, "Items/Fruit/Powdermelon.png"),
+    AncientFruit(550, false, 0, "Items/Fruit/Ancient_Fruit.png"),
+    ;
 
     private final int price;
     private final boolean isFruitEdible;

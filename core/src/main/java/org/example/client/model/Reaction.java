@@ -33,7 +33,7 @@ public class Reaction {
     public HashMap<String, Object> getInfo() {
         HashMap<String, Object> info = new HashMap<>();
         info.put("isEmoji", isEmoji);
-        info.put("emoji", emoji == null? null : emoji.name());
+        info.put("emoji", emoji == null ? null : emoji.name());
         info.put("text", text);
         return info;
     }
@@ -54,7 +54,7 @@ public class Reaction {
         return reactionTimer;
     }
 
-    public void updateReaction(float delta){
+    public void updateReaction(float delta) {
         this.reactionTimer -= delta;
         ///  DRAW HERE
     }

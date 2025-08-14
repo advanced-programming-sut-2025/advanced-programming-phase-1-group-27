@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import org.example.client.model.utils.MusicPlayer;
 import org.example.common.models.AbilityType;
 import org.example.common.models.ArtisanTypes;
 import org.example.common.models.Item;
@@ -20,7 +21,6 @@ import org.example.common.models.items.products.AnimalProduct;
 import org.example.common.models.items.products.CookingProduct;
 import org.example.common.models.items.products.CraftingProduct;
 import org.example.common.models.items.products.ProcessedProductType;
-import org.example.client.model.utils.MusicPlayer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,7 +28,6 @@ import java.util.HashMap;
 
 
 public class GameAssetManager {
-
 
 
     private static GameAssetManager gameAssetManager;
@@ -120,7 +119,7 @@ public class GameAssetManager {
         put(CropType.Pumpkin, new Texture("assets/Images/Crops/Giant_Pumpkin.png"));
     }};
 
-    private final Texture[] shopTextures = new Texture[] {
+    private final Texture[] shopTextures = new Texture[]{
             new Texture("assets/Buildings/BlackSmith.png"),
             new Texture("assets/Buildings/Jojamart.png"),
             new Texture("assets/Buildings/Pierres_shop.png"),
@@ -150,7 +149,7 @@ public class GameAssetManager {
 
     private final TextureAtlas cabinsAtlas = new TextureAtlas("assets/Buildings/Buildings.atlas");
 
-    private final TextureRegion[] cabinTextures= new TextureRegion[]{
+    private final TextureRegion[] cabinTextures = new TextureRegion[]{
             new TextureRegion(cabinsAtlas.createSprite("cabin_1").getTexture(),
                     cabinsAtlas.findRegion("cabin_1").getRegionX(),
                     cabinsAtlas.findRegion("cabin_1").getRegionY(),
@@ -201,7 +200,7 @@ public class GameAssetManager {
                     80, 112),
     };
 
-    private final HashMap<BuildingType, Texture> animalEnclosureTextureMap = new HashMap<>(){{
+    private final HashMap<BuildingType, Texture> animalEnclosureTextureMap = new HashMap<>() {{
         put(BuildingType.Coop, new Texture("assets/Buildings/Coop.png"));
         put(BuildingType.BigCoop, new Texture("assets/Buildings/Big Coop.png"));
         put(BuildingType.DeluxeCoop, new Texture("assets/Buildings/Deluxe Coop.png"));
@@ -210,44 +209,44 @@ public class GameAssetManager {
         put(BuildingType.DeluxeBarn, new Texture("assets/Buildings/Deluxe Barn.png"));
     }};
 
-    private final HashMap<AnimalType, Animation<Texture>> animalLeftWalkAnimation = new HashMap<>(){{
+    private final HashMap<AnimalType, Animation<Texture>> animalLeftWalkAnimation = new HashMap<>() {{
         put(AnimalType.Chicken,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Chicken/03.png"),
                         new Texture("assets/Images/Animals/Chicken/13.png"),
                         new Texture("assets/Images/Animals/Chicken/23.png"),
                         new Texture("assets/Images/Animals/Chicken/33.png")
-                        ));
+                ));
         put(AnimalType.Dinosaur,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Dinosaur/03.png"),
                         new Texture("assets/Images/Animals/Dinosaur/13.png"),
                         new Texture("assets/Images/Animals/Dinosaur/23.png"),
                         new Texture("assets/Images/Animals/Dinosaur/33.png")
-                        ));
+                ));
         put(AnimalType.Duck,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Duck/03.png"),
                         new Texture("assets/Images/Animals/Duck/13.png"),
                         new Texture("assets/Images/Animals/Duck/23.png"),
                         new Texture("assets/Images/Animals/Duck/33.png")
-                        ));
+                ));
         put(AnimalType.Rabbit,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Rabbit/03.png"),
                         new Texture("assets/Images/Animals/Rabbit/13.png"),
                         new Texture("assets/Images/Animals/Rabbit/23.png"),
                         new Texture("assets/Images/Animals/Rabbit/33.png")
-                        ));
+                ));
     }};
 
-    private final HashMap<ArtisanTypes, Texture> artisanTextureMap = new HashMap<>(){{
+    private final HashMap<ArtisanTypes, Texture> artisanTextureMap = new HashMap<>() {{
         for (ArtisanTypes value : ArtisanTypes.values()) {
             put(value, new Texture("assets/Images/Artisans/" + value.name() + ".png"));
         }
     }};
 
-    private final HashMap<AnimalType, Animation<Texture>> animalRightWalkAnimation = new HashMap<>(){{
+    private final HashMap<AnimalType, Animation<Texture>> animalRightWalkAnimation = new HashMap<>() {{
         put(AnimalType.Chicken,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Chicken/01.png"),
@@ -268,35 +267,35 @@ public class GameAssetManager {
                         new Texture("assets/Images/Animals/Duck/11.png"),
                         new Texture("assets/Images/Animals/Duck/21.png"),
                         new Texture("assets/Images/Animals/Duck/31.png")
-                        ));
+                ));
         put(AnimalType.Rabbit,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Rabbit/01.png"),
                         new Texture("assets/Images/Animals/Rabbit/11.png"),
                         new Texture("assets/Images/Animals/Rabbit/21.png"),
                         new Texture("assets/Images/Animals/Rabbit/31.png")
-                        ));
+                ));
         put(AnimalType.Cow,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Cow/01.png"),
                         new Texture("assets/Images/Animals/Cow/11.png"),
                         new Texture("assets/Images/Animals/Cow/21.png"),
                         new Texture("assets/Images/Animals/Cow/31.png")
-                        ));
+                ));
         put(AnimalType.Goat,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Goat/01.png"),
                         new Texture("assets/Images/Animals/Goat/11.png"),
                         new Texture("assets/Images/Animals/Goat/21.png"),
                         new Texture("assets/Images/Animals/Goat/31.png")
-                        ));
+                ));
         put(AnimalType.Pig,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Pig/01.png"),
                         new Texture("assets/Images/Animals/Pig/11.png"),
                         new Texture("assets/Images/Animals/Pig/21.png"),
                         new Texture("assets/Images/Animals/Pig/31.png")
-                        ));
+                ));
         put(AnimalType.Sheep,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Sheep/01.png"),
@@ -306,7 +305,7 @@ public class GameAssetManager {
                 ));
     }};
 
-    private final HashMap<AnimalType, Animation<Texture>> animalUpWalkAnimation = new HashMap<>(){{
+    private final HashMap<AnimalType, Animation<Texture>> animalUpWalkAnimation = new HashMap<>() {{
         put(AnimalType.Chicken,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Chicken/02.png"),
@@ -365,7 +364,7 @@ public class GameAssetManager {
                 ));
     }};
 
-    private final HashMap<AnimalType, Animation<Texture>> animalDownWalkAnimation = new HashMap<>(){{
+    private final HashMap<AnimalType, Animation<Texture>> animalDownWalkAnimation = new HashMap<>() {{
         put(AnimalType.Chicken,
                 new Animation<>(0.1f,
                         new Texture("assets/Images/Animals/Chicken/00.png"),
@@ -454,7 +453,7 @@ public class GameAssetManager {
             sebastianAtlas.findRegion("standing_1").getRegionY(),
             16, 32);
 
-    private final HashMap<NPCType, TextureRegion> NPCTextureMap = new HashMap<>(){{
+    private final HashMap<NPCType, TextureRegion> NPCTextureMap = new HashMap<>() {{
         put(NPCType.Abigail, abigailTexture);
         put(NPCType.Harvey, harveyTexture);
         put(NPCType.Lia, liaTexture);
@@ -463,7 +462,7 @@ public class GameAssetManager {
 
     }};
 
-    private final HashMap<AbilityType, Texture> abilityTextureMap = new HashMap<>(){{
+    private final HashMap<AbilityType, Texture> abilityTextureMap = new HashMap<>() {{
         put(AbilityType.Farming, new Texture("assets/Images/Buffs/Farming_Skill_Icon.png"));
         put(AbilityType.Fishing, new Texture("assets/Images/Buffs/Fishing_Skill_Icon.png"));
         put(AbilityType.Foraging, new Texture("assets/Images/Buffs/Foraging_Skill_Icon.png"));
@@ -539,7 +538,7 @@ public class GameAssetManager {
                 }
                 put(cropType, arrayList);
             } else {
-                put(cropType, new ArrayList<>(){{
+                put(cropType, new ArrayList<>() {{
                     add(new Texture(Gdx.files.internal(cropType.getAddress())));
                 }});
             }
@@ -556,7 +555,7 @@ public class GameAssetManager {
         }
     }};
 
-    private final HashMap<AnimalType, Texture> animalTextureMap = new HashMap<>(){{
+    private final HashMap<AnimalType, Texture> animalTextureMap = new HashMap<>() {{
         for (AnimalType animalType : AnimalType.values()) {
             put(animalType, new Texture("assets/Images/Animals/" + animalType.getName() + ".png"));
         }
@@ -592,13 +591,13 @@ public class GameAssetManager {
             characterAtlas.createSprite("left_4")
     );
 
-    private final HashMap<NPCType, Animation<Texture>> NpcWalkDownAnimationMap = new HashMap<>(){{
+    private final HashMap<NPCType, Animation<Texture>> NpcWalkDownAnimationMap = new HashMap<>() {{
         put(NPCType.Harvey, new Animation<>(0.1f,
                 new Texture("assets/NPCs/Other/HarveyWalk/00.png"),
                 new Texture("assets/NPCs/Other/HarveyWalk/10.png"),
                 new Texture("assets/NPCs/Other/HarveyWalk/20.png"),
                 new Texture("assets/NPCs/Other/HarveyWalk/30.png")
-                ));
+        ));
         put(NPCType.Abigail, new Animation<>(0.1f,
                 new Texture("assets/NPCs/Other/AbigailWalk/00.png"),
                 new Texture("assets/NPCs/Other/AbigailWalk/10.png"),
@@ -625,7 +624,7 @@ public class GameAssetManager {
         ));
     }};
 
-    private final HashMap<NPCType, Animation<Texture>> NpcWalkRightAnimationMap = new HashMap<>(){{
+    private final HashMap<NPCType, Animation<Texture>> NpcWalkRightAnimationMap = new HashMap<>() {{
         put(NPCType.Harvey, new Animation<>(0.1f,
                 new Texture("assets/NPCs/Other/HarveyWalk/01.png"),
                 new Texture("assets/NPCs/Other/HarveyWalk/11.png"),
@@ -658,7 +657,7 @@ public class GameAssetManager {
         ));
     }};
 
-    private final HashMap<NPCType, Animation<Texture>> NpcWalkUpAnimationMap = new HashMap<>(){{
+    private final HashMap<NPCType, Animation<Texture>> NpcWalkUpAnimationMap = new HashMap<>() {{
         put(NPCType.Harvey, new Animation<>(0.1f,
                 new Texture("assets/NPCs/Other/HarveyWalk/02.png"),
                 new Texture("assets/NPCs/Other/HarveyWalk/12.png"),
@@ -691,7 +690,7 @@ public class GameAssetManager {
         ));
     }};
 
-    private final HashMap<NPCType, Animation<Texture>> NpcWalkLeftAnimationMap = new HashMap<>(){{
+    private final HashMap<NPCType, Animation<Texture>> NpcWalkLeftAnimationMap = new HashMap<>() {{
         put(NPCType.Harvey, new Animation<>(0.1f,
                 new Texture("assets/NPCs/Other/HarveyWalk/03.png"),
                 new Texture("assets/NPCs/Other/HarveyWalk/13.png"),
@@ -724,18 +723,11 @@ public class GameAssetManager {
         ));
     }};
 
-    private final Texture arrowTexture = new  Texture(Gdx.files.internal("Clock/Arrow.png"));
-
-    {
-//        musicPlayer.setCurrentTrack(Track.THEME_1);
-    }
-
+    private final Texture arrowTexture = new Texture(Gdx.files.internal("Clock/Arrow.png"));
     private final Image craftingMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Crafting/CraftingMenuMan.png")));
     private final Image inventoryMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Inventory/InventoryMenuMan.png")));
     private final Image skillMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Skill/SkillsMenuMan.png")));
     private final Image exitMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Exit/ExitMenuMan2.png")));
-
-
     private final Image craft_bomb = new Image(new Texture(Gdx.files.internal("Images/Crafting/Bomb.png")));
     private final Image craft_charcoalKiln = new Image(new Texture(Gdx.files.internal("Images/Crafting/Charcoal_Kiln.png")));
     private final Image craft_cherry_Bomb = new Image(new Texture(Gdx.files.internal("Images/Crafting/Cherry_Bomb.png")));
@@ -757,64 +749,42 @@ public class GameAssetManager {
     private final Image craft_grassStarter = new Image(new Texture(Gdx.files.internal("Images/Crafting/Grass_Starter.png")));
     private final Image craft_fishSmoker = new Image(new Texture(Gdx.files.internal("Images/Crafting/Fish_Smoker.png")));
     private final Image craft_mysticTreeSeed = new Image(new Texture(Gdx.files.internal("Images/Crafting/Mystic_Tree_Seed.png")));
-
     private final Image cookingMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png")));
-
     private final Image hoveringInfoWindow = new Image(new Texture(Gdx.files.internal("Images/HoveringInfoWindow.png")));
     private final Image hoveringMiningWindow = new Image(new Texture(Gdx.files.internal("Images/Skill/HoverMining.png")));
     private final Image hoveringFarmingWindow = new Image(new Texture(Gdx.files.internal("Images/Skill/HoverFarming.png")));
     private final Image hoveringFishingWindow = new Image(new Texture(Gdx.files.internal("Images/Skill/HoverFishing.png")));
     private final Image hoveringForagingWindow = new Image(new Texture(Gdx.files.internal("Images/Skill/HoverForaging.png")));
-
     private final Texture skillPointImage = new Texture(Gdx.files.internal("Images/Skill/SkillPoint.png"));
-
     private final Image socialMenuBackgroundImage = new Image(new Texture(Gdx.files.internal("Images/Social/SocialMenuMan.png")));
-
     private final Texture npc1Avatar = new Texture(Gdx.files.internal("NPCs/Other/Abigail.png"));
     private final Texture npc2Avatar = new Texture(Gdx.files.internal("NPCs/Other/Harvey.png"));
     private final Texture npc3Avatar = new Texture(Gdx.files.internal("NPCs/Other/Lia.png"));
     private final Texture npc4Avatar = new Texture(Gdx.files.internal("NPCs/Other/Robbin.png"));
     private final Texture npc5Avatar = new Texture(Gdx.files.internal("NPCs/Other/Sebastian.png"));
-
     private final Texture checkBox = new Texture(Gdx.files.internal("Images/Social/CheckedBox.png"));
-
     private final Texture socialButton = new Texture(Gdx.files.internal("Images/PlayerSocial/SocialButton.png"));
-
-    private final Image playerSocialBackground = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
-
-    private final Image mapMenuBackground = new Image( new Texture(Gdx.files.internal("Images/Map/MapMenu.png")));
-
-    private final Image energyBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/EnergyBar2.png")));
-    private final Image boostBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/EnergyBar2.png")));
-    private final Image greenBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/GreenBar.png")));
-    private final Image redBar = new Image( new Texture(Gdx.files.internal("EnergyIcons/RedBar.png")));
-
+    private final Image playerSocialBackground = new Image(new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
+    private final Image mapMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Map/MapMenu.png")));
+    private final Image energyBar = new Image(new Texture(Gdx.files.internal("EnergyIcons/EnergyBar2.png")));
+    private final Image boostBar = new Image(new Texture(Gdx.files.internal("EnergyIcons/EnergyBar2.png")));
+    private final Image greenBar = new Image(new Texture(Gdx.files.internal("EnergyIcons/GreenBar.png")));
+    private final Image redBar = new Image(new Texture(Gdx.files.internal("EnergyIcons/RedBar.png")));
     private final Sound thorSound = Gdx.audio.newSound(Gdx.files.internal("Thor/ThorSFX.wav"));
-
     private final Texture thor1 = new Texture(Gdx.files.internal("Thor/Lightning1.png"));
     private final Texture thor2 = new Texture(Gdx.files.internal("Thor/Lightning2.png"));
     private final Texture thor3 = new Texture(Gdx.files.internal("Thor/Lightning3.png"));
     private final Texture thor4 = new Texture(Gdx.files.internal("Thor/Lightning4.png"));
-
-    private final Animation<Texture> thorAnimationFrames = new Animation<>(0.25f, thor1,thor2,thor3,thor4);
-
-    private final Image tradeInventoryBackground = new Image( new Texture(Gdx.files.internal("Images/Trade/InventoryBackground2.png")));
-
-    private final Image selectSlot = new Image( new Texture(Gdx.files.internal("Images/Trade/SelectedSlot.png")));
-
-    private final Image messageBackgroundImage = new Image( new Texture(Gdx.files.internal("Images/Inbox/InboxMessageBackground.png")));
-    private final Image messageAlertImage = new Image( new Texture(Gdx.files.internal("Images/Inbox/MessageAlert.png")));
-
-    private final Image radioBackground = new Image( new Texture(Gdx.files.internal("Images/RadioBackground.png")));
-
-    private final Image mapImage = new Image( new Texture(Gdx.files.internal("Images/Map/MapImage.png")));
-
+    private final Animation<Texture> thorAnimationFrames = new Animation<>(0.25f, thor1, thor2, thor3, thor4);
+    private final Image tradeInventoryBackground = new Image(new Texture(Gdx.files.internal("Images/Trade/InventoryBackground2.png")));
+    private final Image selectSlot = new Image(new Texture(Gdx.files.internal("Images/Trade/SelectedSlot.png")));
+    private final Image messageBackgroundImage = new Image(new Texture(Gdx.files.internal("Images/Inbox/InboxMessageBackground.png")));
+    private final Image messageAlertImage = new Image(new Texture(Gdx.files.internal("Images/Inbox/MessageAlert.png")));
+    private final Image radioBackground = new Image(new Texture(Gdx.files.internal("Images/RadioBackground.png")));
+    private final Image mapImage = new Image(new Texture(Gdx.files.internal("Images/Map/MapImage.png")));
     private final Texture playerIcon = new Texture(Gdx.files.internal("Images/Map/Icon.png"));
-
     private final Array<Texture> crows = new Array<>();
-    private Animation<Texture> crowAnimationFrames;
-
-    private final Image cryEmoji =  new Image(new Texture(Gdx.files.internal("Images/Emoji/Cry.png")));
+    private final Image cryEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Cry.png")));
     private final Image loveEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Love.png")));
     private final Image pashmEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Pashm.png")));
     private final Image skullEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Skull.png")));
@@ -829,27 +799,20 @@ public class GameAssetManager {
     private final Image khisEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Khis.png")));
     private final Image crabEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Crab.png")));
     private final Image shalvarEmoji = new Image(new Texture(Gdx.files.internal("Images/Emoji/Shalvar.png")));
-
-    private final Image reactionMenuBackground = new Image( new Texture(Gdx.files.internal("Images/Emoji/ReactionBackground.png")));
-
-    private final Image giftPlayerMenuBackground = new Image( new Texture(Gdx.files.internal("Images/GiftPlayerMenuBackground.png")));
-
-    private final Image interactionMenuDecoration1 = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/InteractionEmoji1.png")));
-    private final Image interactionMenuDecoration2 = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/InteractionEmoji2.png")));
-
-    private final Image leaderBoardBackground = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
-
-    private final Image journalMenuBackground = new Image( new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
-
+    private final Image reactionMenuBackground = new Image(new Texture(Gdx.files.internal("Images/Emoji/ReactionBackground.png")));
+    private final Image giftPlayerMenuBackground = new Image(new Texture(Gdx.files.internal("Images/GiftPlayerMenuBackground.png")));
+    private final Image interactionMenuDecoration1 = new Image(new Texture(Gdx.files.internal("Images/PlayerSocial/InteractionEmoji1.png")));
+    private final Image interactionMenuDecoration2 = new Image(new Texture(Gdx.files.internal("Images/PlayerSocial/InteractionEmoji2.png")));
+    private final Image leaderBoardBackground = new Image(new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
+    private final Image journalMenuBackground = new Image(new Texture(Gdx.files.internal("Images/PlayerSocial/PlayerSocialBackground.png")));
     private final Texture fishingMiniGameBackground = new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingMiniGameWindow2.png"));
-    private final Image sonarBobber = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobber.png")));
-    private final Image sonarBobberWindow = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobberWindow.png")));
-    private final Image crown = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/Crown.png")));
-    private final Image fishIcon = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/FishIcon.png")));
-    private final Image fishingGreenBar = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingGreenBar.png")));
-    private final Image fishingBar = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/Bar2.png")));
-    private final Image fishingProgressBar = new Image( new Texture(Gdx.files.internal("Images/FishingMiniGame/GreenBar2.png")));
-
+    private final Image sonarBobber = new Image(new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobber.png")));
+    private final Image sonarBobberWindow = new Image(new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobberWindow.png")));
+    private final Image crown = new Image(new Texture(Gdx.files.internal("Images/FishingMiniGame/Crown.png")));
+    private final Image fishIcon = new Image(new Texture(Gdx.files.internal("Images/FishingMiniGame/FishIcon.png")));
+    private final Image fishingGreenBar = new Image(new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingGreenBar.png")));
+    private final Image fishingBar = new Image(new Texture(Gdx.files.internal("Images/FishingMiniGame/Bar2.png")));
+    private final Image fishingProgressBar = new Image(new Texture(Gdx.files.internal("Images/FishingMiniGame/GreenBar2.png")));
     private final Texture questStar = new Texture(Gdx.files.internal("Images/QuestStar.png"));
     private final Texture giftIcon = new Texture(Gdx.files.internal("Images/GiftIcon.png"));
     private final Texture hugIcon = new Texture(Gdx.files.internal("Images/HugIcon.png"));
@@ -858,8 +821,11 @@ public class GameAssetManager {
     private final Texture brokenHeart = new Texture(Gdx.files.internal("Images/BrokenHeart.png"));
     private final Texture heart1 = new Texture(Gdx.files.internal("Images/Heart.png"));
     private final Texture noMarriage = new Texture(Gdx.files.internal("Images/NoMarriage.png"));
+    private Animation<Texture> crowAnimationFrames;
 
-
+    {
+//        musicPlayer.setCurrentTrack(Track.THEME_1);
+    }
 
     public static GameAssetManager getGameAssetManager() {
 
@@ -1031,10 +997,10 @@ public class GameAssetManager {
         return mapImage;
     }
 
-    private void setUpImageArray(){
+    private void setUpImageArray() {
 
-        for( int i = 18; i < 94; i++ ){
-            crows.add(new Texture(Gdx.files.internal("CrowAttack/unscreen-0"+i+".png")));
+        for (int i = 18; i < 94; i++) {
+            crows.add(new Texture(Gdx.files.internal("CrowAttack/unscreen-0" + i + ".png")));
         }
 
         crowAnimationFrames = new Animation<>(0.05f, crows);
@@ -1321,7 +1287,7 @@ public class GameAssetManager {
         return craft_mysticTreeSeed;
     }
 
-    public Image getCraftingMenuBackground(){
+    public Image getCraftingMenuBackground() {
 
         return craftingMenuBackground;
 

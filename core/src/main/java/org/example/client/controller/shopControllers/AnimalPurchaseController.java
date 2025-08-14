@@ -4,18 +4,13 @@ import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
 import org.example.client.model.ClientApp;
-import org.example.common.models.Player;
-import org.example.common.models.Result;
-import org.example.common.models.Stock;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
 import org.example.client.view.shopview.AnimalPurchaseView;
-import org.example.client.model.GameAssetManager;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.AnimalProperty.Barn;
 import org.example.common.models.AnimalProperty.Coop;
-import org.example.common.models.NPCType;
+import org.example.common.models.*;
 import org.example.common.models.items.AnimalType;
 
 import java.util.HashMap;
@@ -26,7 +21,7 @@ public class AnimalPurchaseController extends MenuController {
     private final AnimalPurchaseView passwordMenuView;
     private final AppMenu shopMenuView;
 
-    public AnimalPurchaseController(AnimalPurchaseView passwordMenuView , AppMenu shopMenuView) {
+    public AnimalPurchaseController(AnimalPurchaseView passwordMenuView, AppMenu shopMenuView) {
         this.passwordMenuView = passwordMenuView;
         this.shopMenuView = shopMenuView;
     }
@@ -67,7 +62,7 @@ public class AnimalPurchaseController extends MenuController {
             );
         }
         GraphicalResult result = new GraphicalResult(response.<LinkedTreeMap<String, Object>>getFromBody("GraphicalResult"));
-        if(result.hasError())
+        if (result.hasError())
             return result;
 
 
@@ -107,7 +102,6 @@ public class AnimalPurchaseController extends MenuController {
         }
         return new Result(false, "There is No Space For This Animal in Your Farm!");
     }
-
 
 
     @Override

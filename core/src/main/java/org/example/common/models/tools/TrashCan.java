@@ -2,8 +2,8 @@ package org.example.common.models.tools;
 
 import org.example.client.model.ClientApp;
 import org.example.common.models.Result;
-import org.example.common.models.Stacks;
 import org.example.common.models.StackLevel;
+import org.example.common.models.Stacks;
 import org.example.common.models.items.ToolType;
 
 public class TrashCan extends Tool {

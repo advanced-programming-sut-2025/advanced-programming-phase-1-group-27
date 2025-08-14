@@ -3,10 +3,12 @@ package org.example.client.controller.menus;
 import com.badlogic.gdx.Gdx;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
-import org.example.client.model.*;
+import org.example.client.model.ClientApp;
+import org.example.client.model.ClientGame;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.MiniPlayer;
 import org.example.client.view.HomeView;
 import org.example.client.view.menu.LobbyMenuView;
-
 import org.example.client.view.menu.PregameMenuView;
 import org.example.common.models.*;
 
@@ -24,13 +26,13 @@ public class PregameMenuController extends MenuController {
     }
 
     public GraphicalResult chooseMap(int mapId) {
-        Message message = new Message(new HashMap<>(){{
+        Message message = new Message(new HashMap<>() {{
             put("mapId", mapId);
-            put("username" , ClientApp.getLoggedInUser().getUsername());
-            put("lobbyId" , view.getLobby().getId());
-        }} , Message.Type.choose_map);
+            put("username", ClientApp.getLoggedInUser().getUsername());
+            put("lobbyId", view.getLobby().getId());
+        }}, Message.Type.choose_map);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
-        if(response == null || response.getType() != Message.Type.response) {
+        if (response == null || response.getType() != Message.Type.response) {
             return new GraphicalResult(
                     "Failed to choose!",
                     GameAssetManager.getGameAssetManager().getErrorColor()
@@ -85,16 +87,16 @@ public class PregameMenuController extends MenuController {
         });
     }
 
-    public Lobby getLobby(int id){
-        Message message = new Message(new HashMap<>(){{
+    public Lobby getLobby(int id) {
+        Message message = new Message(new HashMap<>() {{
             put("id", id);
-        }} , Message.Type.find_lobby);
+        }}, Message.Type.find_lobby);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
-        if(response == null || response.getType() != Message.Type.response) {
+        if (response == null || response.getType() != Message.Type.response) {
             return null;
         }
         boolean found = response.getFromBody("found?");
-        if(!found){
+        if (!found) {
             return new Lobby();
         }
         return new Lobby(response.getFromBody("lobbyInfo"));
@@ -102,9 +104,9 @@ public class PregameMenuController extends MenuController {
 
     public void leave() {
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
-            put("username" , ClientApp.getLoggedInUser().getUsername());
-            put("lobbyId" , view.getLobby().getId());
-        }} , Message.Type.leave_lobby));
+            put("username", ClientApp.getLoggedInUser().getUsername());
+            put("lobbyId", view.getLobby().getId());
+        }}, Message.Type.leave_lobby));
         ClientApp.setCurrentMenu(new LobbyMenuView());
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(ClientApp.getCurrentMenu());

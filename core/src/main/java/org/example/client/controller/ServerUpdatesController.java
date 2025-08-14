@@ -11,33 +11,28 @@ import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.*;
 import org.example.client.view.HomeView;
+import org.example.client.view.InteractionMenus.MarriageRequestView;
 import org.example.client.view.InteractionMenus.Trade.PreTradeMenuView;
 import org.example.client.view.InteractionMenus.Trade.StartTradeView;
 import org.example.client.view.InteractionMenus.Trade.TradeView;
-import org.example.client.view.InteractionMenus.MarriageRequestView;
 import org.example.client.view.OutsideView;
 import org.example.client.view.VoteView;
 import org.example.common.models.*;
 import org.example.common.models.Map.FarmMap;
 import org.example.common.models.Map.NPCMap;
-import org.example.common.models.Shops.Shop;
-import org.example.common.models.AbilityType;
-import org.example.common.models.Plants.Plant;
-import org.example.common.models.StackLevel;
-import org.example.common.models.Weathers.Weather;
-
-import java.util.HashMap;
-import java.util.Random;
-
 import org.example.common.models.Plants.Crop;
+import org.example.common.models.Plants.Plant;
 import org.example.common.models.Plants.Tree;
+import org.example.common.models.Shops.Shop;
+import org.example.common.models.Weathers.Weather;
 import org.example.common.models.items.ShopItems;
 import org.example.common.models.tools.Backpack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 import static java.lang.Math.min;
-import static java.lang.Math.scalb;
 
 public class ServerUpdatesController { // handles updates sent by server
 
@@ -191,14 +186,14 @@ public class ServerUpdatesController { // handles updates sent by server
         ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(gift.getItem(), gift.getStackLevel(), gift.getQuantity());
         // TODO : sobhan ya parsa, gift ro handle konid
 
-        if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
 
             Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getGiftIcon());
             itemSprite.setSize(72, 62);
 
             PopUpController.addPopUp(new PopUpTexture(itemSprite
-                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+80,
-                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+20, 4
+                    , outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY() + 80,
+                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY() + 20, 4
             ));
 
         }
@@ -208,17 +203,17 @@ public class ServerUpdatesController { // handles updates sent by server
 
     private static void handleFlower(Message message) {
         String giver = message.getFromBody("starter");
-        ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(ShopItems.Bouquet , StackLevel.Basic , 1);
+        ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().addItems(ShopItems.Bouquet, StackLevel.Basic, 1);
         // TODO : sobhan ya parsa, gol bedahid
 
-        if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
 
             Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getBouquet());
             itemSprite.setSize(72, 62);
 
             PopUpController.addPopUp(new PopUpTexture(itemSprite
-                    ,outsideView.getPlayerController().getX(),outsideView.getPlayerController().getY()+80,
-                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY()+20, 4
+                    , outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY() + 80,
+                    outsideView.getPlayerController().getX(), outsideView.getPlayerController().getY() + 20, 4
             ));
 
         }
@@ -229,16 +224,16 @@ public class ServerUpdatesController { // handles updates sent by server
         String giver = message.getFromBody("starter");
         // TODO : sobhan ya parsa, hug konid
 
-        if ( ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
+        if (ClientApp.getCurrentMenu() instanceof OutsideView outsideView) {
 
             Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getHugIcon());
             itemSprite.setSize(72, 62);
 
             float giverX = 0, giverY = 0;
 
-            for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+            for (MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers()) {
 
-                if ( miniPlayer.getUsername().equals(giver) ) {
+                if (miniPlayer.getUsername().equals(giver)) {
                     giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
                     giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
                 }
@@ -246,8 +241,8 @@ public class ServerUpdatesController { // handles updates sent by server
             }
 
             PopUpController.addPopUp(new PopUpTexture(itemSprite
-                    ,(outsideView.getPlayerController().getX()+giverX)/2f,(outsideView.getPlayerController().getY()+giverY)/2f,
-                    (outsideView.getPlayerController().getX()+giverX)/2f, (outsideView.getPlayerController().getY()+giverY)/2f, 4
+                    , (outsideView.getPlayerController().getX() + giverX) / 2f, (outsideView.getPlayerController().getY() + giverY) / 2f,
+                    (outsideView.getPlayerController().getX() + giverX) / 2f, (outsideView.getPlayerController().getY() + giverY) / 2f, 4
             ));
 
         }
@@ -331,46 +326,45 @@ public class ServerUpdatesController { // handles updates sent by server
             Sprite noMarriageSprite = new Sprite(GameAssetManager.getGameAssetManager().getNoMarriage());
             Sprite heartSprite = new Sprite(GameAssetManager.getGameAssetManager().getHeart1());
 
-            noMarriageSprite.setSize(72,72);
-            heartSprite.setSize(72,72);
+            noMarriageSprite.setSize(72, 72);
+            heartSprite.setSize(72, 72);
 
             float targetX = 0, targetY = 0;
 
-            for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+            for (MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers()) {
 
-                if ( miniPlayer.getUsername().equals(username) ) {
+                if (miniPlayer.getUsername().equals(username)) {
                     targetX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
                     targetY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
                 }
 
             }
-            if ( !answer ){
+            if (!answer) {
 
                 PopUpController.addPopUp(new PopUpTexture(finalItemSprite
-                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
-                        newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+                        , newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY() + 80,
+                        newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY() + 20, 4
                 ));
 
                 PopUpController.addPopUp(new PopUpTexture(noMarriageSprite
-                        ,targetX,targetY+80,
-                        targetX, targetY+20, 4
+                        , targetX, targetY + 80,
+                        targetX, targetY + 20, 4
                 ));
 
-            }
-            else{
+            } else {
 
                 PopUpController.addPopUp(new PopUpTexture(heartSprite
-                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
-                        newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+                        , newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY() + 80,
+                        newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY() + 20, 4
                 ));
 
                 PopUpController.addPopUp(new PopUpTexture(heartSprite
-                        ,targetX,targetY+80,
-                        targetX, targetY+20, 4
+                        , targetX, targetY + 80,
+                        targetX, targetY + 20, 4
                 ));
 
                 PopUpController.addPopUp(new PopUpTexture(finalItemSprite
-                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),
+                        , newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY(),
                         targetX, targetY, 4
                 ));
 
@@ -431,8 +425,7 @@ public class ServerUpdatesController { // handles updates sent by server
                                     playerX, playerY + 70,
                                     2
                             ));
-                }
-                else {
+                } else {
                     InfoWindow infoWindow = new InfoWindow(
                             GameAssetManager.getGameAssetManager().getSkin().getFont("font"),
                             reaction.getText(),
@@ -456,8 +449,7 @@ public class ServerUpdatesController { // handles updates sent by server
         String mode = message.getFromBody("mode");
         if (mode.equals("ask")) {
             sendPlayerMiniInfo(message);
-        }
-        else if (mode.equals("response")) {
+        } else if (mode.equals("response")) {
             updateMiniPlayerInfo(message);
         }
     }
@@ -476,7 +468,7 @@ public class ServerUpdatesController { // handles updates sent by server
             put("other", message.getFromBody("other"));
             put("self", ClientApp.getLoggedInUser().getUsername());
             put("position", player.getPosition().getInfo());
-            put("mapIndex", player.getCurrentMap() instanceof NPCMap? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(player.getUsername()));
+            put("mapIndex", player.getCurrentMap() instanceof NPCMap ? 4 : ClientApp.getCurrentGame().getPlayerMapIndex(player.getUsername()));
             put("money", player.getMoney());
             put("numberOfQuestsCompleted", player.getNumberOfQuestsDone());
             put("totalAbility", player.getAbility(AbilityType.Farming).getLevel() +

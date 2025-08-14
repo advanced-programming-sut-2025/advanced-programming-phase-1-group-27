@@ -3,8 +3,8 @@ package org.example.common.models.Plants;
 import com.badlogic.gdx.graphics.Texture;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.model.GameAssetManager;
-import org.example.common.models.ItemManager;
 import org.example.common.models.Cell;
+import org.example.common.models.ItemManager;
 import org.example.common.models.Stacks;
 
 import java.util.HashMap;
@@ -64,7 +64,7 @@ public abstract class Plant {
     public void grow() {
         cnt++;
         tillNextHarvest = Integer.max(tillNextHarvest - 1, 0);
-        if (currentStage < type.getStages().length  && cnt >= type.getStages()[currentStage]) {
+        if (currentStage < type.getStages().length && cnt >= type.getStages()[currentStage]) {
             currentStage++;
             cnt = 0;
         }
@@ -120,20 +120,20 @@ public abstract class Plant {
         this.wateredToday = wateredToday;
     }
 
-    public void setAlwaysWatered(boolean alwaysWatered) {
-        this.alwaysWatered = alwaysWatered;
-    }
-
     public boolean isAlwaysWatered() {
         return alwaysWatered;
     }
 
-    public void setFertilized(boolean fertilized) {
-        this.fertilized = fertilized;
+    public void setAlwaysWatered(boolean alwaysWatered) {
+        this.alwaysWatered = alwaysWatered;
     }
 
     public boolean isFertilized() {
         return fertilized;
+    }
+
+    public void setFertilized(boolean fertilized) {
+        this.fertilized = fertilized;
     }
 
     public boolean isGiant() {

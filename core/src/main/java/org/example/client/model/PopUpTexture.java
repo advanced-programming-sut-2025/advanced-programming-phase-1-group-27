@@ -5,13 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import org.example.client.Main;
 
-import java.awt.*;
-
 public class PopUpTexture {
     private final Sprite sprite;
-    private float originX, originY, time;
     private final float destinationX, destinationY,
             deltaX, deltaY;
+    private float originX, originY, time;
 
     public PopUpTexture(Sprite sprite, float originX, float originY, float destinationX, float destinationY, float time) {
         this.sprite = sprite;

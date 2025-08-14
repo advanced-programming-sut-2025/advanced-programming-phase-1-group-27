@@ -1,6 +1,5 @@
 package org.example.common.models.tools;
 
-import org.example.client.model.ClientApp;
 import org.example.common.models.Cell;
 import org.example.common.models.Result;
 import org.example.common.models.StackLevel;

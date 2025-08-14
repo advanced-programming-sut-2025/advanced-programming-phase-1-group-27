@@ -1,21 +1,15 @@
 package org.example.server.controller;
 
 import org.example.common.database.DataBaseHelper;
-import org.example.common.models.Item;
-import org.example.common.models.Lobby;
-import org.example.common.models.Player;
-import org.example.common.models.User;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.ItemManager;
-import org.example.common.models.Message;
-import org.example.common.models.MusicInfo;
-import org.example.server.models.*;
+import org.example.common.models.*;
 import org.example.common.models.Relations.Gift;
 import org.example.common.models.Relations.Relation;
 import org.example.common.models.Relations.Trade;
 import org.example.common.models.Shops.Shop;
-import org.example.server.models.connections.ClientConnectionThread;
 import org.example.common.models.Weathers.Weather;
+import org.example.server.models.ServerApp;
+import org.example.server.models.ServerGame;
+import org.example.server.models.connections.ClientConnectionThread;
 
 import java.util.HashMap;
 
@@ -120,12 +114,12 @@ public class GameController {
             player1.getPlayerMetToday().put(player2, Boolean.TRUE);
             player2.getPlayerMetToday().put(player1, Boolean.TRUE);
             Relation relation = player1.getRelations().computeIfAbsent(player2, k -> new Relation());
-            if(relation.getLevel() == 2
-                    &&  relation.getXp() == 300){
+            if (relation.getLevel() == 2
+                    && relation.getXp() == 300) {
                 player1.goNextLevel(player2);
                 player2.goNextLevel(player1);
             }
-        }else  if (mode.equals("hug")) {
+        } else if (mode.equals("hug")) {
             int lobbyId = message.getIntFromBody("lobbyId");
             Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
             Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);
@@ -138,7 +132,7 @@ public class GameController {
                 player2.addXP(player1, 60);
                 player1.addXP(player2, 60);
             }
-        }else if (mode.equals("gift")) {
+        } else if (mode.equals("gift")) {
             int lobbyId = message.getIntFromBody("lobbyId");
             Player player1 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(starter);
             Player player2 = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(other);

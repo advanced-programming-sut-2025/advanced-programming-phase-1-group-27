@@ -6,9 +6,9 @@ import org.example.client.view.menu.LoginMenuView;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.SecurityQuestionMenuView;
 import org.example.common.models.Message;
+import org.example.common.models.Questions;
 import org.example.common.models.Result;
 import org.example.common.models.SecurityQuestion;
-import org.example.common.models.Questions;
 
 import java.util.HashMap;
 
@@ -30,8 +30,7 @@ public class SecurityQuestionMenuController extends MenuController {
             Main.getMain().getScreen().dispose();
             ClientApp.setCurrentMenu(new LoginMenuView());
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
-        }
-        else {
+        } else {
             view.setErrorPhase(true);
         }
     }

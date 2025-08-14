@@ -6,9 +6,9 @@ import org.example.common.models.Seasons.Season;
 import java.util.HashMap;
 
 public class Time {
-    private Game game;
     private final String[] daysOfWeek = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday"};
+    private Game game;
     // implement as instance
     private int daysPassed = 0;
     private int hour = 9, day = 1;
@@ -18,7 +18,7 @@ public class Time {
         this.game = game;
     }
 
-    public HashMap<String , Object> getInfo(){
+    public HashMap<String, Object> getInfo() {
         HashMap<String, Object> timeInfo = new HashMap<>();
         timeInfo.put("daysPassed", daysPassed);
         timeInfo.put("hour", hour);
@@ -38,6 +38,10 @@ public class Time {
         return this.hour;
     }
 
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
     public int getDate() {
         return this.day;
     }
@@ -51,20 +55,8 @@ public class Time {
                 getHour() + ":00\n");
     }
 
-    public void setDaysPassed(int daysPassed) {
-        this.daysPassed = daysPassed;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
     public void setDay(int day) {
         this.day = day;
-    }
-
-    public void setSeason(Season season) {
-        this.season = season;
     }
 
     public void passAnHour() {
@@ -100,6 +92,10 @@ public class Time {
         return this.season;
     }
 
+    public void setSeason(Season season) {
+        this.season = season;
+    }
+
     ///  Cheats :
     public void cheatAdvanceTime(int hour) {
         advanceTime(hour);
@@ -111,5 +107,9 @@ public class Time {
 
     public int getDaysPassed() {
         return daysPassed;
+    }
+
+    public void setDaysPassed(int daysPassed) {
+        this.daysPassed = daysPassed;
     }
 }

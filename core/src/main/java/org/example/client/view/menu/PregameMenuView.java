@@ -13,10 +13,10 @@ import org.example.client.Main;
 import org.example.client.controller.menus.PregameMenuController;
 import org.example.client.model.ClientApp;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.AppMenu;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Lobby;
 import org.example.common.models.User;
-import org.example.client.view.AppMenu;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,35 +24,27 @@ import java.util.Scanner;
 
 public class PregameMenuView extends AppMenu {
     private final PregameMenuController controller;
-    private Stage stage;
-
     private final Label menuTitle;
     private final Label mapSelectionLabel;
     private final Label lobbyNameLabel;
     private final Label playersLabel;
-
     private final Label user0Label;
     private final Label user1Label;
     private final Label user2Label;
     private final Label user3Label;
-
     private final Label userMap0Label;
     private final Label userMap1Label;
     private final Label userMap2Label;
     private final Label userMap3Label;
-
     private final Label lobbyIdLabel;
-
     private final GraphicalResult errorLabel;
-
     private final TextButton backButton;
     private final TextButton createGameButton;
-
     private final ImageButton map1Button;
     private final ImageButton map2Button;
     private final ImageButton map3Button;
     private final ImageButton map4Button;
-
+    private Stage stage;
     private User currentMapSelector;
 
     private Map<String, Label> usernameLabels = new HashMap<>();
@@ -93,10 +85,10 @@ public class PregameMenuView extends AppMenu {
         map3Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap3()));
         map4Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap4()));
 
-        map1Button.setSize(128,128);
-        map2Button.setSize(128,128);
-        map3Button.setSize(128,128);
-        map4Button.setSize(128,128);
+        map1Button.setSize(128, 128);
+        map2Button.setSize(128, 128);
+        map3Button.setSize(128, 128);
+        map4Button.setSize(128, 128);
 
         setListeners();
     }
@@ -136,7 +128,7 @@ public class PregameMenuView extends AppMenu {
         stage.addActor(userMap3Label);
         stage.addActor(playersLabel);
         stage.addActor(mapSelectionLabel);
-        if(currentMapSelector.getUsername().equals(lobby.getAdmin().getUsername())){
+        if (currentMapSelector.getUsername().equals(lobby.getAdmin().getUsername())) {
             lobbyIdLabel.setPosition(Gdx.graphics.getWidth() / 2f - 20, 30);
             stage.addActor(lobbyIdLabel);
         }
@@ -178,14 +170,14 @@ public class PregameMenuView extends AppMenu {
                 oldLabel.remove();
                 usernameLabels.remove(username);
             }
-            if(mapNumber != 0) {
+            if (mapNumber != 0) {
                 Label mapOwnerLabel = new Label(username, skin);
                 mapOwnerLabel.setPosition(
                         map1Button.getX() + ((mapNumber + 1) % 2) * (11 * Gdx.graphics.getWidth() / 90f + Gdx.graphics.getWidth() / 15f) + (map1Button.getWidth() - mapOwnerLabel.getWidth()) / 2,
                         6 * Gdx.graphics.getHeight() / 12f - ((int) ((mapNumber - 1) / 2)) * (11 * Gdx.graphics.getWidth() / 90f) + (map1Button.getHeight() - mapOwnerLabel.getHeight()) / 2
                 );
                 stage.addActor(mapOwnerLabel);
-                usernameLabels.put(username , mapOwnerLabel);
+                usernameLabels.put(username, mapOwnerLabel);
             }
         }
 

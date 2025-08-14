@@ -1,29 +1,21 @@
 package org.example.server.models;
 
-import org.example.common.models.Cell;
-import org.example.common.models.Lobby;
-import org.example.common.models.Player;
-import org.example.common.models.User;
-import org.example.common.database.DataBaseHelper;
 import org.example.common.models.*;
-import org.example.server.controller.TimeController;
-import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.Map.*;
 import org.example.common.models.NPCs.NPC;
+import org.example.common.models.Plants.Plant;
 import org.example.common.models.Relations.Dialogue;
 import org.example.common.models.Relations.Gift;
 import org.example.common.models.Relations.Relation;
 import org.example.common.models.Relations.Trade;
 import org.example.common.models.Shops.BlackSmith;
 import org.example.common.models.Shops.Shop;
-import org.example.common.models.Plants.*;
 import org.example.common.models.Weathers.Weather;
+import org.example.server.controller.TimeController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-
-import static java.lang.Math.min;
 
 public class ServerGame implements Game {
     private final Lobby lobby;
@@ -51,26 +43,6 @@ public class ServerGame implements Game {
         this.players = players;
         this.time = new Time(this);
         this.timeTracker = new ServerTimeTracker(this.time);
-        for (Player player : players) {
-            for (Player otherPlayer : players) {
-                if (otherPlayer.getUsername().equals(player.getUsername())) {
-                    continue;
-                }
-                player.getRelations().put(otherPlayer, new Relation());
-                player.getPlayerMetToday().put(otherPlayer, Boolean.FALSE);
-                player.getPlayerHuggedToday().put(otherPlayer, Boolean.FALSE);
-                player.getPlayerGiftToday().put(otherPlayer, Boolean.FALSE);
-                player.getPlayerTradeToday().put(otherPlayer, Boolean.FALSE);
-            }
-        }
-    }
-
-    // TODO: this constructor should be erased
-    public ServerGame(User admin, ArrayList<Player> players) {
-        this.admin = admin;
-        this.players = players;
-        this.time = new Time(this);
-        this.lobby = null;
         for (Player player : players) {
             for (Player otherPlayer : players) {
                 if (otherPlayer.getUsername().equals(player.getUsername())) {
@@ -168,23 +140,11 @@ public class ServerGame implements Game {
 
     public void passAnHour() {
         TimeController.passAnHour(lobby);
-//        DataBaseHelper.saveTimeAndWeather(lobby , time , currentWeather);
-//        DataBaseHelper.saveGiftsAndTrades(lobby , gifts , trades);
-//        updatePlayersBuff();
-//        updateArtisans();
         // player energies will be automatically updated
     }
 
     public void newDay() {
-//        crowsAttack();
-//        System.out.println("Crows attack checked.");
-        updateAnimals();
-        System.out.println("Animals updateAndRender checked.");
-        updateShippingBin();
-        System.out.println("Shipping Bin checked.");
         setNewWeather();
-        System.out.println("Weather checked.");
-//        growPlants();
 //        System.out.println("Grow plants checked.");
 //        // Walking to their houses
 //        for (int i = 0; i < players.size(); i++) {
@@ -237,14 +197,11 @@ public class ServerGame implements Game {
 
         //refresh relations :
         for (Player player : players) {
-//            player.refreshNPCThings(this);
             refreshPlayerThings(player);
         }
         // refresh shop stock
         initShops();
 
-        // Apply weather effect
-//        applyWeatherEffect(currentWeather);
     }
 
     public void newSeason() {
@@ -351,51 +308,6 @@ public class ServerGame implements Game {
         }
     }
 
-    private void crowsAttack() {
-        // Crows Attacking
-        for (Player player : players) {
-            ArrayList<Plant> allPlants = player.getFarmMap().getAllPlants();
-            int crowsCount = allPlants.size() / 16;
-            ArrayList<Integer> attackedPlants = new ArrayList<>();
-            for (int i = 0; i < crowsCount; i++) {
-                if (new Random().nextInt(4) == 0) {
-                    int plantIndex = new Random().nextInt(allPlants.size());
-                    attackedPlants.add(plantIndex);
-                    Plant plant = allPlants.get(plantIndex);
-                    if (plant.getCell().isProtected())
-                        continue;
-                    if (plant instanceof Crop crop) {
-                        crop.getCell().setObject(null);
-                    } else if (plant instanceof Tree tree) {
-                        tree.setTillNextHarvest(min(1, tree.getTillNextHarvest()));
-                    }
-                }
-            }
-            lobby.notifyUser(player, new Message(new HashMap<>() {{
-                put("attackedPlants", attackedPlants);
-            }}, Message.Type.crows_attack));
-        }
-    }
-
-    private void updateAnimals() {
-        // Updating animals
-        for (Player player : players) {
-            for (Animal animal : player.getFarmMap().getAnimals()) {
-                animal.passADay();
-            }
-        }
-    }
-
-    private void updateShippingBin() {
-        // Emptying shipping bin
-//        for (Player player : players) {
-//            for (ShippingBin shippingBin : player.getFarmMap().getShippingBins()) {
-//                shippingBin.refresh();
-//                // money will automatically be updated when player.addMoney() is called in client
-//            }
-//        }
-    }
-
     private void setNewWeather() {
         // Setting Weather :
         if (tomorrowWeather == null) currentWeather = time.getSeason().pickARandomWeather();
@@ -500,45 +412,8 @@ public class ServerGame implements Game {
         return npcs;
     }
 
-    public boolean nextPlayer() { // returns true if everyone has played one turn
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-        return players.get(currentPlayerIndex) == admin;
-    }
-
     public NPCMap getNpcMap() {
         return npcMap;
-    }
-
-    public ArrayList<Dialogue> getDialogues() {
-        return dialogues;
-    }
-
-    public void addDialogue(Dialogue dialogue) {
-        dialogues.add(dialogue);
-    }
-
-
-    private void updatePlayersBuff() {
-        for (Player player : players) {
-            if (player.getCurrentBuff() != null) {
-                player.getCurrentBuff().reduceRemainingTime();
-                if (player.getCurrentBuff().getRemainingTime() <= 0) {
-                    player.removeBuff();
-                }
-            }
-        }
-    }
-
-    private void updateArtisans() {
-        for (FarmMap map : farmMaps) {
-            for (int i = 0; i < map.getHeight(); i++) {
-                for (int j = 0; j < map.getWidth(); j++) {
-                    Cell cell = map.getCell(i, j);
-                    if (cell.getObject() instanceof Artisan)
-                        ((Artisan) cell.getObject()).passHour();
-                }
-            }
-        }
     }
 
     public ArrayList getFarmInfo() {
@@ -568,8 +443,8 @@ public class ServerGame implements Game {
     }
 
     public Player getPlayerByUsername(String username) {
-        for(Player player : players){
-            if(player.getUsername().equals(username)){
+        for (Player player : players) {
+            if (player.getUsername().equals(username)) {
                 return player;
             }
         }
@@ -580,24 +455,24 @@ public class ServerGame implements Game {
         return trades;
     }
 
-    public void addTrade(Trade trade) {
-        trades.add(trade);
-    }
-
     public void setTrades(ArrayList<Trade> trades) {
         this.trades = trades;
+    }
+
+    public void addTrade(Trade trade) {
+        trades.add(trade);
     }
 
     public ArrayList<Gift> getGifts() {
         return gifts;
     }
 
-    public void addGifts(Gift gift) {
-        gifts.add(gift);
-    }
-
     public void setGifts(ArrayList<Gift> gifts) {
         this.gifts = gifts;
+    }
+
+    public void addGifts(Gift gift) {
+        gifts.add(gift);
     }
 
     public void setPlayerMusic(String playerName, String songId, String songName) {
@@ -632,9 +507,9 @@ public class ServerGame implements Game {
         playerToMusicMap.remove(playerName);
     }
 
-    public Gift getGiftWithId(int id){
-        for(Gift gift : gifts){
-            if(gift.getId() == id){
+    public Gift getGiftWithId(int id) {
+        for (Gift gift : gifts) {
+            if (gift.getId() == id) {
                 return gift;
             }
         }

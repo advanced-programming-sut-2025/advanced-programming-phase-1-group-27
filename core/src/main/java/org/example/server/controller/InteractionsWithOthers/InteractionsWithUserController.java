@@ -1,25 +1,19 @@
 package org.example.server.controller.InteractionsWithOthers;
 
-import org.example.common.models.Item;
-import org.example.common.models.Lobby;
-import org.example.common.models.Player;
-import org.example.common.models.Result;
 import org.example.common.models.GraphicalResult;
+import org.example.common.models.Lobby;
 import org.example.common.models.Message;
-import org.example.server.models.*;
-import org.example.common.models.Relations.Dialogue;
+import org.example.common.models.Player;
 import org.example.common.models.Relations.Gift;
 import org.example.common.models.Relations.Relation;
-import org.example.common.models.DialogueType;
-import org.example.common.models.items.ShopItems;
-import org.example.common.models.tools.Backpack;
+import org.example.server.models.ServerApp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class InteractionsWithUserController {
-    public static void meet(Message message){
+    public static void meet(Message message) {
         int lobbyId = message.getIntFromBody("lobbyId");
         Player player = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("self"));
         Player other = ServerApp.getLobbyById(lobbyId).getGame().getPlayerByUsername(message.getFromBody("other"));
@@ -321,7 +315,7 @@ public class InteractionsWithUserController {
                 put("GraphicalResult", GraphicalResult.getInfo("Player not found"));
             }}, Message.Type.response);
         }
-        if(player.getUsername().equals(currentPlayer.getUsername())) {
+        if (player.getUsername().equals(currentPlayer.getUsername())) {
             return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("You can't add level to yourself!"));
             }}, Message.Type.response);
@@ -357,7 +351,7 @@ public class InteractionsWithUserController {
                 put("GraphicalResult", GraphicalResult.getInfo("Player not found"));
             }}, Message.Type.response);
         }
-        if(player.getUsername().equals(currentPlayer.getUsername())) {
+        if (player.getUsername().equals(currentPlayer.getUsername())) {
             return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("You can't add level to yourself!"));
             }}, Message.Type.response);
@@ -387,7 +381,7 @@ public class InteractionsWithUserController {
             if (starter.equals(gift.getTo()) &&
                     other.equals(gift.getFrom())) {
                 selected.add(gift.getInfo());
-            }else if(starter.equals(gift.getFrom()) &&
+            } else if (starter.equals(gift.getFrom()) &&
                     other.equals(gift.getTo())) {
                 selected.add(gift.getInfo());
             }

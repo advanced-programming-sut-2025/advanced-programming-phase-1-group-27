@@ -2,11 +2,11 @@ package org.example.client.controller.menus;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.common.models.Result;
-import org.example.common.models.Menu;
 import org.example.client.view.menu.LoginMenuView;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.WelcomeMenuView;
+import org.example.common.models.Menu;
+import org.example.common.models.Result;
 
 public class WelcomeMenuController extends MenuController {
 

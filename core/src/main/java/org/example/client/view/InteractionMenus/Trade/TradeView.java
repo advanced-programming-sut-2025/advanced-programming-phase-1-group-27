@@ -12,8 +12,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
 import org.example.client.model.ClientApp;
-import org.example.client.view.AppMenu;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.AppMenu;
 import org.example.common.models.Stacks;
 
 import java.util.ArrayList;
@@ -40,19 +40,19 @@ public class TradeView extends AppMenu {
     private final TextButton declineTrade;
     private final TextButton addButton;
     private final Stage stage;
-    private boolean tradeDoneByStarterSide;
     private final ArrayList<Stacks> selectedCurrent;
-    private ArrayList<Stacks> selectedOther;
-    private float timer = 0f;
     private final ArrayList<Stacks> onScreenItems = new ArrayList<>();
-    private int itemCount;
-    private int rowNum;
-    private Integer selectItemIndex;
     //Scroll planes
     private final Table stockTableCurrent;
     private final ScrollPane scrollPaneCurrent;
     private final Table stockTableOther;
     private final ScrollPane scrollPaneOther;
+    private boolean tradeDoneByStarterSide;
+    private ArrayList<Stacks> selectedOther;
+    private float timer = 0f;
+    private int itemCount;
+    private int rowNum;
+    private Integer selectItemIndex;
 
     public TradeView(String starter, String other, ArrayList<Stacks> targetInventory) {
 

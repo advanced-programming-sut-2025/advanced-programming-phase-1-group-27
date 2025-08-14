@@ -4,11 +4,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.common.models.Result;
-import org.example.client.view.menu.*;
 import org.example.client.model.GameAssetManager;
+import org.example.client.view.menu.ForgetPasswordMenuView;
+import org.example.client.view.menu.LoginMenuView;
+import org.example.client.view.menu.MainMenuView;
+import org.example.client.view.menu.WelcomeMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
+import org.example.common.models.Result;
 
 import java.util.HashMap;
 

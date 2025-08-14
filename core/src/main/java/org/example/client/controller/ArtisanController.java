@@ -5,19 +5,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import org.example.client.model.ClientApp;
-import org.example.client.view.HUDView;
 import org.example.client.model.GameAssetManager;
-import org.example.common.models.Artisan;
-import org.example.common.models.Ingredient;
-import org.example.common.models.Item;
-import org.example.common.models.Stacks;
 import org.example.client.model.enums.InGameMenuType;
-import org.example.common.models.StackLevel;
+import org.example.client.view.HUDView;
+import org.example.common.models.*;
 import org.example.common.models.items.Recipe;
 import org.example.common.models.items.products.ProcessedProductType;
 
@@ -30,32 +27,22 @@ public class ArtisanController {
     private final Stage stage;
 
     private final Skin skin = GameAssetManager.getGameAssetManager().getSkin();
-
-    //MINI MENU:
-    private ArrayList<Label> artisanRecipe;
     private final Image artisanMiniBackground;
-
-    private Artisan artisan;
-
     private final TextButton artisanCancelButton;
     private final TextButton artisanCheatButton;
-
-    //MAIN MENU:
-
     private final ArrayList<Stacks> inventoryCopy;
     private final ArrayList<Image> itemImageButtons;
-    private final ArrayList<Label> quantityLabels;
 
+    //MAIN MENU:
+    private final ArrayList<Label> quantityLabels;
     private final ArrayList<Stacks> selectedItems;
     private final ArrayList<Image> selectedItemImages;
     private final ArrayList<Label> selectedQuantityLabels;
-
-
     private final Image artisanBackgrond;
-
     private final TextButton artisanProcessButton, artisanCollectButton;
-
-
+    //MINI MENU:
+    private ArrayList<Label> artisanRecipe;
+    private Artisan artisan;
 
 
     public ArtisanController(HUDView hudView, Stage stage) {
@@ -115,7 +102,6 @@ public class ArtisanController {
         addListeners();
 //        stage.setDebugAll(true);
     }
-
 
 
     private void displayArtisanMini() {
@@ -178,7 +164,7 @@ public class ArtisanController {
 
     }
 
-    public void setArtisanMini(Artisan artisan , float x, float y) {
+    public void setArtisanMini(Artisan artisan, float x, float y) {
         this.artisan = artisan;
         setupArtisanMini(x, y);
         hudView.setCurrentMenu(InGameMenuType.ARTISAN_MINI);
@@ -238,8 +224,7 @@ public class ArtisanController {
                 if (count > 1) {
                     label.setText(String.valueOf(count - 1));
                     stacks.setQuantity(count - 1);
-                }
-                else {
+                } else {
                     temp = i;
                 }
 
@@ -499,7 +484,6 @@ public class ArtisanController {
         });
 
     }
-
 
 
     private boolean hasEnoughIngredients(Recipe recipe) {

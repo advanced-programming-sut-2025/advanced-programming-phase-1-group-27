@@ -4,9 +4,9 @@ import org.example.common.models.Map.FarmMap;
 import org.example.common.models.Map.Map;
 import org.example.common.models.NPCs.NPC;
 import org.example.common.models.NPCs.Quest;
+import org.example.common.models.Plants.FruitType;
 import org.example.common.models.Relations.Dialogue;
 import org.example.common.models.Relations.Relation;
-import org.example.common.models.Plants.FruitType;
 import org.example.common.models.items.Recipe;
 import org.example.common.models.items.ToolType;
 import org.example.common.models.items.products.CookingProduct;
@@ -63,7 +63,7 @@ public class Player extends User {
         backpack.addItems(ToolType.TrainingRod, ToolType.TrainingRod.getLevel(), 1);
         backpack.addItems(ToolType.BasicTrashCan, ToolType.BasicTrashCan.getLevel(), 1);
 
-        for ( FruitType ft: FruitType.values() ){
+        for (FruitType ft : FruitType.values()) {
             backpack.addItems(ft, StackLevel.Basic, 20);
         }
 
@@ -242,16 +242,12 @@ public class Player extends User {
         return energy;
     }
 
-    public int getBoostEnergy() {
-        return boostEnergy;
-    }
-
     public void setEnergy(int energy) {
         this.energy = energy;
     }
 
-    public void setMaxEnergy(int maxEnergy) {
-        this.maxEnergy = maxEnergy;
+    public int getBoostEnergy() {
+        return boostEnergy;
     }
 
     public void setBoostEnergy(int boostEnergy) {
@@ -263,16 +259,20 @@ public class Player extends User {
         energy += val;
     }
 
-    public void setCheater(boolean cheater) {
-        this.cheater = cheater;
-    }
-
     public boolean isCheater() {
         return cheater;
     }
 
+    public void setCheater(boolean cheater) {
+        this.cheater = cheater;
+    }
+
     public int getMaxEnergy() {
         return maxEnergy;
+    }
+
+    public void setMaxEnergy(int maxEnergy) {
+        this.maxEnergy = maxEnergy;
     }
 
     public boolean hasPassedOut() {
@@ -690,11 +690,11 @@ public class Player extends User {
         return numberOfQuestsDone;
     }
 
-    public void addNumberOfQuestsDone() {
-        numberOfQuestsDone++;
-    }
-
     public void setNumberOfQuestsDone(int numberOfQuestsDone) {
         this.numberOfQuestsDone = numberOfQuestsDone;
+    }
+
+    public void addNumberOfQuestsDone() {
+        numberOfQuestsDone++;
     }
 }

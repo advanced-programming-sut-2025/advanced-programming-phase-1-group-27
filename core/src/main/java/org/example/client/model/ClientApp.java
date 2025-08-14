@@ -5,9 +5,9 @@ import org.example.client.Main;
 import org.example.client.controller.SaveController;
 import org.example.client.view.AppMenu;
 import org.example.client.view.menu.MainMenuView;
+import org.example.common.models.Gender;
 import org.example.common.models.Map.NPCMap;
 import org.example.common.models.Message;
-import org.example.common.models.Gender;
 import org.example.common.models.SecurityQuestion;
 import org.example.common.models.User;
 import org.json.JSONObject;
@@ -22,16 +22,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class ClientApp {
     public static final int TIMEOUT_MILLIS = 5000;
-    
+    private static final String loggedInUserFilePath = "data/login_user.json";
     private static String ip;
     private static int port;
-    private static final String loggedInUserFilePath = "data/login_user.json";
     private static ServerConnectionThread serverConnectionThread;
     private static User loggedInUser = null;
     private static ClientGame currentGame = null;
@@ -50,12 +46,12 @@ public class ClientApp {
         return false;
     }
 
-    public static void setLoggedInUser(User user) {
-        loggedInUser = user;
-    }
-
     public static User getLoggedInUser() {
         return loggedInUser;
+    }
+
+    public static void setLoggedInUser(User user) {
+        loggedInUser = user;
     }
 
     public static void initFromArgs(String[] args) throws IOException {
@@ -128,12 +124,12 @@ public class ClientApp {
         ClientApp.currentGame = currentGame;
     }
 
-    public static void setCurrentMenu(AppMenu currentMenu) {
-        ClientApp.currentMenu = currentMenu;
-    }
-
     public static AppMenu getCurrentMenu() {
         return currentMenu;
+    }
+
+    public static void setCurrentMenu(AppMenu currentMenu) {
+        ClientApp.currentMenu = currentMenu;
     }
 
     public static void updateFile(User user) {
@@ -148,29 +144,6 @@ public class ClientApp {
         if (!file.exists() || file.length() == 0)
             return;
         file.delete();
-    }
-
-    public static void setSavedUser(User user) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", user.getUsername());
-        jsonObject.put("password", user.getPassword());
-        jsonObject.put("email", user.getEmail());
-        jsonObject.put("nickname", user.getNickname());
-        jsonObject.put("gender", user.getGender());
-        jsonObject.put("recoveryQuestion", user.getRecoveryQuestion().getQuestion());
-        jsonObject.put("recoveryAnswer", user.getRecoveryQuestion().getAnswer());
-        jsonObject.put("maxMoneyEarned", user.getMaxMoneyEarned());
-        jsonObject.put("numberOfGamesPlayed", user.getNumberOfGamesPlayed());
-        jsonObject.put("avatarId", user.getAvatarId());
-
-        File file = new File(loggedInUserFilePath);
-        file.getParentFile().mkdirs();
-
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.write(jsonObject.toString(4));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static User getSavedUser() {
@@ -196,6 +169,29 @@ public class ClientApp {
             return result;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public static void setSavedUser(User user) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", user.getUsername());
+        jsonObject.put("password", user.getPassword());
+        jsonObject.put("email", user.getEmail());
+        jsonObject.put("nickname", user.getNickname());
+        jsonObject.put("gender", user.getGender());
+        jsonObject.put("recoveryQuestion", user.getRecoveryQuestion().getQuestion());
+        jsonObject.put("recoveryAnswer", user.getRecoveryQuestion().getAnswer());
+        jsonObject.put("maxMoneyEarned", user.getMaxMoneyEarned());
+        jsonObject.put("numberOfGamesPlayed", user.getNumberOfGamesPlayed());
+        jsonObject.put("avatarId", user.getAvatarId());
+
+        File file = new File(loggedInUserFilePath);
+        file.getParentFile().mkdirs();
+
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(jsonObject.toString(4));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

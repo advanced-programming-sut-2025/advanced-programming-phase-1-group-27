@@ -1,7 +1,7 @@
 package org.example.server.controller;
 
-import org.example.common.models.Message;
 import org.example.common.models.Lobby;
+import org.example.common.models.Message;
 import org.example.server.models.ServerApp;
 
 public class TimeController {

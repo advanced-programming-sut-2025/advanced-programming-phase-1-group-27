@@ -2,13 +2,9 @@ package org.example.server.controller;
 
 import org.example.client.Main;
 import org.example.client.controller.menus.MenuController;
-import org.example.common.models.Result;
-import org.example.common.models.SecurityQuestion;
-import org.example.common.models.Menu;
-import org.example.common.models.Questions;
-import org.example.client.view.menu.LoginMenuView;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.SecurityQuestionMenuView;
+import org.example.common.models.Result;
 
 public class SecurityQuestionMenuController extends MenuController {
 

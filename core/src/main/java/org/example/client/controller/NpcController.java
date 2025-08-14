@@ -12,10 +12,10 @@ import com.badlogic.gdx.utils.Align;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
-import org.example.client.view.InteractionMenus.NpcMenuView;
-import org.example.client.view.OutsideView;
 import org.example.client.model.GameAssetManager;
 import org.example.client.model.InfoWindow;
+import org.example.client.view.InteractionMenus.NpcMenuView;
+import org.example.client.view.OutsideView;
 import org.example.common.models.Cell;
 import org.example.common.models.NPCs.NPC;
 
@@ -29,12 +29,9 @@ public class NpcController {
     private final Cell homeStartCell, wonderStartCell;
     private final Float walkTime = 0.4f;
     private final Sprite sprite;
-
+    private final ArrayList<InfoWindow> infoWindows = new ArrayList<>();
     private Camera camera;
     private Animation<Texture> currentAnimation;
-
-    private final ArrayList<InfoWindow> infoWindows = new ArrayList<>();
-
     private float x, y, destX, destY, time = 0f, animationTime = 0f;
     private int i, j, phase = -1;
     private boolean walking = false;
@@ -114,7 +111,7 @@ public class NpcController {
             case 2:
                 dest = ClientApp.getCurrentGame().getNpcMap().getCell(i, j - 1);
                 if (dest != null && dest.isPassable() && dest.getObject() == null
-                && j - 1 >= leftBound[phase]) {
+                        && j - 1 >= leftBound[phase]) {
                     j--;
 
                     walking = true;
@@ -131,7 +128,7 @@ public class NpcController {
             case 3:
                 dest = ClientApp.getCurrentGame().getNpcMap().getCell(i - 1, j);
                 if (dest != null && dest.isPassable() && dest.getObject() == null &&
-                i - 1 >= upperBound[phase]) {
+                        i - 1 >= upperBound[phase]) {
                     i--;
 
                     walking = true;
@@ -145,8 +142,8 @@ public class NpcController {
                     npc.setCurrentCell(dest);
                 }
                 break;
+        }
     }
-}
 
     private void updateAnimation() {
 
@@ -259,7 +256,6 @@ public class NpcController {
 
         time += Gdx.graphics.getDeltaTime();
         animationTime += Gdx.graphics.getDeltaTime();
-
 
 
         if (walking) {

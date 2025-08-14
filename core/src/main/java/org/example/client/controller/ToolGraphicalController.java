@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import org.example.client.Main;
-import org.example.client.model.*;
+import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
+import org.example.client.model.PopUpTexture;
 import org.example.client.view.GameView;
 import org.example.client.view.OutsideView;
 import org.example.common.models.*;
@@ -22,15 +24,13 @@ import java.util.ArrayList;
 import static java.lang.Math.max;
 
 public class ToolGraphicalController {
-    private float x, y;
     private final OutsideView view;
-    private Camera camera;
-    private boolean turnOff = false;
-
     private final Sprite toolSprite = new Sprite(GameAssetManager.getGameAssetManager().getItemTexture(
             ToolType.BasicPickaxe
     ));
-
+    private float x, y;
+    private Camera camera;
+    private boolean turnOff = false;
     private Player player = ClientApp.getCurrentGame().getCurrentPlayer();
     private ArrayList<GraphicalResult> errors = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class ToolGraphicalController {
                     if (res != null)
                         handleError(res);
                 } else if (cell.getType() == CellType.Water &&
-                toolType.getTheFuckingTool() instanceof FishingPole) {
+                        toolType.getTheFuckingTool() instanceof FishingPole) {
                     boolean flag = false;
                     for (Cell adjacentCell : player.getCurrentCell().getAdjacentCells()) {
                         flag |= adjacentCell.getType() == CellType.Water;
@@ -115,14 +115,14 @@ public class ToolGraphicalController {
 
             }
 
-            }
+        }
     }
 
     private void handleFertilization() {
         if (!player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem()
                 .equals(ShopItems.DeluxeRetainingSoil) &&
-                        !player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem()
-                                .equals(ShopItems.SpeedGro)) {
+                !player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem()
+                        .equals(ShopItems.SpeedGro)) {
             return;
         }
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
@@ -150,7 +150,7 @@ public class ToolGraphicalController {
                 plant.setFertilized(true);
             }
             if (player.getBackpack().get(player.getCurrentInventorySlotIndex()).getItem().equals(
-                    ShopItems.DeluxeRetainingSoil)){
+                    ShopItems.DeluxeRetainingSoil)) {
                 plant.setAlwaysWatered(true);
                 ResultController.addSuccess("The selected plant will never need water!");
             }

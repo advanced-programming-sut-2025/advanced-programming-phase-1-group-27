@@ -1,13 +1,7 @@
 package org.example.common.models.NPCs;
 
-import org.example.common.models.Cell;
-import org.example.common.models.Item;
-import org.example.common.models.Player;
-import org.example.common.models.Building;
+import org.example.common.models.*;
 import org.example.common.models.Relations.Relation;
-import org.example.common.models.Features;
-import org.example.common.models.NPCType;
-import org.example.common.models.ShopType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -130,12 +124,12 @@ public class NPC {
         this.home = home;
     }
 
-    public void setDialogue(String dialogue) {
-        this.dialogue = dialogue;
-    }
-
     public String getDialogue() {
         return dialogue;
+    }
+
+    public void setDialogue(String dialogue) {
+        this.dialogue = dialogue;
     }
 
     public boolean isThinking() {

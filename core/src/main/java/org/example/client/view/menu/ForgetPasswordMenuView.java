@@ -11,8 +11,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.menus.ForgetPasswordMenuController;
 import org.example.client.model.GameAssetManager;
-import org.example.common.models.GraphicalResult;
 import org.example.client.view.AppMenu;
+import org.example.common.models.GraphicalResult;
 
 import java.util.Scanner;
 

@@ -2,11 +2,11 @@ package org.example.client.controller.menus;
 
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.menu.ForgetPasswordMenuView;
 import org.example.client.view.menu.LoginMenuView;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.Result;
 import org.example.common.models.User;
 

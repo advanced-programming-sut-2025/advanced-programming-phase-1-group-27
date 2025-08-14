@@ -7,7 +7,6 @@ import org.example.client.Main;
 import org.example.client.model.ClientApp;
 
 
-
 /**
  * Launches the desktop (LWJGL3) application.
  */

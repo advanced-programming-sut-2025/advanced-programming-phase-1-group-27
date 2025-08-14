@@ -7,25 +7,23 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import org.example.client.Main;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.OutsideView;
 import org.example.common.models.Direction;
-import org.example.client.model.GameAssetManager;
 
 import java.awt.*;
 
 import static java.lang.Math.min;
 
 public class OtherPlayerController {
+    private final String username;
     private float x = Gdx.graphics.getWidth() / 2f, y = Gdx.graphics.getHeight() / 2f,
             lastX, lastY, destX, destY;
     private Animation<TextureRegion> currentAnimation;
     private Sprite characterSprite = new Sprite(GameAssetManager.getGameAssetManager().getStandingSprite());
     private float time = 0f, animationTime = 0f;
     private boolean walking = false;
-
     private boolean sobhan = false;
-
-    private final String username;
 
     public OtherPlayerController(String username, int i, int j) {
         this.username = username;

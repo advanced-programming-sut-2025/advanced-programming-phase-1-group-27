@@ -4,15 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
 import org.example.client.model.ClientApp;
-import org.example.common.models.Result;
-import org.example.common.models.User;
-import org.example.client.view.menu.WelcomeMenuView;
 import org.example.client.model.GameAssetManager;
-import org.example.common.models.GraphicalResult;
 import org.example.client.view.menu.RegisterMenuView;
 import org.example.client.view.menu.SecurityQuestionMenuView;
-import org.example.common.models.Message;
-import org.example.common.models.Gender;
+import org.example.client.view.menu.WelcomeMenuView;
+import org.example.common.models.*;
 
 import java.util.HashMap;
 
@@ -48,9 +44,9 @@ public class RegisterMenuController extends MenuController {
 
     private GraphicalResult checkAllFieldsAreFilled() {
         if (view.getUsernameField().getText().isEmpty() ||
-            view.getPasswordField().getText().isEmpty() ||
-            view.getEmailField().getText().isEmpty() ||
-            view.getNicknameField().getText().isEmpty()) {
+                view.getPasswordField().getText().isEmpty() ||
+                view.getEmailField().getText().isEmpty() ||
+                view.getNicknameField().getText().isEmpty()) {
             return new GraphicalResult(
                     "Please fill all the required fields",
                     GameAssetManager.getGameAssetManager().getErrorColor()

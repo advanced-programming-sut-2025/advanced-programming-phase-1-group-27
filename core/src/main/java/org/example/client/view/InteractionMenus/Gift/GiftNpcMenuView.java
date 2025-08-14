@@ -6,24 +6,24 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.InteractionsWithOthers.InteractionsWithNPCController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
 import org.example.client.view.InteractionMenus.NpcMenuView;
-import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
-import org.example.common.models.Stacks;
 import org.example.common.models.NPCType;
+import org.example.common.models.Stacks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-
-import static java.lang.Math.max;
 
 public class GiftNpcMenuView extends AppMenu {
 
@@ -59,8 +59,6 @@ public class GiftNpcMenuView extends AppMenu {
         errorLabel = new GraphicalResult();
         rowNum = 0;
         selectItemIndex = null;
-
-
 
 
         backButton = new TextButton("Back", skin);
@@ -253,12 +251,12 @@ public class GiftNpcMenuView extends AppMenu {
         });
 
 
-       sendGiftButton.addListener(new ClickListener() {
+        sendGiftButton.addListener(new ClickListener() {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playClickSound();
-                errorLabel.set(controller.giftNPC(npc.getName(),onScreenItems.get(selectItemIndex).getItem().getName()));
+                errorLabel.set(controller.giftNPC(npc.getName(), onScreenItems.get(selectItemIndex).getItem().getName()));
             }
         });
 

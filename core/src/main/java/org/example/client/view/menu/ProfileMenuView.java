@@ -10,37 +10,32 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.menus.ProfileMenuController;
-import org.example.common.models.GraphicalResult;
 import org.example.client.model.GameAssetManager;
 import org.example.client.view.AppMenu;
+import org.example.common.models.GraphicalResult;
 
 import java.util.Scanner;
 
 public class ProfileMenuView extends AppMenu {
 
     private final ProfileMenuController controller;
-    private Stage stage;
-
     private final Label menuTitleLabel;
     private final Label newUsernameLabel;
     private final Label newPasswordLabel;
     private final Label newEmailLabel;
     private final Label newNicknameLabel;
     private final Label passwordLabel;
-
     private final TextField newUsernameTextField;
     private final TextField newPasswordTextField;
     private final TextField newEmailTextField;
     private final TextField newNicknameTextField;
     private final TextField passwordTextField;
-
     private final TextButton changeButton;
     private final TextButton avatarMenuButton;
     private final TextButton userInfoMenuButton;
     private final TextButton backButton;
-
     private final GraphicalResult errorLabel;
-
+    private Stage stage;
     private float fadeInTimer = 0f;
 
     public ProfileMenuView() {
@@ -79,7 +74,7 @@ public class ProfileMenuView extends AppMenu {
 
     }
 
-    private void showLabels(){
+    private void showLabels() {
 
         newUsernameLabel.setWidth(Gdx.graphics.getWidth() / 5f);
         newNicknameLabel.setWidth(Gdx.graphics.getWidth() / 5f);
@@ -102,7 +97,7 @@ public class ProfileMenuView extends AppMenu {
 
     }
 
-    private void showFields(){
+    private void showFields() {
 
         newUsernameTextField.setWidth(Gdx.graphics.getWidth() / 5f);
         newNicknameTextField.setWidth(Gdx.graphics.getWidth() / 5f);
@@ -111,11 +106,11 @@ public class ProfileMenuView extends AppMenu {
         passwordTextField.setWidth(Gdx.graphics.getWidth() / 5f);
 
 
-        newUsernameTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 16 * Gdx.graphics.getHeight() / 24f-20);
-        newNicknameTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 13 * Gdx.graphics.getHeight() / 24f-20);
-        newEmailTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 10 * Gdx.graphics.getHeight() / 24f-20);
-        newPasswordTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 7 * Gdx.graphics.getHeight() / 24f-20);
-        passwordTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 4 * Gdx.graphics.getHeight() / 24f-20);
+        newUsernameTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 16 * Gdx.graphics.getHeight() / 24f - 20);
+        newNicknameTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 13 * Gdx.graphics.getHeight() / 24f - 20);
+        newEmailTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 10 * Gdx.graphics.getHeight() / 24f - 20);
+        newPasswordTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 7 * Gdx.graphics.getHeight() / 24f - 20);
+        passwordTextField.setPosition(4 * Gdx.graphics.getWidth() / 10f, 4 * Gdx.graphics.getHeight() / 24f - 20);
 
         stage.addActor(newUsernameTextField);
         stage.addActor(newNicknameTextField);
@@ -125,28 +120,28 @@ public class ProfileMenuView extends AppMenu {
 
     }
 
-    private void showButtons(){
+    private void showButtons() {
 
         backButton.setWidth(Gdx.graphics.getWidth() / 5f);
         avatarMenuButton.setWidth(Gdx.graphics.getWidth() / 5f);
         userInfoMenuButton.setWidth(Gdx.graphics.getWidth() / 5f);
         changeButton.setWidth(Gdx.graphics.getWidth() / 5f);
 
-        backButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-backButton.getWidth())/2,
-                 Gdx.graphics.getHeight()/3f - 75);
+        backButton.setPosition(Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - backButton.getWidth()) / 2,
+                Gdx.graphics.getHeight() / 3f - 75);
 
         avatarMenuButton.setPosition(
-                Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-avatarMenuButton.getWidth())/2,
-                Gdx.graphics.getHeight()/3f + 75
+                Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - avatarMenuButton.getWidth()) / 2,
+                Gdx.graphics.getHeight() / 3f + 75
         );
 
         userInfoMenuButton.setPosition(
-                Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth()/2f-avatarMenuButton.getWidth()) / 2,
-                Gdx.graphics.getHeight()/3f + 225
+                Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - avatarMenuButton.getWidth()) / 2,
+                Gdx.graphics.getHeight() / 3f + 225
         );
 
-        changeButton.setPosition(Gdx.graphics.getWidth()/2f + (Gdx.graphics.getWidth()/2f-changeButton.getWidth())/2,
-                Gdx.graphics.getHeight()/3f + 375);
+        changeButton.setPosition(Gdx.graphics.getWidth() / 2f + (Gdx.graphics.getWidth() / 2f - changeButton.getWidth()) / 2,
+                Gdx.graphics.getHeight() / 3f + 375);
 
         stage.addActor(backButton);
         stage.addActor(avatarMenuButton);
@@ -242,11 +237,11 @@ public class ProfileMenuView extends AppMenu {
         });
 
         userInfoMenuButton.addListener(new ClickListener() {
-           @Override
-           public void clicked(InputEvent event, float x, float y) {
-               playClickSound();
-               controller.goToUserInfoMenu();
-           }
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playClickSound();
+                controller.goToUserInfoMenu();
+            }
         });
 
         backButton.addListener(new ClickListener() {
@@ -279,5 +274,6 @@ public class ProfileMenuView extends AppMenu {
         return passwordTextField;
     }
 
-    public void executeCommands(Scanner scanner) {}
+    public void executeCommands(Scanner scanner) {
+    }
 }

@@ -1,12 +1,9 @@
 package org.example.server.controller;
 
-import org.example.common.models.Lobby;
-import org.example.common.models.Player;
-import org.example.common.models.User;
 import org.example.common.database.DataBaseHelper;
-import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
-import org.example.server.models.*;
+import org.example.common.models.*;
+import org.example.server.models.ServerApp;
+import org.example.server.models.ServerGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,23 +46,23 @@ public class PregameMenuController {
         Lobby lobby = ServerApp.getLobbyById(lobbyId);
         assert lobby != null;
         HashMap<String, Integer> usersAndChosenMaps = lobby.getUsernameToMap();
-        if(!usersAndChosenMaps.containsKey(username)){
+        if (!usersAndChosenMaps.containsKey(username)) {
             usersAndChosenMaps.put(username, -1);
         }
         int pastId = usersAndChosenMaps.get(username);
-        if(pastId == mapId){
-            return new Message(new HashMap<>(){{
+        if (pastId == mapId) {
+            return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("You have already chosen this map!"));
             }}, Message.Type.response);
         }
-        for(String key : usersAndChosenMaps.keySet()){
-            if(usersAndChosenMaps.get(key) == mapId){
-                return new Message(new HashMap<>(){{
+        for (String key : usersAndChosenMaps.keySet()) {
+            if (usersAndChosenMaps.get(key) == mapId) {
+                return new Message(new HashMap<>() {{
                     put("GraphicalResult", GraphicalResult.getInfo("This map is selected already!"));
                 }}, Message.Type.response);
             }
         }
-        lobby.setMap(username , mapId);
+        lobby.setMap(username, mapId);
         return new Message(new HashMap<>() {{
             put("GraphicalResult", GraphicalResult.getInfo("Map selected successfully!", false));
         }}, Message.Type.response);
@@ -79,13 +76,13 @@ public class PregameMenuController {
             return;
         }
         User selectedUser = null;
-        for(User user : lobby.getUsers()) {
-            if(user.getUsername().equals(username)) {
+        for (User user : lobby.getUsers()) {
+            if (user.getUsername().equals(username)) {
                 selectedUser = user;
             }
         }
 
-        if(selectedUser != null) {
+        if (selectedUser != null) {
             lobby.removeUser(selectedUser);
 
             if (lobby.getUsers().isEmpty()) {

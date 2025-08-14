@@ -7,10 +7,10 @@ import org.example.client.model.enums.MiniGameDifficulty;
 import org.example.client.view.MiniGame.MiniGameView;
 import org.example.client.view.MiniGame.PostMiniGameMenuView;
 import org.example.client.view.OutsideView;
-import org.example.common.models.Stacks;
 import org.example.common.models.AbilityType;
 import org.example.common.models.Seasons.Season;
 import org.example.common.models.StackLevel;
+import org.example.common.models.Stacks;
 import org.example.common.models.items.FishType;
 import org.example.common.models.items.ToolType;
 
@@ -25,10 +25,10 @@ public class MiniGameController {
     private final ToolType fishingPole;
     private final FishType caughtFish;
     private final int numberOfFish;
-    private StackLevel fishLevel;
     private final FishMovementType caughtFishMovement;
-    private Integer previousDirection;
     private final MiniGameDifficulty difficulty;
+    private StackLevel fishLevel;
+    private Integer previousDirection;
     private float progress;
     private boolean isPerfect;
     private MiniGameView miniGameView;

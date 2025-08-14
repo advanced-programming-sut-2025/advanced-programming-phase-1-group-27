@@ -7,11 +7,12 @@ import org.example.common.models.Result;
 
 public class MainMenuController extends MenuController {
     private MainMenuView view;
+
     public MainMenuController(MainMenuView view) {
         this.view = view;
     }
 
-    public void logout(){
+    public void logout() {
         ClientApp.setLoggedInUser(null);
         ClientApp.deleteLoginUserFile();
         Main.getMain().getScreen().dispose();
@@ -19,7 +20,7 @@ public class MainMenuController extends MenuController {
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
-    public void goToLobbyMenu(){
+    public void goToLobbyMenu() {
         Main.getMain().getScreen().dispose();
         ClientApp.setCurrentMenu(new LobbyMenuView());
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
@@ -31,7 +32,7 @@ public class MainMenuController extends MenuController {
         Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 
-    public void goToProfileMenu(){
+    public void goToProfileMenu() {
         Main.getMain().getScreen().dispose();
         ClientApp.setCurrentMenu(new ProfileMenuView());
         Main.getMain().setScreen(ClientApp.getCurrentMenu());

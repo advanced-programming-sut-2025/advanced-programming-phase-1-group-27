@@ -1,9 +1,9 @@
 package org.example.server.controller;
 
-import org.example.common.models.User;
 import org.example.common.models.GraphicalResult;
 import org.example.common.models.Message;
-import org.example.server.models.*;
+import org.example.common.models.User;
+import org.example.server.models.ServerApp;
 import org.example.server.models.connections.ClientConnectionThread;
 
 import java.util.HashMap;
@@ -18,19 +18,19 @@ public class LoginMenuController {
         if (user == null) {
             return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("Username not found!"));
-            }} , Message.Type.response);
+            }}, Message.Type.response);
         }
 
-        if(!user.passwordEquals(password)){
+        if (!user.passwordEquals(password)) {
             return new Message(new HashMap<>() {{
                 put("GraphicalResult", GraphicalResult.getInfo("Passwords does not match!"));
-            }} , Message.Type.response);
+            }}, Message.Type.response);
         }
         clientConnectionThread.setUser(user);
         DcController.handleNewLogin(user);
         return new Message(new HashMap<>() {{
             put("GraphicalResult", GraphicalResult.getInfo("You have successfully logged in."
                     , false));
-        }} , Message.Type.response);
+        }}, Message.Type.response);
     }
 }

@@ -25,16 +25,16 @@ public class ProcessedProduct implements Item, Edible { // for all processed pro
         this.energy = ((Number) info.get("energy")).intValue();
     }
 
+    public ProcessedProduct(ProcessedProductType type) {
+        this.type = type;
+    }
+
     public HashMap<String, Object> getInfo() {
         HashMap<String, Object> info = new HashMap<>();
         info.put("type", type.name());
         info.put("price", price);
         info.put("energy", energy);
         return info;
-    }
-
-    public ProcessedProduct(ProcessedProductType type) {
-        this.type = type;
     }
 
     public ProcessedProductType getType() {

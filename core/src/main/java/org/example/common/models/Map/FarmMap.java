@@ -1,16 +1,18 @@
 package org.example.common.models.Map;
 
 import com.google.gson.internal.LinkedTreeMap;
-import org.example.common.models.ItemManager;
 import org.example.common.models.AnimalProperty.Animal;
 import org.example.common.models.AnimalProperty.AnimalEnclosure;
 import org.example.common.models.AnimalProperty.Barn;
 import org.example.common.models.AnimalProperty.Coop;
 import org.example.common.models.Cell;
-import org.example.common.models.ShippingBin;
 import org.example.common.models.CellType;
-import org.example.common.models.Plants.*;
+import org.example.common.models.ItemManager;
+import org.example.common.models.Plants.CropType;
+import org.example.common.models.Plants.Plant;
+import org.example.common.models.Plants.TreeType;
 import org.example.common.models.Seasons.Season;
+import org.example.common.models.ShippingBin;
 import org.example.common.models.items.MineralType;
 
 import java.util.ArrayList;
@@ -35,7 +37,6 @@ public class FarmMap extends Map {
             }
         }
     }
-
 
 
     public HashMap<String, Object> getInfo() {
@@ -165,11 +166,9 @@ public class FarmMap extends Map {
                     cell.placeSeed(cropType);
                 else
                     cell.placeCrop(cropType);
-            }
-            else if (foragingType instanceof TreeType treeType) {
+            } else if (foragingType instanceof TreeType treeType) {
                 cell.placeTree(treeType);
-            }
-            else if (foragingType instanceof MineralType mineralType) {
+            } else if (foragingType instanceof MineralType mineralType) {
                 cell.placeMineral(mineralType);
             }
         }

@@ -14,8 +14,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.Main;
 import org.example.client.controller.menus.RegisterMenuController;
 import org.example.client.model.GameAssetManager;
-import org.example.common.models.GraphicalResult;
 import org.example.client.view.AppMenu;
+import org.example.common.models.GraphicalResult;
 
 import java.util.Scanner;
 
@@ -351,6 +351,7 @@ public class RegisterMenuView extends AppMenu {
 
 
     @Override
-    public void executeCommands(Scanner scanner) {}
+    public void executeCommands(Scanner scanner) {
+    }
 
 }

@@ -9,16 +9,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Align;
 
 public class InfoWindow {
+    private final GlyphLayout glyphLayout = new GlyphLayout();
     private BitmapFont font;
     private Color color;
     private boolean wrap = false, finished = false;
     private int alignment = Align.left, width;
     private String text;
-
     private float x, y;
     private float time = 4f, fontScale = 1f;
-
-    private final GlyphLayout glyphLayout = new GlyphLayout();
 
     public InfoWindow(BitmapFont font, String text, Color color, int width, int alignment, boolean wrap) {
         this.font = new BitmapFont(font.getData(), (TextureRegion) null, false);

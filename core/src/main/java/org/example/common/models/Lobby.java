@@ -7,27 +7,26 @@ import org.example.server.models.ServerGame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Lobby {
-    private User admin;
     private final ArrayList<User> users = new ArrayList<>();
     private final boolean isPublic;
     private final boolean isVisible;
     private final int id;
     private final String name;
     private final String password;
+    private final ArrayList<String> dcPlayers = new ArrayList<>();
+    private User admin;
     private HashMap<String, Integer> usernameToMap = new HashMap<>();
     private ServerGame serverGame = null;
     private boolean active;
     private AtomicLong lastChange = new AtomicLong(System.currentTimeMillis());
     private AtomicInteger votesToTerminate = new AtomicInteger(0);
     private AtomicInteger numberOfVotes = new AtomicInteger(0);
-    private final ArrayList<String> dcPlayers = new ArrayList<>();
 
-    public Lobby () {
+    public Lobby() {
         this.admin = new User();
         this.isPublic = true;
         this.isVisible = true;
@@ -243,7 +242,7 @@ public class Lobby {
             if (user.getUsername().equals(username))
                 return true;
         }
-        return  false;
+        return false;
     }
 
     public void addDcPlayer(String dcPlayer) {

@@ -27,16 +27,16 @@ public class User {
         this.gender = gender;
     }
 
-    public User(String username, String password, String nickname, String email, String gender ,
-                String question, String answer , int maxMoneyEarned, int numberOfGamesPlayed , int avatarId) {
+    public User(String username, String password, String nickname, String email, String gender,
+                String question, String answer, int maxMoneyEarned, int numberOfGamesPlayed, int avatarId) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
-        if(gender.equalsIgnoreCase("male")){
-            this.gender =  Gender.Male;
-        }else {
-            this.gender =  Gender.Female;
+        if (gender.equalsIgnoreCase("male")) {
+            this.gender = Gender.Male;
+        } else {
+            this.gender = Gender.Female;
         }
         this.recoveryQuestion = new SecurityQuestion(question, answer);
         this.maxMoneyEarned = maxMoneyEarned;
@@ -56,21 +56,7 @@ public class User {
         avatarId = ((Number) data.get("avatarId")).intValue();
     }
 
-    public User() {}
-
-    public HashMap<String, Object> getInfo() {
-        HashMap<String, Object> info = new HashMap<>();
-        info.put("username", username);
-        info.put("password", password);
-        info.put("nickname", nickname);
-        info.put("email", email);
-        info.put("gender", gender.name());
-        info.put("question", recoveryQuestion.getQuestion());
-        info.put("answer", recoveryQuestion.getAnswer());
-        info.put("maxMoneyEarned", maxMoneyEarned);
-        info.put("numberOfGamesPlayed", numberOfGamesPlayed);
-        info.put("avatarId", avatarId);
-        return info;
+    public User() {
     }
 
     public static boolean isValidUsername(String username) {
@@ -131,6 +117,21 @@ public class User {
 
     private static boolean isValidTLD(String TLD) {
         return TLD.length() >= 2;
+    }
+
+    public HashMap<String, Object> getInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("username", username);
+        info.put("password", password);
+        info.put("nickname", nickname);
+        info.put("email", email);
+        info.put("gender", gender.name());
+        info.put("question", recoveryQuestion.getQuestion());
+        info.put("answer", recoveryQuestion.getAnswer());
+        info.put("maxMoneyEarned", maxMoneyEarned);
+        info.put("numberOfGamesPlayed", numberOfGamesPlayed);
+        info.put("avatarId", avatarId);
+        return info;
     }
 
     public String getUsername() {

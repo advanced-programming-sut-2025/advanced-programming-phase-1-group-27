@@ -14,40 +14,40 @@ public enum TreeType implements PlantType {
             "assets/Images/Trees/Cherry"),
     BananaTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Banana, new Season[]{Season.Summer}, 1,
-             "assets/Images/Trees/Banana"),
+            "assets/Images/Trees/Banana"),
     MangoTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Mango, new Season[]{Season.Summer}, 1,
-             "assets/Images/Trees/Mango"),
+            "assets/Images/Trees/Mango"),
     OrangeTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Orange, new Season[]{Season.Summer}, 1,
-             "assets/Images/Trees/Orange"),
+            "assets/Images/Trees/Orange"),
     PeachTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Peach, new Season[]{Season.Summer}, 1,
-             "assets/Images/Trees/Peach"),
+            "assets/Images/Trees/Peach"),
     AppleTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Apple, new Season[]{Season.Fall}, 1,
-             "assets/Images/Trees/Apple"),
+            "assets/Images/Trees/Apple"),
     PomegranateTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Pomegranate, new Season[]{Season.Fall}, 1,
-             "assets/Images/Trees/Pomegranate"),
+            "assets/Images/Trees/Pomegranate"),
     OakTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.OakResin, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 7,
-             "assets/Images/Trees/Oak"),
+            "assets/Images/Trees/Oak"),
     MapleTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.MapleSyrup, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 9,
-             "assets/Images/Trees/Maple"),
+            "assets/Images/Trees/Maple"),
     PineTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.PineTar, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 5,
-             "assets/Images/Trees/Pine"),
+            "assets/Images/Trees/Pine"),
     MahoganyTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.Sap, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 1,
-             "assets/Images/Trees/Mahogany"),
+            "assets/Images/Trees/Mahogany"),
     MushroomTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.CommonMushroom, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 1,
-             "assets/Images/Trees/Mushroom"),
+            "assets/Images/Trees/Mushroom"),
     MysticTree(new int[]{7, 7, 7, 7}, 28,
             FruitType.MysticSyrup, new Season[]{Season.Spring, Season.Summer, Season.Fall, Season.Winter}, 7,
-             "assets/Images/Trees/Mystic");
+            "assets/Images/Trees/Mystic");
 
     private static final ArrayList<TreeType> foragings = new ArrayList<>(List.of(OakTree, MapleTree, PineTree, MahoganyTree,
             MushroomTree));
@@ -56,8 +56,8 @@ public enum TreeType implements PlantType {
     private final FruitType fruit;
     private final ArrayList<Season> seasons;
     private final int harvestCycle;
-    private PlantSourceType source;
     private final String address;
+    private PlantSourceType source;
 
     TreeType(int[] stages, int harvestTime, FruitType fruit, Season[] seasons, int harvestCycle
             , String address) {

@@ -22,7 +22,7 @@ import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
 public class TradeController {
 
-    public void goToTradeHistory(String username){
+    public void goToTradeHistory(String username) {
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(new TradeHistoryView(username));
     }
@@ -195,19 +195,19 @@ public class TradeController {
             put("starter", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
             put("other", username);
             put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
-        }} , Message.Type.get_trade_history);
+        }}, Message.Type.get_trade_history);
         Message response = ClientApp.getServerConnectionThread().sendAndWaitForResponse(message, TIMEOUT_MILLIS);
         if (response == null || response.getType() != Message.Type.response) {
             return new ArrayList<>();
         }
         ArrayList<Trade> trades = new ArrayList<>();
-        for(LinkedTreeMap<String ,Object> ti : response.<ArrayList<LinkedTreeMap<String,Object>>>getFromBody("trades")){
+        for (LinkedTreeMap<String, Object> ti : response.<ArrayList<LinkedTreeMap<String, Object>>>getFromBody("trades")) {
             trades.add(new Trade(ti));
         }
         return trades;
     }
 
-    public void exit(String username){
+    public void exit(String username) {
         Main.getMain().getScreen().dispose();
         InteractionMenu interactionMenu = new InteractionMenu(username);
         Main.getMain().setScreen(interactionMenu);

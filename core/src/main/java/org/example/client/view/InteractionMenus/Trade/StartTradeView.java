@@ -3,7 +3,9 @@ package org.example.client.view.InteractionMenus.Trade;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import org.example.client.controller.InteractionsWithOthers.TradeController;
@@ -31,8 +33,8 @@ public class StartTradeView extends AppMenu {
         controller = new TradeController();
         ClientApp.setNonMainMenu(this);
         this.username = username;
-        yesButton = new TextButton("Yes" , skin);
-        noButton = new TextButton("No" , skin);
+        yesButton = new TextButton("Yes", skin);
+        noButton = new TextButton("No", skin);
 
         creamImage = new Image(RoundedRectangleTexture.createCreamRoundedRect(
                 Gdx.graphics.getWidth(),
@@ -64,9 +66,9 @@ public class StartTradeView extends AppMenu {
         displayBackground();
         yesButton.setWidth(300);
         noButton.setWidth(300);
-        label.setPosition(Gdx.graphics.getWidth() / 2f - label.getWidth() + 50,  Gdx.graphics.getHeight() / 2f + label.getHeight() + 50);
+        label.setPosition(Gdx.graphics.getWidth() / 2f - label.getWidth() + 50, Gdx.graphics.getHeight() / 2f + label.getHeight() + 50);
         yesButton.setPosition(Gdx.graphics.getWidth() / 2f + yesButton.getWidth() - 150, Gdx.graphics.getHeight() / 2f - yesButton.getHeight());
-        noButton.setPosition(Gdx.graphics.getWidth() / 2f - noButton.getWidth() - 150 , Gdx.graphics.getHeight() / 2f - noButton.getHeight());
+        noButton.setPosition(Gdx.graphics.getWidth() / 2f - noButton.getWidth() - 150, Gdx.graphics.getHeight() / 2f - noButton.getHeight());
         stage.addActor(label);
         stage.addActor(noButton);
         stage.addActor(yesButton);
@@ -112,7 +114,7 @@ public class StartTradeView extends AppMenu {
         yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.respondToStartTrade(username , true);
+                controller.respondToStartTrade(username, true);
                 stage.clear();
             }
         });
@@ -120,7 +122,7 @@ public class StartTradeView extends AppMenu {
         noButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                controller.respondToStartTrade(username , false);
+                controller.respondToStartTrade(username, false);
                 stage.clear();
             }
         });

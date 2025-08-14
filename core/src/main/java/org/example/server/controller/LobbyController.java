@@ -2,10 +2,10 @@ package org.example.server.controller;
 
 
 import org.example.common.models.GraphicalResult;
-import org.example.common.models.Message;
 import org.example.common.models.Lobby;
-import org.example.server.models.ServerApp;
+import org.example.common.models.Message;
 import org.example.common.models.User;
+import org.example.server.models.ServerApp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class LobbyController {
                 put("GraphicalResult", GraphicalResult.getInfo("Lobby capacity is full"));
             }}, Message.Type.response);
 
-        return new Message(new HashMap<>(){{
+        return new Message(new HashMap<>() {{
             put("GraphicalResult", GraphicalResult.getInfo("You have successfully joined!", false));
         }}, Message.Type.response);
     }
@@ -75,28 +75,27 @@ public class LobbyController {
             usernames.add(user.getUsername());
         }
         return new Message(new HashMap<>() {{
-            put("usernames" , usernames);
-        }} ,  Message.Type.response);
+            put("usernames", usernames);
+        }}, Message.Type.response);
     }
 
     public static Message findLobbyById(Message message) {
         int lobbyId = message.getIntFromBody("id");
         Lobby selectedLobby = ServerApp.getLobbyById(lobbyId);
 
-        if(selectedLobby != null){
+        if (selectedLobby != null) {
             Lobby finalSelectedLobby = selectedLobby;
             return new Message(new HashMap<>() {{
-                put("found?" , true);
-                put("lobbyInfo" , finalSelectedLobby.getInfo());
+                put("found?", true);
+                put("lobbyInfo", finalSelectedLobby.getInfo());
                 put("GraphicalResult", GraphicalResult.getInfo("Lobby found successfully!"));
-            }} , Message.Type.response);
-        }
-        else {
+            }}, Message.Type.response);
+        } else {
             return new Message(new HashMap<>() {{
-                put("found?" , false);
-                put("lobbyInfo" , null);
-                put("GraphicalResult" , GraphicalResult.getInfo("Lobby not found!"));
-            }} , Message.Type.response);
+                put("found?", false);
+                put("lobbyInfo", null);
+                put("GraphicalResult", GraphicalResult.getInfo("Lobby not found!"));
+            }}, Message.Type.response);
         }
     }
 
