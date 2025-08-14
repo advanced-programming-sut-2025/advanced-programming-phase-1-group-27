@@ -165,7 +165,6 @@ public class HUDController extends MenuController {
 
     public void updateSlotIndex(Integer slotChange) {
 
-        ///  TODO: RASSA MOVE KON TO TRASH CAN
         Player player = ClientApp.getCurrentGame().getCurrentPlayer();
 
         Integer currentSlot = player.getCurrentInventorySlotIndex();

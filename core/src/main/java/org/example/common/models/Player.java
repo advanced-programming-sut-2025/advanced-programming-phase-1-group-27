@@ -95,7 +95,7 @@ public class Player extends User {
         this.foraging = new Ability();
         this.fishing = new Ability();
         this.currentCell = null;
-        this.money = 10;
+        this.money = 8569;
         this.currentTool = null;
         abilityFinder.put(AbilityType.Farming, farming);
         abilityFinder.put(AbilityType.Fishing, fishing);
@@ -696,5 +696,17 @@ public class Player extends User {
 
     public void addNumberOfQuestsDone() {
         numberOfQuestsDone++;
+    }
+
+    public HashMap<String, Object> getRelationsInfo() {
+        HashMap<String, Object> info = new HashMap<>();
+        for (java.util.Map.Entry<Player, Relation> entry : relations.entrySet()) {
+            info.put(entry.getKey().getUsername(), entry.getValue().getInfo());
+        }
+        return info;
+    }
+
+    public void setRelation(Player player, Relation relation) {
+        relations.put(player, relation);
     }
 }

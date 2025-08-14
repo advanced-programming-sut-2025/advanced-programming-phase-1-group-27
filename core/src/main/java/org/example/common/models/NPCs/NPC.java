@@ -1,5 +1,6 @@
 package org.example.common.models.NPCs;
 
+import com.google.gson.internal.LinkedTreeMap;
 import org.example.common.models.*;
 import org.example.common.models.Relations.Relation;
 
@@ -30,9 +31,20 @@ public class NPC {
         this.favorites = type.getFavorite();
         this.daysForThirdQuest = daysForThirdQuest;
         this.shop = type.getJob();
-//        this.relations = relationMap();
         this.relations = new HashMap<>();
         this.quests = type.getQuests();
+    }
+
+    public HashMap<String, Object> getRelationsInfo() {
+        HashMap<String, Object> result = new HashMap<>();
+        for (Map.Entry<Player, Relation> entry : relations.entrySet()) {
+            result.put(entry.getKey().getUsername(), entry.getValue().getInfo());
+        }
+        return result;
+    }
+
+    public void setRelation(Player player, Relation relation) {
+        this.relations.put(player, relation);
     }
 
     public Cell getCurrentCell() {
@@ -78,14 +90,6 @@ public class NPC {
     public Features getFeature() {
         return features;
     }
-
-//    private Map<Player, Relation> relationMap() {
-//        Map<Player, Relation> map = new HashMap<>();
-//        for (Player player : ClientApp.getCurrentGame().getPlayers()) {
-//            map.put(player, new Relation());
-//        }
-//        return map;
-//    }
 
     public void addXP(Player player, int xp) {
         if (!relations.containsKey(player)) {

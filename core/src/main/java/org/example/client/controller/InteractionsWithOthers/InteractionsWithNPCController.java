@@ -200,7 +200,6 @@ public class InteractionsWithNPCController {
             }}, Message.Type.interaction_p2npc);
             ClientApp.getServerConnectionThread().sendMessage(message);
         }
-        // TODO : Rassa dialogue
         OutsideView newOutsideView = new OutsideView();
         Main.getMain().getScreen().dispose();
         Main.getMain().setScreen(newOutsideView);

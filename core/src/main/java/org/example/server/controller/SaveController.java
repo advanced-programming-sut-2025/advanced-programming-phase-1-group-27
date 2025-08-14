@@ -9,6 +9,8 @@ import org.example.common.models.AnimalProperty.Barn;
 import org.example.common.models.AnimalProperty.Coop;
 import org.example.common.models.Map.FarmMap;
 import org.example.common.models.Map.NPCMap;
+import org.example.common.models.NPCs.NPC;
+import org.example.common.models.Relations.Relation;
 import org.example.common.models.items.Recipe;
 import org.example.common.models.tools.Backpack;
 import org.example.server.models.ServerApp;
@@ -16,6 +18,7 @@ import org.example.server.models.ServerGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SaveController {
     public static void sendInfo(Lobby lobby, String username) {
@@ -201,5 +204,40 @@ public class SaveController {
             recipes.add(Recipe.getItem(recipeName));
         }
         return recipes;
+    }
+
+
+    public static Message getGameInfo(ServerGame game) {
+        Message result = new Message(new HashMap<>(), Message.Type.save);
+        ArrayList npcsInfo = new ArrayList();
+        for (NPC npc : game.getNPCs()) {
+            npcsInfo.add(npc.getRelationsInfo());
+        }
+        result.addToBody("npcsInfo", npcsInfo);
+        for (Player player : game.getPlayers()) {
+            result.addToBody(player.getUsername(), player.getRelationsInfo());
+        }
+        return result;
+    }
+
+    public static void loadRelations(Message message, ServerGame game) {
+        ArrayList<LinkedTreeMap<String, Object>> npcsInfo = message.getFromBody("npcsInfo");
+        for (int i = 0; i < game.getNPCs().size(); i++) {
+            NPC npc = game.getNPCs().get(i);
+            LinkedTreeMap<String, Object> npcInfo = npcsInfo.get(i);
+            for (Map.Entry<String, Object> entry : npcInfo.entrySet()) {
+                Player player = game.getPlayerByUsername(entry.getKey());
+                Relation relation = new Relation((LinkedTreeMap<String, Object>) entry.getValue());
+                npc.setRelation(player, relation);
+            }
+        }
+        for (Player player : game.getPlayers()) {
+            LinkedTreeMap<String, Object> relationInfo = message.getFromBody(player.getUsername());
+            for (Map.Entry<String, Object> entry : relationInfo.entrySet()) {
+                Player otherPlayer = game.getPlayerByUsername(entry.getKey());
+                Relation relation = new Relation((LinkedTreeMap<String, Object>) entry.getValue());
+                player.setRelation(otherPlayer, relation);
+            }
+        }
     }
 }

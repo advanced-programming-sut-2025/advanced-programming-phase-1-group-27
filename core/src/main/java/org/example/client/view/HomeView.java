@@ -57,7 +57,6 @@ public class HomeView extends AppMenu {
         Main.getBatch().setProjectionMatrix(
                 new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight())
         );
-        //TODO Movaghati ast in
         preProcess();
 
         System.out.println("SALAM");

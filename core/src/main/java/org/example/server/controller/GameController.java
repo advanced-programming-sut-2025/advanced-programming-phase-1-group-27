@@ -2,6 +2,7 @@ package org.example.server.controller;
 
 import org.example.common.database.DataBaseHelper;
 import org.example.common.models.*;
+import org.example.common.models.NPCs.NPC;
 import org.example.common.models.Relations.Gift;
 import org.example.common.models.Relations.Relation;
 import org.example.common.models.Relations.Trade;
@@ -11,6 +12,7 @@ import org.example.server.models.ServerApp;
 import org.example.server.models.ServerGame;
 import org.example.server.models.connections.ClientConnectionThread;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.example.server.models.ServerApp.TIMEOUT_MILLIS;
@@ -175,6 +177,7 @@ public class GameController {
         assert lobby != null;
         DataBaseHelper.saveTimeAndWeather(lobby, lobby.getGame().getTime(), lobby.getGame().getCurrentWeather());
         DataBaseHelper.saveGiftsAndTrades(lobby, lobby.getGame().getGifts(), lobby.getGame().getTrades());
+        Message gameInfo = SaveController.getGameInfo(lobby.getGame());
         lobby.notifyAll(new Message(null, Message.Type.save_and_exit_game));
         lobby.getGame().pause();
     }
