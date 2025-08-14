@@ -177,7 +177,7 @@ public class GameController {
         assert lobby != null;
         DataBaseHelper.saveTimeAndWeather(lobby, lobby.getGame().getTime(), lobby.getGame().getCurrentWeather());
         DataBaseHelper.saveGiftsAndTrades(lobby, lobby.getGame().getGifts(), lobby.getGame().getTrades());
-        Message gameInfo = SaveController.getGameInfo(lobby.getGame());
+        DataBaseHelper.saveRelations(lobby , SaveController.getGameInfo(lobby.getGame()));
         lobby.notifyAll(new Message(null, Message.Type.save_and_exit_game));
         lobby.getGame().pause();
     }

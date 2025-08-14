@@ -27,6 +27,7 @@ public class DcController {
                 } else {
                     DataBaseHelper.saveTimeAndWeather(lobby, lobby.getGame().getTime(), lobby.getGame().getCurrentWeather());
                     DataBaseHelper.saveGiftsAndTrades(lobby, lobby.getGame().getGifts(), lobby.getGame().getTrades());
+                    DataBaseHelper.saveRelations(lobby, SaveController.getGameInfo(lobby.getGame()));
                     lobby.getGame().pause();
                     lobby.clearDCPlayers();
                     lobby.notifyAll(new Message(null, Message.Type.save_and_exit_game));

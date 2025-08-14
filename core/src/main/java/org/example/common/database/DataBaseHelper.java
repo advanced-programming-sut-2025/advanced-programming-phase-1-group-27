@@ -323,8 +323,8 @@ public class DataBaseHelper {
                 "User1 TEXT DEFAULT NULL," +
                 "User2 TEXT DEFAULT NULL," +
                 "User3 TEXT DEFAULT NULL," +
-                "User4 TEXT DEFAULT NULL" +
-//                "Relations TEXT DEFAULT NULL" +
+                "User4 TEXT DEFAULT NULL," +
+                "Relations TEXT DEFAULT NULL" +
                 ")";
         try (Connection conn = DriverManager.getConnection(DB_SAVE);
              Statement stmt = conn.createStatement()) {
@@ -443,6 +443,31 @@ public class DataBaseHelper {
         }
     }
 
+    public static synchronized void saveRelations(Lobby lobby, Message message) {
+        String sql = "UPDATE saves SET Relations = ? WHERE lobbyId = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_SAVE);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            String messageJson = JSONUtils.toJson(message);
+
+            pstmt.setString(1, messageJson);
+            pstmt.setInt(2, lobby.getId());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Relations for lobbyId '" + lobby.getId() +
+                        "' updated successfully.");
+            } else {
+                System.out.println("LobbyId '" + lobby.getId() + "' not found, update skipped.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error updating Relations for lobbyId '" +
+                    lobby.getId() + "': " + e.getMessage());
+        }
+    }
+
+
     public static synchronized void saveClientGameInfo(Lobby lobby, Message message) {
         String selectSql = "SELECT User1, User2, User3, User4 FROM saves WHERE lobbyId = ?";
         String updateSql = null;
@@ -517,6 +542,7 @@ public class DataBaseHelper {
                     String weatherString = rs.getString("Weather");
                     String tradesString = rs.getString("Trades");
                     String giftsString = rs.getString("Gifts");
+                    String relationsString = rs.getString("Relations");
 
 
                     ArrayList<Gift> gifts = new ArrayList<>();
@@ -542,6 +568,9 @@ public class DataBaseHelper {
 
                     Message timeMessage = JSONUtils.fromJson(timeString);
                     lobby.getGame().getTime().loadTime(timeMessage.getFromBody("time"));
+
+                    Message relationMessage = JSONUtils.fromJson(relationsString);
+                    SaveController.loadRelations(relationMessage, lobby.getGame());
 
                     lobbies.add(lobby);
                 } catch (Exception e) {
