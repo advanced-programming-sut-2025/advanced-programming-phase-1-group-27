@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
+import static org.example.client.model.ClientApp.saveGame;
 
 public class InteractionsWithNPCController {
 
@@ -69,7 +70,16 @@ public class InteractionsWithNPCController {
         } else {
             backpack.addItems(quest.getReward().getItem(), quest.getReward().getStackLevel(), quest.getReward().getQuantity());
         }
-        currentPlayer.getActiveQuests().remove(quest);
+        
+        Quest deletedQuest = null;
+        for (Quest quest1 : ClientApp.getCurrentGame().getCurrentPlayer().getActiveQuests()) {
+            if (Objects.equals(quest.getRequest().getItem().getName(), quest1.getRequest().getItem().getName())) {
+                if (Objects.equals(quest1.getReward().getItem().getName(), quest.getReward().getItem().getName())) {
+                   deletedQuest = quest1;
+                }
+            }
+        }
+        currentPlayer.getActiveQuests().remove(deletedQuest);
         Message message = new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("quest", quest.getInfo());
