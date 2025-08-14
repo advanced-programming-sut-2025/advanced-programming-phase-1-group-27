@@ -24,8 +24,6 @@ public class VoteController {
             }}, Message.Type.voting));
         }
         Main.getMain().getScreen().dispose();
-        OutsideView outsideView = new OutsideView();
-        ClientApp.setNonMainMenu(outsideView);
-        Main.getMain().setScreen(outsideView);
+        Main.getMain().setScreen(ClientApp.getCurrentMenu());
     }
 }

@@ -563,6 +563,11 @@ public class ClientGame implements Game {
         });
     }
 
+    public void setVolume(float volume) {
+        if (currentMusic != null && currentMusic.isPlaying())
+            currentMusic.setVolume(volume);
+    }
+
     public void stopMusic() {
         if (currentMusic != null && currentMusic.isPlaying()) {
             currentMusic.stop();

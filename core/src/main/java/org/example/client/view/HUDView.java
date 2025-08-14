@@ -1672,10 +1672,10 @@ public class HUDView extends AppMenu {
                         ctrlPressed = true;
                     }
 
-                    if ( keycode == Input.Keys.U ){
+                    if (keycode == Input.Keys.U) {
 
                         isMuted = !isMuted;
-                        ///  TODDO RASSA
+                        ClientApp.getCurrentGame().setVolume(isMuted ? 0 : 1);
 
                     }
 
