@@ -1,8 +1,12 @@
 package org.example.client.controller.InteractionsWithOthers;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.internal.LinkedTreeMap;
 import org.example.client.Main;
+import org.example.client.controller.PopUpController;
 import org.example.client.model.ClientApp;
+import org.example.client.model.MiniPlayer;
+import org.example.client.model.PopUpTexture;
 import org.example.client.view.OutsideView;
 import org.example.client.model.GameAssetManager;
 import org.example.common.models.GraphicalResult;
@@ -61,6 +65,7 @@ public class MarriageController {
 
 
     public void accept(String proposer) {
+
         ClientApp.getServerConnectionThread().sendMessage(new Message(new HashMap<>() {{
             put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
             put("self", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
@@ -72,6 +77,40 @@ public class MarriageController {
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);
         Main.getMain().setScreen(newOutsideView);
+
+        Sprite ringSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
+        Sprite heartSprite = new Sprite(GameAssetManager.getGameAssetManager().getHeart1());
+
+        ringSprite.setSize(72,72);
+        heartSprite.setSize(72,72);
+
+        float proposerX = 0, proposerY = 0;
+
+        for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+
+            if ( miniPlayer.getUsername().equals(proposer) ) {
+                proposerX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                proposerY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
+            }
+
+        }
+
+        PopUpController.addPopUp(new PopUpTexture(heartSprite
+                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
+                newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+        ));
+
+        PopUpController.addPopUp(new PopUpTexture(heartSprite
+                ,proposerX,proposerY+80,
+                proposerX, proposerY+20, 4
+        ));
+
+        PopUpController.addPopUp(new PopUpTexture(ringSprite,
+                proposerX, proposerY
+                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(), 4
+        ));
+
+
     }
 
     public void decline(String proposer) {
@@ -85,6 +124,37 @@ public class MarriageController {
         OutsideView newOutsideView = new OutsideView();
         ClientApp.setNonMainMenu(newOutsideView);
         Main.getMain().setScreen(newOutsideView);
+
+        Sprite noMarriageSprite = new Sprite(GameAssetManager.getGameAssetManager().getNoMarriage());
+        Sprite brokenHeartSprite = new Sprite(GameAssetManager.getGameAssetManager().getBrokenHeart());
+
+        noMarriageSprite.setSize(72,72);
+        brokenHeartSprite.setSize(72,72);
+
+        float proposerX = 0, proposerY = 0;
+
+        for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+
+            if ( miniPlayer.getUsername().equals(proposer) ) {
+                proposerX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                proposerY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
+            }
+
+        }
+
+        PopUpController.addPopUp(new PopUpTexture(brokenHeartSprite
+                ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
+                newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+        ));
+
+        PopUpController.addPopUp(new PopUpTexture(noMarriageSprite
+                ,proposerX,proposerY+80,
+                proposerX, proposerY+20, 4
+        ));
+
+
+
+
     }
 
 }

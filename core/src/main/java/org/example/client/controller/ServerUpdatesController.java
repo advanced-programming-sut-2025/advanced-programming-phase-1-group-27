@@ -320,48 +320,66 @@ public class ServerUpdatesController { // handles updates sent by server
             itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
             ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(ShopItems.WeddingRing, 1);
         }
+        Sprite finalItemSprite = itemSprite;
         Gdx.app.postRunnable(() -> {
             OutsideView newOutsideView = new OutsideView();
             Main.getMain().getScreen().dispose();
             ClientApp.setNonMainMenu(newOutsideView);
             Main.getMain().setScreen(newOutsideView);
             // TODO: inja benevis abdi jan kososherato
+
+            finalItemSprite.setSize(72, 62);
+
+            Sprite noMarriageSprite = new Sprite(GameAssetManager.getGameAssetManager().getNoMarriage());
+            Sprite heartSprite = new Sprite(GameAssetManager.getGameAssetManager().getHeart1());
+
+            noMarriageSprite.setSize(72,72);
+            heartSprite.setSize(72,72);
+
+            float targetX = 0, targetY = 0;
+
+            for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+
+                if ( miniPlayer.getUsername().equals(username) ) {
+                    targetX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                    targetY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
+                }
+
+            }
+            if ( !answer ){
+
+                PopUpController.addPopUp(new PopUpTexture(finalItemSprite
+                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
+                        newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+                ));
+
+                PopUpController.addPopUp(new PopUpTexture(noMarriageSprite
+                        ,targetX,targetY+80,
+                        targetX, targetY+20, 4
+                ));
+
+            }
+            else{
+
+                PopUpController.addPopUp(new PopUpTexture(heartSprite
+                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
+                        newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+                ));
+
+                PopUpController.addPopUp(new PopUpTexture(heartSprite
+                        ,targetX,targetY+80,
+                        targetX, targetY+20, 4
+                ));
+
+                PopUpController.addPopUp(new PopUpTexture(finalItemSprite
+                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),
+                        targetX, targetY, 4
+                ));
+
+            }
+
+
         });
-
-
-
-        itemSprite.setSize(72, 62);
-
-
-//        if ( !answer ){
-//
-//            PopUpController.addPopUp(new PopUpTexture(itemSprite
-//                    ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
-//                    newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
-//            ));
-//
-//        }
-//        else{
-//
-//            float giverX = 0, giverY = 0;
-//
-//            for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
-//
-//                if ( miniPlayer.getUsername().equals(username) ) {
-//                    giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
-//                    giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
-//                }
-//
-//            }
-//
-//            PopUpController.addPopUp(new PopUpTexture(itemSprite
-//                    ,newOutsideView.getPlayerController().getX(),giverY,
-//                    giverX, giverY, 4
-//            ));
-//
-//        }
-
-
 
     }
 

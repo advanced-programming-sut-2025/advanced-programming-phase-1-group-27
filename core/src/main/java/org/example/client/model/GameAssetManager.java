@@ -856,6 +856,9 @@ public class GameAssetManager {
     private final Texture weddingRing = new Texture(Gdx.files.internal("Images/WeddingRing.png"));
     private final Texture bouquet = new Texture(Gdx.files.internal("Images/Bouquet.png"));
     private final Texture brokenHeart = new Texture(Gdx.files.internal("Images/BrokenHeart.png"));
+    private final Texture heart1 = new Texture(Gdx.files.internal("Images/Heart.png"));
+    private final Texture noMarriage = new Texture(Gdx.files.internal("Images/NoMarriage.png"));
+
 
 
     public static GameAssetManager getGameAssetManager() {
@@ -866,6 +869,14 @@ public class GameAssetManager {
 
         return gameAssetManager;
 
+    }
+
+    public Texture getNoMarriage() {
+        return noMarriage;
+    }
+
+    public Texture getHeart1() {
+        return heart1;
     }
 
     public Texture getBrokenHeart() {
