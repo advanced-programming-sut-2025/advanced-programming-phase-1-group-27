@@ -313,13 +313,12 @@ public class ServerUpdatesController { // handles updates sent by server
 
     public static void handleMarriageResponse(Message message) {
         boolean answer = message.getFromBody("answer");
-        Sprite itemSprite;
+        String username = message.getFromBody("self");
+        Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getBrokenHeart());
         // TODO: parsa, inja javab behet mirese
         if (answer) {
-//            itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
+            itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
             ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(ShopItems.WeddingRing, 1);
-        } else {
-            //animation for reject
         }
         Gdx.app.postRunnable(() -> {
             OutsideView newOutsideView = new OutsideView();
@@ -330,13 +329,38 @@ public class ServerUpdatesController { // handles updates sent by server
         });
 
 
-//
-//            itemSprite.setSize(72, 62);
+
+        itemSprite.setSize(72, 62);
+
+
+//        if ( !answer ){
 //
 //            PopUpController.addPopUp(new PopUpTexture(itemSprite
-//                    ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+20,
-//                    newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+80, 4
+//                    ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
+//                    newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
 //            ));
+//
+//        }
+//        else{
+//
+//            float giverX = 0, giverY = 0;
+//
+//            for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+//
+//                if ( miniPlayer.getUsername().equals(username) ) {
+//                    giverX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+//                    giverY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
+//                }
+//
+//            }
+//
+//            PopUpController.addPopUp(new PopUpTexture(itemSprite
+//                    ,newOutsideView.getPlayerController().getX(),giverY,
+//                    giverX, giverY, 4
+//            ));
+//
+//        }
+
 
 
     }

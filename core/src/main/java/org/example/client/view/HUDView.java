@@ -2007,7 +2007,7 @@ public class HUDView extends AppMenu {
 
                 if (!isInputFieldVisible) {
 
-                    if (currentMenu != InGameMenuType.ARTISAN && currentMenu != InGameMenuType.FRIDGE) {
+                    if (currentMenu != InGameMenuType.ARTISAN && currentMenu != InGameMenuType.FRIDGE && currentMenu != InGameMenuType.NONE) {
                         if ((525 < x && x < 580) && (800 < y && y < 860)) {
                             currentMenu = InGameMenuType.INVENTORY;
                             return true;

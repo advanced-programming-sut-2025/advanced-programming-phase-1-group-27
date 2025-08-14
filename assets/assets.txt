@@ -1192,6 +1192,10 @@ MapImage/avatar2.png
 MapImage/avatar3.png
 MapImage/avatar4.png
 MapImage/avatar7.png
+MapImage/map0.jpeg
+MapImage/map1.jpeg
+MapImage/map2.jpeg
+MapImage/map3.jpeg
 NPCs/Other/Abigail.atlas
 NPCs/Other/Abigail.png
 NPCs/Other/AbigailSheet.png

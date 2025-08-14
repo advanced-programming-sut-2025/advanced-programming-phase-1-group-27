@@ -59,10 +59,15 @@ public class GameAssetManager {
             new Texture(Gdx.files.internal("Avatars/stardew_avatar_2_2.png")),
     };
 
-    private final Texture map1 = new Texture(Gdx.files.internal("MapImage/avatar7.png"));
-    private final Texture map2 = new Texture(Gdx.files.internal("MapImage/avatar10.png"));
-    private final Texture map3 = new Texture(Gdx.files.internal("MapImage/avatar11.png"));
-    private final Texture map4 = new Texture(Gdx.files.internal("MapImage/avatar15.png"));
+//    private final Texture map1 = new Texture(Gdx.files.internal("MapImage/avatar7.png"));
+//    private final Texture map2 = new Texture(Gdx.files.internal("MapImage/avatar10.png"));
+//    private final Texture map3 = new Texture(Gdx.files.internal("MapImage/avatar11.png"));
+//    private final Texture map4 = new Texture(Gdx.files.internal("MapImage/avatar15.png"));
+
+    private final Texture map1 = new Texture(Gdx.files.internal("MapImage/map0.jpeg"));
+    private final Texture map2 = new Texture(Gdx.files.internal("MapImage/map1.jpeg"));
+    private final Texture map3 = new Texture(Gdx.files.internal("MapImage/map2.jpeg"));
+    private final Texture map4 = new Texture(Gdx.files.internal("MapImage/map3.jpeg"));
 
     private final Image rainyFall = new Image(new Texture(Gdx.files.internal("Clock/RainyFall.png")));
     private final Image stormyFall = new Image(new Texture(Gdx.files.internal("Clock/StormyFall.png")));
