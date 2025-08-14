@@ -188,7 +188,8 @@ public class ArtisanController {
 
     public void displayArtisan() {
         artisanBackgrond.setVisible(hudView.getCurrentMenu() == InGameMenuType.ARTISAN);
-        artisanCollectButton.setVisible(hudView.getCurrentMenu() == InGameMenuType.ARTISAN);
+        artisanCollectButton.setVisible(hudView.getCurrentMenu() == InGameMenuType.ARTISAN &&
+                artisan.getFinalProduct() != null && artisan.getTimeLeft() == 0);
         artisanProcessButton.setVisible(hudView.getCurrentMenu() == InGameMenuType.ARTISAN);
 
         itemImageButtons.forEach(imageButton -> {
@@ -459,6 +460,7 @@ public class ArtisanController {
                 hudView.playClickSound();
                 if (artisan.getFinalProduct() != null) {
                     ResultController.addError("There is another ongoing process");
+                    hudView.setCurrentMenu(InGameMenuType.NONE);
                     return;
                 }
                 for (ProcessedProductType product : artisan.getType().getProducts()) {
@@ -472,6 +474,7 @@ public class ArtisanController {
                     }
                 }
                 ResultController.addError("No Valid Recipe Found");
+                hudView.setCurrentMenu(InGameMenuType.NONE);
             }
         });
 

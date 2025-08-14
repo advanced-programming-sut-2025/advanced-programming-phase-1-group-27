@@ -1303,7 +1303,7 @@ public class HUDView extends AppMenu {
         animalInfoLabel = new Label("Animal Name:     " + animal.getName() + "\n" +
                 "Animal Type:     " + animal.getType().getName() + "\n" +
                 "Base SellPrice:     " + animal.getPrice() + "\n" +
-                "Till next product:     " + animal.getTillNextProduction() + "\n" +
+                "next product:     " + animal.getType().getProducts().get(0).getName() + "\n" +
                 "FriendShip pts:    " + animal.getFriendship(),
                 skin);
         animalInfoLabel.setColor(Color.BLACK);
@@ -2357,6 +2357,9 @@ public class HUDView extends AppMenu {
                            ClientApp.setCurrentMenu(new BuildMenuView(new Artisan(
                                    craftingProduct.getArtisan())));
                            Main.getMain().setScreen(ClientApp.getCurrentMenu());
+                           ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(
+                                   craftingProduct, 1
+                           );
                        }
                    }
                    else {

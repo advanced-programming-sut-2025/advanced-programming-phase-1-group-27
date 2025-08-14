@@ -15,15 +15,15 @@ public class FarmMapDirector {
             game.getNpcMap().setPassageToFarmMap(6, 0, builder.getFinalProduct(), 54, 73);
         } else if (index == 1) {
             builder.createBigLake(25, 7);
-            builder.setPassageToNpcValley(0, 74, 15, 1, game.getNpcMap());
-            game.getNpcMap().setPassageToFarmMap(6, 33, builder.getFinalProduct(), 0, 73);
+            builder.setPassageToNpcValley(54, 0, 6, 32, game.getNpcMap());
+            game.getNpcMap().setPassageToFarmMap(6, 33, builder.getFinalProduct(), 54, 1);
 
         } else if (index == 2) {
             builder.createSmallLake(47, 8);
             builder.createSmallLake(32, 40);
             builder.createSmallLake(21, 21);
-            builder.setPassageToNpcValley(54, 0, 6, 32, game.getNpcMap());
-            game.getNpcMap().setPassageToFarmMap(15, 0, builder.getFinalProduct(), 54, 1);
+            builder.setPassageToNpcValley(0, 74, 15, 1, game.getNpcMap());
+            game.getNpcMap().setPassageToFarmMap(15, 0, builder.getFinalProduct(), 0, 73);
         } else {
             builder.createSmallLake(45, 30);
             builder.createBigLake(35, 4);
