@@ -34,6 +34,7 @@ public class Message {
     }
 
     public enum Type {
+        leave_app,
         command,
         response,
         register_request,
@@ -98,6 +99,7 @@ public class Message {
         get_quests_journal,
         meetP2P,
         save,
-        load_game
+        load_game,
+        dc
     }
 }

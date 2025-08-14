@@ -172,7 +172,7 @@ public class ServerConnectionThread extends ConnectionThread {
     public void run() {
         super.run();
         System.out.println("TAMAM SHOD");
-        ClientApp.end();
+        ClientApp.exit();
     }
 
     private void handleStartDownload(Message message) {

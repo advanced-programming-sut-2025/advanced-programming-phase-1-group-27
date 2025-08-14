@@ -70,12 +70,10 @@ public class GameController {
 
     public static void notifyExcept(Message message) {
         Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
+        assert lobby != null;
         String username = message.getFromBody("username");
         assert username != null;
-        for (User user : lobby.getUsers()) {
-            if (!user.getUsername().equals(username))
-                lobby.notifyUser(user, message);
-        }
+        lobby.notifyExcept(username, message);
     }
 
     public static Message getPlayerRelation(Message message) {
@@ -272,6 +270,8 @@ public class GameController {
         ClientConnectionThread connection = ServerApp.getClientConnectionThreadByUsername(
                 starter.equals(self) ? other : starter
         );
+        if (connection == null)
+            return;
         if (mode.equals("response")) {
             Lobby lobby = ServerApp.getLobbyById(message.getIntFromBody("lobbyId"));
             Player currentPlayer = lobby.getGame().getPlayerByUsername(starter);
@@ -282,7 +282,6 @@ public class GameController {
             message.addToBody("level", relation.getLevel());
             message.addToBody("xp", relation.getXp());
         }
-        assert connection != null;
         connection.sendMessage(message);
     }
 

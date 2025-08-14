@@ -5,6 +5,7 @@ import org.example.client.Main;
 import org.example.client.controller.SaveController;
 import org.example.client.view.AppMenu;
 import org.example.client.view.menu.MainMenuView;
+import org.example.common.models.Map.NPCMap;
 import org.example.common.models.Message;
 import org.example.common.models.Gender;
 import org.example.common.models.SecurityQuestion;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static org.example.client.model.ClientApp.TIMEOUT_MILLIS;
 
@@ -85,7 +87,25 @@ public class ClientApp {
     }
 
     public static void end() {
-        saveGame();
+        if (currentGame != null) {
+            serverConnectionThread.sendMessage(new Message(new HashMap<>() {{
+                put("lobbyId", ClientApp.getCurrentGame().getLobbyId());
+                put("playerName", ClientApp.getCurrentGame().getCurrentPlayer().getUsername());
+            }}, Message.Type.dc));
+            if (currentGame.getCurrentPlayer().getCurrentMap() instanceof NPCMap)
+                serverConnectionThread.sendMessage(new Message(new HashMap<>() {{
+                    put("lobbyId", currentGame.getLobbyId());
+                    put("username", currentGame.getCurrentPlayer().getUsername());
+                }}, Message.Type.leave_npc));
+            saveGame();
+        }
+        ClientApp.getServerConnectionThread().sendAndWaitForResponse(
+                new Message(null, Message.Type.leave_app), TIMEOUT_MILLIS
+        );
+        exit();
+    }
+
+    public static void exit() {
         serverConnectionThread.end();
         Gdx.app.exit();
         System.exit(0);

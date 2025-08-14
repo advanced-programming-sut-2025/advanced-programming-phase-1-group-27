@@ -60,7 +60,11 @@ public class ClientConnectionThread extends ConnectionThread {
         if (message.getType() == Message.Type.register_request) {
             sendMessage(RegisterMenuController.register(message));
             return true;
-        } else if (message.getType() == Message.Type.login_request) {
+        } else if (message.getType() == Message.Type.leave_app) {
+            sendMessage(new Message(null, Message.Type.response));
+            return true;
+        }
+        else if (message.getType() == Message.Type.login_request) {
             sendMessage(LoginMenuController.login(message, this));
             return true;
         } else if (message.getType() == Message.Type.update_user_info) {
@@ -212,6 +216,9 @@ public class ClientConnectionThread extends ConnectionThread {
             return true;
         } else if (message.getType() == Message.Type.load_game) {
             LoadGameController.handleLoadRequest(message);
+            return true;
+        } else if (message.getType() == Message.Type.dc) {
+            DcController.handleDC(message);
             return true;
         }
         System.out.println("not handled message: " + message);

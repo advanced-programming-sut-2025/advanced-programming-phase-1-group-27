@@ -27,6 +27,7 @@ public class LoginMenuController {
             }} , Message.Type.response);
         }
         clientConnectionThread.setUser(user);
+        DcController.handleNewLogin(user);
         return new Message(new HashMap<>() {{
             put("GraphicalResult", GraphicalResult.getInfo("You have successfully logged in."
                     , false));

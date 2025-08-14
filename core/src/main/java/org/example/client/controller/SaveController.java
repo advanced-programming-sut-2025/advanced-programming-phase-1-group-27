@@ -32,6 +32,8 @@ public class SaveController {
         handlePlayerInfo(game, player, message.getFromBody("playerInfo"));
         game.setWeather(Weather.getWeather(message.getFromBody("weather")));
         game.getTime().loadTime(message.getFromBody("time"));
+        player.setCurrentMap(player.getFarmMap());
+        player.setCurrentCell(player.getFarmMap().getCell(8, 71));
 
         Gdx.app.postRunnable(() -> {
             Main.getMain().getScreen().dispose();

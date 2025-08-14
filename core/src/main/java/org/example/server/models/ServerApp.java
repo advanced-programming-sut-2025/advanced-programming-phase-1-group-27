@@ -101,6 +101,21 @@ public class ServerApp {
 
     public static void addLobby(Lobby lobby) {
         lobbies.add(lobby);
+        new Thread(() -> {
+           while (lobby.getGame() == null) {
+               try {
+                   Thread.sleep(2000);
+                   if (System.currentTimeMillis() - lobby.getLastChange().longValue() > 5 * 60 * 1000) {
+                       removeLobby(lobby);
+                       lobby.notifyAll(new Message(null, Message.Type.terminating_lobby));
+                       break;
+                   }
+               } catch (InterruptedException e) {
+                   throw new RuntimeException(e);
+               }
+
+           }
+        }).start();
     }
 
     public static void removeLobby(Lobby lobby) {

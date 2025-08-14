@@ -7,6 +7,7 @@ import org.example.server.models.ServerGame;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -24,6 +25,7 @@ public class Lobby {
     private AtomicLong lastChange = new AtomicLong(System.currentTimeMillis());
     private AtomicInteger votesToTerminate = new AtomicInteger(0);
     private AtomicInteger numberOfVotes = new AtomicInteger(0);
+    private final ArrayList<String> dcPlayers = new ArrayList<>();
 
     public Lobby () {
         this.admin = new User();
@@ -197,6 +199,8 @@ public class Lobby {
 
     public void notifyAll(Message message) {
         for (User user : users) {
+            if (isPlayerDC(user.getUsername()))
+                continue;
             try {
                 ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
             } catch (Exception e) {
@@ -208,12 +212,14 @@ public class Lobby {
 
     public void notifyExcept(String username, Message message) {
         for (User user : users) {
-            if (!user.getUsername().equals(username))
+            if (!user.getUsername().equals(username) && !isPlayerDC(user.getUsername()))
                 ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
         }
     }
 
     public void notifyUser(User user, Message message) {
+        if (isPlayerDC(user.getUsername()))
+            return;
         ServerApp.getClientConnectionThreadByUsername(user.getUsername()).sendMessage(message);
     }
 
@@ -238,5 +244,33 @@ public class Lobby {
                 return true;
         }
         return  false;
+    }
+
+    public void addDcPlayer(String dcPlayer) {
+        synchronized (dcPlayers) {
+            dcPlayers.add(dcPlayer);
+        }
+    }
+
+    public boolean isPlayerDC(String playerName) {
+        synchronized (dcPlayers) {
+            for (String dcPlayer : dcPlayers) {
+                if (dcPlayer.equals(playerName))
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    public void reconnectPlayer(String playerName) {
+        synchronized (dcPlayers) {
+            dcPlayers.remove(playerName);
+        }
+    }
+
+    public void clearDCPlayers() {
+        synchronized (dcPlayers) {
+            dcPlayers.clear();
+        }
     }
 }
