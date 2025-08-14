@@ -741,6 +741,7 @@ Images/Fruits/Pumpkin.png
 Images/Fruits/Spring_Onion.png
 Images/GiftIcon.png
 Images/GiftPlayerMenuBackground.png
+Images/Heart.png
 Images/HoveringInfoWindow.png
 Images/HugIcon.png
 Images/Inbox/InboxMessageBackground.png
@@ -751,6 +752,7 @@ Images/Map/Icon.png
 Images/Map/MapImage.png
 Images/Map/MapMenu.png
 Images/Mini-Fridge.png
+Images/NoMarriage.png
 Images/PlayerSocial/InteractionEmoji1.png
 Images/PlayerSocial/InteractionEmoji2.png
 Images/PlayerSocial/InteractionEmoji3.png
@@ -1192,6 +1194,10 @@ MapImage/avatar2.png
 MapImage/avatar3.png
 MapImage/avatar4.png
 MapImage/avatar7.png
+MapImage/map0.jpeg
+MapImage/map1.jpeg
+MapImage/map2.jpeg
+MapImage/map3.jpeg
 NPCs/Other/Abigail.atlas
 NPCs/Other/Abigail.png
 NPCs/Other/AbigailSheet.png

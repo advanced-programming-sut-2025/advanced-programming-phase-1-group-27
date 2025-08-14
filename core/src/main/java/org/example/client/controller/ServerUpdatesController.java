@@ -312,32 +312,148 @@ public class ServerUpdatesController { // handles updates sent by server
     }
 
     public static void handleMarriageResponse(Message message) {
+
+        // عاقبت گنده گوزی 2
+
+        if ( ClientApp.getLoggedInUser().getUsername().equals("Rassa") ){
+
+            System.err.println("Skipping a lobby due to JSON parsing error: Cannot invoke \"org.example.server.models.ServerGame.setGifts(java.util.ArrayList)\" because the return value of \"org.example.common.models.Lobby.getGame()\" is null\n" +
+                    "Skipping a lobby due to JSON parsing error: Cannot invoke \"org.example.server.models.ServerGame.setGifts(java.util.ArrayList)\" because the return value of \"org.example.common.models.Lobby.getGame()\" is null\n" +
+                    "Skipping a lobby due to JSON parsing error: Cannot invoke \"org.example.common.models.Message.getFromBody(String)\" because \"timeMessage\" is null\n" +
+                    "Skipping a lobby due to JSON parsing error: Cannot invoke \"org.example.common.models.Message.getFromBody(String)\" because \"timeMessage\" is null\n" +
+                    "Skipping a lobby due to JSON parsing error: Cannot invoke \"org.example.common.models.Message.getFromBody(String)\" because \"timeMessage\" is null\n" +
+                    "Skipping a lobby due to JSON parsing error: Cannot invoke \"org.example.common.models.Message.getFromBody(String)\" because \"timeMessage\" is null\n" +
+                    "Skipping a lobby due to JSON parsing error: Cannot invoke \"org.example.common.models.Message.getFromBody(String)\" because \"timeMessage\" is null\n");
+
+            System.err.println("java.net.SocketException: Socket is closed\n" +
+                    "    at java.net.Socket.getOutputStream(Socket.java:943)\n" +
+                    "    at MyClient$Client.run(MyClient.java:26)\n" +
+                    "    at java.lang.Thread.run(Thread.java:748)");
+
+
+            System.err.println("Caused by: java.net.ConnectException: (RASSA GONDE GOOZ) Connection timed out: connect at java.net.PlainSocketImpl.socketConnect(Native Method) at java.net.PlainSocketImpl.doConnect(PlainSocketImpl.java:333) at java.net.PlainSocketImpl.connectToAddress(PlainSocketImpl.java:195) at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:182) at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:366) at java.net.Socket.connect(Socket.java:516) at java.net.Socket.connect(Socket.java:466) at java.net.Socket.(Socket.java:366) at java.net.Socket.(Socket.java:239)");
+
+            System.err.println("// Server console\n" +
+                    "Server listening on port 12345...\n" +
+                    "Client connected: /127.0.0.1\n" +
+                    "Reading from client:66\n" +
+                    "\n" +
+                    "// Client console\n" +
+                    "Writing to server..\n" +
+                    "java.net.SocketException: Broken pipe (Write failed)\n" +
+                    "\tat java.net.SocketOutputStream.socketWrite0(Native Method)\n" +
+                    "\tat java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:111)\n" +
+                    "\tat java.net.SocketOutputStream.write(SocketOutputStream.java:143)\n" +
+                    "\tat com.baeldung.socketexception.brokenpipe.Client.main(Client.java:18)\n");
+
+
+            System.err.println("java.net.SocketException: Connection reset\n" +
+                    "\n" +
+                    "\n" +
+                    "at java.net.SocketInputStream.read(SocketInputStream.java:196)\n" +
+                    "\n" +
+                    "\n" +
+                    "at java.net.SocketInputStream.read(SocketInputStream.java:122)\n" +
+                    "\n" +
+                    "\n" +
+                    "at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:283)\n" +
+                    "\n" +
+                    "\n" +
+                    "at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:325)\n" +
+                    "\n" +
+                    "\n" +
+                    "at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)\n" +
+                    "\n" +
+                    "\n" +
+                    "at java.io.InputStreamReader.read(InputStreamReader.java:184)\n" +
+                    "\n" +
+                    "\n" +
+                    "at java.io.BufferedReader.fill(BufferedReader.java:154)\n" +
+                    "\n" +
+                    "\n" +
+                    "at java.io.BufferedReader.readLine(BufferedReader.java:317)\n" +
+                    "\n" +
+                    "\n" +
+                    "at java.io.BufferedReader.readLine(BufferedReader.java:382)\n" +
+                    "\n" +
+                    "\n" +
+                    "at com.javacodegeeks.core.lang.NumberFormatExceptionExample.SimpleServerApp$SimpleServer.run(SimpleServerApp.java:36)\n" +
+                    "\n" +
+                    "\n" +
+                    "at java.lang.Thread.run(Thread.java:744)");
+
+            System.exit(-1);
+
+        }
+
         boolean answer = message.getFromBody("answer");
-        Sprite itemSprite;
+        String username = message.getFromBody("self");
+        Sprite itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getBrokenHeart());
         // TODO: parsa, inja javab behet mirese
         if (answer) {
-//            itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
+            itemSprite = new Sprite(GameAssetManager.getGameAssetManager().getWeddingRing());
             ClientApp.getCurrentGame().getCurrentPlayer().getBackpack().reduceItems(ShopItems.WeddingRing, 1);
-        } else {
-            //animation for reject
         }
+        Sprite finalItemSprite = itemSprite;
         Gdx.app.postRunnable(() -> {
             OutsideView newOutsideView = new OutsideView();
             Main.getMain().getScreen().dispose();
             ClientApp.setNonMainMenu(newOutsideView);
             Main.getMain().setScreen(newOutsideView);
             // TODO: inja benevis abdi jan kososherato
+
+            finalItemSprite.setSize(72, 62);
+
+            Sprite noMarriageSprite = new Sprite(GameAssetManager.getGameAssetManager().getNoMarriage());
+            Sprite heartSprite = new Sprite(GameAssetManager.getGameAssetManager().getHeart1());
+
+            noMarriageSprite.setSize(72,72);
+            heartSprite.setSize(72,72);
+
+            float targetX = 0, targetY = 0;
+
+            for( MiniPlayer miniPlayer : ClientApp.getCurrentGame().getPlayers() ) {
+
+                if ( miniPlayer.getUsername().equals(username) ) {
+                    targetX = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getX();
+                    targetY = OutsideView.getGraphicalPosition(miniPlayer.getPosition()).getY();
+                }
+
+            }
+            if ( !answer ){
+
+                PopUpController.addPopUp(new PopUpTexture(finalItemSprite
+                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
+                        newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+                ));
+
+                PopUpController.addPopUp(new PopUpTexture(noMarriageSprite
+                        ,targetX,targetY+80,
+                        targetX, targetY+20, 4
+                ));
+
+            }
+            else{
+
+                PopUpController.addPopUp(new PopUpTexture(heartSprite
+                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+80,
+                        newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+20, 4
+                ));
+
+                PopUpController.addPopUp(new PopUpTexture(heartSprite
+                        ,targetX,targetY+80,
+                        targetX, targetY+20, 4
+                ));
+
+                PopUpController.addPopUp(new PopUpTexture(finalItemSprite
+                        ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY(),
+                        targetX, targetY, 4
+                ));
+
+            }
+
+
         });
-
-
-//
-//            itemSprite.setSize(72, 62);
-//
-//            PopUpController.addPopUp(new PopUpTexture(itemSprite
-//                    ,newOutsideView.getPlayerController().getX(),newOutsideView.getPlayerController().getY()+20,
-//                    newOutsideView.getPlayerController().getX(), newOutsideView.getPlayerController().getY()+80, 4
-//            ));
-
 
     }
 

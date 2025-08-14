@@ -93,6 +93,11 @@ public class PregameMenuView extends AppMenu {
         map3Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap3()));
         map4Button = new ImageButton(new TextureRegionDrawable(GameAssetManager.getGameAssetManager().getMap4()));
 
+        map1Button.setSize(128,128);
+        map2Button.setSize(128,128);
+        map3Button.setSize(128,128);
+        map4Button.setSize(128,128);
+
         setListeners();
     }
 
