@@ -18,7 +18,7 @@ public enum QuestsForNPCs {
     AbigailSecondQuest(new Stacks(FruitType.Pumpkin, 1), new Stacks(ShopItems.Coin, 500)),
     AbigailThirdQuest(new Stacks(FruitType.Wheat, 50), new Stacks(ShopItems.RelationLevel, 1)),
     HarveyFirstQuest(new Stacks(SeedType.BlueberrySeed, 2), new Stacks(ShopItems.Coin, 750)),
-    HarveySecondQuest(new Stacks(FishType.Salmon, 1), new Stacks(FishType.Salmon, 1)),
+    HarveySecondQuest(new Stacks(FishType.Salmon, 15), new Stacks(FishType.Legend, 1)),
     HarveyThirdQuest(new Stacks(ProcessedProductType.Wine, 1), new Stacks(CookingProduct.Salad, 5)),
     LiaFirstQuest(new Stacks(MineralType.Wood, 10), new Stacks(ShopItems.Coin, 500)),
     LiaSecondQuest(new Stacks(FishType.Salmon, 1), new Stacks(Recipe.SalmonDinnerRecipe, 1)),

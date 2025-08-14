@@ -157,6 +157,7 @@ public class ServerApp {
 
     public static void updateUser(Message message) {
         User user = new User(message.getFromBody("userInfo"));
-        // TODO : parsa bebar tooye paygah dade
+        DataBaseHelper.changeMaxMoney(user.getUsername() , user.getMaxMoneyEarned());
+        DataBaseHelper.changeNumberOfGames(user.getUsername() , user.getNumberOfGamesPlayed());
     }
 }

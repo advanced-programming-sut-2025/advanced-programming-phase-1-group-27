@@ -207,6 +207,44 @@ public class DataBaseHelper {
         }
     }
 
+    public static void changeMaxMoney(String username, int newMaxMoney) {
+        String sql = "UPDATE users SET maxMoney = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, newMaxMoney);
+            pstmt.setString(2, username);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("maxMoney for user '" + username + "' changed to '" + newMaxMoney + "' successfully.");
+            } else {
+                System.out.println("User '" + username + "' not found, nickname not changed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error changing maxMoney for user '" + username + "': " + e.getMessage());
+        }
+    }
+
+    public static void changeNumberOfGames(String username, int numberOfGames) {
+        String sql = "UPDATE users SET numberOfGamesPlayed = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, numberOfGames);
+            pstmt.setString(2, username);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("numberOfGames for user '" + username + "' changed to '" + numberOfGames + "' successfully.");
+            } else {
+                System.out.println("User '" + username + "' not found, nickname not changed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error changing numberOfGames for user '" + username + "': " + e.getMessage());
+        }
+    }
+
     public static void deleteUser(String username) {
         String sql = "DELETE FROM users WHERE username = ?";
 
@@ -286,6 +324,7 @@ public class DataBaseHelper {
                 "User2 TEXT DEFAULT NULL," +
                 "User3 TEXT DEFAULT NULL," +
                 "User4 TEXT DEFAULT NULL" +
+//                "Relations TEXT DEFAULT NULL" +
                 ")";
         try (Connection conn = DriverManager.getConnection(DB_SAVE);
              Statement stmt = conn.createStatement()) {
