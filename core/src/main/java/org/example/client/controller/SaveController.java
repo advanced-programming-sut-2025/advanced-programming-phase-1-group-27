@@ -14,12 +14,15 @@ import org.example.common.models.AnimalProperty.Barn;
 import org.example.common.models.AnimalProperty.Coop;
 import org.example.common.models.Map.FarmMap;
 import org.example.common.models.Map.NPCMap;
+import org.example.common.models.NPCs.NPC;
+import org.example.common.models.Relations.Relation;
 import org.example.common.models.Weathers.Weather;
 import org.example.common.models.items.Recipe;
 import org.example.common.models.tools.Backpack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SaveController {
     public static void handleInfo(Message message) {
@@ -31,6 +34,7 @@ public class SaveController {
 
         handleFarmInfo(game, message.getFromBody("farmMapInfo"));
         handlePlayerInfo(game, player, message.getFromBody("playerInfo"));
+        handleNPCsInfo(game, message.getFromBody("npcsInfo"));
         game.setWeather(Weather.getWeather(message.getFromBody("weather")));
         game.getTime().loadTime(message.getFromBody("time"));
         player.setCurrentMap(player.getFarmMap());
@@ -41,6 +45,20 @@ public class SaveController {
             ClientApp.setCurrentMenu(new HomeView());
             Main.getMain().setScreen(ClientApp.getCurrentMenu());
         });
+    }
+
+    private static void handleNPCsInfo(ClientGame game, ArrayList<LinkedTreeMap<String, Object>> npcsInfo) {
+        Player player = game.getCurrentPlayer();
+        for (int i = 0; i < game.getNPCs().size(); i++) {
+            NPC npc = game.getNPCs().get(i);
+            LinkedTreeMap<String, Object> npcInfo = npcsInfo.get(i);
+            for (Map.Entry<String, Object> entry : npcInfo.entrySet()) {
+                if (!entry.getKey().equals(player.getUsername()))
+                    continue;
+                Relation relation = new Relation((LinkedTreeMap<String, Object>) entry.getValue());
+                npc.setRelation(player, relation);
+            }
+        }
     }
 
     private static void handlePlayerInfo(ClientGame game, Player player, LinkedTreeMap<String, Object> info) {

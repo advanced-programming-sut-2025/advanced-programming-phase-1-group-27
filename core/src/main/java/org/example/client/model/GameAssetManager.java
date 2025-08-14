@@ -11,10 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import org.example.client.model.utils.MusicPlayer;
-import org.example.common.models.AbilityType;
-import org.example.common.models.ArtisanTypes;
-import org.example.common.models.Item;
-import org.example.common.models.NPCType;
+import org.example.common.models.*;
 import org.example.common.models.Plants.*;
 import org.example.common.models.items.*;
 import org.example.common.models.items.products.AnimalProduct;
@@ -1502,6 +1499,8 @@ public class GameAssetManager {
     }
 
     public Texture getItemTexture(Item item) {
+        if (item instanceof ProcessedProduct processedProduct)
+            return itemTextureMap.get(processedProduct.getType());
         if (itemTextureMap.containsKey(item))
             return itemTextureMap.get(item);
         return redCrossTexture;

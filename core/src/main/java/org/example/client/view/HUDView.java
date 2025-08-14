@@ -145,6 +145,7 @@ public class HUDView extends AppMenu {
     private boolean yourSongsPage;
     private boolean readingMessage;
     private boolean reactionTyping;
+    private boolean isMuted;
     private Backpack inventoryItems;
     private ArrayList<Stacks> onScreenItems;
     private Integer rowCoEfficient;
@@ -175,6 +176,7 @@ public class HUDView extends AppMenu {
         fridgeController = new FridgeController(this, stage);
         shippingBinController = new ShippingBinController(this, stage);
 
+        isMuted = false;
 
         playerIconsInMap = new HashMap<>();
         for (MiniPlayer inGamePlayer : ClientApp.getCurrentGame().getPlayers()) {
@@ -1668,6 +1670,13 @@ public class HUDView extends AppMenu {
 
                     if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
                         ctrlPressed = true;
+                    }
+
+                    if (keycode == Input.Keys.U) {
+
+                        isMuted = !isMuted;
+                        ClientApp.getCurrentGame().setVolume(isMuted ? 0 : 1);
+
                     }
 
                     if (keycode == Input.Keys.T) {

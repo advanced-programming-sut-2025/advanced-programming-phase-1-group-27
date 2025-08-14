@@ -31,7 +31,16 @@ public class SaveController {
             put("playerInfo", getPlayerInfo(player));
             put("weather", lobby.getGame().getCurrentWeather().name());
             put("time", lobby.getGame().getTime().getInfo());
+            put("npcsInfo", getNPCsInfo(lobby.getGame()));
         }}, Message.Type.client_game_info));
+    }
+
+    private static ArrayList getNPCsInfo(ServerGame game) {
+        ArrayList npcsInfo = new ArrayList<>();
+        for (NPC npc : game.getNPCs()) {
+            npcsInfo.add(npc.getRelationsInfo());
+        }
+        return npcsInfo;
     }
 
     private static HashMap<String, Object> getPlayerInfo(Player player) {
@@ -209,10 +218,7 @@ public class SaveController {
 
     public static Message getGameInfo(ServerGame game) {
         Message result = new Message(new HashMap<>(), Message.Type.save);
-        ArrayList npcsInfo = new ArrayList();
-        for (NPC npc : game.getNPCs()) {
-            npcsInfo.add(npc.getRelationsInfo());
-        }
+        ArrayList npcsInfo = getNPCsInfo(game);
         result.addToBody("npcsInfo", npcsInfo);
         for (Player player : game.getPlayers()) {
             result.addToBody(player.getUsername(), player.getRelationsInfo());
